@@ -56,6 +56,7 @@ public class MaritalStatusField extends ObjectField<MaritalStatus> implements Va
 	public MaritalStatus getObject() {
 		if (editable) {
 			MaritalStatus maritalStatus = super.getObject();
+			// Der Cast auf CodeEditField geht schief, falls kein editable, darum das if hier
 			maritalStatus.maritalStatus = ((CodeEditField) code).getObject();
 			maritalStatus.dateOfMaritalStatus = date.getObject();
 			return maritalStatus;
