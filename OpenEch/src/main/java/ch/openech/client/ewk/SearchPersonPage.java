@@ -16,7 +16,7 @@ import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 
 
-public class FoundPersonPage extends Page implements RefreshablePage {
+public class SearchPersonPage extends Page implements RefreshablePage {
 
 	private final EchNamespaceContext echNamespaceContext;
 	private String text;
@@ -35,11 +35,11 @@ public class FoundPersonPage extends Page implements RefreshablePage {
 	
 	// Damit wird die Version des Fenster overruled
 	@Deprecated
-	public FoundPersonPage(PageContext context, String text) {
+	public SearchPersonPage(PageContext context, String text) {
 		this(context,"2.2", text);
 	}
 	
-	public FoundPersonPage(PageContext context, String version, String text) {
+	public SearchPersonPage(PageContext context, String version, String text) {
 		super(context);
 		this.echNamespaceContext = EchNamespaceContext.getNamespaceContext(20, version);
 		this.text = text;

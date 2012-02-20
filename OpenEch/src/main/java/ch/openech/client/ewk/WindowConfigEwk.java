@@ -66,7 +66,7 @@ public class WindowConfigEwk implements WindowConfig {
 	
 	@Override
 	public Class<?>[] getSearchClasses() {
-		return new Class<?>[]{FoundPersonPage.class};
+		return new Class<?>[]{SearchPersonPage.class};
 	}
 	
 	public static class BirthPage extends EditorPage {

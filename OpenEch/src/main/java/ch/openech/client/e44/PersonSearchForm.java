@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.event.ChangeListener;
 
-import ch.openech.client.ewk.FoundPersonPage;
+import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.fields.TextEditField;
 import ch.openech.mj.edit.form.AbstractFormVisual;
@@ -27,7 +27,7 @@ public class PersonSearchForm extends AbstractFormVisual<Person> {
 		super();
 		
 		textField = new TextEditField("search", 100);
-		table = ClientToolkit.getToolkit().createVisualTable(Person.class, FoundPersonPage.FIELD_NAMES);
+		table = ClientToolkit.getToolkit().createVisualTable(Person.class, SearchPersonPage.FIELD_NAMES);
 //		table.setClickListener(new PersonTableClickListener());
 
 		line(Person.PERSON.personIdentification.officialName);
