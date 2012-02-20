@@ -17,6 +17,7 @@ import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageAction;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
@@ -32,7 +33,7 @@ public class WindowConfigEwk implements WindowConfig {
 	
 	@Override
 	public String getTitle() {
-		return "Open-eCH Einwohnerkontrolle";
+		return Resources.getString("Application.title") + " - Schema: " + echNamespaceContext.getVersion();
 	}
 	
 	@Override
