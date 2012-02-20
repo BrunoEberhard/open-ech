@@ -102,7 +102,7 @@ public class PersonEditMenu {
 //		ActionGroup history = person.getOrCreateActionGroup("history");
 //		person.addSeparator();
 
-		ActionGroup partnershipGroup = personActionGroup.getOrCreateActionGroup("Partnerschaft");
+		ActionGroup partnershipGroup = personActionGroup.getOrCreateActionGroup("person_partnership");
 		partnershipGroup.add(marriage);
 		partnershipGroup.add(separation);
 		partnershipGroup.add(undoSeparation);
@@ -112,7 +112,7 @@ public class PersonEditMenu {
 		partnershipGroup.add(partnership);
 		partnershipGroup.add(undoPartnership);
 
-		ActionGroup origin = personActionGroup.getOrCreateActionGroup("Nationalität / Heimatorte");
+		ActionGroup origin = personActionGroup.getOrCreateActionGroup("person_nationality");
 		origin.add(naturalizeSwiss);
 		origin.add(naturalizeForeigner);
 		origin.add(undoSwiss);
@@ -122,29 +122,29 @@ public class PersonEditMenu {
 		origin.add(renewPermit);
 		origin.add(undoCitizen);
 
-		ActionGroup occupation = personActionGroup.getOrCreateActionGroup("Beruf");
+		ActionGroup occupation = personActionGroup.getOrCreateActionGroup("person_occupation");
 		occupation.add(changeOccupation);
 		
-		ActionGroup moveGroup = personActionGroup.getOrCreateActionGroup("Umzug");
+		ActionGroup moveGroup = personActionGroup.getOrCreateActionGroup("person_move");
 		moveGroup.add(move);
 		moveGroup.add(moveOut);
 
-		ActionGroup deathGroup = personActionGroup.getOrCreateActionGroup("Tod");
+		ActionGroup deathGroup = personActionGroup.getOrCreateActionGroup("person_death");
 		deathGroup.add(death);
 		deathGroup.add(missing);
 		deathGroup.add(undoMissing);
 
-		ActionGroup gardian = personActionGroup.getOrCreateActionGroup("Vormundschaft");
+		ActionGroup gardian = personActionGroup.getOrCreateActionGroup("person_care");
 		gardian.add(care);
 		gardian.add(gardianMeasure);
 		gardian.add(undoGardian);
 		gardian.add(changeGardian);
 
-		ActionGroup lock = personActionGroup.getOrCreateActionGroup("Sperre");
+		ActionGroup lock = personActionGroup.getOrCreateActionGroup("person_lock");
 		lock.add(addressLock);
 		lock.add(paperLock);
 
-		ActionGroup change = personActionGroup.getOrCreateActionGroup("Änderung");
+		ActionGroup change = personActionGroup.getOrCreateActionGroup("person_change");
 		change.add(changeName);
 		change.add(changeReligion);
 		change.add(changeTypeOfResidence);
@@ -152,7 +152,7 @@ public class PersonEditMenu {
 		change.add(contact);
 
 		fillCorrectionActionList();
-		ActionGroup correct = personActionGroup.getOrCreateActionGroup("Korrektur");
+		ActionGroup correct = personActionGroup.getOrCreateActionGroup("person_correction");
 		for (Action action : correctEditors) {
 			correct.add(action);
 		}
@@ -202,48 +202,48 @@ public class PersonEditMenu {
 	private void createMenuItems() {
 		showHistory = new PersonHistoryMenuAction();
 
-		marriage = new EditorDialogAction(new MarriageEvent(echNamespaceContext));
-		separation = new EditorDialogAction(new SeparationEvent(echNamespaceContext));
-		undoSeparation = new EditorDialogAction(new UndoSeparationEvent(echNamespaceContext));
-		divorce = new EditorDialogAction(new DivorceEvent(echNamespaceContext));
-		undoMarriage = new EditorDialogAction(new UndoMarriageEvent(echNamespaceContext));
-		partnership = new EditorDialogAction(new PartnershipEvent(echNamespaceContext));
-		undoPartnership = new EditorDialogAction(new UndoPartnershipEvent(echNamespaceContext));
+		marriage = new PersonEditMenuAction(new MarriageEvent(echNamespaceContext));
+		separation = new PersonEditMenuAction(new SeparationEvent(echNamespaceContext));
+		undoSeparation = new PersonEditMenuAction(new UndoSeparationEvent(echNamespaceContext));
+		divorce = new PersonEditMenuAction(new DivorceEvent(echNamespaceContext));
+		undoMarriage = new PersonEditMenuAction(new UndoMarriageEvent(echNamespaceContext));
+		partnership = new PersonEditMenuAction(new PartnershipEvent(echNamespaceContext));
+		undoPartnership = new PersonEditMenuAction(new UndoPartnershipEvent(echNamespaceContext));
 
-		naturalizeSwiss = new EditorDialogAction(new NaturalizeSwissEvent(echNamespaceContext));
-		naturalizeForeigner = new EditorDialogAction(new NaturalizeForeignerEvent(echNamespaceContext));
-		undoSwiss = new EditorDialogAction(new UndoSwissEvent(echNamespaceContext));
-		changeCitizen = new EditorDialogAction(new ChangeCitizenEvent(echNamespaceContext));
-		changeNationality = new EditorDialogAction(new ChangeNationalityEvent(echNamespaceContext));
-		changeResidencePermit = new EditorDialogAction(new ChangeResidencePermitEvent(echNamespaceContext));
-		renewPermit = new EditorDialogAction(new RenewPermitEvent(echNamespaceContext));
-		undoCitizen = new EditorDialogAction(new UndoCitizenEvent(echNamespaceContext));
+		naturalizeSwiss = new PersonEditMenuAction(new NaturalizeSwissEvent(echNamespaceContext));
+		naturalizeForeigner = new PersonEditMenuAction(new NaturalizeForeignerEvent(echNamespaceContext));
+		undoSwiss = new PersonEditMenuAction(new UndoSwissEvent(echNamespaceContext));
+		changeCitizen = new PersonEditMenuAction(new ChangeCitizenEvent(echNamespaceContext));
+		changeNationality = new PersonEditMenuAction(new ChangeNationalityEvent(echNamespaceContext));
+		changeResidencePermit = new PersonEditMenuAction(new ChangeResidencePermitEvent(echNamespaceContext));
+		renewPermit = new PersonEditMenuAction(new RenewPermitEvent(echNamespaceContext));
+		undoCitizen = new PersonEditMenuAction(new UndoCitizenEvent(echNamespaceContext));
 
-		changeOccupation = new EditorDialogAction(new ChangeOccupationEvent(echNamespaceContext));
+		changeOccupation = new PersonEditMenuAction(new ChangeOccupationEvent(echNamespaceContext));
 
-		death = new EditorDialogAction(new DeathEvent(echNamespaceContext));
-		missing = new EditorDialogAction(new MissingEvent(echNamespaceContext));
-		undoMissing = new EditorDialogAction(new UndoMissingEvent(echNamespaceContext));
+		death = new PersonEditMenuAction(new DeathEvent(echNamespaceContext));
+		missing = new PersonEditMenuAction(new MissingEvent(echNamespaceContext));
+		undoMissing = new PersonEditMenuAction(new UndoMissingEvent(echNamespaceContext));
 
-		care = new EditorDialogAction(new CareEvent(echNamespaceContext));
-		gardianMeasure = new EditorDialogAction(new GardianMeasureEvent(echNamespaceContext));
-		undoGardian = new EditorDialogAction(new UndoGardianEvent(echNamespaceContext));
-		changeGardian = new EditorDialogAction(new ChangeGardianEvent(echNamespaceContext));
+		care = new PersonEditMenuAction(new CareEvent(echNamespaceContext));
+		gardianMeasure = new PersonEditMenuAction(new GardianMeasureEvent(echNamespaceContext));
+		undoGardian = new PersonEditMenuAction(new UndoGardianEvent(echNamespaceContext));
+		changeGardian = new PersonEditMenuAction(new ChangeGardianEvent(echNamespaceContext));
 
-		move = new EditorDialogAction(new MoveEvent(echNamespaceContext));
-		moveOut = new EditorDialogAction(new MoveOutEvent(echNamespaceContext));
+		move = new PersonEditMenuAction(new MoveEvent(echNamespaceContext));
+		moveOut = new PersonEditMenuAction(new MoveOutEvent(echNamespaceContext));
 
-		changeName = new EditorDialogAction(new ChangeNameEvent(echNamespaceContext));
-		changeReligion = new EditorDialogAction(new ChangeReligionEvent(echNamespaceContext));
-		changeTypeOfResidence = new EditorDialogAction(new ChangeTypeOfResidenceEvent(echNamespaceContext));
-		changeRelation = new EditorDialogAction(new CorrectRelationshipEvent(echNamespaceContext));
-		contact = new EditorDialogAction(new ContactEvent(echNamespaceContext));
+		changeName = new PersonEditMenuAction(new ChangeNameEvent(echNamespaceContext));
+		changeReligion = new PersonEditMenuAction(new ChangeReligionEvent(echNamespaceContext));
+		changeTypeOfResidence = new PersonEditMenuAction(new ChangeTypeOfResidenceEvent(echNamespaceContext));
+		changeRelation = new PersonEditMenuAction(new CorrectRelationshipEvent(echNamespaceContext));
+		contact = new PersonEditMenuAction(new ContactEvent(echNamespaceContext));
 
-		correctOrigin = new EditorDialogAction(new CorrectOriginEvent(echNamespaceContext));
-		correctResidencePermit = new EditorDialogAction(new CorrectResidencePermitEvent(echNamespaceContext));
+		correctOrigin = new PersonEditMenuAction(new CorrectOriginEvent(echNamespaceContext));
+		correctResidencePermit = new PersonEditMenuAction(new CorrectResidencePermitEvent(echNamespaceContext));
 
-		addressLock = new EditorDialogAction(new AddressLockEvent(echNamespaceContext));
-		paperLock = new EditorDialogAction(new PaperLockEvent(echNamespaceContext));
+		addressLock = new PersonEditMenuAction(new AddressLockEvent(echNamespaceContext));
+		paperLock = new PersonEditMenuAction(new PaperLockEvent(echNamespaceContext));
 	}
 
 	private void fillCorrectionActionList() {
@@ -268,7 +268,7 @@ public class PersonEditMenu {
 	}
 
 	private void addCorrectAction(PersonEventEditor<?> editor) {
-		correctEditors.add(new EditorDialogAction(editor));
+		correctEditors.add(new PersonEditMenuAction(editor));
 	}
 
 	
