@@ -1,0 +1,84 @@
+8000	30	3963	02	Crans-Montana 2	Crans-Montana 2	VS	2		0	8000	6240	20030601
+8002	30	6939	00	Arosio-Mugena	Arosio-Mugena	TI	3		0	8002	5237	20031101
+8003	80	8253	60	Diessenhofen Zust	Diessenhofen Zustellung	TG	1		0	8003	4545	20030701
+8004	20	2338	02	Muriaux	Muriaux	JU	2		1	9046	6753	20031201
+8005	20	2748	02	Les Ecorcheresses	Les Ecorcheresses	BE	2		0	7347	712	20030701
+8006	80	6830	20	Chiasso 1 ZF	Chiasso 1 ZF	TI	3		0	7316	5250	20030701
+8007	80	6900	89	Lugano MailSource	Lugano MailSource	TI	3		0	3837	5192	20030701
+8008	80	1162	60	St-Prex Dist	St-Prex Distribution	VD	2		0	8008	5646	20030701
+8010	20	8615	02	Freudwil	Freudwil	ZH	1		1	7274	198	20050801
+8011	80	6422	60	Steinen Zustellung	Steinen Zustellung	SZ	1		0	8011	1373	20030901
+8012	80	5415	60	Nussbaumen AG Zust	Nussbaumen AG Zustellung	AG	1		0	8012	4038	20030901
+8013	80	3613	60	Steffisburg 2 Zust	Steffisburg 2 Station Zuste	BE	1		0	8190	939	20030901
+8014	80	3661	60	Uetendorf Zust	Uetendorf Zustellung	BE	1		0	8014	944	20030901
+8015	80	3770	60	Zweisimmen Zust	Zweisimmen Zustellung	BE	1		0	8015	794	20030901
+8016	80	3775	60	Lenk i. S. Zust	Lenk i. S. Zustellung	BE	1		0	8016	792	20030901
+8020	80	1223	60	Cologny Dist	Cologny Distribution	GE	2		0	8020	6617	20031001
+8021	80	1964	60	Conthey Dist	Conthey Distribution	VS	2		0	8021	6023	20031001
+8023	80	3454	60	Sumiswald Zust	Sumiswald Zustellung	BE	1		0	8023	957	20031001
+8024	80	6710	60	Biasca Borgo	Biasca Borgo	TI	3		0	8024	5281	20031001
+8027	80	6963	60	Pregassona Dist	Pregassona Distribuzione	TI	3		0	8027	5192	20031001
+8028	80	8353	60	Elgg Zustellung	Elgg Zustellung	ZH	1		0	8028	217	20031001
+8031	80	3920	60	Zermatt Zustellung	Zermatt Zustellung	VS	1		0	8031	6300	20031101
+8032	20	1969	05	Eison (St.Martin)	Eison (St.Martin)	VS	2		0	1250	6087	20031101
+8033	80	3977	60	Granges VS Dist	Granges VS Distribution	VS	2		0	8033	6248	20031101
+8035	80	4034	00	Basel 34 Breite	Basel 34 Breite	BS	1		0	2439	2701	20080501
+8036	80	4035	00	Basel	Basel 35 Bäumlihof	BS	1		0	2439	2701	20080701
+8038	80	1618	60	Châtel-Denis Dist	Châtel-St-Denis Dist	FR	2		0	8038	2325	20040101
+8039	80	1805	60	Jongny Dist	Jongny Distribution	VD	2		0	8039	5885	20040101
+8040	80	1965	60	Savièse Dist	Savièse Distribution	VS	2		0	8040	6265	20040101
+8043	80	7017	60	Flims Dorf Zust	Flims Dorf Zustellung	GR	1		0	3998	3732	20040101
+8073	80	1211	51	Genève 5 cases	Genève 5 cases	GE	2		0	8073	6623	20050701
+8078	80	8606	60	Nänikon Zust	Nänikon Zustellung	ZH	1		0	8078	198	20040201
+8079	80	9642	60	Ebnat-Kappel Zust	Ebnat-Kappel Zustellung	SG	1		0	8079	3352	20040201
+8092	80	1450	60	Ste-Croix Dist	Ste-Croix Distribution	VD	2		0	8092	5568	20040401
+8093	20	3623	03	Buchen BE	Buchen BE	BE	1		0	7330	932	20040301
+8094	20	4588	01	Brittern	Brittern	SO	1		0	1905	2442	20040301
+8095	80	4416	60	Bubendorf Zust	Bubendorf Zustellung	BL	1		0	8095	2823	20041201
+8096	80	4415	60	Lausen Zustellung	Lausen Zustellung	BL	1		0	8096	2828	20041201
+8105	40	4089	00	Basel	Basel SPILOG	BS	1		0	2452	2701	20040401
+8106	80	9545	60	Wängi Zustellung	Wängi Zustellung	TG	1		0	8106	4781	20041201
+8107	80	9463	60	Oberriet SG Zust	Oberriet SG Zustellung	SG	1		0	8107	3254	20040401
+8108	80	9113	60	Degersheim Zust	Degersheim Zustellung	SG	1		0	8108	3401	20040401
+8110	80	8762	60	Schwanden GL Zust	Schwanden GL Zustellung	GL	1		0	8110	1627	20040401
+8113	80	8472	60	Seuzach Zustellung	Seuzach Zustellung	ZH	1		0	8113	227	20040401
+8116	80	8155	60	Niederhasli Zust	Niederhasli Zustellung	ZH	1		0	8116	90	20040401
+8119	30	6330	01	Cham 1	Cham 1	ZG	1		0	7201	1702	20040401
+8120	20	5415	01	Hertenstein AG	Hertenstein AG	AG	1		1	8012	4038	20040501
+8121	20	5415	02	Rieden AG	Rieden AG	AG	1		1	8012	4038	20040501
+8127	20	8596	01	Münsterlingen	Münsterlingen	TG	1		1	4934	4691	20051201
+8129	80	8068	00	Zürich	Zürich	ZH	1		0	4425	261	20040601
+8130	20	9604	02	Unterrindal	Unterrindal	SG	1		1	8393	3393	20040801
+8131	80	3071	60	Ostermundigen Zust	Ostermundigen Zustellung	BE	1		0	8131	363	20040901
+8132	80	1170	60	Aubonne Dist	Aubonne Distribution	VD	2		0	8132	5422	20040701
+8133	80	2013	70	Boudry Dist Ba	Boudry Dist Ba	NE	2		0	8133	6406	20040701
+8135	80	8775	60	Luchsingen Zust	Luchsingen Zustellung	GL	1		0	8135	1614	20040701
+8136	80	9444	60	Diepoldsau Zust	Diepoldsau Zustellung	SG	1		0	8136	3234	20040701
+8146	80	4033	00	Basel	Basel Novartis Campus	BS	1		0	8146	2701	20050201
+8150	80	8902	70	Urdorf Dist Ba	Urdorf Dist Ba	ZH	1		0	8150	250	20040701
+8151	80	8902	71	Urdorf GKA	Urdorf GKA	ZH	1		0	8151	250	20040801
+8152	20	3976	02	Champzabé	Champzabé	VS	2		0	7249	6248	20040801
+8153	80	4081	00	Basel	Basel SPI AS1	BS	1		0	2439	2701	20040801
+8156	80	4082	00	Basel	Basel SPI AS2	BS	1		0	2439	2701	20040801
+8159	80	3072	64	Omundigen Rüti Fä	Ostermundigen Rüti Fächer	BE	1		0	8159	363	20040801
+8165	40	8186	00	Bülach	Bülach LZB	ZH	1		0	7228	53	20040901
+8171	40	3039	00	Bern PF OC	Bern PF Operations Center	BE	1		0	9004	351	20060301
+8172	40	4042	00	Basel PF OC	Basel PF Operations Center	BL	1		0	8172	2769	20060301
+8173	20	3983	05	Greich	Greich	VS	1		0	2425	6181	20040901
+8175	80	1816	60	Chailly Dist	Chailly-Montreux Dist	VD	2		0	8175	5886	20050101
+8178	80	8235	60	Lohn SH Zustellung	Lohn SH Zustellung	SH	1		0	8178	2917	20040901
+8179	80	8239	60	Dörflingen Zust	Dörflingen Zustellung	SH	1		0	8179	2915	20040901
+8180	80	8240	60	Thayngen Zust	Thayngen Zustellung	SH	1		0	8180	2920	20040901
+8181	80	8242	60	Bibern SH Zust	Bibern SH Zustellung	SH	1		0	8181	2920	20040901
+8187	80	3067	60	Boll Zustellung	Boll Zustellung	BE	1		0	8187	359	20041001
+8188	80	3436	60	Zollbrück Zust	Zollbrück Zustellung	BE	1		0	8188	905	20041001
+8189	80	3537	60	Eggiwil Zustellung	Eggiwil Zustellung	BE	1		0	8189	901	20041001
+8190	80	3627	60	Heimberg Zust	Heimberg Zustellung	BE	1		0	8190	928	20041001
+8191	80	3715	60	Adelboden Zust	Adelboden Zustellung	BE	1		0	8191	561	20041001
+8192	80	3780	60	Gstaad Zustellung	Gstaad Zustellung	BE	1		0	8192	843	20041001
+8193	80	3818	60	Grindelwald Zust	Grindelwald Zustellung	BE	1		0	8193	576	20041001
+8195	80	5242	60	Birr-Lupfig Zust	Birr-Lupfig Zustellung	AG	1		0	8195	4092	20041001
+8196	80	5312	60	Döttingen Zust	Döttingen Zustellung	AG	1		0	8196	4304	20041001
+8199	80	5605	60	Dottikon Zust	Dottikon Zustellung	AG	1		0	8199	4065	20041001
+8200	80	5703	60	Seon Zustellung	Seon Zustellung	AG	1		0	8200	4209	20041001
+

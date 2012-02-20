@@ -1,0 +1,3053 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.interlis.ch/INTERLIS2.3" xmlns:ili2c="http://www.interlis.ch/ili2c" targetNamespace="http://www.interlis.ch/INTERLIS2.3" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:annotation>
+    <xsd:appinfo source="http://www.interlis.ch/ili2c/ili2cversion">4.1.2-20090819</xsd:appinfo>
+    <xsd:appinfo source="http://www.interlis.ch/ili2c">
+      <ili2c:model>eGRISDM08</ili2c:model>
+      <ili2c:modelVersion>DM08.2</ili2c:modelVersion>
+      <ili2c:modelAt>http://www.egris.ch</ili2c:modelAt>
+      <ili2c:textMinimalCharset>windows-1252</ili2c:textMinimalCharset>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <xsd:element name="TRANSFER" type="Transfer"/>
+  <xsd:simpleType name="IliID">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="([a-zA-Z_][0-9a-zA-Z_\-\.]*:)?[0-9a-zA-Z_][0-9a-zA-Z_\-\.]*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="Transfer">
+    <xsd:sequence>
+      <xsd:element name="HEADERSECTION" type="HeaderSection"/>
+      <xsd:element name="DATASECTION" type="DataSection"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Models">
+    <xsd:sequence>
+      <xsd:element name="MODEL" type="Model" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Model">
+    <xsd:attribute name="NAME" type="INTERLIS.NAME" use="required"/>
+    <xsd:attribute name="VERSION" type="xsd:string" use="required"/>
+    <xsd:attribute name="URI" type="xsd:anyURI" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="RoleType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="REF" type="IliID" use="required"/>
+        <xsd:attribute name="BID" type="IliID"/>
+        <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="DataSection">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="eGRISDM08.Codetabellen" type="eGRISDM08.Codetabellen"/>
+        <xsd:element name="eGRISDM08.Herkunft" type="eGRISDM08.Herkunft"/>
+        <xsd:element name="eGRISDM08.PersonenStamm" type="eGRISDM08.PersonenStamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch" type="eGRISDM08.Hauptbuch"/>
+        <xsd:element name="eGRISDM08.Notizen" type="eGRISDM08.Notizen"/>
+        <xsd:element name="eGRISDM08.Tagebuch" type="eGRISDM08.Tagebuch"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="eGRISDM08.BBArt">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Gebaeude"/>
+      <xsd:enumeration value="befestigt.Strasse_Weg"/>
+      <xsd:enumeration value="befestigt.Trottoir"/>
+      <xsd:enumeration value="befestigt.Verkehrsinsel"/>
+      <xsd:enumeration value="befestigt.Bahn"/>
+      <xsd:enumeration value="befestigt.Flugplatz"/>
+      <xsd:enumeration value="befestigt.Wasserbecken"/>
+      <xsd:enumeration value="befestigt.uebrige_befestigte"/>
+      <xsd:enumeration value="humusiert.Acker_Wiese_Weide"/>
+      <xsd:enumeration value="humusiert.Intensivkultur.Reben"/>
+      <xsd:enumeration value="humusiert.Intensivkultur.uebrige_Intensivkultur"/>
+      <xsd:enumeration value="humusiert.Gartenanlage"/>
+      <xsd:enumeration value="humusiert.Hoch_Flachmoor"/>
+      <xsd:enumeration value="humusiert.uebrige_humusierte"/>
+      <xsd:enumeration value="Gewaesser.stehendes"/>
+      <xsd:enumeration value="Gewaesser.fliessendes"/>
+      <xsd:enumeration value="Gewaesser.Schilfguertel"/>
+      <xsd:enumeration value="bestockt.geschlossener_Wald"/>
+      <xsd:enumeration value="bestockt.Wytweide.Wytweide_dicht"/>
+      <xsd:enumeration value="bestockt.Wytweide.Wytweide_offen"/>
+      <xsd:enumeration value="bestockt.uebrige_bestockte"/>
+      <xsd:enumeration value="vegetationslos.Fels"/>
+      <xsd:enumeration value="vegetationslos.Gletscher_Firn"/>
+      <xsd:enumeration value="vegetationslos.Geroell_Sand"/>
+      <xsd:enumeration value="vegetationslos.Abbau_Deponie"/>
+      <xsd:enumeration value="vegetationslos.uebrige_vegetationslose"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.TagebuchNummer">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="15"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.Datum">
+    <xsd:restriction base="xsd:normalizedString">
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.DatumInklZeit">
+    <xsd:restriction base="xsd:normalizedString">
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.DauerndesRechtArt">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Baurecht"/>
+      <xsd:enumeration value="Quellenrecht"/>
+      <xsd:enumeration value="Konzession"/>
+      <xsd:enumeration value="weitere"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.EGBPID">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="14"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.EGBTBID">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="22"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.EGRID">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="14"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.EREID">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="22"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.Geschaeftstyp">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Normal"/>
+      <xsd:enumeration value="Berichtigung"/>
+      <xsd:enumeration value="Ersterfassung"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.GrundpfandrechtArt">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="NamenSchuldbrief"/>
+      <xsd:enumeration value="InhaberSchuldbrief"/>
+      <xsd:enumeration value="NamenGuelt"/>
+      <xsd:enumeration value="InhaberGuelt"/>
+      <xsd:enumeration value="KapitalGrundpfandverschreibung"/>
+      <xsd:enumeration value="MaximalGrundpfandverschreibung"/>
+      <xsd:enumeration value="Altrechtlich"/>
+      <xsd:enumeration value="vorbehaltenerVorgang"/>
+      <xsd:enumeration value="leerePfandstelle"/>
+      <xsd:enumeration value="GrundpfandverschreibungAlsInhaberobligation"/>
+      <xsd:enumeration value="RegisterPfand"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.GWR_EGID">
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="1"/>
+      <xsd:maxInclusive value="999999999"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.NachrueckungsRechtArt">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="schiebend"/>
+      <xsd:enumeration value="springend"/>
+      <xsd:enumeration value="inDenNebenrang"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.NameOrt">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="60"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.NamePerson">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="250"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.NBIdentAV">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="12"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="eGRISDM08.ObjektIdentifikator">
+    <xsd:attribute name="OID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:simpleType name="eGRISDM08.StichwortZusatz">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="240"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.TagebuchIdx">
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="2147483647"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType  name="eGRISDM08.GWR_EGID_">
+    <xsd:sequence>
+      <xsd:element name="value" type="eGRISDM08.GWR_EGID"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.ObjektIdentifikator_">
+    <xsd:sequence>
+      <xsd:element name="value" type="eGRISDM08.ObjektIdentifikator"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Uebersetzung">
+    <xsd:sequence>
+      <xsd:element name="Sprache">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="de"/>
+            <xsd:enumeration value="fr"/>
+            <xsd:enumeration value="it"/>
+            <xsd:enumeration value="rm"/>
+            <xsd:enumeration value="en"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Begriff">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="eGRISDM08.WertCHF">
+    <xsd:restriction base="xsd:double">
+      <xsd:minInclusive value="0.0"/>
+      <xsd:maxInclusive value="1.0E12"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType  name="eGRISDM08.GrundstueckNummer">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="Nummer">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="NummerZusatz" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="SubKreis" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="15"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Los" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="15"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.KantonaleGrundstueckNummer">
+    <xsd:sequence>
+      <xsd:element name="Nummer">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="NummerZusatz" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="SubKreis" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="15"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Los" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="15"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.MutationsNummer">
+    <xsd:sequence>
+      <xsd:element name="Nummer">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="AmtlVermKreis" type="eGRISDM08.NBIdentAV"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="eGRISDM08.FlaecheMitNachkomma">
+    <xsd:restriction base="xsd:double">
+      <xsd:minInclusive value="0.0"/>
+      <xsd:maxInclusive value="1.0E9"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="eGRISDM08.Codetabellen.Stichwort">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="200"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Anmeldung_Geschaeftsfallbeschreibung">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Anmerkung_Art">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.AuslaendischeRechtsform_Rechtsform">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Bergwerk_KantonaleUnterart">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Dienstbarkeit_Art">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Erwerbsgrund_Erwerbsart">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Gebaeude_Gebaeudeart">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Geschaftsstand_Zustand">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.GewoehnlichesMitegentum_KantonaleUnterart">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.GewoehnlichesSDR_KantonaleUnterart">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Grundlast_Art">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Grundpfandrecht_altRechtlichKantonaleArt">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.JuristischePersonGB_Rechtsform">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Konzession_KantonaleUnterart">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Liegenschaft_KantonaleUnterart">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.StockwerksEinheit_KantonaleUnterart">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Codetabellen.Vormerkung_Art">
+    <xsd:sequence>
+      <xsd:element name="Stichwort" type="eGRISDM08.Codetabellen.Stichwort"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="eGRISDM08.Codetabellen">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="eGRISDM08.Codetabellen.Anmeldung_Geschaeftsfallbeschreibung" type="eGRISDM08.Codetabellen.Anmeldung_Geschaeftsfallbeschreibung"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Anmerkung_Art" type="eGRISDM08.Codetabellen.Anmerkung_Art"/>
+        <xsd:element name="eGRISDM08.Codetabellen.AuslaendischeRechtsform_Rechtsform" type="eGRISDM08.Codetabellen.AuslaendischeRechtsform_Rechtsform"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Bergwerk_KantonaleUnterart" type="eGRISDM08.Codetabellen.Bergwerk_KantonaleUnterart"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Dienstbarkeit_Art" type="eGRISDM08.Codetabellen.Dienstbarkeit_Art"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Erwerbsgrund_Erwerbsart" type="eGRISDM08.Codetabellen.Erwerbsgrund_Erwerbsart"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Gebaeude_Gebaeudeart" type="eGRISDM08.Codetabellen.Gebaeude_Gebaeudeart"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Geschaftsstand_Zustand" type="eGRISDM08.Codetabellen.Geschaftsstand_Zustand"/>
+        <xsd:element name="eGRISDM08.Codetabellen.GewoehnlichesMitegentum_KantonaleUnterart" type="eGRISDM08.Codetabellen.GewoehnlichesMitegentum_KantonaleUnterart"/>
+        <xsd:element name="eGRISDM08.Codetabellen.GewoehnlichesSDR_KantonaleUnterart" type="eGRISDM08.Codetabellen.GewoehnlichesSDR_KantonaleUnterart"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Grundlast_Art" type="eGRISDM08.Codetabellen.Grundlast_Art"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Grundpfandrecht_altRechtlichKantonaleArt" type="eGRISDM08.Codetabellen.Grundpfandrecht_altRechtlichKantonaleArt"/>
+        <xsd:element name="eGRISDM08.Codetabellen.JuristischePersonGB_Rechtsform" type="eGRISDM08.Codetabellen.JuristischePersonGB_Rechtsform"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Konzession_KantonaleUnterart" type="eGRISDM08.Codetabellen.Konzession_KantonaleUnterart"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Liegenschaft_KantonaleUnterart" type="eGRISDM08.Codetabellen.Liegenschaft_KantonaleUnterart"/>
+        <xsd:element name="eGRISDM08.Codetabellen.StockwerksEinheit_KantonaleUnterart" type="eGRISDM08.Codetabellen.StockwerksEinheit_KantonaleUnterart"/>
+        <xsd:element name="eGRISDM08.Codetabellen.Vormerkung_Art" type="eGRISDM08.Codetabellen.Vormerkung_Art"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="BID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Herkunft.GrundstueckHerkunft">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="Homepage" type="INTERLIS.URI"/>
+      <xsd:element name="Kanton">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Amt" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Herkunft.WebServiceZugang">
+    <xsd:sequence>
+      <xsd:element name="Art">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Zugang" type="INTERLIS.URI"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Herkunft.AssociationDef86">
+    <xsd:sequence>
+      <xsd:element name="grundstueck" type="RoleType"/>
+      <xsd:element name="webService" type="RoleType"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="eGRISDM08.Herkunft">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="eGRISDM08.Herkunft.GrundstueckHerkunft" type="eGRISDM08.Herkunft.GrundstueckHerkunft"/>
+        <xsd:element name="eGRISDM08.Herkunft.WebServiceZugang" type="eGRISDM08.Herkunft.WebServiceZugang"/>
+        <xsd:element name="eGRISDM08.Herkunft.AssociationDef86" type="eGRISDM08.Herkunft.AssociationDef86"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="BID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.PersonenStamm.Adresse">
+    <xsd:sequence>
+      <xsd:element name="ZusatzinformationEmpfaenger" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="120"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Strasse" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="60"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Hausnummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="GebaeudeBezeichnung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="60"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="PostDienstleistung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="30"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="BenanntesGebiet" type="eGRISDM08.NameOrt" minOccurs="0"/>
+      <xsd:element name="PLZ" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="15"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Ort" type="eGRISDM08.NameOrt" minOccurs="0"/>
+      <xsd:element name="Land" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="60"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="GWR_EGID" type="eGRISDM08.GWR_EGID" minOccurs="0"/>
+      <xsd:element name="GWR_EDID" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="99"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="PersonStamm">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.PersonenStamm.PersonenAdresse" type="eGRISDM08.PersonenStamm.PersonenAdresse"/>
+          </xsd:sequence>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.PersonenStamm.PersonStamm">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="KantPersNr" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.PersonenStamm.JuristischePerson">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="KantPersNr" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="NameUebersetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Uebersetzung" type="eGRISDM08.Uebersetzung" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.PersonenStamm.NatuerlichePerson">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="KantPersNr" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Vorname">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="250"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Geburtsjahr">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1880"/>
+            <xsd:maxInclusive value="2100"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Geburtsmonat" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Geburtstag" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="31"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Zivilstand" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ledig"/>
+            <xsd:enumeration value="verheiratet"/>
+            <xsd:enumeration value="geschieden"/>
+            <xsd:enumeration value="verwitwet"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="LedigerName" type="eGRISDM08.NamePerson" minOccurs="0"/>
+      <xsd:element name="Buergerort" type="eGRISDM08.NameOrt" minOccurs="0"/>
+      <xsd:element name="NameDerEltern" type="eGRISDM08.NamePerson" minOccurs="0"/>
+      <xsd:element name="Geschlecht" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="weiblich"/>
+            <xsd:enumeration value="maennlich"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="EPID" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.PersonenStamm.PersonenAdresse">
+    <xsd:sequence>
+      <xsd:element name="Rolle">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Rechtsdomizil"/>
+            <xsd:enumeration value="Zustelladresse"/>
+            <xsd:enumeration value="Weitere"/>
+            <xsd:enumeration value="Verwalter"/>
+            <xsd:enumeration value="Wohnadresse"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="RolleWeitereBeschreibung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.PersonenStamm.AuslaendischeRechtsform">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="KantPersNr" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="NameUebersetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Uebersetzung" type="eGRISDM08.Uebersetzung" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RechtsformStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="RechtsformZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Sitz">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="100"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.PersonenStamm.OeffentlicheKoerperschaft">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="KantPersNr" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="NameUebersetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Uebersetzung" type="eGRISDM08.Uebersetzung" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Sitz" type="eGRISDM08.NameOrt"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.PersonenStamm.SchweizerischeJuristischePerson">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="KantPersNr" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="NameUebersetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Uebersetzung" type="eGRISDM08.Uebersetzung" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gesellschaftsform">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Aktiengesellschaft"/>
+            <xsd:enumeration value="Kommanditaktiengesellschaft"/>
+            <xsd:enumeration value="GmbH"/>
+            <xsd:enumeration value="Genossenschaft"/>
+            <xsd:enumeration value="Verein"/>
+            <xsd:enumeration value="Stiftung"/>
+            <xsd:enumeration value="weitere"/>
+            <xsd:enumeration value="KollektiveGesellschaft"/>
+            <xsd:enumeration value="KommanditGesellschaft"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Sitz" type="eGRISDM08.NameOrt"/>
+      <xsd:element name="UID" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="eGRISDM08.PersonenStamm">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="eGRISDM08.PersonenStamm.Adresse" type="eGRISDM08.PersonenStamm.Adresse"/>
+        <xsd:element name="eGRISDM08.PersonenStamm.JuristischePerson" type="eGRISDM08.PersonenStamm.JuristischePerson"/>
+        <xsd:element name="eGRISDM08.PersonenStamm.NatuerlichePerson" type="eGRISDM08.PersonenStamm.NatuerlichePerson"/>
+        <xsd:element name="eGRISDM08.PersonenStamm.AuslaendischeRechtsform" type="eGRISDM08.PersonenStamm.AuslaendischeRechtsform"/>
+        <xsd:element name="eGRISDM08.PersonenStamm.OeffentlicheKoerperschaft" type="eGRISDM08.PersonenStamm.OeffentlicheKoerperschaft"/>
+        <xsd:element name="eGRISDM08.PersonenStamm.SchweizerischeJuristischePerson" type="eGRISDM08.PersonenStamm.SchweizerischeJuristischePerson"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="BID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Abschnitt">
+    <xsd:sequence>
+      <xsd:element name="Flaechenmass" type="eGRISDM08.FlaecheMitNachkomma"/>
+      <xsd:element name="Datum" type="eGRISDM08.Datum"/>
+      <xsd:element name="TagebuchNummer" type="eGRISDM08.TagebuchNummer" minOccurs="0"/>
+      <xsd:element name="von">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.GrundstueckNummer" type="eGRISDM08.GrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.AVBemerkung">
+    <xsd:sequence>
+      <xsd:element name="Art">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="StreitigeGrenze"/>
+            <xsd:enumeration value="Lagefixpunkt"/>
+            <xsd:enumeration value="Naturdenkmal"/>
+            <xsd:enumeration value="eingedoltesGewaesser"/>
+            <xsd:enumeration value="andere"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="AndereArt" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Bemerkung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="200"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Berechtigte_Stamm">
+    <xsd:sequence>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Berechtigte">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Bodenbedeckung">
+    <xsd:sequence>
+      <xsd:element name="Art" type="eGRISDM08.BBArt"/>
+      <xsd:element name="Flaechenmass" type="eGRISDM08.FlaecheMitNachkomma"/>
+      <xsd:element name="ArtBezeichnung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Erwerbsgrund">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="ErwerbsartStichwort" type="eGRISDM08.ObjektIdentifikator"/>
+      <xsd:element name="ErwerbsartZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Datum" type="eGRISDM08.Datum"/>
+      <xsd:element name="TagebuchNummer" type="eGRISDM08.TagebuchNummer" minOccurs="0"/>
+      <xsd:element name="EigentumAnteil">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Flaeche_Stamm">
+    <xsd:sequence>
+      <xsd:element name="letzteVollzogeneMutation" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.MutationsNummer" type="eGRISDM08.MutationsNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Bergwerk" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DauerndesRecht" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Flaeche">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Flaechenmass" type="eGRISDM08.FlaecheMitNachkomma"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Flurname">
+    <xsd:sequence>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="40"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GBPlan">
+    <xsd:sequence>
+      <xsd:element name="Nummer">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="NBIdent" type="eGRISDM08.NBIdentAV"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Gebaeude">
+    <xsd:sequence>
+      <xsd:element name="GWR_EGID" type="eGRISDM08.GWR_EGID" minOccurs="0"/>
+      <xsd:element name="istProjektiert" type="xsd:boolean"/>
+      <xsd:element name="istUnterirdisch" type="xsd:boolean"/>
+      <xsd:element name="Nummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="GebaeudeartStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="GebaeudeartZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="GebaeudeartCode" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="4"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Flaechenmass" type="eGRISDM08.FlaecheMitNachkomma"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GebaeudeeingangAdresse">
+    <xsd:sequence>
+      <xsd:element name="Strasse" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="60"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Hausnummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="GebaeudeBezeichnung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="40"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="PLZ">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1000"/>
+            <xsd:maxInclusive value="9999"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="PlzZusatzziffern" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="99"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Ortschaft" type="eGRISDM08.NameOrt"/>
+      <xsd:element name="GWR_EGID" type="eGRISDM08.GWR_EGID" minOccurs="0"/>
+      <xsd:element name="GWR_EDID" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="99"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Gebaeude">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Gemeinde">
+    <xsd:sequence>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="30"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="BFSNr">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="9999"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.LastRechtAnmerkung">
+    <xsd:sequence>
+      <xsd:element name="Anmerkung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.LastRechtDienstbarkeit">
+    <xsd:sequence>
+      <xsd:element name="Dienstbarkeit">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.LastRechtGrundlast">
+    <xsd:sequence>
+      <xsd:element name="Grundlast">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.LastRechtVormerkung">
+    <xsd:sequence>
+      <xsd:element name="Vormerkung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Recht_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EREID" type="eGRISDM08.EREID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Fortsetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Recht">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="alteNummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Anmerkung_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EREID" type="eGRISDM08.EREID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Fortsetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Anmerkung">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="alteNummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ArtStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="ArtZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Ablaufdatum" type="eGRISDM08.Datum" minOccurs="0"/>
+      <xsd:element name="Wert" type="eGRISDM08.WertCHF" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Dienstbarkeit_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EREID" type="eGRISDM08.EREID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Fortsetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Dienstbarkeit">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="alteNummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ArtStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="ArtZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Ablaufdatum" type="eGRISDM08.Datum" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.EigentumAnteil_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EREID" type="eGRISDM08.EREID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Fortsetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Berechtigte" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="belastetesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.EigentumAnteil">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="alteNummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AnteilZaehler" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="1000000000"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="AnteilNenner" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="1000000000"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="SubjektivDinglich" type="xsd:boolean"/>
+      <xsd:element name="Eigentumsform">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="AlleinEigentum"/>
+            <xsd:enumeration value="MitEigentum"/>
+            <xsd:enumeration value="GesamtEigentum"/>
+            <xsd:enumeration value="Herrenlos"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="AnteilInProsa" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="300"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Grundlast_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EREID" type="eGRISDM08.EREID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Fortsetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Grundlast">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="alteNummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ArtStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="ArtZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Gesamtwert" type="eGRISDM08.WertCHF"/>
+      <xsd:element name="Ablaufdatum" type="eGRISDM08.Datum" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Grundpfandrecht_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EREID" type="eGRISDM08.EREID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Fortsetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Grundpfandrecht">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="alteNummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Art" type="eGRISDM08.GrundpfandrechtArt"/>
+      <xsd:element name="Pfandsumme" type="eGRISDM08.WertCHF"/>
+      <xsd:element name="maxZinsfuss" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:double">
+            <xsd:minInclusive value="5.0"/>
+            <xsd:maxInclusive value="20.0"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="altRechtlichKantonaleArtStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="altRechtlichKantonaleArtZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Bemerkung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="2000"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Grundstueck_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Grundstueck">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.PersonGB_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="PersonStamm" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.PersonGB">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Vormerkung_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EREID" type="eGRISDM08.EREID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Fortsetzung" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Vormerkung">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="alteNummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ArtStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="ArtZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Ablaufdatum" type="eGRISDM08.Datum" minOccurs="0"/>
+      <xsd:element name="Preis" type="eGRISDM08.WertCHF" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.LastRechtDienstbarkeitBerechtigte">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Berechtigte">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="LastRechtDienstbarkeit">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.LastRechtGrundlastBerechtigte">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Berechtigte">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="LastRechtGrundlast">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.TeilAnmerkungBerechtigte">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Berechtigte">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="TeilAnmerkung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.TeilVormerkungBerechtigte">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Berechtigte">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="TeilVormerkung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Bergwerk_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="KantonaleUnterartStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="KantonaleUnterartZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Bergwerk">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Gemeinschaft_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="PersonStamm" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Gemeinschaft">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Art">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="EinfacheGesellschaft"/>
+            <xsd:enumeration value="Guetergemeinschaft"/>
+            <xsd:enumeration value="Erbengemeinschaft"/>
+            <xsd:enumeration value="Gemeinderschaft"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Name" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="250"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.JuristischePersonGB_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="PersonStamm" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.JuristischePersonGB">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Name_Firma">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Sitz">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="100"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="RechtsformStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="RechtsformZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Firmennummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Liegenschaft_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="KantonaleUnterartStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="KantonaleUnterartZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="BodbdAnteil" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Bodenbedeckung" type="eGRISDM08.Hauptbuch.Bodenbedeckung" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="letzteVollzogeneMutation" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.MutationsNummer" type="eGRISDM08.MutationsNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Liegenschaft">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Flaechenmass" type="eGRISDM08.FlaecheMitNachkomma"/>
+      <xsd:element name="Zugang" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Abschnitt" type="eGRISDM08.Hauptbuch.Abschnitt" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.MiteigentumsAnteil_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.MiteigentumsAnteil">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.NatuerlichePersonGB_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGBPID" type="eGRISDM08.EGBPID"/>
+      <xsd:element name="PersonStamm" minOccurs="0">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.NatuerlichePersonGB">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="255"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Vorname">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="250"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Geburtsjahr">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1880"/>
+            <xsd:maxInclusive value="2100"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Geburtsmonat" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="12"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Geburtstag" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="31"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.SelbstaendigesDauerndesRecht_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.SelbstaendigesDauerndesRecht">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Anteil">
+    <xsd:sequence>
+      <xsd:element name="flaeche" type="RoleType"/>
+      <xsd:element name="liegt_auf" type="RoleType"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.BelastetesGrundstueckAnmerkung">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="TeilAnmerkung2">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="belastetesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.BelastetesGrundstueckDienstbarkeit">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="TeilDienstbarkeit">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="belastetesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.BelastetesGrundstueckGrundlast">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="TeilGrundlast">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="belastetesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.BelastetesGrundstueckVormerkung">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="TeilVormerkung2">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="belastetesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckAnmerkung">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Anmerkung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="beteiligtesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckDienstbarkeit">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Dienstbarkeit">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="beteiligtesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckGrundlast">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Grundlast">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="beteiligtesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckVormerkung">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Vormerkung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="beteiligtesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.ForderungGlaeubiger">
+    <xsd:sequence>
+      <xsd:element name="Rolle" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Grundpfand"/>
+            <xsd:enumeration value="Faustpfand"/>
+            <xsd:enumeration value="Nutzniesser"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Forderung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Glaeubiger">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GebaeudenummerDienstbarkeit">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Dienstbarkeit">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gebaeudenummer">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GrundstueckAltNeu">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="alt">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="neu">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GrundstueckAVBemerkung">
+    <xsd:sequence>
+      <xsd:element name="Grundstueck" type="RoleType"/>
+      <xsd:element name="AVBemerkung" type="RoleType"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GrundstueckGebaeude">
+    <xsd:sequence>
+      <xsd:element name="Gebaeude" type="RoleType"/>
+      <xsd:element name="Grundstueck" type="RoleType"/>
+      <xsd:element name="Flaechenmass" type="eGRISDM08.FlaecheMitNachkomma"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.SchuldSchuldner">
+    <xsd:sequence>
+      <xsd:element name="Rolle" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Solidar"/>
+            <xsd:enumeration value="Einfach"/>
+            <xsd:enumeration value="Dritt"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Schuld">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Schuldner">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.VerpfaendetesGrundstueckGrundpfandrecht_Stamm">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Grundpfandrecht">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="VerpfaendetesGrundstueck">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.VerpfaendetesGrundstueckGrundpfandrecht">
+    <xsd:sequence>
+      <xsd:element name="Teilpfandsumme" type="eGRISDM08.WertCHF" minOccurs="0"/>
+      <xsd:element name="Pfandstelle" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nachrueckungsrecht" type="eGRISDM08.NachrueckungsRechtArt" minOccurs="0"/>
+      <xsd:element name="Bemerkung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="2000"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GewoehnlichesMiteigentum_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="KantonaleUnterartStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GewoehnlichesMiteigentum">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Beschreibung" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="240"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GewoehnlichesSDR_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="KantonaleUnterartStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GewoehnlichesSDR">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Art" type="eGRISDM08.DauerndesRechtArt"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Konzession_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="KantonaleUnterartStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Konzession">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Beschreibung">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="240"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Ablaufdatum" type="eGRISDM08.Datum" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.StockwerksEinheit_Stamm">
+    <xsd:sequence>
+      <xsd:element name="EGRID" type="eGRISDM08.EGRID"/>
+      <xsd:element name="istKopie" type="xsd:boolean"/>
+      <xsd:element name="Flurnamen" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Flurname" type="eGRISDM08.Hauptbuch.Flurname" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GBPlaene" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.GBPlan" type="eGRISDM08.Hauptbuch.GBPlan" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Gemeinde">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.Hauptbuch.Gemeinde" type="eGRISDM08.Hauptbuch.Gemeinde"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="KantonaleUnterartStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.StockwerksEinheit">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="stamm">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Fuehrungsart">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eidgenoessisch"/>
+            <xsd:enumeration value="kantonal"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Nummer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.KantonaleGrundstueckNummer" type="eGRISDM08.KantonaleGrundstueckNummer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Beschreibung">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="240"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="GWR_EGID" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.GWR_EGID_" type="eGRISDM08.GWR_EGID_" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GemeinschaftTeilhaber">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="Gemeinschaft">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Mitglieder">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.GestuetztAufGehoertZu">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="gehoertZu">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="gestuetztAuf">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Hauptbuch.Rangverschiebung">
+    <xsd:sequence>
+      <xsd:element name="von" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="vonIdx" type="eGRISDM08.TagebuchIdx"/>
+      <xsd:element name="bis" type="eGRISDM08.EGBTBID" minOccurs="0"/>
+      <xsd:element name="bisIdx" type="eGRISDM08.TagebuchIdx" minOccurs="0"/>
+      <xsd:element name="RangNachfolge">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Vorrang">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="eGRISDM08.Hauptbuch">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="eGRISDM08.Hauptbuch.AVBemerkung" type="eGRISDM08.Hauptbuch.AVBemerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Erwerbsgrund" type="eGRISDM08.Hauptbuch.Erwerbsgrund"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Flaeche_Stamm" type="eGRISDM08.Hauptbuch.Flaeche_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Flaeche" type="eGRISDM08.Hauptbuch.Flaeche"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Gebaeude" type="eGRISDM08.Hauptbuch.Gebaeude"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GebaeudeeingangAdresse" type="eGRISDM08.Hauptbuch.GebaeudeeingangAdresse"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.LastRechtAnmerkung" type="eGRISDM08.Hauptbuch.LastRechtAnmerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.LastRechtDienstbarkeit" type="eGRISDM08.Hauptbuch.LastRechtDienstbarkeit"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.LastRechtGrundlast" type="eGRISDM08.Hauptbuch.LastRechtGrundlast"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.LastRechtVormerkung" type="eGRISDM08.Hauptbuch.LastRechtVormerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Anmerkung_Stamm" type="eGRISDM08.Hauptbuch.Anmerkung_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Anmerkung" type="eGRISDM08.Hauptbuch.Anmerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Dienstbarkeit_Stamm" type="eGRISDM08.Hauptbuch.Dienstbarkeit_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Dienstbarkeit" type="eGRISDM08.Hauptbuch.Dienstbarkeit"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.EigentumAnteil_Stamm" type="eGRISDM08.Hauptbuch.EigentumAnteil_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.EigentumAnteil" type="eGRISDM08.Hauptbuch.EigentumAnteil"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Grundlast_Stamm" type="eGRISDM08.Hauptbuch.Grundlast_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Grundlast" type="eGRISDM08.Hauptbuch.Grundlast"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Grundpfandrecht_Stamm" type="eGRISDM08.Hauptbuch.Grundpfandrecht_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Grundpfandrecht" type="eGRISDM08.Hauptbuch.Grundpfandrecht"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.PersonGB_Stamm" type="eGRISDM08.Hauptbuch.PersonGB_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.PersonGB" type="eGRISDM08.Hauptbuch.PersonGB"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Vormerkung_Stamm" type="eGRISDM08.Hauptbuch.Vormerkung_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Vormerkung" type="eGRISDM08.Hauptbuch.Vormerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.LastRechtDienstbarkeitBerechtigte" type="eGRISDM08.Hauptbuch.LastRechtDienstbarkeitBerechtigte"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.LastRechtGrundlastBerechtigte" type="eGRISDM08.Hauptbuch.LastRechtGrundlastBerechtigte"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.TeilAnmerkungBerechtigte" type="eGRISDM08.Hauptbuch.TeilAnmerkungBerechtigte"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.TeilVormerkungBerechtigte" type="eGRISDM08.Hauptbuch.TeilVormerkungBerechtigte"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Bergwerk_Stamm" type="eGRISDM08.Hauptbuch.Bergwerk_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Bergwerk" type="eGRISDM08.Hauptbuch.Bergwerk"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Gemeinschaft_Stamm" type="eGRISDM08.Hauptbuch.Gemeinschaft_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Gemeinschaft" type="eGRISDM08.Hauptbuch.Gemeinschaft"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.JuristischePersonGB_Stamm" type="eGRISDM08.Hauptbuch.JuristischePersonGB_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.JuristischePersonGB" type="eGRISDM08.Hauptbuch.JuristischePersonGB"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Liegenschaft_Stamm" type="eGRISDM08.Hauptbuch.Liegenschaft_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Liegenschaft" type="eGRISDM08.Hauptbuch.Liegenschaft"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.NatuerlichePersonGB_Stamm" type="eGRISDM08.Hauptbuch.NatuerlichePersonGB_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.NatuerlichePersonGB" type="eGRISDM08.Hauptbuch.NatuerlichePersonGB"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Anteil" type="eGRISDM08.Hauptbuch.Anteil"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.BelastetesGrundstueckAnmerkung" type="eGRISDM08.Hauptbuch.BelastetesGrundstueckAnmerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.BelastetesGrundstueckDienstbarkeit" type="eGRISDM08.Hauptbuch.BelastetesGrundstueckDienstbarkeit"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.BelastetesGrundstueckGrundlast" type="eGRISDM08.Hauptbuch.BelastetesGrundstueckGrundlast"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.BelastetesGrundstueckVormerkung" type="eGRISDM08.Hauptbuch.BelastetesGrundstueckVormerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckAnmerkung" type="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckAnmerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckDienstbarkeit" type="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckDienstbarkeit"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckGrundlast" type="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckGrundlast"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckVormerkung" type="eGRISDM08.Hauptbuch.BeteiligtesGrundstueckVormerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.ForderungGlaeubiger" type="eGRISDM08.Hauptbuch.ForderungGlaeubiger"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GebaeudenummerDienstbarkeit" type="eGRISDM08.Hauptbuch.GebaeudenummerDienstbarkeit"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GrundstueckAltNeu" type="eGRISDM08.Hauptbuch.GrundstueckAltNeu"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GrundstueckAVBemerkung" type="eGRISDM08.Hauptbuch.GrundstueckAVBemerkung"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GrundstueckGebaeude" type="eGRISDM08.Hauptbuch.GrundstueckGebaeude"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.SchuldSchuldner" type="eGRISDM08.Hauptbuch.SchuldSchuldner"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.VerpfaendetesGrundstueckGrundpfandrecht_Stamm" type="eGRISDM08.Hauptbuch.VerpfaendetesGrundstueckGrundpfandrecht_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.VerpfaendetesGrundstueckGrundpfandrecht" type="eGRISDM08.Hauptbuch.VerpfaendetesGrundstueckGrundpfandrecht"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GewoehnlichesMiteigentum_Stamm" type="eGRISDM08.Hauptbuch.GewoehnlichesMiteigentum_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GewoehnlichesMiteigentum" type="eGRISDM08.Hauptbuch.GewoehnlichesMiteigentum"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GewoehnlichesSDR_Stamm" type="eGRISDM08.Hauptbuch.GewoehnlichesSDR_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GewoehnlichesSDR" type="eGRISDM08.Hauptbuch.GewoehnlichesSDR"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Konzession_Stamm" type="eGRISDM08.Hauptbuch.Konzession_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Konzession" type="eGRISDM08.Hauptbuch.Konzession"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.StockwerksEinheit_Stamm" type="eGRISDM08.Hauptbuch.StockwerksEinheit_Stamm"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.StockwerksEinheit" type="eGRISDM08.Hauptbuch.StockwerksEinheit"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GemeinschaftTeilhaber" type="eGRISDM08.Hauptbuch.GemeinschaftTeilhaber"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.GestuetztAufGehoertZu" type="eGRISDM08.Hauptbuch.GestuetztAufGehoertZu"/>
+        <xsd:element name="eGRISDM08.Hauptbuch.Rangverschiebung" type="eGRISDM08.Hauptbuch.Rangverschiebung"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="BID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Notizen.Notiz">
+    <xsd:sequence>
+      <xsd:element name="betrifftObjekte">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.ObjektIdentifikator_" type="eGRISDM08.ObjektIdentifikator_" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Bemerkung">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="240"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="gueltigAb" type="eGRISDM08.Datum"/>
+      <xsd:element name="gueltigBis" type="eGRISDM08.Datum" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="eGRISDM08.Notizen">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="eGRISDM08.Notizen.Notiz" type="eGRISDM08.Notizen.Notiz"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="BID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Tagebuch.Anmeldung">
+    <xsd:sequence>
+      <xsd:element name="EGBTBID" type="eGRISDM08.EGBTBID"/>
+      <xsd:element name="TagebuchNummer" type="eGRISDM08.TagebuchNummer" minOccurs="0"/>
+      <xsd:element name="TagebuchDatumZeit" type="eGRISDM08.DatumInklZeit"/>
+      <xsd:element name="GeschaeftsfallbeschreibungStichwort" type="eGRISDM08.ObjektIdentifikator"/>
+      <xsd:element name="GeschaeftsfallbeschreibungZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="Bemerkungen" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="240"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="DossierNummer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Geschaeftstyp" type="eGRISDM08.Geschaeftstyp"/>
+      <xsd:element name="MutationsNummer" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.MutationsNummer" type="eGRISDM08.MutationsNummer" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="betroffenesGrundstueck" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="eGRISDM08.GrundstueckNummer" type="eGRISDM08.GrundstueckNummer" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Tagebuch.Dokument">
+    <xsd:sequence>
+      <xsd:element name="Bild">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:string"/>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Nmmer" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:normalizedString">
+            <xsd:maxLength value="20"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Anmeldung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Tagebuch.Geschaeftsstand">
+    <xsd:sequence>
+      <xsd:element name="ZustandStichwort" type="eGRISDM08.ObjektIdentifikator" minOccurs="0"/>
+      <xsd:element name="ZustandZusatz" type="eGRISDM08.StichwortZusatz" minOccurs="0"/>
+      <xsd:element name="ArtDerErledigung">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Eingetragen"/>
+            <xsd:enumeration value="Rueckzug"/>
+            <xsd:enumeration value="Abweisung"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Datum" type="eGRISDM08.Datum"/>
+      <xsd:element name="AnfechtungsDatum" type="eGRISDM08.Datum" minOccurs="0"/>
+      <xsd:element name="Anmeldung">
+        <xsd:complexType>
+          <xsd:attribute name="REF" type="IliID" use="required"/>
+          <xsd:attribute name="BID" type="IliID"/>
+          <xsd:attribute name="ORDER_POS" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType  name="eGRISDM08.Tagebuch.AnmeldungAnmeldendePerson">
+    <xsd:sequence>
+      <xsd:element name="Anmeldung" type="RoleType"/>
+      <xsd:element name="anmeldendePerson" type="RoleType"/>
+    </xsd:sequence>
+    <xsd:attribute name="TID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="eGRISDM08.Tagebuch">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="eGRISDM08.Tagebuch.Anmeldung" type="eGRISDM08.Tagebuch.Anmeldung"/>
+        <xsd:element name="eGRISDM08.Tagebuch.Dokument" type="eGRISDM08.Tagebuch.Dokument"/>
+        <xsd:element name="eGRISDM08.Tagebuch.Geschaeftsstand" type="eGRISDM08.Tagebuch.Geschaeftsstand"/>
+        <xsd:element name="eGRISDM08.Tagebuch.AnmeldungAnmeldendePerson" type="eGRISDM08.Tagebuch.AnmeldungAnmeldendePerson"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="BID" type="IliID" use="required"/>
+  </xsd:complexType>
+  <xsd:simpleType name="INTERLIS.NAME">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="255"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="INTERLIS.URI">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:maxLength value="1023"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="HeaderSection">
+    <xsd:sequence>
+      <xsd:element name="MODELS" type="Models"/>
+      <xsd:element name="OIDSPACES" type="OidSpaces" minOccurs="0"/>
+      <xsd:element name="COMMENT" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="VERSION" type="xsd:decimal" use="required" fixed="2.3"/>
+    <xsd:attribute name="SENDER" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="OidSpaces">
+    <xsd:sequence>
+      <xsd:element name="OIDSPACE" type="OidSpace" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OidSpace">
+    <xsd:attribute name="NAME" type="xsd:string" use="required"/>
+    <xsd:attribute name="OIDDOMAIN" type="xsd:string" use="required"/>
+  </xsd:complexType>
+</xsd:schema>

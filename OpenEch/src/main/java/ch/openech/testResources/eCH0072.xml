@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eCH-0072:countries xmlns:eCH-0072="http://www.ech.ch/xmlns/eCH-0072/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ech.ch/xmlns/eCH-0072/1 http://www.ech.ch/xmlns/eCH-0072/1/eCH-0072-1-0.xsd">
+	<validFrom>2010-01-01</validFrom>
+	<country>
+		<id>8100</id>
+		<unId>756</unId>
+		<iso2Id>CH</iso2Id>
+		<iso3Id>CHE</iso3Id>
+		<shortNameDe>Schweiz</shortNameDe>
+		<shortNameFr>Suisse</shortNameFr>
+		<shortNameIt>Svizzera</shortNameIt>
+		<shortNameEn>Switzerland</shortNameEn>
+		<officialNameDe>Schweizerische Eidgenossenschaft</officialNameDe>
+		<officialNameFr>Confédération suisse</officialNameFr>
+		<officialNameIt>Confederazione svizzera</officialNameIt>
+		<continent>1</continent>
+		<region>3</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>2002-09-10</unEntryDate>
+		<recognizedCh>false</recognizedCh>
+		<entryValid>true</entryValid>
+		<dateOfChange>2008-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8201</id>
+		<unId>8</unId>
+		<iso2Id>AL</iso2Id>
+		<iso3Id>ALB</iso3Id>
+		<shortNameDe>Albanien</shortNameDe>
+		<shortNameFr>Albanie</shortNameFr>
+		<shortNameIt>Albania</shortNameIt>
+		<shortNameEn>Albania</shortNameEn>
+		<officialNameDe>Republik Albanien</officialNameDe>
+		<officialNameFr>République d'Albanie</officialNameFr>
+		<officialNameIt>Repubblica d'Albania</officialNameIt>
+		<continent>1</continent>
+		<region>7</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1955-12-14</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1945-01-01</recognizedDate>
+		<entryValid>true</entryValid>
+		<dateOfChange>2009-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8202</id>
+		<unId>20</unId>
+		<iso2Id>AD</iso2Id>
+		<iso3Id>AND</iso3Id>
+		<shortNameDe>Andorra</shortNameDe>
+		<shortNameFr>Andorre</shortNameFr>
+		<shortNameIt>Andorra</shortNameIt>
+		<shortNameEn>Andorra</shortNameEn>
+		<officialNameDe>Fürstentum Andorra</officialNameDe>
+		<officialNameFr>Principauté d'Andorre</officialNameFr>
+		<officialNameIt>Principato d'Andorra</officialNameIt>
+		<continent>1</continent>
+		<region>5</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1993-07-28</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1993-08-25</recognizedDate>
+		<entryValid>true</entryValid>
+		<dateOfChange>2009-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8204</id>
+		<unId>56</unId>
+		<iso2Id>BE</iso2Id>
+		<iso3Id>BEL</iso3Id>
+		<shortNameDe>Belgien</shortNameDe>
+		<shortNameFr>Belgique</shortNameFr>
+		<shortNameIt>Belgio</shortNameIt>
+		<shortNameEn>Belgium</shortNameEn>
+		<officialNameDe>Königreich Belgien</officialNameDe>
+		<officialNameFr>Royaume de Belgique</officialNameFr>
+		<officialNameIt>Regno del Belgio</officialNameIt>
+		<continent>1</continent>
+		<region>4</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1945-12-27</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1945-01-01</recognizedDate>
+		<entryValid>true</entryValid>
+		<dateOfChange>2008-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8205</id>
+		<unId>100</unId>
+		<iso2Id>BG</iso2Id>
+		<iso3Id>BGR</iso3Id>
+		<shortNameDe>Bulgarien</shortNameDe>
+		<shortNameFr>Bulgarie</shortNameFr>
+		<shortNameIt>Bulgaria</shortNameIt>
+		<shortNameEn>Bulgaria</shortNameEn>
+		<officialNameDe>Republik Bulgarien</officialNameDe>
+		<officialNameFr>République de Bulgarie</officialNameFr>
+		<officialNameIt>Repubblica di Bulgaria</officialNameIt>
+		<continent>1</continent>
+		<region>7</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1955-12-14</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1945-01-01</recognizedDate>
+		<entryValid>true</entryValid>
+		<dateOfChange>2009-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8206</id>
+		<unId>208</unId>
+		<iso2Id>DK</iso2Id>
+		<iso3Id>DNK</iso3Id>
+		<shortNameDe>Dänemark</shortNameDe>
+		<shortNameFr>Danemark</shortNameFr>
+		<shortNameIt>Danimarca</shortNameIt>
+		<shortNameEn>Denmark</shortNameEn>
+		<officialNameDe>Königreich Dänemark</officialNameDe>
+		<officialNameFr>Royaume de Danemark</officialNameFr>
+		<officialNameIt>Regno di Danimarca</officialNameIt>
+		<continent>1</continent>
+		<region>1</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1945-10-24</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1945-01-01</recognizedDate>
+		<remarkFr>Auparavant: Royaume du Danemark</remarkFr>
+		<entryValid>true</entryValid>
+		<dateOfChange>2010-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8207</id>
+		<unId>276</unId>
+		<iso2Id>DE</iso2Id>
+		<iso3Id>DEU</iso3Id>
+		<shortNameDe>Deutschland</shortNameDe>
+		<shortNameFr>Allemagne</shortNameFr>
+		<shortNameIt>Germania</shortNameIt>
+		<shortNameEn>Germany</shortNameEn>
+		<officialNameDe>Bundesrepublik Deutschland</officialNameDe>
+		<officialNameFr>République fédérale d'Allemagne</officialNameFr>
+		<officialNameIt>Repubblica federale di Germania</officialNameIt>
+		<continent>1</continent>
+		<region>3</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1973-09-18</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1949-05-23</recognizedDate>
+		<remarkDe>Gründung der BRD am 23.05.1949; 1957 Anschluss Saarland; 03.10.1990 Anschluss der DDR</remarkDe>
+		<remarkFr>Création RFA le 23.05.1949; La Sarre est rattachée à l'Allemagne de l'Ouest en 1957; 03.10.1990 rattachement de la RDA.</remarkFr>
+		<remarkIt>Creazione della RFT il 23.05.1949; Il Saarland divenne nuovamente parte della Germania dell'ovest nel 1957; il 03.10.1990, la RDT fù inclusa alla RFT.</remarkIt>
+		<entryValid>true</entryValid>
+		<dateOfChange>2008-03-05</dateOfChange>
+	</country>
+	<country>
+		<id>8208</id>
+		<shortNameDe>Deutsche Demokratische Republik</shortNameDe>
+		<shortNameFr>République démocratique allemande</shortNameFr>
+		<shortNameIt>Repubblica Democratica Tedesca</shortNameIt>
+		<shortNameEn>German Democratic Republic</shortNameEn>
+		<continent>1</continent>
+		<region>3</region>
+		<state>true</state>
+		<unMember>false</unMember>
+		<recognizedCh>false</recognizedCh>
+		<remarkDe>Anschluss der DDR an die BRD am 03.10.1990; Nachfolger 8207</remarkDe>
+		<remarkFr>Rattachement de la RDA à la RFA le 03.10.1990; successeur 8207</remarkFr>
+		<remarkIt>Inclusione della RDT alla RFT il 03.10.1990; Successore 8207</remarkIt>
+		<entryValid>false</entryValid>
+		<dateOfChange>2009-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8209</id>
+		<shortNameDe>Westberlin</shortNameDe>
+		<shortNameFr>Berlin ouest</shortNameFr>
+		<shortNameIt>Berlino Ovest</shortNameIt>
+		<shortNameEn>West Berlin</shortNameEn>
+		<continent>1</continent>
+		<region>3</region>
+		<state>false</state>
+		<areaState>8207</areaState>
+		<unMember>false</unMember>
+		<recognizedCh>false</recognizedCh>
+		<remarkDe>Nachfolger 8207</remarkDe>
+		<remarkFr>Successeur 8207</remarkFr>
+		<remarkIt>Successore 8207</remarkIt>
+		<entryValid>false</entryValid>
+		<dateOfChange>2008-03-05</dateOfChange>
+	</country>
+	<country>
+		<id>8210</id>
+		<unId>234</unId>
+		<iso2Id>FO</iso2Id>
+		<iso3Id>FRO</iso3Id>
+		<shortNameDe>Färöer</shortNameDe>
+		<shortNameFr>Iles Féroé</shortNameFr>
+		<shortNameIt>Isole Faer Oer</shortNameIt>
+		<shortNameEn>Faeroe Islands</shortNameEn>
+		<continent>1</continent>
+		<region>1</region>
+		<state>false</state>
+		<areaState>8206</areaState>
+		<unMember>false</unMember>
+		<recognizedCh>false</recognizedCh>
+		<entryValid>true</entryValid>
+		<dateOfChange>2008-03-05</dateOfChange>
+	</country>
+	<country>
+		<id>8211</id>
+		<unId>246</unId>
+		<iso2Id>FI</iso2Id>
+		<iso3Id>FIN</iso3Id>
+		<shortNameDe>Finnland</shortNameDe>
+		<shortNameFr>Finlande</shortNameFr>
+		<shortNameIt>Finlandia</shortNameIt>
+		<shortNameEn>Finland</shortNameEn>
+		<officialNameDe>Republik Finnland</officialNameDe>
+		<officialNameFr>République de Finlande</officialNameFr>
+		<officialNameIt>Repubblica di Finlandia</officialNameIt>
+		<continent>1</continent>
+		<region>1</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1955-12-14</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1945-01-01</recognizedDate>
+		<entryValid>true</entryValid>
+		<dateOfChange>2008-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8212</id>
+		<unId>250</unId>
+		<iso2Id>FR</iso2Id>
+		<iso3Id>FRA</iso3Id>
+		<shortNameDe>Frankreich</shortNameDe>
+		<shortNameFr>France</shortNameFr>
+		<shortNameIt>Francia</shortNameIt>
+		<shortNameEn>France</shortNameEn>
+		<officialNameDe>Französische Republik</officialNameDe>
+		<officialNameFr>République française</officialNameFr>
+		<officialNameIt>Repubblica francese</officialNameIt>
+		<continent>1</continent>
+		<region>4</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1945-10-24</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1945-01-01</recognizedDate>
+		<entryValid>true</entryValid>
+		<dateOfChange>2008-01-01</dateOfChange>
+	</country>
+	<country>
+		<id>8244</id>
+		<unId>203</unId>
+		<iso2Id>CZ</iso2Id>
+		<iso3Id>CZE</iso3Id>
+		<shortNameDe>Tschechische Republik</shortNameDe>
+		<shortNameFr>République tchèque</shortNameFr>
+		<shortNameIt>Repubblica ceca</shortNameIt>
+		<shortNameEn>Czech Republic</shortNameEn>
+		<officialNameDe>Tschechische Republik</officialNameDe>
+		<officialNameFr>République tchèque</officialNameFr>
+		<officialNameIt>Repubblica ceca</officialNameIt>
+		<continent>1</continent>
+		<region>3</region>
+		<state>true</state>
+		<unMember>true</unMember>
+		<unEntryDate>1993-01-19</unEntryDate>
+		<recognizedCh>true</recognizedCh>
+		<recognizedDate>1993-01-01</recognizedDate>
+		<remarkDe>Vorgängerentität : Tschechoslowakei (8238)</remarkDe>
+		<remarkFr>Entité précédente: Tchécoslovaquie (8238)</remarkFr>
+		<remarkIt>Entità precedente: Cecoslovacchia (8238)</remarkIt>
+		<entryValid>true</entryValid>
+		<dateOfChange>2009-01-01</dateOfChange>
+	</country>	
+</eCH-0072:countries>

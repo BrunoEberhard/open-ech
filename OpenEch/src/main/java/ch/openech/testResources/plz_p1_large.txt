@@ -1,0 +1,347 @@
+8000	30	3963	02	Crans-Montana 2	Crans-Montana 2	VS	2		0	8000	6240	20030601
+8002	30	6939	00	Arosio-Mugena	Arosio-Mugena	TI	3		0	8002	5237	20031101
+8003	80	8253	60	Diessenhofen Zust	Diessenhofen Zustellung	TG	1		0	8003	4545	20030701
+8004	20	2338	02	Muriaux	Muriaux	JU	2		1	9046	6753	20031201
+8005	20	2748	02	Les Ecorcheresses	Les Ecorcheresses	BE	2		0	7347	712	20030701
+8006	80	6830	20	Chiasso 1 ZF	Chiasso 1 ZF	TI	3		0	7316	5250	20030701
+8007	80	6900	89	Lugano MailSource	Lugano MailSource	TI	3		0	3837	5192	20030701
+8008	80	1162	60	St-Prex Dist	St-Prex Distribution	VD	2		0	8008	5646	20030701
+8010	20	8615	02	Freudwil	Freudwil	ZH	1		1	7274	198	20050801
+8011	80	6422	60	Steinen Zustellung	Steinen Zustellung	SZ	1		0	8011	1373	20030901
+8012	80	5415	60	Nussbaumen AG Zust	Nussbaumen AG Zustellung	AG	1		0	8012	4038	20030901
+8013	80	3613	60	Steffisburg 2 Zust	Steffisburg 2 Station Zuste	BE	1		0	8190	939	20030901
+8014	80	3661	60	Uetendorf Zust	Uetendorf Zustellung	BE	1		0	8014	944	20030901
+8015	80	3770	60	Zweisimmen Zust	Zweisimmen Zustellung	BE	1		0	8015	794	20030901
+8016	80	3775	60	Lenk i. S. Zust	Lenk i. S. Zustellung	BE	1		0	8016	792	20030901
+8020	80	1223	60	Cologny Dist	Cologny Distribution	GE	2		0	8020	6617	20031001
+8021	80	1964	60	Conthey Dist	Conthey Distribution	VS	2		0	8021	6023	20031001
+8023	80	3454	60	Sumiswald Zust	Sumiswald Zustellung	BE	1		0	8023	957	20031001
+8024	80	6710	60	Biasca Borgo	Biasca Borgo	TI	3		0	8024	5281	20031001
+8027	80	6963	60	Pregassona Dist	Pregassona Distribuzione	TI	3		0	8027	5192	20031001
+8028	80	8353	60	Elgg Zustellung	Elgg Zustellung	ZH	1		0	8028	217	20031001
+8031	80	3920	60	Zermatt Zustellung	Zermatt Zustellung	VS	1		0	8031	6300	20031101
+8032	20	1969	05	Eison (St.Martin)	Eison (St.Martin)	VS	2		0	1250	6087	20031101
+8033	80	3977	60	Granges VS Dist	Granges VS Distribution	VS	2		0	8033	6248	20031101
+8035	80	4034	00	Basel 34 Breite	Basel 34 Breite	BS	1		0	2439	2701	20080501
+8036	80	4035	00	Basel	Basel 35 Bäumlihof	BS	1		0	2439	2701	20080701
+8038	80	1618	60	Châtel-Denis Dist	Châtel-St-Denis Dist	FR	2		0	8038	2325	20040101
+8039	80	1805	60	Jongny Dist	Jongny Distribution	VD	2		0	8039	5885	20040101
+8040	80	1965	60	Savièse Dist	Savièse Distribution	VS	2		0	8040	6265	20040101
+8043	80	7017	60	Flims Dorf Zust	Flims Dorf Zustellung	GR	1		0	3998	3732	20040101
+8073	80	1211	51	Genève 5 cases	Genève 5 cases	GE	2		0	8073	6623	20050701
+8078	80	8606	60	Nänikon Zust	Nänikon Zustellung	ZH	1		0	8078	198	20040201
+8079	80	9642	60	Ebnat-Kappel Zust	Ebnat-Kappel Zustellung	SG	1		0	8079	3352	20040201
+8092	80	1450	60	Ste-Croix Dist	Ste-Croix Distribution	VD	2		0	8092	5568	20040401
+8093	20	3623	03	Buchen BE	Buchen BE	BE	1		0	7330	932	20040301
+8094	20	4588	01	Brittern	Brittern	SO	1		0	1905	2442	20040301
+8095	80	4416	60	Bubendorf Zust	Bubendorf Zustellung	BL	1		0	8095	2823	20041201
+8096	80	4415	60	Lausen Zustellung	Lausen Zustellung	BL	1		0	8096	2828	20041201
+8105	40	4089	00	Basel	Basel SPILOG	BS	1		0	2452	2701	20040401
+8106	80	9545	60	Wängi Zustellung	Wängi Zustellung	TG	1		0	8106	4781	20041201
+8107	80	9463	60	Oberriet SG Zust	Oberriet SG Zustellung	SG	1		0	8107	3254	20040401
+8108	80	9113	60	Degersheim Zust	Degersheim Zustellung	SG	1		0	8108	3401	20040401
+8110	80	8762	60	Schwanden GL Zust	Schwanden GL Zustellung	GL	1		0	8110	1627	20040401
+8113	80	8472	60	Seuzach Zustellung	Seuzach Zustellung	ZH	1		0	8113	227	20040401
+8116	80	8155	60	Niederhasli Zust	Niederhasli Zustellung	ZH	1		0	8116	90	20040401
+8119	30	6330	01	Cham 1	Cham 1	ZG	1		0	7201	1702	20040401
+8120	20	5415	01	Hertenstein AG	Hertenstein AG	AG	1		1	8012	4038	20040501
+8121	20	5415	02	Rieden AG	Rieden AG	AG	1		1	8012	4038	20040501
+8127	20	8596	01	Münsterlingen	Münsterlingen	TG	1		1	4934	4691	20051201
+8129	80	8068	00	Zürich	Zürich	ZH	1		0	4425	261	20040601
+8130	20	9604	02	Unterrindal	Unterrindal	SG	1		1	8393	3393	20040801
+8131	80	3071	60	Ostermundigen Zust	Ostermundigen Zustellung	BE	1		0	8131	363	20040901
+8132	80	1170	60	Aubonne Dist	Aubonne Distribution	VD	2		0	8132	5422	20040701
+8133	80	2013	70	Boudry Dist Ba	Boudry Dist Ba	NE	2		0	8133	6406	20040701
+8135	80	8775	60	Luchsingen Zust	Luchsingen Zustellung	GL	1		0	8135	1614	20040701
+8136	80	9444	60	Diepoldsau Zust	Diepoldsau Zustellung	SG	1		0	8136	3234	20040701
+8146	80	4033	00	Basel	Basel Novartis Campus	BS	1		0	8146	2701	20050201
+8150	80	8902	70	Urdorf Dist Ba	Urdorf Dist Ba	ZH	1		0	8150	250	20040701
+8151	80	8902	71	Urdorf GKA	Urdorf GKA	ZH	1		0	8151	250	20040801
+8152	20	3976	02	Champzabé	Champzabé	VS	2		0	7249	6248	20040801
+8153	80	4081	00	Basel	Basel SPI AS1	BS	1		0	2439	2701	20040801
+8156	80	4082	00	Basel	Basel SPI AS2	BS	1		0	2439	2701	20040801
+8159	80	3072	64	Omundigen Rüti Fä	Ostermundigen Rüti Fächer	BE	1		0	8159	363	20040801
+8165	40	8186	00	Bülach	Bülach LZB	ZH	1		0	7228	53	20040901
+8171	40	3039	00	Bern PF OC	Bern PF Operations Center	BE	1		0	9004	351	20060301
+8172	40	4042	00	Basel PF OC	Basel PF Operations Center	BL	1		0	8172	2769	20060301
+8173	20	3983	05	Greich	Greich	VS	1		0	2425	6181	20040901
+8175	80	1816	60	Chailly Dist	Chailly-Montreux Dist	VD	2		0	8175	5886	20050101
+8178	80	8235	60	Lohn SH Zustellung	Lohn SH Zustellung	SH	1		0	8178	2917	20040901
+8179	80	8239	60	Dörflingen Zust	Dörflingen Zustellung	SH	1		0	8179	2915	20040901
+8180	80	8240	60	Thayngen Zust	Thayngen Zustellung	SH	1		0	8180	2920	20040901
+8181	80	8242	60	Bibern SH Zust	Bibern SH Zustellung	SH	1		0	8181	2920	20040901
+8187	80	3067	60	Boll Zustellung	Boll Zustellung	BE	1		0	8187	359	20041001
+8188	80	3436	60	Zollbrück Zust	Zollbrück Zustellung	BE	1		0	8188	905	20041001
+8189	80	3537	60	Eggiwil Zustellung	Eggiwil Zustellung	BE	1		0	8189	901	20041001
+8190	80	3627	60	Heimberg Zust	Heimberg Zustellung	BE	1		0	8190	928	20041001
+8191	80	3715	60	Adelboden Zust	Adelboden Zustellung	BE	1		0	8191	561	20041001
+8192	80	3780	60	Gstaad Zustellung	Gstaad Zustellung	BE	1		0	8192	843	20041001
+8193	80	3818	60	Grindelwald Zust	Grindelwald Zustellung	BE	1		0	8193	576	20041001
+8195	80	5242	60	Birr-Lupfig Zust	Birr-Lupfig Zustellung	AG	1		0	8195	4092	20041001
+8196	80	5312	60	Döttingen Zust	Döttingen Zustellung	AG	1		0	8196	4304	20041001
+8199	80	5605	60	Dottikon Zust	Dottikon Zustellung	AG	1		0	8199	4065	20041001
+8200	80	5703	60	Seon Zustellung	Seon Zustellung	AG	1		0	8200	4209	20041001
+8201	80	5726	60	Unterkulm Zust	Unterkulm Zustellung	AG	1		0	8201	4146	20041001
+8202	80	6023	60	Rothenburg Zust	Rothenburg Zustellung	LU	1		0	8202	1040	20041001
+8203	80	6037	60	Root Zustellung	Root Zustellung	LU	1		0	8203	1065	20041001
+8204	80	6043	60	Adligenswil Zust	Adligenswil Zustellung	LU	1		0	8204	1051	20041001
+8205	80	6045	60	Meggen Zustellung	Meggen Zustellung	LU	1		0	8205	1063	20041001
+8206	80	6055	60	Alpnach Zustellung	Alpnach Zustellung	OW	1		0	8206	1401	20041001
+8207	80	6374	60	Buochs Zustellung	Buochs Zustellung	NW	1		0	8207	1502	20041001
+8210	80	3071	70	Ostermundi Dist Ba	Ostermundigen Dist Ba	BE	1		0	8210	363	20041001
+8212	40	4083	00	Basel	Basel	BS	1		0	2439	2701	20041001
+8213	40	4084	00	Basel	Basel	BS	1		0	2439	2701	20041001
+8214	40	4085	00	Basel	Basel	BS	1		0	2439	2701	20041001
+8215	40	4086	00	Basel	Basel	BS	1		0	2439	2701	20041001
+8216	40	4087	00	Basel	Basel	BS	1		0	2439	2701	20041001
+8217	40	4088	00	Basel	Basel	BS	1		0	2439	2701	20041001
+8218	40	8081	00	Zürich	Zürich Helsana	ZH	1		0	4393	261	20041001
+8219	80	1347	60	Le Sentier Dist	Le Sentier Distribution	VD	2		0	8219	5872	20041001
+8223	80	8142	60	Uitikon Zust	Uitikon Waldegg Zustellung	ZH	1		0	7226	248	20041001
+8227	80	1304	60	Cossonay Dist	Cossonay Distribution	VD	2		0	8227	5477	20050801
+8228	40	4092	00	Basel SPI AS 22	Basel SPI AS 22	BS	1		0	2439	2701	20041101
+8229	40	4093	00	Basel SPI AS 23	Basel SPI AS 23	BS	1		0	2439	2701	20041101
+8230	40	4094	00	Basel SPI AS 24	Basel SPI AS 24	BS	1		0	2439	2701	20041101
+8231	40	4095	00	Basel SPI AS 25	Basel SPI AS 25	BS	1		0	2439	2701	20041101
+8232	40	4096	00	Basel SPI AS 26	Basel SPI AS 26	BS	1		0	2439	2701	20041101
+8233	80	9494	60	Schaan Zustellung	Schaan Zustellung	FL	1		0	5398	7005	20080101
+8236	40	8901	00	Urdorf	Urdorf RRD	ZH	1		0	7267	250	20041201
+8237	20	8546	03	Menzengrüt	Menzengrüt	ZH	1		1	4847	229	20050401
+8238	80	4665	73	Oftringen PL	Oftringen PostLogistics PL4	AG	1		0	7191	4280	20041201
+8239	80	4665	74	Oftringen SPN	Oftringen SPN	AG	1		0	7191	4280	20041201
+8245	80	8450	60	Andelfingen Zust	Andelfingen Zustellung	ZH	1		0	8245	30	20041201
+8247	80	8005	60	Zürich 5 Zust	Zürich 5 Zustellung	ZH	1		0	8247	261	20041201
+8267	80	8064	60	Zürich 64 Zust	Zürich 64 Zustellung	ZH	1		0	7301	261	20050101
+8269	80	2035	60	Corcelles NE Dist	Corcelles NE Distribution	NE	2		0	8269	6407	20050101
+8299	80	3175	60	Flamatt Zustellung	Flamatt Zustellung	FR	1		0	8299	2309	20050101
+8300	80	6017	60	Ruswil Zustellung	Ruswil Zustellung	LU	1		0	8300	1098	20050101
+8301	80	6162	60	Entlebuch Zust	Entlebuch Zustellung	LU	1		0	8301	1002	20050101
+8302	80	6170	60	Schüpfheim Zust	Schüpfheim Zustellung	LU	1		0	8302	1008	20050101
+8303	80	6182	60	Escholzmatt Zust	Escholzmatt Zustellung	LU	1		0	8303	1003	20050101
+8307	80	8722	60	Kaltbrunn Zust	Kaltbrunn Zustellung	SG	1		0	8307	3313	20050201
+8308	80	8494	60	Bauma Zustellung	Bauma Zustellung	ZH	1		0	8308	171	20050201
+8316	30	6204	02	Sempach Stadt	Sempach Stadt	LU	1		0	8316	1102	20050301
+8318	80	7078	60	Lenzerheide Zust	Lenzerheide Zustellung	GR	1		0	8318	3506	20050401
+8321	40	3041	00	Bern	Bern UBS	BE	1		0	9004	351	20050401
+8322	40	6008	00	Luzern	Luzern UBS	LU	1		0	3215	1061	20050401
+8323	40	4041	00	Basel	Basel UBS	BS	1		0	8323	2701	20050401
+8324	80	8107	60	Buchs ZH Zust	Buchs ZH Zustellung	ZH	1		0	8324	83	20050401
+8325	80	8488	60	Turbenthal Zust	Turbenthal Zustellung	ZH	1		0	8325	228	20050401
+8329	80	8907	60	Wettswil Zust	Wettswil Zustellung	ZH	1		0	8329	14	20050401
+8331	80	8926	60	Kappel a. A. Zust	Kappel am Albis Zustellung	ZH	1		0	8331	6	20050401
+8332	80	8932	60	Mettmenstetten Zus	Mettmenstetten Zustellung	ZH	1		0	8332	9	20050401
+8333	80	7050	60	Arosa Zust	Arosa Zustellung	GR	1		0	8333	3921	20050401
+8334	80	9542	60	Münchwilen TG Zust	Münchwilen TG Zustellung	TG	1		0	5406	4746	20050401
+8346	80	9489	00	Vaduz	Vaduz	FL	1		0	5393	7001	20090401
+8347	20	3053	05	Lätti	Lätti	BE	1		1	7321	310	20050601
+8348	20	3256	03	Seewil	Seewil	BE	1		1	1762	310	20081101
+8349	40	4551	00	Derendingen	Derendingen Swisscom	SO	1		0	2716	2517	20050501
+8351	80	8526	60	Oberneunforn Zust	Oberneunforn Zustellung	TG	1		0	8351	4601	20050501
+8355	80	1934	60	Le Châble VS Dist	Le Châble VS Distribution	VS	2		0	8355	6031	20050501
+8356	80	1071	60	Chexbres Dist	Chexbres Distribution	VD	2		0	8356	5601	20050501
+8357	80	1854	60	Leysin Dist	Leysin Distribution	VD	2		0	8357	5407	20050501
+8358	20	8135	03	Sihlwald	Sihlwald	ZH	1		1	7221	133	20050801
+8359	20	8152	02	Glattpark(Opfikon)	Glattpark (Opfikon)	ZH	1		1	6381	66	20061001
+8362	40	1211	94	Genève  94 UBS	Genève 94 UBS	GE	2		0	356	6621	20050701
+8365	80	1607	60	Palézieux Dist	Palézieux Distribution	VD	2		0	8365	5795	20050701
+8366	20	5645	02	Fenkrieden	Fenkrieden	AG	1		1	3136	4239	20060401
+8367	40	4075	00	Basel	Basel	BS	1		0	2452	2701	20050801
+8368	40	9022	00	St. Gallen	St. Gallen	SG	1		0	5193	3203	20050901
+8369	80	8820	70	Wädenswil Dist Ba	Wädenswil Dist Ba	ZH	1		0	8369	142	20050901
+8390	80	5400	80	Baden IM	Baden IM	AG	1		0	6552	4021	20051101
+8393	80	9602	60	Bazenheid Zust	Bazenheid Zustellung	SG	1		0	8393	3392	20051201
+8394	80	7430	60	Thusis Zustellung	Thusis Zustellung	GR	1		0	8394	3668	20051201
+8395	80	7130	60	Ilanz Zustellung	Ilanz Zustellung	GR	1		0	8395	3574	20051201
+8397	80	1926	60	Fully Dist	Fully Distribution	VS	2		0	8397	6133	20060701
+8398	80	1296	60	Coppet Dist	Coppet Distribution	VD	2		0	8398	5712	20051201
+8399	20	1782	06	Formangueires	Formangueires	FR	2		0	1031	2235	20060101
+8423	20	7513	02	Silvaplana-Surlej	Silvaplana-Surlej	GR	1		1	7725	3790	20080501
+8426	80	7250	60	Klosters Zust	Klosters Zustellung	GR	1		0	8426	3871	20060401
+8427	80	7550	60	Scuol Zustellung	Scuol Zustellung	GR	1		0	8427	3762	20060401
+8439	20	8543	01	Gundetswil	Gundetswil	ZH	1		1	4847	212	20080101
+8440	40	4089	73	Basel SPI GLS	Basel SPI GLS Retour	BS	1		0	2452	2701	20060501
+8441	80	3940	01	Steg-Gampel	Steg-Gampel	VS	1		0	8441	6204	20060501
+8442	20	8109	00	Kloster Fahr	Kloster Fahr	AG	1		1	7267	4048	20061001
+8445	30	1019	00	Lausanne	Lausanne Services spéciaux	VD	2		0	130	5586	20070701
+8447	40	1039	00	Cheseaux Polyval	Cheseaux Polyval	VD	2		0	7497	5582	20060801
+8449	80	6346	60	Baar 3	Baar 3	ZG	1		0	8449	1701	20060801
+8452	80	6331	60	Hünenberg Zust	Hünenberg Zustellung	ZG	1		0	8452	1703	20060801
+8454	80	6346	70	Baar 3 Dist Ba	Baar 3 Dist Ba	ZG	1		0	8449	1701	20060801
+8458	40	3085	00	Wabern Weihnachten	Wabern 2 x Weihnachten	BE	1		0		355	20061001
+8459	40	1211	73	Genève 73	Genève 73	GE	2		0	381	6621	20061001
+8460	80	5610	70	Dintikon LCD	Dintikon LCD	AG	1		0	8460	4194	20061101
+8461	80	8952	55	Schlieren DS	Schlieren DocumentServices	ZH	1		0	7267	247	20061201
+8462	80	1300	50	Eclépens CC	Eclépens Centre Courrier	VD	2		0	8462	5482	20080201
+8464	80	3050	55	Bern DS	Bern DocumentServices	BE	1		0	1696	351	20061201
+8465	80	3070	50	Ostermundigen LZB	Ostermundigen (LZB)	BE	1		0	8465	363	20080201
+8467	80	4621	50	Härkingen BZ	Härkingen Briefzentrum	SO	1		0	8467	2402	20080201
+8469	80	6590	50	Cadenazzo (CLL)	Cadenazzo Centro logistico	TI	3		0	8469	5003	20080201
+8470	80	7000	50	Chur LRV	Chur Logistikzentrum	GR	1		0	8470	3901	20080201
+8471	80	8010	55	ZH Mülligen DS	Zürich DocumentServices	ZH	1		0	6455	247	20061201
+8472	80	9200	50	Gossau SG LZB	Gossau SG Logistikzentrum	SG	1		0	8472	3443	20080201
+8474	80	4702	85	Oensingen Hub	Oensingen Hub SecurePost	SO	1		0	7181	2407	20070101
+8476	80	6614	60	Brissago Dist	Brissago Distribuzione	TI	3		0	8476	5097	20070101
+8477	20	1148	09	La Coudre	La Coudre	VD	2		0	293	5486	20070101
+8479	40	1919	00	Martigny Mutuel	Martigny Groupe Mutuel	VS	2		0	5637	6136	20070201
+8480	40	8096	00	Zürich IBRS local	Zürich IBRS local	ZH	1		0	4415	261	20070201
+8482	80	1920	03	Martigny Gare CFF	Martigny Gare CFF	VS	2		0	5637	6136	20070201
+8483	80	1001	30	Lausanne Sozialb.	Lausanne Sozialberatung	VD	2		0	130	5586	20070201
+8484	80	4600	72	Olten Filiale	Olten Kurierzentrum Filiale	SO	1		0	2789	2581	20070401
+8485	80	1700	48	Fribourg PF Fil.	Fribourg PostFinance Fil.	FR	2		0	926	2196	20070301
+8486	40	4808	40	Zofingen PF	Zofingen PostFinance	AG	1		0	7198	4289	20070301
+8487	80	4800	40	Zofingen PF	Zofingen PostFinance	AG	1		0	7198	4289	20070301
+8488	80	3400	40	Burgdorf Filiale	Burgdorf Filiale	BE	1		0	2001	404	20070301
+8489	40	4807	40	Zofingen PF	Zofingen PostFinance	AG	1		0	7198	4289	20070301
+8490	80	8010	53	Zürich BZI	Zürich-Mülligen BZI	ZH	1		0	6455	247	20070301
+8506	80	1311	00	Eclépens SC	Eclépens Scanning-Center	VD	2		0	8506	5482	20070501
+8507	80	4611	00	Härkingen SC	Härkingen Scanning-Center	SO	1		0	8507	2402	20070501
+8509	80	8011	00	Zürich Mülligen SC	Zürich Mülligen SC	ZH	1		0	8509	247	20070501
+8513	80	8010	67	Zürich Mü BZ Ann.	Zürich Mülligen BZ Annahme	ZH	1		0	6455	247	20070601
+8514	30	8060	00	Zürich	Zürich	ZH	1		0	8514	62	20070601
+8515	30	8362	01	Bichelsee-Baltersw	Bichelsee-Balterswil	TG	1		0	8515	4721	20070601
+8603	80	6002	46	Luzern Uni PG	Luzern Uni PG	LU	1		0	3202	1061	20100201
+8807	20	8352	02	Ricketwil	Ricketwil (Winterthur)	ZH	1		1	4669	230	20070901
+8808	80	4310	89	Rheinfelden SPI	Rheinfelden SPI Logistics A	AG	1		0	7192	4258	20090701
+8809	80	4133	89	Pratteln SPI	Pratteln SPI Logistics	BL	1		0	7182	2831	20090701
+8810	20	6333	00	Hünenberg See	Hünenberg See	ZG	1		1	7201	1703	20070901
+8816	80	4621	59	Härkingen DSAG	Härkingen DocumentService	SO	1		0	8816	2402	20071001
+8817	40	4809	00	Zofingen PF	Zofingen Postfinance UBS	AG	1		0	7198	4289	20071001
+8821	80	3400	05	Burgdorf PF mob	Burgdorf PostFinance mob	BE	1		0	2001	404	20071101
+8822	40	4809	01	Zofingen PF UBS	Zofingen PF UBS Verarb.	AG	1		0	7198	4289	20071101
+8823	80	6039	05	Root Längenbold SH	Root Längenbold SH	LU	1		0	8203	1065	20071101
+8825	80	8059	00	Zürich 59 EO	Zürich 59 Exchange Office	ZH	1		0	4477	62	20080201
+8828	80	8059	85	Zürich 59 Ausland	Zürich 59 Ausland	ZH	1		0	4477	261	20071201
+8832	10	8545	01	Rickenbach Sulz	Rickenbach Sulz	ZH	1		1	4841	225	20090201
+8833	20	8543	02	Kefikon ZH	Kefikon ZH	ZH	1		1	4847	212	20080101
+8834	20	8310	01	Grafstal	Grafstal	ZH	1		1	7233	176	20080101
+8835	20	8465	01	Wildensbuch	Wildensbuch	ZH	1		1	4763	40	20080101
+8837	80	3017	60	Bern Zustellung	Bern Zustellung	BE	1		0	8837	351	20080101
+8840	20	8471	03	Oberwil (Dägerlen)	Oberwil (Dägerlen)	ZH	1		1	4749	214	20080201
+8841	20	8471	04	Berg (Dägerlen)	Berg (Dägerlen)	ZH	1		1	4749	214	20080201
+8842	20	8471	05	Bänk (Dägerlen)	Bänk (Dägerlen)	ZH	1		1	4749	214	20080201
+8844	80	9494	68	Schaan BZ GKS	Schaan BZ GKS	FL	1		0		7005	20080301
+8845	30	9301	00	Wittenbach	Wittenbach	SG	1		0	8845	3204	20080301
+8889	80	1300	67	Eclépens CC Dépôt	Eclépens CC Dépôt	VD	2		0	8462	5482	20080401
+8890	20	8412	01	Riet (Neftenbach)	Riet (Neftenbach)	ZH	1		1	4717	223	20080501
+8891	20	8412	02	Hünikon	Hünikon (Neftenbach)	ZH	1		1	4717	223	20080501
+8893	80	6511	00	Cadenazzo SC	Cadenazzo Scanning-Center	TI	3		0	8893	5003	20080501
+8898	40	8074	00	Zürich Voice Pub	Zürich Voice Publishing	ZH	1		0	4443	261	20080501
+8901	80	8050	49	Zürich Oerlikon DB	Zürich Oerlikon DB PickPost	ZH	1		0	7303	261	20080601
+8916	40	6430	81	Schwyz SKB	Schwyz Kantonalbank	SZ	1		0	7214	1372	20080701
+8917	20	5643	03	Meienberg	Meienberg	AG	1		1	3136	4239	20090501
+8918	20	3823	01	Kleine Scheidegg	Kleine Scheidegg	BE	1		0	2248	576	20080801
+8919	20	3823	02	Eigergletscher	Eigergletscher	BE	1		0	2248	576	20080801
+8936	80	1532	70	Fétigny Dist Fil	Fétigny Dist Fil	FR	2		0		2016	20081001
+8937	80	1880	70	Bex Dist Fil	Bex Dist Fil	VD	2		0	8937	5402	20081001
+8938	40	3029	00	Bern Entris	Bern Entris	BE	1		0	9004	351	20081001
+8939	80	8200	48	Schaffhausen PF	Schaffhausen PF	SH	1		0	4562	2939	20081001
+8940	80	1860	47	Aigle Gare CFF	Aigle Gare CFF	VD	2		0		5401	20081001
+8941	80	6500	47	Bellinzona FFS	Bellinzona Stazione FFS	TI	3		0		5002	20081001
+8942	80	5200	47	Brugg Bahnhof SBB	Brugg Bahnhof SBB	AG	1		0		4095	20081001
+8943	80	6440	47	Brunnen SBB	Brunnen Bahnhof SBB	SZ	1		0		1364	20081001
+8944	80	9471	47	Buchs Bahnhof SBB	Buchs Bahnhof SBB	SG	1		0		3271	20081001
+8945	80	8180	47	Bülach Bahnhof SBB	Bülach Bahnhof SBB	ZH	1		0		53	20081001
+8946	80	6830	47	Chiasso FFS	Chiasso Stazione FFS	TI	3		0		5250	20081001
+8947	80	8953	47	Dietikon SBB	Dietikon Bahnhof SBB	ZH	1		0		243	20081001
+8948	80	8307	47	Effretikon SBB	Effretikon Bahnhof SBB	ZH	1		0		174	20081001
+8949	80	7302	47	Landquart SBB	Landquart Bahnhof SBB	GR	1		0		3942	20081001
+8950	80	5600	47	Lenzburg SBB	Lenzburg Bahnhof SBB	AG	1		0		4201	20081001
+8951	80	4410	47	Liestal SBB	Liestal Bahnhof SBB	BL	1		0		2829	20081001
+8952	80	6600	47	Locarno FFS	Locarno Stazione FFS	TI	3		0		5113	20081001
+8953	80	1260	47	Nyon Gare CFF	Nyon Gare CFF	VD	2		0		5724	20081001
+8954	80	4702	47	Oensingen SBB	Oensingen Bahnhof SBB	SO	1		0		2407	20081001
+8955	80	8808	47	Pfäffikon SBB	Pfäffikon Bahnhof SBB	SZ	1		0		1322	20081001
+8956	80	1020	47	Renens Gare CFF	Renens Gare CFF	VD	2		0		5591	20081001
+8957	80	4310	47	Rheinfelden SBB	Rheinfelden Bahnhof SBB	AG	1		0		4258	20081001
+8958	80	9400	47	Rorschach SBB	Rorschach Bahnhof SBB	SG	1		0		3215	20081001
+8959	80	6343	47	Rotkreuz SBB	Rotkreuz Bahnhof SBB	ZG	1		0		1707	20081001
+8960	80	8630	47	Rüti Bahnhof SBB	Rüti Bahnhof SBB	ZH	1		0		118	20081001
+8961	80	4500	47	Solothurn SBB	Solothurn Bahnhof SBB	SO	1		0		2601	20081001
+8962	80	6210	47	Sursee Bahnhof SBB	Sursee Bahnhof SBB	LU	1		0		1103	20081001
+8963	80	8800	47	Thalwil SBB	Thalwil Bahnhof SBB	ZH	1		0		141	20081001
+8964	80	3930	47	Visp Bahnhof SBB	Visp Bahnhof SBB	VS	1		0		6297	20081001
+8965	80	1400	47	Yverdon CFF	Yverdon-les-Bains Gare CFF	VD	2		0		5938	20081001
+8966	80	8866	47	Ziegelbrücke SBB	Ziegelbrücke Bahnhof SBB	GL	1		0		1622	20081001
+8967	80	4800	47	Zofingen SBB	Zofingen Bahnhof SBB	AG	1		0		4289	20081001
+8968	80	8820	47	Wädenswil SBB	Wädenswil Bahnhof SBB	ZH	1		0		142	20081001
+8969	80	6304	47	Zug Bahnhof SBB	Zug Bahnhof SBB	ZG	1		0		1711	20081001
+8970	80	6900	41	Lugano FSS	Lugano Stazione FSS	TI	3		0		5192	20081001
+8971	80	3000	28	Bern 28	Bern 28	BE	1		0	8837	351	20081101
+8973	80	3030	97	Bern LOGIPV	Bern Logistikcenter	BE	1		0		351	20081101
+8978	80	4621	57	Härkingen	Härkingen	SO	1		0		2402	20081201
+8983	20	9050	02	Appenzell Eggerst.	Appenzell Eggerstanden	AI	1		1	7309	3103	20100301
+8984	20	9050	03	Appenzell Enggenh.	Appenzell Enggenhütten	AI	1		1	7309	3104	20100301
+8985	20	9050	05	Appenzell Meister.	Appenzell Meistersrüte	AI	1		1	7309	3101	20100301
+8986	20	9050	06	Appenzell Steinegg	Appenzell Steinegg	AI	1		1	7309	3103	20100301
+8987	20	9050	07	Appenzell Schlatt	Appenzell Schlatt	AI	1		1	7309	3104	20100301
+8988	20	9057	03	Wasserauen	Wasserauen	AI	1		1	7309	3105	20100301
+8990	20	9108	02	Gontenbad	Gontenbad	AI	1		1	7309	3102	20100301
+8991	80	6000	48	Luzern 1 PF	Luzern 1 PF	LU	1		0		1061	20081201
+8992	20	9108	03	Jakobsbad	Jakobsbad	AI	1		1	7309	3102	20100301
+8993	20	9442	02	Büriswilen	Büriswilen	AI	1		1	5356	3111	20100301
+9004	80	3070	52	Ostermundigen	Ostermundigen LZB BHS-AF	BE	1		0	9004	363	20090201
+9005	20	7110	00	Peiden	Peiden	GR	1		0	4058	3599	20090201
+9006	40	8012	00	Zürich	Zürich	ZH	1		0	9006	247	20090701
+9007	80	1300	51	Eclépens SAB	Eclépens SAB	VD	2		0	8462	5482	20090301
+9008	80	6595	01	Riazzino Dist	Riazzino Distribuzione	TI	3		0		5113	20090601
+9009	80	6987	01	Caslano Dist	Caslano Distribuzione	TI	3		0		5171	20090601
+9011	80	6593	01	Cadenazzo Dist	Cadenazzo Distribuzione	TI	3		0	9011	5003	20090501
+9013	80	5506	66	Mägenwil VDS	Mägenwil VDS	AG	1		0		4032	20100301
+9014	80	5506	70	Mägenwil Dist Ba	Mägenwil Dist Ba	AG	1		0	9014	4032	20100301
+9015	80	5506	71	Mägenwil GKA	Mägenwil GKA	AG	1		0		4032	20100301
+9017	80	5506	73	Mägenwil HUB	Mägenwil HUB	AG	1		0		4032	20100301
+9026	80	1663	60	Epagny Dist	Epagny Distribution	FR	2		0	9026	2135	20100301
+9028	20	1356	02	La Russille	La Russille	VD	2		0	7240	5750	20090701
+9029	80	8307	76	Effretikon PAG	Effretikon PostAuto AG	ZH	1		0	7233	174	20090701
+9030	20	9245	02	Sonnental	Sonnental	SG	1		0	5305	3424	20090701
+9031	80	4665	72	Oftringen Hub PL43	Oftringen Hub PL43	AG	1		0		4280	20090701
+9032	80	1227	48	Genève Carouge	Genève Carouge PostFinance	GE	2		0	7162	6608	20090801
+9033	80	4310	76	Rheinfelden PAuto	Rheinfelden PostAuto AG	AG	1		0	7192	4258	20090801
+9034	80	8010	54	Zürich BZI DE	Zürich BZI DE	ZH	1		0	8490	247	20090801
+9035	80	1006	47	Lausanne Ouchy	Lausanne Parking d'Ouchy	VD	2		0	130	5586	20091001
+9036	80	1003	46	Lausanne Centre	Lausanne Parking du Centre	VD	2		0	130	5586	20091001
+9037	80	1032	47	Romanel Shell	Romanel-sur-Lausanne Shell	VD	2		0	7497	5592	20091001
+9040	80	2802	76	Develier PostAuto	Develier PostAuto AG	JU	2		0	1554	6712	20090901
+9041	80	4053	47	Basel Shell	Basel Shell Dreispitz	BS	1		0	2439	2701	20091001
+9042	80	4106	47	Therwil Shell	Therwil Shell	BL	1		0	7185	2775	20091001
+9043	80	8008	47	Zürich Tbrunnen	Zürich Tiefenbrunnen SBB	ZH	1		0	4443	261	20091001
+9044	80	8080	47	Zürich West SPS	Zürich West SPS	ZH	1		0	7294	261	20090901
+9045	80	8302	47	Kloten Bahnhof SBB	Kloten Bahnhof SBB	ZH	1		0	7338	62	20091001
+9046	80	2340	60	Le Noirmont Dist	Le Noirmont Distribution	JU	2		0	9046	6754	20090901
+9054	80	1003	69	Lausanne PF	Lausanne Terreaux PF	VD	2	2	0		5586	20091001
+9055	80	6000	02	Luzern 2	Luzern 2 Universität	LU	1		0		1061	20091101
+9057	80	1219	48	Lignon B&V GK	Lignon B&V GK	GE	2	1	0	7167	6643	20091201
+9058	80	1219	49	Lignon B&V GK 2	Lignon B&V GK 2	GE	2	1	0	7167	6643	20091201
+9061	20	3206	01	Ferenbalm	Ferenbalm	BE	1		0	1867	662	20100301
+9062	20	3206	03	Biberen	Biberen	BE	1		0	1867	662	20100301
+9063	20	3206	04	Gammen	Gammen	BE	1		0	1867	662	20100301
+9065	80	4800	48	Zofingen B&V GK	Zofingen B&V GK	AG	1	2	0	7198	4289	20091201
+9066	80	5405	47	Baden B&V GK 2	Baden B&V GK 2	AG	1	2	0	6552	4021	20091201
+9067	80	5405	48	Baden B&V GK	Baden B&V GK	AG	1	2	0	6552	4021	20091201
+9069	80	8852	47	Altendorf B&V GK	Altendorf B&V GK	SZ	1	2	0	7701	1341	20091201
+9070	80	8852	48	Altendorf B&V GK 2	Altendorf B&V GK 2	SZ	1	2	0	7701	1341	20091201
+9071	80	4204	76	Himmelried Pauto	Himmelried PostAuto AG	SO	1	2	0	2560	2618	20091201
+9072	80	7000	45	Chur B&V GK 2	Chur B&V GK 2	GR	1	2	0	3973	3901	20091201
+9073	80	7000	46	Chur B&V GK	Chur B&V GK	GR	1	2	0	3973	3901	20091201
+9074	80	8305	47	Dietlikon Shell	Dietlikon Shell	ZH	1		0	7280	54	20100101
+9075	80	8008	48	Zürich Hornegg	Zürich Hornegg Shell	ZH	1		0	4443	261	20100101
+9076	80	8127	47	Forch Heuberg	Forch Heuberg Shell	ZH	1		0	7242	195	20100101
+9077	80	8153	47	Rümlang Shell	Rümlang Tankstelle Shell	ZH	1		0	7264	97	20100101
+9078	80	1762	49	Givisiez PickPost	Givisiez PickPost	FR	2	1	0	7095	2197	20100101
+9079	20	2360	00	Le Bémont	Le Bémont	JU	2		0	9046	6741	20100301
+9080	10	2362	00	Montfaucon	Montfaucon	JU	2		0	9046	6751	20100301
+9081	20	2362	02	Montfavergier	Montfavergier	JU	2		0	9046	6751	20100301
+9082	20	2363	00	Les Enfers	Les Enfers	JU	2		0	9046	6745	20100301
+9083	10	2364	00	St-Brais	St-Brais	JU	2		0	9046	6758	20100301
+9084	80	3030	81	Bern PF KD PK Be 4	Bern PF KD PK Bern 4	BE	1		0	9004	351	20100201
+9085	80	3030	82	Bern PF KD PK Be 5	Bern PF KD PK Bern 5	BE	1		0	9004	351	20100201
+9086	80	4142	81	Münchenstein PF KD	Münchenstein PF KD PK Bs 2	BL	1		0	7179	2769	20100201
+9087	80	6010	81	Kriens PF KD LU 2	Kriens PF KD PK/GK LU 2	LU	1		0	7209	1059	20100201
+9088	80	9020	81	St. Gallen PF KD	St. GallenPF KD PK/GK SG 2	SG	1		0	5204	3203	20100201
+9089	80	1754	60	Corjolens Dist	Corjolens Distribution	FR	2	1	0	9089	2174	20100201
+9090	80	6000	47	Luzern Bahnhof SBB	Luzern Bahnhof SBB	LU	1	1	0	3202	1061	20100201
+9091	80	4600	45	Olten Personal	Olten Personal	SO	1		0	2789	2581	20100301
+9092	80	8002	48	Zürich Enge	Zürich Enge PF Filiale	ZH	1		0	4415	261	20100301
+9093	80	1905	76	Dorénaz PA	Dorénaz PostAuto AG Schweiz	VS	2		0	1152	6212	20100301
+9097	40	1951	51	Sion Retours	Sion Retours	VS	1		0	9097	6266	20100401
+9099	80	2013	66	Boudry SDD	Boudry SDD	NE	2		0		6404	20100501

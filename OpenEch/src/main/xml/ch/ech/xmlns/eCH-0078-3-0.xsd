@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2009 sp1 (http://www.altova.com) von Martin Stingelin (Stingelin Informatik GmbH) bearbeitet -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Martin Stingelin (Stingelin Informatik GmbH) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044/2" xmlns:eCH-0078="http://www.ech.ch/xmlns/eCH-0078/3" xmlns:eCH-0058="http://www.ech.ch/xmlns/eCH-0058/3" xmlns:eCH-0021="http://www.ech.ch/xmlns/eCH-0021/4" targetNamespace="http://www.ech.ch/xmlns/eCH-0078/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xs:annotation>
+		<xs:documentation xml:lang="de">Ausgabedatum: 02.04.2010</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0044/2" schemaLocation="http://www.ech.ch/xmlns/eCH-0044/2/eCH-0044-2-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0058/3" schemaLocation="http://www.ech.ch/xmlns/eCH-0058/3/eCH-0058-3-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0021/4" schemaLocation="http://www.ech.ch/xmlns/eCH-0021/4/eCH-0021-4-0.xsd"/>
+	<xs:complexType name="headerType">
+		<xs:sequence>
+			<xs:element name="senderId" type="eCH-0058:participantIdType"/>
+			<xs:element name="originalSenderId" type="eCH-0058:participantIdType" minOccurs="0"/>
+			<xs:element name="declarationLocalReference" type="eCH-0058:declarationLocalReferenceType" minOccurs="0"/>
+			<xs:element name="recipientId" type="eCH-0058:participantIdType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="messageId" type="eCH-0058:messageIdType"/>
+			<xs:element name="referenceMessageId" type="eCH-0058:messageIdType" minOccurs="0"/>
+			<xs:element name="ourBusinessReferenceId" type="eCH-0058:businessReferenceIdType" minOccurs="0"/>
+			<xs:element name="yourBusinessReferenceId" type="eCH-0058:businessReferenceIdType" minOccurs="0"/>
+			<xs:element name="uniqueIdBusinessTransaction" type="eCH-0058:uniqueIdBusinessTransactionType" minOccurs="0"/>
+			<xs:element name="messageType" type="eCH-0058:messageTypeType"/>
+			<xs:element name="subMessageType" type="eCH-0058:subMessageTypeType" minOccurs="0"/>
+			<xs:element name="sendingApplication" type="eCH-0058:sendingApplicationType"/>
+			<xs:element name="partialDelivery" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="uniqueIdBusinessCase" type="eCH-0058:uniqueIdBusinessCaseType"/>
+						<xs:element name="totalNumberOfPackages" type="eCH-0058:totalNumberOfPackagesType"/>
+						<xs:element name="numberOfActualPackage" type="eCH-0058:numberOfActualPackageType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="subject" type="eCH-0058:subjectType" minOccurs="0"/>
+			<xs:element name="object" type="eCH-0078:personObjectType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="comment" type="eCH-0058:commentType" minOccurs="0"/>
+			<xs:element name="messageDate" type="xs:dateTime"/>
+			<xs:element name="initialMessageDate" type="eCH-0058:initialMessageDateType" minOccurs="0"/>
+			<xs:element name="eventDate" type="xs:dateTime"/>
+			<xs:element name="modificationDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="action">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="3"/>
+						<xs:enumeration value="4"/>
+						<xs:enumeration value="5"/>
+						<xs:enumeration value="6"/>
+						<xs:enumeration value="7"/>
+						<xs:enumeration value="10"/>
+						<xs:enumeration value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="attachment" type="eCH-0078:attachmentType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="testDeliveryFlag" type="eCH-0058:testDeliveryFlagType"/>
+			<xs:element name="testData" type="eCH-0078:testDataType" minOccurs="0"/>
+			<xs:element name="extension" type="eCH-0078:extensionType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="reportHeaderType">
+		<xs:sequence>
+			<xs:element name="senderId" type="eCH-0058:participantIdType"/>
+			<xs:element name="recipientId" type="eCH-0058:participantIdType" minOccurs="0"/>
+			<xs:element name="messageId" type="eCH-0058:messageIdType"/>
+			<xs:element name="referenceMessageId" type="eCH-0058:messageIdType" minOccurs="0"/>
+			<xs:element name="ourBusinessReferenceId" type="eCH-0058:businessReferenceIdType" minOccurs="0"/>
+			<xs:element name="yourBusinessReferenceId" type="eCH-0058:businessReferenceIdType" minOccurs="0"/>
+			<xs:element name="uniqueIdBusinessTransaction" type="eCH-0058:uniqueIdBusinessTransactionType" minOccurs="0"/>
+			<xs:element name="messageType" type="eCH-0058:messageTypeType"/>
+			<xs:element name="subMessageType" type="eCH-0058:subMessageTypeType" minOccurs="0"/>
+			<xs:element name="sendingApplication" type="eCH-0058:sendingApplicationType"/>
+			<xs:element name="object" type="eCH-0078:personObjectType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="initialMessageDate" type="eCH-0058:initialMessageDateType" minOccurs="0"/>
+			<xs:element name="action">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:enumeration value="8"/>
+						<xs:enumeration value="9"/>
+						<xs:enumeration value="11"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="testDeliveryFlag" type="eCH-0058:testDeliveryFlagType"/>
+			<xs:element name="testData" type="eCH-0078:testDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="personObjectType">
+		<xs:sequence>
+			<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="infoType">
+		<xs:sequence>
+			<xs:element name="code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="250"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="textEnglish" type="eCH-0078:infoTextType" minOccurs="0"/>
+			<xs:element name="textGerman" type="eCH-0078:infoTextType" minOccurs="0"/>
+			<xs:element name="textFrench" type="eCH-0078:infoTextType" minOccurs="0"/>
+			<xs:element name="textItalian" type="eCH-0078:infoTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="infoTextType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="negativeReportType">
+		<xs:sequence>
+			<xs:element name="generalError" type="eCH-0078:infoType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="personError" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+						<xs:element name="errorInfo" type="eCH-0078:infoType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="positiveReportType">
+		<xs:sequence>
+			<xs:element name="generalResponse" type="eCH-0078:infoType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="personResponse" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+						<xs:element name="response" type="eCH-0078:infoType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="eventReport">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="reportHeader" type="eCH-0078:reportHeaderType"/>
+				<xs:choice>
+					<xs:element name="negativeReport" type="eCH-0078:negativeReportType"/>
+					<xs:element name="positiveReport" type="eCH-0078:positiveReportType"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="attachmentType">
+		<xs:sequence>
+			<xs:element name="title" type="eCH-0078:subjectType"/>
+			<xs:element name="pathFileName" type="eCH-0078:pathFileNameType"/>
+			<xs:element name="leadingDocument" type="eCH-0078:leadingDocumentType"/>
+			<xs:element name="sortOrder" type="eCH-0078:sortOrderType"/>
+			<xs:element name="documentType" type="xs:anyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="subjectType">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="pathFileNameType">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="leadingDocumentType">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="sortOrderType">
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="testDataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="extensionType">
+		<xs:sequence>
+			<xs:element name="dataLock" type="eCH-0021:dataLockType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

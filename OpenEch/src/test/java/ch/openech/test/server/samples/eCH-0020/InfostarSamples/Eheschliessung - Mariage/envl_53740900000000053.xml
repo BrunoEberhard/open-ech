@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<envelope xmlns="http://www.ech.ch/xmlns/eCH-0090/1" version="1.0">
+    <messageId>53740900000000053</messageId>
+    <messageType>20001</messageType>
+    <messageClass>0</messageClass>
+    <senderId>T3-CH-4</senderId>
+    <recipientId>1-4566-1</recipientId>
+    <eventDate>2009-10-20T09:36:36.021+02:00</eventDate>
+    <messageDate>2009-10-20T09:36:36.021+02:00</messageDate>
+</envelope>

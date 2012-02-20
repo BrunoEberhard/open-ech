@@ -1,0 +1,57 @@
+
+<ns2:delivery xmlns="http://www.ech.ch/xmlns/eCH-0058/1" xmlns:ns2="http://www.ech.ch/xmlns/eCH-0020/1" xmlns:ns3="http://www.ech.ch/xmlns/eCH-0044/1" xmlns:ns4="http://www.ech.ch/xmlns/eCH-0011/3" xmlns:ns5="http://www.ech.ch/xmlns/eCH-0007/3" xmlns:ns6="http://www.ech.ch/xmlns/eCH-0008/2" xmlns:ns7="http://www.ech.ch/xmlns/eCH-0010/3" xmlns:ns8="http://www.ech.ch/xmlns/eCH-0021/2">
+    <ns2:deliveryHeader>
+        <senderId>T3-CH-4</senderId>
+        <declarationLocalReference>ZATG027-EC  Frauenfeld (Célébration du mariage - Eheschliessung)</declarationLocalReference>
+        <recipientId>1-4566-1</recipientId>
+        <sendingApplication>
+            <manufacturer>ISC-EJPD</manufacturer>
+            <product>INFOSTAR</product>
+            <productVersion>2.0.0</productVersion>
+        </sendingApplication>
+        <partialDelivery>
+            <uniqueIDBusinessCase>84885</uniqueIDBusinessCase>
+            <totalNumberOfPackages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:int">5</totalNumberOfPackages>
+            <numberOfActualPackage>1</numberOfActualPackage>
+        </partialDelivery>
+        <eventDate>1995-12-20T00:00:00.000+01:00</eventDate>
+        <action>1</action>
+    </ns2:deliveryHeader>
+    <ns2:marriage>
+        <ns2:marriagePerson>
+            <ns2:personIdentification>
+                <ns3:vn>7569397277370</ns3:vn>
+                <ns3:localPersonId>
+                    <ns3:personIdCategory>CH.INFOSTAR</ns3:personIdCategory>
+                    <ns3:personId>00000001</ns3:personId>
+                </ns3:localPersonId>
+                <ns3:officialName>Villiger</ns3:officialName>
+                <ns3:firstName>Marco Giuseppe</ns3:firstName>
+                <ns3:sex>1</ns3:sex>
+                <ns3:dateOfBirth>
+                    <ns3:yearMonthDay>1967-07-17+01:00</ns3:yearMonthDay>
+                </ns3:dateOfBirth>
+            </ns2:personIdentification>
+        </ns2:marriagePerson>
+        <ns2:maritalStatus>2</ns2:maritalStatus>
+        <ns2:dateOfMaritalStatus>1995-12-20+01:00</ns2:dateOfMaritalStatus>
+        <ns2:marriageRelationship>
+            <ns2:typeOfRelationship>1</ns2:typeOfRelationship>
+            <ns2:partner>
+                <ns2:personIdentification>
+                    <ns3:vn>7560584727838</ns3:vn>
+                    <ns3:localPersonId>
+                        <ns3:personIdCategory>CH.INFOSTAR</ns3:personIdCategory>
+                        <ns3:personId>00000001</ns3:personId>
+                    </ns3:localPersonId>
+                    <ns3:officialName>Ogi</ns3:officialName>
+                    <ns3:firstName>Linda Anita</ns3:firstName>
+                    <ns3:sex>2</ns3:sex>
+                    <ns3:dateOfBirth>
+                        <ns3:yearMonthDay>1965-05-30+01:00</ns3:yearMonthDay>
+                    </ns3:dateOfBirth>
+                </ns2:personIdentification>
+            </ns2:partner>
+        </ns2:marriageRelationship>
+    </ns2:marriage>
+</ns2:delivery>

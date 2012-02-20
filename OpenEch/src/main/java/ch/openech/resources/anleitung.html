@@ -1,0 +1,200 @@
+<!DOCTYPE HTML SYSTEM>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Anleitung OpenEch</title>
+</head>
+<body>
+<h1>Applikation als Browser</h1>
+
+<p>Die Applikation ist im Stil eines Browsers gehalten. Es können die beim Surfen bekannten Bedienungen angewandt werden.
+Insbesondere kann</p>
+<ul>
+<li>Per Mausklick auf eine referenzierte Person gewechselt werden</li>
+<li>Ein neues Fenster geöffnet werden</li>
+<li>Innerhalb eines Fensters ein neuer Tab geöffnet werden</li>
+<li>Innerhalb eines Tabs mit zurück und vorwärts zwischen Seiten gewechselt werden</li>
+<li>Falls eine Seite dies unterstützt eine Aktualisierung ausgelöst werden</li>
+</ul>
+
+<p>Unterschiede ergeben sich daher, dass auch Daten geändert werden können. Während einer
+Bearbeitung kann nicht zurück navigiert werden. Beim Verlassen einer geänderten
+Seite wird der Benutzer zuerst gefragt, ob man die Änderungen verwerfen oder speichern möchte.</p>
+
+<p>Bei Teiländerungen von Daten wird ein neues Fenster innerhalb des aktuellen Tab geöffnet. Dieses
+Bearbeitungsfenster ist innerhalb des Tab gefangen. Es blockiert im Gegenzug auch nur diesen Tab. Das heisst
+trotz dieses Fensters kann auf ein anderes Tab oder sogar auf ein anderes Fenster gewechselt werden.</p>
+
+<p>In einigen Fällen können auch weitere Fenster enstehen. Dabei blockiert das vorderste Fenster immer
+sämtliche Eingabemöglichkeiten der hinteren Fenster und des aktuellen Tabs.</p>
+
+<h2>Kontextmenus</h2>
+
+Bei manchen Eingabefeldern existieren weitere Optionen die über das Kontextmenu erreichbar sind. Das Kontextmenu
+kann über die rechte Maustaste, über den Menüpunkt im Menu oder die entsprechende Taste auf der Tastatur erreicht werden.
+Eingaben in die unteren Felder beim Zuzug können über die Funktionstasten ausgelöst werden.
+
+<h2>Tastatursteuerung</h2>
+
+Sämtliche Funktionen sollten auch über eine reine Tastaturbedienung erreichbar sein. Eingaben (Dialoge) können
+mit ctrl-S gespeichert werden oder mit Escape abgebrochen werden. Spezielle Tastaturbelgungen sind in
+den Menus angezeigt.
+
+<h2>Beziehungsfelder</h2>
+
+Verschiedene Arten von Beziehungen zu einer Person erfasst werden. Wohin eine Beziehung zeigen soll kann
+dabei varieren:
+
+<ul>
+<li>Es kann auf eine andere erfasste Person verwiesen werden
+<li>Eine Adresse kann beschrieben werden
+<li>Bei Mutter/Vater verweisen kann auch nur der Name angegeben werden
+</ul>
+
+Wichtig ist dabei zu wissen, dass diese drei Arten von Verweisen gemischt vorkommen können und dass
+vom System keine Garantie von Konsistenz gegeben ist. So kann zu einer Beziehung zu Person eine zusätzliche Adresse erfasst werden.
+Der Vor- oder Nachnamen dieser Adresse kann jedoch willkürlich erfasst werden. Die erfasste Adresse hat auch keine Verknüpfung
+zu der gewählten Person, sollte gehört alleinig zu der Beziehung. Ebenso können Mutter/Vater Namen frei gewählt werden
+und sind nur innerhalb der Beziehung relevant.<p>
+
+Bei der Anzeige wird jeweils zuerst die Art der Beziehung beschrieben (Mutter, Beistand, etc.) und darunter die
+vorhandenen Beziehungsarten (Person, Adresse oder Name).
+
+<h2>Datumsfelder</h2>
+
+<p>Ein Datumsfeld enthält die Angaben zu Tag, Monat und Jahr. Bei Geburtstagen kann der Monat und der Tag weggelassen werden,
+falls diese Angaben nicht bekannt sind. Die Eingabe wird
+so gut wie möglich ergänzt. Die Übersetzung geschieht wie folgt:</p>
+<ul>
+<li>030607 wird zu 03.06.2007 also dem 3. Juni im Jahr 2010</li>
+<li>2.2.02 wird zu 02.02.2002 also dem 2. Februar 2002</li>
+<li>1.1.99 wird zu 01.01.1999 Zweistellige Jahreszahlen werden bis 20 als 20xx, ab 21 als 19xx interpretiert</li>
+</ul>
+<p>Zusätzlich kann mit den Cursor/Pfeil - Tasten das Datum geändert werden. Mit Pfeil runter wird der folgende Tag gewählt,
+mit Pfeil rauf der vorhergehende. Mit der Umschalttaste wird das Jahr gewechselt, mit der Alt-Taste der Monat.</p>
+
+<h2>Validierung</h2>
+
+<p>Zwingende Felder oder Felder mit falscher Eingabe sind mit einer roten Wellenlinie versehen. Der
+Grund für den Fehler kann auf 2 Arten angezeigt werden:</p>
+<ul>
+<li>Über den Tooltip (Hinweis) des Feldes. Dazu muss der Mauszeiger in das entsprechende Feld gefahren
+werden und dort einen Moment verharren.</li>
+<li>Wird eine Speicherung versucht, währenddem noch Felder rot markiert sind, so wird anstatt gespeichert
+ein Fenster angezeigt, dass die aktuellen Fehler auflistet.</li>
+</ul>
+
+<h1>Anwendungsfälle</h1>
+
+<p>Die Applikation beschäftigt sich mit der Erfassung und Mutation von Personendaten. Personen können
+auf drei Arten erfasst werden:</p>
+<ul>
+<li>Eine Person kann als Zuzug erfasst werden</li>
+<li>Eine Geburt kann erfasst werden</li>
+<li>Die Daten können von einer bestehenden Applikation übernommen werden (Basislieferung)</li>
+</ul>
+
+<p>Umgekehrt kann eine Person die Verwaltung auf folgende Art verlassen:</p>
+<ul>
+<li>Der Wegzug der Person kann erfasst werden</li>
+<li>Die Person kann gestorben sein</li>
+<li>Die Person kann als verschollen gemeldet werden (das kann als einziges rückgängig gemacht werden)</li>
+</ul>
+<p>Alle anderen fachlichen Anwendungsfälle beziehen sich auf einen Meldegrund. Anwendungsfälle ohne Meldegründe sind 
+Korrekturen (also Behebungen von Fehlern).</p>
+
+<h2>Zuzug</h2>
+
+<p>Ein Zuzug kann mehrere Personen auf einmal betreffen. Wenn ein Ehepaar mit Kindern zuzieht, <i>so
+sollten zuerst die Eltern und danach die Kinder erfasst werden</i>. Damit werden die Beziehungsdaten
+automatisch richtig erstellt.</p>
+
+<p>Bei einer Beziehung zwischen Kind/Eltern wird jeweils nur die Eltern - Beziehung erfasst. Das heisst,
+es exisitieren keine Eintragungen bei den Eltern.</p>
+
+<p>Nach Abschluss der Eingabe der ersten Person des Zuzugs wird nachgefragt, ob eine weitere Person
+erfasst werden soll. Dabei muss unterschieden werden zwischen (Ehe-)Partner und Kindern:</p>
+<ul>
+<li>Ein (Ehe-)Partner kann nur erfasst werden, wenn der Zivilstand der bereits erfassten Person
+den nötigen Eintrag hat. Da bei einem (Ehe-)Partner die Beziehungsdaten gegenseitig eingetragen
+werden, wird (im Hintergrund) mit der definitven Speichern der 1. Person zugewartet, bis auch
+die 2. Person abgeschlossen wird. Dieser Vorgang ist in der Regel für den Benutzer transparent,
+nur im Fehlerfall kann es sein, dass sich ein Fehler auf die scheinbar schon gespeicherte 1. Person
+bezieht. Ausserdem ist die 1. Person erst suchbar, wenn sie zusammen mit der 2. gespeichert wurde.</li>
+<li>Bei Kindern wird eine Mutter- und eine Vaterbeziehung vorgeschlagen. Die Werte werden dabei von
+der ersten Person (links im Dialog) übernommen. Daher kann es sinnvoll sein, Mutter und Vater zu tauschen,
+vorgeschlagen wird aber die Mutter als Vorlage.</li>
+</ul>
+
+<h2>Geburt</h2>
+
+<p>Am einfachsten kann eine Geburt erfasst werden, wenn gerade ein Elternteil des Kindes angezeigt
+wird. In diesem Fall werden einige Angaben (z.B. Familiennamen etc.) auf die Eingabemaske übernommen.
+Ist eine Beziehung zu einem Ehepartner / einer Ehepartnerin vorhanden so werden auch diese Angaben
+übernommen.<p>
+
+<h2>Bearbeitung einer Person</h2>
+
+<p>Ist eine Person angezeigt, so kann über die Menus auf den einzelnen Feldern bearbeitet werden. So
+kann z.B. über das Feld Zivilstand eine Ehe oder Scheidung ausgelöst werden. Hinweis: Es muss die
+aktuelle Version der Person angezeigt werden, sonst sind die Menus deaktiviert</p>
+
+<h1>Weitere Funktionen</h1>
+
+<p>Diese Funktionen können nicht direkt einem Anwendungsfall zugeordnet werden, sind jedoch für die
+Benutzung der Applikation notwending.</p>
+
+<h2>Suchen einer Person</h2>
+
+<p>Die Suche wird jeweils als Einstieg bei jedem neuen Tab angeboten. Das Resultat der Suche wird
+tabellarisch angezeigt. Daraus kann per Doppelklick die Person angezeigt werden. Hinweis: Der Doppelklick
+reagiert etwas feinfühlig, man muss schnell genug klicken, damit er erkannt wird.</p>
+
+<h2>Versionen einer Person</h2>
+
+<p>Es können die verschiedenen Versionen einer Person angezeigt werden. Dies bei der Anzeige einer
+Person über den Menupunkt "Verlauf anzeigen". Durch Anwählen eines Eintrages in der
+Tabelle kann der jeweilige Stand der Daten bis und <i>mit</i> dem gewählten Eintrag angezeigt werden.</p>
+
+<p>Hinweis: Verändert werden kann nur die aktuellste Version der Person, daher sind die Änderungsmenus
+im Fall von älteren Versionen deaktiviert.</p>
+
+<h2>Links bei Beziehungen</h2>
+
+<p>Wird bei einer angezeigten Person eine Beziehung angezeigt oder ein Kontakt zu einer anderen
+Person so kann durch ein Mausklick auf die Beziehung oder den Kontakt zur betreffenden Person
+navigiert werden. Um wieder auf die ursprüngliche Person zurückzukehren kann der Zurück-Knopf
+in der Toolbar verwendet werden, oder das Tastaturkürzel "Alt-Links".</p>
+
+<h2>Datengenerierung</h2>
+
+<p>Ist die entsprechende Option bei den Einstellungen aktiv so können mit der Taste § (bei schweiz/deutscher Tastatur
+links neben der 1) die meisten Formulare mit Zufallsdaten gefüllten werden. Nicht immer erfüllen diese
+Daten allerdings die Validierung.</p>
+
+<p>Als zweites existiert ein Menupunkt (falls die Einstellung angewählt ist) mit dem man beliebig viele Personen
+generieren lassen kann. Es ist kein Maximum gesetzt, aber in der momentanen Konfiguration sollte man es bei
+einigen Tausend Personen belassen.</p>
+
+<h2>Schemaversionen</h2>
+
+<p>Bei der Einwohnerkontrolle (EWK) werden verschiedene Versionen der Spezifikation von Ech
+unterstützt. Die technische Spezifikation besteht dabei aus einem sogenannten XML - Schema. Die
+Version des Schema wird dabei bei jeder Anpassung von Ech hochgezählt.</p>
+
+<p>Jede neue Version bietet neue Möglichkeiten. Das bedeutet meistens mehr Felder auf einer
+Eingabemaske. Im Normalfall kann mit dem neusten Schema gearbeitet werden. Ältere Schemas
+sind nur für technisch Interessierte gedacht, die damit z.B. die Kompatibilität zu früherer
+Software überprüfen möchten.</p>
+
+<p>Jedes Fenster verwendet genau eine Schemaversion. Um ein Fenster zu öffen, das mit einer anderen
+Version arbeitet wählen Sie den Menupunkt "Datei/Neues Fenster mit..".</p>
+
+<!--
+<H1>Konfiguration</H1>
+
+<p></p>
+-->
+
+</body>
+</html>

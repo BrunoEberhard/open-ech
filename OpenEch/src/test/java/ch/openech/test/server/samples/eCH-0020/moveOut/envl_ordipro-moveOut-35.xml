@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<envelope xmlns="http://www.ech.ch/xmlns/eCH-0090/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ech.ch/xmlns/eCH-0090/1 http://www.ech.ch/xmlns/eCH-0090/1/eCH-0090-1-0.xsd" version="1.0">
+	<messageId>282</messageId>
+	<messageType>20201</messageType>
+	<messageClass>0</messageClass>
+	<senderId>3-CH-6</senderId>
+	<recipientId>1-1102-1</recipientId>
+	<eventDate>2009-04-23T11:11:35.0Z</eventDate>
+	<messageDate>2009-04-23T11:11:35.0Z</messageDate>
+</envelope>
