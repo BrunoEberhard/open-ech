@@ -91,7 +91,7 @@ public class TechnicalIdsField extends ObjectField<TechnicalIds> {
 	@Override
 	protected void display(TechnicalIds technicalIds) {
 		StringBuilder s = new StringBuilder();
-		if (technicalIds.localId != null) {
+		if (technicalIds.localId.personId != null) {
 			s.append(technicalIds.localId.personId);
 		}
 		for (NamedId namedPersonId : technicalIds.otherId) {
