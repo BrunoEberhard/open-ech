@@ -8,6 +8,7 @@ import ch.openech.client.e08.CountryFreePanel;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
+import ch.openech.dm.common.Swiss;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.edit.fields.ObjectField;
@@ -54,7 +55,7 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		switchLayoutCountry = ClientToolkit.getToolkit().createSwitchLayout();
 		switchLayoutCountry.show(comboBoxCountry);
 		
-		textForeignTown = ClientToolkit.getToolkit().createReadOnlyTextField();
+		textForeignTown = ClientToolkit.getToolkit().createTextField(listener(), 100); // TODO
 
 		horizontalLayoutForeign = ClientToolkit.getToolkit().createHorizontalLayout(switchLayoutCountry, textForeignTown);
 		
@@ -62,6 +63,21 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		switchLayout.show(switchLayoutMunicipality);
 		
 		createMenu();
+	}
+
+	@Override
+	protected void fireChange() {
+		if (switchLayout.getShownComponent() == switchLayoutMunicipality) {
+			if (switchLayoutMunicipality.getShownComponent() == comboBoxMunicipality) {
+				((MunicipalityIdentification) comboBoxMunicipality.getSelectedObject()).copyTo(getObject().municipalityIdentification);
+			}
+			if (switchLayoutCountry.getShownComponent() == comboBoxCountry) {
+				((CountryIdentification) comboBoxCountry.getSelectedObject()).copyTo(getObject().countryIdentification);
+			}
+		} else {
+			getObject().foreignTown = textForeignTown.getText();
+		}
+		super.fireChange();
 	}
 
 	@Override
@@ -76,39 +92,14 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		addAction(new PlaceCountryFreeEntryEditor());
 		addAction(new PlaceUnknownAction());
 	}
-	
-	private void modeSelectMunicipality() {
-		switchLayout.show(switchLayoutMunicipality);
-		switchLayoutMunicipality.show(comboBoxMunicipality);
-	}
 
-	private void modeFreeMunicipality(MunicipalityIdentification municipalityIdentification) {
-		textMunicipality.setText(municipalityIdentification.municipalityName);
-		switchLayout.show(switchLayoutMunicipality);
-		switchLayoutMunicipality.show(textMunicipality);
-	}
-
-	private void modeSelectCountry() {
-		switchLayout.show(horizontalLayoutForeign);
-		switchLayoutCountry.show(comboBoxCountry);
-	}
-
-	private void modeFreeCountry(CountryIdentification countryIdentification) {
-		textCountry.setText(countryIdentification.countryNameShort); // TODO
-		switchLayout.show(horizontalLayoutForeign);
-		switchLayoutCountry.show(textCountry);
-	}
-
-	private void modeUnknown() {
-		textMunicipality.setText("placeOfBirth".equals(getName()) ? "Unbekannt" : "-");
-		switchLayout.show(horizontalLayoutForeign);
-		switchLayoutCountry.show(textCountry);
-	}
-	
 	private final class PlaceMunicipalitySelectAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			modeSelectMunicipality();
+			Place place = getObject();
+			Swiss.createCountryIdentification().copyTo(place.countryIdentification);
+			StaxEch0071.getInstance().getMunicipalityIdentifications().get(0).copyTo(place.municipalityIdentification);
+			fireObjectChange();
 			comboBoxMunicipality.requestFocus();
 		}
 	}
@@ -130,15 +121,18 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		}
 
 		@Override
-		protected void setPart(Place object, MunicipalityIdentification municipalityIdentification) {
-			object.setMunicipalityIdentification(municipalityIdentification);
+		protected void setPart(Place place, MunicipalityIdentification municipalityIdentification) {
+			Swiss.createCountryIdentification().copyTo(place.countryIdentification);
+			place.setMunicipalityIdentification(municipalityIdentification);
 		}
 	}
 
 	private final class PlaceCountrySelectAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			modeSelectCountry();
+			Place place = getObject();
+			StaxEch0072.getInstance().getCountryIdentifications().get(1).copyTo(place.countryIdentification);
+			fireObjectChange();
 			comboBoxCountry.requestFocus();
 		}
 	}
@@ -188,21 +182,29 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 			int index = StaxEch0071.getInstance().getMunicipalityIdentifications().indexOf(municipalityIdentification);
 			if (index >= 0) {
 				comboBoxMunicipality.setSelectedObject(municipalityIdentification);
-				modeSelectMunicipality();
+				switchLayout.show(switchLayoutMunicipality);
+				switchLayoutMunicipality.show(comboBoxMunicipality);
 			} else {
-				modeFreeMunicipality(municipalityIdentification);
+				textMunicipality.setText(municipalityIdentification.municipalityName);
+				switchLayout.show(switchLayoutMunicipality);
+				switchLayoutMunicipality.show(textMunicipality);
 			}
 		} else if (value.isForeign()) {
 			CountryIdentification countryIdentification = value.countryIdentification;
 			int index = StaxEch0072.getInstance().getCountryIdentifications().indexOf(countryIdentification);
 			if (index >= 0) {
 				comboBoxCountry.setSelectedObject(countryIdentification);
-				modeSelectCountry();
+				switchLayout.show(horizontalLayoutForeign);
+				switchLayoutCountry.show(comboBoxCountry);
 			} else {
-				modeFreeCountry(countryIdentification);
+				textCountry.setText(countryIdentification.countryNameShort); // TODO
+				switchLayout.show(horizontalLayoutForeign);
+				switchLayoutCountry.show(textCountry);
 			}
 		} else {
-			modeUnknown();
+			textMunicipality.setText("placeOfBirth".equals(getName()) ? "Unbekannt" : "-");
+			switchLayout.show(switchLayoutMunicipality);
+			switchLayoutMunicipality.show(textMunicipality);
 		}
 
 		textForeignTown.setText(value.foreignTown);
