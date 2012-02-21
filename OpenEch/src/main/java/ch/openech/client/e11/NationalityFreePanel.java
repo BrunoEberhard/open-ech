@@ -9,6 +9,8 @@ import ch.openech.dm.person.Nationality;
 public class NationalityFreePanel extends EchFormPanel<Nationality> {
 
 	public NationalityFreePanel() {
+		super(2);
+		
 		line(NATIONALITY.nationalityStatus, NATIONALITY.nationalityCountry.countryId);
 		line(NATIONALITY.nationalityCountry.countryNameShort, NATIONALITY.nationalityCountry.countryIdISO2);
 	}
