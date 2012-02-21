@@ -72,7 +72,7 @@ public class UndoCitizenEvent extends PersonEventEditor<PlaceOfOrigin> {
 		}
 
 		@Override
-		public IComponent getComponent() {
+		public IComponent getComponent0() {
 			return comboBox;
 		}
 
@@ -99,11 +99,6 @@ public class UndoCitizenEvent extends PersonEventEditor<PlaceOfOrigin> {
 				}
 			}
 			comboBox.setObjects(placeOfOrigins);
-		}
-
-		@Override
-		public void setValidationMessages(List<ValidationMessage> validationMessages) {
-			comboBox.setValidationMessages(validationMessages);
 		}
 	}
 

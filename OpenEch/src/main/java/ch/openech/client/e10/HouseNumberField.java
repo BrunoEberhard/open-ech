@@ -1,13 +1,12 @@
 package ch.openech.client.e10;
 
-import java.util.List;
-
 import ch.openech.dm.common.HouseNumber;
 import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.HorizontalLayout;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
 public class HouseNumberField extends AbstractEditField<HouseNumber> {
@@ -26,7 +25,7 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent0() {
 		return horizontalLayout;
 	}
 
@@ -49,8 +48,8 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	}
 
 	@Override
-	public void setValidationMessages(List<ValidationMessage> validationMessages) {
-		houseNumberTextField.setValidationMessages(validationMessages);
+	protected Indicator[] getIndicatingComponents() {
+		return new Indicator[]{houseNumberTextField};
 	};
 	
 }

@@ -165,8 +165,7 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getObject().clear();
-			display(getObject());
-			fireChange();
+			fireObjectChange();
 		}
 	}
 

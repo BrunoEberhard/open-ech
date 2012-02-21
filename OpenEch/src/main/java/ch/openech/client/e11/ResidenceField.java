@@ -104,7 +104,7 @@ public class ResidenceField extends ObjectField<Residence> implements Validatabl
 		@Override
 		public boolean save(Residence residence) {
 			ResidenceField.this.getObject().secondary.add(residence.reportingMunicipality);
-			fireChange();
+			fireObjectChange();
 			return true;
 		}
 	}
@@ -113,7 +113,7 @@ public class ResidenceField extends ObjectField<Residence> implements Validatabl
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getObject().secondary.clear();
-			fireChange();
+			fireObjectChange();
 		}
 	}
 	
@@ -218,7 +218,7 @@ public class ResidenceField extends ObjectField<Residence> implements Validatabl
 			getObject().reportingMunicipality = null;
 		}
 		
-		fireChange();
+		fireObjectChange();
 	}
 
 	@Override

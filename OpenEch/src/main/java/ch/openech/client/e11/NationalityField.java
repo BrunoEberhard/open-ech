@@ -3,6 +3,7 @@ package ch.openech.client.e11;
 import java.awt.event.ActionEvent;
 
 import ch.openech.dm.common.CountryIdentification;
+import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Nationality;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
@@ -12,7 +13,6 @@ import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.read.StaxEch0072;
 
 public class NationalityField extends ObjectField<Nationality> {
@@ -53,21 +53,31 @@ public class NationalityField extends ObjectField<Nationality> {
 	private final class NationalitySelectAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			modeSelectCountry();
+			Nationality nationality = getObject();
+			nationality.nationalityStatus = "2";
+			Swiss.createCountryIdentification().copyTo(nationality.nationalityCountry);
+			fireObjectChange();
+			comboBox.requestFocus();
 		}
 	}
 	
 	private final class NationalityRemoveAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			modeStaatenlos();
+			Nationality nationality = getObject();
+			nationality.nationalityStatus = "1";
+			nationality.nationalityCountry.clear();
+			fireObjectChange();		
 		}
 	}
 	
 	private final class NationalityUnknownAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			modeUnknown();
+			Nationality nationality = getObject();
+			nationality.nationalityStatus = "0";
+			nationality.nationalityCountry.clear();
+			fireObjectChange();
 		}
 	}
 
@@ -94,73 +104,34 @@ public class NationalityField extends ObjectField<Nationality> {
 	}
 	
 	@Override
+	protected void fireChange() {
+		Nationality nationality = getObject();
+		nationality.nationalityStatus = "2";
+		((CountryIdentification) comboBox.getSelectedObject()).copyTo(nationality.nationalityCountry);
+		super.fireChange();
+	}
+
+	@Override
 	protected void display(Nationality nationality) {
 		String status = nationality.nationalityStatus;
 		if ("2".equals(status)) {
 			CountryIdentification countryIdentification = nationality.nationalityCountry;
 			int index = StaxEch0072.getInstance().getCountryIdentifications().indexOf(countryIdentification);
 			if (index < 0) {
-				modeFree();
+				switchLayout.show(textField);
+				textField.setText(visualizeFreeEntry());
 			} else {
 				comboBox.setSelectedObject(countryIdentification);
-				modeSelectCountry();
+				switchLayout.show(comboBox);
 			}
 		} else if ("1".equals(status)) {
-			modeStaatenlos();
-		} else if ("0".equals(status) || StringUtils.isBlank(status)) {
-			modeUnknown();
+			switchLayout.show(textFieldWithout);
+		} else if ("0".equals(status)) {
+			switchLayout.show(textFieldUnknown);
 		} else {
-			modeFree();
+			switchLayout.show(textField);
+			textField.setText(visualizeFreeEntry());
 		}
-	}
-
-	@Override
-	public Nationality getObject() {
-		Nationality nationality = super.getObject();
-		if (switchLayout.getShownComponent() == comboBox) {
-			CountryIdentification countryIdentification = (CountryIdentification) comboBox.getSelectedObject();
-			if (countryIdentification != null) {
-				nationality.nationalityStatus = "2";
-				countryIdentification.copyTo(nationality.nationalityCountry);
-			} else {
-				nationality.nationalityStatus = "0";
-				nationality.nationalityCountry.clear();
-			}
-		} else if (switchLayout.getShownComponent() == textFieldUnknown) {
-			nationality.nationalityStatus = "0";
-			nationality.nationalityCountry.clear();
-		} else if (switchLayout.getShownComponent() == textFieldWithout) {
-			nationality.nationalityStatus = "1";
-			nationality.nationalityCountry.clear();
-		} else {
-			if (nationality.nationalityCountry.isEmpty()) {
-				nationality.nationalityStatus = "0";
-			} else {
-				nationality.nationalityStatus = "2";
-			}
-		}
-		return nationality;
-	}
-
-	
-	// modes
-
-	private void modeSelectCountry() {
-		switchLayout.show(comboBox);
-		comboBox.requestFocus();
-	}
-
-	private void modeStaatenlos() {
-		switchLayout.show(textFieldWithout);
-	}
-	
-	private void modeUnknown() {
-		switchLayout.show(textFieldUnknown);
-	}
-	
-	private void modeFree() {
-		textField.setText(visualizeFreeEntry());
-		switchLayout.show(textField);
 	}
 
 }

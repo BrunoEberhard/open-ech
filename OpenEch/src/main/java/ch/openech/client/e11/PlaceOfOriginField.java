@@ -96,7 +96,7 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 		@Override
 		protected void setPart(List<PlaceOfOrigin> object, PlaceOfOrigin p) {
 			object.set(list.getSelectedIndex(), p);
-			fireChange();
+			fireObjectChange();
 		}
 	}
 
@@ -105,7 +105,7 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 		public void actionPerformed(ActionEvent e) {
 			if (list.getSelectedIndex() >= 0) {
 				getObject().remove(list.getSelectedIndex());
-				fireChange();
+				fireObjectChange();
 			}
 		}
 	}
@@ -140,7 +140,7 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 			}
 		}
 		if (changed) {
- 			fireChange();
+ 			fireObjectChange();
 		}
 	}
 
@@ -150,7 +150,7 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 		do {
 			getObject().add(DataGenerator.placeOfOrigin());
 		} while (Math.random() < .4);
-		fireChange();
+		fireObjectChange();
 	}
 
 	@Override

@@ -125,7 +125,7 @@ public class ContactPersonField extends ObjectField<ContactPerson> {
 						if (person.isFemale()) contactPerson.address.mrMrs = "1";
 					}
 				}
-				fireChange();
+				fireObjectChange();
 			}
 			return true;
 		}
@@ -154,7 +154,7 @@ public class ContactPersonField extends ObjectField<ContactPerson> {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getObject().person = null;
-			fireChange();
+			fireObjectChange();
 		}
     };
 
@@ -187,7 +187,7 @@ public class ContactPersonField extends ObjectField<ContactPerson> {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getObject().address = null;
-			fireChange();
+			fireObjectChange();
 		}
 	};
 	

@@ -10,10 +10,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.ContextLayout;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
@@ -24,7 +23,6 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 	private final ComboBox comboBox;
 	private final TextField textField;
 	private final SwitchLayout switchLayout;
-	private final ContextLayout contextLayout;
 	
 	private ZipTownField connectedZipTownField;
 
@@ -42,20 +40,17 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout(); // comboBox, textField
 		switchLayout.show(comboBox);
 		
-		contextLayout = ClientToolkit.getToolkit().createContextLayout(switchLayout);
-		
 		// editable 
 		
 		createMenu();
 	}
 	
 	@Override
-	public Object getComponent() {
-		return contextLayout;
+	public IComponent getComponent0() {
+		return switchLayout;
 	}
 
 	private void createMenu() {
-		List<Action> actions = new ArrayList<Action>();
 		Action select = new AbstractAction("Auswahl Land") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -63,7 +58,7 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 				comboBox.requestFocus();
 			}
         };
-        actions.add(select);
+        addAction(select);
 
         Action freeEntry = new AbstractAction("Freie Eingabe") {
 			@Override
@@ -73,9 +68,7 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 				comboBox.requestFocus();
 			}
         };
-        actions.add(freeEntry);
-        
-        contextLayout.setActions(actions);
+        addAction(freeEntry);
 	}
 	
 	public void setConnectedZipTownField(ZipTownField connectedZipTownField) {
@@ -118,12 +111,6 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 			switchLayout.show(comboBox);
 			comboBox.setSelectedObject(value);
 		}
-	}
-	
-	@Override
-	public void setValidationMessages(List<ValidationMessage> validationMessages) {
-		textField.setValidationMessages(validationMessages);
-		comboBox.setValidationMessages(validationMessages);
 	}
 	
 }

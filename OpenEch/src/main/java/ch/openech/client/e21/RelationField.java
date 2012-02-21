@@ -80,7 +80,7 @@ public class RelationField extends ObjectField<List<Relation>> {
 //			}
 			if (listRelation.getSelectedIndex() >= 0) {
 				getObject().remove(listRelation.getSelectedIndex());
-				fireChange();
+				fireObjectChange();
 			}
 		}
 	}

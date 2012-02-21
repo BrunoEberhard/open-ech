@@ -1,6 +1,7 @@
 package ch.openech.client.e07;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
@@ -9,6 +10,7 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.mj.db.model.Code;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.ObjectField.ObjectFieldEditor;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;

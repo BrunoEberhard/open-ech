@@ -10,10 +10,8 @@ import javax.swing.Action;
 import ch.openech.dm.code.CodeWithOther;
 import ch.openech.mj.db.model.Code;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.ContextLayout;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
@@ -32,7 +30,6 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 	private final Code code;
 	private CodeWithOther codeWithOther;
 	
-	private final ContextLayout contextLayout;
 	private final SwitchLayout switchLayout;
 	private final ComboBox comboBox;
 	private final TextField textField;
@@ -54,28 +51,24 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 		
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout(); // comboBox, textField
 		switchLayout.show(comboBox);
-		
-		contextLayout = ClientToolkit.getToolkit().createContextLayout(switchLayout);
 
 		setDefault();
 		createMenu();
 	}
 	
 	@Override
-	public Object getComponent() {
-		return contextLayout;
+	public IComponent getComponent0() {
+		return switchLayout;
 	}
 
 	private void createMenu() {
-		List<Action> actions = new ArrayList<Action>();
-		
 		Action select = new AbstractAction("Auswahl " + code.getDisplayName()) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				modeChoice();
 			}
 		};
-		actions.add(select);
+		addAction(select);
 
 		Action unbekannt = new AbstractAction(code.getDisplayName() + " entfernen") {
 			@Override
@@ -83,7 +76,7 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 				modeUnknown();
 			}
 		};
-		actions.add(unbekannt);
+		addAction(unbekannt);
 
 		Action freeEntry = new AbstractAction("Freie Eingabe") {
 			@Override
@@ -91,9 +84,7 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 				modeFreeEntry();
 			}
 		};
-		actions.add(freeEntry);
-		
-		contextLayout.setActions(actions);
+		addAction(freeEntry);
 	}
 	
 	private void modeChoice() {
@@ -181,9 +172,4 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 		}
 	}
 	
-	@Override
-	public void setValidationMessages(List<ValidationMessage> validationMessages) {
-		textField.setValidationMessages(validationMessages);
-		comboBox.setValidationMessages(validationMessages);
-	}
 }

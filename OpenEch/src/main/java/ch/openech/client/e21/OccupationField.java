@@ -42,7 +42,7 @@ public class OccupationField extends ObjectField<List<Occupation>> implements In
 		protected void setPart(List<Occupation> object, Occupation p) {
 			List<Occupation> occupations = OccupationField.this.getObject();
 			occupations.add(p);
-			fireChange();
+			fireObjectChange();
 		}
 		
 		@Override
@@ -58,7 +58,7 @@ public class OccupationField extends ObjectField<List<Occupation>> implements In
 			int index = listOccupation.getSelectedIndex();
 			if (index >= 0) {
 				occupations.remove(index);
-				fireChange();
+				fireObjectChange();
 			}
 			
 //			int[] selectedIndices = listOccupation.getSelectedIndices();

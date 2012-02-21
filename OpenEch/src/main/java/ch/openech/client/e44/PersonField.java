@@ -65,7 +65,6 @@ public class PersonField extends ObjectField<Person> {
 		protected boolean save(Person person) {
 			if (person != null) {
 				PersonField.this.setObject(person);
-				fireChange();
 			}
 			return true;
 		}

@@ -42,12 +42,6 @@ public class ForeignField extends ObjectField<Foreign> implements Validatable, D
 	}
 
 	@Override
-	public void setObject(Foreign object) {
-		if (object == null) throw new IllegalArgumentException();
-		super.setObject(object);
-	}
-
-	@Override
 	public FormVisual<Foreign> createFormPanel() {
 		return new ForeignPanel(namespaceContext);
 	}

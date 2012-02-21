@@ -83,7 +83,7 @@ public class ContactField extends ObjectField<Contact> {
 			int index = list.getSelectedIndex();
 			if (index >= 0) {
 				contact.entries.remove(index);
-				fireChange();
+				fireObjectChange();
 			}
 		}
     };

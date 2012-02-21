@@ -21,6 +21,7 @@ import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
@@ -328,7 +329,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public Object getComponent() {
+		public IComponent getComponent0() {
 			return comboBox;
 		}
 
@@ -340,11 +341,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		@Override
 		public Person getObject() {
 			return (Person) comboBox.getSelectedObject();
-		}
-
-		@Override
-		public void setValidationMessages(List<ValidationMessage> validationMessages) {
-			// TODO
 		}
 
 		@Override

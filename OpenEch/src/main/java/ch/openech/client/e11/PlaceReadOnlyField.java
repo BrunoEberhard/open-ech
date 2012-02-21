@@ -1,41 +1,30 @@
 package ch.openech.client.e11;
 
 import ch.openech.dm.common.Place;
-import ch.openech.mj.edit.fields.ObjectField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.IComponentDelegate;
 import ch.openech.mj.toolkit.TextField;
 
 
-public class PlaceReadOnlyField extends ObjectField<Place> {
-	private TextField text;
-
+public class PlaceReadOnlyField implements FormField<Place>, IComponentDelegate {
+	private final TextField text;
+	private final String name;
+	
 	public PlaceReadOnlyField(Object key) {
-		super(key);
-		
+		this.name = Constants.getConstant(key);
 		text = ClientToolkit.getToolkit().createReadOnlyTextField();
 	}
 
 	@Override
-	protected IComponent getComponent0() {
+	public IComponent getComponent() {
 		return text;
 	}
 
 	@Override
 	public void setObject(Place value) {
-		if (value == null) {
-			value = new Place();
-		}
-		super.setObject(value);
-	}
-	
-	public void setEnabled(boolean enabled) {
-		text.setEnabled(enabled);
-	}
-	
-	@Override
-	public void display(Place value) {
 		if (value.isSwiss()) {
 			text.setText(value.municipalityIdentification.toString());
 		} else if (value.isForeign()) {
@@ -44,11 +33,14 @@ public class PlaceReadOnlyField extends ObjectField<Place> {
 			text.setText("-");
 		}
 	}
+	
+	public void setEnabled(boolean enabled) {
+		text.setEnabled(enabled);
+	}
 
 	@Override
-	protected FormVisual<Place> createFormPanel() {
-		// not used
-		return null;
+	public String getName() {
+		return name;
 	}
 
 }

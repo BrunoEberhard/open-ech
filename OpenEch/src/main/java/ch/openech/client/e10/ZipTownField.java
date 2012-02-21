@@ -170,7 +170,7 @@ public class ZipTownField extends ObjectField<ZipTown> implements DemoEnabled {
 		} else {
 			modeSelectCH();
 		}
-		fireChange();
+		fireObjectChange();
 	}
 
 	@Override

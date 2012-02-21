@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.ObjectField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.VisualList;
 
 
-public class RemoveEntriesListField<T> extends ObjectField<List<T>> {
+public class RemoveEntriesListField<T> extends AbstractEditField<List<T>> {
 
 	private List<T> values = new ArrayList<T>();
 	private List<T> selectedValues = new ArrayList<T>();
@@ -52,17 +51,6 @@ public class RemoveEntriesListField<T> extends ObjectField<List<T>> {
 	@Override
 	protected IComponent getComponent0() {
 		return list;
-	}
-
-	@Override
-	protected FormVisual<List<T>> createFormPanel() {
-		// not used
-		return null;
-	}
-
-	@Override
-	protected void display(List<T> object) {
-		// not used
 	}
 	
 	private class RemoveSelectedObjectAction extends ResourceAction {

@@ -25,7 +25,7 @@ public class VnField extends AbstractEditField<String> implements DemoEnabled, V
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent0() {
 		return textField;
 	}
 
@@ -87,11 +87,6 @@ public class VnField extends AbstractEditField<String> implements DemoEnabled, V
 		if (vn < 7560000000001L || vn > 7569999999999L) {
 			list.add(new ValidationMessage(getName(), "Die Eingabe muss zw 7560000000001 und 7569999999999 liegen"));
 		}
-	}
-
-	@Override
-	public void setValidationMessages(List<ValidationMessage> validationMessages) {
-		textField.setValidationMessages(validationMessages);
 	}
 
 }

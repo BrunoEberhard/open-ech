@@ -7,8 +7,7 @@ import java.util.List;
 import ch.openech.dm.common.CountryZipTown;
 import ch.openech.dm.common.ZipTown;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.edit.fields.ObjectField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -18,7 +17,7 @@ import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.util.StringUtils;
 
 
-public class CountryZipTownField extends ObjectField<CountryZipTown> implements DemoEnabled, Validatable, Indicator {
+public class CountryZipTownField extends AbstractEditField<CountryZipTown> implements DemoEnabled, Validatable, Indicator {
 	private CountryField countryField;
 	private ZipTownField zipTownField;
 	private HorizontalLayout horizontalLayout;
@@ -36,7 +35,7 @@ public class CountryZipTownField extends ObjectField<CountryZipTown> implements 
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
+	public IComponent getComponent0() {
 		return horizontalLayout;
 	}
 
@@ -89,17 +88,6 @@ public class CountryZipTownField extends ObjectField<CountryZipTown> implements 
 	@Override
 	protected Indicator[] getIndicatingComponents() {
 		return new Indicator[]{countryField, zipTownField};
-	}
-
-	@Override
-	public FormVisual<CountryZipTown> createFormPanel() {
-		return null;
-		// unused
-	}
-
-	@Override
-	protected void display(CountryZipTown object) {
-		// unused
 	}
 	
 }

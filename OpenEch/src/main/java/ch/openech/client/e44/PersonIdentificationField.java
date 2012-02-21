@@ -71,7 +71,6 @@ public class PersonIdentificationField extends ObjectField<PersonIdentification>
 		protected boolean save(Person person) {
 			if (person != null) {
 				PersonIdentificationField.this.setObject(person.personIdentification);
-				fireChange();
 			}
 			return true;
 		}
@@ -92,7 +91,6 @@ public class PersonIdentificationField extends ObjectField<PersonIdentification>
 		@Override
 		public boolean save(PersonIdentification personIdentification) {
 			PersonIdentificationField.this.setObject(personIdentification);
-			fireChange();
 			return true;
 		}
 

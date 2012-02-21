@@ -28,7 +28,7 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent0() {
 		return textField;
 	}
 
@@ -99,11 +99,6 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 			value += (int)(Math.random() * 900000000 + 100000000);
 		} while (!checksum(value));
 		setObject(value);
-	}
-	
-	@Override
-	public void setValidationMessages(List<ValidationMessage> validationMessages) {
-		textField.setValidationMessages(validationMessages);
 	}
 	
 }

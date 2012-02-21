@@ -8,10 +8,10 @@ import javax.swing.event.ChangeListener;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.person.MaritalStatus;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.CodeEditField;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.FormField;
-import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.fields.TextFormField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Indicator;
@@ -22,12 +22,13 @@ import ch.openech.mj.toolkit.HorizontalLayout;
 import ch.openech.mj.toolkit.IComponent;
 
 
-public class MaritalStatusField extends ObjectField<MaritalStatus> implements Validatable, DemoEnabled {
+public class MaritalStatusField extends AbstractEditField<MaritalStatus> implements Validatable, DemoEnabled {
 	private final boolean editable;
 	private final FormField<String> code;
 	private final DateField date;
 	private final HorizontalLayout horizontalLayout;
 	private DateEnablerChangeListener dateEnablerChangeListener;
+	private MaritalStatus maritalStatus;
 	
 	public MaritalStatusField(Object key, boolean editable) {
 		super(key);
@@ -55,19 +56,16 @@ public class MaritalStatusField extends ObjectField<MaritalStatus> implements Va
 	@Override
 	public MaritalStatus getObject() {
 		if (editable) {
-			MaritalStatus maritalStatus = super.getObject();
 			// Der Cast auf CodeEditField geht schief, falls kein editable, darum das if hier
 			maritalStatus.maritalStatus = ((CodeEditField) code).getObject();
 			maritalStatus.dateOfMaritalStatus = date.getObject();
-			return maritalStatus;
-		} else {
-			return super.getObject();
 		}
+		return maritalStatus;
 	}
 
 	@Override
 	public void setObject(MaritalStatus maritalStatus) {
-		super.setObject(maritalStatus);
+		this.maritalStatus = maritalStatus;
 		code.setObject(maritalStatus.maritalStatus);
 		date.setObject(maritalStatus.dateOfMaritalStatus);
 	}
@@ -110,17 +108,6 @@ public class MaritalStatusField extends ObjectField<MaritalStatus> implements Va
 		if (!getObject().isLedig()) {
 			date.fillWithDemoData();
 		}
-	}
-
-	@Override
-	public FormVisual<MaritalStatus> createFormPanel() {
-		// unused
-		return null;
-	}
-
-	@Override
-	protected void display(MaritalStatus object) {
-		// unused
 	}
 
 	@Override

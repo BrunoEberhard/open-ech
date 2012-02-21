@@ -84,8 +84,7 @@ public class TechnicalIdsField extends ObjectField<TechnicalIds> {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getObject().clear();
-			display(getObject());
-			fireChange();
+			fireObjectChange();
 		}
 	}
 	

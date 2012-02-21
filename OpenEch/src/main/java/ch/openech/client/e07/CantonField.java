@@ -33,7 +33,7 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent0() {
 		return textField;
 	}
 
@@ -90,9 +90,4 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 		list.add(new ValidationMessage(getName(), "Kein gültiger Kanton"));
 	}
 
-	@Override
-	public void setValidationMessages(List<ValidationMessage> validationMessages) {
-		textField.setValidationMessages(validationMessages);
-	}
-	
 }
