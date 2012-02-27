@@ -64,7 +64,7 @@ public abstract class XmlEditor<T> extends Editor<T> {
 //	}
 
 	@Override
-	protected Action[] getActions() {
+	public Action[] getActions() {
 		return new Action[]{xmlAction, cancelAction, saveAction};
 	}
 

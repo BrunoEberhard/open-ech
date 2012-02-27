@@ -21,7 +21,7 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 	}
 
 	public static class MoveEventData extends DwellingAddress {
-		private MunicipalityIdentification reportingMunicipality;
+		public MunicipalityIdentification reportingMunicipality;
 	}
 
 	private static final MoveEventData MED = Constants.of(MoveEventData.class);

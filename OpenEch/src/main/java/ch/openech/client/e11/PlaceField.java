@@ -69,10 +69,16 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 	protected void fireChange() {
 		if (switchLayout.getShownComponent() == switchLayoutMunicipality) {
 			if (switchLayoutMunicipality.getShownComponent() == comboBoxMunicipality) {
-				((MunicipalityIdentification) comboBoxMunicipality.getSelectedObject()).copyTo(getObject().municipalityIdentification);
+				MunicipalityIdentification selectedMunicipality = (MunicipalityIdentification) comboBoxMunicipality.getSelectedObject();
+				if (selectedMunicipality != null) {
+					selectedMunicipality.copyTo(getObject().municipalityIdentification);
+				}
 			}
 			if (switchLayoutCountry.getShownComponent() == comboBoxCountry) {
-				((CountryIdentification) comboBoxCountry.getSelectedObject()).copyTo(getObject().countryIdentification);
+				CountryIdentification selectedCountry = (CountryIdentification) comboBoxCountry.getSelectedObject();
+				if (selectedCountry != null) {
+					selectedCountry.copyTo(getObject().countryIdentification);
+				}
 			}
 		} else {
 			getObject().foreignTown = textForeignTown.getText();

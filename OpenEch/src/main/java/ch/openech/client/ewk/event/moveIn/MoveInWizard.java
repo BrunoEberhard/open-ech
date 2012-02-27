@@ -13,6 +13,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.Editor;
+import ch.openech.mj.edit.WizardPage;
 import ch.openech.mj.edit.Wizard;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
@@ -32,6 +33,9 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	private final EchNamespaceContext echNamespaceContext;
 	private final Person person;
 	private final MoveInEditorData data;
+	private final MoveInPersonWizardPage moveInPersonWizardPage;
+	private final MoveInNextPersonWizardPage moveInNextPersonWizardPage;
+	private int personCount;
 	
 	public MoveInWizard(String version) {
 		this(EchNamespaceContext.getNamespaceContext(20, version));
@@ -45,8 +49,10 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		this.echNamespaceContext = echNamespaceContext;
 		this.person = person;
 		this.data = new MoveInEditorData();
+		this.moveInPersonWizardPage = new MoveInPersonWizardPage();
+		this.moveInNextPersonWizardPage = new MoveInNextPersonWizardPage();
 	}
-
+	
 	public static class MoveInNextPerson {
 		public static final MoveInNextPerson MOVE_IN_NEXT_PERSON = Constants.of(MoveInNextPerson.class);
 		
@@ -65,6 +71,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		
 		public final List<Person> persons = new ArrayList<Person>();
 		public final List<MoveInNextPerson> nextPersons = new ArrayList<MoveInWizard.MoveInNextPerson>();
+	}
+
+	@Override
+	protected WizardPage<?> getFirstPage() {
+		return moveInPersonWizardPage;
 	}
 
 	protected WriterEch0020 getWriterEch0020() {
@@ -90,83 +101,71 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		return data;
 	}
 
-	@Override
-	protected Editor<?> getNextEditor() {
-		if (data.persons.isEmpty()) {
-			return new MoveInWizardEditor(new Person());
-		} else if (data.persons.size() == data.nextPersons.size()) {
-			return new MoveInWizardEditor(createNextPerson(data.nextPersons.get(data.nextPersons.size()-1)));
-		} else {
-			return new MoveInNextPersonEditor();
-		}
-	}
+	private class MoveInPersonWizardPage extends WizardPage<Person> {
 
-	private Person createNextPerson(MoveInNextPerson moveInNextPerson) {
-		TypeOfRelationshipInverted relation = moveInNextPerson.typeOfRelationshipInverted();
-		switch (relation) {
-		case Partner:
-			return NextPersonHelper.createNextPersonPartner(moveInNextPerson.basePerson, true);
-		case AllianzPartner:
-			return NextPersonHelper.createNextPersonPartner(moveInNextPerson.basePerson, false);
-		case Kind:
-			return NextPersonHelper.createNextPersonChild(moveInNextPerson);
-		default:
-			return NextPersonHelper.createPersonWithoutRelation(moveInNextPerson.basePerson);
-		}
-	}
-	
-	@Override
-	protected Editor<?> getPrevEditor() {
-		return new MoveInWizardEditor(new Person());
-	}
-
-	@Override
-	protected boolean save(MoveInEditorData object) {
-		List<String> xmlList = new ArrayList<String>();
-		for (Person person : object.persons) {
-			try {
-				xmlList.add(getWriterEch0020().moveIn(person));
-			} catch (Exception e) {
-				// TODO
-				e.printStackTrace();
-			}
-		}
-		XmlEditor.send(xmlList);
-		return true;
-	}
-
-	private class MoveInWizardEditor extends Editor<Person> {
-
-		private final Person person;
-		
-		public MoveInWizardEditor(Person person) {
-			this.person = person;
-		}
-		
 		@Override
 		protected FormVisual<Person> createForm() {
 			return new PersonPanel(PersonPanelType.MOVE_IN, echNamespaceContext);
 		}
 
 		@Override
+		public String getTitle() {
+			return "Person eingeben";
+		}
+
+		@Override
+		public String getDescription() {
+			return null;
+		}
+
+		@Override
+		public String getMessage() {
+			return null;
+		}
+
+		@Override
+		public boolean canFinish() {
+			return true;
+		}
+
+		@Override
+		public WizardPage<?> getNextPage() {
+			return moveInNextPersonWizardPage;
+		}
+
+		@Override
+		public WizardPage<?> getPreviousPage() {
+			return moveInNextPersonWizardPage;
+		}
+		
+		@Override
+		protected boolean save(Person person) {
+			return true;
+		}
+
+		@Override
 		protected Person load() {
-			return person;
+			personCount = personCount + 1;
+			MoveInEditorData wizardData = MoveInWizard.this.getObject();
+			if (wizardData.persons.size() < personCount) {
+				Person person;
+				if (personCount > 1) {
+					person = createNextPerson(wizardData.nextPersons.get(personCount-2));
+				} else {
+					person = new Person();
+				}
+				wizardData.persons.add(person);
+			}
+			return wizardData.persons.get(personCount-1);
 		}
 
 		@Override
 		protected void validate(Person object, List<ValidationMessage> resultList) {
-			// noting special to validate
+			// nothing special to validate
 		}
-
-		@Override
-		protected boolean save(Person person) {
-			MoveInWizard.this.getObject().persons.add(person);
-			return true;
-		}
-		
 	}
-
-	private class MoveInNextPersonEditor extends Editor<MoveInNextPerson> {
+	
+	private class MoveInNextPersonWizardPage extends WizardPage<MoveInNextPerson> {
 
 		@Override
 		protected FormVisual<MoveInNextPerson> createForm() {
@@ -187,23 +186,87 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		protected MoveInNextPerson load() {
-			return new MoveInNextPerson();
+		public String getTitle() {
+			return "Weitere Person erfassen";
 		}
 
 		@Override
-		protected void validate(MoveInNextPerson object, List<ValidationMessage> resultList) {
-			// noting special to validate
+		public String getDescription() {
+			return null;
+		}
+
+		@Override
+		public String getMessage() {
+			return null;
+		}
+
+		@Override
+		public boolean canFinish() {
+			return false;
+		}
+
+		@Override
+		protected MoveInNextPerson load() {
+			MoveInEditorData wizardData = MoveInWizard.this.getObject();
+			if (wizardData.nextPersons.size() < personCount) {
+				MoveInNextPerson moveInNextPerson = new MoveInNextPerson();
+				wizardData.nextPersons.add(moveInNextPerson);
+			}
+			return wizardData.nextPersons.get(personCount-1);
 		}
 
 		@Override
 		protected boolean save(MoveInNextPerson object) {
-			MoveInWizard.this.getObject().nextPersons.add(object);
 			return true;
 		}
-		
+
+		@Override
+		public WizardPage<?> getNextPage() {
+			return moveInPersonWizardPage;
+		}
+
+		@Override
+		public WizardPage<?> getPreviousPage() {
+			return moveInPersonWizardPage;
+		}
+
+		@Override
+		protected void validate(MoveInNextPerson object, List<ValidationMessage> resultList) {
+			// nothing special to validate
+		}
+
 	}
 	
+	private Person createNextPerson(MoveInNextPerson moveInNextPerson) {
+		TypeOfRelationshipInverted relation = moveInNextPerson.typeOfRelationshipInverted();
+		switch (relation) {
+		case Partner:
+			return NextPersonHelper.createNextPersonPartner(moveInNextPerson.basePerson, true);
+		case AllianzPartner:
+			return NextPersonHelper.createNextPersonPartner(moveInNextPerson.basePerson, false);
+		case Kind:
+			return NextPersonHelper.createNextPersonChild(moveInNextPerson);
+		default:
+			return NextPersonHelper.createPersonWithoutRelation(moveInNextPerson.basePerson);
+		}
+	}
+
+	@Override
+	protected boolean save(MoveInEditorData object) {
+		List<String> xmlList = new ArrayList<String>();
+		for (Person person : object.persons) {
+			try {
+				xmlList.add(getWriterEch0020().moveIn(person));
+			} catch (Exception e) {
+				// TODO
+				e.printStackTrace();
+			}
+		}
+		XmlEditor.send(xmlList);
+		return true;
+	}
+
+
 	private class MoveInNextPersonField extends AbstractEditField<Person> implements DependingOnFieldAbove<String> {
 
 		private final ComboBox comboBox;
@@ -269,4 +332,5 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 		
 	}
+
 }
