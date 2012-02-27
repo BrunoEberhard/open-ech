@@ -13,7 +13,6 @@ import ch.openech.mj.edit.fields.CodeEditField;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.edit.fields.TextFormField;
-import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -91,7 +90,7 @@ public class MaritalStatusField extends AbstractEditField<MaritalStatus> impleme
 	public void setChangeListener(ChangeListener changeListener) {
 		super.setChangeListener(changeListener);
 		dateEnablerChangeListener.setChangeListener(changeListener);
-		date.setChangeListener(dateEnablerChangeListener); // will propagate with right source
+		date.setChangeListener(changeListener);
 	}
 
 	@Override
