@@ -10,11 +10,9 @@ import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.code.TypeOfRelationship;
 import ch.openech.dm.code.TypeOfRelationshipInverted;
 import ch.openech.dm.person.Person;
-import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.Editor;
-import ch.openech.mj.edit.WizardPage;
 import ch.openech.mj.edit.Wizard;
+import ch.openech.mj.edit.WizardPage;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
@@ -23,7 +21,6 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -35,7 +32,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	private final MoveInEditorData data;
 	private final MoveInPersonWizardPage moveInPersonWizardPage;
 	private final MoveInNextPersonWizardPage moveInNextPersonWizardPage;
-	private int personCount;
+	private int personIndex; // merge with currentPageIndex?
 	
 	public MoveInWizard(String version) {
 		this(EchNamespaceContext.getNamespaceContext(20, version));
@@ -135,6 +132,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		public WizardPage<?> getPreviousPage() {
+			personIndex = personIndex - 1;
 			return moveInNextPersonWizardPage;
 		}
 		
@@ -145,18 +143,17 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		protected Person load() {
-			personCount = personCount + 1;
 			MoveInEditorData wizardData = MoveInWizard.this.getObject();
-			if (wizardData.persons.size() < personCount) {
+			if (wizardData.persons.size() <= personIndex) {
 				Person person;
-				if (personCount > 1) {
-					person = createNextPerson(wizardData.nextPersons.get(personCount-2));
+				if (personIndex > 0) {
+					person = createNextPerson(wizardData.nextPersons.get(personIndex-1));
 				} else {
 					person = new Person();
 				}
 				wizardData.persons.add(person);
 			}
-			return wizardData.persons.get(personCount-1);
+			return wizardData.persons.get(personIndex);
 		}
 
 		@Override
@@ -208,11 +205,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		@Override
 		protected MoveInNextPerson load() {
 			MoveInEditorData wizardData = MoveInWizard.this.getObject();
-			if (wizardData.nextPersons.size() < personCount) {
+			if (wizardData.nextPersons.size() <= personIndex) {
 				MoveInNextPerson moveInNextPerson = new MoveInNextPerson();
 				wizardData.nextPersons.add(moveInNextPerson);
 			}
-			return wizardData.nextPersons.get(personCount-1);
+			return wizardData.nextPersons.get(personIndex);
 		}
 
 		@Override
@@ -222,6 +219,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		public WizardPage<?> getNextPage() {
+			personIndex = personIndex + 1;
 			return moveInPersonWizardPage;
 		}
 
