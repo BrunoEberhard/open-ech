@@ -43,6 +43,7 @@ public class MaritalStatusField extends AbstractEditField<MaritalStatus> impleme
 		if (editable) {
 			((CodeEditField) code).setChangeListener(dateEnablerChangeListener);
 		}
+		date.setChangeListener(listener());
 	}
 
 	@Override
@@ -74,23 +75,11 @@ public class MaritalStatusField extends AbstractEditField<MaritalStatus> impleme
 	}
 	
 	private class DateEnablerChangeListener implements ChangeListener {
-		private ChangeListener changeListener;
 		@Override
 		public void stateChanged(ChangeEvent changeEvent) {
 			enableDate();
-			if (changeListener != null) changeListener.stateChanged(new ChangeEvent(MaritalStatusField.this));
+			listener().stateChanged(changeEvent);
 		}
-		
-		public void setChangeListener(ChangeListener changeListener) {
-			this.changeListener = changeListener;
-		}
-	}
-
-	@Override
-	public void setChangeListener(ChangeListener changeListener) {
-		super.setChangeListener(changeListener);
-		dateEnablerChangeListener.setChangeListener(changeListener);
-		date.setChangeListener(changeListener);
 	}
 
 	@Override
