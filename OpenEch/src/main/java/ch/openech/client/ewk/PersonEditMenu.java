@@ -8,6 +8,7 @@ import javax.swing.Action;
 
 import ch.openech.client.e21.CareEvent;
 import ch.openech.client.ewk.event.AddressLockEvent;
+import ch.openech.client.ewk.event.BirthChildEvent;
 import ch.openech.client.ewk.event.ChangeCitizenEvent;
 import ch.openech.client.ewk.event.ChangeGardianEvent;
 import ch.openech.client.ewk.event.ChangeNameEvent;
@@ -59,6 +60,7 @@ import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.SeparatorAction;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -82,7 +84,8 @@ public class PersonEditMenu {
 	private Action changeName, changeReligion, changeTypeOfResidence, changeRelation, contact;
 	private Action correctOrigin, correctResidencePermit;
 	private Action addressLock, paperLock;
-
+	private Action birthChild;
+	
 	private final List<Action> correctEditors = new ArrayList<Action>();
 
 	public PersonEditMenu(EchNamespaceContext echNamespaceContext) {
@@ -157,6 +160,10 @@ public class PersonEditMenu {
 			correct.add(action);
 		}
 
+		personActionGroup.add(new SeparatorAction());
+		
+		personActionGroup.add(birthChild); 
+		
 		//
 		
 		List<Action> actions = actionGroup.getAllActions();
@@ -244,6 +251,8 @@ public class PersonEditMenu {
 
 		addressLock = new PersonEditMenuAction(new AddressLockEvent(echNamespaceContext));
 		paperLock = new PersonEditMenuAction(new PaperLockEvent(echNamespaceContext));
+		
+		birthChild = new PersonEditMenuAction(new BirthChildEvent(echNamespaceContext));
 	}
 
 	private void fillCorrectionActionList() {
