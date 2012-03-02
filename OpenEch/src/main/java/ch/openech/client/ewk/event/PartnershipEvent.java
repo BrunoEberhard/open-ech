@@ -9,9 +9,10 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.annotation.Boolean;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.db.model.annotation.FormatName;
-import ch.openech.mj.edit.fields.CheckBoxField;
+import ch.openech.mj.edit.fields.CheckBoxStringField;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.TextEditField;
@@ -34,27 +35,22 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		
 	public static class PartnershipEventData {
 		@Date
-		private String dateOfMaritalStatus;
-		private boolean registerPartner1 = true, registerPartner2 = true;
-		private Person partner1, partner2;
-		private boolean changeName1, changeName2;
-
+		public String dateOfMaritalStatus;
+		@Boolean
+		public String registerPartner1 = "1", registerPartner2 = "1";
+		public Person partner1, partner2;
+		@Boolean
+		public String changeName1, changeName2;
 		@FormatName(EchFormats.baseName)
-		private String name1, name2;
+		public String name1, name2;
 	}
 	
 	private static final PartnershipEventData PED = Constants.of(PartnershipEventData.class);
 
 	@Override
 	protected void fillForm(AbstractFormVisual<PartnershipEventData> formPanel) {
-		CheckBoxField checkBoxPartner1 = formPanel.createCheckBoxField("registerPartner1"); checkBoxPartner1.setObject(true);
-		CheckBoxField checkBoxPartner2 = formPanel.createCheckBoxField("registerPartner2"); checkBoxPartner2.setObject(true);
-	
 		PersonField partner1 = new PersonField(PED.partner1); 
 		PersonField partner2 = new PersonField(PED.partner2);
-	
-		CheckBoxField checkBoxName1 = formPanel.createCheckBoxField(PED.changeName1);
-		CheckBoxField checkBoxName2 = formPanel.createCheckBoxField(PED.changeName2);
 		
 		TextField name1 = (TextField) formPanel.createField(PED.name1);
 		TextField name2 = (TextField) formPanel.createField(PED.name2);
@@ -63,10 +59,10 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		
 		formPanel.line(new DateField(PED.dateOfMaritalStatus, DateField.REQUIRED));
 		
-		formPanel.line(checkBoxPartner1, checkBoxPartner2);
+		formPanel.line(PED.registerPartner1, PED.registerPartner2);
 		formPanel.area(partner1, partner2);
 	
-		formPanel.line(checkBoxName1, checkBoxName2);
+		formPanel.line(PED.changeName1, PED.changeName2);
 		formPanel.line(name1, name2);
 	}
 
@@ -105,17 +101,17 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	@Override
 	protected List<String> getXml(Person person, PartnershipEventData data, WriterEch0020 writerEch0020) throws Exception {
 		List<String> xmls = new ArrayList<String>();
-		if (data.registerPartner1) {
+		if (CheckBoxStringField.isTrue(data.registerPartner1)) {
 			xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification, data.partner2.personIdentification));
 		}
-		if (data.registerPartner2) {
+		if (CheckBoxStringField.isTrue(data.registerPartner2)) {
 			xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification, data.partner1.personIdentification));
 		}
 		
-		if (data.changeName1) {
+		if (CheckBoxStringField.isTrue(data.changeName1)) {
 			xmls.add(changeName(writerEch0020, person, data.name1));
 		}
-		if (data.changeName2 && data.partner2.isPersisent()) {
+		if (CheckBoxStringField.isTrue(data.changeName2) && data.partner2.isPersisent()) {
 			xmls.add(changeName(writerEch0020, data.partner2, data.name2));
 		}
 
@@ -142,7 +138,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 	
 	private void validateNamesNotBlank(PartnershipEventData data, List<ValidationMessage> validationMessages) {
-		if (data.changeName1) MarriageEvent.validateNameNotBlank(validationMessages, "name1", data.name1);
-		if (data.changeName2) MarriageEvent.validateNameNotBlank(validationMessages, "name2", data.name2);
+		if (CheckBoxStringField.isTrue(data.changeName1)) MarriageEvent.validateNameNotBlank(validationMessages, "name1", data.name1);
+		if (CheckBoxStringField.isTrue(data.changeName2)) MarriageEvent.validateNameNotBlank(validationMessages, "name2", data.name2);
 	}
 }

@@ -10,8 +10,9 @@ import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.annotation.Boolean;
 import ch.openech.mj.db.model.annotation.FormatName;
-import ch.openech.mj.edit.fields.CheckBoxField;
+import ch.openech.mj.edit.fields.CheckBoxStringField;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.TextEditField;
@@ -32,28 +33,30 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 	}
 
 	public static class MarriageEventData {
-		private String dateOfMaritalStatus;
-		private boolean registerPartner1 = true, registerPartner2 = true;
-		private Person partner1, partner2;
-		private boolean changeName1, changeName2;
+		public String dateOfMaritalStatus;
+		@Boolean
+		public String registerPartner1 = "1", registerPartner2 = "1";
+		public Person partner1, partner2;
+		@Boolean
+		public String changeName1, changeName2;
 		@FormatName("officialName")
-		private String name1, name2;
-		private List<PlaceOfOrigin> origin1, origin2;
+		public String name1, name2;
+		public final List<PlaceOfOrigin> origin1 = new ArrayList<PlaceOfOrigin>();
+		public final List<PlaceOfOrigin> origin2 = new ArrayList<PlaceOfOrigin>();
 	}
 	
 	private static final MarriageEventData MED = Constants.of(MarriageEventData.class);
 
 	@Override
-	protected void fillForm(AbstractFormVisual<MarriageEventData> formPanel) {
-		CheckBoxField checkBoxPartner1 = formPanel.createCheckBoxField(MED.registerPartner1);
-		CheckBoxField checkBoxPartner2 = formPanel.createCheckBoxField(MED.registerPartner2);
+	protected int getFormColumns() {
+		return 2;
+	}
 	
+	@Override
+	protected void fillForm(AbstractFormVisual<MarriageEventData> formPanel) {
 		PersonField partner1 = new PersonField(MED.partner1); 
 		PersonField partner2 = new PersonField(MED.partner2);
 	
-		CheckBoxField checkBoxName1 = formPanel.createCheckBoxField(MED.changeName1);
-		CheckBoxField checkBoxName2 = formPanel.createCheckBoxField(MED.changeName2);
-		
 		NewPersonNameField name1 = new NewPersonNameField(MED.name1, MED.partner2);
 		NewPersonNameField name2 = new NewPersonNameField(MED.name2, MED.partner1);
 	
@@ -64,10 +67,10 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 		
 		formPanel.line(new DateField(MED.dateOfMaritalStatus, DateField.REQUIRED));
 		
-		formPanel.line(checkBoxPartner1, checkBoxPartner2);
+		formPanel.line(MED.registerPartner1, MED.registerPartner2);
 		formPanel.area(partner1, partner2);
 	
-		formPanel.line(checkBoxName1, checkBoxName2);
+		formPanel.line(MED.changeName1, MED.changeName2);
 		formPanel.line(name1, name2);
 		
 		formPanel.text("Übernommene Heimatorte"); formPanel.text("Übernommene Heimatorte");
@@ -136,10 +139,10 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 
 		// Die Reihenfolge der Events ist wichtig, da nach einer Namensänderung
 		// die ursprüngliche Bezeichnung des Partners schon nicht mehr die aktuelle ist
-		if (data.registerPartner1) {
+		if (CheckBoxStringField.isTrue(data.registerPartner1)) {
 			xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification, data.partner2.personIdentification));
 		}
-		if (data.registerPartner2) {
+		if (CheckBoxStringField.isTrue(data.registerPartner2)) {
 			xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification, data.partner1.personIdentification));
 		}
 
@@ -149,10 +152,10 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 		naturalizeSwiss(writerEch0020, data.partner1, data.origin1, naturalizationDate, xmls);
 		naturalizeSwiss(writerEch0020, data.partner2, data.origin2, naturalizationDate, xmls);
 		
-		if (data.changeName1) {
+		if (CheckBoxStringField.isTrue(data.changeName1)) {
 			xmls.add(changeName(writerEch0020, person, data.name1));
 		}
-		if (data.changeName2 && data.partner2.isPersisent()) {
+		if (CheckBoxStringField.isTrue(data.changeName2) && data.partner2.isPersisent()) {
 			xmls.add(changeName(writerEch0020, data.partner2, data.name2));
 		}
 
@@ -198,8 +201,8 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 	}
 	
 	private void validateNamesNotBlank(MarriageEventData data, List<ValidationMessage> validationMessages) {
-		if (data.changeName1) validateNameNotBlank(validationMessages, "name1", data.name1);
-		if (data.changeName2) validateNameNotBlank(validationMessages, "name2", data.name2);
+		if (CheckBoxStringField.isTrue(data.changeName1)) validateNameNotBlank(validationMessages, "name1", data.name1);
+		if (CheckBoxStringField.isTrue(data.changeName2)) validateNameNotBlank(validationMessages, "name2", data.name2);
 	}
 	
 	@BusinessRule("2 Eheleute/Partner für Ehe notwendig")
@@ -211,6 +214,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 	
 	@BusinessRule("Ehepartner/Partner müssen leben")
 	static void validatePartnerAlive(List<ValidationMessage> validationMessages, String key, Person person) {
+		if (person == null) return;
 		if (!StringUtils.isBlank(person.dateOfDeath)) {
 			validationMessages.add(new ValidationMessage(key, "Person darf nicht tot sein"));
 		}
