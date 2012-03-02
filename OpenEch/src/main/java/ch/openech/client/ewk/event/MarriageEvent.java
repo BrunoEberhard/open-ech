@@ -26,16 +26,16 @@ import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
 
-public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEventData> {
+public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
 	public MarriageEvent(EchNamespaceContext namespaceContext) {
 		super(namespaceContext);
 	}
 
-	public static class MarriageEventData {
+	public static class Marriage {
 		public String dateOfMaritalStatus;
 		@Boolean
-		public String registerPartner1 = "1", registerPartner2 = "1";
+		public String registerPartner2 = "1";
 		public Person partner1, partner2;
 		@Boolean
 		public String changeName1, changeName2;
@@ -45,7 +45,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 		public final List<PlaceOfOrigin> origin2 = new ArrayList<PlaceOfOrigin>();
 	}
 	
-	private static final MarriageEventData MED = Constants.of(MarriageEventData.class);
+	private static final Marriage MARRIAGE = Constants.of(Marriage.class);
 
 	@Override
 	protected int getFormColumns() {
@@ -53,27 +53,25 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 	}
 	
 	@Override
-	protected void fillForm(AbstractFormVisual<MarriageEventData> formPanel) {
-		PersonField partner1 = new PersonField(MED.partner1); 
-		PersonField partner2 = new PersonField(MED.partner2);
+	protected void fillForm(AbstractFormVisual<Marriage> formPanel) {
+		PersonField partner1 = new PersonField(MARRIAGE.partner1); 
+		PersonField partner2 = new PersonField(MARRIAGE.partner2);
 	
-		NewPersonNameField name1 = new NewPersonNameField(MED.name1, MED.partner2);
-		NewPersonNameField name2 = new NewPersonNameField(MED.name2, MED.partner1);
+		NewPersonNameField name1 = new NewPersonNameField(MARRIAGE.name1, MARRIAGE.partner2);
+		NewPersonNameField name2 = new NewPersonNameField(MARRIAGE.name2, MARRIAGE.partner1);
 	
-		RemoveEntriesListField<PlaceOfOrigin> origin1 = new OriginListField(MED.origin1, MED.partner2);
-		RemoveEntriesListField<PlaceOfOrigin> origin2 = new OriginListField(MED.origin2, MED.partner1);
+		RemoveEntriesListField<PlaceOfOrigin> origin1 = new OriginListField(MARRIAGE.origin1, MARRIAGE.partner2);
+		RemoveEntriesListField<PlaceOfOrigin> origin2 = new OriginListField(MARRIAGE.origin2, MARRIAGE.partner1);
 		
 		//
 		
-		formPanel.line(new DateField(MED.dateOfMaritalStatus, DateField.REQUIRED));
+		formPanel.line(new DateField(MARRIAGE.dateOfMaritalStatus, DateField.REQUIRED), MARRIAGE.registerPartner2);
 		
-		formPanel.line(MED.registerPartner1, MED.registerPartner2);
 		formPanel.area(partner1, partner2);
 	
-		formPanel.line(MED.changeName1, MED.changeName2);
+		formPanel.line(MARRIAGE.changeName1, MARRIAGE.changeName2);
 		formPanel.line(name1, name2);
 		
-		formPanel.text("Übernommene Heimatorte"); formPanel.text("Übernommene Heimatorte");
 		formPanel.area(origin1, origin2);
 	}
 
@@ -127,21 +125,19 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 	}
 	
 	@Override
-	public MarriageEventData load() {
-		MarriageEventData marriageActionData = new MarriageEventData();
+	public Marriage load() {
+		Marriage marriageActionData = new Marriage();
 		marriageActionData.partner1 = getPerson();
 		return marriageActionData;
 	}
 
 	@Override
-	protected List<String> getXml(Person person, MarriageEventData data, WriterEch0020 writerEch0020) throws Exception {
+	protected List<String> getXml(Person person, Marriage data, WriterEch0020 writerEch0020) throws Exception {
 		List<String> xmls = new ArrayList<String>();
 
 		// Die Reihenfolge der Events ist wichtig, da nach einer Namensänderung
 		// die ursprüngliche Bezeichnung des Partners schon nicht mehr die aktuelle ist
-		if (CheckBoxStringField.isTrue(data.registerPartner1)) {
-			xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification, data.partner2.personIdentification));
-		}
+		xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification, data.partner2.personIdentification));
 		if (CheckBoxStringField.isTrue(data.registerPartner2)) {
 			xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification, data.partner1.personIdentification));
 		}
@@ -187,7 +183,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 	}
 
 	@Override
-	public void validate(MarriageEventData data, List<ValidationMessage> resultList) {
+	public void validate(Marriage data, List<ValidationMessage> resultList) {
 		validate(resultList, data.partner1, data.partner2, true);
 		validateNamesNotBlank(data, resultList);
 	}
@@ -200,7 +196,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.MarriageEvent
 		validateSex(validationMessages, person1, person2, marriage);
 	}
 	
-	private void validateNamesNotBlank(MarriageEventData data, List<ValidationMessage> validationMessages) {
+	private void validateNamesNotBlank(Marriage data, List<ValidationMessage> validationMessages) {
 		if (CheckBoxStringField.isTrue(data.changeName1)) validateNameNotBlank(validationMessages, "name1", data.name1);
 		if (CheckBoxStringField.isTrue(data.changeName2)) validateNameNotBlank(validationMessages, "name2", data.name2);
 	}

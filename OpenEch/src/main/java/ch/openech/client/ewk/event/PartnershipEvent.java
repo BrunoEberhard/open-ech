@@ -20,24 +20,23 @@ import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
-import ch.openech.mj.toolkit.TextField;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
 
 // Ähnlich Marriage, aber die Heimatorte werden nicht ausgewechselt und
 // "nur" der Allianzname nicht der "richtige" Name
-public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.PartnershipEventData> {
+public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partnership> {
 
 	public PartnershipEvent(EchNamespaceContext echNamespaceContext) {
 		super(echNamespaceContext);
 	}
 		
-	public static class PartnershipEventData {
+	public static class Partnership {
 		@Date
 		public String dateOfMaritalStatus;
 		@Boolean
-		public String registerPartner1 = "1", registerPartner2 = "1";
+		public String registerPartner2 = "1";
 		public Person partner1, partner2;
 		@Boolean
 		public String changeName1, changeName2;
@@ -45,25 +44,25 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		public String name1, name2;
 	}
 	
-	private static final PartnershipEventData PED = Constants.of(PartnershipEventData.class);
+	private static final Partnership PARTNERSHIP = Constants.of(Partnership.class);
 
 	@Override
-	protected void fillForm(AbstractFormVisual<PartnershipEventData> formPanel) {
-		PersonField partner1 = new PersonField(PED.partner1); 
-		PersonField partner2 = new PersonField(PED.partner2);
-		
-		TextField name1 = (TextField) formPanel.createField(PED.name1);
-		TextField name2 = (TextField) formPanel.createField(PED.name2);
+	protected int getFormColumns() {
+		return 2;
+	}
 	
+	@Override
+	protected void fillForm(AbstractFormVisual<Partnership> formPanel) {
+		PersonField partner1 = new PersonField(PARTNERSHIP.partner1); 
+		PersonField partner2 = new PersonField(PARTNERSHIP.partner2);
+		
 		//
 		
-		formPanel.line(new DateField(PED.dateOfMaritalStatus, DateField.REQUIRED));
-		
-		formPanel.line(PED.registerPartner1, PED.registerPartner2);
+		formPanel.line(new DateField(PARTNERSHIP.dateOfMaritalStatus, DateField.REQUIRED), PARTNERSHIP.registerPartner2);
 		formPanel.area(partner1, partner2);
 	
-		formPanel.line(PED.changeName1, PED.changeName2);
-		formPanel.line(name1, name2);
+		formPanel.line(PARTNERSHIP.changeName1, PARTNERSHIP.changeName2);
+		formPanel.line(PARTNERSHIP.name1, PARTNERSHIP.name2);
 	}
 
 	// TODO da bin ich mir fachlich nicht mehr sicher, wie das mit dem Allianz-Namen
@@ -92,18 +91,16 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 	
 	@Override
-	public PartnershipEventData load() {
-		PartnershipEventData partnershipActionData = new PartnershipEventData();
+	public Partnership load() {
+		Partnership partnershipActionData = new Partnership();
 		partnershipActionData.partner1 = getPerson();
 		return partnershipActionData;
 	}
 
 	@Override
-	protected List<String> getXml(Person person, PartnershipEventData data, WriterEch0020 writerEch0020) throws Exception {
+	protected List<String> getXml(Person person, Partnership data, WriterEch0020 writerEch0020) throws Exception {
 		List<String> xmls = new ArrayList<String>();
-		if (CheckBoxStringField.isTrue(data.registerPartner1)) {
-			xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification, data.partner2.personIdentification));
-		}
+		xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification, data.partner2.personIdentification));
 		if (CheckBoxStringField.isTrue(data.registerPartner2)) {
 			xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification, data.partner1.personIdentification));
 		}
@@ -132,12 +129,12 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 	
 	@Override
-	public void validate(PartnershipEventData data, List<ValidationMessage> resultList) {
+	public void validate(Partnership data, List<ValidationMessage> resultList) {
 		MarriageEvent.validate(resultList, data.partner1, data.partner2, false);
 		validateNamesNotBlank(data, resultList);
 	}
 	
-	private void validateNamesNotBlank(PartnershipEventData data, List<ValidationMessage> validationMessages) {
+	private void validateNamesNotBlank(Partnership data, List<ValidationMessage> validationMessages) {
 		if (CheckBoxStringField.isTrue(data.changeName1)) MarriageEvent.validateNameNotBlank(validationMessages, "name1", data.name1);
 		if (CheckBoxStringField.isTrue(data.changeName2)) MarriageEvent.validateNameNotBlank(validationMessages, "name2", data.name2);
 	}
