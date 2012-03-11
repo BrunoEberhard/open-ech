@@ -2,14 +2,15 @@ package ch.openech.client.e44;
 
 import java.util.List;
 
+import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.Editor;
+import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.MultiLineTextField;
+import ch.openech.server.EchServer;
 
 public class PersonField extends ObjectField<Person> {
 	protected final MultiLineTextField text;
@@ -19,7 +20,7 @@ public class PersonField extends ObjectField<Person> {
 		text = ClientToolkit.getToolkit().createMultiLineTextField();
 		
 		// editable 
-        addAction(new PersonSearchEditor());
+        addAction(new PersonSearchAction());
         addAction(new RemoveObjectAction());
 	}
 	
@@ -43,30 +44,22 @@ public class PersonField extends ObjectField<Person> {
 		}
 	}
 
-	public final class PersonSearchEditor extends Editor<Person> {
+	public class PersonSearchAction extends SearchDialogAction<Person> {
 		
-		@Override
-		protected FormVisual<Person> createForm() {
-			return new PersonSearchForm();
+		public PersonSearchAction() {
+			super(SearchPersonPage.FIELD_NAMES);
 		}
 
 		@Override
-		protected Person load() {
-			// not used
-			return null;
+		protected List<Person> search(String text) {		
+			List<Person> resultList = EchServer.getInstance().getPersistence().person().find(text);
+			return resultList;
 		}
 
 		@Override
-		protected void validate(Person object, List<ValidationMessage> resultList) {
-			// not used
+		protected void save(Person object) {
+			setObject(object);
 		}
 
-		@Override
-		protected boolean save(Person person) {
-			if (person != null) {
-				PersonField.this.setObject(person);
-			}
-			return true;
-		}
 	}
 }

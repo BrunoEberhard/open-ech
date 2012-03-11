@@ -7,16 +7,15 @@ import java.util.List;
 
 import ch.openech.client.e10.AddressPanel;
 import ch.openech.client.e44.PersonIdentificationPanel;
-import ch.openech.client.e44.PersonSearchForm;
 import ch.openech.client.ewk.PersonViewPage;
+import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
-import ch.openech.mj.edit.Editor;
+import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.ResourceAction;
@@ -25,6 +24,7 @@ import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.MultiLineTextField;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
+import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 
 public class ContactPersonField extends ObjectField<ContactPerson> {
@@ -92,26 +92,14 @@ public class ContactPersonField extends ObjectField<ContactPerson> {
 	}
 	
 	// Person suchen
-	public class SelectPersonContactEditor extends Editor<Person> {
+	public class SelectPersonContactEditor extends SearchDialogAction<Person> {
 		
-		@Override
-		protected FormVisual<Person> createForm() {
-			return new PersonSearchForm();
-		}
-
-		@Override
-		protected Person load() {
-			// not used
-			return null;
-		}
-
-		@Override
-		protected void validate(Person object, List<ValidationMessage> resultList) {
-			// not used
+		public SelectPersonContactEditor() {
+			super(SearchPersonPage.FIELD_NAMES);
 		}
 		
 		@Override
-		protected boolean save(Person person) {
+		protected void save(Person person) {
 			if (person != null) {
 				ContactPerson contactPerson = ContactPersonField.this.getObject();
 				
@@ -127,7 +115,12 @@ public class ContactPersonField extends ObjectField<ContactPerson> {
 				}
 				fireObjectChange();
 			}
-			return true;
+		}
+
+		@Override
+		protected List<Person> search(String text) {		
+			List<Person> resultList = EchServer.getInstance().getPersistence().person().find(text);
+			return resultList;
 		}
 	};
     
