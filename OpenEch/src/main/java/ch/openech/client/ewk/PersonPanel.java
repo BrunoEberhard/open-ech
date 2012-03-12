@@ -73,7 +73,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 	public void createIdentification() {
 		String prefix = Constants.getConstant(PERSON.personIdentification) + ".";
 		TechnicalIdsField technicalId = new TechnicalIdsField(prefix + Constants.getConstant(PERSON_IDENTIFICATION.technicalIds), TechnicalIdsField.WITH_EU_IDS, editable);
-		VnField vn = new VnField(prefix + PERSON_IDENTIFICATION.vn);
+		VnField vn = new VnField(prefix + PERSON_IDENTIFICATION.vn, editable);
 		
 		line(prefix + PERSON_IDENTIFICATION.officialName);
 		line(prefix + PERSON_IDENTIFICATION.firstName);

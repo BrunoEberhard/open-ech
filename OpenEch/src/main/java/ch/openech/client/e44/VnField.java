@@ -13,15 +13,15 @@ import ch.openech.mj.toolkit.TextField.TextFieldFilter;
 import ch.openech.mj.util.StringUtils;
 
 public class VnField extends AbstractEditField<String> implements DemoEnabled, Validatable {
-	private TextField textField;
+	private final TextField textField;
 
-	public VnField() {
-		this(null);
-	}
-	
-	public VnField(String name) {
+	public VnField(String name, boolean editable) {
 		super(name);
-		textField = ClientToolkit.getToolkit().createTextField(listener(), new VnFilter());
+		if (editable) {
+			textField = ClientToolkit.getToolkit().createTextField(listener(), new VnFilter());
+		} else {
+			textField = ClientToolkit.getToolkit().createReadOnlyTextField();
+		}
 	}
 	
 	@Override
