@@ -20,7 +20,8 @@ import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.HorizontalLayout;
 import ch.openech.mj.toolkit.IComponent;
 
-
+// TODO Das MaritalStatus-Field sollte in zwei Felder mit DependingOn aufgeteilt werden.
+// das createHorizontalLayout(code, date) mit Namenlosen Feldern ist ein Murks
 public class MaritalStatusField extends AbstractEditField<MaritalStatus> implements Validatable, DemoEnabled {
 	private final boolean editable;
 	private final FormField<String> code;
@@ -34,7 +35,8 @@ public class MaritalStatusField extends AbstractEditField<MaritalStatus> impleme
 		
 		this.editable = editable;
 		code = editable ? new CodeEditField(key, EchCodes.maritalStatus) : new TextFormField(key, EchCodes.maritalStatus);
-		date = new DateField(DateField.NOT_REQUIRED, editable);
+		date = new DateField(null, DateField.NOT_REQUIRED, editable);
+		
 		horizontalLayout = ClientToolkit.getToolkit().createHorizontalLayout(code, date);
 		
 		dateEnablerChangeListener = new DateEnablerChangeListener();
