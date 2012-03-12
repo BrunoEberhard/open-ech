@@ -175,9 +175,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.mother, TypeOfRelationship.Mutter));
 			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.father, TypeOfRelationship.Vater));
 
-			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.fosterMother, TypeOfRelationship.Pflegemutter));
-			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.fosterFather, TypeOfRelationship.Pflegevater));
+			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.fosterMother, TypeOfRelationship.Pflegemutter), //
+					new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.fosterFather, TypeOfRelationship.Pflegevater));
 
+			form.setRequired(MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted);
+			form.setRequired(MoveInNextPerson.MOVE_IN_NEXT_PERSON.basePerson);
 			
 			return form;
 		}
