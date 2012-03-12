@@ -86,14 +86,14 @@ public abstract class XmlEditor<T> extends Editor<T> {
 				return false;
 			}
 		}
-		if (SedexOutputGenerator.sedexOutputDirectoryAvailable()) {
-			try {
-				// TODO
-				// generateSedexOutput();
-			} catch (Exception e) {
-				throw new RuntimeException("Fehler bei Sedex Meldung erstellen", e);
-			}
-		}
+		// TODO
+//		if (SedexOutputGenerator.sedexOutputDirectoryAvailable()) {
+//			try {
+//				generateSedexOutput();
+//			} catch (Exception e) {
+//				throw new RuntimeException("Fehler bei Sedex Meldung erstellen", e);
+//			}
+//		}
 		return true;
 	}
 	
