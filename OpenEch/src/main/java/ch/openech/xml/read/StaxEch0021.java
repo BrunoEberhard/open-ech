@@ -100,15 +100,19 @@ public class StaxEch0021 {
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				// eventuell wurden diese Heimatorte schon mit anyPerson von e11 geliefert.
-				for (PlaceOfOrigin p : placeOfOrigins) {
-					if (StringUtils.equals(placeOfOrigin.originName, p.originName) && StringUtils.equals(placeOfOrigin.canton, p.canton)) {
-						placeOfOrigins.remove(p); break;
-					}
-				}
-				placeOfOrigins.add(placeOfOrigin);
+				updatePlaceOfOrigin(placeOfOrigins, placeOfOrigin);
 				return;
 			} // else skip
 		}
+	}
+	
+	public static void updatePlaceOfOrigin(List<PlaceOfOrigin> placeOfOrigins, PlaceOfOrigin placeOfOrigin) {
+		for (PlaceOfOrigin p : placeOfOrigins) {
+			if (StringUtils.equals(placeOfOrigin.originName, p.originName) && StringUtils.equals(placeOfOrigin.canton, p.canton)) {
+				placeOfOrigins.remove(p); break;
+			}
+		}
+		placeOfOrigins.add(placeOfOrigin);
 	}
 	
 	public static void nameOfParentAtBirth(XMLEventReader xml, Relation relation) throws XMLStreamException, ParserTargetException {

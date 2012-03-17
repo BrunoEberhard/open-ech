@@ -75,11 +75,11 @@ public class ParserTargetDB3 implements ParserTarget {
 	public Person getPerson(PersonIdentification personIdentification) throws ParserTargetException {
 		if (personIdentification.getId() != null) {
 			return persistence.person().getByLocalPersonId(personIdentification.getId());
-		} else 
-			if (!StringUtils.isBlank(personIdentification.vn)) {
+		} else if (!StringUtils.isBlank(personIdentification.vn)) {
 			return persistence.person().getByVn(personIdentification.vn);
+		} else {
+			return persistence.person().getByName(personIdentification.officialName, personIdentification.firstName, personIdentification.dateOfBirth);
 		}
-		throw new RuntimeException("Suche nach PersonIdentifikation ohne id und vn noch nicht implementiert");
 	}
 
 }

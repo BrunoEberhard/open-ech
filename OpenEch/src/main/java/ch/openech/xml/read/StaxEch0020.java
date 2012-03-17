@@ -80,7 +80,7 @@ public class StaxEch0020 {
 					if (startName.equals(BASE_DELIVERY)) baseDelivery(xml, progressListener);
 					else if (startName.equals(BIRTH)) eventBirth(xml);
 					else if (startName.equals(MOVE_IN)) eventMoveIn(xml);
-					else if (startName.equals(NATURALIZE_FOREIGNER) || startName.equals(NATURALIZE_SWISS)) eventNaturalize(startName, xml);
+					else if (StringUtils.equals(startName, NATURALIZE_FOREIGNER, NATURALIZE_SWISS, UNDO_CITIZEN)) eventNaturalize(startName, xml);
 					else simplePersonEvent(startName, xml);
 				}
 			} else if (event.isEndElement()) return;
@@ -371,9 +371,10 @@ public class StaxEch0020 {
 				else if (StringUtils.equals(startName, PLACE_OF_ORIGIN)) StaxEch0011.placeOfOrigin(xml, placeOfOrigin);
 				else if (startName.equals(NATURALIZATION_DATE)) placeOfOrigin.naturalizationDate = StaxEch.date(xml);
 				else if (startName.equals(REASON_OF_ACQUISITION)) placeOfOrigin.reasonOfAcquisition = token(xml);
+				else if (startName.equals(EXPATRIATION_DATE)) placeOfOrigin.expatriationDate = StaxEch.date(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
-				personToChange.placeOfOrigin.add(placeOfOrigin);
+				StaxEch0021.updatePlaceOfOrigin(personToChange.placeOfOrigin, placeOfOrigin);
 				personToChange.foreign.residencePermit = null;
 				personToChange.foreign.residencePermitTill = null;
 				parserTarget.simplePersonEvent(eventName, personIdentification, personToChange);
@@ -429,7 +430,7 @@ public class StaxEch0020 {
 					if (CORRECT_OCCUPATION.equals(eventName) || CHANGE_RESIDENCE_TYPE.equals(eventName) || //
 							CHANGE_RESIDENCE_PERMIT.equals(eventName) || RENEW_PERMIT.equals(eventName)) personToChange.occupation.clear();
 					if (CORRECT_RELATIONSHIP.equals(eventName) || CHANGE_RESIDENCE_TYPE.equals(eventName)) personToChange.relation.clear();
-					if (CHANGE_CITIZEN.equals(eventName) || UNDO_CITIZEN.equals(eventName) || UNDO_SWISS.equals(eventName) || CORRECT_ORIGIN.equals(eventName)) personToChange.placeOfOrigin.clear();
+					if (CHANGE_CITIZEN.equals(eventName) || UNDO_SWISS.equals(eventName) || CORRECT_ORIGIN.equals(eventName)) personToChange.placeOfOrigin.clear();
 					if (GARDIAN_MEASURE.equals(eventName) || UNDO_GARDIAN.equals(eventName)  || CHANGE_GARDIAN.equals(eventName)) removeGardianRelationship();
 					if (StringUtils.equals(eventName, UNDO_MISSING, CORRECT_DATE_OF_DEATH)) personToChange.dateOfDeath = null;
 					if (UNDO_SEPARATION.equals(eventName)) {

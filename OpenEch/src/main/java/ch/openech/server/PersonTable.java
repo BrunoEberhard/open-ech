@@ -60,6 +60,26 @@ public class PersonTable extends SearchableTable<Person> {
 		}
 	}
 	
+	public Person getByName(String name, String firstName, String dateOfBirth) {
+		List<Person> persons = find(name);
+		for (int i = persons.size()-1; i>= 0; i--) {
+			Person person = persons.get(i);
+			if (!StringUtils.isBlank(firstName) && !StringUtils.equals(firstName, person.personIdentification.firstName)) {
+				persons.remove(i);
+			} else if (!StringUtils.isBlank(dateOfBirth) && !StringUtils.equals(dateOfBirth, person.personIdentification.dateOfBirth)) {
+				persons.remove(i);
+			}
+		}
+		if (persons.size() > 1) {
+			throw new IllegalArgumentException("Zuweisung über Namen und Geburtstag nicht eindeutig für: " + name + ", " + firstName + ", " + dateOfBirth);
+		}
+		if (!persons.isEmpty()) {
+			return persons.get(0);
+		} else {
+			return null;
+		}
+	}
+	
 	public Person getByIdentification(PersonIdentification personIdentification) {
 		if (personIdentification.technicalIds.localId.personId != null) {
 			Person person = getByLocalPersonId(personIdentification.technicalIds.localId.personId);

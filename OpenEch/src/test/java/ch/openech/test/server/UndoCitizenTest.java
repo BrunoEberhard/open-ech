@@ -8,7 +8,6 @@ import org.junit.Test;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.server.ServerCallResult;
 
 public class UndoCitizenTest extends AbstractServerTest {
 
@@ -22,16 +21,13 @@ public class UndoCitizenTest extends AbstractServerTest {
 
 	@Test
 	public void naturalizeSwiss() throws Exception {
-		ServerCallResult result = processFile("testPerson/undoCitizen/person.xml");
-		String person_id = result.createdPersonId;
-
-		Person person = load(person_id);
+		Person person = load(id);
 		
 		int placeOfOriginCountBefore = person.placeOfOrigin.size();
 		
-		result = processFile("samples/eCH-0020/InfostarSamples/Buergerrecht - Nationalité/eventUndoCitizen/data_53722700000000543.xml");
+		processFile("samples/eCH-0020/InfostarSamples/Buergerrecht - Nationalité/eventUndoCitizen/data_53722700000000543.xml");
 		
-		person = load(person_id);
+		person = load(id);
 
 		Assert.assertEquals(placeOfOriginCountBefore, person.placeOfOrigin.size());
 
