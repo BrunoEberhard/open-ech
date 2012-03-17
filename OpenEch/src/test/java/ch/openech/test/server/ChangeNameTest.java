@@ -9,7 +9,7 @@ import ch.openech.dm.person.Person;
 
 public class ChangeNameTest extends AbstractServerTest {
 
-	private static final String vn = "7561829871380";
+	private static final String vn = "7561234567890";
 	private String id;
 	
 	@Before
@@ -19,11 +19,14 @@ public class ChangeNameTest extends AbstractServerTest {
 	
 	@Test
 	public void changeName() throws Exception {
+		Person person = load(id);
+		Assert.assertNotNull(person);
+
 		processFile("samples/eCH-0020/changeName/data_ordipro-changeName-40.xml");
 		
-		Person person = load(id);
-		
+		person = load(id);
 		Assert.assertNotNull(person);
+		
 		Assert.assertEquals("MUSTER", person.personIdentification.officialName);
 		Assert.assertEquals("Hanspeter", person.personIdentification.firstName);
 
