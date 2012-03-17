@@ -1,13 +1,11 @@
 package ch.openech.test.db;
 
 import java.sql.SQLException;
+
 import junit.framework.Assert;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.person.Occupation;
@@ -15,8 +13,11 @@ import ch.openech.dm.person.Person;
 import ch.openech.mj.db.ImmutableTable;
 import ch.openech.mj.db.Table;
 import ch.openech.server.EchPersistence;
+import ch.openech.server.EchServer;
 
 public class DbPersonCrudTest {
+
+	private static EchPersistence persistence = EchServer.getInstance().getPersistence();
 
 	@Test
 	public void testCrud() throws SQLException {
@@ -75,22 +76,7 @@ public class DbPersonCrudTest {
 		int id3 = countryTable.getOrCreateId(readCountry);
 
 		Assert.assertNotSame(id, id3);
-
 	}
-	
-	@BeforeClass
-	public static void setupDb() throws SQLException {
-		EchFormats.initialize();
-		persistence = new EchPersistence();
-	}
-	
-	@AfterClass
-	public static void shutdownDb() throws SQLException {
-		persistence.commit();
-		persistence.disconnect();
-	}
-	
-	private static EchPersistence persistence;
 	
 	@Test
 	public void testCrudPerson() throws SQLException {
