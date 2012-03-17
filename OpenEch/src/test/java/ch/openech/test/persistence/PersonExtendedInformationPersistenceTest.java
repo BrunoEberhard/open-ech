@@ -1,37 +1,22 @@
 package ch.openech.test.persistence;
 
-import java.sql.SQLException;
-
 import junit.framework.Assert;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonExtendedInformation;
 import ch.openech.server.EchPersistence;
+import ch.openech.server.EchServer;
 
 public class PersonExtendedInformationPersistenceTest {
 
-	private static EchPersistence persistence;
+	private static EchPersistence persistence = EchServer.getInstance().getPersistence();
 	
-	@BeforeClass
-	public static void beforeClass() throws SQLException {
-		persistence = new EchPersistence();
-		persistence.connect();
-	}
-
-	
-	@AfterClass
-	public static void afterClass() throws SQLException {
-		persistence.commit();
-		persistence.disconnect();
-	}
-
 	@Test
 	public void insertInformationTest() throws Exception {
-		Person person = new Person();
+		Person person = DataGenerator.person();
 		person.personExtendedInformation = new PersonExtendedInformation();
 		person.personExtendedInformation.armedForcesLiability = "1";
 		
@@ -44,7 +29,7 @@ public class PersonExtendedInformationPersistenceTest {
 
 	@Test
 	public void updateInformationTest() throws Exception {
-		Person person = new Person();
+		Person person = DataGenerator.person();
 		person.personExtendedInformation = new PersonExtendedInformation();
 		person.personExtendedInformation.armedForcesLiability = "1";
 		
