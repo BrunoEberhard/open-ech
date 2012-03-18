@@ -8,6 +8,7 @@ import org.junit.Test;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
+import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 
 public class NaturalizeSwissTest extends AbstractServerTest {
@@ -16,6 +17,8 @@ public class NaturalizeSwissTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
+		EchServer.getInstance().getPersistence().clear();
+		
 		ServerCallResult result = processFile("testPerson/naturalizeSwiss/person.xml");
 		id = result.createdPersonId;
 	}

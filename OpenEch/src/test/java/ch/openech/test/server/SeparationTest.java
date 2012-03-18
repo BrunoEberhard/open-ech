@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.openech.dm.person.Person;
+import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 
 public class SeparationTest extends AbstractServerTest {
@@ -14,6 +15,8 @@ public class SeparationTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
+		EchServer.getInstance().getPersistence().clear();
+		
 		ServerCallResult result = processFile("testPerson/separation/person.xml");
 		id = result.createdPersonId;
 	}

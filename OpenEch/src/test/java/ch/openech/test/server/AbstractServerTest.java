@@ -22,8 +22,9 @@ public abstract class AbstractServerTest {
 	private static WriterEch0020 writer;
 	
 	@BeforeClass
-	public static void startup() {
+	public static void startup() throws Exception {
 		Resources.addResourceBundle(ResourceBundle.getBundle("ch.openech.resources.OpenEch"));
+		EchServer.getInstance().getPersistence().clear();
 	}
 	
 	protected String insertPerson(String vn) throws Exception {

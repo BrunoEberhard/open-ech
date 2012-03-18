@@ -11,6 +11,7 @@ import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
+import ch.openech.server.EchServer;
 
 /*
  * Diese Sammlung von Tests betrifft die bei Schema - Version 2.2. neu
@@ -25,6 +26,8 @@ public class CorrectTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
+		EchServer.getInstance().getPersistence().clear();
+		
 		id = insertPerson(vn);
 		foreignId = insertPerson(FOREGIN_VN);
 	}

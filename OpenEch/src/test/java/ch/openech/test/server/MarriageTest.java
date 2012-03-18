@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 
 public class MarriageTest extends AbstractServerTest {
@@ -17,6 +18,8 @@ public class MarriageTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
+		EchServer.getInstance().getPersistence().clear();
+		
 		ServerCallResult result = processFile("testPerson/mariage/person_" + vn1 + ".xml");
 		id1 = result.createdPersonId;
 		result = processFile("testPerson/mariage/person_" + vn2 + ".xml");

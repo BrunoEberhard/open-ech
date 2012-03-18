@@ -22,6 +22,8 @@ public class CorrectRelationTest extends AbstractServerTest {
 	
 	@Test
 	public void marriage() throws Exception {
+		load(child_id);
+		
 		processFile("samples/eCH-0020/InfostarSamples/Kindsverhältnis - Lien de filiation/data_53759900000000023.xml");
 		processFile("samples/eCH-0020/InfostarSamples/Kindsverhältnis - Lien de filiation/data_53759900000000033.xml");
 		

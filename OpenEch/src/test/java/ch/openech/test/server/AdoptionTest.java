@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.server.EchServer;
 
 public class AdoptionTest extends AbstractServerTest {
 
@@ -18,6 +19,8 @@ public class AdoptionTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
+		EchServer.getInstance().getPersistence().clear();
+		
 		mother_id = insertPerson(VN_MOTHER);
 		father_id = insertPerson(VN_FATHER);
 		child_id = insertPerson(VN_CHILD);
