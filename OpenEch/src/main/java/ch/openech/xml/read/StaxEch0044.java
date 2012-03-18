@@ -58,15 +58,6 @@ public class StaxEch0044 {
 		}
 	}
 	
-	public static int namedIdOpenEch(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
-		NamedId namedId = namedId(xml);
-		if ("CH.OPENECH".equals(namedId.personIdCategory)) {
-			return Integer.valueOf(namedId.personId);
-		} else {
-			return 0;
-		}
-	}
-	
 	public static NamedId namedId(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
 		NamedId namedId = new NamedId();
 		namedId(xml, namedId);

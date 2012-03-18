@@ -57,7 +57,7 @@ public class WriterEch0046 extends DeliveryWriter {
 	
 	private void localID(WriterElement parent, String id) throws Exception {
 		NamedId namedPersonId = new NamedId();
-		namedPersonId.personIdCategory = "LOC";
+		namedPersonId.personIdCategory = "CH.OPENECH";
 		namedPersonId.personId = id;
 		ech44.namedId(parent, namedPersonId, LOCAL_I_D);
 	}
