@@ -43,7 +43,6 @@ public class ParserTargetDB3 implements ParserTarget {
 
 	@Override
 	public void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
-		if ("naturalizeForeigner".equals(type)) naturalizeForeigner(person);
 		if (StringUtils.equals(type, XmlConstants.DIVORCE, XmlConstants.UNDO_MARRIAGE, XmlConstants.UNDO_PARTNERSHIP)) removePartner(person);
 
 		try {
@@ -57,13 +56,6 @@ public class ParserTargetDB3 implements ParserTarget {
 
 	//
 	
-	private void naturalizeForeigner(Person changedPerson) {
-		changedPerson.nationality.nationalityStatus = "2";
-		changedPerson.nationality.nationalityCountry.countryId = "8100";
-		changedPerson.nationality.nationalityCountry.countryIdISO2 = "CH";
-		changedPerson.nationality.nationalityCountry.countryNameShort = "Schweiz";
-	}
-
 	private void removePartner(Person changedPerson) {
 		for (int i = changedPerson.relation.size()-1; i>= 0; i--) {
 			Relation relation = changedPerson.relation.get(i);
