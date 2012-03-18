@@ -525,7 +525,10 @@ public class StaxEch0020 {
 					personToChange.otherName = null;
 					personToChange.alliancePartnershipName = null;
 				} else if (startName.equals(PERSON_IDENTIFICATION_AFTER)) {
+					// die lokale Id darf von aussen nicht verändert werden.
+					String savedLocalId = personToChange.getId();
 					StaxEch0044.personIdentification(xml, personToChange.personIdentification);
+					personToChange.personIdentification.technicalIds.localId.personId = savedLocalId;
 				}
 				else if (startName.equals(OFFICIAL_NAME)) personToChange.personIdentification.officialName = token(xml);
 				else if (startName.equals(FIRST_NAME)) personToChange.personIdentification.firstName = token(xml);
