@@ -53,8 +53,8 @@ public class PersonTable extends SearchableTable<Person> {
 	
 	public Person getByLocalPersonId(String personId) {
 		List<Person> persons = find(personId, new String[]{PERSON.personIdentification.technicalIds.localId.personId});
-		if (persons.size() < 1) {
-			return null;
+		if (persons.size() != 1) {
+			throw new IllegalArgumentException(personId);
 		} else {
 			return persons.get(0);
 		}
