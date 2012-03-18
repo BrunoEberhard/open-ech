@@ -372,6 +372,7 @@ public class StaxEch0020 {
 				else if (startName.equals(NATURALIZATION_DATE)) placeOfOrigin.naturalizationDate = StaxEch.date(xml);
 				else if (startName.equals(REASON_OF_ACQUISITION)) placeOfOrigin.reasonOfAcquisition = token(xml);
 				else if (startName.equals(EXPATRIATION_DATE)) placeOfOrigin.expatriationDate = StaxEch.date(xml);
+				else if (startName.equals(NATIONALITY)) StaxEch0011.nationality(xml, personToChange.nationality);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				StaxEch0021.updatePlaceOfOrigin(personToChange.placeOfOrigin, placeOfOrigin);
