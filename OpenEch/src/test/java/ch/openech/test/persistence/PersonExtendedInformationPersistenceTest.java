@@ -36,8 +36,9 @@ public class PersonExtendedInformationPersistenceTest {
 		int id = persistence.person().insert(person);
 		
 		Person readPerson = persistence.person().read(id);
-		readPerson.personExtendedInformation.armedForcesLiability = "0";
+		Assert.assertEquals("1", readPerson.personExtendedInformation.armedForcesLiability);
 		
+		readPerson.personExtendedInformation.armedForcesService = "0";
 		persistence.person().update(readPerson);
 		
 		Person readPerson2 = persistence.person().read(id);
