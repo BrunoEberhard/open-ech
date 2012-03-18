@@ -13,6 +13,7 @@ public class Contact {
 	public static final Contact CONTACT = Constants.of(Contact.class);
 	
 	@Int(9)
+	// TODO in Contact stringId eventuell durch NamedId ersetzen
 	public String stringId;
 	public final List<ContactEntry> entries = new ArrayList<ContactEntry>();
 	
