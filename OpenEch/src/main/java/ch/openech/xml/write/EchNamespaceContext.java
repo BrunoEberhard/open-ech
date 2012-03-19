@@ -20,7 +20,6 @@ import javax.xml.stream.events.XMLEvent;
 import ch.openech.mj.db.model.Format;
 import ch.openech.mj.db.model.IntegerFormat;
 import ch.openech.mj.db.model.PlainFormat;
-import ch.openech.xml.read.ParserTargetException;
 
 public class EchNamespaceContext {
 
@@ -85,19 +84,19 @@ public class EchNamespaceContext {
 		return openEchNamespaceLocation;
 	}
 	
-	public void read(String namespaceLocation) throws XMLStreamException, ParserTargetException, IOException {
+	public void read(String namespaceLocation) throws XMLStreamException, IOException {
 		if (namespaceLocations.containsValue(namespaceLocation)) return;
 		System.out.println("Read: " + namespaceLocation);
 		registerLocation(namespaceLocation);
 		process(namespaceLocation);
 	}
 	
-	public void readOpenEch(String openEchNamespaceLocation) throws XMLStreamException, ParserTargetException, IOException {
+	public void readOpenEch(String openEchNamespaceLocation) throws XMLStreamException, IOException {
 		this.openEchNamespaceLocation = openEchNamespaceLocation;
 		process(openEchNamespaceLocation);
 	}
 	
-	public void process(String namespaceLocation) throws XMLStreamException, ParserTargetException, IOException {
+	public void process(String namespaceLocation) throws XMLStreamException, IOException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = null;
 		try {
@@ -122,7 +121,7 @@ public class EchNamespaceContext {
 		namespaceMinorVersions.put(namespaceNumber, namespaceMinorVersion);
 	}
 	
-	private void process(XMLEventReader xml) throws XMLStreamException, ParserTargetException, IOException {
+	private void process(XMLEventReader xml) throws XMLStreamException, IOException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -137,7 +136,7 @@ public class EchNamespaceContext {
 		}
 	}
 	
-	private void imports(XMLEventReader xml) throws XMLStreamException, ParserTargetException, IOException {
+	private void imports(XMLEventReader xml) throws XMLStreamException, IOException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -159,12 +158,12 @@ public class EchNamespaceContext {
 		}
 	}
 	
-	private void imprt(StartElement startElement) throws XMLStreamException, ParserTargetException, IOException {
+	private void imprt(StartElement startElement) throws XMLStreamException, IOException {
 		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
 		read(schemaLocation);
 	}
 	
-	private void simpleType(String name, XMLEventReader xml) throws XMLStreamException, ParserTargetException, IOException {
+	private void simpleType(String name, XMLEventReader xml) throws XMLStreamException, IOException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -182,7 +181,7 @@ public class EchNamespaceContext {
 		}
 	}
 	
-	private void restriction(String name, XMLEventReader xml, boolean intBase) throws XMLStreamException, ParserTargetException, IOException {
+	private void restriction(String name, XMLEventReader xml, boolean intBase) throws XMLStreamException, IOException {
 		int size = -1;
 		while (true) {
 			XMLEvent event = xml.nextEvent();

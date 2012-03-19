@@ -48,21 +48,21 @@ public class StaxEch0093 {
 		this.parserTarget = parserTarget;
 	}
 	
-	public void process(String xmlString) throws XMLStreamException, ParserTargetException {
+	public void process(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
 		
 		process(xml, xmlString);
 	}
 
-	public void process(InputStream inputStream, String eventString) throws XMLStreamException, ParserTargetException {
+	public void process(InputStream inputStream, String eventString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 		
 		process(xml, eventString);
 	}
 
-	private void process(XMLEventReader xml, String xmlString) throws XMLStreamException, ParserTargetException {
+	private void process(XMLEventReader xml, String xmlString) throws XMLStreamException {
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -76,7 +76,7 @@ public class StaxEch0093 {
 		}
 	}
 	
-	private void delivery(String xmlString, XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private void delivery(String xmlString, XMLEventReader xml) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -93,7 +93,7 @@ public class StaxEch0093 {
 	
 	//
 	
-	public void moveIn(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public void moveIn(XMLEventReader xml) throws XMLStreamException {
 		Person person = null;
 		
 		while (true) {
@@ -111,7 +111,7 @@ public class StaxEch0093 {
 		}
 	}
 
-	private void moveInReportingMunicipality(XMLEventReader xml, Person personToChange) throws XMLStreamException, ParserTargetException {
+	private void moveInReportingMunicipality(XMLEventReader xml, Person personToChange) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -132,7 +132,7 @@ public class StaxEch0093 {
 	
 	//
 	
-	public void moveOut(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public void moveOut(XMLEventReader xml) throws XMLStreamException {
 		Person person = null;
 		
 		while (true) {
@@ -155,7 +155,7 @@ public class StaxEch0093 {
 		}
 	}
 
-	private void moveOutReportingDestination(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	private void moveOutReportingDestination(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -172,7 +172,7 @@ public class StaxEch0093 {
 		}
 	}
 	
-	private void goesTo(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	private void goesTo(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -192,7 +192,7 @@ public class StaxEch0093 {
 
 	//
 	
-	public void death(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public void death(XMLEventReader xml) throws XMLStreamException {
 		Person person = null;
 		
 		while (true) {

@@ -20,7 +20,6 @@ import org.xml.sax.SAXParseException;
 
 import ch.openech.dm.person.Person;
 import ch.openech.xml.read.LSInputImpl;
-import ch.openech.xml.read.ParserTargetDB3;
 import ch.openech.xml.read.StaxEch0020;
 
 public class EchServer {
@@ -28,12 +27,12 @@ public class EchServer {
 	public static final String OK = "ok";
 	private static EchServer instance;
 	private EchPersistence persistence;
-	private ParserTargetDB3 parserTarget;
+	private StaxEch0020 ech0020;
 	
 	private EchServer() {
 		try {
 			persistence = new EchPersistence();
-			parserTarget = new ParserTargetDB3(persistence);
+			ech0020 = new StaxEch0020(persistence);
 			instance = this;
 		} catch (Exception x) {
 			logger.log(Level.SEVERE, "Couldnt initialize EchServer", x);
@@ -103,13 +102,12 @@ public class EchServer {
 		ServerCallResult result = new ServerCallResult();
 		try {
 			try {
-				StaxEch0020 ech0020 = new StaxEch0020(parserTarget);
 				for (String xmlString : xmlStrings) {
 					logger.fine(xmlString);
 					ech0020.process(xmlString);
 				}
 				persistence.commit();
-				String lastInsertedPersonId = parserTarget.getLastInsertedPersonId();
+				String lastInsertedPersonId = ech0020.getLastInsertedPersonId();
 				if (lastInsertedPersonId != null) {
 					result.createdPersonId = lastInsertedPersonId;
 				}

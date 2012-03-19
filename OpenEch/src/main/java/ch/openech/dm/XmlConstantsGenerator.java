@@ -15,14 +15,13 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.read.ParserTargetException;
 import ch.openech.xml.write.EchNamespaceUtil;
 
 public class XmlConstantsGenerator {
 
 	private SortedSet<String> names = new TreeSet<String>();
 	
-	public void read(int rootNumber, String version) throws XMLStreamException, ParserTargetException, IOException {
+	public void read(int rootNumber, String version) throws XMLStreamException, IOException {
 		int pos = version.indexOf('.');
 		String major = version.substring(0, pos);
 		String minor = version.substring(pos + 1);
@@ -41,7 +40,7 @@ public class XmlConstantsGenerator {
 		}
 	}
 	
-	public void process(String namespaceLocation) throws XMLStreamException, ParserTargetException, IOException {
+	public void process(String namespaceLocation) throws XMLStreamException, IOException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = null;
 		try {
@@ -55,7 +54,7 @@ public class XmlConstantsGenerator {
 		}
 	}
 
-	private void process(XMLEventReader xml) throws XMLStreamException, ParserTargetException, IOException {
+	private void process(XMLEventReader xml) throws XMLStreamException, IOException {
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -69,7 +68,7 @@ public class XmlConstantsGenerator {
 		}
 	}
 	
-	public static void main(String... args) throws XMLStreamException, ParserTargetException, IOException {
+	public static void main(String... args) throws XMLStreamException, IOException {
 		XmlConstantsGenerator generator = new XmlConstantsGenerator();
 		generator.read(7, "4.0");
 		generator.read(10, "4.0");

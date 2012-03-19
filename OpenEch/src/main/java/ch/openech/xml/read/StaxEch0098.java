@@ -15,7 +15,7 @@ import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0098 {
 
-	public static void organisation(XMLEventReader xml, Organisation organisation) throws XMLStreamException, ParserTargetException {
+	public static void organisation(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		 
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -32,7 +32,7 @@ public class StaxEch0098 {
 		}
 	}
 	
-	private static void foundationOrLiquidation(XMLEventReader xml, Organisation organisation) throws XMLStreamException, ParserTargetException {
+	private static void foundationOrLiquidation(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

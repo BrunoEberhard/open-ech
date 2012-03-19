@@ -30,20 +30,20 @@ import ch.openech.dm.contact.ContactEntry;
 
 public class StaxEch0046 {
 
-	public Contact read(InputStream inputStream) throws XMLStreamException, ParserTargetException {
+	public Contact read(InputStream inputStream) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 		return read(xml);
 	}
 
 	
-	public Contact read(String xmlString) throws XMLStreamException, ParserTargetException {
+	public Contact read(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
 		return read(xml);
 	}
 
-	public static Contact read(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static Contact read(XMLEventReader xml) throws XMLStreamException {
 		Contact contact = null;
 		 
 		while (xml.hasNext()) {
@@ -58,7 +58,7 @@ public class StaxEch0046 {
 		return contact;
 	}
 	
-	public static Contact contactRoot(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static Contact contactRoot(XMLEventReader xml) throws XMLStreamException {
 		Contact contact = null;
 		 
 		while (true) {
@@ -74,7 +74,7 @@ public class StaxEch0046 {
 		}
 	}
 	
-	public static Contact contact(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static Contact contact(XMLEventReader xml) throws XMLStreamException {
 		Contact contact = new Contact();
 		 
 		while (true) {
@@ -96,13 +96,13 @@ public class StaxEch0046 {
 		}
 	}
 	
-	private static void addContactEntry(Contact contact, XMLEventReader xml, String type) throws XMLStreamException, ParserTargetException {
+	private static void addContactEntry(Contact contact, XMLEventReader xml, String type) throws XMLStreamException {
 		ContactEntry contactEntry = contactEntry(xml);
 		contactEntry.typeOfContact = type;
 		contact.entries.add(contactEntry);
 	}
 	
-	private static ContactEntry contactEntry(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private static ContactEntry contactEntry(XMLEventReader xml) throws XMLStreamException {
 		ContactEntry contactEntry = new ContactEntry();
 		
 		while (true) {
@@ -137,7 +137,7 @@ public class StaxEch0046 {
 		}
 	}
 
-	private static void validity(XMLEventReader xml, ContactEntry contactEntry) throws XMLStreamException, ParserTargetException {
+	private static void validity(XMLEventReader xml, ContactEntry contactEntry) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

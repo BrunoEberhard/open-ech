@@ -16,7 +16,7 @@ import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0097 {
 
-	public static void organisationIdentification(XMLEventReader xml, Organisation organisation) throws XMLStreamException, ParserTargetException {
+	public static void organisationIdentification(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		 
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -37,7 +37,7 @@ public class StaxEch0097 {
 		}
 	}
 	
-	private static NamedId namedOrganisationId(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private static NamedId namedOrganisationId(XMLEventReader xml) throws XMLStreamException {
 		NamedId namedId = new NamedId();
 		
 		while (true) {
@@ -54,7 +54,7 @@ public class StaxEch0097 {
 		}
 	}
 	
-	public static String uidStructure(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static String uidStructure(XMLEventReader xml) throws XMLStreamException {
 		String uidOrganisationIdCategorie = null;
 		String uidOrganisationId = null;
 		

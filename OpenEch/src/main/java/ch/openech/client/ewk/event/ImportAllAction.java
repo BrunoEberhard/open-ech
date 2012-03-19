@@ -9,7 +9,6 @@ import javax.swing.JFileChooser;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.swing.FrameManager;
 import ch.openech.server.EchServer;
-import ch.openech.xml.read.ParserTargetDB3;
 import ch.openech.xml.read.StaxEch0020;
 
 public class ImportAllAction extends ResourceAction {
@@ -39,8 +38,7 @@ public class ImportAllAction extends ResourceAction {
 			@Override
 			public void run() {
 				try {
-					ParserTargetDB3 parserTarget = new ParserTargetDB3(EchServer.getInstance().getPersistence());
-					StaxEch0020 ech0020 = new StaxEch0020(parserTarget);
+					StaxEch0020 ech0020 = new StaxEch0020(EchServer.getInstance().getPersistence());
 
 					FileInputStream fis = new FileInputStream(inputFile);
 					progressMonitor.invokeSetNote("Importiere Personen");

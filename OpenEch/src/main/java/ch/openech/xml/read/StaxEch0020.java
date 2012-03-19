@@ -6,6 +6,7 @@ import static ch.openech.xml.read.StaxEch.token;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.sql.SQLException;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -15,6 +16,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.dm.Event;
+import ch.openech.dm.XmlConstants;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
@@ -23,16 +25,74 @@ import ch.openech.dm.person.Relation;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.ProgressListener;
 import ch.openech.mj.util.StringUtils;
+import ch.openech.server.EchPersistence;
 
 public class StaxEch0020 {
 
-	private ParserTarget parserTarget;
+	private final EchPersistence persistence;
 	
-	public StaxEch0020(ParserTarget parserTarget) {
-		this.parserTarget = parserTarget;
+	// hack: Globale Variable als 2. Rückgabewert von simplePersonEventPerson and simplePersonEvent
+	// Dies ist notwendige, weil changeNamePersonType einerseits die Identifikation der zu ändernden
+	// Person enthält, andererseits aber schon einen Teil (!) der neuen Werte.
+	private Person personToChange = null;
+	private Event e;
+	private String lastInsertedPersonId;
+	
+	public StaxEch0020(EchPersistence persistence) {
+		this.persistence = persistence;
 	}
 	
-	public void process(String xmlString) throws XMLStreamException, ParserTargetException {
+	// Persistence
+	// (war früher abgetrennt in eigener Klasse)
+	
+	public void insertPerson(Person person) {
+		try {
+			person.event = e;
+			persistence.person().insert(person);
+			lastInsertedPersonId = person.getId();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public String getLastInsertedPersonId() {
+		return lastInsertedPersonId;
+	}
+
+	public void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
+		if (StringUtils.equals(type, XmlConstants.DIVORCE, XmlConstants.UNDO_MARRIAGE, XmlConstants.UNDO_PARTNERSHIP)) removePartner(person);
+
+		try {
+			person.event = e;
+			persistence.person().update(person);
+			persistence.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//
+	
+	private void removePartner(Person changedPerson) {
+		for (int i = changedPerson.relation.size()-1; i>= 0; i--) {
+			Relation relation = changedPerson.relation.get(i);
+			if (relation.isPartnerType()) changedPerson.relation.remove(i);
+		}
+	}
+	
+	public Person getPerson(PersonIdentification personIdentification) {
+		if (personIdentification.getId() != null) {
+			return persistence.person().getByLocalPersonId(personIdentification.getId());
+		} else if (!StringUtils.isBlank(personIdentification.vn)) {
+			return persistence.person().getByVn(personIdentification.vn);
+		} else {
+			return persistence.person().getByName(personIdentification.officialName, personIdentification.firstName, personIdentification.dateOfBirth);
+		}
+	}
+	
+	//
+	
+	public void process(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
 		
@@ -40,7 +100,7 @@ public class StaxEch0020 {
 		xml.close();
 	}
 
-	public void process(InputStream inputStream, String eventString, ProgressListener progressListener) throws XMLStreamException, ParserTargetException {
+	public void process(InputStream inputStream, String eventString, ProgressListener progressListener) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 		
@@ -48,7 +108,7 @@ public class StaxEch0020 {
 		xml.close();
 	}
 
-	private void process(XMLEventReader xml, String xmlString, ProgressListener progressListener) throws XMLStreamException, ParserTargetException {
+	private void process(XMLEventReader xml, String xmlString, ProgressListener progressListener) throws XMLStreamException {
 		while (xml.hasNext() && !isCanceled(progressListener)) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -62,7 +122,7 @@ public class StaxEch0020 {
 		}
 	}
 	
-	private void delivery(String xmlString, XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException, ParserTargetException {
+	private void delivery(String xmlString, XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
 		while (!isCanceled(progressListener)) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -71,11 +131,10 @@ public class StaxEch0020 {
 				if (startName.equals(DELIVERY_HEADER)) {
 					skip(xml);
 				} else {
-					Event e = new Event();
+					e = new Event();
 					e.type = startName;
 					// e.message = xmlString;
 					e.time = DateUtils.getToday();
-					parserTarget.setEvent(e);
 					
 					if (startName.equals(BASE_DELIVERY)) baseDelivery(xml, progressListener);
 					else if (startName.equals(BIRTH)) eventBirth(xml);
@@ -92,7 +151,7 @@ public class StaxEch0020 {
 		return (progressListener instanceof ProgressMonitor) && ((ProgressMonitor)progressListener).isCanceled();
 	}
 	
-	private void baseDelivery(XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException, ParserTargetException {
+	private void baseDelivery(XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
 		int numberOfMessages = 1;
 		int count = 0;
 		
@@ -112,7 +171,7 @@ public class StaxEch0020 {
 		}
 	}
 
-	public void messages(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public void messages(XMLEventReader xml) throws XMLStreamException {
 		Person person = new Person();
 		
 		while(true) {
@@ -131,14 +190,14 @@ public class StaxEch0020 {
 				// TODO householdNumber
 				else residenceChoiceOrSkip(startName, xml, person);
 			} else if (event.isEndElement()) {
-				parserTarget.insertPerson(person);	
+				insertPerson(person);	
 				return;
 			}
 			// else skip
 		}
 	}
 	
-	public static void residenceChoiceOrSkip(String startName, XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void residenceChoiceOrSkip(String startName, XMLEventReader xml, Person person) throws XMLStreamException {
 		if (startName.equals(HAS_MAIN_RESIDENCE)) {
 			person.typeOfResidence = "1";
 			StaxEch0011.mainResidenceType(xml, person);
@@ -154,7 +213,7 @@ public class StaxEch0020 {
 		}
 	}
 
-	public void extension(XMLEventReader xml, Person personToChange) throws XMLStreamException, ParserTargetException {
+	public void extension(XMLEventReader xml, Person personToChange) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -169,7 +228,7 @@ public class StaxEch0020 {
 		}
 	}
 	
-	public void baseDeliveryPerson(XMLEventReader xml, Person values) throws XMLStreamException, ParserTargetException {
+	public void baseDeliveryPerson(XMLEventReader xml, Person values) throws XMLStreamException {
 		
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -186,7 +245,7 @@ public class StaxEch0020 {
 		}
 	}
 
-	public void eventBirth(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public void eventBirth(XMLEventReader xml) throws XMLStreamException {
 		Person person = null;
 		
 		while (true) {
@@ -201,7 +260,7 @@ public class StaxEch0020 {
 			} else if (event.isEndElement()) {
 				completePlaceOfOrigins(person);
 				copyResidence(person);
-				parserTarget.insertPerson(person);
+				insertPerson(person);
 				return;
 			} // else skip
 		}
@@ -214,14 +273,14 @@ public class StaxEch0020 {
 		}
 	}
 	
-	private void copyResidence(Person person) throws ParserTargetException {
+	private void copyResidence(Person person) {
 		Relation relation = person.getMother();
 		if (relation.isEmpty()) relation = person.getFather();
 		if (relation.isEmpty()) {
 			// TODO was macht man hier? Einfach so entstehen ungültige Daten, da eine Person einen Meldeort haben muss
 			return;
 		}
-		Person parent = parserTarget.getPerson(relation.partner);
+		Person parent = getPerson(relation.partner);
 		if (parent == null) return;
 		person.typeOfResidence = parent.typeOfResidence;
 		person.residence.reportingMunicipality = parent.residence.reportingMunicipality;
@@ -229,7 +288,7 @@ public class StaxEch0020 {
 	}
 	
 	// entspricht birthMother + birthFather
-	public static void birthParent(boolean father, XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void birthParent(boolean father, XMLEventReader xml, Person person) throws XMLStreamException {
 		Relation relation = new Relation();
 		
 		while (true) {
@@ -251,7 +310,7 @@ public class StaxEch0020 {
 		}
 	}
 	
-	public static void birthPartner(XMLEventReader xml, Relation relation) throws XMLStreamException, ParserTargetException {
+	public static void birthPartner(XMLEventReader xml, Relation relation) throws XMLStreamException {
 		
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -268,7 +327,7 @@ public class StaxEch0020 {
 		}
 	}
 	
-	public void eventMoveIn(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public void eventMoveIn(XMLEventReader xml) throws XMLStreamException {
 		Person person = null;
 		
 		while (true) {
@@ -284,13 +343,13 @@ public class StaxEch0020 {
 				else if (startName.equals(EXTENSION)) extension(xml, person);
 				else residenceChoiceOrSkip(startName, xml, person);
 			} else if (event.isEndElement()) {
-				parserTarget.insertPerson(person);
+				insertPerson(person);
 				return;
 			} // else skip
 		}
 	}
 	
-	public void moveOutReportingDestination(XMLEventReader xml, Person personToChange) throws XMLStreamException, ParserTargetException {
+	public void moveOutReportingDestination(XMLEventReader xml, Person personToChange) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -312,7 +371,7 @@ public class StaxEch0020 {
 		return municipalityIdentification;
 	}
 	
-	public void moveReportingAddress(XMLEventReader xml, Person personToChange) throws XMLStreamException, ParserTargetException {
+	public void moveReportingAddress(XMLEventReader xml, Person personToChange) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -329,7 +388,7 @@ public class StaxEch0020 {
 	
 	// used as moveInPerson, birthPerson, changeResidenceType
 	// also used in e93
-	public static Person newPerson(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static Person newPerson(XMLEventReader xml) throws XMLStreamException {
 		Person person = new Person();
 
 		while (true) {
@@ -358,7 +417,7 @@ public class StaxEch0020 {
 	}
 	
 	// Swiss & Foreign
-	public void eventNaturalize(String eventName, XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public void eventNaturalize(String eventName, XMLEventReader xml) throws XMLStreamException {
 		PersonIdentification personIdentification = null;
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 		
@@ -378,13 +437,13 @@ public class StaxEch0020 {
 				StaxEch0021.updatePlaceOfOrigin(personToChange.placeOfOrigin, placeOfOrigin);
 				personToChange.foreign.residencePermit = null;
 				personToChange.foreign.residencePermitTill = null;
-				parserTarget.simplePersonEvent(eventName, personIdentification, personToChange);
+				simplePersonEvent(eventName, personIdentification, personToChange);
 				return;
 			} // else skip
 		}
 	}
 	
-	public void changeResidenceTypeReportingMunicipality(XMLEventReader xml, Person personToChange) throws XMLStreamException, ParserTargetException {
+	public void changeResidenceTypeReportingMunicipality(XMLEventReader xml, Person personToChange) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -401,13 +460,8 @@ public class StaxEch0020 {
 		}
 	}
 	
-	// hack: Globale Variable als 2. Rückgabewert von simplePersonEventPerson and simplePersonEvent
-	// Dies ist notwendige, weil changeNamePersonType einerseits die Identifikation der zu ändernden
-	// Person enthält, andererseits aber schon einen Teil (!) der neuen Werte.
-	private Person personToChange = null;
-	
 	// correctOccupation etc
-	private void simplePersonEvent(String eventName, XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private void simplePersonEvent(String eventName, XMLEventReader xml) throws XMLStreamException {
 		PersonIdentification personIdentification = null;
 		personToChange = null;
 		
@@ -490,7 +544,7 @@ public class StaxEch0020 {
 				else if (startName.equals(EXTENSION)) extension(xml, personToChange);
 				else residenceChoiceOrSkip(startName, xml, personToChange);
 			} else if (event.isEndElement()) {
-				parserTarget.simplePersonEvent(eventName, personIdentification, personToChange);
+				simplePersonEvent(eventName, personIdentification, personToChange);
 				return;
 			} // else skip
 		}
@@ -507,7 +561,7 @@ public class StaxEch0020 {
 	}
 
 	// correctOccupationPerson etc
-	private PersonIdentification simplePersonEventPerson(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private PersonIdentification simplePersonEventPerson(XMLEventReader xml) throws XMLStreamException {
 		PersonIdentification personIdentification = null;
 		
 		while (true) {
@@ -517,7 +571,7 @@ public class StaxEch0020 {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(PERSON_IDENTIFICATION) || startName.equals(PERSON_IDENTIFICATION_BEFORE)) {
 					personIdentification = StaxEch0044.personIdentification(xml);
-					personToChange = parserTarget.getPerson(personIdentification);
+					personToChange = getPerson(personIdentification);
 					personToChange.dateOfDeath = null;
 					personToChange.callName = null;
 					personToChange.aliasName = null;
@@ -559,5 +613,5 @@ public class StaxEch0020 {
 			} // else skip
 		}
 	}
-	
+
 }

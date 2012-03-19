@@ -20,19 +20,19 @@ import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0101 {
 
-	public PersonExtendedInformation read(InputStream inputStream) throws XMLStreamException, ParserTargetException {
+	public PersonExtendedInformation read(InputStream inputStream) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 		return read(xml);
 	}
 
-	public PersonExtendedInformation read(String xmlString) throws XMLStreamException, ParserTargetException {
+	public PersonExtendedInformation read(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
 		return read(xml);
 	}
 
-	public static PersonExtendedInformation read(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static PersonExtendedInformation read(XMLEventReader xml) throws XMLStreamException {
 		PersonExtendedInformation information = null;
 		 
 		while (xml.hasNext()) {
@@ -47,7 +47,7 @@ public class StaxEch0101 {
 		return information;
 	}
 	
-	public static PersonExtendedInformation root(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static PersonExtendedInformation root(XMLEventReader xml) throws XMLStreamException {
 		PersonExtendedInformation information = new PersonExtendedInformation();
 		 
 		while (true) {
@@ -63,13 +63,13 @@ public class StaxEch0101 {
 		}
 	}
 
-	public static PersonExtendedInformation information(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static PersonExtendedInformation information(XMLEventReader xml) throws XMLStreamException {
 		PersonExtendedInformation information = new PersonExtendedInformation();
 		information(information, xml);
 		return information;
 	}
 	
-	public static void information(PersonExtendedInformation information, XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static void information(PersonExtendedInformation information, XMLEventReader xml) throws XMLStreamException {
 		 
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -87,7 +87,7 @@ public class StaxEch0101 {
 		}
 	}
 	
-	public static void informationItem(PersonExtendedInformation information, XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static void informationItem(PersonExtendedInformation information, XMLEventReader xml) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -100,7 +100,7 @@ public class StaxEch0101 {
 		}
 	}
 	
-	private static void healthInsurance(PersonExtendedInformation information, XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private static void healthInsurance(PersonExtendedInformation information, XMLEventReader xml) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -115,7 +115,7 @@ public class StaxEch0101 {
 		}
 	}
 
-	private static void insurance(PersonExtendedInformation information, XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private static void insurance(PersonExtendedInformation information, XMLEventReader xml) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

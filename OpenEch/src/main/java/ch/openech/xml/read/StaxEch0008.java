@@ -12,13 +12,13 @@ import ch.openech.mj.db.model.ColumnAccess;
 
 public class StaxEch0008 {
 
-//	public static CountryIdentification country(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+//	public static CountryIdentification country(XMLEventReader xml) throws XMLStreamException {
 //		CountryIdentification countryIdentification = new CountryIdentification();
 //		country(xml, countryIdentification);
 //		return countryIdentification;
 //	}
 	
-	public static void country(XMLEventReader xml, CountryIdentification countryIdentification) throws XMLStreamException, ParserTargetException {
+	public static void country(XMLEventReader xml, CountryIdentification countryIdentification) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

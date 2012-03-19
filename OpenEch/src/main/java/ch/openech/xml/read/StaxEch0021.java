@@ -20,7 +20,7 @@ import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0021 {
 
-	public static Occupation occupation(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static Occupation occupation(XMLEventReader xml) throws XMLStreamException {
 		Occupation occupation = new Occupation();
 		
 		while (true) {
@@ -41,7 +41,7 @@ public class StaxEch0021 {
 	}
 	
 	// partner meint immer "Identifikation der anderen Person einer Beziehung"
-	public static PersonIdentification partner(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static PersonIdentification partner(XMLEventReader xml) throws XMLStreamException {
 		PersonIdentification personIdentification = null;
 		
 		while (true) {
@@ -59,7 +59,7 @@ public class StaxEch0021 {
 		}
 	}
 	
-	public static void relation(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void relation(XMLEventReader xml, Person person) throws XMLStreamException {
 		Relation relation = null;
 		
 		while (true) {
@@ -85,7 +85,7 @@ public class StaxEch0021 {
 	// Das ist von der Signatur her zur Zeit eine grosse Ausnahme. Normalerweise würde einfach
 	// ein PlaceOfOrigin zurückgeliefert. Hier wird jedoch zusätzlich überprüft, ob ein schon
 	// bestehender Eintrag in der Liste ersetzt werden muss.
-	public static void addPlaceOfOriginAddon(XMLEventReader xml, List<PlaceOfOrigin> placeOfOrigins) throws XMLStreamException, ParserTargetException {
+	public static void addPlaceOfOriginAddon(XMLEventReader xml, List<PlaceOfOrigin> placeOfOrigins) throws XMLStreamException {
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 		
 		while (true) {
@@ -115,7 +115,7 @@ public class StaxEch0021 {
 		placeOfOrigins.add(placeOfOrigin);
 	}
 	
-	public static void nameOfParentAtBirth(XMLEventReader xml, Relation relation) throws XMLStreamException, ParserTargetException {
+	public static void nameOfParentAtBirth(XMLEventReader xml, Relation relation) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

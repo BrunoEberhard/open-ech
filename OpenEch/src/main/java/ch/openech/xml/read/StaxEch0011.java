@@ -81,7 +81,7 @@ import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0011 {
 
-	public static void person(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void person(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -95,7 +95,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static Place birthplace(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static Place birthplace(XMLEventReader xml) throws XMLStreamException {
 		Place place = new Place();
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -111,7 +111,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static Place destination(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static Place destination(XMLEventReader xml) throws XMLStreamException {
 		Place place = new Place();
 		
 		while (true) {
@@ -131,7 +131,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	private static void swissTown(XMLEventReader xml, Place birthplace) throws XMLStreamException, ParserTargetException {
+	private static void swissTown(XMLEventReader xml, Place birthplace) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -146,7 +146,7 @@ public class StaxEch0011 {
 		}
 	}
 
-	private static void foreignCountry(XMLEventReader xml, Place place) throws XMLStreamException, ParserTargetException {
+	private static void foreignCountry(XMLEventReader xml, Place place) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -161,7 +161,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static DwellingAddress dwellingAddress(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static DwellingAddress dwellingAddress(XMLEventReader xml) throws XMLStreamException {
 		DwellingAddress dwelingAddress = new DwellingAddress();
 		
 		while (true) {
@@ -183,7 +183,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void withoutEGID(XMLEventReader xml, DwellingAddress dwelingAddress) throws XMLStreamException, ParserTargetException {
+	public static void withoutEGID(XMLEventReader xml, DwellingAddress dwelingAddress) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -197,7 +197,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void maritalData(XMLEventReader xml, MaritalStatus maritalStatus, Separation separation) throws XMLStreamException, ParserTargetException {
+	public static void maritalData(XMLEventReader xml, MaritalStatus maritalStatus, Separation separation) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -216,7 +216,7 @@ public class StaxEch0011 {
 		}
 	}
 
-	public static void coredata(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void coredata(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -240,7 +240,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void nationality(XMLEventReader xml, Nationality nationality) throws XMLStreamException, ParserTargetException {
+	public static void nationality(XMLEventReader xml, Nationality nationality) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -254,7 +254,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void contact(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void contact(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -272,13 +272,13 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static PlaceOfOrigin placeOfOrigin(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static PlaceOfOrigin placeOfOrigin(XMLEventReader xml) throws XMLStreamException {
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 		placeOfOrigin(xml, placeOfOrigin);
 		return placeOfOrigin;
 	}
 	
-	public static void placeOfOrigin(XMLEventReader xml, PlaceOfOrigin placeOfOrigin) throws XMLStreamException, ParserTargetException {
+	public static void placeOfOrigin(XMLEventReader xml, PlaceOfOrigin placeOfOrigin) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -293,7 +293,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void anyPerson(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void anyPerson(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -307,7 +307,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void swiss(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void swiss(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -332,7 +332,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void foreigner(XMLEventReader xml, Foreign foreign) throws XMLStreamException, ParserTargetException {
+	public static void foreigner(XMLEventReader xml, Foreign foreign) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -349,7 +349,7 @@ public class StaxEch0011 {
 	
 	// bei allen residence - Methoden wird das "Type" nicht weggelassen
 	
-	public static void mainResidenceType(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void mainResidenceType(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -363,7 +363,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	private static void residence(XMLEventReader xml, Person person, boolean main) throws XMLStreamException, ParserTargetException {
+	private static void residence(XMLEventReader xml, Person person, boolean main) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -396,7 +396,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void secondaryResidenceType(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void secondaryResidenceType(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -411,7 +411,7 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void otherResidenceType(XMLEventReader xml, Person person) throws XMLStreamException, ParserTargetException {
+	public static void otherResidenceType(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

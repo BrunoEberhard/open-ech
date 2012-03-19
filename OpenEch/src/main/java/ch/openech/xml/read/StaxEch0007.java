@@ -13,13 +13,13 @@ import ch.openech.dm.common.MunicipalityIdentification;
 
 public class StaxEch0007 {
 
-	public static MunicipalityIdentification municipality(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static MunicipalityIdentification municipality(XMLEventReader xml) throws XMLStreamException {
 		MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
 		municipality(xml, municipalityIdentification);
 		return municipalityIdentification;
 	}
 		
-	public static void municipality(XMLEventReader xml, MunicipalityIdentification municipalityIdentification) throws XMLStreamException, ParserTargetException {
+	public static void municipality(XMLEventReader xml, MunicipalityIdentification municipalityIdentification) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

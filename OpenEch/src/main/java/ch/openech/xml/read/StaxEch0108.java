@@ -18,14 +18,14 @@ import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0108 {
 
-	public static Organisation process(String xmlString) throws XMLStreamException, ParserTargetException {
+	public static Organisation process(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
 		
 		return process(xml);
 	}
 	
-	private static Organisation process(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private static Organisation process(XMLEventReader xml) throws XMLStreamException {
 		Organisation organisation = null;
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
@@ -41,7 +41,7 @@ public class StaxEch0108 {
 		return organisation;
 	}
 	
-	private static Organisation organisationRoot(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	private static Organisation organisationRoot(XMLEventReader xml) throws XMLStreamException {
 		Organisation organisation = new Organisation(); 
 
 		while (xml.hasNext()) {
@@ -58,7 +58,7 @@ public class StaxEch0108 {
 		return organisation;
 	}
 	
-	public static Organisation organisation(XMLEventReader xml, Organisation organisation) throws XMLStreamException, ParserTargetException {
+	public static Organisation organisation(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -75,7 +75,7 @@ public class StaxEch0108 {
 		}
 	}
 	
-	private static void organisationRegistration(XMLEventReader xml, Organisation organisation) throws XMLStreamException, ParserTargetException {
+	private static void organisationRegistration(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

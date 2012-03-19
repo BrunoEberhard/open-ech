@@ -13,13 +13,13 @@ import ch.openech.mj.db.model.ColumnAccess;
 
 public class StaxEch0010 {
 
-	public static Address address(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static Address address(XMLEventReader xml) throws XMLStreamException {
 		Address address = new Address();
 		address(address, xml);
 		return address;
 	}
 	
-	public static void address(Address address, XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static void address(Address address, XMLEventReader xml) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

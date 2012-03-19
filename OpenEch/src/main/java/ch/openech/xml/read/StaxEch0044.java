@@ -28,13 +28,13 @@ import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0044 {
 
-	public static PersonIdentification personIdentification(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static PersonIdentification personIdentification(XMLEventReader xml) throws XMLStreamException {
 		PersonIdentification personIdentification = new PersonIdentification();
 		personIdentification(xml, personIdentification);
 		return personIdentification;
 	}
 		
-	public static void personIdentification(XMLEventReader xml, PersonIdentification personIdentification) throws XMLStreamException, ParserTargetException {
+	public static void personIdentification(XMLEventReader xml, PersonIdentification personIdentification) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -58,13 +58,13 @@ public class StaxEch0044 {
 		}
 	}
 	
-	public static NamedId namedId(XMLEventReader xml) throws XMLStreamException, ParserTargetException {
+	public static NamedId namedId(XMLEventReader xml) throws XMLStreamException {
 		NamedId namedId = new NamedId();
 		namedId(xml, namedId);
 		return namedId;
 	}
 	
-	public static void namedId(XMLEventReader xml, NamedId namedId) throws XMLStreamException, ParserTargetException {
+	public static void namedId(XMLEventReader xml, NamedId namedId) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
