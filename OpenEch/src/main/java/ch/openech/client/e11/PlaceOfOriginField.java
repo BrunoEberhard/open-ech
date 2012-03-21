@@ -85,7 +85,8 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 
 		@Override
 		protected PlaceOfOrigin getPart(List<PlaceOfOrigin> object) {
-			index = list.getSelectedIndex();
+			Object selectedObject = list.getSelectedObject();
+			index = object.indexOf(selectedObject);
 			if (index >= 0) {
 				return object.get(index);
 			} else {
@@ -95,7 +96,7 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 
 		@Override
 		protected void setPart(List<PlaceOfOrigin> object, PlaceOfOrigin p) {
-			object.set(list.getSelectedIndex(), p);
+			object.set(index, p);
 			fireObjectChange();
 		}
 	}
