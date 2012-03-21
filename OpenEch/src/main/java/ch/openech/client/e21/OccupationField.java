@@ -13,12 +13,12 @@ import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.VisualList;
 
 public class OccupationField extends ObjectField<List<Occupation>> implements Indicator {
-	private VisualList listOccupation;
+	private VisualList list;
 	
 	public OccupationField(Object key, boolean editable) {
 		super(key);
 		
-		listOccupation = ClientToolkit.getToolkit().createVisualList();
+		list = ClientToolkit.getToolkit().createVisualList();
 		
 		if (editable) {
 			addAction(new AddOccupationEditor());
@@ -28,7 +28,7 @@ public class OccupationField extends ObjectField<List<Occupation>> implements In
 	
 	@Override
 	protected IComponent getComponent0() {
-		return listOccupation;
+		return list;
 	}
 
 	public class AddOccupationEditor extends ObjectFieldPartEditor<Occupation> {
@@ -54,10 +54,9 @@ public class OccupationField extends ObjectField<List<Occupation>> implements In
 	private class RemoveOccupationAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			List<Occupation> occupations = getObject();
-			int index = listOccupation.getSelectedIndex();
-			if (index >= 0) {
-				occupations.remove(index);
+			Object selectedObject = list.getSelectedObject();
+			if (selectedObject != null) {
+				getObject().remove(selectedObject);
 				fireObjectChange();
 			}
 			
@@ -83,6 +82,6 @@ public class OccupationField extends ObjectField<List<Occupation>> implements In
 
 	@Override
 	protected void display(List<Occupation> object) {
-		// nothing to do
+		list.setObjects(object);
 	}
 }

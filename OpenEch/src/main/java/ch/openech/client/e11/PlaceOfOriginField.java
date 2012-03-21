@@ -103,8 +103,9 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 	private class RemoveOriginAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (list.getSelectedIndex() >= 0) {
-				getObject().remove(list.getSelectedIndex());
+			Object selectedObject = list.getSelectedObject();
+			if (selectedObject != null) {
+				getObject().remove(selectedObject);
 				fireObjectChange();
 			}
 		}

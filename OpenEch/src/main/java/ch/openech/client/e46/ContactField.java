@@ -79,10 +79,9 @@ public class ContactField extends ObjectField<Contact> {
 	private class RemoveContactEntryAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Contact contact = getObject();
-			int index = list.getSelectedIndex();
-			if (index >= 0) {
-				contact.entries.remove(index);
+			Object selectedObject = list.getSelectedObject();
+			if (selectedObject != null) {
+				getObject().entries.remove(selectedObject);
 				fireObjectChange();
 			}
 		}

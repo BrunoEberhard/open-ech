@@ -19,7 +19,7 @@ import ch.openech.xml.write.EchNamespaceContext;
 public class RelationField extends ObjectField<List<Relation>> {
 	private final boolean withNameOfParents;
 	private final EchNamespaceContext echNamespaceContext;
-	private final VisualList listRelation;
+	private final VisualList list;
 	
 	public RelationField(Object key, EchNamespaceContext echNamespaceContext, boolean withNameOfParents, boolean editable) {
 		super(key);
@@ -27,18 +27,18 @@ public class RelationField extends ObjectField<List<Relation>> {
 		this.withNameOfParents = withNameOfParents;
 		this.echNamespaceContext = echNamespaceContext;
 		
-		listRelation = ClientToolkit.getToolkit().createVisualList();
+		list = ClientToolkit.getToolkit().createVisualList();
 		
 		if (editable) {
 			createMenu();
 		} else {
-			listRelation.setClickListener(new RelationClickListener());
+			list.setClickListener(new RelationClickListener());
 		}
 	}
 
 	@Override
 	protected IComponent getComponent0() {
-		return listRelation;
+		return list;
 	}
 
 	private void createMenu() {
@@ -78,8 +78,9 @@ public class RelationField extends ObjectField<List<Relation>> {
 //				}
 //				fireChange();
 //			}
-			if (listRelation.getSelectedIndex() >= 0) {
-				getObject().remove(listRelation.getSelectedIndex());
+			Object selectedObject = list.getSelectedObject();
+			if (selectedObject != null) {
+				getObject().remove(selectedObject);
 				fireObjectChange();
 			}
 		}
@@ -88,10 +89,10 @@ public class RelationField extends ObjectField<List<Relation>> {
 	private class RelationClickListener implements ClickListener {
 		@Override
 		public void clicked() {
-			Relation relation = (Relation) listRelation.getSelectedObject();
+			Relation relation = (Relation) list.getSelectedObject();
 			if (relation != null) {
 	    		if (relation.partner != null) {
-	    			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(listRelation);
+	    			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(list);
 	    			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
 	    		}
 			}
@@ -106,7 +107,7 @@ public class RelationField extends ObjectField<List<Relation>> {
 
 	@Override
 	protected void display(List<Relation> objects) {
-		listRelation.setObjects(objects);
+		list.setObjects(objects);
 	}
 
 }
