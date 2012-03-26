@@ -8,7 +8,6 @@ import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
 public class TechnicalIdsField extends ObjectField<TechnicalIds> {
@@ -30,16 +29,16 @@ public class TechnicalIdsField extends ObjectField<TechnicalIds> {
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return textField;
+	public Object getComponent() {
+		return decorateWithContextActions(textField);
 	}
 
 	private void createMenu() {
-        addAction(new TechnicalIdOtherAddEditor());
+        addContextAction(new TechnicalIdOtherAddEditor());
         if (hasSpecialEuIds) {
-    		addAction(new TechnicalIdAddEuEditor());
+        	addContextAction(new TechnicalIdAddEuEditor());
         }
-        addAction(new TechnicalIdRemoveAction());
+        addContextAction(new TechnicalIdRemoveAction());
 	}
 	
 	// "Andere Id hinzufügen"
@@ -91,17 +90,19 @@ public class TechnicalIdsField extends ObjectField<TechnicalIds> {
 	@Override
 	protected void display(TechnicalIds technicalIds) {
 		StringBuilder s = new StringBuilder();
-		if (technicalIds.localId.personId != null) {
-			s.append(technicalIds.localId.personId);
-		}
-		for (NamedId namedPersonId : technicalIds.otherId) {
-			if (s.length() > 0) s.append(", "); 
-			namedPersonId.display(s);
-		}
-		for (NamedId namedPersonId : technicalIds.euId) {
-			if (s.length() > 0) s.append(", ");
-			s.append("EU/");
-			namedPersonId.display(s);
+		if (technicalIds != null) {
+			if (technicalIds.localId.personId != null) {
+				s.append(technicalIds.localId.personId);
+			}
+			for (NamedId namedPersonId : technicalIds.otherId) {
+				if (s.length() > 0) s.append(", "); 
+				namedPersonId.display(s);
+			}
+			for (NamedId namedPersonId : technicalIds.euId) {
+				if (s.length() > 0) s.append(", ");
+				s.append("EU/");
+				namedPersonId.display(s);
+			}
 		}
 		textField.setText(s.toString());
 	}

@@ -20,7 +20,6 @@ import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -273,7 +272,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		private final TypeOfRelationship relation;
 		
 		public MoveInNextPersonField(Object key, TypeOfRelationship relation) {
-			super(key);
+			super(key, true);
 			
 			this.relation = relation;
 			
@@ -307,7 +306,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public IComponent getComponent0() {
+		public Object getComponent() {
 			return comboBox;
 		}
 

@@ -98,7 +98,7 @@ public class ContactEntry {
 			}
 		}
 		
-		s.append("<BR></HTML>");
+		s.append("</HTML>");
 		return s.toString();
 	}
 

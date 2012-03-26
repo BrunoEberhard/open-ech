@@ -13,7 +13,6 @@ import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.HorizontalLayout;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.util.StringUtils;
 
 
@@ -23,7 +22,7 @@ public class CountryZipTownField extends AbstractEditField<CountryZipTown> imple
 	private HorizontalLayout horizontalLayout;
 	
 	public CountryZipTownField(Object key) {
-		super(key);
+		super(key, true);
 		
 		countryField = new CountryField();
 		zipTownField = new ZipTownField();
@@ -35,10 +34,10 @@ public class CountryZipTownField extends AbstractEditField<CountryZipTown> imple
 	}
 	
 	@Override
-	public IComponent getComponent0() {
-		return horizontalLayout;
+	public Object getComponent() {
+		return decorateWithContextActions(horizontalLayout);
 	}
-
+	
 	@Override
 	public CountryZipTown getObject() {
 		CountryZipTown countryZipTown = (CountryZipTown) zipTownField.getObject();

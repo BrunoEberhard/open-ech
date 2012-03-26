@@ -4,7 +4,6 @@ import ch.openech.dm.common.CountryIdentification;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
 /* Dieses Feld wurde erst mit ech 112 gebraucht. Dazu wurde 
@@ -19,8 +18,8 @@ public class CountryReadOnlyField extends ObjectField<CountryIdentification> {
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return textCountry;
+	public Object getComponent() {
+		return decorateWithContextActions(textCountry);
 	}
 	
 	//

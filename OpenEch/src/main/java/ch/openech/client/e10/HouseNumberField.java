@@ -6,7 +6,6 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.HorizontalLayout;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
 public class HouseNumberField extends AbstractEditField<HouseNumber> {
@@ -16,7 +15,7 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	private final HorizontalLayout horizontalLayout;
 	
 	public HouseNumberField(Object key) {
-		super(key);
+		super(key, true);
 		
 		houseNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(HouseNumber.class, HouseNumber.HOUSE_NUMBER.houseNumber).getSize());
 		dwellingNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(HouseNumber.class, HouseNumber.HOUSE_NUMBER.dwellingNumber).getSize());
@@ -25,7 +24,7 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	}
 	
 	@Override
-	public IComponent getComponent0() {
+	public Object getComponent() {
 		return horizontalLayout;
 	}
 

@@ -1,8 +1,6 @@
 package ch.openech.client.e10;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -12,7 +10,6 @@ import javax.swing.event.ChangeListener;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
@@ -31,7 +28,7 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 	}
 		
 	public CountryField(Object key) {
-		super(key);
+		super(key, true);
 
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 		comboBox.setObjects(StaxEch0072.getInstance().getCountryIdISO2s());
@@ -45,9 +42,9 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 		createMenu();
 	}
 	
-	@Override
-	public IComponent getComponent0() {
-		return switchLayout;
+		@Override
+	public Object getComponent() {
+		return decorateWithContextActions(switchLayout);
 	}
 
 	private void createMenu() {
@@ -58,7 +55,7 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 				comboBox.requestFocus();
 			}
         };
-        addAction(select);
+        addContextAction(select);
 
         Action freeEntry = new AbstractAction("Freie Eingabe") {
 			@Override
@@ -68,7 +65,7 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 				comboBox.requestFocus();
 			}
         };
-        addAction(freeEntry);
+        addContextAction(freeEntry);
 	}
 	
 	public void setConnectedZipTownField(ZipTownField connectedZipTownField) {

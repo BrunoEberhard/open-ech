@@ -15,7 +15,6 @@ import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.HorizontalLayout;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.IntegerUtils;
@@ -62,8 +61,8 @@ public class ZipTownField extends ObjectField<ZipTown> implements DemoEnabled {
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return switchLayout;
+	public Object getComponent() {
+		return decorateWithContextActions(switchLayout);
 	}
 
 	private void createMenu() {
@@ -73,9 +72,9 @@ public class ZipTownField extends ObjectField<ZipTown> implements DemoEnabled {
 				modeSelectCH();
 			}
         };
-        addAction(select);
+        addContextAction(select);
 
-        addAction(new ObjectFieldEditor());
+        addContextAction(new ObjectFieldEditor());
 
         foreignZip = new AbstractAction("Freie Eingabe ausländischer Ort") {
         	@Override
@@ -83,7 +82,7 @@ public class ZipTownField extends ObjectField<ZipTown> implements DemoEnabled {
         		modeFreeForeign();
 			}
         };
-        addAction(foreignZip);
+        addContextAction(foreignZip);
 	}
 	
 	public void modeSelectCH() {

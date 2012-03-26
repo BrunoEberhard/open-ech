@@ -14,81 +14,64 @@ import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.edit.SearchDialogAction;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.MultiLineObjectField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.MultiLineTextField;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 
-public class ContactPersonField extends ObjectField<ContactPerson> {
+public class ContactPersonField extends MultiLineObjectField<ContactPerson> {
 	
 	private final PageContext pageContext;
 	private final EchNamespaceContext echNamespaceContext;
-	private final MultiLineTextField text;
 	
 	public ContactPersonField(Object key, EchNamespaceContext echNamespaceContext, boolean editable) {
 		this(key, null, echNamespaceContext, editable);
 	}
 
 	public ContactPersonField(Object key, PageContext pageContext, EchNamespaceContext echNamespaceContext, boolean editable) {
-		super(key);
+		super(key, editable);
 		this.pageContext = pageContext;
 		this.echNamespaceContext = echNamespaceContext;
-		
-		text = ClientToolkit.getToolkit().createMultiLineTextField();
-
-		if (editable) {
-			createContextMenu();
-		} else {
-			// TODO
-			// text.addMouseListener(new ContactMouseListener());
-		}
 	}
 	
-	@Override
-	protected IComponent getComponent0() {
-		return text;
-	}
-
 	@Override
 	protected void display(ContactPerson contactPerson) {
-		StringBuilder s = new StringBuilder();
-		s.append("<HTML>");
+		clearVisual();
+		
 		if (contactPerson.person != null) {
-			s.append("Kontaktperson<BR>");
-			contactPerson.person.display(s);
-			s.append("<BR>");
+			addObject("Kontaktperson");
+			addObject(contactPerson.person.toHtml());
+			if (isEditable()) {
+				addAction(new RemovePersonContactAction());
+			}
+			addGap();
 		}
 		if (contactPerson.address != null) {
-			s.append("Kontaktadresse<BR>");
-			contactPerson.address.toHtml(s);
-			s.append("<BR>");
+			addObject("Kontaktadresse");
+			addObject(contactPerson.address.toHtml());
+			if (isEditable()) {
+				addAction(new RemoveAddressContactAction());
+			}		
+			addGap();
 		}
 		if (!StringUtils.isBlank(contactPerson.validTill)) {
-			s.append("Gültig bis<BR>");
+			addObject("Gültig bis");
 			DateUtils.formatCH(contactPerson.validTill);
-			s.append("<BR>");
+			addGap();
 		}
-		text.setText(s.toString());
-	}
-	
-	private void createContextMenu() {
-		// JMenu menuContact = new JMenu("Kontaktperson");
-		addAction(new SelectPersonContactEditor());
-		addAction(new EnterPersonContactEditor());
-		addAction(new RemovePersonContactAction());
-		
-        // JMenu menuContactAddress = new JMenu("Kontaktadresse");
-        addAction(new AddAddressContactEditor(true));
-        addAction(new AddAddressContactEditor(false));
-        addAction(new RemoveAddressContactAction());
+		if (isEditable()) {
+			addAction(new SelectPersonContactEditor());
+			addAction(new EnterPersonContactEditor());
+			addGap();
+			
+	        addAction(new AddAddressContactEditor(true));
+	        addAction(new AddAddressContactEditor(false));
+		}
 	}
 	
 	// Person suchen

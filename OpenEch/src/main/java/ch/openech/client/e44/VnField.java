@@ -16,7 +16,7 @@ public class VnField extends AbstractEditField<String> implements DemoEnabled, V
 	private final TextField textField;
 
 	public VnField(String name, boolean editable) {
-		super(name);
+		super(name, editable);
 		if (editable) {
 			textField = ClientToolkit.getToolkit().createTextField(listener(), new VnFilter());
 		} else {
@@ -25,7 +25,7 @@ public class VnField extends AbstractEditField<String> implements DemoEnabled, V
 	}
 	
 	@Override
-	public IComponent getComponent0() {
+	public Object getComponent() {
 		return textField;
 	}
 

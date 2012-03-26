@@ -10,7 +10,6 @@ import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.xml.read.StaxEch0072;
@@ -39,15 +38,15 @@ public class NationalityField extends ObjectField<Nationality> {
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout();
 		switchLayout.show(comboBox);
     	
-		addAction(new NationalitySelectAction());
-		addAction(new NationalityRemoveAction());
-		addAction(new NationalityUnknownAction());
-		addAction(new ObjectFieldEditor());
+		addContextAction(new NationalitySelectAction());
+		addContextAction(new NationalityRemoveAction());
+		addContextAction(new NationalityUnknownAction());
+		addContextAction(new ObjectFieldEditor());
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return switchLayout;
+	public Object getComponent() {
+		return decorateWithContextActions(switchLayout);
 	}
 
 	private final class NationalitySelectAction extends ResourceAction {

@@ -5,32 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.AbstractEditField;
+import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.VisualList;
 
 
-public class RemoveEntriesListField<T> extends AbstractEditField<List<T>> {
+// TODO !!
+
+public class RemoveEntriesListField<T> extends MultiLineObjectField<List<T>> {
 
 	private List<T> values = new ArrayList<T>();
 	private List<T> selectedValues = new ArrayList<T>();
-	private final VisualList list;
 
 	public RemoveEntriesListField(Object key) {
-		super(Constants.getConstant(key));
-
-		list = ClientToolkit.getToolkit().createVisualList();
-		addAction(new RemoveSelectedObjectAction());
-		addAction(new AddAllAction());
+		super(Constants.getConstant(key), true);
 	}
 
 	public void setValues(List<T> values) {
 		this.values = values;
 		selectedValues.clear();
 		selectedValues.addAll(values);
-		list.setObjects(selectedValues);
+		
+		setObject(selectedValues);
 	}
 	
 	@Override
@@ -39,28 +35,27 @@ public class RemoveEntriesListField<T> extends AbstractEditField<List<T>> {
 	}
 
 	@Override
-	public void setObject(List<T> object) {
-		this.selectedValues.clear();
-		// Mit der for Schleife wird sichergestellt, dass die Liste die richtigen Objekte enthält
-		for (T value : object) {
-			selectedValues.add(value);
+	public void setObject(List<T> selectedValues) {
+		clearVisual();
+		for (T object : selectedValues) {
+			addObject(object);
+			addAction(new RemoveSelectedObjectAction(object));
 		}
-		list.setObjects(selectedValues);
+		addGap();
+		addAction(new AddAllAction());
 	}
 
-	@Override
-	protected IComponent getComponent0() {
-		return list;
-	}
-	
 	private class RemoveSelectedObjectAction extends ResourceAction {
+		private final T object;
+		
+		private RemoveSelectedObjectAction(T object) {
+			this.object = object;
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Object selectedObject = list.getSelectedObject();
-			if (selectedObject != null) {
-				selectedValues.remove(selectedObject);
-				list.setObjects(selectedValues);
-			}
+			selectedValues.remove(object);
+			setObject(selectedValues);
 		}
 	}
 
@@ -69,8 +64,20 @@ public class RemoveEntriesListField<T> extends AbstractEditField<List<T>> {
 		public void actionPerformed(ActionEvent e) {
 			selectedValues.clear();
 			selectedValues.addAll(values);
-			list.setObjects(selectedValues);
+			setObject(selectedValues);
 		}
+	}
+
+	@Override
+	protected FormVisual<List<T>> createFormPanel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void display(List<T> object) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

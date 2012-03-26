@@ -31,7 +31,7 @@ public class PersonExtendedInformation {
 	public String matrimonialInheritanceArrangement;
 	
 	public void toHtml(StringBuilder s) {
-//		s.append("<HTML>");
+		s.append("<HTML>");
 		yesNoToHtml(s, "Militärdienstpflicht", armedForcesService);
 		yesNoToHtml(s, "Militärersatzpflicht", armedForcesLiability);
 		s.append("<BR>");
@@ -59,7 +59,7 @@ public class PersonExtendedInformation {
 //		if (mailAddress != null) {
 //			mailAddress.toHtml(s); s.append("<BR>");
 //		}
-//		s.append("</HTML>");
+		s.append("</HTML>");
 	}
 	
 	private void yesNoToHtml(StringBuilder s, String label, String value) {

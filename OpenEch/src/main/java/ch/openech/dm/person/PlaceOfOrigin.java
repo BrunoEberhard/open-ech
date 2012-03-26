@@ -106,7 +106,7 @@ public class PlaceOfOrigin {
 			s.append(DateUtils.formatCH(expatriationDate));
 		}
 		
-		s.append("<BR>&nbsp;</BODY></HTML>");
+		s.append("</BODY></HTML>");
 		return s.toString();
 	}
 	

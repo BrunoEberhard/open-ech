@@ -7,22 +7,19 @@ import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.MultiLineObjectField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.swing.PreferencesHelper;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.VisualList;
 
-public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> implements Validatable, DependingOnFieldAbove<Nationality>, DemoEnabled {
+public class PlaceOfOriginField extends MultiLineObjectField<List<PlaceOfOrigin>> implements Validatable, DependingOnFieldAbove<Nationality>, DemoEnabled {
 	public static final boolean WITHOUT_ADD_ON = false;
 	private final boolean withAddOn;
-	private final VisualList list;
 	private boolean swiss = true;
 	
 	public PlaceOfOriginField(Object key, boolean editable) {
@@ -34,24 +31,8 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 	 * per Geburtstag zu der geborenen Person
 	 */
 	public PlaceOfOriginField(Object key, boolean withAddOn, boolean editable) {
-		super(key);
+		super(key, editable);
 		this.withAddOn = withAddOn;
-		
-		list = ClientToolkit.getToolkit().createVisualList();
-		if (editable) {
-			createMenu();
-		}
-	}
-	
-	@Override
-	protected IComponent getComponent0() {
-		return list;
-	}
-
-	private void createMenu() {
-		addAction(new AddOriginEditor());
-		addAction(new EditOriginEditor());
-		addAction(new RemoveOriginAction());
 	}
 	
 	public class AddOriginEditor extends ObjectFieldPartEditor<PlaceOfOrigin> {
@@ -76,8 +57,12 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 	}
 
 	public class EditOriginEditor extends ObjectFieldPartEditor<PlaceOfOrigin> {
-		private int index;
+		private final PlaceOfOrigin placeOfOrigin;
 		
+		private EditOriginEditor(PlaceOfOrigin placeOfOrigin) {
+			this.placeOfOrigin = placeOfOrigin;
+		}
+
 		@Override
 		public FormVisual<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
@@ -85,30 +70,27 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 
 		@Override
 		protected PlaceOfOrigin getPart(List<PlaceOfOrigin> object) {
-			Object selectedObject = list.getSelectedObject();
-			index = object.indexOf(selectedObject);
-			if (index >= 0) {
-				return object.get(index);
-			} else {
-				throw new IllegalStateException();
-			}
+			return placeOfOrigin;
 		}
 
 		@Override
 		protected void setPart(List<PlaceOfOrigin> object, PlaceOfOrigin p) {
-			object.set(index, p);
+			object.set(object.indexOf(placeOfOrigin), p);
 			fireObjectChange();
 		}
 	}
 
 	private class RemoveOriginAction extends ResourceAction {
+		private final PlaceOfOrigin placeOfOrigin;
+		
+		private RemoveOriginAction(PlaceOfOrigin placeOfOrigin) {
+			this.placeOfOrigin = placeOfOrigin;
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Object selectedObject = list.getSelectedObject();
-			if (selectedObject != null) {
-				getObject().remove(selectedObject);
-				fireObjectChange();
-			}
+			getObject().remove(placeOfOrigin);
+			fireObjectChange();
 		}
 	}
 	
@@ -133,7 +115,7 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 			Nationality nationality = field.getObject();
 			swiss = nationality.isSwiss();
 		}
-		list.setEnabled(swiss);
+		getVisual().setEnabled(swiss);
 		boolean changed = false;
 		if (!swiss) {
 			if (getObject() != null && getObject().size() > 0) {
@@ -163,7 +145,18 @@ public class PlaceOfOriginField extends ObjectField<List<PlaceOfOrigin>> impleme
 
 	@Override
 	protected void display(List<PlaceOfOrigin> objects) {
-		list.setObjects(objects);
+		clearVisual();
+		for (PlaceOfOrigin placeOfOrigin : objects) {
+			addObject(placeOfOrigin.displayHtml());
+			if (isEditable()) {
+				addAction(new EditorDialogAction(new EditOriginEditor(placeOfOrigin)));
+				addAction(new RemoveOriginAction(placeOfOrigin));
+				addGap();
+			}
+		}
+		if (isEditable()) {
+			addAction(new EditorDialogAction(new AddOriginEditor()));
+		}
 	}
 
 }

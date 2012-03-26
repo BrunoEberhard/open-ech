@@ -3,49 +3,24 @@ package ch.openech.client.e21;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.dm.person.Relation;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.EditorDialogAction;
+import ch.openech.mj.edit.fields.MultiLineObjectField;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.VisualList;
-import ch.openech.mj.toolkit.VisualList.ClickListener;
 import ch.openech.xml.write.EchNamespaceContext;
 
-public class RelationField extends ObjectField<List<Relation>> {
+public class RelationField extends MultiLineObjectField<List<Relation>> {
 	private final boolean withNameOfParents;
 	private final EchNamespaceContext echNamespaceContext;
-	private final VisualList list;
 	
 	public RelationField(Object key, EchNamespaceContext echNamespaceContext, boolean withNameOfParents, boolean editable) {
-		super(key);
+		super(key, editable);
 		
 		this.withNameOfParents = withNameOfParents;
 		this.echNamespaceContext = echNamespaceContext;
-		
-		list = ClientToolkit.getToolkit().createVisualList();
-		
-		if (editable) {
-			createMenu();
-		} else {
-			list.setClickListener(new RelationClickListener());
-		}
 	}
 
-	@Override
-	protected IComponent getComponent0() {
-		return list;
-	}
-
-	private void createMenu() {
-		addAction(new AddRelationEditor());
-		addAction(new RemoveRelationAction());
-	}
-	
 	public class AddRelationEditor extends ObjectFieldPartEditor<Relation> {
 
 		@Override
@@ -65,39 +40,31 @@ public class RelationField extends ObjectField<List<Relation>> {
 	}
 	
 	private class RemoveRelationAction extends ResourceAction {
+		private final Relation relation;
+		
+		private RemoveRelationAction(Relation relation) {
+			this.relation = relation;
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			int[] selectedIndices = listRelation.getSelectedIndices();
-//			if (selectedIndices.length > 0) {
-//				List<Relation> selectedValues = new ArrayList<Relation>(selectedIndices.length);
-//				for (int index : selectedIndices) {
-//					selectedValues.add(getObject().get(index));
-//				}
-//				for (Relation relation : selectedValues) {
-//					getObject().remove(relation);
-//				}
-//				fireChange();
-//			}
-			Object selectedObject = list.getSelectedObject();
-			if (selectedObject != null) {
-				getObject().remove(selectedObject);
-				fireObjectChange();
-			}
+			getObject().remove(relation);
+			fireObjectChange();
 		}
 	}
 	
-	private class RelationClickListener implements ClickListener {
-		@Override
-		public void clicked() {
-			Relation relation = (Relation) list.getSelectedObject();
-			if (relation != null) {
-	    		if (relation.partner != null) {
-	    			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(list);
-	    			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
-	    		}
-			}
-		}
-	}
+//	private class RelationClickListener implements ClickListener {
+//		@Override
+//		public void clicked() {
+//			Relation relation = (Relation) list.getSelectedObject();
+//			if (relation != null) {
+//	    		if (relation.partner != null) {
+//	    			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(list);
+//	    			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
+//	    		}
+//			}
+//		}
+//	}
 	
 	@Override
 	public FormVisual<List<Relation>> createFormPanel() {
@@ -107,7 +74,13 @@ public class RelationField extends ObjectField<List<Relation>> {
 
 	@Override
 	protected void display(List<Relation> objects) {
-		list.setObjects(objects);
+		clearVisual();
+		for (Relation relation : objects) {
+			addObject(relation.toHtml());
+			addAction(new RemoveRelationAction(relation));
+			addGap();
+		}
+		addAction(new EditorDialogAction(new AddRelationEditor()));
 	}
 
 }

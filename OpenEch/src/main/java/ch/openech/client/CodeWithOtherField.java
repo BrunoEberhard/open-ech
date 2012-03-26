@@ -1,8 +1,6 @@
 package ch.openech.client;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -36,7 +34,7 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 	private final TextField textFieldUnknown;
 	
 	public CodeWithOtherField(Object key, Code code) {
-		super(key);
+		super(key, true);
 		this.code = code;
 		
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
@@ -57,8 +55,8 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 	}
 	
 	@Override
-	public IComponent getComponent0() {
-		return switchLayout;
+	public Object getComponent() {
+		return decorateWithContextActions(switchLayout);
 	}
 
 	private void createMenu() {
@@ -68,7 +66,7 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 				modeChoice();
 			}
 		};
-		addAction(select);
+		addContextAction(select);
 
 		Action unbekannt = new AbstractAction(code.getDisplayName() + " entfernen") {
 			@Override
@@ -76,7 +74,7 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 				modeUnknown();
 			}
 		};
-		addAction(unbekannt);
+		addContextAction(unbekannt);
 
 		Action freeEntry = new AbstractAction("Freie Eingabe") {
 			@Override
@@ -84,7 +82,7 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 				modeFreeEntry();
 			}
 		};
-		addAction(freeEntry);
+		addContextAction(freeEntry);
 	}
 	
 	private void modeChoice() {

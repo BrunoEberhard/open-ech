@@ -10,24 +10,23 @@ import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
 public class ContractorField extends ObjectField<Contact> implements Indicator {
 	private final TextField text;
 	
 	public ContractorField(Object key) {
-		super(key);
+		super(key, true);
 	
 		text = ClientToolkit.getToolkit().createReadOnlyTextField();
 		
-		addAction(new ObjectFieldEditor());
-		addAction(new RemoveObjectAction());
+		addContextAction(new ObjectFieldEditor());
+		addContextAction(new RemoveObjectAction());
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return text;
+	public Object getComponent() {
+		return decorateWithContextActions(text);
 	}
 
 	@Override

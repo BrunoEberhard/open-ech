@@ -20,7 +20,6 @@ import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.HorizontalLayout;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.xml.read.StaxEch0071;
@@ -87,16 +86,16 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 	}
 
 	@Override
-	protected IComponent getComponent0() {
-		return switchLayout;
+	public Object getComponent() {
+		return decorateWithContextActions(switchLayout);
 	}
-
+	
 	private void createMenu() {
-		addAction(new PlaceMunicipalitySelectAction());
-		addAction(new PlaceMunicipalityFreeEntryEditor());
-		addAction(new PlaceCountrySelectAction());
-		addAction(new PlaceCountryFreeEntryEditor());
-		addAction(new PlaceUnknownAction());
+		addContextAction(new PlaceMunicipalitySelectAction());
+		addContextAction(new PlaceMunicipalityFreeEntryEditor());
+		addContextAction(new PlaceCountrySelectAction());
+		addContextAction(new PlaceCountryFreeEntryEditor());
+		addContextAction(new PlaceUnknownAction());
 	}
 
 	private final class PlaceMunicipalitySelectAction extends ResourceAction {

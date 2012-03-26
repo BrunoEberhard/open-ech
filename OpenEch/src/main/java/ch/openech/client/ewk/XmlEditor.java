@@ -14,13 +14,13 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 
 import ch.openech.client.ewk.event.PersonEventEditor;
-import ch.openech.client.ewk.event.SedexOutputGenerator;
 import ch.openech.client.ewk.event.XmlTextFormField;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.swing.PreferencesHelper;
+import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -164,10 +164,14 @@ public abstract class XmlEditor<T> extends Editor<T> {
 				throw new RuntimeException("XML Generierung fehlgeschlagen", x);
 			}
 			
-			AbstractFormVisual<?> form = new AbstractFormVisual(Object.class, Resources.getDefaultResourcebundle(), false);
+			AbstractFormVisual<?> form = new AbstractFormVisual(Object.class, null, false);
 			for (String xml : xmls) {
+				// Nene, multiline durch einzeller listen ersetzen?
+//				xml = xml.replace("\n", "<br>");
+//				xml = "<html>" + xml + "</html>";
 				form.area(new XmlTextFormField(xml));
 			}
+			ClientToolkit.getToolkit().openDialog(null, form, "XML").openDialog();
 		}
 
 		private class EditorControlPreferenceChangeListener extends ComponentAdapter implements PreferenceChangeListener {

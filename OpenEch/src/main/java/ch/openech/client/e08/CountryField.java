@@ -13,7 +13,6 @@ import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.xml.read.StaxEch0072;
@@ -39,16 +38,16 @@ public class CountryField extends ObjectField<CountryIdentification> implements 
 		textCountryUnknown = ClientToolkit.getToolkit().createReadOnlyTextField();
 		textCountryUnknown.setText("-");
 		
-		addAction(new ObjectFieldEditor());
-		addAction(new CountrySelectAction());
-		addAction(new CountryRemoveAction());
+		addContextAction(new ObjectFieldEditor());
+		addContextAction(new CountrySelectAction());
+		addContextAction(new CountryRemoveAction());
 		
 		setObject(Swiss.createCountryIdentification());
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return switchLayout;
+	public Object getComponent() {
+		return decorateWithContextActions(switchLayout);
 	}
 	
 	private final class CountrySelectAction extends ResourceAction {

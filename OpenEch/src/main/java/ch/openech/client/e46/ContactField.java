@@ -1,44 +1,26 @@
 package ch.openech.client.e46;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.MultiLineObjectField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.VisualList;
 
-public class ContactField extends ObjectField<Contact> {
-	private VisualList list;
+public class ContactField extends MultiLineObjectField<Contact> {
 	
 	public ContactField(Object key) {
 		this(key, true);
 	}
 	
 	public ContactField(Object key, boolean editable) {
-		super(key);
-		
-		list = ClientToolkit.getToolkit().createVisualList();
-		// list.setFixedCellHeight(-1); // unfixed cell height
-		// add(new SizedScrollPane(list, 7, 20));
-		if (editable) {
-			addAction(new AddContactEntryEditor(true));
-			addAction(new AddContactEntryEditor(false));
-			addAction(new AddContactEntryEditor("E"));
-			addAction(new AddContactEntryEditor("P"));
-			addAction(new AddContactEntryEditor("I"));
-			addAction(new RemoveContactEntryAction());
-		}
+		super(key, editable);
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return list;
+	public void setObject(Contact object) {
+		super.setObject(object != null ? object : new Contact());
 	}
 
 	public class AddContactEntryEditor extends ObjectFieldPartEditor<ContactEntry> {
@@ -77,13 +59,16 @@ public class ContactField extends ObjectField<Contact> {
     };
 
 	private class RemoveContactEntryAction extends ResourceAction {
+		private final ContactEntry contactEntry;
+		
+		private RemoveContactEntryAction(ContactEntry contactEntry) {
+			this.contactEntry = contactEntry;
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Object selectedObject = list.getSelectedObject();
-			if (selectedObject != null) {
-				getObject().entries.remove(selectedObject);
-				fireObjectChange();
-			}
+			getObject().entries.remove(contactEntry);
+			fireObjectChange();
 		}
     };
 	
@@ -97,13 +82,19 @@ public class ContactField extends ObjectField<Contact> {
 
 	@Override
 	protected void display(Contact contact) {
-		List<String> htmlStrings = new ArrayList<String>();
+		clearVisual();
 		if (contact != null) {
-			for (ContactEntry entry : contact.entries) {
-				htmlStrings.add(entry.toHtml());
+			for (ContactEntry contactEntry : contact.entries) {
+				addObject(contactEntry.toHtml());
+				addAction(new RemoveContactEntryAction(contactEntry));
+				addGap();
 			}
 		}
-		list.setObjects(htmlStrings);
+		addAction(new AddContactEntryEditor(true));
+		addAction(new AddContactEntryEditor(false));
+		addAction(new AddContactEntryEditor("E"));
+		addAction(new AddContactEntryEditor("P"));
+		addAction(new AddContactEntryEditor("I"));
 	}
 
 }

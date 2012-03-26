@@ -23,12 +23,12 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 	}
 	
 	public OrganisationUidField(Object key) {
-		super(key);
+		super(key, true);
 		textField = ClientToolkit.getToolkit().createTextField(listener(), new OrganisationTextFieldFilter());
 	}
 	
 	@Override
-	public IComponent getComponent0() {
+	public Object getComponent() {
 		return textField;
 	}
 

@@ -14,7 +14,6 @@ import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -67,12 +66,12 @@ public class UndoCitizenEvent extends PersonEventEditor<PlaceOfOrigin> {
 		private final ComboBox comboBox;
 		
 		public UndoCitizenField() {
-			super(PLACE_OF_ORIGIN.originName);
+			super(PLACE_OF_ORIGIN.originName, true);
 			comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 		}
 
 		@Override
-		public IComponent getComponent0() {
+		public Object getComponent() {
 			return comboBox;
 		}
 

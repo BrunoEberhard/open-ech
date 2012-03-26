@@ -3,18 +3,13 @@ package ch.openech.client.e10;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.MultiLineObjectField;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.MultiLineTextField;
 
-public class AddressField extends ObjectField<Address> implements DemoEnabled {
+public class AddressField extends MultiLineObjectField<Address> implements DemoEnabled {
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;
-	
-	private final MultiLineTextField text;
 	
 	public AddressField(Object key, boolean editable) {
 		this(key, editable, false, false, false);
@@ -25,21 +20,11 @@ public class AddressField extends ObjectField<Address> implements DemoEnabled {
 	}
 	
 	public AddressField(Object key, boolean editable, boolean swiss, boolean person, boolean organisation) {
-		super(key);
+		super(key, editable);
 		this.swiss = swiss;
 		this.person = person;
 		this.organisation = organisation;
 	
-		text = ClientToolkit.getToolkit().createMultiLineTextField();
-		if (editable) {
-			addAction(new ObjectFieldEditor());
-			addAction(new RemoveObjectAction());
-		}
-	}
-
-	@Override
-	protected IComponent getComponent0() {
-		return text;
 	}
 
 	public FormVisual<Address> createEditFrame() {
@@ -59,9 +44,13 @@ public class AddressField extends ObjectField<Address> implements DemoEnabled {
 	@Override
 	public void display(Address address) {
 		if (address != null) {
-			text.setText(address.toHtml());
+			setText(address.toHtml());
 		} else {
-			text.setText(null);
+			setText(null);
+		}
+		if (isEditable()) {
+			addAction(new ObjectFieldEditor());
+			addAction(new RemoveObjectAction());
 		}
 	}
 

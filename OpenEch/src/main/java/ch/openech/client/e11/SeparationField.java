@@ -17,7 +17,6 @@ import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
@@ -33,14 +32,14 @@ public class SeparationField extends ObjectField<Separation> implements Dependin
 		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 		
 		if (editable) {
-			addAction(new SeparationCancelationEditor());
-			addAction(new SeperationRemoveAction());
+			addContextAction(new SeparationCancelationEditor());
+			addContextAction(new SeperationRemoveAction());
 		}
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return textField;
+	public Object getComponent() {
+		return decorateWithContextActions(textField);
 	}
 
 	@Override

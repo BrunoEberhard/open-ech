@@ -23,7 +23,6 @@ import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
 
@@ -33,22 +32,22 @@ public class ResidenceField extends ObjectField<Residence> implements Validatabl
 	private String typeOfResidence;
 
 	public ResidenceField(Object key, boolean editable) {
-		super(key);
+		super(key, editable);
 		
 		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 
 		if (editable) {
-			addAction(new ResidenceMainEditor());
-			addAction(new ResidenceAddSecondaryEditor());
-			addAction(new ResidenceRemoveSecondaryAction());
+			addContextAction(new ResidenceMainEditor());
+			addContextAction(new ResidenceAddSecondaryEditor());
+			addContextAction(new ResidenceRemoveSecondaryAction());
 		}
 	}
 	
 	// 		setTitle(main ? "Hauptwohnsitz erfassen" : "Nebenwohnsitz erfassen");
 
 	@Override
-	protected IComponent getComponent0() {
-		return textField;
+	public Object getComponent() {
+		return decorateWithContextActions(textField);
 	}
 
 	// Als "Part" wird hier das ganze Objekt editiert. Das entsteht, weil eigentlich eine

@@ -10,12 +10,10 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.mj.db.model.Code;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.ObjectField;
-import ch.openech.mj.edit.fields.ObjectField.ObjectFieldEditor;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
@@ -50,14 +48,14 @@ public class SwissMunicipalityField extends ObjectField<MunicipalityIdentificati
 	}
 	
 	@Override
-	protected IComponent getComponent0() {
-		return switchLayout;
+	public Object getComponent() {
+		return decorateWithContextActions(switchLayout);
 	}
 
 	private void createMenu() {
-        addAction(new MunicipalitySelectAction());
-        addAction(new ObjectFieldEditor());
-        addAction(new MunicipalityRemoveAction());
+		addContextAction(new MunicipalitySelectAction());
+		addContextAction(new ObjectFieldEditor());
+		addContextAction(new MunicipalityRemoveAction());
         
         if (allowFederalRegister) {
         	final Code code = EchCodes.federalRegister;
@@ -71,7 +69,7 @@ public class SwissMunicipalityField extends ObjectField<MunicipalityIdentificati
         				setObject(municipalityIdentification);
         			}
                 };
-                addAction(federalRegisterAction);
+                addContextAction(federalRegisterAction);
         	}
         }
 	}

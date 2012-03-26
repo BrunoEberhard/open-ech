@@ -5,38 +5,19 @@ import java.util.List;
 import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.SearchDialogAction;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.MultiLineObjectField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.MultiLineTextField;
 import ch.openech.server.EchServer;
 
-public class PersonIdentificationField extends ObjectField<PersonIdentification> {
-	protected final MultiLineTextField text;
+public class PersonIdentificationField extends MultiLineObjectField<PersonIdentification> {
 
 	public PersonIdentificationField(Object key) {
-		super(Constants.getConstant(key));
-		
-		text = ClientToolkit.getToolkit().createMultiLineTextField();
-		
-		// editable 
-        addAction(new PersonSearchAction());
-        // EditObjectAction kann nicht verwendet werden, sondern die PersonIdentificationEditAction,
-        // weil der Typ vom FormPanel PersonIdentification und nicht Person ist
-        addAction(new PersonIdentificationEditor());
-        addAction(new RemoveObjectAction());
+		super(key);
 	}
 	
-	@Override
-	protected IComponent getComponent0() {
-		return text;
-	}
-
 	@Override
 	public FormVisual<PersonIdentification> createFormPanel() {
 		// not used
@@ -46,10 +27,16 @@ public class PersonIdentificationField extends ObjectField<PersonIdentification>
 	@Override
 	protected void display(PersonIdentification object) {
 		if (object != null) {
-			text.setText(object.toHtml());
+			setText(object.toHtml());
+			addAction(new RemoveObjectAction());
 		} else {
-			text.setText(null);
+			clearVisual();
 		}
+		// editable 
+        addAction(new PersonSearchAction());
+        // EditObjectAction kann nicht verwendet werden, sondern die PersonIdentificationEditAction,
+        // weil der Typ vom FormPanel PersonIdentification und nicht Person ist
+        addAction(new PersonIdentificationEditor());
 	}
 
 //	public final class PersonSearchEditor extends Editor<Person> {

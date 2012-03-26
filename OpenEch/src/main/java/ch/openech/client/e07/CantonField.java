@@ -23,7 +23,7 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 	}
 	
 	public CantonField(Object key, boolean editable) {
-		super(key);
+		super(key, editable);
 		
 		if (editable) {
 			textField = ClientToolkit.getToolkit().createTextField(listener(), new CantonTextFieldFilter()); // new IndicatingTextField(new LimitedDocument());
@@ -33,7 +33,7 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 	}
 	
 	@Override
-	public IComponent getComponent0() {
+	public Object getComponent() {
 		return textField;
 	}
 

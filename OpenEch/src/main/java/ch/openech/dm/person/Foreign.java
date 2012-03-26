@@ -31,7 +31,6 @@ public class Foreign {
 		if (!StringUtils.isBlank(residencePermitTill)) s += "Ausländerkategorie gültig bis<BR>" + DateUtils.formatCH(residencePermitTill) + "<BR>&nbsp;<BR>";
 		if (!StringUtils.isBlank(nameOnPassport)) s += "Name in ausländischem Pass<BR>" + nameOnPassport;
 		s = s + "</HTML>";
-		s = s.trim();
 		return s;
 	}
 	

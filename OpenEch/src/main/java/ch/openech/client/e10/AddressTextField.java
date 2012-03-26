@@ -5,7 +5,6 @@ import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
 public class AddressTextField extends ObjectField<Address> implements Indicator {
@@ -24,7 +23,7 @@ public class AddressTextField extends ObjectField<Address> implements Indicator 
 	}
 	
 	public AddressTextField(Object key, boolean editable, boolean swiss, boolean person, boolean organisation) {
-		super(key);
+		super(key, editable);
 
 		this.swiss = swiss;
 		this.person = person;
@@ -33,14 +32,14 @@ public class AddressTextField extends ObjectField<Address> implements Indicator 
 		text = ClientToolkit.getToolkit().createReadOnlyTextField();
 		
 		if (editable) {
-			addAction(new ObjectFieldEditor());
-			addAction(new RemoveObjectAction());
+			addContextAction(new ObjectFieldEditor());
+			addContextAction(new RemoveObjectAction());
 		} 
 	}
 
 	@Override
-	protected IComponent getComponent0() {
-		return text;
+	public Object getComponent() {
+		return decorateWithContextActions(text);
 	}
 	
 	public void setEnabled(boolean enabled) {

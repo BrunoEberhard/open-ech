@@ -4,31 +4,16 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.dm.person.Occupation;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.EditorDialogAction;
+import ch.openech.mj.edit.fields.MultiLineObjectField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.VisualList;
 
-public class OccupationField extends ObjectField<List<Occupation>> implements Indicator {
-	private VisualList list;
+public class OccupationField extends MultiLineObjectField<List<Occupation>> implements Indicator {
 	
 	public OccupationField(Object key, boolean editable) {
-		super(key);
-		
-		list = ClientToolkit.getToolkit().createVisualList();
-		
-		if (editable) {
-			addAction(new AddOccupationEditor());
-			addAction(new RemoveOccupationAction());
-		}
-	}
-	
-	@Override
-	protected IComponent getComponent0() {
-		return list;
+		super(key, editable);
 	}
 
 	public class AddOccupationEditor extends ObjectFieldPartEditor<Occupation> {
@@ -52,25 +37,16 @@ public class OccupationField extends ObjectField<List<Occupation>> implements In
 	}
 	
 	private class RemoveOccupationAction extends ResourceAction {
+		private final Occupation occupation;
+		
+		private RemoveOccupationAction(Occupation occupation) {
+			this.occupation = occupation;
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Object selectedObject = list.getSelectedObject();
-			if (selectedObject != null) {
-				getObject().remove(selectedObject);
-				fireObjectChange();
-			}
-			
-//			int[] selectedIndices = listOccupation.getSelectedIndices();
-//			if (selectedIndices.length > 0) {
-//				List<Occupation> selectedValues = new ArrayList<Occupation>(selectedIndices.length);
-//				for (int index : selectedIndices) {
-//					selectedValues.add(getObject().get(index));
-//				}
-//				for (Occupation occupation : selectedValues) {
-//					getObject().remove(occupation);
-//				}
-//				fireChange();
-//			}
+			getObject().remove(occupation);
+			fireObjectChange();
 		}
 	}
 	
@@ -82,6 +58,17 @@ public class OccupationField extends ObjectField<List<Occupation>> implements In
 
 	@Override
 	protected void display(List<Occupation> object) {
-		list.setObjects(object);
+		clearVisual();
+		for (Occupation occupation : object) {
+			addObject(occupation);
+			if (isEditable()) {
+				addAction(new RemoveOccupationAction(occupation));
+				addGap();
+			}
+		}
+		if (isEditable()) {
+			addAction(new EditorDialogAction(new AddOccupationEditor()));
+		}
 	}
+
 }

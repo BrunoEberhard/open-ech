@@ -49,5 +49,34 @@ public class Occupation {
 		s.append("&nbsp;</HTML>");
 		return s.toString();
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		if (!StringUtils.isBlank(jobTitle)) {
+			StringUtils.appendLine(s, "Bezeichnung:", jobTitle);
+		}
+
+		if (!StringUtils.isBlank(kindOfEmployment)) {
+			String text = EchCodes.kindOfEmployment.getText(kindOfEmployment);
+			if (!StringUtils.isBlank(text)) StringUtils.appendLine(s, "Erwerbsart:", text);
+			else StringUtils.appendLine(s, "Erwerbsart:", kindOfEmployment);
+		}
+
+		if (!StringUtils.isBlank(employer)) {
+			StringUtils.appendLine(s, "Arbeitgeber:", employer);
+		}
+		
+		if (placeOfWork != null && !placeOfWork.isEmpty()) {
+			StringUtils.appendLine(s, "Arbeitsort:");
+			placeOfWork.toHtml(s);
+		}
+
+		if (placeOfEmployer != null && !placeOfEmployer.isEmpty()) {
+			StringUtils.appendLine(s, "Arbeitgeberort:");
+			placeOfEmployer.toHtml(s);
+		}
+		return s.toString().replace("<br>", "\n");
+	}
 	
 }
