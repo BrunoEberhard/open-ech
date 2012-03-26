@@ -67,8 +67,8 @@ public class ContactPersonField extends MultiLineObjectField<ContactPerson> {
 			addAction(new EnterPersonContactEditor());
 			addGap();
 			
-	        addAction(new AddAddressContactEditor(true));
-	        addAction(new AddAddressContactEditor(false));
+	        addAction(new AddAddressContactEditor(true), "AddAddressPerson");
+	        addAction(new AddAddressContactEditor(false), "AddAddressOrganisation");
 		}
 	}
 	
