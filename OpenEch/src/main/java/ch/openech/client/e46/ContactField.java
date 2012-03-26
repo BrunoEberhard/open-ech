@@ -82,7 +82,6 @@ public class ContactField extends MultiLineObjectField<Contact> {
 
 	@Override
 	protected void display(Contact contact) {
-		clearVisual();
 		if (contact != null) {
 			for (ContactEntry contactEntry : contact.entries) {
 				addObject(contactEntry.toHtml());
@@ -90,11 +89,11 @@ public class ContactField extends MultiLineObjectField<Contact> {
 				addGap();
 			}
 		}
-		addAction(new AddContactEntryEditor(true));
-		addAction(new AddContactEntryEditor(false));
-		addAction(new AddContactEntryEditor("E"));
-		addAction(new AddContactEntryEditor("P"));
-		addAction(new AddContactEntryEditor("I"));
+		addAction(new AddContactEntryEditor(true), "AddContactEntryAddressPerson");
+		addAction(new AddContactEntryEditor(false), "AddContactEntryAddressOrganisation");
+		addAction(new AddContactEntryEditor("E"), "AddContactEntryEmail");
+		addAction(new AddContactEntryEditor("P"), "AddContactEntryPhone");
+		addAction(new AddContactEntryEditor("I"), "AddContactEntryInternet");
 	}
 
 }

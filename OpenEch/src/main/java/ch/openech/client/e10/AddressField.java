@@ -44,9 +44,7 @@ public class AddressField extends MultiLineObjectField<Address> implements DemoE
 	@Override
 	public void display(Address address) {
 		if (address != null) {
-			setText(address.toHtml());
-		} else {
-			setText(null);
+			addHtml(address.toHtml());
 		}
 		if (isEditable()) {
 			addAction(new ObjectFieldEditor());

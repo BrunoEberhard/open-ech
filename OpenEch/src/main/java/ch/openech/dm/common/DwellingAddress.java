@@ -39,7 +39,13 @@ public class DwellingAddress {
 			resultList.add(new ValidationMessage(DWELLING_ADDRESS.mailAddress, "Postadresse muss gesetzt sein"));
 		}
 	}
-	
+
+	public String toHtml() {
+		StringBuilder s = new StringBuilder();
+		toHtml(s);
+		return s.toString();
+	}
+		
 	public void toHtml(StringBuilder s) {
 		s.append("<HTML>");
 		if (mailAddress != null) {

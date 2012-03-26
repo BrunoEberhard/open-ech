@@ -24,7 +24,7 @@ public class PersonField extends MultiLineObjectField<Person> {
 
 	@Override
 	protected void display(Person object) {
-		setText(object.personIdentification.toHtml());
+		addHtml(object.personIdentification.toHtml());
 		if (isEditable()) {
 	        addAction(new PersonSearchAction());
 	        addAction(new RemoveObjectAction());

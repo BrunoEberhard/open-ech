@@ -41,8 +41,6 @@ public class ContactPersonField extends MultiLineObjectField<ContactPerson> {
 	
 	@Override
 	protected void display(ContactPerson contactPerson) {
-		clearVisual();
-		
 		if (contactPerson.person != null) {
 			addObject("Kontaktperson");
 			addObject(contactPerson.person.toHtml());

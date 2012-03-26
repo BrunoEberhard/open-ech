@@ -13,15 +13,13 @@ public class PersonExtendedInformationField extends MultiLineObjectField<PersonE
 	
 	@Override
 	protected void display(PersonExtendedInformation information) {
-		clearVisual();
-		
-		StringBuilder s = new StringBuilder();
 		if (information != null) {
-			information.toHtml(s);
+			addHtml(information.toHtml());
 		}
-		addObject(s.toString());
-		addAction(new EditorDialogAction(new ObjectFieldEditor()));
-		addAction(new RemoveObjectAction());
+		if (isEditable()) {
+			addAction(new EditorDialogAction(new ObjectFieldEditor()));
+			addAction(new RemoveObjectAction());
+		}
 	}
 	
 	@Override

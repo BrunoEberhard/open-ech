@@ -58,7 +58,6 @@ public class OccupationField extends MultiLineObjectField<List<Occupation>> impl
 
 	@Override
 	protected void display(List<Occupation> object) {
-		clearVisual();
 		for (Occupation occupation : object) {
 			addObject(occupation);
 			if (isEditable()) {

@@ -145,9 +145,8 @@ public class PlaceOfOriginField extends MultiLineObjectField<List<PlaceOfOrigin>
 
 	@Override
 	protected void display(List<PlaceOfOrigin> objects) {
-		clearVisual();
 		for (PlaceOfOrigin placeOfOrigin : objects) {
-			addObject(placeOfOrigin.displayHtml());
+			addHtml(placeOfOrigin.displayHtml());
 			if (isEditable()) {
 				addAction(new EditorDialogAction(new EditOriginEditor(placeOfOrigin)));
 				addAction(new RemoveOriginAction(placeOfOrigin));

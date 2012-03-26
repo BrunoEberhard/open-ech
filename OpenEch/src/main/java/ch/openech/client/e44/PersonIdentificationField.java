@@ -27,16 +27,15 @@ public class PersonIdentificationField extends MultiLineObjectField<PersonIdenti
 	@Override
 	protected void display(PersonIdentification object) {
 		if (object != null) {
-			setText(object.toHtml());
+			addHtml(object.toHtml());
 			addAction(new RemoveObjectAction());
-		} else {
-			clearVisual();
 		}
-		// editable 
-        addAction(new PersonSearchAction());
-        // EditObjectAction kann nicht verwendet werden, sondern die PersonIdentificationEditAction,
-        // weil der Typ vom FormPanel PersonIdentification und nicht Person ist
-        addAction(new PersonIdentificationEditor());
+		if (isEditable()) {
+	        addAction(new PersonSearchAction());
+	        // EditObjectAction kann nicht verwendet werden, sondern die PersonIdentificationEditAction,
+	        // weil der Typ vom FormPanel PersonIdentification und nicht Person ist
+	        addAction(new PersonIdentificationEditor());
+		}
 	}
 
 //	public final class PersonSearchEditor extends Editor<Person> {

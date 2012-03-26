@@ -29,7 +29,13 @@ public class PersonExtendedInformation {
 	
 	@FormatName(EchFormats.baseName) // TODO REMOVE
 	public String matrimonialInheritanceArrangement;
-	
+
+	public String toHtml() {
+		StringBuilder s = new StringBuilder();
+		toHtml(s);
+		return s.toString();
+	}
+
 	public void toHtml(StringBuilder s) {
 		s.append("<HTML>");
 		yesNoToHtml(s, "Militärdienstpflicht", armedForcesService);
@@ -55,10 +61,6 @@ public class PersonExtendedInformation {
 		}
 
 		yesNoToHtml(s, "Gütererbrechtliche<BR>Vereinbarung", matrimonialInheritanceArrangement);
-		
-//		if (mailAddress != null) {
-//			mailAddress.toHtml(s); s.append("<BR>");
-//		}
 		s.append("</HTML>");
 	}
 	

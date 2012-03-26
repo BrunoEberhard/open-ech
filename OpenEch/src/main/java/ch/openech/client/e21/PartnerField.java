@@ -20,8 +20,10 @@ public class PartnerField extends MultiLineObjectField<Relation> {
 	
 	@Override
 	protected void display(Relation relation) {
-		setText(relation.identificationToHtml());
-		addAction(new PartnerEditor());
+		addHtml(relation.identificationToHtml());
+		if (isEditable()) {
+			addAction(new PartnerEditor());
+		}
 
 //		
 //		if (connectedNameField != null) {

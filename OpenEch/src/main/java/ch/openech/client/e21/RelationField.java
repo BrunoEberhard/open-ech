@@ -74,7 +74,6 @@ public class RelationField extends MultiLineObjectField<List<Relation>> {
 
 	@Override
 	protected void display(List<Relation> objects) {
-		clearVisual();
 		for (Relation relation : objects) {
 			addObject(relation.toHtml());
 			addAction(new RemoveRelationAction(relation));

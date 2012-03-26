@@ -36,7 +36,6 @@ public class RemoveEntriesListField<T> extends MultiLineObjectField<List<T>> {
 
 	@Override
 	public void setObject(List<T> selectedValues) {
-		clearVisual();
 		for (T object : selectedValues) {
 			addObject(object);
 			addAction(new RemoveSelectedObjectAction(object));

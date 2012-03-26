@@ -18,15 +18,13 @@ public class DwellingAddressField extends MultiLineObjectField<DwellingAddress> 
 	
 	@Override
 	protected void display(DwellingAddress dwellingAddress) {
-		clearVisual();
-		
-		StringBuilder s = new StringBuilder();
 		if (dwellingAddress != null) {
-			dwellingAddress.toHtml(s);
+			addHtml(dwellingAddress.toHtml());
 		}
-		addObject(s.toString());
-		addAction(new EditorDialogAction(new ObjectFieldEditor()));
-		addAction(new RemoveObjectAction());
+		if (isEditable()) {
+			addAction(new EditorDialogAction(new ObjectFieldEditor()));
+			addAction(new RemoveObjectAction());
+		}
 	}
 	
 	@Override

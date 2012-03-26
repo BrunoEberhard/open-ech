@@ -23,9 +23,9 @@ public class SecondPersonField extends MultiLineObjectField<Relation> {
 	@Override
 	protected void display(Relation relation) {
 		if (!hasPartner()) {
-			setText("Kein Partner / Keine Partnerin vorhanden");
+			addObject("Kein Partner / Keine Partnerin vorhanden");
 		} else {
-			setText(relation.partner.toHtml());
+			addHtml(relation.partner.toHtml());
 		}
 	}
 
