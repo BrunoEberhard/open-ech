@@ -16,4 +16,9 @@ public class ForeignPanel extends EchFormPanel<Foreign> {
 		line(FOREIGN.nameOnPassport);
 	}
 
+	@Override
+	protected int getColumnWidthPercentage() {
+		return 2 * super.getColumnWidthPercentage();
+	}
+
 }
