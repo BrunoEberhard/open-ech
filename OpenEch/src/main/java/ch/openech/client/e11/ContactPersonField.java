@@ -51,7 +51,7 @@ public class ContactPersonField extends MultiLineObjectField<ContactPerson> {
 		}
 		if (contactPerson.address != null) {
 			addObject("Kontaktadresse");
-			addObject(contactPerson.address.toHtml());
+			addHtml(contactPerson.address.toHtml());
 			if (isEditable()) {
 				addAction(new RemoveAddressContactAction());
 			}		
