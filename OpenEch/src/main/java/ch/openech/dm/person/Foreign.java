@@ -26,10 +26,10 @@ public class Foreign {
 		
 		String s = "<HTML>";
 		if (codeText != null) {
-			s = s + "Ausländerkategorie<BR>" + codeText + "<BR>&nbsp;<BR>";
+			s = s + "Ausländerkategorie: " + codeText + "<BR>";
 		}
-		if (!StringUtils.isBlank(residencePermitTill)) s += "Ausländerkategorie gültig bis<BR>" + DateUtils.formatCH(residencePermitTill) + "<BR>&nbsp;<BR>";
-		if (!StringUtils.isBlank(nameOnPassport)) s += "Name in ausländischem Pass<BR>" + nameOnPassport;
+		if (!StringUtils.isBlank(residencePermitTill)) s += "Ausländerkategorie gültig bis: " + DateUtils.formatCH(residencePermitTill) + "<BR>";
+		if (!StringUtils.isBlank(nameOnPassport)) s += "Name in ausländischem Pass: " + nameOnPassport;
 		s = s + "</HTML>";
 		return s;
 	}
