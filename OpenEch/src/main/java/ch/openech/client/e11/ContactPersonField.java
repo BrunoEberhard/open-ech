@@ -43,7 +43,7 @@ public class ContactPersonField extends MultiLineObjectField<ContactPerson> {
 	protected void display(ContactPerson contactPerson) {
 		if (contactPerson.person != null) {
 			addObject("Kontaktperson");
-			addObject(contactPerson.person.toHtml());
+			addHtml(contactPerson.person.toHtml());
 			if (isEditable()) {
 				addAction(new RemovePersonContactAction());
 			}

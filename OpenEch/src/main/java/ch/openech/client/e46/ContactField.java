@@ -84,7 +84,7 @@ public class ContactField extends MultiLineObjectField<Contact> {
 	protected void display(Contact contact) {
 		if (contact != null) {
 			for (ContactEntry contactEntry : contact.entries) {
-				addObject(contactEntry.toHtml());
+				addHtml(contactEntry.toHtml());
 				addAction(new RemoveContactEntryAction(contactEntry));
 				addGap();
 			}
