@@ -15,10 +15,10 @@ public class PersonIdentificationPanel extends EchFormPanel<PersonIdentification
 	
 	// TODO es gibt da noch partnerIdOrganisationType im e11, was noch nicht abgebildet ist
 	public PersonIdentificationPanel(boolean partner) {
-		super();
+		super(2);
 		TechnicalIdsField technicalIdField = new TechnicalIdsField(PERSON_IDENTIFICATION.technicalIds, partner ? TechnicalIdsField.WITHOUT_EU_IDS : TechnicalIdsField.WITH_EU_IDS, editable);
 		
-		text("<html><b>Hinweis:</b> Normalerweise kann eine Person über die Suche ausgewählt werden.<br>Nur bei Ausnahmen sollten hier die Identifikationsmerkmale der Person direkt eingegeben werden.</html>");
+		text("<html><b>Hinweis:</b> Normalerweise kann eine Person über die Suche ausgewählt werden.<br>Nur bei Ausnahmen sollten hier die Identifikationsmerkmale der Person direkt eingegeben werden.</html>", 2);
         line(PERSON_IDENTIFICATION.officialName);
         line(PERSON_IDENTIFICATION.firstName);
         line(new DateField(PERSON_IDENTIFICATION.dateOfBirth, DateField.NOT_REQUIRED), PERSON_IDENTIFICATION.sex);
