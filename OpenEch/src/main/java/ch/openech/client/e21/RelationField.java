@@ -79,7 +79,9 @@ public class RelationField extends MultiLineObjectField<List<Relation>> {
 			addAction(new RemoveRelationAction(relation));
 			addGap();
 		}
-		addAction(new EditorDialogAction(new AddRelationEditor()));
+		if (isEditable()) {
+			addAction(new EditorDialogAction(new AddRelationEditor()));
+		}
 	}
 
 }

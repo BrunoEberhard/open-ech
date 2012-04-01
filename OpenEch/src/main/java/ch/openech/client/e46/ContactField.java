@@ -89,11 +89,13 @@ public class ContactField extends MultiLineObjectField<Contact> {
 				addGap();
 			}
 		}
-		addAction(new AddContactEntryEditor(true), "AddAddressPerson");
-		addAction(new AddContactEntryEditor(false), "AddAddressOrganisation");
-		addAction(new AddContactEntryEditor("E"), "AddEmail");
-		addAction(new AddContactEntryEditor("P"), "AddPhone");
-		addAction(new AddContactEntryEditor("I"), "AddInternet");
+		if (isEditable()) {
+			addAction(new AddContactEntryEditor(true), "AddAddressPerson");
+			addAction(new AddContactEntryEditor(false), "AddAddressOrganisation");
+			addAction(new AddContactEntryEditor("E"), "AddEmail");
+			addAction(new AddContactEntryEditor("P"), "AddPhone");
+			addAction(new AddContactEntryEditor("I"), "AddInternet");
+		}
 	}
 
 }

@@ -18,7 +18,7 @@ public class ForeignField extends MultiLineObjectField<Foreign> implements Valid
 	private boolean swiss = true;
 	
 	public ForeignField(Object key, EchNamespaceContext namespaceContext, boolean editable) {
-		super(key);
+		super(key, editable);
 		this.namespaceContext = namespaceContext;
 	}
 
