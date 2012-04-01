@@ -8,10 +8,10 @@ import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.person.Relation;
+import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.CodeEditField;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.fields.FormField;
-import ch.openech.mj.edit.form.DependenceDecorator;
+import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -29,17 +29,7 @@ public class RelationPanel extends EchFormPanel<Relation> {
         }
 
 		line(RELATION.typeOfRelationship);
-		
-		FormField<String> basedOnLaw = new DependenceDecorator<String>(new CodeEditField(RELATION.basedOnLaw, echNamespaceContext.reducedBasedOnLawCode() ? EchCodes.basedOnLaw3 : EchCodes.basedOnLaw), RELATION.typeOfRelationship) {
-			@Override
-			public void setDependedField(EditField<String> field) {
-				String typeOfRelationship = field.getObject();
-				// TODO das ist isCare auf Relation
-				boolean isVormund = "7".equals(typeOfRelationship) || "8".equals(typeOfRelationship) || "9".equals(typeOfRelationship);
-				// setEnabled(isVormund);
-			}
-		};
-		line(basedOnLaw);
+		line(new BasedOnLawField());
 
 		// TODO: Was war hier gemeint?
 		/*
@@ -58,6 +48,27 @@ public class RelationPanel extends EchFormPanel<Relation> {
 		line(RELATION.care);
 	}
 
+	private class BasedOnLawField extends CodeEditField implements DependingOnFieldAbove<String> {
+		
+		public BasedOnLawField() {
+			super(RELATION.basedOnLaw, getNamespaceContext() == null || getNamespaceContext().reducedBasedOnLawCode() ?  EchCodes.basedOnLaw3 :  EchCodes.basedOnLaw);
+		}
+
+		@Override
+		public String getNameOfDependedField() {
+			return Constants.getConstant(RELATION.typeOfRelationship);
+		}
+
+		@Override
+		public void setDependedField(EditField<String> dependedField) {
+			String typeOfRelationship = dependedField.getObject();
+			// TODO das ist isCare auf Relation
+			boolean isVormund = "7".equals(typeOfRelationship) || "8".equals(typeOfRelationship) || "9".equals(typeOfRelationship);
+			setEnabled(isVormund);
+
+		}
+	}
+	
 	@Override
 	public Relation getObject() {
 		Relation relation = super.getObject();
