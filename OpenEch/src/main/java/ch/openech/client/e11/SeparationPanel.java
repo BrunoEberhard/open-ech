@@ -3,16 +3,19 @@ package ch.openech.client.e11;
 import static ch.openech.dm.person.Separation.SEPARATION;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.person.Separation;
+import ch.openech.xml.write.EchNamespaceContext;
 
 // Freie Eingabe Trennung
 public class SeparationPanel extends EchFormPanel<Separation> {
 	
-	public SeparationPanel() {
+	public SeparationPanel(EchNamespaceContext namespaceContext) {
+		super(namespaceContext);
+		
 		line(SEPARATION.separation);
 		line(SEPARATION.dateOfSeparation);
-		line(SEPARATION.separationTill);
-//		line(new DateField(DATE_OF_SEPARATION, DateField.NOT_REQUIRED));
-//		line(new DateField(SEPARATION_TILL, DateField.NOT_REQUIRED));
+		if (getNamespaceContext().separationTillAvailable()) {
+			line(SEPARATION.separationTill);
+		}
 	}
 
 }

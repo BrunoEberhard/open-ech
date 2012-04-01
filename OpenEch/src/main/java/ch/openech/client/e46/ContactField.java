@@ -4,11 +4,11 @@ import java.awt.event.ActionEvent;
 
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 
-public class ContactField extends MultiLineObjectField<Contact> {
+public class ContactField extends ObjectFlowField<Contact> {
 	
 	public ContactField(Object key) {
 		this(key, true);
@@ -81,21 +81,20 @@ public class ContactField extends MultiLineObjectField<Contact> {
 	}
 
 	@Override
-	protected void display(Contact contact) {
-		if (contact != null) {
-			for (ContactEntry contactEntry : contact.entries) {
-				addHtml(contactEntry.toHtml());
-				addAction(new RemoveContactEntryAction(contactEntry));
-				addGap();
-			}
-		}
-		if (isEditable()) {
-			addAction(new AddContactEntryEditor(true), "AddAddressPerson");
-			addAction(new AddContactEntryEditor(false), "AddAddressOrganisation");
-			addAction(new AddContactEntryEditor("E"), "AddEmail");
-			addAction(new AddContactEntryEditor("P"), "AddPhone");
-			addAction(new AddContactEntryEditor("I"), "AddInternet");
+	protected void show(Contact contact) {
+		for (ContactEntry contactEntry : contact.entries) {
+			addHtml(contactEntry.toHtml());
+			addAction(new RemoveContactEntryAction(contactEntry));
+			addGap();
 		}
 	}
-
+	
+	@Override
+	protected void showActions() {
+		addAction(new AddContactEntryEditor(true), "AddAddressPerson");
+		addAction(new AddContactEntryEditor(false), "AddAddressOrganisation");
+		addAction(new AddContactEntryEditor("E"), "AddEmail");
+		addAction(new AddContactEntryEditor("P"), "AddPhone");
+		addAction(new AddContactEntryEditor("I"), "AddInternet");
+	}
 }

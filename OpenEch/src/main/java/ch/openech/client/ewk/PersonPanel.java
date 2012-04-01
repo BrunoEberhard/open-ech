@@ -12,12 +12,15 @@ import javax.swing.JFrame;
 import ch.openech.client.e10.AddressTextField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
+import ch.openech.client.e11.SeparationField;
 import ch.openech.client.e21.PartnerField;
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.e44.TechnicalIdsField;
 import ch.openech.client.e44.VnField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.EchFormats;
+import ch.openech.dm.code.EchCodes;
+import ch.openech.dm.code.MaritalStatus;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.autofill.FirstNameGenerator;
@@ -97,9 +100,13 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			return;
 		}
 		
-		line(PERSON.maritalStatus.maritalStatus, //
-				editable ? new DateOfMaritalStatusField() : PERSON.maritalStatus.dateOfMaritalStatus, //
-						PERSON.separation);
+		if (editable) {
+			line(PERSON.maritalStatus.maritalStatus, //
+					new DateOfMaritalStatusField(), new SeparationField(PERSON.separation, getNamespaceContext(), true), new CancelationReasonField());
+		} else {
+			line(PERSON.maritalStatus.maritalStatus, PERSON.maritalStatus.dateOfMaritalStatus, //
+					new SeparationField(PERSON.separation, getNamespaceContext(), false), PERSON.cancelationReason);
+		}
 		
 		line(PERSON.nationality, PERSON.religion);
 
@@ -149,7 +156,24 @@ public class PersonPanel extends EchFormPanel<Person>  {
 
 		@Override
 		public void setDependedField(EditField<String> dependedField) {
-			setEnabled(!StringUtils.equals("1", dependedField.getObject()));
+			setEnabled(!StringUtils.equals(MaritalStatus.Ledig.value, dependedField.getObject()));
+		}
+	}
+	
+	private class CancelationReasonField extends CodeEditField implements DependingOnFieldAbove<String> {
+		
+		public CancelationReasonField() {
+			super(PERSON.cancelationReason, EchCodes.partnerShipAbolition);
+		}
+
+		@Override
+		public String getNameOfDependedField() {
+			return Constants.getConstant(PERSON.maritalStatus.maritalStatus);
+		}
+
+		@Override
+		public void setDependedField(EditField<String> dependedField) {
+			setEnabled(StringUtils.equals(dependedField.getObject(), MaritalStatus.AufgeloestePartnerschaft.value, MaritalStatus.Geschieden.value));
 		}
 	}
 	

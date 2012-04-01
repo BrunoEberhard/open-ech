@@ -89,7 +89,6 @@ public class EchCodes {
 	/*
 	public static final Code TYPE_OF_RESIDENCE = new Code(ch.openech.dm.StringConstants.TYPE_OF_RESIDENCE);
 	public static final Code CARE = new Code(ch.openech.dm.StringConstants.CARE);
-	public static final Code CANCELATION_REASON = new Code(ch.openech.dm.StringConstants.CANCELATION_REASON);
 	
 	
 

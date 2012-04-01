@@ -1,12 +1,12 @@
 package ch.openech.client.e21;
 
 import ch.openech.dm.person.Relation;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.xml.write.EchNamespaceContext;
 
 // Eigentlich relationField
-public class PartnerField extends MultiLineObjectField<Relation> {
+public class PartnerField extends ObjectFlowField<Relation> {
 	private final EchNamespaceContext echNamespaceContext;
 	
 	public PartnerField(Object key, EchNamespaceContext echNamespaceContext) {
@@ -19,12 +19,15 @@ public class PartnerField extends MultiLineObjectField<Relation> {
 	}
 	
 	@Override
-	protected void display(Relation relation) {
+	protected void show(Relation relation) {
 		addHtml(relation.identificationToHtml());
-		if (isEditable()) {
-			addAction(new PartnerEditor());
-		}
+	}
 
+	@Override
+	protected void showActions() {
+		addAction(new PartnerEditor());
+	}
+	
 //		
 //		if (connectedNameField != null) {
 //			String name = null;
@@ -33,8 +36,6 @@ public class PartnerField extends MultiLineObjectField<Relation> {
 //			}
 //			connectedNameField.setText(name);
 //		}
-	}
-	
 	@Override
 	public FormVisual<Relation> createFormPanel() {
 		return new RelationPanel(echNamespaceContext, false);

@@ -407,7 +407,7 @@ public class StaxEch0020 {
 				else if (name.equals(CONTACT)) StaxEch0011.contact(xml, person);
 				else if (name.equals(RELIGION)) person.religion = token(xml);
 				else if (StringUtils.equals(name, LANGUAGE_OF_CORRESPONDANCE, "languageOfCorrespondence")) person.languageOfCorrespondance = token(xml);
-				else if (name.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, person.maritalStatus, person.separation);
+				else if (name.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, person);
 				else if (name.equals(ANY_PERSON)) StaxEch0011.anyPerson(xml, person);
 				else if (name.equals(PLACE_OF_ORIGIN_ADDON) || name.equals(CHANGE_RESIDENCE_TYPE_ORIGIN_ADD_ON)) StaxEch0021.addPlaceOfOriginAddon(xml, person.placeOfOrigin);
 				else skip(xml);
@@ -518,7 +518,7 @@ public class StaxEch0020 {
 				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, personToChange.getMother());
 				else if (startName.equals(MARITAL_STATUS)) personToChange.maritalStatus.maritalStatus = token(xml);
 				else if (startName.equals(DATE_OF_MARITAL_STATUS)) personToChange.maritalStatus.dateOfMaritalStatus = StaxEch.date(xml);
-				else if (startName.equals(PARTNER_SHIP_ABOLITION)) personToChange.separation.cancelationReason = token(xml); // Das Feld heisst in e11 wirklich anders als in e20
+				else if (startName.equals(PARTNER_SHIP_ABOLITION)) personToChange.cancelationReason = token(xml); // Das Feld heisst in e11 wirklich anders als in e20
 				else if (startName.equals(NATIONALITY)) StaxEch0011.nationality(xml, personToChange.nationality);
 				else if (startName.equals(RELIGION)) personToChange.religion = token(xml);
 				else if (startName.equals(SEPARATION)) personToChange.separation.separation = token(xml);
@@ -536,7 +536,7 @@ public class StaxEch0020 {
 				else if (startName.equals(NAME_ON_PASSPORT)) personToChange.foreign.nameOnPassport = token(xml);
 				else if (StringUtils.equals(startName, LANGUAGE_OF_CORRESPONDANCE, "languageOfCorrespondence")) personToChange.languageOfCorrespondance = token(xml);
 				else if (startName.equals(PLACE_OF_BIRTH)) personToChange.placeOfBirth = StaxEch0011.birthplace(xml);
-				else if (startName.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, personToChange.maritalStatus, personToChange.separation);				
+				else if (startName.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, personToChange);				
 				else if (startName.equals(MAIN_RESIDENCE_ADDRESS)) personToChange.dwellingAddress = StaxEch0011.dwellingAddress(xml);				
 				else if (startName.equals(DATA_LOCK)) personToChange.dataLock = token(xml);
 				else if (startName.equals(PAPER_LOCK)) personToChange.paperLock = token(xml);
@@ -602,7 +602,7 @@ public class StaxEch0020 {
 				else if (startName.equals(NAME_ON_PASSPORT)) personToChange.foreign.nameOnPassport = token(xml);
 
 				else if (startName.equals(PLACE_OF_BIRTH)) personToChange.placeOfBirth = StaxEch0011.birthplace(xml);
-				else if (startName.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, personToChange.maritalStatus, personToChange.separation);
+				else if (startName.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, personToChange);
 				else if (startName.equals(NATIONALITY)) StaxEch0011.nationality(xml, personToChange.nationality); 		
 				else if (startName.equals(ANY_PERSON)) StaxEch0011.anyPerson(xml, personToChange);
 				else if (startName.equals(CHANGE_RESIDENCE_TYPE_ORIGIN_ADD_ON) || startName.equals(PLACE_OF_ORIGIN_ADDON)) StaxEch0021.addPlaceOfOriginAddon(xml, personToChange.placeOfOrigin);

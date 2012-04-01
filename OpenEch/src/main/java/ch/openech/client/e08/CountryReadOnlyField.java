@@ -25,7 +25,7 @@ public class CountryReadOnlyField extends ObjectField<CountryIdentification> {
 	//
 
 	@Override
-	public void display(CountryIdentification value) {
+	public void show(CountryIdentification value) {
 		textCountry.setText(value.countryNameShort);
 	}
 

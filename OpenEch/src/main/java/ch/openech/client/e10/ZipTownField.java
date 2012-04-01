@@ -132,12 +132,7 @@ public class ZipTownField extends ObjectField<ZipTown> implements DemoEnabled {
 	}
 
 	@Override
-	protected void display(ZipTown zipTown) {
-		if (zipTown == null) {
-			modeSelectCH();
-			return;
-		}
-		
+	protected void show(ZipTown zipTown) {
 		if (!zipTown.isSwiss()) {
 			modeFreeForeign();
 			textFieldZipSwiss.setText(zipTown.foreignZipCode);

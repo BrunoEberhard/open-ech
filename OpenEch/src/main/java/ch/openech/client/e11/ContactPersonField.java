@@ -10,11 +10,12 @@ import ch.openech.client.e44.PersonIdentificationPanel;
 import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.common.Address;
+import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.edit.SearchDialogAction;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
@@ -24,7 +25,7 @@ import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 
-public class ContactPersonField extends MultiLineObjectField<ContactPerson> {
+public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	
 	private final PageContext pageContext;
 	private final EchNamespaceContext echNamespaceContext;
@@ -40,7 +41,7 @@ public class ContactPersonField extends MultiLineObjectField<ContactPerson> {
 	}
 	
 	@Override
-	protected void display(ContactPerson contactPerson) {
+	protected void show(ContactPerson contactPerson) {
 		if (contactPerson.person != null) {
 			addObject("Kontaktperson");
 			addHtml(contactPerson.person.toHtml());
@@ -62,14 +63,16 @@ public class ContactPersonField extends MultiLineObjectField<ContactPerson> {
 			DateUtils.formatCH(contactPerson.validTill);
 			addGap();
 		}
-		if (isEditable()) {
-			addAction(new SelectPersonContactEditor());
-			addAction(new EnterPersonContactEditor());
-			addGap();
-			
-	        addAction(new AddAddressContactEditor(true), "AddAddressPerson");
-	        addAction(new AddAddressContactEditor(false), "AddAddressOrganisation");
-		}
+	}
+
+	@Override
+	protected void showActions() {
+		addAction(new SelectPersonContactEditor());
+		addAction(new EnterPersonContactEditor());
+		addGap();
+		
+        addAction(new AddAddressContactEditor(true), "AddAddressPerson");
+        addAction(new AddAddressContactEditor(false), "AddAddressOrganisation");
 	}
 	
 	// Person suchen

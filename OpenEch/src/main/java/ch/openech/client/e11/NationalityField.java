@@ -111,7 +111,7 @@ public class NationalityField extends ObjectField<Nationality> {
 	}
 
 	@Override
-	protected void display(Nationality nationality) {
+	protected void show(Nationality nationality) {
 		String status = nationality.nationalityStatus;
 		if ("2".equals(status)) {
 			CountryIdentification countryIdentification = nationality.nationalityCountry;

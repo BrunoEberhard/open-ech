@@ -69,12 +69,8 @@ public class AddressTextField extends ObjectField<Address> implements Indicator 
 	}
 
 	@Override
-	protected void display(Address address) {
-		if (address != null) {
-			text.setText(format(address));
-		} else {
-			text.setText(null);
-		}
+	protected void show(Address address) {
+		text.setText(format(address));
 	}
 
 }

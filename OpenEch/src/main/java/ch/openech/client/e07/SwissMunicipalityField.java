@@ -140,8 +140,8 @@ public class SwissMunicipalityField extends ObjectField<MunicipalityIdentificati
 	}
 
 	@Override
-	protected void display(MunicipalityIdentification object) {
-		if (object != null && object.isFederalRegister()) {
+	protected void show(MunicipalityIdentification object) {
+		if (object.isFederalRegister()) {
 			modeFederalRegister();
 			return;
 		} 

@@ -5,12 +5,12 @@ import java.util.List;
 
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.EditorDialogAction;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.xml.write.EchNamespaceContext;
 
-public class RelationField extends MultiLineObjectField<List<Relation>> {
+public class RelationField extends ObjectFlowField<List<Relation>> {
 	private final boolean withNameOfParents;
 	private final EchNamespaceContext echNamespaceContext;
 	
@@ -73,7 +73,7 @@ public class RelationField extends MultiLineObjectField<List<Relation>> {
 	}
 
 	@Override
-	protected void display(List<Relation> objects) {
+	protected void show(List<Relation> objects) {
 		for (Relation relation : objects) {
 			addHtml(relation.toHtml());
 			addAction(new RemoveRelationAction(relation));

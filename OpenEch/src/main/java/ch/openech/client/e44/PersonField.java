@@ -5,11 +5,11 @@ import java.util.List;
 import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.SearchDialogAction;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.server.EchServer;
 
-public class PersonField extends MultiLineObjectField<Person> {
+public class PersonField extends ObjectFlowField<Person> {
 
 	public PersonField(Object key) {
 		super(key);
@@ -23,14 +23,16 @@ public class PersonField extends MultiLineObjectField<Person> {
 	}
 
 	@Override
-	protected void display(Person object) {
+	protected void show(Person object) {
 		addHtml(object.personIdentification.toHtml());
-		if (isEditable()) {
-	        addAction(new PersonSearchAction());
-	        addAction(new RemoveObjectAction());
-		}
 	}
 
+	@Override
+	protected void showActions() {
+        addAction(new PersonSearchAction());
+        addAction(new RemoveObjectAction());
+	}
+	
 	public class PersonSearchAction extends SearchDialogAction<Person> {
 		
 		public PersonSearchAction() {

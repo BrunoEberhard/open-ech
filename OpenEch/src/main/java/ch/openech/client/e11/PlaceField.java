@@ -179,7 +179,7 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 	}
 	
 	@Override
-	public void display(Place value) {
+	public void show(Place value) {
 		if (value.isSwiss()) {
 			MunicipalityIdentification municipalityIdentification = value.municipalityIdentification;
 			// Zuerst die Selection löschen, damit bei einem nicht vorhandenem Element nicht

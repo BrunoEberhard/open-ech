@@ -4,56 +4,33 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
 
-import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Separation;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.fields.ObjectField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
+import ch.openech.xml.write.EchNamespaceContext;
 
-public class SeparationField extends ObjectField<Separation> implements DependingOnFieldAbove<String> {
+public class SeparationField extends ObjectFlowField<Separation> implements DependingOnFieldAbove<String> {
 
-	private final TextField textField;
+	private final EchNamespaceContext namespaceContext;
 	private Action separationCancelationAction;
+	private boolean verheiratet;
 	
-	public SeparationField(String name, boolean editable) {
-		super(name);
-		
-		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
-		
-		if (editable) {
-			addContextAction(new SeparationCancelationEditor());
-			addContextAction(new SeperationRemoveAction());
-		}
+	public SeparationField(Object key, EchNamespaceContext namespaceContext, boolean editable) {
+		super(key, editable, false);
+		this.namespaceContext = namespaceContext;
 	}
 	
-	@Override
-	public Object getComponent() {
-		return decorateWithContextActions(textField);
-	}
-
 	@Override
 	public FormVisual<Separation> createFormPanel() {
-		return new SeparationPanel();
-	}
-
-	// Eingabe Auflösung Partnerschaft
-	public final class SeparationCancelationEditor extends ObjectFieldEditor {
-		@Override
-		public FormVisual<Separation> createForm() {
-			AbstractFormVisual<Separation> form = new EchFormPanel<Separation>(Separation.class);
-			form.line(Separation.SEPARATION.cancelationReason);
-			return form;
-		}
+		return new SeparationPanel(namespaceContext);
 	}
 
 	private final class SeperationRemoveAction extends ResourceAction {
@@ -61,17 +38,14 @@ public class SeparationField extends ObjectField<Separation> implements Dependin
 		public void actionPerformed(ActionEvent e) {
 			Separation separation = getObject();
 			if (separation != null) {
-				separation.cancelationReason = null;
-				separation.dateOfSeparation = null;
-				separation.separation = null;
-				separation.separationTill = null;
+				separation.clear();
 			}
 			setObject(separation);
 		}
 	}
 	
 	@Override
-	protected void display(Separation separation) {
+	protected void show(Separation separation) {
 		StringBuilder s = new StringBuilder();
 		if (!StringUtils.isBlank(separation.separation)) {
 			String text = EchCodes.separation.getText(separation.separation);
@@ -79,31 +53,24 @@ public class SeparationField extends ObjectField<Separation> implements Dependin
 				text = "Trennung Code " + separation;
 			}
 			s.append(text);
-			s.append(", ");
 		}
 		if (!StringUtils.isBlank(separation.dateOfSeparation)) {
+			s.append(", ");
 			s.append(DateUtils.formatCH(separation.dateOfSeparation));
-			s.append(", ");
-		}
-		if (!StringUtils.isBlank(separation.separationTill)) {
-			s.append("bis ");
-			s.append(DateUtils.formatCH(separation.separationTill));
-			s.append(", ");
-		}
-		if (!StringUtils.isBlank(separation.cancelationReason)) {
-			String text = EchCodes.partnerShipAbolition.getText(separation.cancelationReason);
-			if (StringUtils.isBlank(text)) {
-				text = "Code " + separation.cancelationReason;
+			if (!StringUtils.isBlank(separation.separationTill)) {
+				s.append(" bis ");
+				s.append(DateUtils.formatCH(separation.separationTill));
 			}
-			s.append("Auflösungsgrund: ");
-			s.append(text);
 		}
-		if (s.length() >= 2) {
-			if (s.charAt(s.length()-1) == ' ') s.deleteCharAt(s.length()-1);
-			if (s.charAt(s.length()-1) == ',') s.deleteCharAt(s.length()-1);
+		addObject(s.toString());
+		
+		if (isEditable() && verheiratet) {
+			addGap();
+			addAction(new ObjectFieldEditor());
+			if (!StringUtils.isBlank(separation.separation)) {
+				addAction(new SeperationRemoveAction());
+			}
 		}
-
-		textField.setText(s.toString());
 	}	
 		
 	// DependingOnFieldAbove
@@ -116,19 +83,10 @@ public class SeparationField extends ObjectField<Separation> implements Dependin
 	@Override
 	public void setDependedField(EditField<String> field) {
 		String status = field.getObject();
-		boolean verheiratet = ch.openech.dm.code.MaritalStatus.Verheiratet.value.equals(status);
-		boolean aufgeloest = ch.openech.dm.code.MaritalStatus.AufgeloestePartnerschaft.value.equals(status);
-		
-		// TODO
-		// if (objectEditorAction != null) objectEditorAction.setEnabled(verheiratet);
-		if (separationCancelationAction != null) separationCancelationAction.setEnabled(aufgeloest);
-		
-		if (verheiratet || aufgeloest) {
-			textField.setEnabled(true);
-		} else {
-			textField.setText(null);
-			textField.setEnabled(false);
+		verheiratet = ch.openech.dm.code.MaritalStatus.Verheiratet.value.equals(status);
+		if (!verheiratet && getObject() != null) {
+			getObject().clear();
 		}
+		setObject(getObject());
 	}
-
 }

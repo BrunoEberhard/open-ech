@@ -7,12 +7,12 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.SearchDialogAction;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.server.EchServer;
 
-public class PersonIdentificationField extends MultiLineObjectField<PersonIdentification> {
+public class PersonIdentificationField extends ObjectFlowField<PersonIdentification> {
 
 	public PersonIdentificationField(Object key) {
 		super(key);
@@ -25,11 +25,9 @@ public class PersonIdentificationField extends MultiLineObjectField<PersonIdenti
 	}
 
 	@Override
-	protected void display(PersonIdentification object) {
-		if (object != null) {
-			addHtml(object.toHtml());
-			addAction(new RemoveObjectAction());
-		}
+	protected void show(PersonIdentification object) {
+		addHtml(object.toHtml());
+		addAction(new RemoveObjectAction());
 		if (isEditable()) {
 	        addAction(new PersonSearchAction());
 	        // EditObjectAction kann nicht verwendet werden, sondern die PersonIdentificationEditAction,

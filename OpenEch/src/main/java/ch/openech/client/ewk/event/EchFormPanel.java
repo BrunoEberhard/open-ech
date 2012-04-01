@@ -128,7 +128,7 @@ public class EchFormPanel<T> extends AbstractFormVisual<T> {
 		} else if (type == Person.class) {
 			return new ch.openech.client.e44.PersonField(name);
 		} else if (type == Separation.class) {
-			return new SeparationField(name, editable);
+			return new SeparationField(name, namespaceContext, editable);
 		} else if (type == Nationality.class) {
 			return editable ? new NationalityField(name) : new NationalityReadOnlyField(name);
 		} else if (type == ContactPerson.class) {

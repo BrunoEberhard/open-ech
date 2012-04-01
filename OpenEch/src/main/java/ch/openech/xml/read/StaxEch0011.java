@@ -197,18 +197,18 @@ public class StaxEch0011 {
 		}
 	}
 	
-	public static void maritalData(XMLEventReader xml, MaritalStatus maritalStatus, Separation separation) throws XMLStreamException {
+	public static void maritalData(XMLEventReader xml, Person person) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(MARITAL_STATUS)) maritalStatus.maritalStatus = token(xml);
-				else if (startName.equals(DATE_OF_MARITAL_STATUS)) maritalStatus.dateOfMaritalStatus = date(xml);
-				else if (startName.equals(SEPARATION)) separation.separation = token(xml);
-				else if (startName.equals(DATE_OF_SEPARATION)) separation.dateOfSeparation = date(xml);
-				else if (startName.equals(SEPARATION_TILL)) separation.separationTill = date(xml);
-				else if (startName.equals(CANCELATION_REASON)) separation.cancelationReason = token(xml);
+				if (startName.equals(MARITAL_STATUS)) person.maritalStatus.maritalStatus = token(xml);
+				else if (startName.equals(DATE_OF_MARITAL_STATUS)) person.maritalStatus.dateOfMaritalStatus = date(xml);
+				else if (startName.equals(SEPARATION)) person.separation.separation = token(xml);
+				else if (startName.equals(DATE_OF_SEPARATION)) person.separation.dateOfSeparation = date(xml);
+				else if (startName.equals(SEPARATION_TILL)) person.separation.separationTill = date(xml);
+				else if (startName.equals(CANCELATION_REASON)) person.cancelationReason = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
@@ -229,7 +229,7 @@ public class StaxEch0011 {
 				else if (name.equals(CALL_NAME)) person.callName = token(xml);
 				else if (name.equals(PLACE_OF_BIRTH)) person.placeOfBirth = birthplace(xml);
 				else if (name.equals(DATE_OF_DEATH))person.setDateOfBirth(date(xml));
-				else if (name.equals(MARITAL_DATA)) maritalData(xml, person.maritalStatus, person.separation);
+				else if (name.equals(MARITAL_DATA)) maritalData(xml, person);
 				else if (name.equals(NATIONALITY)) nationality(xml, person.nationality);
 				else if (name.equals(CONTACT)) contact(xml, person);
 				else if (name.equals(LANGUAGE_OF_CORRESPONDANCE)) person.languageOfCorrespondance = token(xml);

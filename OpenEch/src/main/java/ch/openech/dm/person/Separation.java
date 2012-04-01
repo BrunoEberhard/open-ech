@@ -2,7 +2,6 @@ package ch.openech.dm.person;
 
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.db.model.annotation.FormatName;
 
 public class Separation {
 
@@ -13,16 +12,18 @@ public class Separation {
 	@Date
 	public String dateOfSeparation, separationTill;
 	
-	@FormatName("partnerShipAbolition")
-	public String cancelationReason;
-
+	public void clear() {
+		separation = null;
+		dateOfSeparation = null;
+		separation = null;
+	}
+	
 //	@Override
 //	public Separation clone() {
 //		Separation clone = new Separation();
 //		clone.separation = this.separation;
 //		clone.dateOfSeparation = this.dateOfSeparation;
 //		clone.separationTill = this.separationTill;
-//		clone.cancelationReason = this.cancelationReason;
 //		return clone;
 //	}
 }

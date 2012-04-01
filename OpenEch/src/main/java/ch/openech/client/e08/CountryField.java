@@ -91,7 +91,7 @@ public class CountryField extends ObjectField<CountryIdentification> implements 
 	}
 
 	@Override
-	public void display(CountryIdentification value) {
+	public void show(CountryIdentification value) {
 		int index = StaxEch0072.getInstance().getCountryIdentifications().indexOf(value);
 		if (index >= 0) {
 			comboBox.setSelectedObject(value);

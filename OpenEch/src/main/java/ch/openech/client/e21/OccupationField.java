@@ -5,12 +5,12 @@ import java.util.List;
 
 import ch.openech.dm.person.Occupation;
 import ch.openech.mj.edit.EditorDialogAction;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.resources.ResourceAction;
 
-public class OccupationField extends MultiLineObjectField<List<Occupation>> implements Indicator {
+public class OccupationField extends ObjectFlowField<List<Occupation>> implements Indicator {
 	
 	public OccupationField(Object key, boolean editable) {
 		super(key, editable);
@@ -57,7 +57,7 @@ public class OccupationField extends MultiLineObjectField<List<Occupation>> impl
 	}
 
 	@Override
-	protected void display(List<Occupation> object) {
+	protected void show(List<Occupation> object) {
 		for (Occupation occupation : object) {
 			addObject(occupation);
 			if (isEditable()) {

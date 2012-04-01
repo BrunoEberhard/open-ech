@@ -9,7 +9,7 @@ import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Validatable;
@@ -17,7 +17,7 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.swing.PreferencesHelper;
 
-public class PlaceOfOriginField extends MultiLineObjectField<List<PlaceOfOrigin>> implements Validatable, DependingOnFieldAbove<Nationality>, DemoEnabled {
+public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements Validatable, DependingOnFieldAbove<Nationality>, DemoEnabled {
 	public static final boolean WITHOUT_ADD_ON = false;
 	private final boolean withAddOn;
 	private boolean swiss = true;
@@ -144,7 +144,7 @@ public class PlaceOfOriginField extends MultiLineObjectField<List<PlaceOfOrigin>
 	}
 
 	@Override
-	protected void display(List<PlaceOfOrigin> objects) {
+	protected void show(List<PlaceOfOrigin> objects) {
 		for (PlaceOfOrigin placeOfOrigin : objects) {
 			addHtml(placeOfOrigin.displayHtml());
 			if (isEditable()) {

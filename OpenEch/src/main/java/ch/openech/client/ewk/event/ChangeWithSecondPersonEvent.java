@@ -265,7 +265,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(new DateField("date", DateField.REQUIRED));
-			formPanel.line(Person.PERSON.separation.cancelationReason);
+			formPanel.line(Person.PERSON.cancelationReason);
 		}
 
 		@Override

@@ -338,4 +338,10 @@ public class EchNamespaceContext {
 		return getNamespaceVersion(20) > 1 || getNamespaceMinorVersion(20) > 0;
 	}
 	
+	/* 
+	 * separationTill in maritalData existiert erst ab der 5. Version von eCH 11
+	 */
+	public boolean separationTillAvailable() {
+		return getNamespaceVersion(11) >= 5;
+	}
 }

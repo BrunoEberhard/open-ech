@@ -1,10 +1,10 @@
 package ch.openech.client.e44;
 
 import ch.openech.dm.person.Relation;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 
-public class SecondPersonField extends MultiLineObjectField<Relation> {
+public class SecondPersonField extends ObjectFlowField<Relation> {
 	
 	public SecondPersonField(String name) {
 		super(name);
@@ -21,7 +21,7 @@ public class SecondPersonField extends MultiLineObjectField<Relation> {
 	}
 
 	@Override
-	protected void display(Relation relation) {
+	protected void show(Relation relation) {
 		if (!hasPartner()) {
 			addObject("Kein Partner / Keine Partnerin vorhanden");
 		} else {

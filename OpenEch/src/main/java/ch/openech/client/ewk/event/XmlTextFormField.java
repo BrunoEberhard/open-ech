@@ -7,17 +7,17 @@ import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ContextLayout;
 import ch.openech.mj.toolkit.IComponentDelegate;
-import ch.openech.mj.toolkit.MultiLineTextField;
+import ch.openech.mj.toolkit.FlowField;
 import ch.openech.server.EchServer;
 
 public class XmlTextFormField implements FormField<String>, IComponentDelegate {
-	private final MultiLineTextField textField;
+	private final FlowField textField;
 	private final ContextLayout contextLayout;
 	private final String xml;
 	
 	public XmlTextFormField(String xml) {
 		this.xml = xml;
-		textField = ClientToolkit.getToolkit().createMultiLineTextField();
+		textField = ClientToolkit.getToolkit().createFlowField(true);
 		textField.addObject(xml);
 		contextLayout = ClientToolkit.getToolkit().createContextLayout(textField);
 		

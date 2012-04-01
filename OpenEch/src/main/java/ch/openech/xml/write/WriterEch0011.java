@@ -20,6 +20,8 @@ import ch.openech.mj.util.StringUtils;
 public class WriterEch0011 {
 	private static final Logger logger = Logger.getLogger(WriterEch0011.class.getName());
 
+	private final EchNamespaceContext context;
+	
 	public final String URI;
 	public final WriterEch0007 ech7;
 	public final WriterEch0008 ech8;
@@ -27,6 +29,8 @@ public class WriterEch0011 {
 	public final WriterEch0044 ech44;
 	
 	public WriterEch0011(EchNamespaceContext context) {
+		this.context = context;
+		
 		URI = context.getNamespaceURI(11);
 		ech7 = new WriterEch0007(context);
 		ech8 = new WriterEch0008(context);
@@ -74,13 +78,18 @@ public class WriterEch0011 {
 	}
 
 	public void maritalData(WriterElement parent, Person person) throws Exception {
-		maritalData(parent, MARITAL_DATA, person.maritalStatus, person.separation);
+		maritalData(parent, MARITAL_DATA, person);
 	}
 	
-	public void maritalData(WriterElement parent, String tagName, MaritalStatus maritalStatus, Separation separation) throws Exception {
+	public void maritalData(WriterElement parent, String tagName, Person person) throws Exception {
 		WriterElement maritalData = parent.create(URI, tagName);
-		maritalData.values(maritalStatus, MARITAL_STATUS, DATE_OF_MARITAL_STATUS);
-		maritalData.values(separation, SEPARATION, DATE_OF_SEPARATION, CANCELATION_REASON);
+		maritalData.values(person.maritalStatus, MARITAL_STATUS, DATE_OF_MARITAL_STATUS);
+		if (context.separationTillAvailable()) {
+			maritalData.values(person.separation, SEPARATION, DATE_OF_SEPARATION, SEPARATION_TILL);
+		} else {
+			maritalData.values(person.separation, SEPARATION, DATE_OF_SEPARATION);
+		}
+		maritalData.values(person, CANCELATION_REASON);
 	}
 
 	public void nationality(WriterElement parent, Nationality nationality) throws Exception {

@@ -58,6 +58,8 @@ public class Person {
 	
 	public final MaritalStatus maritalStatus = new MaritalStatus();
 	public final Separation separation = new Separation();
+	@FormatName("partnerShipAbolition")
+	public String cancelationReason;
 	public final Nationality nationality = new Nationality();
 	public final ContactPerson contactPerson = new ContactPerson();
 	

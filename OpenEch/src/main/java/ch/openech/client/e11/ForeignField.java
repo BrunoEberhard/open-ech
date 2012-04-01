@@ -5,7 +5,7 @@ import java.util.List;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Nationality;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Validatable;
@@ -13,7 +13,7 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchNamespaceContext;
 
-public class ForeignField extends MultiLineObjectField<Foreign> implements Validatable, DependingOnFieldAbove<Nationality> {
+public class ForeignField extends ObjectFlowField<Foreign> implements Validatable, DependingOnFieldAbove<Nationality> {
 	private final EchNamespaceContext namespaceContext;
 	private boolean swiss = true;
 	
@@ -23,15 +23,17 @@ public class ForeignField extends MultiLineObjectField<Foreign> implements Valid
 	}
 
 	@Override
-	protected void display(Foreign foreign) {
+	protected void show(Foreign foreign) {
 		if (!foreign.isEmpty()) {
 			addHtml(foreign.toHtml());
 		}
-		if (isEditable()) {
-			addAction(new ObjectFieldEditor());
-		}
 	}
 
+	@Override
+	protected void showActions() {
+		addAction(new ObjectFieldEditor());
+	}
+	
 	@Override
 	public FormVisual<Foreign> createFormPanel() {
 		return new ForeignPanel(namespaceContext);

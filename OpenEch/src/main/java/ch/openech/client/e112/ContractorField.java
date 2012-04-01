@@ -30,7 +30,7 @@ public class ContractorField extends ObjectField<Contact> implements Indicator {
 	}
 
 	@Override
-	protected void display(Contact contact) {
+	protected void show(Contact contact) {
 		String s = "Id: " + contact.stringId;
 		if (contact.getAddressList().size() > 0) {
 			Address address = contact.getAddressList().get(0).address;

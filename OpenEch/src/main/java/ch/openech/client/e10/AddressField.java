@@ -3,10 +3,10 @@ package ch.openech.client.e10;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 
-public class AddressField extends MultiLineObjectField<Address> implements DemoEnabled {
+public class AddressField extends ObjectFlowField<Address> implements DemoEnabled {
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;
@@ -42,14 +42,13 @@ public class AddressField extends MultiLineObjectField<Address> implements DemoE
 	}
 
 	@Override
-	public void display(Address address) {
-		if (address != null) {
-			addHtml(address.toHtml());
-		}
-		if (isEditable()) {
-			addAction(new ObjectFieldEditor());
-			addAction(new RemoveObjectAction());
-		}
+	public void show(Address address) {
+		addHtml(address.toHtml());
 	}
 
+	@Override
+	public void showActions() {
+		addAction(new ObjectFieldEditor());
+		addAction(new RemoveObjectAction());
+	}
 }

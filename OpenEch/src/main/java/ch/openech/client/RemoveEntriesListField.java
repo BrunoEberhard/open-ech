@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.MultiLineObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 
 
 // TODO !!
 
-public class RemoveEntriesListField<T> extends MultiLineObjectField<List<T>> {
+public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 
 	private List<T> values = new ArrayList<T>();
 	private List<T> selectedValues = new ArrayList<T>();
@@ -74,7 +74,7 @@ public class RemoveEntriesListField<T> extends MultiLineObjectField<List<T>> {
 	}
 
 	@Override
-	protected void display(List<T> object) {
+	protected void show(List<T> object) {
 		// TODO Auto-generated method stub
 		
 	}
