@@ -118,6 +118,8 @@ public class ResidenceField extends ObjectField<Residence> implements Validatabl
 	
 	@Override
 	public void display(Residence residence) {
+		if (residence == null) return;
+		
 		StringBuilder s = new StringBuilder();
 		boolean hasResidence = false;
 		if (residence.reportingMunicipality != null && !residence.reportingMunicipality.isEmpty()) {
