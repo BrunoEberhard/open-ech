@@ -24,7 +24,9 @@ public class ForeignField extends MultiLineObjectField<Foreign> implements Valid
 
 	@Override
 	protected void display(Foreign foreign) {
-		addHtml(foreign.toHtml());
+		if (!foreign.isEmpty()) {
+			addHtml(foreign.toHtml());
+		}
 		if (isEditable()) {
 			addAction(new ObjectFieldEditor());
 		}
