@@ -5,36 +5,36 @@ import ch.openech.mj.db.model.annotation.Date;
 
 public class MaritalStatus {
 
-	public String maritalStatus = "1";
+	public String maritalStatus = ch.openech.dm.code.MaritalStatus.Ledig.value;
 	@Date
 	public String dateOfMaritalStatus;
 
 	public boolean isLedig() {
-		return "1".equals(maritalStatus);
+		return ch.openech.dm.code.MaritalStatus.Ledig.value.equals(maritalStatus);
 	}
 
 	public boolean isVerheiratet() {
-		return "2".equals(maritalStatus);
+		return ch.openech.dm.code.MaritalStatus.Verheiratet.value.equals(maritalStatus);
 	}
 
 	public boolean isVerwitwet() {
-		return "3".equals(maritalStatus);
+		return ch.openech.dm.code.MaritalStatus.Verwitwet.value.equals(maritalStatus);
 	}
 
 	public boolean isGeschieden() {
-		return "4".equals(maritalStatus);
+		return ch.openech.dm.code.MaritalStatus.Geschieden.value.equals(maritalStatus);
 	}
 
 	public boolean isUngueltigeEhe() {
-		return "5".equals(maritalStatus);
+		return ch.openech.dm.code.MaritalStatus.Unverheiratet.value.equals(maritalStatus);
 	}
 
 	public boolean isPartnerschaft() {
-		return "6".equals(maritalStatus);
+		return ch.openech.dm.code.MaritalStatus.Partnerschaft.value.equals(maritalStatus);
 	}
 
 	public boolean isPartnerschaftAufgeloest() {
-		return "7".equals(maritalStatus);
+		return ch.openech.dm.code.MaritalStatus.AufgeloestePartnerschaft.value.equals(maritalStatus);
 	}
 
 //	@Override

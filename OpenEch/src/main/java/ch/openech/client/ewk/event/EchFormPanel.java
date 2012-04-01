@@ -13,7 +13,6 @@ import ch.openech.client.e101.PersonExtendedInformationField;
 import ch.openech.client.e11.ContactPersonField;
 import ch.openech.client.e11.DwellingAddressField;
 import ch.openech.client.e11.ForeignField;
-import ch.openech.client.e11.MaritalStatusField;
 import ch.openech.client.e11.NationalityField;
 import ch.openech.client.e11.NationalityReadOnlyField;
 import ch.openech.client.e11.PlaceField;
@@ -36,7 +35,6 @@ import ch.openech.dm.common.ZipTown;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Foreign;
-import ch.openech.dm.person.MaritalStatus;
 import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
@@ -129,8 +127,6 @@ public class EchFormPanel<T> extends AbstractFormVisual<T> {
 			return new PersonIdentificationField(name);
 		} else if (type == Person.class) {
 			return new ch.openech.client.e44.PersonField(name);
-		} else if (type == MaritalStatus.class) {
-			return new MaritalStatusField(name, editable);
 		} else if (type == Separation.class) {
 			return new SeparationField(name, editable);
 		} else if (type == Nationality.class) {

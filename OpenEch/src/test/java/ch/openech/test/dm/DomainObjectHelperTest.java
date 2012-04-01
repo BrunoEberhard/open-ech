@@ -6,6 +6,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import ch.openech.dm.code.MaritalStatus;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.db.model.ColumnAccess;
 
@@ -21,7 +22,7 @@ public class DomainObjectHelperTest {
 	@Test
 	public void access2() {
 		Person person = new Person();
-		person.maritalStatus.maritalStatus = "T";
+		person.maritalStatus.maritalStatus = MaritalStatus.Ledig.value;
 		
 		Assert.assertEquals(person.maritalStatus.maritalStatus, //
 				ColumnAccess.getValue(person, "maritalStatus"));

@@ -24,6 +24,7 @@ import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.CodeEditField;
+import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.edit.fields.TextEditField;
@@ -85,6 +86,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 	protected void createData() {
 		boolean moveIn = type == PersonPanelType.MOVE_IN || type == PersonPanelType.CHANGE_RESIDENCE_TYPE;
 		boolean correctName = type == PersonPanelType.CORRECT_NAME;
+		boolean editable = type != PersonPanelType.DISPLAY;
 		
 		// ReportedPerson (ech0011)
 		line(PERSON.originalName, PERSON.alliancePartnershipName, PERSON.aliasName, PERSON.otherName);
@@ -95,7 +97,10 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			return;
 		}
 		
-		line(PERSON.maritalStatus, PERSON.separation);
+		line(PERSON.maritalStatus.maritalStatus, //
+				editable ? new DateOfMaritalStatusField() : PERSON.maritalStatus.dateOfMaritalStatus, //
+						PERSON.separation);
+		
 		line(PERSON.nationality, PERSON.religion);
 
 		//
@@ -129,6 +134,23 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		}
 		
 		createAreas();
+	}
+	
+	private class DateOfMaritalStatusField extends DateField implements DependingOnFieldAbove<String> {
+		
+		public DateOfMaritalStatusField() {
+			super(PERSON.maritalStatus.dateOfMaritalStatus);
+		}
+
+		@Override
+		public String getNameOfDependedField() {
+			return Constants.getConstant(PERSON.maritalStatus.maritalStatus);
+		}
+
+		@Override
+		public void setDependedField(EditField<String> dependedField) {
+			setEnabled(!StringUtils.equals("1", dependedField.getObject()));
+		}
 	}
 	
 	private void createAreas() {

@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.openech.dm.code.MaritalStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Foreign;
@@ -175,7 +176,7 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctMaritalData2() throws Exception {
 		Person person = load(id);
-		person.maritalStatus.maritalStatus = "2";
+		person.maritalStatus.maritalStatus = MaritalStatus.Verheiratet.value;
 		
 		process(writer().correctMaritalData(person));
 		
@@ -186,7 +187,7 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctMaritalData1() throws Exception {
 		Person person = load(id);
-		person.maritalStatus.maritalStatus = "1";
+		person.maritalStatus.maritalStatus = MaritalStatus.Ledig.value;;
 		
 		process(writer().correctMaritalData(person));
 		

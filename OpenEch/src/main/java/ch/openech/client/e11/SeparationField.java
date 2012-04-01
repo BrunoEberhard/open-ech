@@ -6,7 +6,6 @@ import javax.swing.Action;
 
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.code.EchCodes;
-import ch.openech.dm.person.MaritalStatus;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Separation;
 import ch.openech.mj.db.model.Constants;
@@ -21,7 +20,7 @@ import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
-public class SeparationField extends ObjectField<Separation> implements DependingOnFieldAbove<MaritalStatus> {
+public class SeparationField extends ObjectField<Separation> implements DependingOnFieldAbove<String> {
 
 	private final TextField textField;
 	private Action separationCancelationAction;
@@ -111,14 +110,14 @@ public class SeparationField extends ObjectField<Separation> implements Dependin
 	
 	@Override
 	public String getNameOfDependedField() {
-		return Constants.getConstant(Person.PERSON.maritalStatus);
+		return Constants.getConstant(Person.PERSON.maritalStatus.maritalStatus);
 	}
 	
 	@Override
-	public void setDependedField(EditField<MaritalStatus> field) {
-		MaritalStatus maritalStatus = field.getObject();
-		boolean verheiratet = maritalStatus.isVerheiratet();
-		boolean aufgeloest = maritalStatus.isPartnerschaftAufgeloest();
+	public void setDependedField(EditField<String> field) {
+		String status = field.getObject();
+		boolean verheiratet = ch.openech.dm.code.MaritalStatus.Verheiratet.value.equals(status);
+		boolean aufgeloest = ch.openech.dm.code.MaritalStatus.AufgeloestePartnerschaft.value.equals(status);
 		
 		// TODO
 		// if (objectEditorAction != null) objectEditorAction.setEnabled(verheiratet);

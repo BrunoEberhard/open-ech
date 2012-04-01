@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 
 import ch.openech.client.e44.VnField;
 import ch.openech.client.ewk.event.ThreadSafeProgressMonitor;
+import ch.openech.dm.code.MaritalStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
@@ -109,7 +110,7 @@ public class DataGenerator {
 		person.personIdentification.vn = VnField.generateRandom();
 		person.placeOfBirth = place();
 		
-		person.maritalStatus.maritalStatus = "1";
+		person.maritalStatus.maritalStatus = MaritalStatus.Ledig.value;
 		person.maritalStatus.dateOfMaritalStatus = "2004-02-03";
 		person.separation.separation = "2";
 		person.separation.dateOfSeparation = "2005-05-12";
