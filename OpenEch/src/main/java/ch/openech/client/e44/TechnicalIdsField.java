@@ -1,7 +1,9 @@
 package ch.openech.client.e44;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
+import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.common.TechnicalIds;
 import ch.openech.mj.edit.fields.ObjectFlowField;
@@ -18,44 +20,7 @@ public class TechnicalIdsField extends ObjectFlowField<TechnicalIds> {
 		super(key, editable, false);
 		this.hasSpecialEuIds = hasSpecialEuIds;
 	}
-	
-	// "Andere Id hinzufügen"
-	public final class TechnicalIdOtherAddEditor extends ObjectFieldPartEditor<NamedId> {
-		
-		@Override
-		public FormVisual<NamedId> createForm() {
-			return new NamedIdPanel();
-		}
 
-		@Override
-		protected NamedId getPart(TechnicalIds object) {
-			return new NamedId();
-		}
-
-		@Override
-		protected void setPart(TechnicalIds object, NamedId p) {
-			object.otherId.add(p);
-		}
-	}
-
-	// "EU Id hinzufügen"
-	public final class TechnicalIdAddEuEditor extends ObjectFieldPartEditor<NamedId> {
-		
-		@Override
-		public FormVisual<NamedId> createForm() {
-			return new NamedIdPanel();
-		}
-
-		@Override
-		protected NamedId getPart(TechnicalIds object) {
-			return new NamedId();
-		}
-
-		@Override
-		protected void setPart(TechnicalIds object, NamedId p) {
-			object.euId.add(p);
-		}
-	}
 
 	public final class TechnicalIdRemoveAction extends ResourceAction {
 		@Override
@@ -67,43 +32,91 @@ public class TechnicalIdsField extends ObjectFlowField<TechnicalIds> {
 	
 	@Override
 	protected void show(TechnicalIds technicalIds) {
-		boolean empty = true;
-		
-		StringBuilder s = new StringBuilder();
-		if (technicalIds != null) {
-			if (technicalIds.localId.personId != null) {
-				s.append(technicalIds.localId.personId);
-				empty = false;
+		int maxLength = isEditable() ? 10 : 25;
+		if (technicalIds.localId.personId != null) {
+			if (technicalIds.localId.personId.length() <= maxLength) {
+				addObject(technicalIds.localId.personId);
+			} else {
+				addObject(technicalIds.localId.personId.substring(0, maxLength-1) + "...");
 			}
-			for (NamedId namedPersonId : technicalIds.otherId) {
-				if (s.length() > 0) s.append(", "); 
-				namedPersonId.display(s);
-				empty = false;
-			}
-			for (NamedId namedPersonId : technicalIds.euId) {
-				if (s.length() > 0) s.append(", ");
-				s.append("EU/");
-				namedPersonId.display(s);
-				empty = false;
-			}
-		}
-		addObject(s.toString());
-		
-		if (isEditable()) {
-	        addAction(new TechnicalIdOtherAddEditor());
-	        if (hasSpecialEuIds) {
-	        	addAction(new TechnicalIdAddEuEditor());
-	        }
-	        if (!empty) {
-		        addAction(new TechnicalIdRemoveAction());
-	        }
 		}
 	}
 
 	@Override
+	protected void showActions() {
+		addGap();
+		addAction(new ObjectFieldEditor());
+	}
+
+	@Override
 	public FormVisual<TechnicalIds> createFormPanel() {
-		// unused
-		return null;
+		EchFormPanel<TechnicalIds> form = new EchFormPanel<TechnicalIds>(TechnicalIds.class);
+		form.line(TechnicalIds.TECHNICAL_IDS.localId.personIdCategory);
+		form.line(TechnicalIds.TECHNICAL_IDS.localId.personId);
+		form.area(new OtherIdField(TechnicalIds.TECHNICAL_IDS.otherId, isEditable()));
+		if (hasSpecialEuIds) {
+			form.area(new OtherIdField(TechnicalIds.TECHNICAL_IDS.euId, isEditable()));
+		}
+		return form;
+	}
+	
+	private static class OtherIdField extends ObjectFlowField<List<NamedId>> {
+
+		public OtherIdField(Object key, boolean editable) {
+			super(key, editable);
+		}
+
+		@Override
+		protected FormVisual<List<NamedId>> createFormPanel() {
+			// not used
+			return null;
+		}
+
+		@Override
+		protected void show(List<NamedId> object) {
+			for (NamedId id : object) {
+				addObject(id.display());
+				addAction(new RemoveOtherIdAction(id));
+				addGap();
+			}
+		}
+		
+		@Override
+		protected void showActions() {
+			addAction(new AddOtherIdAction());
+		}
+
+		private class AddOtherIdAction extends ObjectFieldPartEditor<NamedId> {
+			@Override
+			public FormVisual<NamedId> createForm() {
+				return new NamedIdPanel();
+			}
+
+			@Override
+			protected NamedId getPart(List<NamedId> ids) {
+				return new NamedId();
+			}
+
+			@Override
+			protected void setPart(List<NamedId> ids, NamedId id) {
+				OtherIdField.this.getObject().add(id);
+			}
+	    };
+		
+		private class RemoveOtherIdAction extends ResourceAction {
+			private final NamedId id;
+			
+			public RemoveOtherIdAction(NamedId id) {
+				this.id = id;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OtherIdField.this.getObject().remove(id);
+				setObject(getObject());
+			}
+		}
+				
 	}
 
 }

@@ -15,6 +15,10 @@ public class NamedId {
 	@Varchar(36)
 	public String personId;
 	
+	public String display() {
+		return personIdCategory + "=" + personId;
+	}
+	
 	public void display(StringBuilder s) {
 		s.append(personIdCategory); s.append("="); s.append(personId);
 	}
