@@ -3,6 +3,7 @@ package ch.openech.client.ewk.event;
 import java.util.List;
 
 import ch.openech.client.e07.CantonField;
+import ch.openech.client.e07.SwissMunicipalityField;
 import ch.openech.client.e08.CountryReadOnlyField;
 import ch.openech.client.e10.AddressTextField;
 import ch.openech.client.e10.CountryField;
@@ -30,6 +31,7 @@ import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.common.CountryZipTown;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.HouseNumber;
+import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.common.ZipTown;
 import ch.openech.dm.contact.Contact;
@@ -155,6 +157,8 @@ public class EchFormPanel<T> extends AbstractFormVisual<T> {
 			return editable ? new CountryField(name) : new CountryReadOnlyField(name);
 		} else if (type == ZipTown.class) {
 			return new ZipTownField();
+		} else if (type == MunicipalityIdentification.class) {
+			return new SwissMunicipalityField(name, false);
 		} else if (type == List.class) {
 			Class<?> listClass = GenericUtils.getGenericClass(accessor.getType());
 			if (listClass == Occupation.class) {
