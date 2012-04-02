@@ -13,7 +13,9 @@ public class PersonExtendedInformationField extends ObjectFlowField<PersonExtend
 	
 	@Override
 	protected void show(PersonExtendedInformation information) {
-		addHtml(information.toHtml());
+		if (!information.isEmpty()) {
+			addHtml(information.toHtml());
+		}
 	}
 
 	@Override

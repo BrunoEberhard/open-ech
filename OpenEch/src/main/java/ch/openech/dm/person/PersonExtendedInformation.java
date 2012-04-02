@@ -30,6 +30,18 @@ public class PersonExtendedInformation {
 	@FormatName(EchFormats.baseName) // TODO REMOVE
 	public String matrimonialInheritanceArrangement;
 
+	public boolean isEmpty() {
+		if (!StringUtils.isEmpty(armedForcesService)) return false;
+		if (!StringUtils.isEmpty(armedForcesLiability)) return false;
+		if (!StringUtils.isEmpty(civilDefense)) return false;
+		if (!StringUtils.isEmpty(fireService)) return false;
+		if (!StringUtils.isEmpty(fireServiceLiability)) return false;
+		if (!StringUtils.isEmpty(insuranceName)) return false;
+		if (!insuranceAddress.isEmpty()) return false;
+		if (!StringUtils.isEmpty(matrimonialInheritanceArrangement)) return false;
+		return true;
+	}
+	
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);
