@@ -40,7 +40,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 		line(ORGANISATION.vatStatus, ORGANISATION.vatEntryStatus);
 		line(ORGANISATION.vatEntryDate, ORGANISATION.vatLiquidationDate);
 		
-		area(createField(ORGANISATION.businessAddress), 1);
+		area(ORGANISATION.businessAddress);
 	}
 	
 }
