@@ -11,7 +11,7 @@ public class WindowConfigOrg implements WindowConfig {
 	
 	@Override
 	public String getTitle() {
-		return "Open-eCH Verzeichnis Organisationen";
+		return "Organisationen";
 	}
 	
 	@Override

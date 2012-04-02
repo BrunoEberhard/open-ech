@@ -10,24 +10,32 @@ import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.EditorPageAction;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
-import ch.openech.mj.resources.Resources;
 import ch.openech.xml.write.EchNamespaceContext;
 
 public class WindowConfigEwk implements WindowConfig {
 
-	private final EchNamespaceContext echNamespaceContext;
+	private final String version;
+	private EchNamespaceContext echNamespaceContext;
 	
-	public WindowConfigEwk (EchNamespaceContext echNamespaceContext) {
-		this.echNamespaceContext = echNamespaceContext;
+	public WindowConfigEwk (String version) {
+		this.version = version;
 	}
 	
 	@Override
 	public String getTitle() {
-		return Resources.getString("Application.title") + " - Schema: " + echNamespaceContext.getVersion();
+		return "Einwohnerkontrolle - Schema " + version;
+	}
+	
+	private synchronized void loadEchNamespaceContext() {
+		if (echNamespaceContext == null) {
+			echNamespaceContext = EchNamespaceContext.getNamespaceContext(20, version);
+		}
 	}
 	
 	@Override
 	public void fillActionGroup(PageContext pageContext, ActionGroup actionGroup) {
+		loadEchNamespaceContext();
+		
 		ActionGroup create = actionGroup.getOrCreateActionGroup(ActionGroup.NEW);
 		create.add(new EditorDialogAction(new MoveInWizard(echNamespaceContext)));
 		create.add(new EditorDialogAction(new BirthEvent(echNamespaceContext)));
