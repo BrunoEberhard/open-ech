@@ -22,6 +22,7 @@ import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.HorizontalLayout;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
+import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
 
@@ -190,7 +191,11 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 				switchLayout.show(switchLayoutMunicipality);
 				switchLayoutMunicipality.show(comboBoxMunicipality);
 			} else {
-				textMunicipality.setText(municipalityIdentification.municipalityName);
+				if (!StringUtils.isBlank(municipalityIdentification.municipalityName)) {
+					textMunicipality.setText(municipalityIdentification.municipalityName);
+				} else {
+					textMunicipality.setText("-");
+				}
 				switchLayout.show(switchLayoutMunicipality);
 				switchLayoutMunicipality.show(textMunicipality);
 			}
@@ -213,6 +218,8 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		}
 
 		textForeignTown.setText(value.foreignTown);
+		
+//		addObject("Land ")
 	}
 
 	@Override
