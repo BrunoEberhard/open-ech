@@ -56,6 +56,7 @@ public class XmlConstants {
 	public static String CHANGE_CITIZEN="changeCitizen";
 	public static String CHANGE_CITIZEN_PERSON="changeCitizenPerson";
 	public static String CHANGE_GARDIAN="changeGardian";
+	public static String CHANGE_LEGAL_FORM="changeLegalForm";
 	public static String CHANGE_NAME="changeName";
 	public static String CHANGE_NAME_PERSON="changeNamePerson";
 	public static String CHANGE_NATIONALITY="changeNationality";
@@ -63,7 +64,9 @@ public class XmlConstants {
 	public static String CHANGE_OCCUPATION="changeOccupation";
 	public static String CHANGE_OF_OCCUPATION_PERSON="changeOfOccupationPerson";
 	public static String CHANGE_OF_RELIGION_PERSON="changeOfReligionPerson";
+	public static String CHANGE_ORGANISATION_NAME="changeOrganisationName";
 	public static String CHANGE_RELIGION="changeReligion";
+	public static String CHANGE_REPORTING="changeReporting";
 	public static String CHANGE_RESIDENCE_PERMIT="changeResidencePermit";
 	public static String CHANGE_RESIDENCE_PERMIT_PERSON="changeResidencePermitPerson";
 	public static String CHANGE_RESIDENCE_TYPE="changeResidenceType";
@@ -101,10 +104,13 @@ public class XmlConstants {
 	public static String CORRECT_CONTACT_PERSON="correctContactPerson";
 	public static String CORRECT_DATE_OF_DEATH="correctDateOfDeath";
 	public static String CORRECT_DATE_OF_DEATH_PERSON="correctDateOfDeathPerson";
+	public static String CORRECT_FOUNDATION="correctFoundation";
 	public static String CORRECT_IDENTIFICATION="correctIdentification";
 	public static String CORRECT_IDENTIFICATION_PERSON="correctIdentificationPerson";
 	public static String CORRECT_LANGUAGE_OF_CORRESPONDANCE="correctLanguageOfCorrespondance";
 	public static String CORRECT_LANGUAGE_OF_CORRESPONDANCE_PERSON="correctLanguageOfCorrespondancePerson";
+	public static String CORRECT_LEGAL_FORM="correctLegalForm";
+	public static String CORRECT_LIQUIDATION="correctLiquidation";
 	public static String CORRECT_MARITAL_DATA="correctMaritalData";
 	public static String CORRECT_MARITAL_DATA_PERSON="correctMaritalDataPerson";
 	public static String CORRECT_NAME="correctName";
@@ -113,6 +119,7 @@ public class XmlConstants {
 	public static String CORRECT_NATIONALITY_PERSON="correctNationalityPerson";
 	public static String CORRECT_OCCUPATION="correctOccupation";
 	public static String CORRECT_OCCUPATION_PERSON="correctOccupationPerson";
+	public static String CORRECT_ORGANISATION_NAME="correctOrganisationName";
 	public static String CORRECT_ORIGIN="correctOrigin";
 	public static String CORRECT_ORIGIN_PERSON="correctOriginPerson";
 	public static String CORRECT_PERSON="correctPerson";
@@ -126,6 +133,7 @@ public class XmlConstants {
 	public static String CORRECT_REPORTING_PERSON="correctReportingPerson";
 	public static String CORRECT_RESIDENCE_PERMIT="correctResidencePermit";
 	public static String CORRECT_RESIDENCE_PERMIT_PERSON="correctResidencePermitPerson";
+	public static String CORRECT_UID_BRANCHE="correctUidBranche";
 	public static String COUNTRIES="countries";
 	public static String COUNTRY="country";
 	public static String COUNTRY_ID="countryId";
@@ -141,6 +149,8 @@ public class XmlConstants {
 	public static String DATE_OF_MARITAL_STATUS="dateOfMaritalStatus";
 	public static String DATE_OF_SEPARATION="dateOfSeparation";
 	public static String DATE_TO="dateTo";
+	public static String DATE_VALID_FROM="dateValidFrom";
+	public static String DATE_VALID_TILL="dateValidTill";
 	public static String DEATH="death";
 	public static String DEATH_PERSON="deathPerson";
 	public static String DECISION_AUTHORITY="decisionAuthority";
@@ -209,6 +219,7 @@ public class XmlConstants {
 	public static String HAS_MAIN_RESIDENCE="hasMainResidence";
 	public static String HAS_OTHER_RESIDENCE="hasOtherResidence";
 	public static String HAS_SECONDARY_RESIDENCE="hasSecondaryResidence";
+	public static String HEADER="header";
 	public static String HEADQUARTER_MUNICIPALITY="headquarterMunicipality";
 	public static String HEALTH_INSURANCE="healthInsurance";
 	public static String HEALTH_INSURED="healthInsured";
@@ -219,6 +230,7 @@ public class XmlConstants {
 	public static String HOUSEHOLD_NUMBER="householdNumber";
 	public static String ID="id";
 	public static String INITIAL_MESSAGE_DATE="initialMessageDate";
+	public static String INLIQUIDATION="inliquidation";
 	public static String INSURANCE="insurance";
 	public static String INSURANCE_ADDRESS="insuranceAddress";
 	public static String INSURANCE_NAME="insuranceName";
@@ -229,6 +241,7 @@ public class XmlConstants {
 	public static String ISO3_ID="iso3Id";
 	public static String JOB_TITLE="jobTitle";
 	public static String KEY_DELIVERY="keyDelivery";
+	public static String KEY_EXCHANGE="keyExchange";
 	public static String KEY_PERSON_IDENTIFICATION="keyPersonIdentification";
 	public static String KIND_OF_EMPLOYMENT="kindOfEmployment";
 	public static String LANGUAGE_OF_CORRESPONDANCE="languageOfCorrespondance";
@@ -237,6 +250,7 @@ public class XmlConstants {
 	public static String LEGAL_FORM="legalForm";
 	public static String LIQUIDATION="liquidation";
 	public static String LIQUIDATION_DATE="liquidationDate";
+	public static String LIQUIDATION_ENTRY_DATE="liquidationEntryDate";
 	public static String LIQUIDATION_REASON="liquidationReason";
 	public static String LOCAL_I_D="localID";
 	public static String LOCAL_ORGANISATION_ID="localOrganisationId";
@@ -265,6 +279,7 @@ public class XmlConstants {
 	public static String MODIFICATION_DATE="modificationDate";
 	public static String MOTHER="mother";
 	public static String MOVE="move";
+	public static String MOVE_DATE="moveDate";
 	public static String MOVE_IN="moveIn";
 	public static String MOVE_IN_PERSON="moveInPerson";
 	public static String MOVE_OUT="moveOut";
@@ -312,6 +327,7 @@ public class XmlConstants {
 	public static String NUMBER_OF_ACTUAL_PACKAGE="numberOfActualPackage";
 	public static String NUMBER_OF_KEY_MESSAGES="numberOfKeyMessages";
 	public static String NUMBER_OF_MESSAGES="numberOfMessages";
+	public static String NUMBER_OF_ORGANISATIONS="numberOfOrganisations";
 	public static String OBJECT="object";
 	public static String OCCUPATION="occupation";
 	public static String OFFICIAL_NAME="officialName";
@@ -321,6 +337,7 @@ public class XmlConstants {
 	public static String OFFICIAL_NAME_ONLY="officialNameOnly";
 	public static String ORGANISATION="organisation";
 	public static String ORGANISATION_ADDITIONAL_NAME="organisationAdditionalName";
+	public static String ORGANISATION_BASE_DELIVERY="organisationBaseDelivery";
 	public static String ORGANISATION_ID="organisationId";
 	public static String ORGANISATION_ID_CATEGORY="organisationIdCategory";
 	public static String ORGANISATION_IDENTIFICATION="organisationIdentification";
