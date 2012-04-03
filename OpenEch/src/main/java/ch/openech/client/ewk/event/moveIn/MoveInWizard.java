@@ -28,7 +28,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	private final EchNamespaceContext echNamespaceContext;
 	private final Person person;
-	private final MoveInEditorData data;
 	private final MoveInPersonWizardPage moveInPersonWizardPage;
 	private final MoveInNextPersonWizardPage moveInNextPersonWizardPage;
 	private int personIndex; // merge with currentPageIndex?
@@ -44,11 +43,10 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	public MoveInWizard(EchNamespaceContext echNamespaceContext, Person person) {
 		this.echNamespaceContext = echNamespaceContext;
 		this.person = person;
-		this.data = new MoveInEditorData();
 		this.moveInPersonWizardPage = new MoveInPersonWizardPage();
 		this.moveInNextPersonWizardPage = new MoveInNextPersonWizardPage();
 	}
-	
+
 	public static class MoveInNextPerson {
 		public static final MoveInNextPerson MOVE_IN_NEXT_PERSON = Constants.of(MoveInNextPerson.class);
 		
@@ -89,12 +87,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	@Override
 	protected MoveInEditorData load() {
-		return data;
-	}
-
-	@Override
-	protected MoveInEditorData getObject() {
-		return data;
+		return new MoveInEditorData();
 	}
 
 	private class MoveInPersonWizardPage extends WizardPage<Person> {
