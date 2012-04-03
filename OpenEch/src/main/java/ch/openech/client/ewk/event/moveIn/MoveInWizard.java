@@ -201,6 +201,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			MoveInEditorData wizardData = MoveInWizard.this.getObject();
 			if (wizardData.nextPersons.size() <= personIndex) {
 				MoveInNextPerson moveInNextPerson = new MoveInNextPerson();
+				moveInNextPerson.basePerson = wizardData.persons.get(personIndex);
 				wizardData.nextPersons.add(moveInNextPerson);
 			}
 			return wizardData.nextPersons.get(personIndex);
