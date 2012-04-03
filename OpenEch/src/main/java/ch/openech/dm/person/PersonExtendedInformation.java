@@ -37,7 +37,7 @@ public class PersonExtendedInformation {
 		if (!StringUtils.isEmpty(fireService)) return false;
 		if (!StringUtils.isEmpty(fireServiceLiability)) return false;
 		if (!StringUtils.isEmpty(insuranceName)) return false;
-		if (!insuranceAddress.isEmpty()) return false;
+		if (insuranceAddress != null && !insuranceAddress.isEmpty()) return false;
 		if (!StringUtils.isEmpty(matrimonialInheritanceArrangement)) return false;
 		return true;
 	}
