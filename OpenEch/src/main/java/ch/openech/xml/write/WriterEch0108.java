@@ -45,7 +45,7 @@ public class WriterEch0108 extends DeliveryWriter {
 		vatRegisterInformation(element, values);
 	}
 	
-	private void uidregInformation(WriterElement parent, Organisation values) throws Exception {
+	public void uidregInformation(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, UIDREG_INFORMATION);
 		element.values(values, UIDREG_STATUS_ENTERPRISE_DETAIL, //
 				UIDREG_PUBLIC_STATUS, UIDREG_ORGANISATION_TYPE, //
@@ -54,7 +54,7 @@ public class WriterEch0108 extends DeliveryWriter {
 		// WriterEch0097.uidStructure(element, "uidRegSource", values.uidregSourceOrganisationId)
     }
 
-	private void commercialRegisterInformation(WriterElement parent, Organisation values) throws Exception {
+	public void commercialRegisterInformation(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, COMMERCIAL_REGISTER_INFORMATION);
 		element.values(values, COMMERCIAL_REGISTER_STATUS, //
 				COMMERCIAL_REGISTER_ENTRY_STATUS, COMMERCIAL_REGISTER_NAME_TRANSLATION, //
@@ -62,7 +62,7 @@ public class WriterEch0108 extends DeliveryWriter {
 				COMMERCIAL_REGISTER_LIQUIDATION_DATE);
     }
 	
-	private void vatRegisterInformation(WriterElement parent, Organisation values) throws Exception {
+	public void vatRegisterInformation(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, VAT_REGISTER_INFORMATION);
 		element.values(values, VAT_STATUS, VAT_ENTRY_STATUS, VAT_ENTRY_DATE, VAT_LIQUIDATION_DATE);
     }

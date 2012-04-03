@@ -35,6 +35,10 @@ public class WriterEch0010 {
 	}
 	
 	public void address(WriterElement parent, String tagName, Address address) throws Exception {
+		address(parent, URI, tagName, address);
+	}
+	
+	public void address(WriterElement parent, String uri, String tagName, Address address) throws Exception {
 		if (address == null || address.isEmpty()) return;
 		WriterElement writer = parent.create(URI, tagName);
 		
@@ -46,10 +50,14 @@ public class WriterEch0010 {
 			person.values(address, MR_MRS, TITLE, FIRST_NAME, LAST_NAME);
 		}
 		
-		addressInformation(writer, ADDRESS_INFORMATION, address);
+		addressInformation(writer, uri, ADDRESS_INFORMATION, address);
 	}
 
 	public void addressInformation(WriterElement parent, String tagName, Address address) throws Exception {
+		addressInformation(parent, URI, tagName, address);
+	}
+
+	public void addressInformation(WriterElement parent, String uri, String tagName, Address address) throws Exception {
 		WriterElement addressInformation = parent.create(URI, tagName);
 		addressInformation(addressInformation, address);
 	}

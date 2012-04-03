@@ -1,6 +1,7 @@
 package ch.openech.dm.organisation;
 
 import ch.openech.dm.Event;
+import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
@@ -31,22 +32,23 @@ public class Organisation {
 	public String organisationName, organisationLegalName, organisationAdditionalName;
 	public String legalForm;
 	
-	// 98
+	// 98 : Daten
 	
 	public String uidBrancheText;
 	public String nogaCode; // 00 - 999999
 	
 	@Date(partialAllowed = true) @Required
 	public String foundationDate;
-	@Date(partialAllowed = true)
 	public String foundationReason;
 	
 	@Date(partialAllowed = true)
-	public String liquidationDate, liquidationReason;
+	public String liquidationDate;
+	public String liquidationReason;
 	
+	@FormatName("language")
 	public String languageOfCorrespondance;
 	
-	// 108
+	// 108 : Informationen andere Register
 	
 	// uidregInformationType
 	public String uidregStatusEnterpriseDetail; // 1-7
@@ -60,7 +62,8 @@ public class Organisation {
 	// commercialRegisterInformation
 	public String commercialRegisterStatus; // 1-3
 	public String commercialRegisterEntryStatus; // 1-2
-	public String commercialRegisterNameTranslation; // unbekannte Länge?
+	@FormatName("organisationName")
+	public String commercialRegisterNameTranslation;
 	public String commercialRegisterEntryDate;
 	public String commercialRegisterLiquidationDate;
 	
@@ -71,6 +74,7 @@ public class Organisation {
 	public String vatEntryDate, vatLiquidationDate;
 	
 	// if reported (gemeldet)
+	public String typeOfResidenceOrganisation = "1";
 	// Achtung: Im Gegensatz zu einer Person kann eine Organisation nur einen primary, secondary oder other Eintrag haben
 	//          Die folgenden Felder sind dabei bei allen 3 Möglichkeiten *genau* gleich.
 	public MunicipalityIdentification reportingMunicipality;
@@ -97,6 +101,18 @@ public class Organisation {
 
 	public void set(String propertyName, Object value) {
 		PropertyAccessor.set(this, propertyName, value);
+	}
+	
+	public boolean hasMainResidence() {
+		return TypeOfResidenceOrganisation.Hauptsitz.getKey().equals(typeOfResidenceOrganisation);
+	}
+
+	public boolean hasSecondaryResidence() {
+		return TypeOfResidenceOrganisation.Nebensitz.getKey().equals(typeOfResidenceOrganisation);
+	}
+
+	public boolean hasOtherResidence() {
+		return TypeOfResidenceOrganisation.Anderersitz.getKey().equals(typeOfResidenceOrganisation);
 	}
 
 }

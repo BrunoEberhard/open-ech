@@ -13,8 +13,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 		super(2);
 		
 		line(ORGANISATION.organisationName);
-		line(ORGANISATION.organisationLegalName);
-		line(ORGANISATION.organisationAdditionalName);
+		line(ORGANISATION.organisationLegalName, ORGANISATION.organisationAdditionalName);
 		line(ORGANISATION.uid, ORGANISATION.legalForm);
 		line(new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable), ORGANISATION.languageOfCorrespondance);
 		line(ORGANISATION.reportingMunicipality);
