@@ -38,10 +38,8 @@ public class EchFormats {
 	static {
 		Formats formats = Formats.getInstance();
 		
-		EchNamespaceContext echNamespaceContext = EchNamespaceContext.getNamespaceContext(20, "2.2");	
-		for (Entry<String, Format> type : echNamespaceContext.getSimpleTypes().entrySet()) {
-			formats.register(type.getKey(), type.getValue());
-		}
+		registerXmlSimpleTypes(20, "2.2");
+		registerXmlSimpleTypes(148, "1.0");
 		
 		// Von den Schemas nicht abgedeckte Formate
 		
@@ -59,6 +57,13 @@ public class EchFormats {
 		formats.register("category", new PlainFormat(1));
 		
 		formats.register(cantonAbbreviation, cantonAbbreviationFormat);
+	}
+	
+	static void registerXmlSimpleTypes(int root, String version) {
+		EchNamespaceContext echNamespaceContext = EchNamespaceContext.getNamespaceContext(root, version);
+		for (Entry<String, Format> type : echNamespaceContext.getSimpleTypes().entrySet()) {
+			Formats.getInstance().register(type.getKey(), type.getValue());
+		}
 	}
 
 	public static void initialize() {
