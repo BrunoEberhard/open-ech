@@ -153,7 +153,11 @@ public class SwissMunicipalityField extends ObjectField<MunicipalityIdentificati
 		} else {
 			comboBoxMunicipality.setSelectedObject(null);
 			modeFreeMunicipality();
-			textMunicipality.setText(object.municipalityName);
+			if (!StringUtils.isEmpty(object.municipalityName)) {
+				textMunicipality.setText(object.municipalityName);
+			} else {
+				textMunicipality.setText("-");
+			}
 		}
 	}
 
