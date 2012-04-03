@@ -1,6 +1,61 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.ADDRESS;
+import static ch.openech.dm.XmlConstants.ALIAS_NAME;
+import static ch.openech.dm.XmlConstants.ALLIANCE_PARTNERSHIP_NAME;
+import static ch.openech.dm.XmlConstants.ANY_PERSON;
+import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
+import static ch.openech.dm.XmlConstants.CALL_NAME;
+import static ch.openech.dm.XmlConstants.CANCELATION_REASON;
+import static ch.openech.dm.XmlConstants.CANTON;
+import static ch.openech.dm.XmlConstants.COMES_FROM;
+import static ch.openech.dm.XmlConstants.CONTACT;
+import static ch.openech.dm.XmlConstants.CONTACT_ADDRESS;
+import static ch.openech.dm.XmlConstants.CONTACT_VALID_TILL;
+import static ch.openech.dm.XmlConstants.COREDATA;
+import static ch.openech.dm.XmlConstants.COUNTRY;
+import static ch.openech.dm.XmlConstants.DATE_OF_DEATH;
+import static ch.openech.dm.XmlConstants.DATE_OF_MARITAL_STATUS;
+import static ch.openech.dm.XmlConstants.DATE_OF_SEPARATION;
+import static ch.openech.dm.XmlConstants.DEPARTURE_DATE;
+import static ch.openech.dm.XmlConstants.DWELLING_ADDRESS;
+import static ch.openech.dm.XmlConstants.FOREIGNER;
+import static ch.openech.dm.XmlConstants.FOREIGN_BIRTH_TOWN;
+import static ch.openech.dm.XmlConstants.FOREIGN_COUNTRY;
+import static ch.openech.dm.XmlConstants.GOES_TO;
+import static ch.openech.dm.XmlConstants.HAS_MAIN_RESIDENCE;
+import static ch.openech.dm.XmlConstants.HAS_OTHER_RESIDENCE;
+import static ch.openech.dm.XmlConstants.HAS_SECONDARY_RESIDENCE;
+import static ch.openech.dm.XmlConstants.HOUSEHOLD_I_D;
+import static ch.openech.dm.XmlConstants.LANGUAGE_OF_CORRESPONDANCE;
+import static ch.openech.dm.XmlConstants.MAIL_ADDRESS;
+import static ch.openech.dm.XmlConstants.MAIN_RESIDENCE;
+import static ch.openech.dm.XmlConstants.MARITAL_DATA;
+import static ch.openech.dm.XmlConstants.MARITAL_STATUS;
+import static ch.openech.dm.XmlConstants.MOVING_DATE;
+import static ch.openech.dm.XmlConstants.MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.NATIONALITY;
+import static ch.openech.dm.XmlConstants.NATIONALITY_STATUS;
+import static ch.openech.dm.XmlConstants.ORIGINAL_NAME;
+import static ch.openech.dm.XmlConstants.ORIGIN_NAME;
+import static ch.openech.dm.XmlConstants.OTHER_NAME;
+import static ch.openech.dm.XmlConstants.PERSON;
+import static ch.openech.dm.XmlConstants.PLACE_OF_BIRTH;
+import static ch.openech.dm.XmlConstants.PLACE_OF_ORIGIN;
+import static ch.openech.dm.XmlConstants.RELIGION;
+import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.SECONDARY_RESIDENCE;
+import static ch.openech.dm.XmlConstants.SECONDARY_RESIDENCE_INFORMATION;
+import static ch.openech.dm.XmlConstants.SEPARATION;
+import static ch.openech.dm.XmlConstants.SEPARATION_TILL;
+import static ch.openech.dm.XmlConstants.SWISS;
+import static ch.openech.dm.XmlConstants.SWISS_TOWN;
+import static ch.openech.dm.XmlConstants.TOWN;
+import static ch.openech.dm.XmlConstants.TYPE_OF_HOUSEHOLD;
+import static ch.openech.dm.XmlConstants.UNKNOWN;
+import static ch.openech.dm.XmlConstants.WITHOUT_E_G_I_D;
+import static ch.openech.dm.XmlConstants._E_G_I_D;
+import static ch.openech.dm.XmlConstants._E_W_I_D;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -10,11 +65,9 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Foreign;
-import ch.openech.dm.person.MaritalStatus;
 import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.dm.person.Separation;
 import ch.openech.mj.util.StringUtils;
 
 public class WriterEch0011 {
@@ -210,10 +263,10 @@ public class WriterEch0011 {
 	}
 	
 	private void commonResidenceInformation(WriterElement element, Person values) throws Exception {
-		element.values(values,  ARRIVAL_DATE);
+		element.values(values, ARRIVAL_DATE);
 		destination(element, COMES_FROM, values.comesFrom, true);
 		dwellingAddress(element, values.dwellingAddress);
-		element.values(values,  DEPARTURE_DATE);
+		element.values(values, DEPARTURE_DATE);
 		destination(element, GOES_TO, values.goesTo, false);
 	}
 
