@@ -103,6 +103,16 @@ public class Organisation {
 		PropertyAccessor.set(this, propertyName, value);
 	}
 	
+	//
+	
+	public String getId() {
+		if (technicalIds.localId.isOpenEch()) {
+			return technicalIds.localId.personId;
+		} else {
+			return null;
+		}
+	}
+	
 	public boolean hasMainResidence() {
 		return TypeOfResidenceOrganisation.Hauptsitz.getKey().equals(typeOfResidenceOrganisation);
 	}
