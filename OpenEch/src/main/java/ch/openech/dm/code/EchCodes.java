@@ -54,8 +54,8 @@ public class EchCodes {
 	
 	public static final Code uidregStatusEnterpriseDetail = new Code(organisation, "uidregStatusEnterpriseDetail");
 	public static final Code uidregPublicStatus = new Code(organisation, "uidregPublicStatus");
-	public static final Code uidregOrganisation = new Code(organisation, "uidregOrganisation");
-//	public static final Code uidregLiquidationReason = new Code(organisation, "uidregLiquidationReason");
+	public static final Code uidregOrganisationType = new Code(organisation, "uidregOrganisationType");
+    public static final Code uidregLiquidationReason = new Code(organisation, "uidregLiquidationReason");
 	public static final Code commercialRegisterStatus = new Code(organisation, "commercialRegisterStatus");
 	public static final Code commercialRegisterEntryStatus = new Code(organisation, "commercialRegisterEntryStatus");
 	public static final Code vatStatus = new Code(organisation, "vatStatus");
