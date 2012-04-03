@@ -136,8 +136,10 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		}
 	}
 	
-	private class XmlAction extends AbstractAction {
-
+	// public for access on xmls
+	public class XmlAction extends AbstractAction {
+		public List<String> xmls;
+		
 		public XmlAction() {
 			super("Vorschau XML");
 		}
@@ -157,20 +159,15 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		}
 		
 		private void showXML() {
-			List<String> xmls;
 			try {
 				xmls = getXml(getObject());
 			} catch (Exception x) {
 				throw new RuntimeException("XML Generierung fehlgeschlagen", x);
 			}
 			
-			AbstractFormVisual<?> form = new AbstractFormVisual(Object.class, null, false);
-			for (String xml : xmls) {
-				// Nene, multiline durch einzeller listen ersetzen?
-//				xml = xml.replace("\n", "<br>");
-//				xml = "<html>" + xml + "</html>";
-				form.area(new XmlTextFormField(xml));
-			}
+			AbstractFormVisual<XmlAction> form = new AbstractFormVisual(XmlAction.class, null, false);
+			form.area(new XmlTextFormField("xmls"));
+			form.setObject(this);
 			ClientToolkit.getToolkit().openDialog(null, form, "XML").openDialog();
 		}
 
