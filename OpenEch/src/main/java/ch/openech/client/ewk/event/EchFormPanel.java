@@ -5,7 +5,7 @@ import java.util.List;
 import ch.openech.client.e07.CantonField;
 import ch.openech.client.e07.SwissMunicipalityField;
 import ch.openech.client.e08.CountryReadOnlyField;
-import ch.openech.client.e10.AddressTextField;
+import ch.openech.client.e10.AddressField;
 import ch.openech.client.e10.CountryField;
 import ch.openech.client.e10.CountryZipTownField;
 import ch.openech.client.e10.HouseNumberField;
@@ -142,7 +142,7 @@ public class EchFormPanel<T> extends AbstractFormVisual<T> {
 		} else if (type == Place.class) {
 			return editable ? new PlaceField(name) : new PlaceReadOnlyField(name);
 		} else if (type == Address.class) {
-			return new AddressTextField(name, editable);
+			return new AddressField(name, editable);
 		} else if (type == DwellingAddress.class) {
 			return new DwellingAddressField(name, namespaceContext, editable);
 		} else if (type == PersonExtendedInformation.class) {

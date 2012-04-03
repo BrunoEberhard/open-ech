@@ -115,14 +115,14 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		if (moveIn) {
 			line(PERSON.placeOfBirth, PERSON.arrivalDate);
 			line(PERSON.typeOfResidence, PERSON.comesFrom);
-			line(PERSON.residence, PERSON.comesFromAddress);
+			area(PERSON.residence, PERSON.comesFromAddress);
 			
 			setRequired(PERSON.arrivalDate);
 		} else {
 			line(PERSON.placeOfBirth, PERSON.dateOfDeath);
 		
 			if (type != PersonPanelType.CORRECT_PERSON && type != PersonPanelType.CHANGE_RESIDENCE_TYPE) {
-				line(PERSON.typeOfResidence, PERSON.residence);
+				area(PERSON.typeOfResidence, PERSON.residence);
 			}
 
 			if (type != PersonPanelType.CORRECT_PERSON) {

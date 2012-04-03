@@ -15,40 +15,24 @@ import ch.openech.dm.person.Residence;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
 
-public class ResidenceField extends ObjectField<Residence> implements Validatable, DependingOnFieldAbove<String>, DemoEnabled {
+public class ResidenceField extends ObjectFlowField<Residence> implements Validatable, DependingOnFieldAbove<String>, DemoEnabled {
 	private Action selectSecondary;
-	private final TextField textField;
 	private String typeOfResidence;
 
 	public ResidenceField(Object key, boolean editable) {
 		super(key, editable);
-		
-		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
-
-		if (editable) {
-			addContextAction(new ResidenceMainEditor());
-			addContextAction(new ResidenceAddSecondaryEditor());
-			addContextAction(new ResidenceRemoveSecondaryAction());
-		}
 	}
 	
 	// 		setTitle(main ? "Hauptwohnsitz erfassen" : "Nebenwohnsitz erfassen");
-
-	@Override
-	public Object getComponent() {
-		return decorateWithContextActions(textField);
-	}
 
 	// Als "Part" wird hier das ganze Objekt editiert. Das entsteht, weil eigentlich eine
 	// ComboBox im Hauptfeld angezeigt werden müsste, dies durch die Möglichkeit der
@@ -138,13 +122,32 @@ public class ResidenceField extends ObjectField<Residence> implements Validatabl
 		} 
 		
 		if (hasResidence) {
-			textField.setText(s.toString());
+			addObject(s);
 		} else {
-			textField.setText("Kein Wohnsitz");
+			addObject("Kein Wohnsitz");
 		}
 		
 		// Bei Nebenwohnsitz darf es nur einer sein, daher auch die Aktion nur bei leerer Liste anbieten
 		if (selectSecondary != null) selectSecondary.setEnabled(!"2".equals(typeOfResidence) || residence.secondary == null || residence.secondary.isEmpty());
+	}
+	
+	
+	@Override
+	protected void showActions() {
+		if (getObject() == null) return;
+
+		boolean hasMainResidence = "1".equals(typeOfResidence);
+		boolean hasOtherResidence = "3".equals(typeOfResidence);
+
+		if (!hasOtherResidence) {
+			addAction(new ResidenceMainEditor());
+		}
+		if (!hasMainResidence || getObject().secondary.isEmpty()) {
+			addAction(new ResidenceAddSecondaryEditor());
+		}
+		if (!getObject().secondary.isEmpty()) {
+			addAction(new ResidenceRemoveSecondaryAction());
+		}
 	}
 
 	@Override
