@@ -10,6 +10,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;
+	private boolean enabled = true;
 	
 	public AddressField(Object key, boolean editable) {
 		this(key, editable, false, false, false);
@@ -31,6 +32,10 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 		return new AddressPanel(swiss, person, organisation);
 	}
 	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 	@Override
 	public void fillWithDemoData() {
 		setObject(DataGenerator.address(true, true, false));
@@ -43,12 +48,16 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 
 	@Override
 	public void show(Address address) {
-		addHtml(address.toHtml());
+		if (enabled) {
+			addHtml(address.toHtml());
+		}
 	}
 
 	@Override
 	public void showActions() {
-		addAction(new ObjectFieldEditor());
-		addAction(new RemoveObjectAction());
+		if (enabled) {
+			addAction(new ObjectFieldEditor());
+			addAction(new RemoveObjectAction());
+		}
 	}
 }
