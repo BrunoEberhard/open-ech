@@ -98,7 +98,7 @@ public class PersonEditMenu {
 		
 		this.pageContext = pageContext;
 		
-		ActionGroup personActionGroup = actionGroup.getOrCreateActionGroup("person");
+		ActionGroup personActionGroup = actionGroup.getOrCreateActionGroup(ActionGroup.OBJECT);
 		personActionGroup.putValue(Action.MNEMONIC_KEY, 'P');
 
 		// TODO History of person

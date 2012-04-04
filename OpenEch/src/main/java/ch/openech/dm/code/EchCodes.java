@@ -11,10 +11,18 @@ import ch.openech.mj.db.model.InternalCode;
 
 public class EchCodes {
 
+	private static final ResourceBundle application = ResourceBundle.getBundle(EchCodes.class.getPackage().getName() + ".ech_application");
 	private static final ResourceBundle common = ResourceBundle.getBundle(EchCodes.class.getPackage().getName() + ".ech_common");
 	private static final ResourceBundle person = ResourceBundle.getBundle(EchCodes.class.getPackage().getName() + ".ech_person");
 	private static final ResourceBundle organisation = ResourceBundle.getBundle(EchCodes.class.getPackage().getName() + ".ech_organisation");
 
+	// Application
+
+	public static final InternalCode applicationMode = new InternalCode(Sex.class);
+	public static final Code schema20 = new Code(application, "schema20");
+	public static final Code schema93 = new Code(application, "schema93");
+	public static final Code schema148 = new Code(application, "schema148");
+	
 	// Person
 	
 	public static final InternalCode sex = new InternalCode(Sex.class);

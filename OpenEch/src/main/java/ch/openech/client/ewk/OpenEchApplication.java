@@ -64,7 +64,7 @@ public class OpenEchApplication extends SwingApplication {
 		graphicalLogHandler.addFilterButton("SQL", null, EchPersistence.logger.getName());
 		graphicalLogHandler.addFilterButton("XML ->", null, EchServer.logger.getName());
 	
-		FrameManager.getInstance().openNavigationFrame(ApplicationConfig.getApplicationConfig().getInitialWindowConfig());
+		FrameManager.getInstance().openNavigationFrame();
 	}
 
 	private void checkDbVersion() {

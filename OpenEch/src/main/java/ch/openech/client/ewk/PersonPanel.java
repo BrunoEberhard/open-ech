@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 
-import ch.openech.client.e10.AddressTextField;
+import ch.openech.client.e10.AddressField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
 import ch.openech.client.e11.SeparationField;
@@ -258,7 +258,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		if (type == PersonPanelType.DISPLAY) {
 			((TextFormField) getField(PERSON.departureDate)).setEnabled(!StringUtils.isBlank(person.departureDate));
 			((PlaceReadOnlyField) getField(PERSON.goesTo)).setEnabled(person.goesTo != null && !person.goesTo.isUnknown());
-			((AddressTextField) getField(PERSON.goesToAddress)).setEnabled(person.goesTo != null && person.goesTo.mailAddress != null && !person.goesTo.mailAddress.isEmpty());
+			((AddressField) getField(PERSON.goesToAddress)).setEnabled(person.goesTo != null && person.goesTo.mailAddress != null && !person.goesTo.mailAddress.isEmpty());
 		}
 	}
 	
