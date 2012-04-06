@@ -18,7 +18,7 @@ public class EchCodes {
 
 	// Application
 
-	public static final InternalCode applicationMode = new InternalCode(Sex.class);
+	public static final InternalCode applicationMode = new InternalCode(ApplicationMode.class);
 	public static final Code schema20 = new Code(application, "schema20");
 	public static final Code schema93 = new Code(application, "schema93");
 	public static final Code schema148 = new Code(application, "schema148");
