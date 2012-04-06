@@ -70,7 +70,6 @@ public class PersonEditMenu {
 	private final EchNamespaceContext echNamespaceContext;
 	private PageContext pageContext;
 	private Person person;
-	private boolean enabled;
 	
 	private PersonHistoryMenuAction showHistory;
 
@@ -99,6 +98,7 @@ public class PersonEditMenu {
 		this.pageContext = pageContext;
 		
 		ActionGroup personActionGroup = actionGroup.getOrCreateActionGroup(ActionGroup.OBJECT);
+		personActionGroup.putValue(Action.NAME, "Person");
 		personActionGroup.putValue(Action.MNEMONIC_KEY, 'P');
 
 		// TODO History of person
@@ -169,8 +169,6 @@ public class PersonEditMenu {
 		List<Action> actions = actionGroup.getAllActions();
 		showHistory.setPerson(person);
 		for (Action action : actions) {
-			action.setEnabled(enabled);
-			
 			if (action instanceof PersonEditMenuAction) {
 				PersonEditMenuAction personEditMenuAction = (PersonEditMenuAction) action;
 				personEditMenuAction.setPerson(person);
@@ -188,7 +186,6 @@ public class PersonEditMenu {
 		
 		public void setPerson(Person person) {
 			editor.setPerson(person);
-			this.setEnabled(editor.isEnabled());
 		}
 	}
 	
@@ -287,7 +284,7 @@ public class PersonEditMenu {
 
 	public void setPerson(Person person, boolean enabled) {
 		this.person = person;
-		this.enabled = enabled;
+		update(person, enabled);
 	}
 	
 	@BusinessRule("Welche Aktion in welchem Zustand ausgeführt werden darf")
@@ -300,17 +297,12 @@ public class PersonEditMenu {
 		boolean isSwiss = isPerson && person.isSwiss();
 		boolean hasGardianMeasure = isPerson && person.hasGardianMeasure();
 		boolean isMainResidence = isPerson && person.isMainResidence();
-//		this.setEnabled(person != null);
-
 		
 		death.setEnabled(isAlive);
 		divorce.setEnabled(isAlive && isMarried);
 		separation.setEnabled(isAlive && isMarried && !isSeparated);
 		undoSeparation.setEnabled(isAlive && isSeparated);
 		missing.setEnabled(isAlive);
-
-		// TODO !!
-		
 		undoMissing.setEnabled(isPerson && !isAlive);
 		undoPartnership.setEnabled(isAlive & hasPartner);
 		changeOccupation.setEnabled(isAlive);

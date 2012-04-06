@@ -157,11 +157,6 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		public boolean isEnabled() {
-			return super.isEnabled() && getPerson().isMarried() && !getPerson().isSeparated();
-		}
-
-		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(Person.PERSON.separation);
 			formPanel.line(new DateField("date", DateField.REQUIRED));
@@ -193,12 +188,6 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		public boolean isEnabled() {
-			return super.isEnabled() && getPerson().isSeparated();
-		}
-
-		
-		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
 			// nothing in it
 		}
@@ -216,6 +205,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			return xmls;
 		}
 		
+		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
 			// nothing to validate
 		}
@@ -225,11 +215,6 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		public DivorceEvent(EchNamespaceContext namespaceContext) {
 			super(namespaceContext);
-		}
-
-		@Override
-		public boolean isEnabled() {
-			return super.isEnabled() && getPerson().isMarried();
 		}
 
 		@Override

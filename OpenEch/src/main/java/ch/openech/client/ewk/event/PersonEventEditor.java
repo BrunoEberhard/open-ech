@@ -46,10 +46,6 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 		return person;
 	}
 	
-	public boolean isEnabled() {
-		return person != null && person.isAlive();
-	}
-	
 	@Override
 	public List<String> getXml(T object) throws Exception {
 		return getXml(getPerson(), object, getEchNamespaceContext().getWriterEch0020());
