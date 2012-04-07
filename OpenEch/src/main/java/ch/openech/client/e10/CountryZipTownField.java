@@ -8,7 +8,6 @@ import ch.openech.dm.common.CountryZipTown;
 import ch.openech.dm.common.ZipTown;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -16,7 +15,7 @@ import ch.openech.mj.toolkit.HorizontalLayout;
 import ch.openech.mj.util.StringUtils;
 
 
-public class CountryZipTownField extends AbstractEditField<CountryZipTown> implements DemoEnabled, Validatable, Indicator {
+public class CountryZipTownField extends AbstractEditField<CountryZipTown> implements DemoEnabled, Validatable {
 	private CountryField countryField;
 	private ZipTownField zipTownField;
 	private HorizontalLayout horizontalLayout;
@@ -83,10 +82,5 @@ public class CountryZipTownField extends AbstractEditField<CountryZipTown> imple
 			resultList.add(new ValidationMessage(COUNTRY_ZIP_TOWN.town, "Eingabe fehlt"));
 		}
 	}
-	
-	@Override
-	protected Indicator[] getIndicatingComponents() {
-		return new Indicator[]{countryField, zipTownField};
-	}
-	
+
 }

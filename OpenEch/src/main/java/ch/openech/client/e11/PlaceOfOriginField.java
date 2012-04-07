@@ -116,16 +116,10 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 			swiss = nationality.isSwiss();
 		}
 		getVisual().setEnabled(swiss);
-		boolean changed = false;
 		if (!swiss) {
-			if (getObject() != null && getObject().size() > 0) {
-				getObject().clear();
-				changed = true;
-			}
+			getObject().clear();
 		}
-		if (changed) {
- 			fireObjectChange();
-		}
+		fireObjectChange();
 	}
 
 	@Override
@@ -145,6 +139,8 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 
 	@Override
 	protected void show(List<PlaceOfOrigin> objects) {
+		if (!swiss) return;
+		
 		for (PlaceOfOrigin placeOfOrigin : objects) {
 			addHtml(placeOfOrigin.displayHtml());
 			if (isEditable()) {
@@ -157,5 +153,4 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 			addAction(new EditorDialogAction(new AddOriginEditor()));
 		}
 	}
-
 }

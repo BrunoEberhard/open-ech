@@ -3,11 +3,10 @@ package ch.openech.client.e10;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.TextField;
 
-public class AddressTextField extends ObjectField<Address> implements Indicator {
+public class AddressTextField extends ObjectField<Address> {
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;

@@ -7,10 +7,9 @@ import ch.openech.dm.person.Occupation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.resources.ResourceAction;
 
-public class OccupationField extends ObjectFlowField<List<Occupation>> implements Indicator {
+public class OccupationField extends ObjectFlowField<List<Occupation>> {
 	
 	public OccupationField(Object key, boolean editable) {
 		super(key, editable);

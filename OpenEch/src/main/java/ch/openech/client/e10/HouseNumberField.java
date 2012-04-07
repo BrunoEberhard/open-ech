@@ -3,7 +3,6 @@ package ch.openech.client.e10;
 import ch.openech.dm.common.HouseNumber;
 import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.HorizontalLayout;
 import ch.openech.mj.toolkit.TextField;
@@ -46,9 +45,4 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 		dwellingNumberTextField.setText(houseNumber.dwellingNumber);
 	}
 
-	@Override
-	protected Indicator[] getIndicatingComponents() {
-		return new Indicator[]{houseNumberTextField};
-	};
-	
 }

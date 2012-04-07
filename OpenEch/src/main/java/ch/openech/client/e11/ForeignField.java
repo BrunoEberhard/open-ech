@@ -31,7 +31,9 @@ public class ForeignField extends ObjectFlowField<Foreign> implements Validatabl
 
 	@Override
 	protected void showActions() {
-		addAction(new ObjectFieldEditor());
+		if (!swiss) {
+			addAction(new ObjectFieldEditor());
+		}
 	}
 	
 	@Override
@@ -59,6 +61,7 @@ public class ForeignField extends ObjectFlowField<Foreign> implements Validatabl
 		Nationality nationality = field.getObject();
 		swiss = nationality.isSwiss();
 		getVisual().setEnabled(!swiss);
+		fireObjectChange();
 	}
 
 }

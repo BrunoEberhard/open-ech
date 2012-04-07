@@ -8,11 +8,10 @@ import ch.openech.dm.contact.Contact;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.TextField;
 
-public class ContractorField extends ObjectField<Contact> implements Indicator {
+public class ContractorField extends ObjectField<Contact> {
 	private final TextField text;
 	
 	public ContractorField(Object key) {

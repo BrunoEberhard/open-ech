@@ -8,7 +8,6 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -20,7 +19,7 @@ import ch.openech.xml.read.StaxEch0072;
 /* Dieses Feld wurde erst mit ech 112 gebraucht. 
  * 
  */
-public class CountryField extends ObjectField<CountryIdentification> implements DemoEnabled, Indicator {
+public class CountryField extends ObjectField<CountryIdentification> implements DemoEnabled {
 	private final SwitchLayout switchLayout;
 	private final ComboBox comboBox;
 	private final TextField textCountry;

@@ -13,7 +13,6 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
@@ -27,7 +26,7 @@ import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
 
 
-public class PlaceField extends ObjectField<Place> implements DemoEnabled, Validatable, Indicator {
+public class PlaceField extends ObjectField<Place> implements DemoEnabled, Validatable {
 	private final ComboBox comboBoxMunicipality;
 	private final TextField textMunicipality;
 	private final SwitchLayout switchLayoutMunicipality;
@@ -240,11 +239,6 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 	public void validate(List<ValidationMessage> resultList) {
 		// Es ist von dem Formular abhängig, ob ein PlaceField leer sein darf. Daher wird z.B.
 		// bei BirthPage validiert und nicht hier
-	}
-	
-	@Override
-	protected Indicator[] getIndicatingComponents() {
-		return new Indicator[]{comboBoxMunicipality, textMunicipality, comboBoxCountry, textCountry, textForeignTown};
 	}
 	
 	@Override
