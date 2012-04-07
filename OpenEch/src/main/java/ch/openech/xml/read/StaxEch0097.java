@@ -26,7 +26,7 @@ public class StaxEch0097 {
 				
 				if (startName.equals(UID)) organisation.uid = uidStructure(xml);
 				
-				else if (startName.equals(LOCAL_ORGANISATION_ID)) organisation.id = Integer.parseInt(namedOrganisationId(xml).personId);
+				else if (startName.equals(LOCAL_ORGANISATION_ID)) namedOrganisationId(xml, organisation.technicalIds.localId);
 				else if (startName.equals("otherOrganisationId") || startName.equals(_OTHER_ORGANISATION_ID)) organisation.technicalIds.otherId.add(namedOrganisationId(xml));
 				
 				else if (StringUtils.equals(startName, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME, LEGAL_FORM)) organisation.set(startName, token(xml));
@@ -37,9 +37,13 @@ public class StaxEch0097 {
 		}
 	}
 	
-	private static NamedId namedOrganisationId(XMLEventReader xml) throws XMLStreamException {
+	public static NamedId namedOrganisationId(XMLEventReader xml) throws XMLStreamException {
 		NamedId namedId = new NamedId();
-		
+		namedOrganisationId(xml, namedId);
+		return namedId;
+	}
+	
+	public static void namedOrganisationId(XMLEventReader xml, NamedId namedId) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -49,7 +53,7 @@ public class StaxEch0097 {
 				else if (startElement.getName().getLocalPart().equals(ORGANISATION_ID)) namedId.personId = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
-				return namedId;
+				return;
 			} // else skip
 		}
 	}

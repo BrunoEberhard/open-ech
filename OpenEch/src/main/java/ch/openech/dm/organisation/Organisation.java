@@ -17,8 +17,6 @@ public class Organisation {
 
 	public static final Organisation ORGANISATION = Constants.of(Organisation.class);
 	
-	public int id;
-	
 	// Der eCH - Event, mit dem die aktuelle Version erstellt oder verändert wurde
 	public Event event;
 	
