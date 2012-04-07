@@ -34,10 +34,9 @@ public class ContactEntry {
 
 	public boolean isAddressEntry() {
 		// darf nicht isAddress heissen, weil sonst mit dem Attribut address kollidiert!
-		// TODO check für das als JUnit erstellen
 		return "A".equals(typeOfContact);
 	}
-
+	
 	public boolean isEmail() {
 		return "E".equals(typeOfContact);
 	}

@@ -14,6 +14,8 @@ import org.junit.Test;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.tpn.ThirdPartyMove;
+import ch.openech.mj.db.model.AccessorInterface;
+import ch.openech.mj.edit.value.PropertyAccessor;
 import ch.openech.mj.util.FieldUtils;
 import ch.openech.mj.util.GenericUtils;
 
@@ -50,6 +52,7 @@ public class DomainClassTest {
 	private void testField(Field field) {
 		if (FieldUtils.isPublic(field)) {
 			testFieldType(field);
+			testNoMethodsForPublicField(field);
 		}
 	}
 
@@ -93,5 +96,11 @@ public class DomainClassTest {
 		if (Boolean.TYPE == fieldType) return true;
 		if (BigDecimal.class == fieldType) return true;
 		return false;
+	}
+	
+	private void testNoMethodsForPublicField(Field field) {
+		AccessorInterface accessor = PropertyAccessor.getAccessor(field.getDeclaringClass(), field.getName());
+		Assert.assertFalse("A public attribute must not have getter or setter methods: " + field.getDeclaringClass().getName() + "." + field.getName(), //
+				accessor.getClass().getSimpleName().startsWith("Method"));
 	}
 }
