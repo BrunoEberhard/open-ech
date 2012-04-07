@@ -20,7 +20,7 @@ public class Contact {
 	public List<ContactEntry> getAddressList() {
 		List<ContactEntry> result = new ArrayList<ContactEntry>();
 		for (ContactEntry entry : entries) {
-			if (entry.isAddress()) {
+			if (entry.isAddressEntry()) {
 				result.add(entry);
 			}
 		}

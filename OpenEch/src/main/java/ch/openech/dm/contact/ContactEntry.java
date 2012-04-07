@@ -32,7 +32,9 @@ public class ContactEntry {
 	@Date
 	public String dateFrom, dateTo;
 
-	public boolean isAddress() {
+	public boolean isAddressEntry() {
+		// darf nicht isAddress heissen, weil sonst mit dem Attribut address kollidiert!
+		// TODO check für das als JUnit erstellen
 		return "A".equals(typeOfContact);
 	}
 
@@ -56,14 +58,14 @@ public class ContactEntry {
 		s.append("<HTML>");
 		if (typeOfContact != null) {
 			if (categoryCode != null) {
-				if (isAddress()) s.append(EchCodes.addressCategory.getText(categoryCode));
+				if (isAddressEntry()) s.append(EchCodes.addressCategory.getText(categoryCode));
 				if (isPhone()) s.append(EchCodes.phoneCategory.getText(categoryCode));
 				if (isEmail()) s.append(EchCodes.emailCategory.getText(categoryCode));
 				if (isInternet()) s.append(EchCodes.internetCategory.getText(categoryCode));
 			} else if (!StringUtils.isBlank(categoryOther)) {
 				s.append(categoryOther);
 			} else {
-				if (isAddress()) s.append("Adresse");
+				if (isAddressEntry()) s.append("Adresse");
 				if (isPhone()) s.append("Telefon");
 				if (isEmail()) s.append("Email");
 				if (isInternet()) s.append("Internet");
@@ -87,7 +89,7 @@ public class ContactEntry {
 		}
 		s.append("</SMALL>");
 
-		if (isAddress()) {
+		if (isAddressEntry()) {
 			if (address != null) {
 				address.toHtml(s);
 			}
