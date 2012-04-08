@@ -1,14 +1,25 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.CANTON;
+import static ch.openech.dm.XmlConstants.CANTONS;
+import static ch.openech.dm.XmlConstants.CANTON_ABBREVIATION;
+import static ch.openech.dm.XmlConstants.CANTON_LONG_NAME;
+import static ch.openech.dm.XmlConstants.HISTORY_MUNICIPALITY_ID;
+import static ch.openech.dm.XmlConstants.MUNICIPALITIES;
+import static ch.openech.dm.XmlConstants.MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.MUNICIPALITY_ABOLITION_DATE;
+import static ch.openech.dm.XmlConstants.MUNICIPALITY_ID;
+import static ch.openech.dm.XmlConstants.MUNICIPALITY_LONG_NAME;
+import static ch.openech.dm.XmlConstants.MUNICIPALITY_SHORT_NAME;
+import static ch.openech.dm.XmlConstants.NOMENCLATURE;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -23,7 +34,7 @@ import ch.openech.mj.util.StringUtils;
 public class StaxEch0071 {
 
 	private static StaxEch0071 instance;
-	private final Vector<MunicipalityIdentification> municipalityIdentifications = new Vector<MunicipalityIdentification>(10000);
+	private final List<MunicipalityIdentification> municipalityIdentifications = new ArrayList<MunicipalityIdentification>(10000);
 	private final List<Canton> cantons = new ArrayList<Canton>(30);
 	
 	private StaxEch0071() {
@@ -44,11 +55,11 @@ public class StaxEch0071 {
 	}
 	
 	public List<Canton> getCantons() {
-		return cantons;
+		return Collections.unmodifiableList(cantons);
 	}
 	
-	public Vector<MunicipalityIdentification> getMunicipalityIdentifications() {
-		return municipalityIdentifications;
+	public List<MunicipalityIdentification> getMunicipalityIdentifications() {
+		return Collections.unmodifiableList(municipalityIdentifications);
 	}
 
 	private void municipality(XMLEventReader xml) throws XMLStreamException, SQLException {

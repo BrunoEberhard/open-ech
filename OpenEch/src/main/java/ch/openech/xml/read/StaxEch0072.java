@@ -10,7 +10,9 @@ import static ch.openech.xml.read.StaxEch.token;
 
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -23,8 +25,8 @@ import ch.openech.dm.common.CountryIdentification;
 public class StaxEch0072 {
 
 	private static StaxEch0072 instance;
-	private final Vector<CountryIdentification> countryIdentifications = new Vector<CountryIdentification>(300);
-	private final Vector<String> countryIdISO2s = new Vector<String>(300);
+	private final List<CountryIdentification> countryIdentifications = new ArrayList<CountryIdentification>(300);
+	private final List<String> countryIdISO2s = new ArrayList<String>(300);
 
 	private StaxEch0072() {
 		String path = this.getClass().getPackage().getName().replace('.', '/');
@@ -43,18 +45,12 @@ public class StaxEch0072 {
 		return instance;
 	}
 	
-	/**
-	 * Diese Methode gibt einen Vector zurück, weil die JCombobox einen Constructor dazu
-	 * anbietet. Vector implementiert auch List, das sollte also nirgends ein Problem sein.
-	 * 
-	 * @return Einen Vector der Länder. 
-	 */
-	public Vector<CountryIdentification> getCountryIdentifications() {
-		return countryIdentifications;
+	public List<CountryIdentification> getCountryIdentifications() {
+		return Collections.unmodifiableList(countryIdentifications);
 	}
 
-	public Vector<String> getCountryIdISO2s() {
-		return countryIdISO2s;
+	public List<String> getCountryIdISO2s() {
+		return Collections.unmodifiableList(countryIdISO2s);
 	}
 
 	private void country(XMLEventReader xml) throws XMLStreamException, SQLException {
