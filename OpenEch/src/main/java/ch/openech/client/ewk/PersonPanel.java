@@ -83,7 +83,10 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		line(prefix + PERSON_IDENTIFICATION.firstName);
 		line(prefix + PERSON_IDENTIFICATION.sex, prefix + PERSON_IDENTIFICATION.dateOfBirth, vn, technicalId);
 		
-		setRequired(prefix + PERSON_IDENTIFICATION.vn);
+		if (type != PersonPanelType.DISPLAY) {
+			setRequired(prefix + PERSON_IDENTIFICATION.sex);
+			setRequired(prefix + PERSON_IDENTIFICATION.vn);
+		}
 	}
 
 	protected void createData() {
