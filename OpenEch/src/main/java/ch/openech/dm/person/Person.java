@@ -65,10 +65,12 @@ public class Person {
 	
 	@FormatName("language")
 	public String languageOfCorrespondance = "de";
+	@Required
 	public String religion = "000";
 	
 	public final Foreign foreign = new Foreign();
 	
+	@Required
 	public String typeOfResidence = "1"; // residence (hasMainResidence / hasSecondaryResidence / hasOtherResidence)
 	public final Residence residence = new Residence();
 	

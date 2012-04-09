@@ -1,10 +1,5 @@
 package ch.openech.client;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-
 import ch.openech.dm.code.CodeWithOther;
 import ch.openech.mj.db.model.Code;
 import ch.openech.mj.edit.fields.AbstractEditField;
@@ -24,6 +19,7 @@ import ch.openech.mj.util.StringUtils;
  * by data model that it is allowed to enter a free value
  * 
  */
+// TODO implement CodeWithOtherField
 public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 	private final Code code;
 	private CodeWithOther codeWithOther;
@@ -51,39 +47,38 @@ public class CodeWithOtherField extends AbstractEditField<CodeWithOther> {
 		switchLayout.show(comboBox);
 
 		setDefault();
-		createMenu();
 	}
 	
 	@Override
 	public Object getComponent() {
-		return decorateWithContextActions(switchLayout);
+		return switchLayout;
 	}
 
-	private void createMenu() {
-		Action select = new AbstractAction("Auswahl " + code.getDisplayName()) {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				modeChoice();
-			}
-		};
-		addContextAction(select);
-
-		Action unbekannt = new AbstractAction(code.getDisplayName() + " entfernen") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				modeUnknown();
-			}
-		};
-		addContextAction(unbekannt);
-
-		Action freeEntry = new AbstractAction("Freie Eingabe") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				modeFreeEntry();
-			}
-		};
-		addContextAction(freeEntry);
-	}
+//	private void createMenu() {
+//		Action select = new AbstractAction("Auswahl " + code.getDisplayName()) {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				modeChoice();
+//			}
+//		};
+//		addContextAction(select);
+//
+//		Action unbekannt = new AbstractAction(code.getDisplayName() + " entfernen") {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				modeUnknown();
+//			}
+//		};
+//		addContextAction(unbekannt);
+//
+//		Action freeEntry = new AbstractAction("Freie Eingabe") {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				modeFreeEntry();
+//			}
+//		};
+//		addContextAction(freeEntry);
+//	}
 	
 	private void modeChoice() {
 		switchLayout.show(comboBox);

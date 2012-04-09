@@ -1,96 +1,41 @@
 package ch.openech.client.e11;
 
-import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 import ch.openech.dm.common.CountryIdentification;
-import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Nationality;
 import ch.openech.mj.edit.fields.ObjectField;
-import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.SwitchLayout;
-import ch.openech.mj.toolkit.TextField;
+import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.read.StaxEch0072;
 
 public class NationalityField extends ObjectField<Nationality> {
-	private final ComboBox comboBox;
-	private final TextField textField;
-	private final TextField textFieldWithout;
-	private final TextField textFieldUnknown;
+	private static final Logger logger = Logger.getLogger(NationalityField.class.getName());
 	
-	private final SwitchLayout switchLayout;
+	private final ComboBox comboBox;
+	private final List<CountryIdentification> countries;
 	
 	public NationalityField(Object key) {
 		super(key);
 		
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
-		comboBox.setObjects(StaxEch0072.getInstance().getCountryIdentifications());
 		
-		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
-		textFieldWithout = ClientToolkit.getToolkit().createReadOnlyTextField();
-		textFieldWithout.setText("Staatenlos");
-		
-		textFieldUnknown = ClientToolkit.getToolkit().createReadOnlyTextField();
-		textFieldUnknown.setText("Staatsangehörigkeit unbekannt");
-		
-		switchLayout = ClientToolkit.getToolkit().createSwitchLayout();
-		switchLayout.show(comboBox);
-    	
-		addContextAction(new NationalitySelectAction());
-		addContextAction(new NationalityRemoveAction());
-		addContextAction(new NationalityUnknownAction());
-		addContextAction(new ObjectFieldEditor());
+		countries = StaxEch0072.getInstance().getCountryIdentifications();
+		List<String> countryNames = new ArrayList<String>(countries.size() + 2);
+		countryNames.add("Staatsangehörigkeit unbekannt");
+		countryNames.add("Staatenlos");
+		for (CountryIdentification country : countries) {
+			countryNames.add(country.countryNameShort);
+		}
+		comboBox.setObjects(countryNames);
 	}
 	
 	@Override
 	public Object getComponent() {
-		return decorateWithContextActions(switchLayout);
-	}
-
-	private final class NationalitySelectAction extends ResourceAction {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Nationality nationality = getObject();
-			nationality.nationalityStatus = "2";
-			Swiss.createCountryIdentification().copyTo(nationality.nationalityCountry);
-			fireObjectChange();
-			comboBox.requestFocus();
-		}
-	}
-	
-	private final class NationalityRemoveAction extends ResourceAction {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Nationality nationality = getObject();
-			nationality.nationalityStatus = "1";
-			nationality.nationalityCountry.clear();
-			fireObjectChange();		
-		}
-	}
-	
-	private final class NationalityUnknownAction extends ResourceAction {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Nationality nationality = getObject();
-			nationality.nationalityStatus = "0";
-			nationality.nationalityCountry.clear();
-			fireObjectChange();
-		}
-	}
-
-	@Override
-	public FormVisual<Nationality> createFormPanel() {
-		return new NationalityFreePanel();
-	}
-	
-	private String visualizeFreeEntry() {
-		Nationality nationality = getObject();
-		StringBuilder s = new StringBuilder();
-		s.append("Status = "); s.append(nationality.nationalityStatus); s.append(", ");
-		s.append(nationality.nationalityCountry.toStringReadable());
-		return s.toString();
+		return comboBox;
 	}
 	
 	@Override
@@ -103,11 +48,26 @@ public class NationalityField extends ObjectField<Nationality> {
 	}
 	
 	@Override
-	protected void fireChange() {
-		Nationality nationality = getObject();
-		nationality.nationalityStatus = "2";
-		((CountryIdentification) comboBox.getSelectedObject()).copyTo(nationality.nationalityCountry);
-		super.fireChange();
+	public Nationality getObject() {
+		Nationality nationality = super.getObject();
+		nationality.nationalityStatus = "0";
+		nationality.nationalityCountry.clear();
+		
+		String value = (String)comboBox.getSelectedObject();
+		if ("Staatenlos".equals(value)) {
+			nationality.nationalityStatus = "1";
+		} else if ("Staatsangehörigkeit unbekannt".equals(value)) {
+			nationality.nationalityStatus = "0";
+		} else if (value != null) {
+			for (CountryIdentification country : countries) {
+				if (StringUtils.equals(country.countryNameShort, value)) {
+					nationality.nationalityStatus = "2";
+					country.copyTo(nationality.nationalityCountry);
+					break;
+				}
+			}
+		}
+		return nationality;
 	}
 
 	@Override
@@ -115,21 +75,23 @@ public class NationalityField extends ObjectField<Nationality> {
 		String status = nationality.nationalityStatus;
 		if ("2".equals(status)) {
 			CountryIdentification countryIdentification = nationality.nationalityCountry;
-			int index = StaxEch0072.getInstance().getCountryIdentifications().indexOf(countryIdentification);
+			int index = countries.indexOf(countryIdentification);
 			if (index < 0) {
-				switchLayout.show(textField);
-				textField.setText(visualizeFreeEntry());
+				logger.warning("Unknown country");
+				comboBox.setSelectedObject(null);
 			} else {
-				comboBox.setSelectedObject(countryIdentification);
-				switchLayout.show(comboBox);
+				comboBox.setSelectedObject(countryIdentification.countryNameShort);
 			}
 		} else if ("1".equals(status)) {
-			switchLayout.show(textFieldWithout);
+			comboBox.setSelectedObject("Staatenlos");
 		} else if ("0".equals(status)) {
-			switchLayout.show(textFieldUnknown);
+			comboBox.setSelectedObject("Staatsangehörigkeit unbekannt");
+		} else if (status != null) {
+			logger.warning("Unknown nationalityStatus");
+			comboBox.setSelectedObject(null);
 		} else {
-			switchLayout.show(textField);
-			textField.setText(visualizeFreeEntry());
+			logger.info("nationalityStatus is null");
+			comboBox.setSelectedObject(null);
 		}
 	}
 

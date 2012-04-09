@@ -2,7 +2,7 @@ package ch.openech.dm.common;
 
 import ch.openech.mj.db.model.Constants;
 
-public class Canton implements Cloneable {
+public class Canton implements Cloneable, Comparable<Canton> {
 
 	public static final Canton CANTON = Constants.of(Canton.class);
 	
@@ -17,4 +17,9 @@ public class Canton implements Cloneable {
 		return clone;
 	}
 
+	@Override
+	public int compareTo(Canton c) {
+		// Used in ComboBox
+		return cantonAbbreviation.compareTo(c.cantonAbbreviation);
+	}
 }

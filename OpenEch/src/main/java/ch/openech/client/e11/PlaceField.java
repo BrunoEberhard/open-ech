@@ -1,21 +1,15 @@
 package ch.openech.client.e11;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
-import ch.openech.client.e07.MunicipalityFreePanel;
-import ch.openech.client.e08.CountryFreePanel;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
-import ch.openech.dm.common.Swiss;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.edit.fields.ObjectField;
-import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.HorizontalLayout;
@@ -26,6 +20,7 @@ import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
 
 
+// TODO implement PlaceField
 public class PlaceField extends ObjectField<Place> implements DemoEnabled, Validatable {
 	private final ComboBox comboBoxMunicipality;
 	private final TextField textMunicipality;
@@ -60,8 +55,6 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout();
 		switchLayout.show(switchLayoutMunicipality);
-		
-		createMenu();
 	}
 
 	@Override
@@ -87,86 +80,78 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 
 	@Override
 	public Object getComponent() {
-		return decorateWithContextActions(switchLayout);
+		return switchLayout;
 	}
 	
-	private void createMenu() {
-		addContextAction(new PlaceMunicipalitySelectAction());
-		addContextAction(new PlaceMunicipalityFreeEntryEditor());
-		addContextAction(new PlaceCountrySelectAction());
-		addContextAction(new PlaceCountryFreeEntryEditor());
-		addContextAction(new PlaceUnknownAction());
-	}
-
-	private final class PlaceMunicipalitySelectAction extends ResourceAction {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Place place = getObject();
-			Swiss.createCountryIdentification().copyTo(place.countryIdentification);
-			StaxEch0071.getInstance().getMunicipalityIdentifications().get(0).copyTo(place.municipalityIdentification);
-			fireObjectChange();
-			comboBoxMunicipality.requestFocus();
-		}
-	}
-
-	public final class PlaceMunicipalityFreeEntryEditor extends ObjectFieldPartEditor<MunicipalityIdentification> {
-		
-		public PlaceMunicipalityFreeEntryEditor() {
-			super();
-		}
-		
-		@Override
-		public FormVisual<MunicipalityIdentification> createForm() {
-			return new MunicipalityFreePanel();
-		}
-
-		@Override
-		protected MunicipalityIdentification getPart(Place object) {
-			return object.municipalityIdentification;
-		}
-
-		@Override
-		protected void setPart(Place place, MunicipalityIdentification municipalityIdentification) {
-			Swiss.createCountryIdentification().copyTo(place.countryIdentification);
-			place.setMunicipalityIdentification(municipalityIdentification);
-		}
-	}
-
-	private final class PlaceCountrySelectAction extends ResourceAction {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Place place = getObject();
-			StaxEch0072.getInstance().getCountryIdentifications().get(1).copyTo(place.countryIdentification);
-			fireObjectChange();
-			comboBoxCountry.requestFocus();
-		}
-	}
-
-	public final class PlaceCountryFreeEntryEditor extends ObjectFieldPartEditor<CountryIdentification> {
-		
-		@Override
-		public FormVisual<CountryIdentification> createForm() {
-			return new CountryFreePanel();
-		}
-
-		@Override
-		protected CountryIdentification getPart(Place object) {
-			return object.countryIdentification;
-		}
-
-		@Override
-		protected void setPart(Place object, CountryIdentification p) {
-			object.setCountryIdentification(p);
-		}
-	}
-
-	private final class PlaceUnknownAction extends ResourceAction {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			getObject().clear();
-			fireObjectChange();
-		}
-	}
+//	private final class PlaceMunicipalitySelectAction extends ResourceAction {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Place place = getObject();
+//			Swiss.createCountryIdentification().copyTo(place.countryIdentification);
+//			StaxEch0071.getInstance().getMunicipalityIdentifications().get(0).copyTo(place.municipalityIdentification);
+//			fireObjectChange();
+//			comboBoxMunicipality.requestFocus();
+//		}
+//	}
+//
+//	public final class PlaceMunicipalityFreeEntryEditor extends ObjectFieldPartEditor<MunicipalityIdentification> {
+//		
+//		public PlaceMunicipalityFreeEntryEditor() {
+//			super();
+//		}
+//		
+//		@Override
+//		public FormVisual<MunicipalityIdentification> createForm() {
+//			return new MunicipalityFreePanel();
+//		}
+//
+//		@Override
+//		protected MunicipalityIdentification getPart(Place object) {
+//			return object.municipalityIdentification;
+//		}
+//
+//		@Override
+//		protected void setPart(Place place, MunicipalityIdentification municipalityIdentification) {
+//			Swiss.createCountryIdentification().copyTo(place.countryIdentification);
+//			place.setMunicipalityIdentification(municipalityIdentification);
+//		}
+//	}
+//
+//	private final class PlaceCountrySelectAction extends ResourceAction {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Place place = getObject();
+//			StaxEch0072.getInstance().getCountryIdentifications().get(1).copyTo(place.countryIdentification);
+//			fireObjectChange();
+//			comboBoxCountry.requestFocus();
+//		}
+//	}
+//
+//	public final class PlaceCountryFreeEntryEditor extends ObjectFieldPartEditor<CountryIdentification> {
+//		
+//		@Override
+//		public FormVisual<CountryIdentification> createForm() {
+//			return new CountryFreePanel();
+//		}
+//
+//		@Override
+//		protected CountryIdentification getPart(Place object) {
+//			return object.countryIdentification;
+//		}
+//
+//		@Override
+//		protected void setPart(Place object, CountryIdentification p) {
+//			object.setCountryIdentification(p);
+//		}
+//	}
+//
+//	private final class PlaceUnknownAction extends ResourceAction {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			getObject().clear();
+//			fireObjectChange();
+//		}
+//	}
 
 	// 
 
@@ -181,29 +166,27 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 	@Override
 	public void show(Place value) {
 		if (value.isSwiss()) {
+			switchLayout.show(switchLayoutMunicipality);
 			MunicipalityIdentification municipalityIdentification = value.municipalityIdentification;
-			// Zuerst die Selection löschen, damit bei einem nicht vorhandenem Element nicht
-			// einfach die bestehende Selektion bestehen bleibt @see JComboBox.setSelectedItem
 			int index = StaxEch0071.getInstance().getMunicipalityIdentifications().indexOf(municipalityIdentification);
 			if (index >= 0) {
 				comboBoxMunicipality.setSelectedObject(municipalityIdentification);
-				switchLayout.show(switchLayoutMunicipality);
 				switchLayoutMunicipality.show(comboBoxMunicipality);
 			} else {
 				if (!StringUtils.isBlank(municipalityIdentification.municipalityName)) {
 					textMunicipality.setText(municipalityIdentification.municipalityName);
+					switchLayoutMunicipality.show(textMunicipality);
 				} else {
-					textMunicipality.setText("-");
+					comboBoxMunicipality.setSelectedObject(null);
+					switchLayoutMunicipality.show(comboBoxMunicipality);
 				}
-				switchLayout.show(switchLayoutMunicipality);
-				switchLayoutMunicipality.show(textMunicipality);
 			}
 		} else if (value.isForeign()) {
+			switchLayout.show(horizontalLayoutForeign);
 			CountryIdentification countryIdentification = value.countryIdentification;
 			int index = StaxEch0072.getInstance().getCountryIdentifications().indexOf(countryIdentification);
 			if (index >= 0) {
 				comboBoxCountry.setSelectedObject(countryIdentification);
-				switchLayout.show(horizontalLayoutForeign);
 				switchLayoutCountry.show(comboBoxCountry);
 			} else {
 				textCountry.setText(countryIdentification.countryNameShort); // TODO
@@ -211,9 +194,8 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 				switchLayoutCountry.show(textCountry);
 			}
 		} else {
-			textMunicipality.setText("placeOfBirth".equals(getName()) ? "Unbekannt" : "-");
 			switchLayout.show(switchLayoutMunicipality);
-			switchLayoutMunicipality.show(textMunicipality);
+			switchLayoutMunicipality.show(comboBoxMunicipality);
 		}
 
 		textForeignTown.setText(value.foreignTown);
@@ -239,12 +221,6 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 	public void validate(List<ValidationMessage> resultList) {
 		// Es ist von dem Formular abhängig, ob ein PlaceField leer sein darf. Daher wird z.B.
 		// bei BirthPage validiert und nicht hier
-	}
-	
-	@Override
-	public FormVisual<Place> createFormPanel() {
-		// unused
-		return null;
 	}
 
 }

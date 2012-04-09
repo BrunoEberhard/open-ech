@@ -45,6 +45,8 @@ public class StaxEch0071 {
 		} catch (Exception x) {
 			throw new RuntimeException("Read of cantons and municipalities failed", x);
 		}
+		Collections.sort(cantons);
+		Collections.sort(municipalityIdentifications);
 	}
 
 	public static synchronized StaxEch0071 getInstance() {

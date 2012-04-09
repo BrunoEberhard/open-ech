@@ -2,7 +2,7 @@ package ch.openech.vaadin;
 
 import java.util.ResourceBundle;
 
-import ch.openech.client.ewk.ApplicationConfigOpenEch;
+import ch.openech.client.ApplicationConfigOpenEch;
 import ch.openech.dm.EchFormats;
 import ch.openech.mj.application.ApplicationConfig;
 import ch.openech.mj.resources.Resources;

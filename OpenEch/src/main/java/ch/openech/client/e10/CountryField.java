@@ -1,26 +1,24 @@
 package ch.openech.client.e10;
 
-import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import ch.openech.dm.common.CountryIdentification;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
-import ch.openech.mj.toolkit.SwitchLayout;
-import ch.openech.mj.toolkit.TextField;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.read.StaxEch0072;
 
 public class CountryField extends AbstractEditField<String> implements ChangeListener {
-
+	private static final Logger logger = Logger.getLogger(CountryField.class.getName());
 	private final ComboBox comboBox;
-	private final TextField textField;
-	private final SwitchLayout switchLayout;
 	
+	private final List<CountryIdentification> countries;
+	private final List<String> countryNames;
 	private ZipTownField connectedZipTownField;
 
 	public CountryField() {
@@ -31,42 +29,21 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 		super(key, true);
 
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
-		comboBox.setObjects(StaxEch0072.getInstance().getCountryIdISO2s());
-		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
-		
-		switchLayout = ClientToolkit.getToolkit().createSwitchLayout(); // comboBox, textField
-		switchLayout.show(comboBox);
-		
-		// editable 
-		
-		createMenu();
+		countries = StaxEch0072.getInstance().getCountryIdentifications();
+		countryNames = new ArrayList<String>();
+		for (CountryIdentification country : countries) {
+			if (country.countryIdISO2 != null) {
+				countryNames.add(country.countryIdISO2);
+			}
+		}
+		comboBox.setObjects(countryNames);
 	}
 	
 		@Override
 	public Object getComponent() {
-		return decorateWithContextActions(switchLayout);
+		return comboBox;
 	}
 
-	private void createMenu() {
-		Action select = new AbstractAction("Auswahl Land") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				switchLayout.show(comboBox);
-				comboBox.requestFocus();
-			}
-        };
-        addContextAction(select);
-
-        Action freeEntry = new AbstractAction("Freie Eingabe") {
-			@Override
-			public void actionPerformed(ActionEvent e) {				
-				switchLayout.show(textField);
-				textField.setText(null);
-				comboBox.requestFocus();
-			}
-        };
-        addContextAction(freeEntry);
-	}
 	
 	public void setConnectedZipTownField(ZipTownField connectedZipTownField) {
 		this.connectedZipTownField = connectedZipTownField;
@@ -88,24 +65,16 @@ public class CountryField extends AbstractEditField<String> implements ChangeLis
 	
 	@Override
 	public String getObject() {
-		if (switchLayout.getShownComponent() == textField) {
-			if (StringUtils.isBlank(textField.getText())) {
-				return null;
-			} else {
-				return textField.getText();
-			}
-		} else {
-			return (String) comboBox.getSelectedObject();
-		} 
+		return (String) comboBox.getSelectedObject();
 	}
 
 	@Override
 	public void setObject(String value) {
-		if (StringUtils.isBlank(value)) {
-			switchLayout.show(comboBox);
-			comboBox.setSelectedObject("CH");
+		int index = countryNames.indexOf(value);
+		if (index < 0) {
+			logger.warning("Unknown country");
+			comboBox.setSelectedObject(null);
 		} else {
-			switchLayout.show(comboBox);
 			comboBox.setSelectedObject(value);
 		}
 	}

@@ -20,6 +20,7 @@ import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.IntegerUtils;
 import ch.openech.util.PlzImport;
 
+// TODO implement ZipTownField
 public class ZipTownField extends ObjectField<ZipTown> implements DemoEnabled {
 	private ComboBox comboBox;
 	private HorizontalLayout horizontalLayoutSwiss;
@@ -56,35 +57,14 @@ public class ZipTownField extends ObjectField<ZipTown> implements DemoEnabled {
 		
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout();
 		switchLayout.show(comboBox);
-		
-		createMenu();
 	}
 	
 	@Override
 	public Object getComponent() {
-		return decorateWithContextActions(switchLayout);
+		return switchLayout;
 	}
 
-	private void createMenu() {
-        select = new AbstractAction("Auswahl CH Postleitzahl") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				modeSelectCH();
-			}
-        };
-        addContextAction(select);
 
-        addContextAction(new ObjectFieldEditor());
-
-        foreignZip = new AbstractAction("Freie Eingabe ausländischer Ort") {
-        	@Override
-			public void actionPerformed(ActionEvent e) {				
-        		modeFreeForeign();
-			}
-        };
-        addContextAction(foreignZip);
-	}
-	
 	public void modeSelectCH() {
 		switchLayout.show(comboBox);
 	}
@@ -183,11 +163,6 @@ public class ZipTownField extends ObjectField<ZipTown> implements DemoEnabled {
 		zipTown.swissZipCodeId = "" + plz.onrp;
 		
 		setObject(zipTown);
-	}
-
-	@Override
-	public FormVisual<ZipTown> createFormPanel() {
-		return new ZipTownFreePanel();
 	}
 
 }

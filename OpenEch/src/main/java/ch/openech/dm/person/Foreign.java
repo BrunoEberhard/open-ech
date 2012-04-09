@@ -22,7 +22,7 @@ public class Foreign {
 	public String toHtml() {
 		// Der residencePermitDetailed - Code hat mehr Möglichkeiten als
 		// der neuere "normale" Code, daher wird zum auflösen der ältere verwendet
-		String codeText = EchCodes.residencePermitDetailed.getText(residencePermit);
+		String codeText = EchCodes.residencePermit.getText(residencePermit);
 		
 		String s = "<HTML>";
 		if (codeText != null) {

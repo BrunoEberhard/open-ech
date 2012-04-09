@@ -34,7 +34,7 @@ public class CountryZipTownField extends AbstractEditField<CountryZipTown> imple
 	
 	@Override
 	public Object getComponent() {
-		return decorateWithContextActions(horizontalLayout);
+		return horizontalLayout;
 	}
 	
 	@Override
