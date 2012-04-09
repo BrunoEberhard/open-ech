@@ -1,4 +1,4 @@
-package ch.openech.client;
+package ch.openech.client.preferences;
 
 import ch.openech.mj.db.model.Constants;
 

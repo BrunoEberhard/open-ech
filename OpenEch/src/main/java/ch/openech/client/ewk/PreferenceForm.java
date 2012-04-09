@@ -1,9 +1,9 @@
 package ch.openech.client.ewk;
 
-import static ch.openech.client.ewk.PreferenceData.PreferencesDefaultsData.PREFERENCES_DEFAULTS_DATA;
 import static ch.openech.client.ewk.PreferenceData.PreferencesSedexData.PREFERENCES_SEDEX_DATA;
 import ch.openech.client.e07.SwissMunicipalityField;
 import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.preferences.PreferencesDefaultsData;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormAdapter;
 import ch.openech.mj.edit.form.FormVisual;
@@ -33,14 +33,14 @@ public class PreferenceForm extends TabbedForm<PreferenceData> {
 	}
 
 
-	private FormVisual<PreferenceData.PreferencesDefaultsData> createDefaultsTab() {
-		AbstractFormVisual<PreferenceData.PreferencesDefaultsData> panelPreferences = new EchFormPanel<PreferenceData.PreferencesDefaultsData>(PreferenceData.PreferencesDefaultsData.class);
+	private FormVisual<PreferencesDefaultsData> createDefaultsTab() {
+		AbstractFormVisual<PreferencesDefaultsData> panelPreferences = new EchFormPanel<PreferencesDefaultsData>(PreferencesDefaultsData.class);
 		
-		panelPreferences.line(new SwissMunicipalityField(PREFERENCES_DEFAULTS_DATA.residence, false));
-		panelPreferences.line(PREFERENCES_DEFAULTS_DATA.zipTown);
-		panelPreferences.line(PREFERENCES_DEFAULTS_DATA.cantonAbbreviation);
-		panelPreferences.line(PREFERENCES_DEFAULTS_DATA.language);
-		panelPreferences.line(PREFERENCES_DEFAULTS_DATA.religion);
+		panelPreferences.line(new SwissMunicipalityField(PreferencesDefaultsData.PREFERENCES_DEFAULTS_DATA.residence, false));
+		panelPreferences.line(PreferencesDefaultsData.PREFERENCES_DEFAULTS_DATA.zipTown);
+		panelPreferences.line(PreferencesDefaultsData.PREFERENCES_DEFAULTS_DATA.cantonAbbreviation);
+		panelPreferences.line(PreferencesDefaultsData.PREFERENCES_DEFAULTS_DATA.language);
+		panelPreferences.line(PreferencesDefaultsData.PREFERENCES_DEFAULTS_DATA.religion);
 
 		return panelPreferences;
 	}

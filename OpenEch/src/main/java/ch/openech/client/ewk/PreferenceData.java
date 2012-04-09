@@ -1,7 +1,6 @@
 package ch.openech.client.ewk;
 
-import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.common.ZipTown;
+import ch.openech.client.preferences.PreferencesDefaultsData;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.swing.PreferencesHelper;
 
@@ -29,16 +28,6 @@ public class PreferenceData {
 			generateData = true;
 			showXml = true;
 		}
-	}
-	
-	public static class PreferencesDefaultsData {
-		public static final PreferencesDefaultsData PREFERENCES_DEFAULTS_DATA = Constants.of(PreferencesDefaultsData.class);
-		
-		public final MunicipalityIdentification residence = new MunicipalityIdentification();
-		public final ZipTown zipTown = new ZipTown();
-		public String cantonAbbreviation;
-		public String language;
-		public String religion;
 	}
 	
 	public static class PreferencesSedexData {

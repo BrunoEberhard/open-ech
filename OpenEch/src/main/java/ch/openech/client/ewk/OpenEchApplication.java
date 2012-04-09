@@ -23,7 +23,7 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JOptionPane;
 
-import ch.openech.mj.application.ApplicationConfig;
+import ch.openech.client.ApplicationConfigOpenEch;
 import ch.openech.mj.db.DerbyOptionsDialogController;
 import ch.openech.mj.swing.FrameManager;
 import ch.openech.mj.swing.GraphicalLogHandler;
@@ -34,15 +34,11 @@ import ch.openech.server.EchServer;
 
 public class OpenEchApplication extends SwingApplication {
 	
-	public static enum ApplicationType { EWK, ORG, TPN; }
-	
-	private final ApplicationType application;
 	private final String[] args;
 	private GraphicalLogHandler graphicalLogHandler;
 	
 	public OpenEchApplication(String... args) {
 		this.args = args;
-		application = ApplicationType.valueOf(System.getProperty("application", "EWK"));
 		Locale.setDefault(Locale.GERMAN);
 	}
 	
