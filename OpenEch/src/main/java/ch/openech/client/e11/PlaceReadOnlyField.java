@@ -10,32 +10,36 @@ import ch.openech.mj.toolkit.TextField;
 
 
 public class PlaceReadOnlyField implements FormField<Place>, IComponentDelegate {
-	private final TextField text;
+	private final TextField textField;
 	private final String name;
 	
 	public PlaceReadOnlyField(Object key) {
 		this.name = Constants.getConstant(key);
-		text = ClientToolkit.getToolkit().createReadOnlyTextField();
+		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 	}
 
 	@Override
 	public IComponent getComponent() {
-		return text;
+		return textField;
 	}
 
 	@Override
 	public void setObject(Place value) {
 		if (value.isSwiss()) {
-			text.setText(value.municipalityIdentification.toString());
+			textField.setText(value.municipalityIdentification.toString());
 		} else if (value.isForeign()) {
-			text.setText(value.countryIdentification.toString());
+			String text = value.countryIdentification.toString();
+			if (value.foreignTown != null) {
+				text = text + ", " + value.foreignTown;
+			}
+			textField.setText(text);
 		} else {
-			text.setText("-");
+			textField.setText("-");
 		}
 	}
 	
 	public void setEnabled(boolean enabled) {
-		text.setEnabled(enabled);
+		textField.setEnabled(enabled);
 	}
 
 	@Override
