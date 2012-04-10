@@ -1,19 +1,12 @@
 package ch.openech.client.e10;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ch.openech.dm.common.Address;
-import ch.openech.dm.common.CountryIdentification;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.TextField;
-import ch.openech.xml.read.StaxEch0072;
 
 public class ChIso2Field extends AbstractEditField<String> implements ChangeListener {
 	private final TextField textField;
