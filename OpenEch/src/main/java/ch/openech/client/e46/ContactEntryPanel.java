@@ -6,24 +6,31 @@ import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.mj.db.model.Code;
-import ch.openech.mj.edit.fields.DateField;
+import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.FormField;
+import ch.openech.mj.edit.fields.TextEditField;
+import ch.openech.mj.edit.form.DependingOnFieldAbove;
+import ch.openech.mj.toolkit.TextField;
 
 // setTitle("Kontakt");
 public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
 	
 	private final String type;
-	private final boolean person;
 	private AddressField addressField;
 
 	public ContactEntryPanel(String type, boolean person) {
-		super();
+		super(2);
 		this.type = type;
-		this.person = person;
 
-		addCategoryLine(type);
-		addDateLines();
-		addValueLine();
+		line(ContactEntry.CONTACT_ENTRY.categoryCode);
+		line(new OtherCategoryField(ContactEntry.CONTACT_ENTRY.categoryOther));
+		if ("A".equals(type)) {
+			addressField = new AddressField("address", false, person, !person);
+			area(addressField);
+		} else {
+			line(ContactEntry.CONTACT_ENTRY.value);
+		}
+		line(ContactEntry.CONTACT_ENTRY.dateFrom, ContactEntry.CONTACT_ENTRY.dateTo);
 	}
 	
 	@Override
@@ -41,25 +48,6 @@ public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
 			return super.createField(keyObject);
 		}
 	}
-
-	protected void addCategoryLine(String type) {
-		line(ContactEntry.CONTACT_ENTRY.categoryCode);
-		line(ContactEntry.CONTACT_ENTRY.categoryOther);
-	}
-	
-	protected void addDateLines() {
-		line(new DateField(ContactEntry.CONTACT_ENTRY.dateFrom, DateField.NOT_REQUIRED));
-		line(new DateField(ContactEntry.CONTACT_ENTRY.dateTo, DateField.NOT_REQUIRED));
-	}
-	
-	protected void addValueLine() {
-		if ("A".equals(type)) {
-			addressField = new AddressField("address", false, person, !person);
-			area(addressField);
-		} else {
-			line(ContactEntry.CONTACT_ENTRY.value);
-		}
-	}
 	
 	@Override
 	public void fillWithDemoData() {
@@ -67,5 +55,27 @@ public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
 			addressField.setObject(DataGenerator.address(true, true, false));
 		}
 		super.fillWithDemoData();
+	}
+	
+	private static class OtherCategoryField extends TextEditField implements DependingOnFieldAbove<String> {
+
+		public OtherCategoryField(String name) {
+			super(name);
+		}
+
+		@Override
+		public String getNameOfDependedField() {
+			return ContactEntry.CONTACT_ENTRY.categoryCode;
+		}
+
+		@Override
+		public void setDependedField(EditField<String> field) {
+			boolean enabled = field.getObject() == null;
+			if (!enabled) {
+				setObject(null);
+			}
+			((TextField) getComponent()).setEnabled(enabled);
+		}
+		
 	}
 }
