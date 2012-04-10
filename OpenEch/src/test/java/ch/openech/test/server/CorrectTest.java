@@ -94,7 +94,7 @@ public class CorrectTest extends AbstractServerTest {
 		person.contactPerson.address = new Address();
 		person.contactPerson.address.lastName = "Kontaktnachname";
 		person.contactPerson.address.street = "Kontaktstrasse";
-		person.contactPerson.address.countryZipTown.town = "Kontaktort";
+		person.contactPerson.address.town = "Kontaktort";
 		
 		process(writer().correctContact(person));
 		
@@ -103,7 +103,7 @@ public class CorrectTest extends AbstractServerTest {
 		Assert.assertNotNull(person.contactPerson.address);
 		Assert.assertEquals("Kontaktnachname", person.contactPerson.address.lastName);
 		Assert.assertEquals("Kontaktstrasse", person.contactPerson.address.street);
-		Assert.assertEquals("Kontaktort", person.contactPerson.address.countryZipTown.town);
+		Assert.assertEquals("Kontaktort", person.contactPerson.address.town);
 	}
 
 	@Test

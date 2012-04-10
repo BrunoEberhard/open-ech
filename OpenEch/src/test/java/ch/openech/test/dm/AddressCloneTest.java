@@ -12,7 +12,7 @@ public class AddressCloneTest {
 	public void addressClone() {
 		Address address = new Address();
 		address.addressLine1 = "line1";
-		address.countryZipTown.country = "DE";
+		address.country = "DE";
 		
 		Address clone = address.clone();
 
@@ -24,8 +24,8 @@ public class AddressCloneTest {
 		Assert.assertEquals("line1", clone.addressLine1);
 
 		// Dasselbe bei untergeordneten Feldern
-		Assert.assertEquals("DE", clone.countryZipTown.country);
+		Assert.assertEquals("DE", clone.country);
 		address.addressLine1 = "DEChanged";
-		Assert.assertEquals("DE", clone.countryZipTown.country);
+		Assert.assertEquals("DE", clone.country);
 	}
 }

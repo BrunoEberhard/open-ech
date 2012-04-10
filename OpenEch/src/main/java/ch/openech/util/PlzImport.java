@@ -1,9 +1,11 @@
 package ch.openech.util;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.Vector;
 
 import ch.openech.dm.common.Plz;
 
@@ -11,7 +13,7 @@ public class PlzImport {
 	
 	private static PlzImport instance;
 	
-	private final Vector<Plz> zipCodes = new Vector<Plz>(5500);
+	private final List<Plz> zipCodes = new ArrayList<Plz>(5500);
 	
 	private PlzImport() {
 		String path = this.getClass().getPackage().getName().replace('.', '/');
@@ -33,8 +35,8 @@ public class PlzImport {
 	}
 	
 	
-	public Vector<Plz> getZipCodes() {
-		return zipCodes;
+	public List<Plz> getZipCodes() {
+		return Collections.unmodifiableList(zipCodes);
 	}
 
 	private void process(InputStream inputStream) throws Exception {
@@ -63,6 +65,7 @@ public class PlzImport {
 				break;
 			}
 		}
+		Collections.sort(zipCodes);
 	}
 	
 	public static void main(String... args){

@@ -261,7 +261,7 @@ public class Person {
 
 	public String getTown() {
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
-			return dwellingAddress.mailAddress.countryZipTown.town;
+			return dwellingAddress.mailAddress.town;
 		} else {
 			return null;
 		}

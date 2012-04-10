@@ -30,10 +30,10 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals("1", person.dwellingAddress.mailAddress.houseNumber.houseNumber);
 		Assert.assertEquals("2", person.dwellingAddress.mailAddress.houseNumber.dwellingNumber);
 		Assert.assertEquals("Gebiet", person.dwellingAddress.mailAddress.locality);
-		Assert.assertEquals("Herdern", person.dwellingAddress.mailAddress.countryZipTown.town);
-		Assert.assertEquals("8535", person.dwellingAddress.mailAddress.countryZipTown.swissZipCode);
-		Assert.assertEquals("4837", person.dwellingAddress.mailAddress.countryZipTown.swissZipCodeId);
-		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.countryZipTown.country);
+		Assert.assertEquals("Herdern", person.dwellingAddress.mailAddress.town);
+		Assert.assertEquals("8535", person.dwellingAddress.mailAddress.zip.swissZipCode);
+		Assert.assertEquals("4837", person.dwellingAddress.mailAddress.zip.swissZipCodeId);
+		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
 		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
 		Assert.assertEquals("2010-08-30", person.dwellingAddress.movingDate);
@@ -106,10 +106,10 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals("1234", person.contactPerson.address.postOfficeBoxNumber);
 		Assert.assertEquals("POSTFACH", person.contactPerson.address.postOfficeBoxText);
 		Assert.assertEquals("Gebiet", person.contactPerson.address.locality);
-		Assert.assertEquals("Vessy", person.contactPerson.address.countryZipTown.town);
-		Assert.assertEquals("1234", person.contactPerson.address.countryZipTown.swissZipCode);
-		Assert.assertEquals("452", person.contactPerson.address.countryZipTown.swissZipCodeId);
-		Assert.assertEquals("CH", person.contactPerson.address.countryZipTown.country);
+		Assert.assertEquals("Vessy", person.contactPerson.address.town);
+		Assert.assertEquals("1234", person.contactPerson.address.zip.swissZipCode);
+		Assert.assertEquals("452", person.contactPerson.address.zip.swissZipCodeId);
+		Assert.assertEquals("CH", person.contactPerson.address.country);
 	}
 	
 }

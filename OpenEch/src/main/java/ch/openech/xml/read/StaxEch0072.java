@@ -26,6 +26,7 @@ public class StaxEch0072 {
 
 	private static StaxEch0072 instance;
 	private final List<CountryIdentification> countryIdentifications = new ArrayList<CountryIdentification>(300);
+	private final List<String> countryNames = new ArrayList<String>(300);
 	private final List<String> countryIdISO2s = new ArrayList<String>(300);
 
 	private StaxEch0072() {
@@ -49,6 +50,10 @@ public class StaxEch0072 {
 		return Collections.unmodifiableList(countryIdentifications);
 	}
 
+	public List<String> getCountryNames() {
+		return Collections.unmodifiableList(countryNames);
+	}
+	
 	public List<String> getCountryIdISO2s() {
 		return Collections.unmodifiableList(countryIdISO2s);
 	}
@@ -67,10 +72,14 @@ public class StaxEch0072 {
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				countryIdentifications.add(countryIdentification);
-				countryIdISO2s.add(countryIdentification.countryIdISO2);
+				countryNames.add(countryIdentification.countryNameShort);
+				if (countryIdentification.countryIdISO2 != null) {
+					countryIdISO2s.add(countryIdentification.countryIdISO2);
+				}
 				break;
 			}  // else skip
 		}
+		Collections.sort(countryIdISO2s);
 	}
 	
 	private void countries(XMLEventReader xml) throws XMLStreamException, SQLException {

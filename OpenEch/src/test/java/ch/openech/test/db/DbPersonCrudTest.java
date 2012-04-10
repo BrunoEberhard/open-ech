@@ -27,7 +27,7 @@ public class DbPersonCrudTest {
 		address.street = "Grütstrasse";
 		address.mrMrs = "1";
 		address.houseNumber.houseNumber = "10";
-		address.countryZipTown.country = "CH";
+		address.country = "CH";
 		
 		int id = addressTable.getOrCreateId(address);
 		persistence.commit();
@@ -37,7 +37,7 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(address.mrMrs, readAddress.mrMrs);
 		Assert.assertEquals(address.street, readAddress.street);
 		Assert.assertEquals(address.houseNumber.houseNumber, readAddress.houseNumber.houseNumber);
-		Assert.assertEquals(address.countryZipTown.country, readAddress.countryZipTown.country);
+		Assert.assertEquals(address.country, readAddress.country);
 	
 		int id2 = addressTable.getOrCreateId(address);
 		persistence.commit();

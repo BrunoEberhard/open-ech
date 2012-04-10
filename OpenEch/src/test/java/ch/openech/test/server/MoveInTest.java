@@ -40,9 +40,9 @@ public class MoveInTest extends AbstractServerTest {
 		Assert.assertEquals("2009-04-23", person.arrivalDate);
 		Assert.assertEquals("unknown", person.comesFrom.countryIdentification.countryNameShort);
 		Assert.assertEquals("Muristrasse 53", person.dwellingAddress.mailAddress.street);
-		Assert.assertEquals("Bern", person.dwellingAddress.mailAddress.countryZipTown.town);
-		Assert.assertEquals("3006", person.dwellingAddress.mailAddress.countryZipTown.swissZipCode);
-		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.countryZipTown.country);
+		Assert.assertEquals("Bern", person.dwellingAddress.mailAddress.town);
+		Assert.assertEquals("3006", person.dwellingAddress.mailAddress.zip.swissZipCode);
+		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
 		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
 	}

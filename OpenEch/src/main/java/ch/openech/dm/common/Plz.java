@@ -31,8 +31,10 @@ public class Plz implements Comparable<Plz>, Serializable, Cloneable {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(postleitzahl);
-		s.append(' ');
-		s.append(ortsbezeichnung);
+		if (zusatzziffern != 0) {
+			s.append(' ');
+			s.append(StringUtils.padLeft("" + zusatzziffern, 2, '0'));
+		}
 		return s.toString();
 	}
 	

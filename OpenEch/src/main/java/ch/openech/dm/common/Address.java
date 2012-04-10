@@ -31,7 +31,9 @@ public class Address {
 	public String postOfficeBoxNumber;
 	public String postOfficeBoxText;
 	public String locality;
-	public final CountryZipTown countryZipTown = new CountryZipTown();
+	public String country = "CH";
+	public final Zip zip = new Zip();
+	public String town;
 	
 	@Override
 	public Address clone() {
@@ -45,7 +47,7 @@ public class Address {
 	}
 	
 	public boolean isEmpty() {
-		return StringUtils.isBlank(street) || StringUtils.isBlank(countryZipTown.town);
+		return StringUtils.isBlank(street) || StringUtils.isBlank(town);
  	}
 	
 	public boolean isOrganisation() {
@@ -76,7 +78,7 @@ public class Address {
 		StringUtils.appendLine(s, addressLine2);
 		StringUtils.appendLine(s, street, houseNumber.concatNumbers());
 		StringUtils.appendLine(s, postOfficeBoxText, postOfficeBoxNumber);
-		countryZipTown.appendToHtml(s);
+		StringUtils.appendLine(s, zip.display(), town);
 		StringUtils.appendLine(s, locality);
 	}
 

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
+import ch.openech.client.preferences.PreferenceData;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;

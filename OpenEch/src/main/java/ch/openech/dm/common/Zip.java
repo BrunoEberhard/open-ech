@@ -3,24 +3,22 @@ package ch.openech.dm.common;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.util.StringUtils;
 
-public class ZipTown {
+public class Zip {
 
-	public static final ZipTown ZIP_TOWN = Constants.of(ZipTown.class);
+	public static final Zip ZIP_TOWN = Constants.of(Zip.class);
 	
 	public String foreignZipCode;
 	public String swissZipCode; // 0 - 9999
 	public String swissZipCodeAddOn;
 	public String swissZipCodeId; // int
-	public String town;
 	
 	@Override
-	protected ZipTown clone() {
-		ZipTown clone = new ZipTown();
+	protected Zip clone() {
+		Zip clone = new Zip();
 		clone.foreignZipCode = this.foreignZipCode;
 		clone.swissZipCode = this.swissZipCode;
 		clone.swissZipCodeAddOn = this.swissZipCodeAddOn;
 		clone.swissZipCodeId = this.swissZipCodeId;
-		clone.town = this.town;
 		return clone;
 	}
 
@@ -29,11 +27,10 @@ public class ZipTown {
 		swissZipCode = Integer.toString(plz.postleitzahl);
 		swissZipCodeAddOn = Integer.toString(plz.zusatzziffern);
 		swissZipCodeId = Integer.toString(plz.onrp);
-		town = plz.ortsbezeichnung;
 	}
 
 	public boolean isEmpty() {
-		return StringUtils.isBlank(town);
+		return StringUtils.isBlank(swissZipCode) && StringUtils.isBlank(foreignZipCode);
 	}
 	
 	public boolean isSwiss() {
@@ -43,7 +40,20 @@ public class ZipTown {
 	public void clear() {
 		foreignZipCode = null;
 		swissZipCode = swissZipCodeAddOn = swissZipCodeId = null;
-		town = null;
+	}
+	
+	public String display() {
+		if (!StringUtils.isBlank(swissZipCode)) {
+			if (!StringUtils.isBlank(swissZipCodeAddOn)) {
+				return swissZipCode + " " + swissZipCodeAddOn;
+			} else {
+				return swissZipCode;
+			}
+		 } else if (!StringUtils.isBlank(foreignZipCode)) {
+			 return foreignZipCode;
+		 } else {
+			 return "";
+		 }
 	}
 	
 }

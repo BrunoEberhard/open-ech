@@ -49,8 +49,8 @@ public class ContactXmlTest {
 		address1.addressLine2 = "Addresszeile 2";
 		address1.street = "Teststrasse";
 		address1.houseNumber.houseNumber = "42";
-		address1.countryZipTown.town = "Jona";
-		address1.countryZipTown.swissZipCode = "8645";
+		address1.town = "Jona";
+		address1.zip.swissZipCode = "8645";
 		addressEntry1.address = address1;
 		contact.entries.add(addressEntry1);
 		

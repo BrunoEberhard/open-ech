@@ -4,12 +4,13 @@ import java.util.List;
 
 import ch.openech.client.e07.CantonField;
 import ch.openech.client.e07.SwissMunicipalityField;
+import ch.openech.client.e08.CountryField;
 import ch.openech.client.e08.CountryReadOnlyField;
 import ch.openech.client.e10.AddressField;
-import ch.openech.client.e10.CountryField;
-import ch.openech.client.e10.CountryZipTownField;
+import ch.openech.client.e10.CountryIso2Field;
 import ch.openech.client.e10.HouseNumberField;
-import ch.openech.client.e10.ZipTownField;
+import ch.openech.client.e10.TownField;
+import ch.openech.client.e10.ZipField;
 import ch.openech.client.e101.PersonExtendedInformationField;
 import ch.openech.client.e11.ContactPersonField;
 import ch.openech.client.e11.DwellingAddressField;
@@ -28,12 +29,11 @@ import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
-import ch.openech.dm.common.CountryZipTown;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.HouseNumber;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
-import ch.openech.dm.common.ZipTown;
+import ch.openech.dm.common.Zip;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Foreign;
@@ -119,6 +119,12 @@ public class EchFormPanel<T> extends AbstractFormVisual<T> {
 			}
 		}
 		
+		if (Address.ADDRESS.country.equals(name)) {
+			return new CountryIso2Field(name);
+		} else if (Address.ADDRESS.town.equals(name)) {
+			return new TownField(name);
+		}
+		
 		return super.createStringField(name, format);
 	}
 
@@ -151,12 +157,10 @@ public class EchFormPanel<T> extends AbstractFormVisual<T> {
 			return new ContactField(name, editable);
 		} else if (type == HouseNumber.class) {
 			return new HouseNumberField(name);
-		} else if (type == CountryZipTown.class) {
-			return new CountryZipTownField(name);
+		} else if (type == Zip.class) {
+			return new ZipField(name);
 		} else if (type == CountryIdentification.class) {
 			return editable ? new CountryField(name) : new CountryReadOnlyField(name);
-		} else if (type == ZipTown.class) {
-			return new ZipTownField();
 		} else if (type == MunicipalityIdentification.class) {
 			return new SwissMunicipalityField(name, false);
 		} else if (type == List.class) {

@@ -197,15 +197,17 @@ public class DataGenerator {
 			List<Plz> plzList = PlzImport.getInstance().getZipCodes();
 			int pos = (int) (Math.random() * plzList.size());
 			Plz plz = plzList.get(pos);
-			address.countryZipTown.setPlz(plz);
+			address.country = "CH";
+			address.zip.setPlz(plz);
+			address.town = plz.ortsbezeichnung;
 		} else {
 			if (Math.random() < .5) {
 				address.postOfficeBoxText = "POSTFACH";
 				address.postOfficeBoxNumber = "" + (int)(1000 + Math.random() * 9000);
 			}
-			address.countryZipTown.foreignZipCode = "" + ((int)(Math.random() * 90000 + 10000));
-			address.countryZipTown.town = NameGenerator.officialName() + "Town";
-			address.countryZipTown.country = "DE";
+			address.zip.foreignZipCode = "" + ((int)(Math.random() * 90000 + 10000));
+			address.town = NameGenerator.officialName() + "Town";
+			address.country = "DE";
 		}
 		
 		return address;
