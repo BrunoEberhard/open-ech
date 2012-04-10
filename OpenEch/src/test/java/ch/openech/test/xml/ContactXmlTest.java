@@ -27,13 +27,13 @@ public class ContactXmlTest {
 		mail1.typeOfContact = "E";
 		mail1.dateFrom = DateUtils.parseCH("1.2.2003");
 		mail1.dateTo = DateUtils.parseCH("4.5.2006");
-		mail1.category.code = "2";
+		mail1.categoryCode = "2";
 		mail1.value = "mymail@myhost.com";
 		contact.entries.add(mail1);
 		
 		ContactEntry mail2 = new ContactEntry();
 		mail2.typeOfContact = "E";
-		mail2.category.other = "OtherMail";
+		mail2.categoryOther = "OtherMail";
 		mail2.value = "otherMail@myhost.com";
 		contact.entries.add(mail2);
 
@@ -41,7 +41,7 @@ public class ContactXmlTest {
 		addressEntry1.typeOfContact = "A";
 		addressEntry1.dateFrom = DateUtils.parseCH("1.2.2003");
 		addressEntry1.dateTo = DateUtils.parseCH("4.5.2006");
-		addressEntry1.category.code = "1";
+		addressEntry1.categoryCode = "1";
 		Address address1 = new Address();
 		address1.firstName = "Vortester";
 		address1.lastName = "Nachtestr";
@@ -73,16 +73,16 @@ public class ContactXmlTest {
 		ContactEntry mail1Out = contactOut.getEmailList().get(0);
 		Assert.assertEquals(mail1.dateFrom, mail1Out.dateFrom);
 		Assert.assertEquals(mail1.dateTo, mail1Out.dateTo);
-		Assert.assertEquals(mail1.category.code, mail1Out.category.code);
-		Assert.assertEquals(mail1.category.other, mail1Out.category.other);
+		Assert.assertEquals(mail1.categoryCode, mail1Out.categoryCode);
+		Assert.assertEquals(mail1.categoryOther, mail1Out.categoryOther);
 		Assert.assertEquals(mail1.value, mail1Out.value);
 		Assert.assertTrue(ColumnAccess.equals(mail1, mail1Out));
 
 		ContactEntry mail2Out = contactOut.getEmailList().get(1);
 		Assert.assertEquals(mail2.dateFrom, mail2Out.dateFrom);
 		Assert.assertEquals(mail2.dateTo, mail2Out.dateTo);
-		Assert.assertEquals(mail2.category.code, mail2Out.category.code);
-		Assert.assertEquals(mail2.category.other, mail2Out.category.other);
+		Assert.assertEquals(mail2.categoryCode, mail2Out.categoryCode);
+		Assert.assertEquals(mail2.categoryOther, mail2Out.categoryOther);
 		Assert.assertEquals(mail2.value, mail2Out.value);
 		Assert.assertTrue(ColumnAccess.equals(mail2, mail2Out));
 		

@@ -25,10 +25,10 @@ import ch.openech.xml.read.StaxEch0072;
 public class PlaceField extends ObjectField<Place> implements DemoEnabled, Validatable {
 	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
 
-	private final ComboBox comboBoxCountry;
+	private final ComboBox<CountryIdentification> comboBoxCountry;
 
 	private final SwitchLayout switchLayoutMunicipality;
-	private final ComboBox comboBoxMunicipality;
+	private final ComboBox<MunicipalityIdentification> comboBoxMunicipality;
 	private final TextField textForeignTown;
 	
 	private final HorizontalLayout horizontalLayout;
@@ -101,18 +101,14 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 
 	@Override
 	public void show(Place value) {
-		comboBoxCountry.setSelectedObject(value.countryIdentification);
+		if (!value.countryIdentification.isEmpty()) {
+			comboBoxCountry.setSelectedObject(value.countryIdentification);
+		} else {
+			comboBoxCountry.setSelectedObject(null);
+		}
 		if (value.isSwiss()) {
+			comboBoxMunicipality.setSelectedObject(value.municipalityIdentification);
 			switchLayoutMunicipality.show(comboBoxMunicipality);
-			MunicipalityIdentification municipalityIdentification = value.municipalityIdentification;
-			int index = StaxEch0071.getInstance().getMunicipalityIdentifications().indexOf(municipalityIdentification);
-			if (index >= 0) {
-				comboBoxMunicipality.setSelectedObject(municipalityIdentification);
-			} else if (!StringUtils.isBlank(municipalityIdentification.municipalityName)) {
-				comboBoxMunicipality.setSelectedObject(null);
-			} else {
-				logger.warning("Municipality not found: " + municipalityIdentification.municipalityName);
-			}
 		} else if (value.isForeign()) {
 			textForeignTown.setText(value.foreignTown);
 			switchLayoutMunicipality.show(textForeignTown);

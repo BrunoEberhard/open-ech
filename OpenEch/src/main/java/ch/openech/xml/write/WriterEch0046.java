@@ -93,11 +93,11 @@ public class WriterEch0046 extends DeliveryWriter {
 	private WriterElement entryElementWithCategory(WriterElement parent, ContactEntry entry, String type) throws Exception {
 		WriterElement element = parent.create(URI, type);
 
-		if (!StringUtils.isBlank(entry.category.code)) {
-			element.text(type + "Category", entry.category.code);
+		if (!StringUtils.isBlank(entry.categoryCode)) {
+			element.text(type + "Category", entry.categoryCode);
 		}
-		if (!StringUtils.isBlank(entry.category.other)) {
-			element.text("other" + firstLetterToUpper(type) + "Category", entry.category.other);
+		if (!StringUtils.isBlank(entry.categoryOther)) {
+			element.text("other" + firstLetterToUpper(type) + "Category", entry.categoryOther);
 		}
 		return element;
 	}

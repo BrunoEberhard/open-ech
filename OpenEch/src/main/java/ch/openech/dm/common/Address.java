@@ -31,7 +31,7 @@ public class Address {
 	public String postOfficeBoxNumber;
 	public String postOfficeBoxText;
 	public String locality;
-	public String country = "CH";
+	public String country = "XX";
 	public final Zip zip = new Zip();
 	public String town;
 	

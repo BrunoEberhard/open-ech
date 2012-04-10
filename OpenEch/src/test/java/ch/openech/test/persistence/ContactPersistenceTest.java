@@ -31,7 +31,7 @@ public class ContactPersistenceTest {
 		persistence.contact().insert(contact);
 		
 		ContactEntry entry = new ContactEntry();
-		entry.category.code = "2";
+		entry.categoryCode = "2";
 
 		contact.entries.add(entry);
 		
@@ -43,7 +43,7 @@ public class ContactPersistenceTest {
 		Assert.assertNotSame(contact, readContact);
 		Assert.assertEquals(contact.stringId, readContact.stringId);
 		Assert.assertEquals(1, readContact.entries.size());
-		Assert.assertEquals(contact.entries.get(0).category.code, readContact.entries.get(0).category.code);
+		Assert.assertEquals(contact.entries.get(0).categoryCode, readContact.entries.get(0).categoryCode);
 		
 	}
 }

@@ -13,7 +13,7 @@ import ch.openech.xml.read.StaxEch0072;
 
 public class CountryIso2Field extends AbstractEditField<String> implements ChangeListener {
 	private static final Logger logger = Logger.getLogger(CountryIso2Field.class.getName());
-	private final ComboBox comboBox;
+	private final ComboBox<String> comboBox;
 	
 	private final List<String> countryNames;
 
@@ -37,15 +37,7 @@ public class CountryIso2Field extends AbstractEditField<String> implements Chang
 
 	@Override
 	public void setObject(String value) {
-		int index = countryNames.indexOf(value);
-		if (index < 0) {
-			if (value != null) {
-				logger.warning("Unknown country");
-			}
-			comboBox.setSelectedObject(null);
-		} else {
-			comboBox.setSelectedObject(value);
-		}
+		comboBox.setSelectedObject(value);
 	}
 
 	@Override

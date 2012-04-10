@@ -116,9 +116,9 @@ public class StaxEch0046 {
 				if (category) {
 					boolean other = startName.startsWith("other");
 					if (other) {
-						contactEntry.category.other = token(xml);
+						contactEntry.categoryOther = token(xml);
 					} else {
-						contactEntry.category.code = token(xml);
+						contactEntry.categoryCode = token(xml);
 					}
 				} else if (startName.equals(VALIDITY)) {
 					validity(xml, contactEntry);

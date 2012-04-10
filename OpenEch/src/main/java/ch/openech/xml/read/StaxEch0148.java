@@ -1,30 +1,30 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
-
-import java.io.InputStream;
-import java.io.StringReader;
-import java.sql.SQLException;
-
-import javax.swing.ProgressMonitor;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
-
-import ch.openech.dm.Event;
-import ch.openech.dm.XmlConstants;
-import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.organisation.Organisation;
-import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.dm.person.Relation;
-import ch.openech.mj.util.DateUtils;
-import ch.openech.mj.util.ProgressListener;
-import ch.openech.mj.util.StringUtils;
+//import static ch.openech.dm.XmlConstants.*;
+//import static ch.openech.xml.read.StaxEch.skip;
+//import static ch.openech.xml.read.StaxEch.token;
+//
+//import java.io.InputStream;
+//import java.io.StringReader;
+//import java.sql.SQLException;
+//
+//import javax.swing.ProgressMonitor;
+//import javax.xml.stream.XMLEventReader;
+//import javax.xml.stream.XMLInputFactory;
+//import javax.xml.stream.XMLStreamException;
+//import javax.xml.stream.events.StartElement;
+//import javax.xml.stream.events.XMLEvent;
+//
+//import ch.openech.dm.XmlConstants;
+//import ch.openech.dm.common.MunicipalityIdentification;
+//import ch.openech.dm.person.PlaceOfOrigin;
+//import ch.openech.dm.person.Relation;
+//import ch.openech.mj.util.DateUtils;
+//import ch.openech.mj.util.ProgressListener;
+//import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchPersistence;
+import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.Event;
 
 public class StaxEch0148 {
 

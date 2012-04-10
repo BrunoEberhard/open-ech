@@ -16,7 +16,7 @@ import ch.openech.xml.read.StaxEch0072;
 public class CountryField extends ObjectField<CountryIdentification> implements DemoEnabled {
 	private static final Logger logger = Logger.getLogger(CountryField.class.getName());
 
-	private final ComboBox comboBox;
+	private final ComboBox<CountryIdentification> comboBox;
 	
 	public CountryField(String name) {
 		super(name);

@@ -3,12 +3,12 @@ package ch.openech.dm.contact;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import ch.openech.dm.code.CodeWithOther;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Varchar;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
@@ -19,9 +19,10 @@ public class ContactEntry {
 	
 	public String typeOfContact; // A, E, P, I
 	
-	// public final ContactEntryCategory contactEntryCategory = new ContactEntryCategory();
-	
-	public final CodeWithOther category = new CodeWithOther();
+	@Varchar(2)
+	public String categoryCode;
+	@FormatName("freeKategoryText") // sic!
+	public String categoryOther;
 	
 	// Address only for Address Entries, value for the other types
 	public Address address;
@@ -50,9 +51,6 @@ public class ContactEntry {
 	}
 	
 	public String toHtml() {
-		String categoryCode = category.code;
-		String categoryOther = category.other;
-		
 		StringBuilder s = new StringBuilder();
 		s.append("<HTML>");
 		if (typeOfContact != null) {

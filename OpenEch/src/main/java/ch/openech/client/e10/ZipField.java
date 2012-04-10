@@ -17,7 +17,7 @@ import ch.openech.util.PlzImport;
 
 // TODO implement ZipTownField
 public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<String> {
-	private final ComboBox comboBoxSwiss;
+	private final ComboBox<Plz> comboBoxSwiss;
 	private final TextField textFieldForeign;
 	private final TextField textFieldEmpty;
 	private final SwitchLayout switchLayout;

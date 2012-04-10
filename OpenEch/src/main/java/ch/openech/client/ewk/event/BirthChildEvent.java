@@ -6,7 +6,7 @@ import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
-import ch.openech.client.ewk.PreferenceData;
+import ch.openech.client.preferences.PreferenceData;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
