@@ -10,7 +10,7 @@ import ch.openech.client.ewk.event.ExportAllAction;
 import ch.openech.client.ewk.event.KeyDeliveryAction;
 import ch.openech.client.ewk.event.birth.BirthEvent;
 import ch.openech.client.ewk.event.moveIn.MoveInWizard;
-import ch.openech.client.preferences.ApplicationSchemaData;
+import ch.openech.client.preferences.PreferenceData.ApplicationSchemaData;
 import ch.openech.client.tpn.MoveDirection;
 import ch.openech.client.tpn.TpnMoveEditor;
 import ch.openech.datagenerator.GeneratePersonAction;
