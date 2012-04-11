@@ -1,26 +1,30 @@
-package ch.openech.client.ewk;
+package ch.openech.client.org;
 
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.ewk.XmlEditor;
+import ch.openech.client.ewk.XmlResult;
+import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.server.EchServer;
-import ch.openech.xml.read.StaxEch0108;
 import ch.openech.xml.write.EchNamespaceContext;
-import ch.openech.xml.write.WriterEch0108;
+import ch.openech.xml.write.WriterEch0148;
 
 
-public class CreateOrganisationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
-
-	public CreateOrganisationEditor(EchNamespaceContext echNamespaceContext) {
+public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
+	private final WriterEch0148 writerEch0148;
+	
+	public BaseDeliveryOrganisationEditor(EchNamespaceContext echNamespaceContext) {
 		super(echNamespaceContext);
+		this.writerEch0148 = new WriterEch0148(echNamespaceContext);
 	}
 
 	@Override
 	public FormVisual<Organisation> createForm() {
-		return new OrganisationPanel();
+		return new OrganisationPanel(OrganisationPanelType.BASE_DELIVERY, getEchNamespaceContext());
 	}
 
 	@Override
@@ -57,22 +61,20 @@ public class CreateOrganisationEditor extends XmlEditor<Organisation> implements
 	}
 
 	@Override
-	public boolean save(Organisation object) {
+	public boolean save(Organisation organisation) {
 		String xml;
 		try {
-			xml = new WriterEch0108(getEchNamespaceContext()).organisation(object);
-			Organisation result = StaxEch0108.process(xml);
-			EchServer.getInstance().getPersistence().organisation().insert(result);
+			xml = getXml(organisation).get(0);
+			EchServer.getInstance().process(xml);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			throw new RuntimeException("Organisation konnte nicht gespeichert werden", e);
 		}
 	}
-
+	
 	@Override
-	public List<String> getXml(Organisation object) throws Exception {
-		return Collections.singletonList(new WriterEch0108(getEchNamespaceContext()).organisation(object));
+	public List<String> getXml(Organisation organisation) throws Exception {
+		return Collections.singletonList(writerEch0148.organisationBaseDelivery(Collections.singletonList(organisation)));
 	}
 
 }

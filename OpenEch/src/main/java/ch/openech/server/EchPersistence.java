@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.contact.Contact;
-import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.tpn.ThirdPartyMove;
 import ch.openech.mj.db.DbPersistence;
@@ -15,7 +14,7 @@ public class EchPersistence extends DbPersistence {
 	private final Table<PersonIdentification> personIdentification;
 	private final PersonTable person;
 	private final Table<Contact> contact;
-	private final Table<Organisation> organisation = null;
+	private final OrganisationTable organisation;
 	private final Table<ThirdPartyMove> thirdPartyMove = null;
 
 	public EchPersistence() throws SQLException {
@@ -29,7 +28,7 @@ public class EchPersistence extends DbPersistence {
 		contact = addClass(Contact.class);
 		add(contact);
 
-		// organisation = addClass(Organisation.class);
+		organisation = new OrganisationTable(this);
 		// thirdPartyMove = addClass(ThirdPartyMove.class);
 		
 		connect();
@@ -47,7 +46,7 @@ public class EchPersistence extends DbPersistence {
 		return contact;
 	}
 
-	public Table<Organisation> organisation() {
+	public OrganisationTable organisation() {
 		return organisation;
 	}
 	

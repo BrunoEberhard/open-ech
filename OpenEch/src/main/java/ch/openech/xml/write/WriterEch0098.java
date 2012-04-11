@@ -16,7 +16,6 @@ import static ch.openech.dm.XmlConstants.HAS_MAIN_RESIDENCE;
 import static ch.openech.dm.XmlConstants.HAS_OTHER_RESIDENCE;
 import static ch.openech.dm.XmlConstants.HAS_SECONDARY_RESIDENCE;
 import static ch.openech.dm.XmlConstants.HEADQUARTER_MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.HOUSEHOLD_I_D;
 import static ch.openech.dm.XmlConstants.LANGUAGE_OF_CORRESPONDANCE;
 import static ch.openech.dm.XmlConstants.LIQUIDATION;
 import static ch.openech.dm.XmlConstants.LIQUIDATION_DATE;
@@ -29,16 +28,13 @@ import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
 import static ch.openech.dm.XmlConstants.SWISS_HEADQUARTER;
 import static ch.openech.dm.XmlConstants.SWISS_TOWN;
 import static ch.openech.dm.XmlConstants.TOWN;
-import static ch.openech.dm.XmlConstants.TYPE_OF_HOUSEHOLD;
 import static ch.openech.dm.XmlConstants.UID_BRANCHE_TEXT;
 import static ch.openech.dm.XmlConstants.UNKNOWN;
-import static ch.openech.dm.XmlConstants.WITHOUT_E_G_I_D;
 import static ch.openech.dm.XmlConstants._E_G_I_D;
 import static ch.openech.dm.XmlConstants._E_W_I_D;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.util.StringUtils;
 
 public class WriterEch0098 {
 
@@ -83,8 +79,8 @@ public class WriterEch0098 {
 	private void swissHeadquarter(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, SWISS_HEADQUARTER);
 		ech97.organisationIdentification(element, values.headquarterOrganisation);
-		ech7.municipality(element, HEADQUARTER_MUNICIPALITY, values.headquarterMunicipality);
-		ech10.address(element, URI, BUSINESS_ADDRESS, values.headquarterAddress);
+		ech7.municipality(element, HEADQUARTER_MUNICIPALITY, values.headquarterOrganisation.reportingMunicipality);
+		dwellingAddress(element, BUSINESS_ADDRESS, values.headquarterOrganisation.businessAddress);
 	}
 	
 	public void otherResidence(WriterElement parent, Organisation values) throws Exception {
@@ -96,7 +92,7 @@ public class WriterEch0098 {
 
 	private void foreignHeadquarter(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, FOREIGN_HEADQUARTER);
-		ech10.address(element, URI, BUSINESS_ADDRESS, values.headquarterAddress);
+		dwellingAddress(element, BUSINESS_ADDRESS, values.headquarterOrganisation.businessAddress);
 	}
 
 	// Nearly exact code from Writer Ech0011
@@ -124,19 +120,14 @@ public class WriterEch0098 {
 		if (place.mailAddress != null && !place.mailAddress.isEmpty()) ech10.addressInformation(placeElement, MAIL_ADDRESS, place.mailAddress);
 	}
 	
-	// Nearly exact code from Writer Ech0011
+	// Quite different from Writer Ech0011
 	public void dwellingAddress(WriterElement parent, String tagName, DwellingAddress dwelingAddress) throws Exception {
 		if (dwelingAddress == null) return; 
 		
 		WriterElement element = parent.create(URI, tagName);
-		if (!StringUtils.isBlank(dwelingAddress.EGID)) {
-			element.values(dwelingAddress, _E_G_I_D, _E_W_I_D, HOUSEHOLD_I_D);
-		} else {
-			WriterElement withoutEGID = element.create(URI, WITHOUT_E_G_I_D);
-			withoutEGID.text(HOUSEHOLD_I_D, dwelingAddress.householdID); 
-		}
+		element.values(dwelingAddress, _E_G_I_D, _E_W_I_D);
 		if (dwelingAddress.mailAddress != null && !dwelingAddress.mailAddress.isEmpty()) ech10.swissAddressInformation(element, ADDRESS, dwelingAddress.mailAddress);
-		element.values(dwelingAddress, TYPE_OF_HOUSEHOLD, MOVING_DATE);
+		element.values(dwelingAddress, MOVING_DATE);
 	}
 	
 	private static void unknown(WriterElement parent) throws Exception {

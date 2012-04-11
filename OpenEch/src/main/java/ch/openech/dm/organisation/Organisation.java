@@ -2,7 +2,6 @@ package ch.openech.dm.organisation;
 
 import ch.openech.dm.Event;
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
-import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
@@ -84,12 +83,8 @@ public class Organisation {
 	public String departureDate;
 	public Place goesTo;
 	
-	// secondaryResidence
-	public Organisation headquarterOrganisation;
-	public MunicipalityIdentification headquarterMunicipality;
-	
 	// secondaryResidence / otherResidence
-	public Address headquarterAddress; // swiss or foreign
+	public Organisation headquarterOrganisation;
 
 	//
 	

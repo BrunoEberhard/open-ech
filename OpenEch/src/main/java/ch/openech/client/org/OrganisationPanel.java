@@ -1,4 +1,4 @@
-package ch.openech.client.ewk;
+package ch.openech.client.org;
 
 import static ch.openech.dm.organisation.Organisation.ORGANISATION;
 import ch.openech.client.e44.TechnicalIdsField;
@@ -6,11 +6,19 @@ import ch.openech.client.e97.OrganisationUidField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.fields.DateField;
+import ch.openech.xml.write.EchNamespaceContext;
 
 public class OrganisationPanel extends EchFormPanel<Organisation> {
 
-	public OrganisationPanel() {
-		super(2);
+	public enum OrganisationPanelType {
+		DISPLAY, BASE_DELIVERY, MOVE_IN, // BIRTH, CHANGE_RESIDENCE_TYPE, CORRECT_PERSON, CORRECT_IDENTIFICATION, CORRECT_NAME
+	};
+
+	private final OrganisationPanelType type;
+	
+	public OrganisationPanel(OrganisationPanelType type, EchNamespaceContext context) {
+		super(context, OrganisationPanelType.DISPLAY != type, 2);
+		this.type = type;
 		
 		line(ORGANISATION.organisationName);
 		line(ORGANISATION.organisationLegalName, ORGANISATION.organisationAdditionalName);

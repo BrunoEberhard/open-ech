@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 
 import ch.openech.dm.person.Person;
 import ch.openech.mj.resources.Resources;
+import ch.openech.server.EchPersistence;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -70,7 +71,7 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static Person load(String personId) {
-		return EchServer.getInstance().getByLocalPersonId(personId);
+		return EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
 	}
 	
 	public static Person getByVn(String vn) {

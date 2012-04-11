@@ -2,7 +2,7 @@
 <!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Martin Stingelin (Stingelin Informatik GmbH) bearbeitet -->
 <!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Martin Stingelin (Stingelin Informatik GmbH) -->
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by BITUSER (Bundesamt für Informatik und Telekommunikation) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/1" xmlns:eCH-0098="http://www.ech.ch/xmlns/eCH-0098/1" xmlns:eCH-0108="http://www.ech.ch/xmlns/eCH-0108/1" xmlns:eCH-0148="http://www.ech.ch/xmlns/eCH-0148/1" xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/5" xmlns:eCH-0046="http://www.ech.ch/xmlns/eCH-0046/2" xmlns:eCH-0102="http://www.ech.ch/xmlns/eCH-0102/1" targetNamespace="http://www.ech.ch/xmlns/eCH-0148/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/1" xmlns:eCH-0098="http://www.ech.ch/xmlns/eCH-0098/1" xmlns:eCH-0108="http://www.ech.ch/xmlns/eCH-0108/1" xmlns:eCH-0148="http://www.ech.ch/xmlns/eCH-0148/1" xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/5" xmlns:eCH-0046="http://www.ech.ch/xmlns/eCH-0046/2" xmlns:eCH-0078="http://www.ech.ch/xmlns/eCH-0078/2" targetNamespace="http://www.ech.ch/xmlns/eCH-0148/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
 	<xs:annotation>
 		<xs:documentation>Ausgabedatum: 28.01.2012</xs:documentation>
 	</xs:annotation>
@@ -11,7 +11,10 @@
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0108/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0108/1/eCH-0108-1-0.xsd"/>
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0007/5" schemaLocation="http://www.ech.ch/xmlns/eCH-0007/5/eCH-0007-5-0.xsd"/>
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0046/2" schemaLocation="http://www.ech.ch/xmlns/eCH-0046/2/eCH-0046-2-0.xsd"/>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0102/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0102/1/eCH-0102-1-0.xsd"/>
+	<!-- change Open-eCH -->
+	<!--  <xs:import namespace="http://www.ech.ch/xmlns/eCH-0102/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0102/1/eCH-0102-1-0.xsd"/> -->
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0078/2" schemaLocation="http://www.ech.ch/xmlns/eCH-0078/2/eCH-0078-2-0.xsd"/>
+	
 	<xs:simpleType name="eventTypesType">
 		<xs:restriction base="xs:token">
 			<xs:enumeration value="0"/>
@@ -245,7 +248,9 @@
 	<xs:element name="delivery">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="header" type="eCH-0102:headerType"/>
+				<!-- change Open-eCH -->
+				<!-- <xs:element name="header" type="eCH-0102:headerType"/>  -->
+				<xs:element name="deliveryHeader" type="eCH-0078:headerType"/>
 				<xs:choice>
 					<xs:element name="organisationBaseDelivery" type="eCH-0148:eventOrganisationBaseDelivery"/>
 					<xs:element name="keyExchange" type="eCH-0148:eventKeyExchange"/>

@@ -75,7 +75,7 @@ public class StaxEch0108 {
 		}
 	}
 	
-	private static void organisationRegistration(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
+	public static void organisationRegistration(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

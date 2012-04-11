@@ -18,7 +18,6 @@ import org.w3c.dom.ls.LSResourceResolver;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import ch.openech.dm.person.Person;
 import ch.openech.xml.read.LSInputImpl;
 import ch.openech.xml.read.StaxEch0020;
 
@@ -48,10 +47,6 @@ public class EchServer {
 	
 	public EchPersistence getPersistence() {
 		return persistence;
-	}
-	
-	public Person getByLocalPersonId(String personId) {
-		return getPersistence().person().getByLocalPersonId(personId);
 	}
 	
 	//
