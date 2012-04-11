@@ -30,6 +30,11 @@ public class ChangeNameEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
+	protected int getFormColumns() {
+		return 2;
+	}
+
+	@Override
 	public Person load() {
 		return getPerson();
 	}
