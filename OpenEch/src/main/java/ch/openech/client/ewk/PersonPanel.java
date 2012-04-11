@@ -194,10 +194,10 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			break;
 		case CORRECT_PERSON:
 			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
-			area(PERSON.contactPerson);
 			if (extensionAvailable()) {
-				area(PERSON.personExtendedInformation);
-				area(PERSON.contact);
+				area(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contact);
+			} else {
+				area(PERSON.contactPerson);
 			}
 			break;
 		case BIRTH:
