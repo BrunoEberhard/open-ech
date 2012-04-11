@@ -10,7 +10,6 @@ import ch.openech.client.e44.PersonIdentificationPanel;
 import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.common.Address;
-import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
@@ -20,6 +19,7 @@ import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
@@ -47,6 +47,8 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			addHtml(contactPerson.person.toHtml());
 			if (isEditable()) {
 				addAction(new RemovePersonContactAction());
+			} else {
+				addAction(new PersonContactViewAction(contactPerson.person));
 			}
 			addGap();
 		}
@@ -73,6 +75,20 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		
         addAction(new AddAddressContactEditor(true), "AddAddressPerson");
         addAction(new AddAddressContactEditor(false), "AddAddressOrganisation");
+	}
+	
+	private class PersonContactViewAction extends ResourceAction {
+		private final PersonIdentification person;
+		
+		private PersonContactViewAction(PersonIdentification person) {
+			this.person = person;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(e.getSource());
+			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), person.getId()));
+		}
 	}
 	
 	// Person suchen
