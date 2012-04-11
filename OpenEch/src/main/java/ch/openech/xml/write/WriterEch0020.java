@@ -549,7 +549,7 @@ public class WriterEch0020 extends DeliveryWriter {
 		WriterElement event = delivery().create(URI, CHANGE_NAME);
 		WriterElement person = event.create(URI, CHANGE_NAME_PERSON);
 		ech44.personIdentification(person, PERSON_IDENTIFICATION, personIdentification);
-        person.values(changedPerson, OFFICIAL_NAME, FIRST_NAME);
+        person.values(changedPerson.personIdentification, OFFICIAL_NAME, FIRST_NAME);
     	addVariousNames(person, changedPerson);
     	person.values(changedPerson, NAME_ON_PASSPORT);
         if (changeNameWithParents) {
