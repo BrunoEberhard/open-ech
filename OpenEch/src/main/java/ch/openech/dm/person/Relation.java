@@ -84,7 +84,7 @@ public class Relation {
 			s.append("&nbsp<BR>");
 		}
 		
-		if (address != null) {
+		if (address != null && !address.isEmpty()) {
 			s.append("Adresse:<BR>");
 			address.toHtml(s);
 			s.append("<BR>");

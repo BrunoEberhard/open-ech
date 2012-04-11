@@ -3,11 +3,15 @@ package ch.openech.client.e21;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.page.Page;
+import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.xml.write.EchNamespaceContext;
 
 public class RelationField extends ObjectFlowField<List<Relation>> {
@@ -53,18 +57,19 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		}
 	}
 	
-//	private class RelationClickListener implements ClickListener {
-//		@Override
-//		public void clicked() {
-//			Relation relation = (Relation) list.getSelectedObject();
-//			if (relation != null) {
-//	    		if (relation.partner != null) {
-//	    			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(list);
-//	    			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
-//	    		}
-//			}
-//		}
-//	}
+	private class RelationViewAction extends ResourceAction {
+		private final Relation relation;
+		
+		private RelationViewAction(Relation relation) {
+			this.relation = relation;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(e.getSource());
+			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
+		}
+	}
 	
 	@Override
 	public FormVisual<List<Relation>> createFormPanel() {
@@ -74,13 +79,19 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 
 	@Override
 	protected void show(List<Relation> objects) {
-		for (Relation relation : objects) {
-			addHtml(relation.toHtml());
-			addAction(new RemoveRelationAction(relation));
-			addGap();
-		}
 		if (isEditable()) {
+			for (Relation relation : objects) {
+				addHtml(relation.toHtml());
+				addAction(new RemoveRelationAction(relation));
+				addGap();
+			}
 			addAction(new EditorDialogAction(new AddRelationEditor()));
+		} else {
+			for (Relation relation : objects) {
+				addHtml(relation.toHtml());
+				addAction(new RelationViewAction(relation));
+				addGap();
+			}
 		}
 	}
 
