@@ -72,7 +72,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		private final String dependingOnFieldName;
 		
 		public NewPersonNameField(Object key, Object dependingOnFieldKey) {
-			super(Constants.getConstant(key));
+			super(Constants.getConstant(key), Partnership.class);
 			this.dependingOnFieldName = Constants.getConstant(dependingOnFieldKey);
 		}
 

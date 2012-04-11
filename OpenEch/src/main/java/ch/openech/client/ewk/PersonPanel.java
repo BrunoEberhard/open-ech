@@ -22,10 +22,12 @@ import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.code.MaritalStatus;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.edit.fields.CodeEditField;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.EditField;
@@ -222,7 +224,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 	private static class MotherField extends TextEditField implements DependingOnFieldAbove<Relation> {
 		
 		public MotherField() {
-			super(PERSON_IDENTIFICATION.officialName);
+			super(PERSON_IDENTIFICATION.officialName, PersonIdentification.class);
 		}
 
 		@Override

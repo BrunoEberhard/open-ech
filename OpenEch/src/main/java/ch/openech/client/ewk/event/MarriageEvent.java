@@ -1,30 +1,32 @@
 package ch.openech.client.ewk.event;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.RemoveEntriesListField;
 import ch.openech.client.e44.PersonField;
+import ch.openech.dm.EchFormats;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Boolean;
+import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.db.model.annotation.FormatName;
 import ch.openech.mj.edit.fields.CheckBoxStringField;
-import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.TextEditField;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
+import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
-
 
 public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
@@ -33,13 +35,14 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	}
 
 	public static class Marriage {
+		@Required @Date
 		public String dateOfMaritalStatus;
 		@Boolean
 		public String registerPartner2 = "1";
 		public Person partner1, partner2;
 		@Boolean
 		public String changeName1, changeName2;
-		@FormatName("officialName")
+		@FormatName(EchFormats.baseName)
 		public String name1, name2;
 		public final List<PlaceOfOrigin> origin1 = new ArrayList<PlaceOfOrigin>();
 		public final List<PlaceOfOrigin> origin2 = new ArrayList<PlaceOfOrigin>();
@@ -65,7 +68,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		
 		//
 		
-		formPanel.line(new DateField(MARRIAGE.dateOfMaritalStatus, DateField.REQUIRED), MARRIAGE.registerPartner2);
+		formPanel.line(MARRIAGE.dateOfMaritalStatus, MARRIAGE.registerPartner2);
 		
 		formPanel.area(partner1, partner2);
 	
@@ -92,10 +95,17 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		@Override
 		public void setDependedField(EditField<Person> field) {
 			Person person = field.getObject();
+			List<PlaceOfOrigin> origins;
 			if (person != null) {
-				setValues(person.placeOfOrigin);
+				origins = person.placeOfOrigin;
 			} else {
-				setValues(new ArrayList<PlaceOfOrigin>());
+				origins = Collections.emptyList();
+			}
+			setValues(origins);
+			if (getObject() != null) {
+				getObject().clear();
+				getObject().addAll(origins);
+				fireObjectChange();
 			}
 		}
 	}
@@ -105,7 +115,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		private final String dependingOnFieldName;
 		
 		public NewPersonNameField(Object key, Object dependingOnFieldKey) {
-			super(Constants.getConstant(key));
+			super(Constants.getConstant(key), Marriage.class);
 			this.dependingOnFieldName = Constants.getConstant(dependingOnFieldKey);
 		}
 
@@ -128,6 +138,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	public Marriage load() {
 		Marriage marriageActionData = new Marriage();
 		marriageActionData.partner1 = getPerson();
+		marriageActionData.origin2.addAll(getPerson().placeOfOrigin);
 		return marriageActionData;
 	}
 

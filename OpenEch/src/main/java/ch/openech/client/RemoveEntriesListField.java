@@ -9,13 +9,8 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 
-
-// TODO !!
-
 public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
-
 	private List<T> values = new ArrayList<T>();
-	private List<T> selectedValues = new ArrayList<T>();
 
 	public RemoveEntriesListField(Object key) {
 		super(Constants.getConstant(key), true);
@@ -23,27 +18,8 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 
 	public void setValues(List<T> values) {
 		this.values = values;
-		selectedValues.clear();
-		selectedValues.addAll(values);
-		
-		setObject(selectedValues);
 	}
 	
-	@Override
-	public List<T> getObject() {
-		return selectedValues;
-	}
-
-	@Override
-	public void setObject(List<T> selectedValues) {
-		for (T object : selectedValues) {
-			addObject(object);
-			addAction(new RemoveSelectedObjectAction(object));
-		}
-		addGap();
-		addAction(new AddAllAction());
-	}
-
 	private class RemoveSelectedObjectAction extends ResourceAction {
 		private final T object;
 		
@@ -53,30 +29,32 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			selectedValues.remove(object);
-			setObject(selectedValues);
+			getObject().remove(object);
+			setObject(getObject());
 		}
 	}
 
 	private class AddAllAction extends ResourceAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			selectedValues.clear();
-			selectedValues.addAll(values);
-			setObject(selectedValues);
+			setObject(new ArrayList<T>(values));
 		}
 	}
 
 	@Override
 	protected FormVisual<List<T>> createFormPanel() {
-		// TODO Auto-generated method stub
+		// not used
 		return null;
 	}
 
 	@Override
-	protected void show(List<T> object) {
-		// TODO Auto-generated method stub
-		
+	protected void show(List<T> objects) {
+		for (T object : objects) {
+			addObject(object);
+			addAction(new RemoveSelectedObjectAction(object));
+		}
+		addGap();
+		addAction(new AddAllAction());
 	}
 
 }

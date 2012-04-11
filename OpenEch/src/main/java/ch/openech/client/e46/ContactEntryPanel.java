@@ -60,7 +60,7 @@ public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
 	private static class OtherCategoryField extends TextEditField implements DependingOnFieldAbove<String> {
 
 		public OtherCategoryField(String name) {
-			super(name);
+			super(name, ContactEntry.class);
 		}
 
 		@Override
