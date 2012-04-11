@@ -6,9 +6,10 @@ import java.util.List;
 import ch.openech.client.e44.SecondPersonField;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.Relation;
-import ch.openech.mj.edit.fields.CheckBoxField;
+import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.annotation.Boolean;
+import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -25,12 +26,19 @@ public abstract class ChangeWithSecondPersonEvent extends
 		super(namespaceContext);
 	}
 
-	public class ChangeWithSecondPersonEventData extends Person {
+	public static class ChangeWithSecondPersonEventData extends Person {
+		public static final ChangeWithSecondPersonEventData DATA = Constants.of(ChangeWithSecondPersonEventData.class);
+		@Date
 		public String date;
 		public String separation;
 		public String cancelationReason;
-		public boolean checkBoxPartner;
-		public PersonIdentification secondPerson;
+		@Boolean
+		public String registerPartner = "0";
+		public Relation relationPartner;
+		
+		public boolean registerPartner() {
+			return "1".equals(registerPartner);
+		}
 	}
 
 	protected abstract void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel);
@@ -38,18 +46,16 @@ public abstract class ChangeWithSecondPersonEvent extends
 	@Override
 	protected void fillForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
 		createSpecificForm(formPanel);
-		CheckBoxField checkBoxField = formPanel.createCheckBoxField("checkBoxPartner");
-		// checkBoxField.setText("Gleichzeitiger Eintrag für Partner/in");
-		formPanel.line(checkBoxField);
-		formPanel.line(new SecondPersonField("secondPerson"));
+		formPanel.line(ChangeWithSecondPersonEventData.DATA.registerPartner);
+		formPanel.line(new SecondPersonField(ChangeWithSecondPersonEventData.DATA.relationPartner));
 	}
 
 	@Override
 	public ChangeWithSecondPersonEventData load() {
 		ChangeWithSecondPersonEventData data = new ChangeWithSecondPersonEventData();
 		if (getPerson().getPartner() != null) {
-			data.secondPerson = getPerson().getPartner().partner;
-			data.checkBoxPartner = true;
+			data.relationPartner = getPerson().getPartner();
+			data.registerPartner = "1";
 		}
 		return data;
 	}
@@ -60,7 +66,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		if (getPerson() != null && !StringUtils.isBlank(getPerson().maritalStatus.dateOfMaritalStatus)
 				&& !StringUtils.isBlank(date)) {
 			if (date.compareTo(getPerson().maritalStatus.dateOfMaritalStatus) < 0) {
-				validationMessages.add(new ValidationMessage("date",
+				validationMessages.add(new ValidationMessage(ChangeWithSecondPersonEventData.DATA.date,
 						"Datum darf nicht vor letztem Zivilstandsereignis sein"));
 			}
 		}
@@ -74,7 +80,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(new DateField("date", DateField.REQUIRED));
+			formPanel.line(new DateField(ChangeWithSecondPersonEventData.DATA.date, DateField.REQUIRED));
 		}
 
 		@Override
@@ -83,7 +89,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			List<String> xmls = new ArrayList<String>();
 			xmls.add(writerEch0020.death(person.personIdentification, data.date));
 
-			if (data.checkBoxPartner) {
+			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				if ("1".equals(relation.typeOfRelationship)) {
 					// Ehe
@@ -110,7 +116,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
-			Person.validateEventNotBeforeBirth(validationMessages, data.personIdentification, data.date, "date");
+			Person.validateEventNotBeforeBirth(validationMessages, data.personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
 		}
 	}
 
@@ -122,7 +128,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(new DateField("date", DateField.REQUIRED));
+			formPanel.line(new DateField(ChangeWithSecondPersonEventData.DATA.date, DateField.REQUIRED));
 		}
 
 		@Override
@@ -131,7 +137,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			List<String> xmls = new ArrayList<String>();
 			xmls.add(writerEch0020.missing(person.personIdentification, data.date));
 
-			if (data.checkBoxPartner) {
+			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				if ("1".equals(relation.typeOfRelationship)) {
 					// Ehe
@@ -146,7 +152,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
-			Person.validateEventNotBeforeBirth(validationMessages, data.personIdentification, data.date, "date");
+			Person.validateEventNotBeforeBirth(validationMessages, data.personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
 		}
 	}
 
@@ -159,7 +165,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(Person.PERSON.separation);
-			formPanel.line(new DateField("date", DateField.REQUIRED));
+			formPanel.line(new DateField(ChangeWithSecondPersonEventData.DATA.date, DateField.REQUIRED));
 		}
 
 		@Override
@@ -173,7 +179,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			List<String> xmls = new ArrayList<String>();
 			xmls.add(writerEch0020.separation(person.personIdentification, data.separation, data.date));
 
-			if (data.checkBoxPartner) {
+			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				xmls.add(writerEch0020.separation(relation.partner, data.separation, data.date));
 			}
@@ -198,7 +204,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			List<String> xmls = new ArrayList<String>();
 			xmls.add(writerEch0020.undoSeparation(person.personIdentification));
 
-			if (data.checkBoxPartner) {
+			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				xmls.add(writerEch0020.undoSeparation(relation.partner));
 			}
@@ -219,7 +225,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(new DateField("date", DateField.REQUIRED));
+			formPanel.line(new DateField(ChangeWithSecondPersonEventData.DATA.date, DateField.REQUIRED));
 		}
 
 		@Override
@@ -233,7 +239,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			List<String> xmls = new ArrayList<String>();
 			xmls.add(writerEch0020.divorce(person.personIdentification, data.date));
 
-			if (data.checkBoxPartner) {
+			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				xmls.add(writerEch0020.divorce(relation.partner, data.date));
 			}
@@ -249,8 +255,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(new DateField("date", DateField.REQUIRED));
-			formPanel.line(Person.PERSON.cancelationReason);
+			formPanel.line(new DateField(ChangeWithSecondPersonEventData.DATA.date, DateField.REQUIRED));
+			formPanel.line(ChangeWithSecondPersonEventData.DATA.cancelationReason);
 		}
 
 		@Override
@@ -264,7 +270,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			List<String> xmls = new ArrayList<String>();
 			xmls.add(writerEch0020.undoPartnership(person.personIdentification, data.date, data.cancelationReason));
 
-			if (data.checkBoxPartner) {
+			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				xmls.add(writerEch0020.undoPartnership(relation.partner, data.date, data.cancelationReason));
 			}
@@ -280,7 +286,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(new DateField("date", DateField.REQUIRED));
+			formPanel.line(new DateField(ChangeWithSecondPersonEventData.DATA.date, DateField.REQUIRED));
 		}
 
 		@Override
@@ -294,7 +300,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			List<String> xmls = new ArrayList<String>();
 			xmls.add(writerEch0020.undoMarriage(person.personIdentification, data.date));
 
-			if (data.checkBoxPartner) {
+			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				xmls.add(writerEch0020.undoMarriage(relation.partner, data.date));
 			}
