@@ -2,10 +2,12 @@ package ch.openech.client.ewk;
 
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.application.ObjectViewPage;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.resources.Resources;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 
@@ -32,6 +34,7 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 	protected void showObject(Person person) {
 		super.showObject(person);
 		menu.setPerson(person, true);
+		setTitle(pageTitle(person));
 	}
 	
 	@Override
@@ -47,6 +50,31 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 	@Override
 	public FormVisual<Person> createForm() {
 		return personPanel;
+	}
+	
+	private static final int MAX_NAME_LENGTH = 10;
+	
+	private static String pageTitle(Person person) {
+		PersonIdentification identification = person.personIdentification;
+		String title;
+		if (identification.officialName != null) {
+			if (identification.officialName.length() <= MAX_NAME_LENGTH) {
+				title = identification.officialName;
+			} else {
+				title = identification.officialName.substring(0, MAX_NAME_LENGTH-1) + "..";
+			}
+			if (identification.firstName != null) {
+				title = title + ", ";
+				if (identification.firstName.length() <= MAX_NAME_LENGTH) {
+					title = title + identification.firstName;
+				} else {
+					title = title + identification.firstName.substring(0, MAX_NAME_LENGTH-1) + "..";
+				}
+			}
+		} else {
+			title = Resources.getString("Person");
+		}
+		return title;
 	}
 
 }
