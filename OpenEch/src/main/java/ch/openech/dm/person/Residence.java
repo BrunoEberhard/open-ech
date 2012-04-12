@@ -13,19 +13,6 @@ public class Residence {
 	public MunicipalityIdentification reportingMunicipality;
 	public final List<MunicipalityIdentification> secondary = new ArrayList<MunicipalityIdentification>(); // nur bei hasMainResidence
 
-	@Override
-	public Residence clone() {
-		Residence clone = new Residence();
-		if (reportingMunicipality != null) {
-			clone.reportingMunicipality = this.reportingMunicipality.clone();
-		}
-		clone.secondary.clear();
-		for (MunicipalityIdentification m : secondary) {
-			clone.secondary.add(m.clone());
-		}
-		return clone;
-	}
-
 	public void setSecondary(List<MunicipalityIdentification> secondary2) {
 		secondary.clear();
 		secondary.addAll(secondary2);

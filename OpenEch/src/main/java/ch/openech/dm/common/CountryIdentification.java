@@ -35,15 +35,6 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 		copy.countryNameShort = countryNameShort;
 	}
 
-	@Override
-	public CountryIdentification clone() {
-		CountryIdentification clone = new CountryIdentification();
-		clone.countryId = countryId;
-		clone.countryIdISO2 = countryIdISO2;
-		clone.countryNameShort = countryNameShort;
-		return clone;
-	}
-
 	public boolean isSwiss() {
 		return Swiss.SWISS_COUNTRY_ID.equals(countryId) && //
 				Swiss.SWISS_COUNTRY_ISO2.equals(countryIdISO2) && //

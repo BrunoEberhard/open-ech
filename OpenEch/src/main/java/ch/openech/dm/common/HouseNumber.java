@@ -3,7 +3,7 @@ package ch.openech.dm.common;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.util.StringUtils;
 
-public class HouseNumber implements Cloneable {
+public class HouseNumber {
 
 	public static final HouseNumber HOUSE_NUMBER = Constants.of(HouseNumber.class);
 	
@@ -19,12 +19,4 @@ public class HouseNumber implements Cloneable {
 		return houseNumber + "&nbsp;/&nbsp;" + dwellingNumber;
 	}
 
-	@Override
-	protected HouseNumber clone() {
-		HouseNumber clone = new HouseNumber();
-		clone.houseNumber = this.houseNumber;
-		clone.dwellingNumber = this.dwellingNumber;
-		return clone;
-	}
-	
 }

@@ -37,13 +37,4 @@ public class Foreign {
 	public boolean isEmpty() {
 		return StringUtils.isEmpty(residencePermit);
 	}
-	
-//	@Override
-//	public Foreign clone() {
-//		Foreign clone = new Foreign();
-//		clone.residencePermit = this.residencePermit;
-//		clone.residencePermitTill = this.residencePermitTill;
-//		clone.nameOnPassport = this.nameOnPassport;
-//		return clone;
-//	}
 }

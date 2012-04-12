@@ -5,7 +5,7 @@ import java.io.Serializable;
 import ch.openech.mj.util.StringUtils;
 
 
-public class Plz implements Comparable<Plz>, Serializable, Cloneable {
+public class Plz implements Comparable<Plz>, Serializable {
 
 	public int onrp;
 	public int typ;
@@ -13,19 +13,6 @@ public class Plz implements Comparable<Plz>, Serializable, Cloneable {
 	public int zusatzziffern;
 	public String ortsbezeichnung;
 	public String kanton;
-	
-	
-	@Override
-	protected Plz clone() {
-		Plz clone = new Plz();
-		clone.onrp = this.onrp;
-		clone.typ = this.typ;
-		clone.postleitzahl = this.postleitzahl;
-		clone.zusatzziffern = this.zusatzziffern;
-		clone.ortsbezeichnung = this.ortsbezeichnung;
-		clone.kanton = this.kanton;
-		return clone;
-	}
 
 	@Override
 	public String toString() {

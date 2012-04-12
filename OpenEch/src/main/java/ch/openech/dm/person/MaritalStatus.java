@@ -36,13 +36,5 @@ public class MaritalStatus {
 	public boolean isPartnerschaftAufgeloest() {
 		return ch.openech.dm.code.MaritalStatus.AufgeloestePartnerschaft.value.equals(maritalStatus);
 	}
-
-//	@Override
-//	protected MaritalStatus clone() {
-//		MaritalStatus maritalStatus = new MaritalStatus();
-//		maritalStatus.maritalStatus = this.maritalStatus;
-//		maritalStatus.dateOfMaritalStatus = dateOfMaritalStatus;
-//		return maritalStatus;
-//	}
 	
 }

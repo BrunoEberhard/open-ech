@@ -30,19 +30,6 @@ public class Place {
 		municipalityIdentification.copyTo(this.municipalityIdentification);
 	}
 
-	
-//	@Override
-//	protected Place clone() {
-//		Place clone = new Place();
-//		clone.municipalityIdentification = this.municipalityIdentification.clone();
-//		clone.countryIdentification = this.countryIdentification.clone();
-//		clone.foreignTown = this.foreignTown;
-//		if (this.mailAddress != null) {
-//			clone.mailAddress = this.mailAddress.clone();
-//		}
-//		return clone;
-//	}
-
 	public boolean isSwiss() {
 		return countryIdentification.isSwiss();
 	}
@@ -54,19 +41,5 @@ public class Place {
 	public boolean isUnknown() {
 		return !(isSwiss() && !municipalityIdentification.isEmpty() || isForeign());
 	}
-
-//	@Override
-//	public void copyTo(Map<String, String> valueMap) {
-//		super.copyTo(valueMap);
-//		if (valueMap instanceof Place) {
-//			Place place = (Place) valueMap;
-//			municipalityIdentification.copyTo(place.municipalityIdentification);
-//			countryIdentification.copyTo(place.countryIdentification);
-//			if (mailAddress != null) {
-//				if (place.mailAddress == null) place.mailAddress = new Address();
-//				mailAddress.copyTo(place.mailAddress);
-//			}
-//		}
-//	}
 
 }

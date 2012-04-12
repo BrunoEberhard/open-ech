@@ -6,7 +6,7 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.FormatName;
 import ch.openech.mj.util.StringUtils;
 
-public class MunicipalityIdentification implements Comparable<MunicipalityIdentification>, Serializable, Cloneable {
+public class MunicipalityIdentification implements Comparable<MunicipalityIdentification>, Serializable {
 
 	public static MunicipalityIdentification MUNICIPALITY_IDENTIFICATION = Constants.of(MunicipalityIdentification.class);
 
@@ -68,16 +68,6 @@ public class MunicipalityIdentification implements Comparable<MunicipalityIdenti
 		municipalityIdentification.historyMunicipalityId = this.historyMunicipalityId;
 	}
 	
-	@Override
-	public MunicipalityIdentification clone() {
-		MunicipalityIdentification clone = new MunicipalityIdentification();
-		clone.municipalityId = municipalityId;
-		clone.municipalityName = municipalityName;
-		clone.cantonAbbreviation = cantonAbbreviation;
-		clone.historyMunicipalityId = historyMunicipalityId;
-		return clone;
-	}
-
 	@Override
 	public int hashCode() {
 		if (historyMunicipalityId != null) return historyMunicipalityId.hashCode();

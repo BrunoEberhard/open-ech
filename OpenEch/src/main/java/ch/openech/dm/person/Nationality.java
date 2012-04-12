@@ -86,12 +86,4 @@ public class Nationality  {
 //		return StringUtils.equals(nationality.nationalityStatus, this.nationalityStatus) && //
 //			sameValues(nationality.nationalityCountry, this.nationalityCountry);
 //	}
-
-//	@Override
-//	public Nationality clone() {
-//		Nationality clone = new Nationality();
-//		clone.nationalityStatus = this.nationalityStatus;
-//		clone.nationalityCountry = this.nationalityCountry.clone();
-//		return clone;
-//	}
 }

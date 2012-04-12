@@ -3,7 +3,6 @@ package ch.openech.dm.common;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.code.MrMrs;
-import ch.openech.mj.db.model.ColumnAccess;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.FormatName;
 import ch.openech.mj.util.StringUtils;
@@ -34,13 +33,6 @@ public class Address {
 	public String country = "XX";
 	public final Zip zip = new Zip();
 	public String town;
-	
-	@Override
-	public Address clone() {
-		Address address = new Address();
-		ColumnAccess.copy(this, address);
-		return address;
-	}
 	
 	public void setMrMrs(MrMrs mrMrs) {
 		this.mrMrs = mrMrs.getKey();

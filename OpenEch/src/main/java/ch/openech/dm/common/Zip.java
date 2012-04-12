@@ -4,23 +4,12 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.util.StringUtils;
 
 public class Zip {
-
 	public static final Zip ZIP_TOWN = Constants.of(Zip.class);
 	
 	public String foreignZipCode;
 	public String swissZipCode; // 0 - 9999
 	public String swissZipCodeAddOn;
 	public String swissZipCodeId; // int
-	
-	@Override
-	protected Zip clone() {
-		Zip clone = new Zip();
-		clone.foreignZipCode = this.foreignZipCode;
-		clone.swissZipCode = this.swissZipCode;
-		clone.swissZipCodeAddOn = this.swissZipCodeAddOn;
-		clone.swissZipCodeId = this.swissZipCodeId;
-		return clone;
-	}
 
 	public void setPlz(Plz plz) {
 		foreignZipCode = null;

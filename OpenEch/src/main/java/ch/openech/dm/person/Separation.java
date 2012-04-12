@@ -17,13 +17,4 @@ public class Separation {
 		dateOfSeparation = null;
 		separation = null;
 	}
-	
-//	@Override
-//	public Separation clone() {
-//		Separation clone = new Separation();
-//		clone.separation = this.separation;
-//		clone.dateOfSeparation = this.dateOfSeparation;
-//		clone.separationTill = this.separationTill;
-//		return clone;
-//	}
 }
