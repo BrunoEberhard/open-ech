@@ -56,6 +56,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 	@Override
 	protected void show(List<String> object) {
 		for (String xml : object) {
+			String original = xml;
 			// Nene, multiline durch einzeller listen ersetzen?
 			xml = xml.replace("&", "&amp;");
 			xml = xml.replace("<", "&lt;");
@@ -64,8 +65,8 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 			xml = xml.replace(" ", "&nbsp;");
 			xml = "<html><code>" + xml + "</code></html>";
 			addObject(xml);
-			addAction(new XmlValidateAction(xml));
-			addAction(new CopyToClipboardAction(xml));
+			addAction(new XmlValidateAction(original));
+			addAction(new CopyToClipboardAction(original));
 			addGap();
 		}
 	}
