@@ -20,10 +20,10 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 		this.values = values;
 	}
 	
-	private class RemoveSelectedObjectAction extends ResourceAction {
+	private class RemoveThisObjectAction extends ResourceAction {
 		private final T object;
 		
-		private RemoveSelectedObjectAction(T object) {
+		private RemoveThisObjectAction(T object) {
 			this.object = object;
 		}
 
@@ -51,7 +51,7 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 	protected void show(List<T> objects) {
 		for (T object : objects) {
 			addObject(object);
-			addAction(new RemoveSelectedObjectAction(object));
+			addAction(new RemoveThisObjectAction(object));
 		}
 		addGap();
 		addAction(new AddAllAction());
