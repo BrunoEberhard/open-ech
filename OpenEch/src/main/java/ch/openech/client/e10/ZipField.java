@@ -82,7 +82,12 @@ public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<
 
 	@Override
 	public String getNameOfDependedField() {
-		return Address.ADDRESS.country;
+		int pos = getName().lastIndexOf('.');
+		if (pos > 0) {
+			return getName().substring(0, pos + 1) + Address.ADDRESS.country;
+		} else {
+			return Address.ADDRESS.country;
+		}
 	}
 
 	@Override
