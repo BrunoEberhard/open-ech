@@ -1,12 +1,17 @@
 package ch.openech.client.ewk.event.moveIn;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.XmlTextFormField;
 import ch.openech.dm.code.TypeOfRelationship;
 import ch.openech.dm.code.TypeOfRelationshipInverted;
 import ch.openech.dm.person.Person;
@@ -15,6 +20,7 @@ import ch.openech.mj.edit.Wizard;
 import ch.openech.mj.edit.WizardPage;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
+import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -94,6 +100,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	@Override
 	protected MoveInEditorData newInstance() {
 		return new MoveInEditorData();
+	}
+
+	@Override
+	public Action[] getActions() {
+		return new Action[]{demoDataAction, new XmlAction(), cancelAction, prevAction, nextAction, saveAction};
+
 	}
 
 	private class MoveInPersonWizardPage extends WizardPage<Person> {
@@ -330,6 +342,46 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			// TODO enable/disable der Felder
 		}
 		
+	}
+
+	// public for access on xmls
+	public class XmlAction extends AbstractAction {
+		public List<String> xmls;
+		
+		public XmlAction() {
+			super("Vorschau XML");
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			showXML();
+		}
+		
+		private void showXML() {
+			try {
+				xmls = new ArrayList<String>();
+				for (Person person : getObject().persons) {
+					try {
+						xmls.add(getWriterEch0020().moveIn(person));
+					} catch (Exception e) {
+						// TODO
+						e.printStackTrace();
+					}
+				}
+			} catch (Exception x) {
+				throw new RuntimeException("XML Generierung fehlgeschlagen", x);
+			}
+			
+			AbstractFormVisual<XmlAction> form = new AbstractFormVisual(XmlAction.class, null, false) {
+				@Override
+				protected int getColumnWidthPercentage() {
+					return 1000;
+				}
+			};
+			form.area(new XmlTextFormField("xmls"));
+			form.setObject(this);
+			ClientToolkit.getToolkit().openDialog(null, form, "XML").openDialog();
+		}
 	}
 
 }
