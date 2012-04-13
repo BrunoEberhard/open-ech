@@ -38,10 +38,19 @@ public class DomainClassTest {
 	private void testDomainClassCheckRecursion(Class<?> clazz) {
 		if (!testedClasses.contains(clazz)) {
 			testedClasses.add(clazz);
+			testConstructor(clazz);
 			testFields(clazz);
 		}
 	}
 
+	private void testConstructor(Class<?> clazz) {
+		try {
+			Assert.assertTrue(Modifier.isPublic(clazz.getConstructor().getModifiers()));
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException(clazz.getName() + " has no public empty constructor");
+		}
+	}
+	
 	private void testFields(Class<?> clazz) {
 		Field[] fields = clazz.getFields();
 		for (Field field : fields) {

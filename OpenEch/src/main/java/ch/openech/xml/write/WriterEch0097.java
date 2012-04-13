@@ -7,6 +7,7 @@ import java.util.List;
 
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.util.StringUtils;
 
 public class WriterEch0097 {
 
@@ -30,8 +31,8 @@ public class WriterEch0097 {
     }
 	
 	public void uidStructure(WriterElement parent, String tagName, String uid) throws Exception {
-		WriterElement uidStructure = parent.create(URI, tagName);
 		if (uid != null && uid.length() == 12) {
+			WriterElement uidStructure = parent.create(URI, tagName);
 			uidStructure.text(UID_ORGANISATION_ID_CATEGORIE, uid.substring(0, 3)); // TYPO by schema
 			uidStructure.text(UID_ORGANISATION_ID, uid.substring(3));
 		}
@@ -44,10 +45,12 @@ public class WriterEch0097 {
 	}
 	
 	private void namedId(WriterElement parent, NamedId namedId, String name) throws Exception {
-		WriterElement element = parent.create(URI, name);
-		
-		element.text(ORGANISATION_ID_CATEGORY, namedId.personIdCategory);
-		element.text(ORGANISATION_ID, namedId.personId);
+		if (!StringUtils.isEmpty(namedId.personId)) {
+			WriterElement element = parent.create(URI, name);
+			
+			element.text(ORGANISATION_ID_CATEGORY, namedId.personIdCategory);
+			element.text(ORGANISATION_ID, namedId.personId);
+		}
 	}
 
 }

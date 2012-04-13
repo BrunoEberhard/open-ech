@@ -6,8 +6,8 @@ import ch.openech.mj.edit.form.FormVisual;
 
 public class SecondPersonField extends ObjectFlowField<Relation> {
 	
-	public SecondPersonField(String name) {
-		super(name);
+	public SecondPersonField(Object key) {
+		super(key);
 	}
 	
 	public boolean hasPartner() {

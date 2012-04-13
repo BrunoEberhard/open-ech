@@ -37,7 +37,8 @@ public class UndoCitizenEvent extends PersonEventEditor<PlaceOfOrigin> {
 	@Override
 	public PlaceOfOrigin load() {
 		originField.setValues(getPerson().placeOfOrigin);
-		return new PlaceOfOrigin();
+		PlaceOfOrigin origin = new PlaceOfOrigin();
+		return origin;
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class UndoCitizenEvent extends PersonEventEditor<PlaceOfOrigin> {
 
 
 	private class UndoCitizenField extends AbstractEditField<PlaceOfOrigin> {
-		private final ComboBox comboBox;
+		private final ComboBox<PlaceOfOrigin> comboBox;
 		
 		public UndoCitizenField() {
 			super(PLACE_OF_ORIGIN.originName, true);

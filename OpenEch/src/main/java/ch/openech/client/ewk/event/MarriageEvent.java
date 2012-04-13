@@ -177,7 +177,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	}
 	
 	private String changeName(WriterEch0020 writerEch0020, Person person, String officialName) throws Exception {
-		Person personToChange = CloneHelper.cloneIfPossible(person);
+		Person personToChange = CloneHelper.clone(person);
 		personToChange.personIdentification.officialName = officialName;
 		return writerEch0020.changeName(person.personIdentification, personToChange);
 	}

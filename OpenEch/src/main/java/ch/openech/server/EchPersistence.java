@@ -29,6 +29,7 @@ public class EchPersistence extends DbPersistence {
 		add(contact);
 
 		organisation = new OrganisationTable(this);
+		add(organisation);
 		// thirdPartyMove = addClass(ThirdPartyMove.class);
 		
 		connect();

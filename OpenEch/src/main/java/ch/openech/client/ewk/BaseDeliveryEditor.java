@@ -16,6 +16,11 @@ import ch.openech.xml.write.WriterEch0020;
 public class BaseDeliveryEditor extends XmlEditor<Person> {
 	private final WriterEch0020 writerEch0020;
 	
+	public BaseDeliveryEditor(String version) {
+		super(EchNamespaceContext.getNamespaceContext(20, version));
+		this.writerEch0020 = new WriterEch0020(getEchNamespaceContext());
+	}
+	
 	public BaseDeliveryEditor(EchNamespaceContext echNamespaceContext) {
 		super(echNamespaceContext);
 		this.writerEch0020 = new WriterEch0020(echNamespaceContext);
@@ -27,7 +32,7 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 	}
 
 	@Override
-	public Person load() {
+	public Person newInstance() {
 		Person person = new Person();
 		PreferenceData preferenceData = PreferenceData.load();
 		person.religion = preferenceData.preferencesDefaultsData.religion;

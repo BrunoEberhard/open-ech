@@ -20,6 +20,8 @@ import org.xml.sax.SAXParseException;
 
 import ch.openech.xml.read.LSInputImpl;
 import ch.openech.xml.read.StaxEch0020;
+import ch.openech.xml.read.StaxEch0148;
+import ch.openech.xml.read.StaxEchParser;
 
 public class EchServer {
 	public static final Logger logger = Logger.getLogger(EchServer.class.getName());
@@ -27,11 +29,13 @@ public class EchServer {
 	private static EchServer instance;
 	private EchPersistence persistence;
 	private StaxEch0020 ech0020;
+	private StaxEch0148 ech0148;
 	
 	private EchServer() {
 		try {
 			persistence = new EchPersistence();
 			ech0020 = new StaxEch0020(persistence);
+			ech0148 = new StaxEch0148(persistence);
 			instance = this;
 		} catch (Exception x) {
 			logger.log(Level.SEVERE, "Couldnt initialize EchServer", x);
@@ -88,8 +92,16 @@ public class EchServer {
 		}
 	    return message;
 	}
-
+	
 	public synchronized ServerCallResult process(String... xmlStrings) {
+		return process(ech0020, xmlStrings);
+	}
+
+	public synchronized ServerCallResult processOrg(String... xmlStrings) {
+		return process(ech0148, xmlStrings);
+	}
+	
+	public synchronized ServerCallResult process(StaxEchParser parser, String... xmlStrings) {
 		if (xmlStrings.length > 1) {
 			logger.fine("process " + xmlStrings.length + " xmls");
 		}
@@ -99,12 +111,12 @@ public class EchServer {
 			try {
 				for (String xmlString : xmlStrings) {
 					logger.fine(xmlString);
-					ech0020.process(xmlString);
+					parser.process(xmlString);
 				}
 				persistence.commit();
-				String lastInsertedPersonId = ech0020.getLastInsertedPersonId();
-				if (lastInsertedPersonId != null) {
-					result.createdPersonId = lastInsertedPersonId;
+				String lastInsertedId = parser.getLastInsertedId();
+				if (lastInsertedId != null) {
+					result.createdPersonId = lastInsertedId;
 				}
 			} catch (Exception x) {
 				x.printStackTrace();

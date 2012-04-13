@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import ch.openech.client.ewk.BaseDeliveryEditor;
-import ch.openech.client.ewk.CreateOrganisationEditor;
 import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.client.ewk.event.ExportAllAction;
 import ch.openech.client.ewk.event.KeyDeliveryAction;
 import ch.openech.client.ewk.event.birth.BirthEvent;
 import ch.openech.client.ewk.event.moveIn.MoveInWizard;
+import ch.openech.client.org.BaseDeliveryOrganisationEditor;
+import ch.openech.client.org.FoundationEditor;
 import ch.openech.client.preferences.PreferenceData.ApplicationSchemaData;
 import ch.openech.client.tpn.MoveDirection;
 import ch.openech.client.tpn.TpnMoveEditor;
@@ -57,7 +58,8 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		ActionGroup niu = file.getOrCreateActionGroup(ActionGroup.NEW);
 		
 		if (ewkNamespaceContext != null) {
-			niu.add(new EditorDialogAction(new MoveInWizard(ewkNamespaceContext)));
+//			niu.add(new EditorDialogAction(new MoveInWizard(ewkNamespaceContext)));
+			niu.add(new EditorPageAction(MoveInWizard.class, ewkNamespaceContext.getVersion()));
 			niu.add(new EditorDialogAction(new BirthEvent(ewkNamespaceContext)));
 			
 			ActionGroup export = file.getOrCreateActionGroup(ActionGroup.EXPORT);
@@ -73,11 +75,12 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		}
 		
 		if (orgNamespaceContext != null) {
-			niu.add(new EditorDialogAction(new CreateOrganisationEditor(orgNamespaceContext)));
+			niu.add(new EditorDialogAction(new BaseDeliveryOrganisationEditor(orgNamespaceContext)));
+			niu.add(new EditorDialogAction(new FoundationEditor(orgNamespaceContext)));
 		}
 		
 		if (tpnNamespaceContext != null) {
-			niu.add(new EditorPageAction(TpnMoveEditor.class, MoveDirection.IN.toString()));
+			niu.add(new EditorDialogAction(new TpnMoveEditor(MoveDirection.IN.toString())));
 		}
 		
 		ActionGroup window = actionGroup.getOrCreateActionGroup(ActionGroup.WINDOW);

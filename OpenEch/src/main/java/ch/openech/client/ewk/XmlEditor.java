@@ -18,7 +18,6 @@ import ch.openech.client.ewk.event.XmlTextFormField;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.resources.Resources;
 import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
@@ -165,7 +164,12 @@ public abstract class XmlEditor<T> extends Editor<T> {
 				throw new RuntimeException("XML Generierung fehlgeschlagen", x);
 			}
 			
-			AbstractFormVisual<XmlAction> form = new AbstractFormVisual(XmlAction.class, null, false);
+			AbstractFormVisual<XmlAction> form = new AbstractFormVisual(XmlAction.class, null, false) {
+				@Override
+				protected int getColumnWidthPercentage() {
+					return 1000;
+				}
+			};
 			form.area(new XmlTextFormField("xmls"));
 			form.setObject(this);
 			ClientToolkit.getToolkit().openDialog(null, form, "XML").openDialog();

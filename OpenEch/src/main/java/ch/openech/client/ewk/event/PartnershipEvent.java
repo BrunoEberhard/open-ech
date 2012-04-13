@@ -123,7 +123,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 	
 	private String changeName(WriterEch0020 writerEch0020, Person person, String officialName) throws Exception {
-		Person personToChange = CloneHelper.cloneIfPossible(person);
+		Person personToChange = CloneHelper.clone(person);
 		personToChange.alliancePartnershipName = officialName; // !!
 		return writerEch0020.changeName(person.personIdentification, personToChange);
 	}

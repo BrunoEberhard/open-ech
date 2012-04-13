@@ -53,13 +53,14 @@ public class WriterEch0098 {
 	}
 
 	public void reportedOrganisationType(WriterElement parent, String tagName, Organisation organisation) throws Exception {
-		organisation(parent, tagName, organisation);
+		WriterElement element = parent.create(URI, tagName);
+		organisation(element, ORGANISATION, organisation);
 		if (organisation.hasMainResidence()) {
-			mainResidence(parent, organisation);
+			mainResidence(element, organisation);
 		} else if (organisation.hasSecondaryResidence()) {
-			secondaryResidence(parent, organisation);
+			secondaryResidence(element, organisation);
 		} else if (organisation.hasOtherResidence()) {
-			otherResidence(parent, organisation);
+			otherResidence(element, organisation);
 		} 
 	}
 	
@@ -99,7 +100,7 @@ public class WriterEch0098 {
 	private void commonResidenceInformation(WriterElement element, Organisation values) throws Exception {
 		element.values(values, ARRIVAL_DATE);
 		destination(element, COMES_FROM, values.comesFrom, true);
-		dwellingAddress(element, MAIL_ADDRESS, values.businessAddress);
+		dwellingAddress(element, BUSINESS_ADDRESS, values.businessAddress);
 		element.values(values, DEPARTURE_DATE);
 		destination(element, GOES_TO, values.goesTo, false);
 	}

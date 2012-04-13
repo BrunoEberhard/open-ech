@@ -3,10 +3,7 @@ package ch.openech.datagenerator;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-
 import ch.openech.client.e44.VnField;
-import ch.openech.client.ewk.event.ThreadSafeProgressMonitor;
 import ch.openech.dm.code.MaritalStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
@@ -21,42 +18,16 @@ import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.value.PropertyAccessor;
-import ch.openech.mj.page.RefreshablePage;
 import ch.openech.server.EchServer;
 import ch.openech.util.PlzImport;
 import ch.openech.xml.read.StaxEch0071;
-import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
 public class DataGenerator {
 
 	private static List<MunicipalityIdentification> municipalityIdentifications = StaxEch0071.getInstance().getMunicipalityIdentifications();
 
-	public static void generateData(final EchNamespaceContext echNamespaceContext, final int parseInt, final RefreshablePage refreshable) {
-		final ThreadSafeProgressMonitor progressMonitor = new ThreadSafeProgressMonitor(null, "Generiere Testdaten", "Initialisierung", 0, parseInt);
-		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				WriterEch0020 writerEch0020 = new WriterEch0020(echNamespaceContext);
-				for (int i = 0; i<parseInt; i++) {
-					if (progressMonitor.isCanceled()) break;
-					progressMonitor.invokeSetNote("Generiere Person " + i);
-					progressMonitor.invokeSetProgress(i);
-					generatePerson(writerEch0020, progressMonitor);
-				}
-				progressMonitor.close();
-				SwingUtilities.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						refreshable.refresh();
-					}
-				});
-			}
-		}).start();
-	}
-	
-	public static void generatePerson(WriterEch0020 writerEch0020, ThreadSafeProgressMonitor progressMonitor) {
+	public static void generatePerson(WriterEch0020 writerEch0020) {
 		try {
 			String xml = writerEch0020.moveIn(person());
 			EchServer.getInstance().process(xml);

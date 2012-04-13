@@ -16,7 +16,6 @@ public class EchFormats {
 	// public static final String datePartiallyKnown = "http://www.ech.ch/xmlns/eCH-0044/2:datePartiallyKnown";
 
 	public static final String baseName = "baseName";
-	public static final String organisationName = "organisationName";
 	public static final String addressLine = "addressLine";
 	public static final String yesNo = "yesNo";
 	
@@ -34,6 +33,11 @@ public class EchFormats {
 
 	public static final String cantonAbbreviation = "cantonAbbreviation";
 	public static final Format cantonAbbreviationFormat = new PlainFormat(2);
+	
+	// ech 97
+	public static final String organisationName = "organisationName";
+	public static final String uidStructure = "uidStructure";
+
 	
 	static {
 		Formats formats = Formats.getInstance();
@@ -57,6 +61,8 @@ public class EchFormats {
 		formats.register("category", new PlainFormat(1));
 		
 		formats.register(cantonAbbreviation, cantonAbbreviationFormat);
+		
+		formats.register(uidStructure, new PlainFormat(12));
 	}
 	
 	static void registerXmlSimpleTypes(int root, String version) {

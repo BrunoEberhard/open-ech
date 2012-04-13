@@ -1,5 +1,6 @@
 package ch.openech.dm.organisation;
 
+import ch.openech.dm.EchFormats;
 import ch.openech.dm.Event;
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.common.DwellingAddress;
@@ -20,12 +21,12 @@ public class Organisation {
 	public Event event;
 	
 	// 97 : Identification
-	@FormatName("uidStructure")
+	@FormatName(EchFormats.uidStructure)
 	public String uid; // ADM000000001 - CHE999999999
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 	
-	@FormatName("organisationName")
+	@FormatName(EchFormats.organisationName)
 	public String organisationName, organisationLegalName, organisationAdditionalName;
 	public String legalForm;
 	
@@ -53,18 +54,20 @@ public class Organisation {
 	public String uidregOrganisationType; // 1-12
 	public String uidregLiquidationReason; // 1-8
 	
-	@FormatName("uidStructure")
+	@FormatName(EchFormats.uidStructure)
 	public String uidregSourceUid; // ADM000000001 - CHE999999999
 	
 	// commercialRegisterInformation
+	@Required
 	public String commercialRegisterStatus; // 1-3
 	public String commercialRegisterEntryStatus; // 1-2
-	@FormatName("organisationName")
+	@FormatName(EchFormats.organisationName)
 	public String commercialRegisterNameTranslation;
-	public String commercialRegisterEntryDate;
-	public String commercialRegisterLiquidationDate;
+	@Date
+	public String commercialRegisterEntryDate, commercialRegisterLiquidationDate;
 	
 	// vatRegisterInformation
+	@Required
 	public String vatStatus; // 1-3
 	public String vatEntryStatus; // 1-2
 	@Date

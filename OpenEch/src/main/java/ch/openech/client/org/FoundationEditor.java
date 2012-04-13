@@ -14,17 +14,17 @@ import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0148;
 
 
-public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
+public class FoundationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
 	private final WriterEch0148 writerEch0148;
 	
-	public BaseDeliveryOrganisationEditor(EchNamespaceContext echNamespaceContext) {
+	public FoundationEditor(EchNamespaceContext echNamespaceContext) {
 		super(echNamespaceContext);
 		this.writerEch0148 = new WriterEch0148(echNamespaceContext);
 	}
 
 	@Override
 	public FormVisual<Organisation> createForm() {
-		return new OrganisationPanel(OrganisationPanelType.BASE_DELIVERY, getEchNamespaceContext());
+		return new OrganisationPanel(OrganisationPanelType.FOUNDATION, getEchNamespaceContext());
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> impl
 	
 	@Override
 	public List<String> getXml(Organisation organisation) throws Exception {
-		return Collections.singletonList(writerEch0148.organisationBaseDelivery(Collections.singletonList(organisation)));
+		return Collections.singletonList(writerEch0148.foundation(organisation));
 	}
 
 }

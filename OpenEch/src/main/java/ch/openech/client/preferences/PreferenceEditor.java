@@ -15,7 +15,7 @@ public class PreferenceEditor extends Editor<PreferenceData> {
 	}
 	
 	@Override
-	protected PreferenceData load() {
+	protected PreferenceData newInstance() {
 		PreferenceData data = new PreferenceData();
 		PreferencesHelper.load(data);
 		return data;

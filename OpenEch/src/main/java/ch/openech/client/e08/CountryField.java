@@ -56,7 +56,7 @@ public class CountryField extends ObjectField<CountryIdentification> implements 
 	public void fillWithDemoData() {
 		int index = (int) (Math.random() * (double) StaxEch0072.getInstance().getCountryIdentifications().size());
 		CountryIdentification country =  StaxEch0072.getInstance().getCountryIdentifications().get(index);
-		setObject(CloneHelper.cloneIfPossible(country));
+		setObject(CloneHelper.clone(country));
 	}
 
 }

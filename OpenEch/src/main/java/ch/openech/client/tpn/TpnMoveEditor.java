@@ -110,7 +110,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	}
 
 	@Override
-	protected ThirdPartyMove load() {
+	protected ThirdPartyMove newInstance() {
 		ThirdPartyMove thirdPartyMove = new ThirdPartyMove();
 		thirdPartyMove.contractor = loadLastContractor();
 

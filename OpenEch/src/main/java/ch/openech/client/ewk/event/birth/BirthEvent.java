@@ -27,7 +27,7 @@ public class BirthEvent extends XmlEditor<Person> {
 	}
 
 	@Override
-	public Person load() {
+	public Person newInstance() {
 		return calculatePresets();
 	}
 

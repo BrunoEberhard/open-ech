@@ -21,7 +21,7 @@ import ch.openech.mj.util.ProgressListener;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchPersistence;
 
-public class StaxEch0148 {
+public class StaxEch0148 implements StaxEchParser {
 
 	private final EchPersistence persistence;
 	
@@ -43,7 +43,8 @@ public class StaxEch0148 {
 		}
 	}
 
-	public String getLastInsertedOrganisationId() {
+	@Override
+	public String getLastInsertedId() {
 		return lastInsertedOrganisationId;
 	}
 
