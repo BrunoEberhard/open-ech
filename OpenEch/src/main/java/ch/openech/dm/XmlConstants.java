@@ -142,6 +142,7 @@ public class XmlConstants {
 	public static String COUNTRY_ROOT="countryRoot";
 	public static String DATA_LOCK="dataLock";
 	public static String DATA_REQUEST="dataRequest";
+	public static String DATE_CLOSING_VOTING_REGISTER="dateClosingVotingRegister";
 	public static String DATE_FROM="dateFrom";
 	public static String DATE_OF_BIRTH="dateOfBirth";
 	public static String DATE_OF_CHANGE="dateOfChange";
@@ -192,6 +193,10 @@ public class XmlConstants {
 	public static String ERROR_INFO="errorInfo";
 	public static String EU_PERSON_ID="euPersonId";
 	public static String EVENT_DATE="eventDate";
+	public static String EVENT_DATE_FROM="eventDateFrom";
+	public static String EVENT_DATE_TO="eventDateTo";
+	public static String EVENT_IDENTIFICATION="eventIdentification";
+	public static String EVENT_NAME="eventName";
 	public static String EVENT_REPORT="eventReport";
 	public static String EXPATRIATION_DATE="expatriationDate";
 	public static String EXTENSION="extension";
@@ -352,6 +357,7 @@ public class XmlConstants {
 	public static String ORIGIN_ADDON="originAddon";
 	public static String ORIGIN_NAME="originName";
 	public static String ORIGINAL_NAME="originalName";
+	public static String ORIGINAL_SENDER_I_D="originalSenderID";
 	public static String ORIGINAL_SENDER_ID="originalSenderId";
 	public static String OTHER_ADDRESS_CATEGORY="otherAddressCategory";
 	public static String OTHER_EMAIL_CATEGORY="otherEmailCategory";
@@ -360,6 +366,7 @@ public class XmlConstants {
 	public static String OTHER_PERSON_ID="otherPersonId";
 	public static String OTHER_PHONE_CATEGORY="otherPhoneCategory";
 	public static String OTHER_RESIDENCE_ADDRESS="otherResidenceAddress";
+	public static String OUR_BUSINESS_REFERENCE_I_D="ourBusinessReferenceID";
 	public static String OUR_BUSINESS_REFERENCE_ID="ourBusinessReferenceId";
 	public static String PAPER_LOCK="paperLock";
 	public static String PAPER_LOCK_PERSON="paperLockPerson";
@@ -496,6 +503,7 @@ public class XmlConstants {
 	public static String UNDO_SEPARATION_PERSON="undoSeparationPerson";
 	public static String UNDO_SWISS="undoSwiss";
 	public static String UNDO_SWISS_PERSON="undoSwissPerson";
+	public static String UNIQUE_I_D_BUSINESS_CASE="uniqueIDBusinessCase";
 	public static String UNIQUE_ID_BUSINESS_CASE="uniqueIdBusinessCase";
 	public static String UNIQUE_ID_BUSINESS_TRANSACTION="uniqueIdBusinessTransaction";
 	public static String UNKNOWN="unknown";

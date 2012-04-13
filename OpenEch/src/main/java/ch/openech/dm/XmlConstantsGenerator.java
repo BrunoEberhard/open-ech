@@ -87,6 +87,7 @@ public class XmlConstantsGenerator {
 		generator.read(97, "1.0");
 		generator.read(98, "1.0");
 		generator.read(101, "1.0");
+		generator.read(102, "1.0");
 		generator.read(108, "1.0");
 		generator.read(112, "1.0");
 		generator.read(148, "1.0");
