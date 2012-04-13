@@ -30,7 +30,8 @@ public class FoundationEditor extends XmlEditor<Organisation> implements XmlResu
 	@Override
 	public Organisation newInstance() {
 		Organisation organisation = new Organisation();
-
+		organisation.technicalIds.localId.setOpenEch();
+		
 		// TODO Presets
 		
 //		for (String key : getStringKeys()) {

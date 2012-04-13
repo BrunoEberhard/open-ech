@@ -86,7 +86,10 @@ public abstract class DeliveryWriter {
 		
 		// TODO Diese ifs sind etwas gewagt. Es wird davon ausgegangen, dass wenn das Schema
 		// 58 oder 78 bekannt ist auch ein Header geschrieben werden soll.
-		if (context.getNamespaceURI(78) != null) {
+		if (context.getNamespaceURI(102) != null) {
+			WriterEch0102 ech102 = new WriterEch0102(context);
+			ech102.header(rootElement, getEnvelope());
+		} else if (context.getNamespaceURI(78) != null) {
 			WriterEch0078 ech78 = new WriterEch0078(context);
 			ech78.header(rootElement, getEnvelope());
 		} else if (context.getNamespaceURI(58) != null) {

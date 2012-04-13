@@ -1,13 +1,22 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
-
+import static ch.openech.dm.XmlConstants.LEGAL_FORM;
+import static ch.openech.dm.XmlConstants.LOCAL_ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ADDITIONAL_NAME;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.ORGANISATION_IDENTIFICATION;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ID_CATEGORY;
+import static ch.openech.dm.XmlConstants.ORGANISATION_LEGAL_NAME;
+import static ch.openech.dm.XmlConstants.ORGANISATION_NAME;
+import static ch.openech.dm.XmlConstants.UID;
+import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID_CATEGORIE;
+import static ch.openech.dm.XmlConstants._OTHER_ORGANISATION_ID;
 
 import java.util.List;
 
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.util.StringUtils;
 
 public class WriterEch0097 {
 
@@ -45,12 +54,10 @@ public class WriterEch0097 {
 	}
 	
 	private void namedId(WriterElement parent, NamedId namedId, String name) throws Exception {
-		if (!StringUtils.isEmpty(namedId.personId)) {
-			WriterElement element = parent.create(URI, name);
-			
-			element.text(ORGANISATION_ID_CATEGORY, namedId.personIdCategory);
-			element.text(ORGANISATION_ID, namedId.personId);
-		}
+		WriterElement element = parent.create(URI, name);
+		
+		element.text(ORGANISATION_ID_CATEGORY, namedId.personIdCategory);
+		element.text(ORGANISATION_ID, namedId.personId);
 	}
 
 }

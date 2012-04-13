@@ -78,10 +78,12 @@ public class WriterEch0098 {
 	}
 	
 	private void swissHeadquarter(WriterElement parent, Organisation values) throws Exception {
-		WriterElement element = parent.create(URI, SWISS_HEADQUARTER);
-		ech97.organisationIdentification(element, values.headquarterOrganisation);
-		ech7.municipality(element, HEADQUARTER_MUNICIPALITY, values.headquarterOrganisation.reportingMunicipality);
-		dwellingAddress(element, BUSINESS_ADDRESS, values.headquarterOrganisation.businessAddress);
+		if (values.headquarterOrganisation != null) {
+			WriterElement element = parent.create(URI, SWISS_HEADQUARTER);
+			ech97.organisationIdentification(element, values.headquarterOrganisation);
+			ech7.municipality(element, HEADQUARTER_MUNICIPALITY, values.headquarterOrganisation.reportingMunicipality);
+			dwellingAddress(element, BUSINESS_ADDRESS, values.headquarterOrganisation.businessAddress);
+		}
 	}
 	
 	public void otherResidence(WriterElement parent, Organisation values) throws Exception {
@@ -92,8 +94,10 @@ public class WriterEch0098 {
 	}
 
 	private void foreignHeadquarter(WriterElement parent, Organisation values) throws Exception {
-		WriterElement element = parent.create(URI, FOREIGN_HEADQUARTER);
-		dwellingAddress(element, BUSINESS_ADDRESS, values.headquarterOrganisation.businessAddress);
+		if (values.headquarterOrganisation != null) {
+			WriterElement element = parent.create(URI, FOREIGN_HEADQUARTER);
+			dwellingAddress(element, BUSINESS_ADDRESS, values.headquarterOrganisation.businessAddress);
+		}
 	}
 
 	// Nearly exact code from Writer Ech0011
