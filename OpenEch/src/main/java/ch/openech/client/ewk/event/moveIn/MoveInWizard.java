@@ -268,7 +268,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	private class MoveInNextPersonField extends AbstractEditField<Person> implements DependingOnFieldAbove<String> {
 
-		private final ComboBox comboBox;
+		private final ComboBox<Person> comboBox;
 		private final TypeOfRelationship relation;
 		
 		public MoveInNextPersonField(Object key, TypeOfRelationship relation) {
