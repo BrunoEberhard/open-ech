@@ -87,6 +87,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	@Override
 	protected MoveInEditorData load() {
+		// Editor should use newInstance
+		return null;
+	}
+	
+	@Override
+	protected MoveInEditorData newInstance() {
 		return new MoveInEditorData();
 	}
 
@@ -134,7 +140,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		protected Person load() {
+		protected Person newInstance() {
 			MoveInEditorData wizardData = MoveInWizard.this.getObject();
 			if (wizardData.persons.size() <= personIndex) {
 				Person person;
@@ -197,7 +203,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		protected MoveInNextPerson load() {
+		protected MoveInNextPerson newInstance() {
 			MoveInEditorData wizardData = MoveInWizard.this.getObject();
 			if (wizardData.nextPersons.size() <= personIndex) {
 				MoveInNextPerson moveInNextPerson = new MoveInNextPerson();
