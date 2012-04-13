@@ -56,6 +56,8 @@ public class EchCodes {
 	// Organisation
 	
 	public static final InternalCode typeOfResidenceOrganisation = new InternalCode(TypeOfResidenceOrganisation.class);
+	
+	public static final Code uidOrganisationIdCategorie = new Code(organisation, "uidOrganisationIdCategorie");
 	public static final Code legalForm = new Code(organisation, "legalForm");
 	
 	public static final Code foundationReason = new Code(organisation, "foundationReason");
