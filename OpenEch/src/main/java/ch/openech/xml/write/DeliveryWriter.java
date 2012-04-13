@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -17,7 +18,8 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.mj.util.DateUtils;
 
 public abstract class DeliveryWriter {
-
+	private static final Logger logger = Logger.getLogger(DeliveryWriter.class.getName());
+	
 	public static final String XMLSchema_URI = "http://www.w3.org/2001/XMLSchema-instance";
 
 	private Writer writer;
@@ -68,7 +70,11 @@ public abstract class DeliveryWriter {
 	}
 
 	public WriterElement delivery(Writer writer) throws Exception {
-		if (this.writer != null) throw new IllegalStateException("Method result() not called before delivery()");
+		if (this.writer != null) {
+			logger.info("Method result() not called before delivery()");
+			writer.close();
+			writer = null;
+		}
 
 		this.writer = writer;
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
