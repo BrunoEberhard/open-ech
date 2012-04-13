@@ -18,12 +18,8 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 	private static final int[] mult = {5, 4, 3, 2, 7, 6, 5, 4};
 	private TextField textField;
 	
-	public OrganisationUidField() {
-		this(null);
-	}
-	
-	public OrganisationUidField(Object key) {
-		super(key, true);
+	public OrganisationUidField(Object key, boolean editable) {
+		super(key, editable);
 		textField = ClientToolkit.getToolkit().createTextField(listener(), new OrganisationTextFieldFilter());
 	}
 	

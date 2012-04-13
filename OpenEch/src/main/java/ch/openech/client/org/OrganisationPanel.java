@@ -22,7 +22,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 		
 		reportedOrganisation();
 		
-		if (OrganisationPanelType.FOUNDATION == type) {
+		if (OrganisationPanelType.FOUNDATION == type || OrganisationPanelType.DISPLAY == type) {
 			uidregInformation();
 			commercialRegisterInformation();
 			vatRegisterInformation();
@@ -37,10 +37,10 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 	public void organisation() {
 		line(ORGANISATION.organisationName);
 		line(ORGANISATION.organisationLegalName, ORGANISATION.organisationAdditionalName, ORGANISATION.legalForm, ORGANISATION.languageOfCorrespondance);
-		line(new OrganisationUidField(ORGANISATION.uid), new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
+		line(new OrganisationUidField(ORGANISATION.uid, editable), new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
 
 		line(ORGANISATION.uidBrancheText, ORGANISATION.nogaCode);
-		line(new DateField(ORGANISATION.foundationDate, DateField.PARTIAL_ALLOWED), new DateField(ORGANISATION.liquidationDate, DateField.PARTIAL_ALLOWED));
+		line(new DateField(ORGANISATION.foundationDate, DateField.PARTIAL_ALLOWED, editable), new DateField(ORGANISATION.liquidationDate, DateField.PARTIAL_ALLOWED, editable));
 		line(ORGANISATION.foundationReason, ORGANISATION.liquidationReason);
 	}
 
@@ -56,7 +56,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 	private void uidregInformation() {
 		addTitle("UID - Register");
 		line(ORGANISATION.uidregStatusEnterpriseDetail, ORGANISATION.uidregPublicStatus, ORGANISATION.uidregOrganisationType, ORGANISATION.uidregLiquidationReason);
-		line(new OrganisationUidField(ORGANISATION.uidregSourceUid));
+		line(new OrganisationUidField(ORGANISATION.uidregSourceUid, editable));
 	}
 
 	private void commercialRegisterInformation() {
