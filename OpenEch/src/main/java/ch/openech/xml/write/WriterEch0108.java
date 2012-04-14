@@ -1,19 +1,20 @@
 package ch.openech.xml.write;
 
 import static ch.openech.dm.XmlConstants.*;
-
 import ch.openech.dm.organisation.Organisation;
 
 public class WriterEch0108 extends DeliveryWriter {
 
 	public final String URI;
 	public final WriterEch0098 ech98;
+	public final WriterEch0097 ech97;
 	
 	public WriterEch0108(EchNamespaceContext context) {
 		super(context);
 		
 		URI = context.getNamespaceURI(108);
 		ech98 = new WriterEch0098(context);
+		ech97 = new WriterEch0097(context);
 	}
 	
 	@Override
@@ -50,8 +51,7 @@ public class WriterEch0108 extends DeliveryWriter {
 		element.values(values, UIDREG_STATUS_ENTERPRISE_DETAIL, //
 				UIDREG_PUBLIC_STATUS, UIDREG_ORGANISATION_TYPE, //
 				UIDREG_LIQUIDATION_REASON);
-		// TODO source
-		// WriterEch0097.uidStructure(element, "uidRegSource", values.uidregSourceOrganisationId)
+		ech97.uidStructure(element, UIDREG_SOURCE, values.uidregSourceUid);
     }
 
 	public void commercialRegisterInformation(WriterElement parent, Organisation values) throws Exception {
