@@ -16,11 +16,15 @@ import ch.openech.mj.util.StringUtils;
 public class OrganisationUidField extends AbstractEditField<String> implements DemoEnabled, Validatable {
 
 	private static final int[] mult = {5, 4, 3, 2, 7, 6, 5, 4};
-	private TextField textField;
+	private final TextField textField;
 	
 	public OrganisationUidField(Object key, boolean editable) {
 		super(key, editable);
-		textField = ClientToolkit.getToolkit().createTextField(listener(), new OrganisationTextFieldFilter());
+		if (editable) {
+			textField = ClientToolkit.getToolkit().createTextField(listener(), new OrganisationTextFieldFilter());
+		} else {
+			textField = ClientToolkit.getToolkit().createReadOnlyTextField();
+		}
 	}
 	
 	@Override
