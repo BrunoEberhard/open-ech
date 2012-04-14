@@ -11,6 +11,8 @@ import ch.openech.client.ewk.event.birth.BirthEvent;
 import ch.openech.client.ewk.event.moveIn.MoveInWizard;
 import ch.openech.client.org.BaseDeliveryOrganisationEditor;
 import ch.openech.client.org.FoundationEditor;
+import ch.openech.client.org.OrganisationViewPage;
+import ch.openech.client.org.SearchOrganisationPage;
 import ch.openech.client.preferences.PreferenceData.ApplicationSchemaData;
 import ch.openech.client.tpn.MoveDirection;
 import ch.openech.client.tpn.TpnMoveEditor;
@@ -46,7 +48,7 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 
 	@Override
 	public Class<?>[] getSearchClasses() {
-		return new Class<?>[]{SearchPersonPage.class};
+		return new Class<?>[]{SearchPersonPage.class, SearchOrganisationPage.class};
 	}
 
 	@Override
