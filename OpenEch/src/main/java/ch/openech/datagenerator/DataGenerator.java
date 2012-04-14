@@ -145,6 +145,13 @@ public class DataGenerator {
 		return placeOfOrigin;
 	}
 	
+	public static MunicipalityIdentification municipalityIdentification() {
+		MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
+		MunicipalityIdentification m = municipalityIdentifications.get((int)(Math.random() * municipalityIdentifications.size()));
+		m.copyTo(municipalityIdentification);
+		return municipalityIdentification;
+	}
+	
 	public static DwellingAddress dwellingAddress() {
 		DwellingAddress dwellingAddress = new DwellingAddress();
 		dwellingAddress.EGID = "" + (int)(Math.random() * 999999998 + 1);

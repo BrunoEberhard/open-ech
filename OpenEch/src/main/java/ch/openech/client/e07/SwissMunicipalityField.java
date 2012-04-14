@@ -3,15 +3,17 @@ package ch.openech.client.e07;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.common.MunicipalityIdentification;
+import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.xml.read.StaxEch0071;
 
-public class SwissMunicipalityField extends ObjectField<MunicipalityIdentification> {
+public class SwissMunicipalityField extends ObjectField<MunicipalityIdentification> implements DemoEnabled {
 	private final List<MunicipalityIdentification> municipalities;
 	private final ComboBox<MunicipalityIdentification> comboBox;
 
@@ -93,5 +95,10 @@ public class SwissMunicipalityField extends ObjectField<MunicipalityIdentificati
 			FederalRegisterMunicipality other = (FederalRegisterMunicipality) obj;
 			return key == other.key;
 		}
+	}
+
+	@Override
+	public void fillWithDemoData() {
+		setObject(DataGenerator.municipalityIdentification());
 	}
 }
