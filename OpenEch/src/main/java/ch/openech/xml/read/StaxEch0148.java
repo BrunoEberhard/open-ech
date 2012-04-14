@@ -162,7 +162,6 @@ public class StaxEch0148 implements StaxEchParser {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(REPORTED_ORGANISATION)) organisation = StaxEch0098.reportedOrganisation(xml);
-				else if (startName.equals(UIDREG_INFORMATION)) StaxEch0108.organisation(xml, organisation);
 				else if (StringUtils.equals(startName, UIDREG_INFORMATION, COMMERCIAL_REGISTER_INFORMATION, VAT_REGISTER_INFORMATION)) StaxEch0108.organisationRegistration(xml, organisation);
 				else skip(xml);
 			} else if (event.isEndElement()) {

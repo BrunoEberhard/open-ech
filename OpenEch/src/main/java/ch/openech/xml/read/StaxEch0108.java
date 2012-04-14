@@ -82,6 +82,7 @@ public class StaxEch0108 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.endsWith("Date")) organisation.set(startName, date(xml));
+				else if (startName.equals(UIDREG_SOURCE)) organisation.uidregSourceUid = StaxEch0097.uidStructure(xml);
 				else organisation.set(startName, token(xml));
 			} else if (event.isEndElement()) {
 				return;
