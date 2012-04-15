@@ -8,7 +8,6 @@ import java.util.List;
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
@@ -24,7 +23,7 @@ public class CorrectResidencePermitEvent extends PersonEventEditor<Foreign> {
 		formPanel.line(PERSON.foreign.residencePermit);
 		
 		// bei Change ist diese Angabe obligatorisch, bei Correct nicht
-		formPanel.line(new DateField(PERSON.foreign.residencePermitTill, DateField.NOT_REQUIRED)); 
+		formPanel.line(PERSON.foreign.residencePermitTill); 
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
+import ch.openech.mj.edit.value.Required;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -33,7 +34,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 		
 	public static class Partnership {
-		@Date
+		@Required @Date
 		public String dateOfMaritalStatus;
 		@Boolean
 		public String registerPartner2 = "1";
@@ -58,7 +59,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		
 		//
 		
-		formPanel.line(new DateField(PARTNERSHIP.dateOfMaritalStatus, DateField.REQUIRED), PARTNERSHIP.registerPartner2);
+		formPanel.line(PARTNERSHIP.dateOfMaritalStatus, PARTNERSHIP.registerPartner2);
 		formPanel.area(partner1, partner2);
 	
 		formPanel.line(PARTNERSHIP.changeName1, PARTNERSHIP.changeName2);

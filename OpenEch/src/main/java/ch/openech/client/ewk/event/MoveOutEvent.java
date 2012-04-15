@@ -9,8 +9,9 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.DateField;
+import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.value.Required;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0093;
@@ -22,6 +23,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 	}
 
 	public static class MoveOutData {
+		@Required @Date
 		public String departureDate;
 		public MunicipalityIdentification reportingMunicipality;
 		public Place goesTo;
@@ -41,7 +43,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 
 	@Override
 	protected void fillForm(AbstractFormVisual<MoveOutData> formPanel) {
-		formPanel.line(new DateField(MOD.departureDate, DateField.REQUIRED));
+		formPanel.line(MOD.departureDate);
 		formPanel.line(new SwissMunicipalityField(MOD.reportingMunicipality, true));
 		formPanel.line(MOD.goesTo);
 	}
