@@ -12,7 +12,12 @@ public class TechnicalIds {
 	public final List<NamedId> otherId = new ArrayList<NamedId>();
 	public final List<NamedId> euId = new ArrayList<NamedId>();
 
+	public TechnicalIds() {
+		localId.setOpenEch();
+	}
+	
 	public void clear() {
+		localId.setOpenEch();
 		otherId.clear();
 		euId.clear();
 	}
