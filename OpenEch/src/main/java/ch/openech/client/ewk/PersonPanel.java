@@ -27,7 +27,6 @@ import ch.openech.dm.person.Relation;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.edit.fields.CodeEditField;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.EditField;
@@ -240,7 +239,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 	protected void createBirth() {
 		line(PERSON.callName, PERSON.languageOfCorrespondance);
 		line(PERSON.nationality, PERSON.religion);
-		line(PERSON.placeOfBirth); // TODO: halfLine !!
+		line(PERSON.placeOfBirth);
 		createAreas();
 	}
 
