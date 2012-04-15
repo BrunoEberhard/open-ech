@@ -45,7 +45,7 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected List<String> getXml(Person person, Person changedPerson, WriterEch0020 writerEch0020) throws Exception {
-		return Collections.singletonList(writerEch0020.birth(person));
+		return Collections.singletonList(writerEch0020.birth(changedPerson));
 	}
 	
 	@Override
