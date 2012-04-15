@@ -16,12 +16,9 @@ import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.HorizontalLayout;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
 
-
-// TODO implement PlaceField
 public class PlaceField extends ObjectField<Place> implements DemoEnabled, Validatable {
 	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
 
@@ -84,7 +81,7 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		} else {
 			place.countryIdentification.clear();
 		}
-		if (switchLayoutMunicipality.getShownComponent() == comboBoxCountry) {
+		if (switchLayoutMunicipality.getShownComponent() == comboBoxMunicipality) {
 			if (comboBoxMunicipality.getSelectedObject() != null) {
 				((MunicipalityIdentification) comboBoxMunicipality.getSelectedObject()).copyTo(place.municipalityIdentification);
 			} else {
@@ -136,7 +133,7 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 	@Override
 	public void validate(List<ValidationMessage> resultList) {
 		// Es ist von dem Formular abhängig, ob ein PlaceField leer sein darf. Daher wird z.B.
-		// bei BirthPage validiert und nicht hier
+		// bei BirthChildEvent validiert und nicht hier
 	}
 
 }
