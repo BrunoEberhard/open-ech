@@ -1,14 +1,13 @@
 package ch.openech.client.ewk.event;
 
-import static ch.openech.dm.person.Occupation.OCCUPATION;
-
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.e10.AddressField;
+import ch.openech.client.e21.OccupationPanel;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -22,15 +21,15 @@ public class ChangeOccupationEvent extends PersonEventEditor<Occupation> {
 	}
 	
 	@Override
-	protected void fillForm(AbstractFormVisual<Occupation> formPanel) {
-		// TODO das ist das gleiche Formular wie bei OccupationFrame
-		formPanel.line(OCCUPATION.kindOfEmployment);
-		formPanel.line(OCCUPATION.jobTitle);
-		formPanel.line(OCCUPATION.employer);
-		formPanel.area(new AddressField(OCCUPATION.placeOfWork, false, false, false));
-		formPanel.area(new AddressField(OCCUPATION.placeOfEmployer, false, false, false));
+	public FormVisual<Occupation> createForm() {
+		return new OccupationPanel(getEchNamespaceContext());
 	}
 
+	@Override
+	protected void fillForm(AbstractFormVisual<Occupation> formPanel) {
+		// not used
+	}
+	
 	@Override
 	public Occupation load() {
 		return new Occupation();

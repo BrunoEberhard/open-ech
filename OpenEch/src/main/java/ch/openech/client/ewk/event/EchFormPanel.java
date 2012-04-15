@@ -167,7 +167,7 @@ public class EchFormPanel<T> extends AbstractFormVisual<T> {
 		} else if (type == List.class) {
 			Class<?> listClass = GenericUtils.getGenericClass(accessor.getType());
 			if (listClass == Occupation.class) {
-				return new OccupationField(name, editable);
+				return new OccupationField(name, namespaceContext, editable);
 //				} else if (listClass == Relation.class) {
 //					return new RelationField(name, editable);
 			} else if (listClass == PlaceOfOrigin.class) {

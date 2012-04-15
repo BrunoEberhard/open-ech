@@ -3,6 +3,8 @@ package ch.openech.dm.person;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.annotation.Date;
+import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class Occupation {
@@ -12,6 +14,8 @@ public class Occupation {
 	public String jobTitle;
 	public String employer;
 	public String kindOfEmployment;
+	@Date
+	public String occupationValidTill;
 	
 	public Address placeOfWork;
 	public Address placeOfEmployer;
@@ -45,7 +49,11 @@ public class Occupation {
 			StringUtils.appendLine(s, "Arbeitgeberort:");
 			placeOfEmployer.toHtml(s);
 		}
-
+		
+		if (!StringUtils.isBlank(occupationValidTill)) {
+			s.append("Gültig bis "); s.append(DateUtils.formatCH(occupationValidTill));
+		}
+		
 		s.append("&nbsp;</HTML>");
 		return s.toString();
 	}

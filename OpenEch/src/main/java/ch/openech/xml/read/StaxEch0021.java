@@ -1,6 +1,7 @@
 package ch.openech.xml.read;
 
 import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.date;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -33,6 +34,7 @@ public class StaxEch0021 {
 				else if (startName.equals(EMPLOYER)) occupation.employer = token(xml);
 				else if (startName.equals(PLACE_OF_WORK)) occupation.placeOfWork = StaxEch0010.address(xml);
 				else if (startName.equals(PLACE_OF_EMPLOYER)) occupation.placeOfEmployer = StaxEch0010.address(xml);
+				else if (startName.equals(OCCUPATION_VALID_TILL)) occupation.occupationValidTill = date(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return occupation;

@@ -344,4 +344,19 @@ public class EchNamespaceContext {
 	public boolean separationTillAvailable() {
 		return getNamespaceVersion(11) >= 5;
 	}
+	
+	/*
+	 * Occupation enthält muss vor eCH 21 Version 4 das kindOfEmployment
+	 * gesetzt haben. Bei späteren Versionen können alle Felder leer bleiben!
+	 */
+	public boolean kindOfEmploymentMandatory() {
+		return getNamespaceVersion(21) < 4;
+	}
+	
+	/*
+	 * Occupation enthält aber eCH 21 Version 4 ein validTill 
+	 */
+	public boolean occupationValidTillAvailable() {
+		return getNamespaceVersion(21) >= 4;
+	}
 }

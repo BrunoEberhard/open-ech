@@ -33,6 +33,8 @@ public class WriterEch0021 {
 		if (occupation.placeOfEmployer != null) {
 			ech10.addressInformation(occupationElement, PLACE_OF_EMPLOYER, occupation.placeOfEmployer);
 		}
+		
+		occupationElement.values(occupation, OCCUPATION_VALID_TILL);
 	}
 
 	public void relation(WriterElement parent, Relation relation) throws Exception {
