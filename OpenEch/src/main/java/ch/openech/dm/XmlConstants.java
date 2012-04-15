@@ -335,6 +335,7 @@ public class XmlConstants {
 	public static String NUMBER_OF_ORGANISATIONS="numberOfOrganisations";
 	public static String OBJECT="object";
 	public static String OCCUPATION="occupation";
+	public static String OCCUPATION_VALID_TILL="occupationValidTill";
 	public static String OFFICIAL_NAME="officialName";
 	public static String OFFICIAL_NAME_DE="officialNameDe";
 	public static String OFFICIAL_NAME_FR="officialNameFr";
