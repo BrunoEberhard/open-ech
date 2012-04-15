@@ -216,7 +216,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 		if (StringUtils.equals(value, typeOfResidence)) return;
 		
 		this.typeOfResidence = value;
-		if ("3".equals(typeOfResidence)) {
+		if ("3".equals(typeOfResidence) && getObject() != null) {
 			getObject().reportingMunicipality = null;
 		}
 		
