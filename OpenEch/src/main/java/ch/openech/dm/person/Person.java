@@ -315,12 +315,12 @@ public class Person {
 	private void validateBirthAfterParents(List<ValidationMessage> resultList) {
 		Relation relation = getMother();
 		if (!isBirthAfterRelation(relation)) {
-			resultList.add(new ValidationMessage(PERSON.personIdentification + "." + PersonIdentification.PERSON_IDENTIFICATION.dateOfBirth, "Geburtsdatum muss nach demjenigen der Mutter sein"));
+			resultList.add(new ValidationMessage(PERSON.personIdentification.dateOfBirth, "Geburtsdatum muss nach demjenigen der Mutter sein"));
 		}
 		
 		relation = getFather();
 		if (!isBirthAfterRelation(relation)) {
-			resultList.add(new ValidationMessage(PERSON.personIdentification + "." + PersonIdentification.PERSON_IDENTIFICATION.dateOfBirth, "Geburtsdatum muss nach demjenigen des Vaters sein"));
+			resultList.add(new ValidationMessage(PERSON.personIdentification.dateOfBirth, "Geburtsdatum muss nach demjenigen des Vaters sein"));
 		}
 	}
 
