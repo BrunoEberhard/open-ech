@@ -33,9 +33,7 @@ public class NextPersonHelper {
 		nextPerson.comesFrom = partner.comesFrom;
 		nextPerson.dwellingAddress = partner.dwellingAddress;
 	
-		// Folgendes würde nichts nützen, da das Panel später vor dem
-		// Speichern ein anderes Objekt zurückgibt
-		// relation.partner = person;
+		relation.partner = nextPerson.personIdentification;
 		partner.relation.add(relation);
 	
 		relation2.partner = partner.personIdentification;
