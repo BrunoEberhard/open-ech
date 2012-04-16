@@ -3,6 +3,8 @@ package ch.openech.client;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.Action;
+
 import ch.openech.client.ewk.BaseDeliveryEditor;
 import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.client.ewk.event.ExportAllAction;
@@ -12,7 +14,6 @@ import ch.openech.client.ewk.event.moveIn.MoveInWizard;
 import ch.openech.client.org.BaseDeliveryOrganisationEditor;
 import ch.openech.client.org.FoundationEditor;
 import ch.openech.client.org.MoveInEditor;
-import ch.openech.client.org.OrganisationViewPage;
 import ch.openech.client.org.SearchOrganisationPage;
 import ch.openech.client.preferences.PreferenceData.ApplicationSchemaData;
 import ch.openech.client.tpn.MoveDirection;
@@ -28,6 +29,7 @@ import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchNamespaceContext;
 
 public class ApplicationConfigOpenEch extends ApplicationConfig {
@@ -134,10 +136,23 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		protected ApplicationSchemaData load() {
 			return applicationData;
 		}
+		
+		@Override
+		public String getInformation() {
+			return "<html><b>Hinweis:</b> Die Einstellungen werden erst bei<br>einem neu geöffneten Fenster aktiv</html>";
+		}
 
 		@Override
-		protected void validate(ApplicationSchemaData object, List<ValidationMessage> resultList) {
-			// nothing to validate
+		public Action[] getActions() {
+			// ignore demoAction, doesnt make sense in Preferences
+			return new Action[]{cancelAction, saveAction};
+		}
+		
+		@Override
+		protected void validate(ApplicationSchemaData data, List<ValidationMessage> resultList) {
+			if (StringUtils.isEmpty(data.schema20) && StringUtils.isEmpty(data.schema93) && StringUtils.isEmpty(data.schema148)) {
+				resultList.add(new ValidationMessage(ApplicationSchemaData.APPLICATION_SCHEMA_DATA.schema20, "Mindestens ein Schema ist erforderlich"));
+			}
 		}
 
 		@Override
