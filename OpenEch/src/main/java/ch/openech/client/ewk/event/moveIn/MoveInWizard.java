@@ -9,6 +9,7 @@ import javax.swing.Action;
 
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
+import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.client.ewk.event.XmlTextFormField;
@@ -24,6 +25,7 @@ import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.Page;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -274,6 +276,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			}
 		}
 		XmlEditor.send(xmlList);
+		setFollowLink(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), object.persons.get(0).getId()));
 		return true;
 	}
 

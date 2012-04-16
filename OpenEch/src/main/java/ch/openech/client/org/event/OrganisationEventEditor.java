@@ -5,10 +5,12 @@ import java.util.List;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.org.OrganisationViewPage;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.Page;
 import ch.openech.mj.util.GenericUtils;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
@@ -64,6 +66,10 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 		try {
 			xmls = getXml(object);
 			send(xmls);
+			if (object instanceof Organisation) {
+				Organisation organisation = (Organisation) object;
+				setFollowLink(Page.link(OrganisationViewPage.class, getEchNamespaceContext().getVersion(), organisation.getId()));
+			}
 			return true;
 		} catch (Exception e) {
 			throw new RuntimeException("Konnte XML nicht erstellen", e);

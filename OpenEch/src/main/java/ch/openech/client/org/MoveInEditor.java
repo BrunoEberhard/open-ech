@@ -3,12 +3,14 @@ package ch.openech.client.org;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.Page;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0148;
@@ -46,6 +48,7 @@ public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<O
 		try {
 			xml = getXml(organisation).get(0);
 			EchServer.getInstance().processOrg(xml);
+			setFollowLink(Page.link(PersonViewPage.class, getEchNamespaceContext().getVersion(), getObject().getId()));
 			return true;
 		} catch (Exception e) {
 			throw new RuntimeException("Organisation konnte nicht gespeichert werden", e);
