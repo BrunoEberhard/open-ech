@@ -1,28 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
-import static ch.openech.dm.XmlConstants.BUSINESS_ADDRESS;
-import static ch.openech.dm.XmlConstants.COMES_FROM;
-import static ch.openech.dm.XmlConstants.DEPARTURE_DATE;
-import static ch.openech.dm.XmlConstants.FOREIGN_HEADQUARTER;
-import static ch.openech.dm.XmlConstants.FOUNDATION;
-import static ch.openech.dm.XmlConstants.FOUNDATION_DATE;
-import static ch.openech.dm.XmlConstants.FOUNDATION_REASON;
-import static ch.openech.dm.XmlConstants.GOES_TO;
-import static ch.openech.dm.XmlConstants.HAS_MAIN_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HAS_OTHER_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HAS_SECONDARY_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HEADQUARTER_MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.LANGUAGE_OF_CORRESPONDANCE;
-import static ch.openech.dm.XmlConstants.LIQUIDATION;
-import static ch.openech.dm.XmlConstants.LIQUIDATION_DATE;
-import static ch.openech.dm.XmlConstants.LIQUIDATION_REASON;
-import static ch.openech.dm.XmlConstants.NOGA_CODE;
-import static ch.openech.dm.XmlConstants.ORGANISATION;
-import static ch.openech.dm.XmlConstants.ORGANISATION_IDENTIFICATION;
-import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.SWISS_HEADQUARTER;
-import static ch.openech.dm.XmlConstants.UID_BRANCHE_TEXT;
+import static ch.openech.dm.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -45,7 +23,8 @@ public class StaxEch0098 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(ORGANISATION)) organisation(xml, organisation);
-				else residenceChoiceOrSkip(startName, xml, organisation);
+				else if (startName.endsWith("Residence")) residence(startName, xml, organisation);
+				else skip(xml);
 			} else if (event.isEndElement()) {
 				return organisation;
 			}
@@ -53,7 +32,7 @@ public class StaxEch0098 {
 		}
 	}
 
-	public static void residenceChoiceOrSkip(String startName, XMLEventReader xml, Organisation organisation) throws XMLStreamException {
+	public static void residence(String startName, XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		if (startName.equals(HAS_MAIN_RESIDENCE)) {
 			organisation.typeOfResidenceOrganisation = "1";
 			residence(xml, organisation);
@@ -78,6 +57,7 @@ public class StaxEch0098 {
 				if (startName.equals(ORGANISATION_IDENTIFICATION)) StaxEch0097.organisationIdentification(xml, organisation);
 				else if (StringUtils.equals(startName, FOUNDATION, LIQUIDATION)) foundationOrLiquidation(xml, organisation);
 				else if (StringUtils.equals(startName, UID_BRANCHE_TEXT, NOGA_CODE, LANGUAGE_OF_CORRESPONDANCE)) organisation.set(startName, token(xml));
+				else if (StringUtils.equals(startName, CONTACT)) organisation.contact = StaxEch0046.contact(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;

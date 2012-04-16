@@ -46,8 +46,9 @@ public class WriterEch0046 extends DeliveryWriter {
 	}
 	
 	public void contact(WriterElement parent, String tagName, Contact contact) throws Exception {
+		if (contact == null) return;
+		
 		WriterElement contactElement = parent.create(URI, tagName);
-
 		localID(contactElement, contact.stringId);
 		for (ContactEntry entry : contact.getAddressList()) address(contactElement, entry);
 		for (ContactEntry entry : contact.getEmailList()) email(contactElement, entry);

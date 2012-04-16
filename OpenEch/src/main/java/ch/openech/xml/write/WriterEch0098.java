@@ -42,6 +42,7 @@ public class WriterEch0098 {
 	public final WriterEch0007 ech7;
 	public final WriterEch0008 ech8;
 	public final WriterEch0010 ech10;
+	public final WriterEch0046 ech46;
 	public final WriterEch0097 ech97;
 	
 	public WriterEch0098(EchNamespaceContext context) {
@@ -49,19 +50,24 @@ public class WriterEch0098 {
 		ech7 = new WriterEch0007(context);
 		ech8 = new WriterEch0008(context);
 		ech10 = new WriterEch0010(context);
+		ech46 = new WriterEch0046(context);
 		ech97 = new WriterEch0097(context);
 	}
 
 	public void reportedOrganisationType(WriterElement parent, String tagName, Organisation organisation) throws Exception {
 		WriterElement element = parent.create(URI, tagName);
 		organisation(element, ORGANISATION, organisation);
+		residence(element, organisation); 
+	}
+
+	public void residence(WriterElement element, Organisation organisation) throws Exception {
 		if (organisation.hasMainResidence()) {
 			mainResidence(element, organisation);
 		} else if (organisation.hasSecondaryResidence()) {
 			secondaryResidence(element, organisation);
 		} else if (organisation.hasOtherResidence()) {
 			otherResidence(element, organisation);
-		} 
+		}
 	}
 	
 	public void mainResidence(WriterElement parent, Organisation values) throws Exception {
@@ -152,17 +158,17 @@ public class WriterEch0098 {
 		element.values(values, UID_BRANCHE_TEXT, NOGA_CODE);
 		foundation(element, values);
 		liquidation(element, values);
-		// TODO Contact
+		ech46.contact(element, values.contact);
 		element.values(values, LANGUAGE_OF_CORRESPONDANCE);
 	}
 	
-	private void foundation(WriterElement parent, Organisation values) throws Exception {
+	public void foundation(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, FOUNDATION);
 		datePartiallyKnownType(element, FOUNDATION_DATE, values);
 		element.values(values, FOUNDATION_REASON);
     }
 
-	private void liquidation(WriterElement parent, Organisation values) throws Exception {
+	public void liquidation(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, LIQUIDATION);
 		datePartiallyKnownType(element, LIQUIDATION_DATE, values);
 		element.values(values, LIQUIDATION_REASON);

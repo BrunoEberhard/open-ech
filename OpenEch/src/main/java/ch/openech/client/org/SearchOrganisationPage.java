@@ -23,6 +23,7 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 
 	public static final Object[] FIELD_NAMES = {
 		ORGANISATION.organisationName, //
+		ORGANISATION.reportingMunicipality.municipalityName, //
 	};
 	
 	// Damit wird die Version des Fenster overruled

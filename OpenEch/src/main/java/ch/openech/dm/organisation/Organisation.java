@@ -7,6 +7,7 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.common.TechnicalIds;
+import ch.openech.dm.contact.Contact;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.db.model.annotation.FormatName;
@@ -39,6 +40,8 @@ public class Organisation {
 	public String foundationDate;
 	public String foundationReason;
 	
+	@Date
+	public String liquidationEntryDate;
 	@Date(partialAllowed = true)
 	public String liquidationDate;
 	public String liquidationReason;
@@ -58,7 +61,6 @@ public class Organisation {
 	public String uidregSourceUid; // ADM000000001 - CHE999999999
 	
 	// commercialRegisterInformation
-	@Required
 	public String commercialRegisterStatus; // 1-3
 	public String commercialRegisterEntryStatus; // 1-2
 	@FormatName(EchFormats.organisationName)
@@ -67,7 +69,6 @@ public class Organisation {
 	public String commercialRegisterEntryDate, commercialRegisterLiquidationDate;
 	
 	// vatRegisterInformation
-	@Required
 	public String vatStatus; // 1-3
 	public String vatEntryStatus; // 1-2
 	@Date
@@ -89,6 +90,8 @@ public class Organisation {
 	// secondaryResidence / otherResidence
 	public Organisation headquarterOrganisation;
 
+	public Contact contact;
+	
 	//
 	
 	public Object get(String propertyName) {

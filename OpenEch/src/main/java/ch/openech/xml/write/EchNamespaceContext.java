@@ -31,6 +31,7 @@ public class EchNamespaceContext {
 	private String openEchNamespaceLocation;
 	private final Map<String, Format> simpleTypes = new HashMap<String, Format>();
 	private WriterEch0020 writerEch0020;
+	private WriterEch0148 writerEch0148;
 	
 	private EchNamespaceContext(int rootNumber, String version) {
 		read(rootNumber, version);
@@ -241,6 +242,13 @@ public class EchNamespaceContext {
 			writerEch0020 = new WriterEch0020(this); // 1100 - 1400ms
 		}
 		return writerEch0020;
+	}
+	
+	public WriterEch0148 getWriterEch0148() {
+		if (writerEch0148 == null) {
+			writerEch0148 = new WriterEch0148(this); // 1100 - 1400ms
+		}
+		return writerEch0148;
 	}
 	
 	//

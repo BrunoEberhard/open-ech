@@ -1,7 +1,9 @@
 package ch.openech.xml.read;
 
 import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.date;
 import static ch.openech.xml.read.StaxEch.skip;
+import static ch.openech.xml.read.StaxEch.token;
 
 import java.io.InputStream;
 import java.io.StringReader;
@@ -25,7 +27,6 @@ public class StaxEch0148 implements StaxEchParser {
 
 	private final EchPersistence persistence;
 	
-	private Organisation organisationToChange = null;
 	private Event e;
 	private String lastInsertedOrganisationId;
 	
@@ -171,56 +172,6 @@ public class StaxEch0148 implements StaxEchParser {
 		}
 	}
 
-//	public void moveOutReportingDestination(XMLEventReader xml, Organisation organisationToChange) throws XMLStreamException {
-//		while (true) {
-//			XMLEvent event = xml.nextEvent();
-//			if (event.isStartElement()) {
-//				StartElement startElement = event.asStartElement();
-//				String startName = startElement.getName().getLocalPart();
-//				if (startName.equals(REPORTING_MUNICIPALITY)) organisationToChange.residence.reportingMunicipality = StaxEch0007.municipality(xml);
-//				else if (startName.equals(FEDERAL_REGISTER)) organisationToChange.residence.reportingMunicipality = federalRegister(xml);
-//				else if (startName.equals(GOES_TO)) organisationToChange.goesTo = StaxEch0011.destination(xml);
-//				else if (startName.equals(DEPARTURE_DATE)) organisationToChange.departureDate = StaxEch.date(xml);
-//			} else if (event.isEndElement()) {
-//				return;
-//			} // else skip
-//		}
-//	}
-//
-//	
-//	public void moveReportingAddress(XMLEventReader xml, Organisation organisationToChange) throws XMLStreamException {
-//		while (true) {
-//			XMLEvent event = xml.nextEvent();
-//			if (event.isStartElement()) {
-//				StartElement startElement = event.asStartElement();
-//				String startName = startElement.getName().getLocalPart();
-//				if (startName.equals(REPORTING_MUNICIPALITY)) organisationToChange.residence.reportingMunicipality = StaxEch0007.municipality(xml);
-//				else if (startName.equals(FEDERAL_REGISTER)) organisationToChange.residence.reportingMunicipality = federalRegister(xml);
-//				else if (startName.equals(DWELLING_ADDRESS)) organisationToChange.dwellingAddress = StaxEch0011.dwellingAddress(xml);
-//			} else if (event.isEndElement()) {
-//				return;
-//			} // else skip
-//		}
-//	}
-//	
-//	
-//	public void changeResidenceTypeReportingMunicipality(XMLEventReader xml, Organisation organisationToChange) throws XMLStreamException {
-//		while (true) {
-//			XMLEvent event = xml.nextEvent();
-//			if (event.isStartElement()) {
-//				StartElement startElement = event.asStartElement();
-//				String startName = startElement.getName().getLocalPart();
-//				if (startName.equals(REPORTING_MUNICIPALITY)) organisationToChange.residence.reportingMunicipality = StaxEch0007.municipality(xml);
-//				else if (startName.equals(TYP_OF_RESIDENCE)) organisationToChange.typeOfResidence = token(xml);
-//				else if (startName.equals(ARRIVAL_DATE)) organisationToChange.arrivalDate = StaxEch.date(xml);
-//				else if (startName.equals(COMES_FROM)) organisationToChange.comesFrom = StaxEch0011.destination(xml);
-//				else if (startName.equals(DWELLING_ADDRESS)) organisationToChange.dwellingAddress = StaxEch0011.dwellingAddress(xml);
-//			} else if (event.isEndElement()) {
-//				return;
-//			} // else skip
-//		}
-//	}
-//	
 	private void simpleOrganisationEvent(String eventName, XMLEventReader xml) throws XMLStreamException {
 		Organisation organisationIdentification = new Organisation();
 		Organisation organisation = null;
@@ -234,22 +185,14 @@ public class StaxEch0148 implements StaxEchParser {
 					StaxEch0097.organisationIdentification(xml, organisationIdentification);
 					organisation = getOrganisation(organisationIdentification);
 				}
-
-				else if (startName.equals(LIQUIDATION_DATE)) organisation.liquidationDate = StaxEch.date(xml);
-				else if (startName.equals(LIQUIDATION_REASON)) organisation.liquidationReason = StaxEch.token(xml);
-				// TODO Was ist mit LIQUIDATION_ENTRY_DATE??
-				else if (startName.equals(LIQUIDATION_ENTRY_DATE)) organisation.liquidationDate = StaxEch.token(xml);
-				// TODO contact
-				
-				else if (startName.equals(ORGANISATION_NAME)) organisation.organisationName = StaxEch.date(xml);
-				else if (startName.equals(ORGANISATION_LEGAL_NAME)) organisation.organisationLegalName = StaxEch.date(xml);
-				else if (startName.equals(ORGANISATION_ADDITIONAL_NAME)) organisation.organisationAdditionalName = StaxEch.date(xml);
 				// TODO valid dateValidFrom
-				
-				else if (startName.equals(LEGAL_FORM)) organisation.legalForm = StaxEch.date(xml);
 			
-//				else if (startName.equals(CHANGE_REPORTING)) changeResidenceTypeReportingMunicipality(xml, organisationToChange);
-				else StaxEch0098.residenceChoiceOrSkip(startName, xml, organisationToChange);
+				else if (startName.endsWith("Date")) organisation.set(startName, date(xml));
+				else if (startName.equals(UIDREG_SOURCE)) organisation.uidregSourceUid = StaxEch0097.uidStructure(xml);
+				else if (startName.equals(CONTACT)) organisation.contact = StaxEch0046.contact(xml);
+				else if (startName.endsWith("Residence")) StaxEch0098.residence(startName, xml, organisation);
+				else if (startName.equals(TYP_OF_RESIDENCE)) organisation.typeOfResidenceOrganisation = token(xml);
+				else organisation.set(startName, token(xml));
 			} else if (event.isEndElement()) {
 				simpleOrganisationEvent(eventName, organisationIdentification, organisation);
 				return;

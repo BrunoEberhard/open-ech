@@ -14,43 +14,24 @@ import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0148;
 
 
-public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
+public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
 	private final WriterEch0148 writerEch0148;
 	
-	public BaseDeliveryOrganisationEditor(EchNamespaceContext echNamespaceContext) {
+	public MoveInEditor(EchNamespaceContext echNamespaceContext) {
 		super(echNamespaceContext);
 		this.writerEch0148 = new WriterEch0148(echNamespaceContext);
 	}
 
 	@Override
 	public FormVisual<Organisation> createForm() {
-		return new OrganisationPanel(OrganisationPanelType.BASE_DELIVERY, getEchNamespaceContext());
+		return new OrganisationPanel(OrganisationPanelType.MOVE_IN, getEchNamespaceContext());
 	}
 
 	@Override
 	public Organisation newInstance() {
 		Organisation organisation = new Organisation();
+
 		// TODO Presets
-		
-//		for (String key : getStringKeys()) {
-//			String setting = AbstractApplication.preferences().get(key, null);
-//			if (setting != null) {
-//				set(key, setting);
-//			}
-//		}
-//		if (reportingMunicipalityField != null) {
-//			// TODO das sollte das Formpanel von sich aus können
-//			MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
-//			for (String key : municipalityIdentification.keySet()) {
-//				String setting = AbstractApplication.preferences().get(key, null);
-//				if (setting != null) {
-//					municipalityIdentification.set(key, setting);
-//				}
-//			}
-//			Residence residence = residenceField.getObject();
-//			residence.reportingMunicipality = municipalityIdentification;
-//			residenceField.setObject(residence);
-//		}
 
 		return organisation;
 	}
@@ -73,7 +54,7 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> impl
 	
 	@Override
 	public List<String> getXml(Organisation organisation) throws Exception {
-		return Collections.singletonList(writerEch0148.organisationBaseDelivery(Collections.singletonList(organisation)));
+		return Collections.singletonList(writerEch0148.moveIn(organisation));
 	}
 
 }

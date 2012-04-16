@@ -11,6 +11,7 @@ import ch.openech.client.ewk.event.birth.BirthEvent;
 import ch.openech.client.ewk.event.moveIn.MoveInWizard;
 import ch.openech.client.org.BaseDeliveryOrganisationEditor;
 import ch.openech.client.org.FoundationEditor;
+import ch.openech.client.org.MoveInEditor;
 import ch.openech.client.org.OrganisationViewPage;
 import ch.openech.client.org.SearchOrganisationPage;
 import ch.openech.client.preferences.PreferenceData.ApplicationSchemaData;
@@ -79,6 +80,7 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		if (orgNamespaceContext != null) {
 			niu.add(new EditorDialogAction(new BaseDeliveryOrganisationEditor(orgNamespaceContext)));
 			niu.add(new EditorDialogAction(new FoundationEditor(orgNamespaceContext)));
+			niu.add(new EditorDialogAction(new MoveInEditor(orgNamespaceContext)));
 		}
 		
 		if (tpnNamespaceContext != null) {
