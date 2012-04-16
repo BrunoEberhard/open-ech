@@ -1,5 +1,7 @@
 package ch.openech.client.e46;
 
+import java.util.List;
+
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.datagenerator.DataGenerator;
@@ -10,7 +12,9 @@ import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.edit.fields.TextEditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
+import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.TextField;
+import ch.openech.mj.util.StringUtils;
 
 // setTitle("Kontakt");
 public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
@@ -49,6 +53,24 @@ public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
 		}
 	}
 	
+	@Override
+	public void validate(List<ValidationMessage> resultList) {
+		super.validate(resultList);
+		if ("P".equals(type)) {
+			ContactEntry entry = getObject();
+			if (entry.value == null || entry.value.length() < 10) {
+				resultList.add(new ValidationMessage(ContactEntry.CONTACT_ENTRY.value, "10 Ziffern erforderlich"));
+				return;
+			}
+			for (int i = 0; i<entry.value.length(); i++) {
+				if (!Character.isDigit(entry.value.charAt(i))) {
+					resultList.add(new ValidationMessage(ContactEntry.CONTACT_ENTRY.value, "Nur Zahlen erlaubt"));
+					return;
+				}
+			}
+		}
+	}
+
 	@Override
 	public void fillWithDemoData() {
 		if (addressField != null) {
