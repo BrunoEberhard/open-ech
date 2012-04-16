@@ -155,7 +155,7 @@ public class PersonEditMenu {
 		change.add(contact);
 
 		fillCorrectionActionList();
-		ActionGroup correct = personActionGroup.getOrCreateActionGroup("person_correction");
+		ActionGroup correct = personActionGroup.getOrCreateActionGroup("correction");
 		for (Action action : correctEditors) {
 			correct.add(action);
 		}

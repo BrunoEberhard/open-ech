@@ -77,7 +77,7 @@ public class OrganisationMenu {
 		organisationActionGroup.addSeparator();
 
 		fillCorrectionActionList();
-		ActionGroup correct = organisationActionGroup.getOrCreateActionGroup("organisation_correction");
+		ActionGroup correct = organisationActionGroup.getOrCreateActionGroup("correction");
 		for (Action action : correctEditors) {
 			correct.add(action);
 		}
