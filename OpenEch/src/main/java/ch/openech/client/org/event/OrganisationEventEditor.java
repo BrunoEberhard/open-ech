@@ -45,6 +45,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 
 	public void setOrganisation(Organisation organisation) {
 		this.organisation = organisation;
+		setFollowLink(Page.link(OrganisationViewPage.class, getEchNamespaceContext().getVersion(), organisation.getId()));
 	}
 	
 	public Organisation getOrganisation() {

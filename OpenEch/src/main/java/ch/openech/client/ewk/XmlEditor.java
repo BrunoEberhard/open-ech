@@ -15,13 +15,9 @@ import javax.swing.Action;
 
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.ewk.event.XmlTextFormField;
-import ch.openech.client.org.OrganisationViewPage;
-import ch.openech.dm.organisation.Organisation;
-import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.page.Page;
 import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
@@ -77,13 +73,6 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		try {
 			xmls = getXml(object);
 			send(xmls);
-			if (object instanceof Person) {
-				Person person = (Person) object;
-				setFollowLink(Page.link(PersonViewPage.class, getEchNamespaceContext().getVersion(), person.getId()));
-			} else if (object instanceof Organisation) {
-				Organisation organisation = (Organisation) object;
-				setFollowLink(Page.link(OrganisationViewPage.class, getEchNamespaceContext().getVersion(), organisation.getId()));
-			}
 			return true;
 		} catch (Exception e) {
 			throw new RuntimeException("Konnte XML nicht erstellen", e);

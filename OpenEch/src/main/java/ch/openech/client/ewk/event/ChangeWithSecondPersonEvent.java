@@ -26,7 +26,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		super(namespaceContext);
 	}
 
-	public static class ChangeWithSecondPersonEventData extends Person {
+	public static class ChangeWithSecondPersonEventData {
 		public static final ChangeWithSecondPersonEventData DATA = Constants.of(ChangeWithSecondPersonEventData.class);
 		@Required @Date
 		public String date;
@@ -116,7 +116,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
-			Person.validateEventNotBeforeBirth(validationMessages, data.personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
+			Person.validateEventNotBeforeBirth(validationMessages, getPerson().personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
 		}
 	}
 
@@ -152,7 +152,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
-			Person.validateEventNotBeforeBirth(validationMessages, data.personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
+			Person.validateEventNotBeforeBirth(validationMessages, getPerson().personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
 		}
 	}
 

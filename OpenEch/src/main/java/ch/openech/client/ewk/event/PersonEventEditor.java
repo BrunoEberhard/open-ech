@@ -2,12 +2,14 @@ package ch.openech.client.ewk.event;
 
 import java.util.List;
 
+import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.Page;
 import ch.openech.mj.util.GenericUtils;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
@@ -40,6 +42,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 
 	public void setPerson(Person person) {
 		this.person = person;
+		setFollowLink(Page.link(PersonViewPage.class, getEchNamespaceContext().getVersion(), person.getId()));
 	}
 	
 	public Person getPerson() {
