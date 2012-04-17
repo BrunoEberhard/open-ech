@@ -71,7 +71,7 @@ public class PersonEditMenu {
 	private PageContext pageContext;
 	private Person person;
 	
-	private PersonHistoryMenuAction showHistory;
+	private PersonHistoryAction showHistory;
 
 	private Action marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
 	private Action naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality,
@@ -161,8 +161,10 @@ public class PersonEditMenu {
 		}
 
 		personActionGroup.add(new SeparatorAction());
-		
 		personActionGroup.add(birthChild); 
+		
+		personActionGroup.add(new SeparatorAction());
+		personActionGroup.add(showHistory); 
 		
 		//
 		
@@ -189,22 +191,22 @@ public class PersonEditMenu {
 		}
 	}
 	
-	private class PersonHistoryMenuAction extends ResourceAction {
+	private class PersonHistoryAction extends ResourceAction {
 		private Person person;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pageContext.show(Page.link(PersonHistoryViewPage.class, echNamespaceContext.getVersion(), person.getId()));
+			pageContext.show(Page.link(PersonHistoryPage.class, echNamespaceContext.getVersion(), person.getId()));
 		}
 		
 		public void setPerson(Person person) {
 			this.person = person;
 			setEnabled(person != null);
 		}
-	}
+	}	
 
 	private void createMenuItems() {
-		showHistory = new PersonHistoryMenuAction();
+		showHistory = new PersonHistoryAction();
 
 		marriage = new PersonEditMenuAction(new MarriageEvent(echNamespaceContext));
 		separation = new PersonEditMenuAction(new SeparationEvent(echNamespaceContext));

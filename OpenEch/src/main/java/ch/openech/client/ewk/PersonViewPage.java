@@ -1,5 +1,7 @@
 package ch.openech.client.ewk;
 
+import java.sql.SQLException;
+
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
@@ -14,37 +16,48 @@ import ch.openech.xml.write.EchNamespaceContext;
 public class PersonViewPage extends ObjectViewPage<Person> {
 
 	private final String personId;
+	private final int time;
 	private final EchNamespaceContext echNamespaceContext;
 	private final PersonPanel personPanel;
 	private final PersonEditMenu menu;
 
 	public PersonViewPage(PageContext context, String[] arguments) {
-		this(context, arguments[0], arguments[1]);
-	}
-	
-	public PersonViewPage(PageContext context, String version, String personId) {
 		super(context);
-		this.personId = personId;
-		this.echNamespaceContext = EchNamespaceContext.getNamespaceContext(20, version);
+		this.echNamespaceContext = EchNamespaceContext.getNamespaceContext(20, arguments[0]);
+		this.personId = arguments[1];
+		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
 		this.personPanel = new PersonPanel(PersonPanelType.DISPLAY, echNamespaceContext);
-		this.menu = new PersonEditMenu(echNamespaceContext); 
+		this.menu = time == 0 ? new PersonEditMenu(echNamespaceContext) : null; 
 	}
 
 	@Override
 	protected void showObject(Person person) {
 		super.showObject(person);
-		menu.setPerson(person, true);
+		if (menu != null) {
+			menu.setPerson(person, true);
+		}
 		setTitle(pageTitle(person));
 	}
 	
 	@Override
 	public void fillActionGroup(PageContext pageContext, ActionGroup actionGroup) {
-		menu.fillActionGroup(pageContext, actionGroup);
+		if (menu != null) {
+			menu.fillActionGroup(pageContext, actionGroup);
+		}
 	}
 
 	@Override
 	protected Person loadObject() {
-		return EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
+		Person actualPerson = EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
+		if (time == 0) {
+			return actualPerson;
+		} else {
+			try {
+				return EchServer.getInstance().getPersistence().person().read(actualPerson, time);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package ch.openech.client.ewk;
 
 import static ch.openech.dm.person.Person.PERSON;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.dm.person.Person;
@@ -21,6 +22,7 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 	private final EchNamespaceContext echNamespaceContext;
 	private String text;
 	private VisualTable<Person> table;
+	private List<Person> resultList;
 
 	public static final Object[] FIELD_NAMES = {
 		Person.MR_MRS, //
@@ -57,16 +59,21 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 
 		@Override
 		public void clicked() {
-			Person person = table.getSelectedObject();
-			if (person != null) {
-				show(PersonViewPage.class, echNamespaceContext.getVersion(), person.getId());
+			int index = table.getSelectedIndex();
+			if (index >= 0) {
+				List<String> pageLinks = new ArrayList<String>(resultList.size());
+				for (Person person : resultList) {
+					String link = link(PersonViewPage.class, echNamespaceContext.getVersion(), person.getId());
+					pageLinks.add(link);
+				}
+				getPageContext().show(pageLinks, index);
 			}
 		}
 	}
 	
 	@Override
 	public void refresh() {
-		List<Person> resultList = EchServer.getInstance().getPersistence().person().find(text);
+		resultList = EchServer.getInstance().getPersistence().person().find(text);
 		table.setObjects(resultList);
 	}
 	
