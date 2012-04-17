@@ -24,7 +24,6 @@ import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 
 import ch.openech.client.ApplicationConfigOpenEch;
-import ch.openech.mj.db.DerbyOptionsDialogController;
 import ch.openech.mj.swing.FrameManager;
 import ch.openech.mj.swing.GraphicalLogHandler;
 import ch.openech.mj.swing.PreferencesHelper;
@@ -47,12 +46,13 @@ public class OpenEchApplication extends SwingApplication {
 		PreferencesHelper.setPreferences(Preferences.userNodeForPackage(OpenEchApplication.class));
 		FrameManager.setSystemLookAndFeel();
 		
-		if (args != null && args.length >= 3) {
-			// EchServer server = new EchServer(args[0], args[1], args[2]);
-			checkDbVersion();
-		} else {
-			DerbyOptionsDialogController.showOptions();
-		}
+		PreferencesHelper.preferences().putBoolean("dbMemory", true);
+//		if (args != null && args.length >= 3) {
+//			// EchServer server = new EchServer(args[0], args[1], args[2]);
+//			checkDbVersion();
+//		} else {
+//			DerbyOptionsDialogController.showOptions();
+//		}
 		// Initialize Server
 		EchServer.getInstance();
 		
@@ -70,30 +70,6 @@ public class OpenEchApplication extends SwingApplication {
 			System.exit(-1);
 		}
 	}
-	
-//	public List<PersonIdentification> getVisiblePersonIdentifications() {
-//		List<PersonIdentification> result = new ArrayList<PersonIdentification>();
-//		List<SwingFrame> frames = FrameManager.getInstance().getNavigationFrames();
-//		for (SwingFrame frame : frames) {
-//			result.addAll(getVisiblePersonIdentifications(frame));
-//		}
-//		return result;
-//	}
-//
-//	private List<PersonIdentification> getVisiblePersonIdentifications(SwingFrame navigationFrame) {
-//		List<PersonIdentification> personIdentifications = new ArrayList<PersonIdentification>();
-//		List<Page> pages = navigationFrame.getPages();
-//		for (Page page : pages) {
-//			if (page instanceof ObjectPage<?>) {
-//				ObjectPage<?> objectPage = (ObjectPage<?>) page;
-//				if (objectPage.getObject() instanceof Person) {
-//					Person person = (Person) objectPage.getObject();
-//					personIdentifications.add(person.personIdentification);
-//				}
-//			}
-//		}
-//		return personIdentifications;
-//	}
 
 	/*
 	 * MAIN
