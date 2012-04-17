@@ -93,6 +93,7 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	//
 	
+	@Override
 	public void process(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
@@ -496,7 +497,15 @@ public class StaxEch0020 implements StaxEchParser {
 						personToChange.contactPerson.address = null; personToChange.contactPerson.person = null; personToChange.contactPerson.validTill = null;
 					}
 					if (CORRECT_REPORTING.equals(eventName)) personToChange.residence.secondary.clear();
-//					if (CORRECT_PERSON.equals(eventName)) personToChange.dateOfDeath = null;
+					if (StringUtils.equals(eventName, CHANGE_NAME, CHANGE_RESIDENCE_TYPE, CORRECT_NAME, CORRECT_PERSON)) {
+						// Müssen gelöscht werden, damit bei fehlendem Element die Werte nicht bestehen bleiben
+						personToChange.originalName = null;
+						personToChange.alliancePartnershipName = null;
+						personToChange.aliasName = null;
+						personToChange.otherName = null;
+						personToChange.callName = null;
+					}
+					//					if (CORRECT_PERSON.equals(eventName)) personToChange.dateOfDeath = null;
 				}
 				else if (startName.equals(OCCUPATION)) personToChange.occupation.add(StaxEch0021.occupation(xml));
 				else if (startName.equals(_RELATIONSHIP) || startName.equals(RELATIONSHIP) || startName.equals(_RELATIONSHIP_TYPE) || //
@@ -573,12 +582,6 @@ public class StaxEch0020 implements StaxEchParser {
 				if (startName.equals(PERSON_IDENTIFICATION) || startName.equals(PERSON_IDENTIFICATION_BEFORE)) {
 					personIdentification = StaxEch0044.personIdentification(xml);
 					personToChange = getPerson(personIdentification);
-					personToChange.dateOfDeath = null;
-					personToChange.callName = null;
-					personToChange.aliasName = null;
-					personToChange.originalName = null;
-					personToChange.otherName = null;
-					personToChange.alliancePartnershipName = null;
 				} else if (startName.equals(PERSON_IDENTIFICATION_AFTER)) {
 					// die lokale Id darf von aussen nicht verändert werden.
 					String savedLocalId = personToChange.getId();
