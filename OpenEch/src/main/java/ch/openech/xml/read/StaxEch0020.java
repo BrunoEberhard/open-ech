@@ -428,7 +428,7 @@ public class StaxEch0020 implements StaxEchParser {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.endsWith("Person")) personIdentification = simplePersonEventPerson(xml);
+				if (startName.endsWith("Person")) personIdentification = simplePersonEventPerson(eventName, xml);
 				else if (StringUtils.equals(startName, PLACE_OF_ORIGIN)) StaxEch0011.placeOfOrigin(xml, placeOfOrigin);
 				else if (startName.equals(NATURALIZATION_DATE)) placeOfOrigin.naturalizationDate = StaxEch.date(xml);
 				else if (startName.equals(REASON_OF_ACQUISITION)) placeOfOrigin.reasonOfAcquisition = token(xml);
@@ -477,7 +477,7 @@ public class StaxEch0020 implements StaxEchParser {
 						GARDIAN_MEASURE_PERSON, CHANGE_OF_OCCUPATION_PERSON, //
 						CONTACT_ADDRESS_PERSON, NATURALIZATION_SWISS_PERSON, CHANGE_OF_RELIGION_PERSON, //
 						CITIZENSHIP_DISCHARGE_PERSON)) {
-					personIdentification = simplePersonEventPerson(xml);
+					personIdentification = simplePersonEventPerson(eventName, xml);
 					
 					// Bei gewissen Events werden 1-n Beziehungen komplett geliefert (z.B. correctRelationship)
 					// bei anderen werden nur die zusätzlichen geliefert (z.B. care)
@@ -497,14 +497,6 @@ public class StaxEch0020 implements StaxEchParser {
 						personToChange.contactPerson.address = null; personToChange.contactPerson.person = null; personToChange.contactPerson.validTill = null;
 					}
 					if (CORRECT_REPORTING.equals(eventName)) personToChange.residence.secondary.clear();
-					if (StringUtils.equals(eventName, CHANGE_NAME, CHANGE_RESIDENCE_TYPE, CORRECT_NAME, CORRECT_PERSON)) {
-						// Müssen gelöscht werden, damit bei fehlendem Element die Werte nicht bestehen bleiben
-						personToChange.originalName = null;
-						personToChange.alliancePartnershipName = null;
-						personToChange.aliasName = null;
-						personToChange.otherName = null;
-						personToChange.callName = null;
-					}
 					//					if (CORRECT_PERSON.equals(eventName)) personToChange.dateOfDeath = null;
 				}
 				else if (startName.equals(OCCUPATION)) personToChange.occupation.add(StaxEch0021.occupation(xml));
@@ -571,7 +563,7 @@ public class StaxEch0020 implements StaxEchParser {
 	}
 
 	// correctOccupationPerson etc
-	private PersonIdentification simplePersonEventPerson(XMLEventReader xml) throws XMLStreamException {
+	private PersonIdentification simplePersonEventPerson(String eventName, XMLEventReader xml) throws XMLStreamException {
 		PersonIdentification personIdentification = null;
 		
 		while (true) {
@@ -582,6 +574,14 @@ public class StaxEch0020 implements StaxEchParser {
 				if (startName.equals(PERSON_IDENTIFICATION) || startName.equals(PERSON_IDENTIFICATION_BEFORE)) {
 					personIdentification = StaxEch0044.personIdentification(xml);
 					personToChange = getPerson(personIdentification);
+					if (StringUtils.equals(eventName, CHANGE_NAME, CHANGE_RESIDENCE_TYPE, CORRECT_NAME, CORRECT_PERSON)) {
+						// Müssen gelöscht werden, damit bei fehlendem Element die Werte nicht bestehen bleiben
+						personToChange.originalName = null;
+						personToChange.alliancePartnershipName = null;
+						personToChange.aliasName = null;
+						personToChange.otherName = null;
+						personToChange.callName = null;
+					}
 				} else if (startName.equals(PERSON_IDENTIFICATION_AFTER)) {
 					// die lokale Id darf von aussen nicht verändert werden.
 					String savedLocalId = personToChange.getId();
