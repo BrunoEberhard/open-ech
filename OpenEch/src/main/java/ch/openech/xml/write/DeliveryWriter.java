@@ -120,7 +120,7 @@ public abstract class DeliveryWriter {
 		writeXmlSchemaLocation();
 		writeNamespaces(context, namespaceNumbers);
 		
-		rootElement = new StaxWriterElement(xmlStreamWriter, getNamespaceURI());
+		rootElement = new WriterElement(xmlStreamWriter, getNamespaceURI());
 		return rootElement;
 	}
 	

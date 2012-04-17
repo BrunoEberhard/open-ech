@@ -26,7 +26,7 @@ public class StaxWriterFactory {
 		writer.writeStartElement(childNameSpaceURI, localName); // !!
 		writeNamespaces();
 		
-		rootElement = new StaxWriterElement(writer, childNameSpaceURI);
+		rootElement = new WriterElement(writer, childNameSpaceURI);
 		return rootElement;
 	}
 	
