@@ -18,9 +18,13 @@ public class DwellingAddressPanel extends EchFormPanel<DwellingAddress> {
 		
 		line(DWELLING_ADDRESS.EGID);
 		line(DWELLING_ADDRESS.EWID);
-		line(DWELLING_ADDRESS.householdID);
+		if (!namespaceContext.addressesAreBusiness()) {
+			line(DWELLING_ADDRESS.householdID);
+		}
 		area(new AddressField(DWELLING_ADDRESS.mailAddress, true, false, false));
-		line(DWELLING_ADDRESS.typeOfHousehold);
+		if (!namespaceContext.addressesAreBusiness()) {
+			line(DWELLING_ADDRESS.typeOfHousehold);
+		}
 		line(DWELLING_ADDRESS.movingDate);
 	}
 	

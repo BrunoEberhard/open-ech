@@ -191,9 +191,12 @@ public class StaxEch0148 implements StaxEchParser {
 				else if (startName.endsWith("Date")) organisation.set(startName, date(xml));
 				else if (startName.equals(UIDREG_SOURCE)) organisation.uidregSourceUid = StaxEch0097.uidStructure(xml);
 				else if (startName.equals(CONTACT)) organisation.contact = StaxEch0046.contact(xml);
-				else if (startName.endsWith("Residence")) StaxEch0098.residence(startName, xml, organisation);
 				else if (startName.equals(TYP_OF_RESIDENCE)) organisation.typeOfResidenceOrganisation = token(xml);
-				else if (StringUtils.equals(startName, MOVE_OUT_REPORTING_DESTINATION, MOVE_REPORTING_ADDRESS)) StaxEch0098.residence(xml, organisation);
+				else if (startName.equals(REPORTING_MUNICIPALITY)) organisation.reportingMunicipality = StaxEch0007.municipality(xml);
+				else if (startName.equals(ARRIVAL_DATE)) organisation.arrivalDate = StaxEch.date(xml);
+				else if (startName.equals(COMES_FROM)) organisation.comesFrom = StaxEch0011.destination(xml);
+				else if (startName.equals(BUSINESS_ADDRESS)) organisation.businessAddress = StaxEch0011.dwellingAddress(xml);
+				else if (StringUtils.equals(startName, HAS_MAIN_RESIDENCE, HAS_SECONDARY_RESIDENCE, HAS_OTHER_RESIDENCE, MOVE_OUT_REPORTING_DESTINATION, MOVE_REPORTING_ADDRESS)) StaxEch0098.residence(xml, organisation);
 				else organisation.set(startName, token(xml));
 			} else if (event.isEndElement()) {
 				simpleOrganisationEvent(eventName, organisation);

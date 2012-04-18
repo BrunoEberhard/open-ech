@@ -27,6 +27,7 @@ public class EchNamespaceContext {
 	private final Map<Integer, String> namespaceLocations = new HashMap<Integer, String>();
 	private final Map<Integer, Integer> namespaceVersions = new HashMap<Integer, Integer>();
 	private final Map<Integer, Integer> namespaceMinorVersions = new HashMap<Integer, Integer>();
+	private final int rootNumber;
 	private String version;
 	private String openEchNamespaceLocation;
 	private final Map<String, Format> simpleTypes = new HashMap<String, Format>();
@@ -35,6 +36,7 @@ public class EchNamespaceContext {
 	
 	private EchNamespaceContext(int rootNumber, String version) {
 		read(rootNumber, version);
+		this.rootNumber = rootNumber;
 		this.version = version;
 	}
 	
@@ -366,5 +368,12 @@ public class EchNamespaceContext {
 	 */
 	public boolean occupationValidTillAvailable() {
 		return getNamespaceVersion(21) >= 4;
+	}
+	
+	/*
+	 * Geschäftsadressen haben keine "Haushaltsart" und "Haushaltsid"
+	 */
+	public boolean addressesAreBusiness() {
+		return rootNumber == 148;
 	}
 }

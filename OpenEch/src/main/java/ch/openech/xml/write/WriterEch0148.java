@@ -96,12 +96,11 @@ public class WriterEch0148 extends DeliveryWriter {
 		return result();
 	}
 	
-	private String moveOutReportingDestination(WriterElement parent, Organisation organisation) throws Exception {
+	private void moveOutReportingDestination(WriterElement parent, Organisation organisation) throws Exception {
 		WriterElement element = parent.create(URI, MOVE_OUT_REPORTING_DESTINATION);
 		ech7.municipality(element, REPORTING_MUNICIPALITY, organisation.reportingMunicipality);
 		element.values(organisation, DEPARTURE_DATE);
 		ech98.destination(element, GOES_TO, organisation.goesTo, true);
-		return result();
 	}
 	
 	// Code 6
@@ -112,11 +111,10 @@ public class WriterEch0148 extends DeliveryWriter {
 		return result();
 	}
 	
-	private String moveReportingAddress(WriterElement parent, Organisation organisation) throws Exception {
+	private void moveReportingAddress(WriterElement parent, Organisation organisation) throws Exception {
 		WriterElement element = parent.create(URI, MOVE_REPORTING_ADDRESS);
 		ech7.municipality(element, REPORTING_MUNICIPALITY, organisation.reportingMunicipality);
 		ech98.dwellingAddress(element, BUSINESS_ADDRESS, organisation.businessAddress);
-		return result();
 	}
 	
 	// Code 7
