@@ -1,10 +1,12 @@
 package ch.openech.dm.person;
 
 import ch.openech.mj.db.model.annotation.Date;
+import ch.openech.mj.edit.value.Required;
 
 
 public class MaritalStatus {
 
+	@Required
 	public String maritalStatus = ch.openech.dm.code.MaritalStatus.Ledig.value;
 	@Date
 	public String dateOfMaritalStatus;
