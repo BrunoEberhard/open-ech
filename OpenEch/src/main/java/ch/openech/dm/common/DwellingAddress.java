@@ -51,15 +51,22 @@ public class DwellingAddress {
 		if (mailAddress != null) {
 			mailAddress.toHtml(s); s.append("<BR>");
 		}
-		s.append("EGID: " );
-		if (!StringUtils.isBlank(EGID)) s.append(EGID); else s.append("- ");
-		s.append("<BR>EWID: ");
-		if (!StringUtils.isBlank(EWID)) s.append(EWID); else s.append("- ");
-		s.append("<BR>Haushalt ID: ");
-		if (!StringUtils.isBlank(householdID)) s.append(householdID); else s.append("- ");
+		if (!StringUtils.isBlank(EGID)) {
+			s.append("EGID: " );
+			s.append(EGID); 
+		}
+		if (!StringUtils.isBlank(EWID)) {
+			s.append("<BR>EWID: ");
+			s.append(EWID);
+		}
+		
+		if (!StringUtils.isBlank(householdID)) {
+			s.append("<BR>Haushalt ID: ");
+			s.append(householdID);
+		}
 		s.append("<BR>");
 		if (StringUtils.isBlank(typeOfHousehold)) {
-			s.append("Haushaltsart: -");
+			// print nothing
 		} else if (typeOfHouseHoldIsCode()) {
 			// Die Codes der Haushaltsart sind sprechend genug, man kann sich daher das Textlabel sparen
 			s.append(EchCodes.typeOfHousehold.getText(typeOfHousehold));
