@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
-import ch.openech.client.e11.SeparationField;
 import ch.openech.client.e21.PartnerField;
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.e44.TechnicalIdsField;
@@ -94,21 +93,35 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		
 		// ReportedPerson (ech0011)
 		line(PERSON.originalName, PERSON.alliancePartnershipName, PERSON.aliasName, PERSON.otherName);
-		if (!correctName) {
-			line(PERSON.callName, PERSON.languageOfCorrespondance);
-		} else {
-			line(PERSON.callName, PERSON.foreign.nameOnPassport);
-			return;
-		}
 		
 		if (editable) {
-			line(PERSON.maritalStatus.maritalStatus, //
-					new DateOfMaritalStatusField(), new SeparationField(PERSON.separation, getNamespaceContext(), true), new CancelationReasonField());
+			line(PERSON.maritalStatus.maritalStatus,
+					new DateOfMaritalStatusField(),
+					new CancelationReasonField(), PERSON.callName);
 		} else {
-			line(PERSON.maritalStatus.maritalStatus, PERSON.maritalStatus.dateOfMaritalStatus, //
-					new SeparationField(PERSON.separation, getNamespaceContext(), false), PERSON.cancelationReason);
+			line(PERSON.maritalStatus.maritalStatus,
+					PERSON.maritalStatus.dateOfMaritalStatus,
+					PERSON.cancelationReason, PERSON.callName);
 		}
-		
+
+		if (getNamespaceContext().separationTillAvailable()) {
+			if (!correctName) {
+				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
+						PERSON.separation.separationTill, PERSON.languageOfCorrespondance);
+			} else {
+				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
+						PERSON.separation.separationTill, PERSON.foreign.nameOnPassport);
+			}
+		} else {
+			if (!correctName) {
+				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
+						PERSON.languageOfCorrespondance);
+			} else {
+				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
+						PERSON.foreign.nameOnPassport);
+			}
+		}
+
 		line(PERSON.nationality, PERSON.religion);
 
 		//
