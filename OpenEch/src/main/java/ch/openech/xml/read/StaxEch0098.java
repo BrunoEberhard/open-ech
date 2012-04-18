@@ -86,7 +86,7 @@ public class StaxEch0098 {
 	// -> businessAddress statt dwellingAddress
 	// -> federalRegister gibt es hier nicht
 	
-	private static void residence(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
+	public static void residence(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

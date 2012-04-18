@@ -49,6 +49,7 @@ public class StaxEch0148 implements StaxEchParser {
 		return lastInsertedOrganisationId;
 	}
 
+	@Override
 	public void process(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
@@ -131,7 +132,7 @@ public class StaxEch0148 implements StaxEchParser {
 	
 	//
 
-	public void simpleOrganisationEvent(String type, Organisation organisationIdentification, Organisation organisation) {
+	public void simpleOrganisationEvent(String type, Organisation organisation) {
 		try {
 			organisation.event = e;
 			persistence.organisation().update(organisation);
@@ -192,13 +193,13 @@ public class StaxEch0148 implements StaxEchParser {
 				else if (startName.equals(CONTACT)) organisation.contact = StaxEch0046.contact(xml);
 				else if (startName.endsWith("Residence")) StaxEch0098.residence(startName, xml, organisation);
 				else if (startName.equals(TYP_OF_RESIDENCE)) organisation.typeOfResidenceOrganisation = token(xml);
+				else if (StringUtils.equals(startName, MOVE_OUT_REPORTING_DESTINATION, MOVE_REPORTING_ADDRESS)) StaxEch0098.residence(xml, organisation);
 				else organisation.set(startName, token(xml));
 			} else if (event.isEndElement()) {
-				simpleOrganisationEvent(eventName, organisationIdentification, organisation);
+				simpleOrganisationEvent(eventName, organisation);
 				return;
 			} // else skip
 		}
 	}
-	
 
 }
