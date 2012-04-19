@@ -74,15 +74,17 @@ public class PlzImport {
 				scanner.next(); // skip Gültigkeitsdatum
 				plzList.add(plz);
 				plzByOnrp.put(plz.onrp, plz);
-				Zip zip = new Zip();
-				zip.setPlz(plz);
-				zipList.add(zip);
 			} catch (NoSuchElementException x) {
 				// Am Schluss des Files befindet sich eine Leerlinie, daher funktioniert hasNextLine nicht als Kontrolle
 				break;
 			}
 		}
 		Collections.sort(plzList);
+		for (Plz plz : plzList) {
+			Zip zip = new Zip();
+			zip.setPlz(plz);
+			zipList.add(zip);
+		}
 	}
 	
 	public static void main(String... args){
