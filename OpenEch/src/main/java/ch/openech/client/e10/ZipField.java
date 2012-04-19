@@ -1,13 +1,16 @@
 package ch.openech.client.e10;
 
+import java.util.List;
+
 import ch.openech.dm.common.Address;
-import ch.openech.dm.common.Plz;
 import ch.openech.dm.common.Zip;
+import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
+import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.SwitchLayout;
@@ -16,23 +19,19 @@ import ch.openech.mj.util.StringUtils;
 import ch.openech.util.PlzImport;
 
 // TODO implement ZipTownField
-public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<String> {
-	private final ComboBox<Plz> comboBoxSwiss;
+public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<String>, DemoEnabled {
+	private final ComboBox<Zip> comboBoxSwiss;
 	private final TextField textFieldForeign;
-	private final TextField textFieldEmpty;
 	private final SwitchLayout switchLayout;
 	
 	public ZipField(Object key) {
 		super(Constants.getConstant(key));
 		
 		comboBoxSwiss = ClientToolkit.getToolkit().createComboBox(listener());
-		comboBoxSwiss.setObjects(PlzImport.getInstance().getZipCodes());
+		comboBoxSwiss.setObjects(PlzImport.getInstance().getZipList());
 
 		textFieldForeign = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(Zip.class, Zip.ZIP_TOWN.foreignZipCode).getSize());
 
-		textFieldEmpty = ClientToolkit.getToolkit().createReadOnlyTextField();
-		textFieldEmpty.setText("-");
-		
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout();
 		switchLayout.show(comboBoxSwiss);
 	}
@@ -44,21 +43,16 @@ public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<
 	
 	@Override
 	public Zip getObject() {
-		Zip zipTown = super.getObject();
-		
-		zipTown.clear();
+		Zip zip = super.getObject();
 		if (switchLayout.getShownComponent() == comboBoxSwiss) {
 			if (comboBoxSwiss.getSelectedObject() != null) {
-				Plz plz = (Plz) comboBoxSwiss.getSelectedObject();
-				if (plz.postleitzahl > 0) zipTown.swissZipCode = Integer.toString(plz.postleitzahl);
-				if (plz.zusatzziffern > 0) zipTown.swissZipCodeAddOn = Integer.toString(plz.zusatzziffern);
-				if (plz.onrp > 0) zipTown.swissZipCodeId = Integer.toString(plz.onrp);
+				CloneHelper.deepCopy(comboBoxSwiss.getSelectedObject(), zip);
 			}
 		} else if (switchLayout.getShownComponent() == textFieldForeign) {
-			zipTown.foreignZipCode = textFieldForeign.getText();
+			zip.clear();
+			zip.foreignZipCode = textFieldForeign.getText();
 		}
-
-		return zipTown;
+		return zip;
 	}
 	
 	boolean isSwiss() {
@@ -71,17 +65,12 @@ public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<
 	
 	@Override
 	protected void show(Zip zip) {
-		if (zip.isSwiss()) {
-			switchLayout.show(comboBoxSwiss);
-			Plz plz = new Plz();
-			plz.onrp = Integer.parseInt(zip.swissZipCodeId);
-			comboBoxSwiss.setSelectedObject(plz); // see overwritten equals in Plz
-		} else if (zip.isForeign()) {
+		if (zip.isForeign()) {
 			switchLayout.show(textFieldForeign);
 			textFieldForeign.setText(zip.foreignZipCode);
 		} else {
-			switchLayout.show(textFieldForeign);
-			textFieldForeign.setText(zip.foreignZipCode);
+			switchLayout.show(comboBoxSwiss);
+			comboBoxSwiss.setSelectedObject(zip);
 		}
 	}
 
@@ -98,39 +87,34 @@ public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<
 	@Override
 	public void setDependedField(EditField<String> field) {
 		String coutryIso2 = field.getObject();
-		if ("CH".equals(coutryIso2) || "LI".equals(coutryIso2)) {
+		if (StringUtils.equals(coutryIso2, "CH", "LI", null)) {
 			if (switchLayout.getShownComponent() != comboBoxSwiss) {
 				comboBoxSwiss.setSelectedObject(null);
 				switchLayout.show(comboBoxSwiss);
+				fireChange();
 			}
-		} else if (!StringUtils.isBlank(coutryIso2)) {
+		} else {
 			if (switchLayout.getShownComponent() != textFieldForeign) {
 				textFieldForeign.setText("");
 				switchLayout.show(textFieldForeign);
+				fireChange();
 			}
-		} else {
-			switchLayout.show(textFieldEmpty);
 		}
 	}
 	
 	//
 
-//	@Override
-//	public void fillWithDemoData() {
-//		int index = (int)(Math.random() * (double)PlzImport.getInstance().getZipCodes().size());
-//		Plz plz = PlzImport.getInstance().getZipCodes().get(index);
-//
-//		Zip zipTown = getObject();
-//		if (zipTown == null) {
-//			// TODO ist das wirklich nötig?
-//			zipTown = new Zip();
-//		}
-//		zipTown.town = plz.ortsbezeichnung;
-//		zipTown.swissZipCode = "" + plz.postleitzahl;
-//		zipTown.swissZipCodeAddOn = "" + plz.zusatzziffern;
-//		zipTown.swissZipCodeId = "" + plz.onrp;
-//		
-//		setObject(zipTown);
-//	}
+	@Override
+	public void fillWithDemoData() {
+		if (switchLayout.getShownComponent() == comboBoxSwiss) {
+			List<Zip> zipList = PlzImport.getInstance().getZipList();
+			int index = (int)(Math.random() * (double)zipList.size());
+			Zip zip = zipList.get(index);
+			comboBoxSwiss.setSelectedObject(zip);
+		} else {
+			textFieldForeign.setText("" + (int)(10000 + 90000 * Math.random()));
+		}
+		fireChange();
+	}
 
 }

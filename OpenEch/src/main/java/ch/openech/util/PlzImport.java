@@ -3,17 +3,23 @@ package ch.openech.util;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import ch.openech.dm.common.Plz;
+import ch.openech.dm.common.Zip;
 
 public class PlzImport {
-	
+	private static final Logger logger = Logger.getLogger(PlzImport.class.getName());
 	private static PlzImport instance;
 	
 	private final List<Plz> plzList = new ArrayList<Plz>(5500);
+	private final List<Zip> zipList = new ArrayList<Zip>(5500);
+	private final Map<Integer, Plz> plzByOnrp = new HashMap<Integer, Plz>(10000);
 	
 	private PlzImport() {
 		String path = this.getClass().getPackage().getName().replace('.', '/');
@@ -29,16 +35,23 @@ public class PlzImport {
 		if (instance == null) {
 			long start = System.nanoTime();
 			instance = new PlzImport();
-			System.out.println((System.nanoTime() - start) / 1000 / 1000);
+			logger.fine("Einlesen Plz: " + (System.nanoTime() - start) / 1000 / 1000 + "ms");
 		}
 		return instance;
 	}
 	
-	
-	public List<Plz> getZipCodes() {
+	public List<Plz> getPlzList() {
 		return Collections.unmodifiableList(plzList);
 	}
 
+	public List<Zip> getZipList() {
+		return Collections.unmodifiableList(zipList);
+	}
+
+	public Plz getPlz(int onrp) {
+		return plzByOnrp.get(onrp);
+	}
+	
 	private void process(InputStream inputStream) throws Exception {
 		Scanner scanner = new Scanner(inputStream, "ISO-8859-1");
 		scanner.useDelimiter("\t|\n");
@@ -60,6 +73,10 @@ public class PlzImport {
 				scanner.next(); // skip Bfs
 				scanner.next(); // skip Gültigkeitsdatum
 				plzList.add(plz);
+				plzByOnrp.put(plz.onrp, plz);
+				Zip zip = new Zip();
+				zip.setPlz(plz);
+				zipList.add(zip);
 			} catch (NoSuchElementException x) {
 				// Am Schluss des Files befindet sich eine Leerlinie, daher funktioniert hasNextLine nicht als Kontrolle
 				break;
@@ -69,7 +86,7 @@ public class PlzImport {
 	}
 	
 	public static void main(String... args){
-		System.out.println(getInstance().getZipCodes().size());
+		System.out.println(getInstance().getPlzList().size());
 	}
 	
 }

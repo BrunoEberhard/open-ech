@@ -70,7 +70,11 @@ public class Address {
 		StringUtils.appendLine(s, addressLine2);
 		StringUtils.appendLine(s, street, houseNumber.concatNumbers());
 		StringUtils.appendLine(s, postOfficeBoxText, postOfficeBoxNumber);
-		StringUtils.appendLine(s, zip.display(), town);
+		if ("CH".equals(country)) {
+			StringUtils.appendLine(s, zip.display(), town);
+		} else {
+			StringUtils.appendLine(s, country, zip.display(), town);
+		}
 		StringUtils.appendLine(s, locality);
 	}
 

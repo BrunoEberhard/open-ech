@@ -48,5 +48,43 @@ public class Zip {
 			 return "";
 		 }
 	}
+
+	@Override
+	public String toString() {
+		return display();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((foreignZipCode == null) ? 0 : foreignZipCode.hashCode());
+		result = prime * result
+				+ ((swissZipCodeId == null) ? 0 : swissZipCodeId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Zip other = (Zip) obj;
+		if (foreignZipCode == null) {
+			if (other.foreignZipCode != null)
+				return false;
+		} else if (!foreignZipCode.equals(other.foreignZipCode))
+			return false;
+		if (swissZipCodeId == null) {
+			if (other.swissZipCodeId != null)
+				return false;
+		} else if (!swissZipCodeId.equals(other.swissZipCodeId))
+			return false;
+		return true;
+	}
 	
 }

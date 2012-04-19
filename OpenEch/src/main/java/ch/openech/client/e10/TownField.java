@@ -2,10 +2,12 @@ package ch.openech.client.e10;
 
 import java.util.logging.Logger;
 
+import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.Plz;
 import ch.openech.dm.common.Zip;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.edit.fields.EditField;
@@ -22,20 +24,15 @@ public class TownField extends ObjectField<String> implements DemoEnabled, Depen
 	private final SwitchLayout switchLayout;
 	private final TextField textFieldSwiss;
 	private final TextField textFieldZipForeign;
-	private final TextField textFieldEmpty;
 	
 	public TownField(Object key) {
 		super(Constants.getConstant(key));
 		
 		textFieldSwiss = ClientToolkit.getToolkit().createReadOnlyTextField();
-		
 		textFieldZipForeign = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(Zip.class, Zip.ZIP_TOWN.foreignZipCode).getSize());
-		textFieldEmpty = ClientToolkit.getToolkit().createReadOnlyTextField();
-		
-		textFieldEmpty.setText("-");
 		
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout();
-		switchLayout.show(textFieldEmpty);
+		switchLayout.show(textFieldSwiss);
 	}
 	
 	@Override
@@ -56,34 +53,21 @@ public class TownField extends ObjectField<String> implements DemoEnabled, Depen
 
 	@Override
 	protected void show(String town) {
-//		if (switchLayout.getShownComponent() == textFieldSwiss) {
-//			textFieldSwiss.setText(town);
-//		} else if (switchLayout.getShownComponent() == textFieldZipForeign) {
-//			textFieldZipForeign.setText(town);
-//		} else {
-//			return null;
-//		}
+		if (switchLayout.getShownComponent() == textFieldSwiss) {
+			textFieldSwiss.setText(town);
+		} else if (switchLayout.getShownComponent() == textFieldZipForeign) {
+			textFieldZipForeign.setText(town);
+		}
 	}
-	
 	
 	//
 	
 	@Override
 	public void fillWithDemoData() {
-//		int index = (int)(Math.random() * (double)PlzImport.getInstance().getZipCodes().size());
-//		Plz plz = PlzImport.getInstance().getZipCodes().get(index);
-//
-//		Zip zipTown = getObject();
-//		if (zipTown == null) {
-//			// TODO ist das wirklich nötig?
-//			zipTown = new Zip();
-//		}
-//		zipTown.town = plz.ortsbezeichnung;
-//		zipTown.swissZipCode = "" + plz.postleitzahl;
-//		zipTown.swissZipCodeAddOn = "" + plz.zusatzziffern;
-//		zipTown.swissZipCodeId = "" + plz.onrp;
-//		
-//		setObject(zipTown);
+		if (switchLayout.getShownComponent() == textFieldZipForeign) {
+			textFieldZipForeign.setText(NameGenerator.officialName() + "Town");
+			fireChange();
+		}
 	}
 
 	@Override
@@ -97,29 +81,27 @@ public class TownField extends ObjectField<String> implements DemoEnabled, Depen
 		Zip zip = zipfield.getObject();
 		
 		if (zipfield.isSwiss()) {
+			switchLayout.show(textFieldSwiss);
 			if (zip.swissZipCodeId != null) {
 				Integer onrp = Integer.parseInt(zip.swissZipCodeId);
-				for (Plz plz : PlzImport.getInstance().getZipCodes()) {
-					if (plz.onrp == onrp) {
-						textFieldSwiss.setText(plz.ortsbezeichnung);
-						switchLayout.show(textFieldSwiss);
-						return;
-					}
+				Plz plz = PlzImport.getInstance().getPlz(onrp);
+				if (plz != null) {
+					textFieldSwiss.setText(plz.ortsbezeichnung);
+					switchLayout.show(textFieldSwiss);
+					fireChange();
+					return;
 				}
-				switchLayout.show(textFieldEmpty);
 				logger.warning("Townfield could not found value of ZipField: " + zip.swissZipCodeId);
-			} else {
-				switchLayout.show(textFieldEmpty);
+				textFieldSwiss.setText("");
+				fireChange();
 			}
-		} else if (zipfield.isForeign()) {
+		} else {
 			if (switchLayout.getShownComponent() != textFieldZipForeign) {
 				switchLayout.show(textFieldZipForeign);
 				textFieldZipForeign.setText("");
+				fireChange();
 			}
-		} else {
-			switchLayout.show(textFieldEmpty);
 		}
-		fireChange();
 	}
 
 }

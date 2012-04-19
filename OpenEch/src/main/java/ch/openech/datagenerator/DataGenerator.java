@@ -172,7 +172,7 @@ public class DataGenerator {
 		}
 		
 		if (swiss || Math.random() < .9) {
-			List<Plz> plzList = PlzImport.getInstance().getZipCodes();
+			List<Plz> plzList = PlzImport.getInstance().getPlzList();
 			int pos = (int) (Math.random() * plzList.size());
 			Plz plz = plzList.get(pos);
 			address.country = "CH";
