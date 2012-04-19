@@ -71,7 +71,7 @@ public class PersonEditMenu {
 	private PageContext pageContext;
 	private Person person;
 	
-	private PersonHistoryAction showHistory;
+	private HistoryAction showHistory;
 
 	private Action marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
 	private Action naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality,
@@ -100,10 +100,6 @@ public class PersonEditMenu {
 		ActionGroup personActionGroup = actionGroup.getOrCreateActionGroup(ActionGroup.OBJECT);
 		personActionGroup.putValue(Action.NAME, "Person");
 		personActionGroup.putValue(Action.MNEMONIC_KEY, 'P');
-
-		// TODO History of person
-//		ActionGroup history = person.getOrCreateActionGroup("history");
-//		person.addSeparator();
 
 		ActionGroup partnershipGroup = personActionGroup.getOrCreateActionGroup("person_partnership");
 		partnershipGroup.add(marriage);
@@ -191,7 +187,7 @@ public class PersonEditMenu {
 		}
 	}
 	
-	private class PersonHistoryAction extends ResourceAction {
+	private class HistoryAction extends ResourceAction {
 		private Person person;
 		
 		@Override
@@ -206,8 +202,6 @@ public class PersonEditMenu {
 	}	
 
 	private void createMenuItems() {
-		showHistory = new PersonHistoryAction();
-
 		marriage = new PersonEditMenuAction(new MarriageEvent(echNamespaceContext));
 		separation = new PersonEditMenuAction(new SeparationEvent(echNamespaceContext));
 		undoSeparation = new PersonEditMenuAction(new UndoSeparationEvent(echNamespaceContext));
@@ -252,6 +246,8 @@ public class PersonEditMenu {
 		paperLock = new PersonEditMenuAction(new PaperLockEvent(echNamespaceContext));
 		
 		birthChild = new PersonEditMenuAction(new BirthChildEvent(echNamespaceContext));
+
+		showHistory = new HistoryAction();
 	}
 
 	private void fillCorrectionActionList() {
@@ -289,7 +285,7 @@ public class PersonEditMenu {
 		update(person, enabled);
 	}
 	
-	@BusinessRule("Welche Aktion in welchem Zustand ausgeführt werden darf")
+	@BusinessRule("Welche Aktion in welchem Zustand von Personen ausgeführt werden darf")
 	public void update(Person person, boolean enabled) {
 		boolean isPerson = person != null && enabled;
 		boolean isAlive = isPerson && person.isAlive();

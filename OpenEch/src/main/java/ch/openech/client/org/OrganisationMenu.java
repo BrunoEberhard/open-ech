@@ -1,5 +1,6 @@
 package ch.openech.client.org;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,10 @@ import ch.openech.client.org.event.correct.CorrectUidBrancheEvent;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.page.ActionGroup;
+import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.SeparatorAction;
+import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchNamespaceContext;
 
@@ -35,7 +39,7 @@ public class OrganisationMenu {
 	private PageContext pageContext;
 	private Organisation organisation;
 	
-//	private OrganisationHistoryMenuAction showHistory;
+	private HistoryAction showHistory;
 
 	private Action moveOut, move;
 	private Action contact, changeOrganisationName, changeLegalForm, changeReporting;
@@ -56,10 +60,6 @@ public class OrganisationMenu {
 		ActionGroup organisationActionGroup = actionGroup.getOrCreateActionGroup(ActionGroup.OBJECT);
 		organisationActionGroup.putValue(Action.NAME, "Organisation");
 		organisationActionGroup.putValue(Action.MNEMONIC_KEY, 'O');
-
-		// TODO History of organisation
-//		ActionGroup history = organisation.getOrCreateActionGroup("history");
-//		organisation.addSeparator();
 
 		organisationActionGroup.add(moveOut);
 		organisationActionGroup.add(move);
@@ -82,10 +82,13 @@ public class OrganisationMenu {
 			correct.add(action);
 		}
 		
+		organisationActionGroup.add(new SeparatorAction());
+		organisationActionGroup.add(showHistory); 
+		
 		//
 		
 		List<Action> actions = actionGroup.getAllActions();
-//		showHistory.setOrganisation(organisation);
+		showHistory.setOrganisation(organisation);
 		for (Action action : actions) {
 			if (action instanceof OrganisationEditMenuAction) {
 				OrganisationEditMenuAction organisationEditMenuAction = (OrganisationEditMenuAction) action;
@@ -107,25 +110,21 @@ public class OrganisationMenu {
 		}
 	}
 	
-//	private class OrganisationHistoryMenuAction extends ResourceAction {
-//		private Organisation organisation;
-//		
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			pageContext.show(Page.link(OrganisationHistoryViewPage.class, echNamespaceContext.getVersion(), organisation.getId()));
-//		}
-//		
-//		public void setOrganisation(Organisation organisation) {
-//			this.organisation = organisation;
-//			setEnabled(organisation != null);
-//		}
-//	}
+	private class HistoryAction extends ResourceAction {
+		private Organisation organisation;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pageContext.show(Page.link(OrganisationHistoryPage.class, echNamespaceContext.getVersion(), organisation.getId()));
+		}
+		
+		public void setOrganisation(Organisation organisation) {
+			this.organisation = organisation;
+			setEnabled(organisation != null);
+		}
+	}	
 
 	private void createMenuItems() {
-//		showHistory = new OrganisationHistoryMenuAction();
-		
-//		private Action moveOut, move;
-
 		move = new OrganisationEditMenuAction(new MoveEvent(echNamespaceContext));
 		moveOut = new OrganisationEditMenuAction(new MoveOutEvent(echNamespaceContext));
 
@@ -136,6 +135,8 @@ public class OrganisationMenu {
 
 		inLiquidation = new OrganisationEditMenuAction(new InLiquidationEvent(echNamespaceContext));
 		liquidation = new OrganisationEditMenuAction(new LiquidationEvent(echNamespaceContext));
+		
+		showHistory = new HistoryAction();
 	}
 
 	private void fillCorrectionActionList() {
@@ -158,9 +159,9 @@ public class OrganisationMenu {
 		update(organisation, enabled);
 	}
 	
-	@BusinessRule("Welche Aktion in welchem Zustand ausgeführt werden darf")
+	@BusinessRule("Welche Aktion in welchem Zustand von Unternehmen ausgeführt werden darf")
 	public void update(Organisation organisation, boolean enabled) {
-		boolean isOrganisation = organisation != null && enabled;
+//		boolean isOrganisation = organisation != null && enabled;
 //		boolean isAlive = isOrganisation && organisation.isAlive();
 //
 //		death.setEnabled(isAlive);
