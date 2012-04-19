@@ -56,25 +56,12 @@ public class TownField extends ObjectField<String> implements DemoEnabled, Depen
 
 	@Override
 	protected void show(String town) {
-//		if (!zipTown.isSwiss()) {
-//			modeFreeForeign();
-//			textFieldZipSwiss.setText(zipTown.foreignZipCode);
-//			textFieldTownSwiss.setText(zipTown.town);
-//		} else  {
-//			Plz plz = new Plz();
-//			plz.postleitzahl = IntegerUtils.intValue(zipTown.swissZipCode);
-//			plz.zusatzziffern = IntegerUtils.intValue(zipTown.swissZipCodeAddOn);
-//			plz.onrp = IntegerUtils.intValue(zipTown.swissZipCodeId);
-//			plz.ortsbezeichnung = zipTown.town;
-//			int index = PlzImport.getInstance().getZipCodes().indexOf(plz);
-//			if (index >= 0) {
-//				comboBox.setSelectedObject(plz);
-//				modeSelectCH();
-//			} else {
-//				modeFreeCH();
-//				textFieldZipSwiss.setText(zipTown.swissZipCode);
-//				textFieldTownSwiss.setText(zipTown.town);
-//			}
+//		if (switchLayout.getShownComponent() == textFieldSwiss) {
+//			textFieldSwiss.setText(town);
+//		} else if (switchLayout.getShownComponent() == textFieldZipForeign) {
+//			textFieldZipForeign.setText(town);
+//		} else {
+//			return null;
 //		}
 	}
 	
@@ -132,6 +119,7 @@ public class TownField extends ObjectField<String> implements DemoEnabled, Depen
 		} else {
 			switchLayout.show(textFieldEmpty);
 		}
+		fireChange();
 	}
 
 }

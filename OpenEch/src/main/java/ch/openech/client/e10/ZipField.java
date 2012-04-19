@@ -71,13 +71,18 @@ public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<
 	
 	@Override
 	protected void show(Zip zip) {
-		// muss man das wirklich implementieren?
-//		if (zip.isSwiss()) {
-//			switchLayout.show(comboBoxSwiss);
-//			
-//		} else {
-//			
-//		}
+		if (zip.isSwiss()) {
+			switchLayout.show(comboBoxSwiss);
+			Plz plz = new Plz();
+			plz.onrp = Integer.parseInt(zip.swissZipCodeId);
+			comboBoxSwiss.setSelectedObject(plz); // see overwritten equals in Plz
+		} else if (zip.isForeign()) {
+			switchLayout.show(textFieldForeign);
+			textFieldForeign.setText(zip.foreignZipCode);
+		} else {
+			switchLayout.show(textFieldForeign);
+			textFieldForeign.setText(zip.foreignZipCode);
+		}
 	}
 
 	@Override
@@ -106,7 +111,6 @@ public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<
 		} else {
 			switchLayout.show(textFieldEmpty);
 		}
-		fireChange();
 	}
 	
 	//

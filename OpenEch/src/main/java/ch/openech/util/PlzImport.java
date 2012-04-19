@@ -13,7 +13,7 @@ public class PlzImport {
 	
 	private static PlzImport instance;
 	
-	private final List<Plz> zipCodes = new ArrayList<Plz>(5500);
+	private final List<Plz> plzList = new ArrayList<Plz>(5500);
 	
 	private PlzImport() {
 		String path = this.getClass().getPackage().getName().replace('.', '/');
@@ -36,7 +36,7 @@ public class PlzImport {
 	
 	
 	public List<Plz> getZipCodes() {
-		return Collections.unmodifiableList(zipCodes);
+		return Collections.unmodifiableList(plzList);
 	}
 
 	private void process(InputStream inputStream) throws Exception {
@@ -59,13 +59,13 @@ public class PlzImport {
 				scanner.next(); // skip Briefzustellung
 				scanner.next(); // skip Bfs
 				scanner.next(); // skip Gültigkeitsdatum
-				zipCodes.add(plz);
+				plzList.add(plz);
 			} catch (NoSuchElementException x) {
 				// Am Schluss des Files befindet sich eine Leerlinie, daher funktioniert hasNextLine nicht als Kontrolle
 				break;
 			}
 		}
-		Collections.sort(zipCodes);
+		Collections.sort(plzList);
 	}
 	
 	public static void main(String... args){

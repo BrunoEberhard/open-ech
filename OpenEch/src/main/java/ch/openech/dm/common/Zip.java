@@ -23,7 +23,11 @@ public class Zip {
 	}
 	
 	public boolean isSwiss() {
-		return StringUtils.isBlank(foreignZipCode);
+		return !StringUtils.isBlank(swissZipCodeId);
+	}
+	
+	public boolean isForeign() {
+		return !StringUtils.isBlank(foreignZipCode);
 	}
 
 	public void clear() {

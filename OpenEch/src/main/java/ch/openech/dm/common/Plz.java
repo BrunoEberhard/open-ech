@@ -50,4 +50,21 @@ public class Plz implements Comparable<Plz>, Serializable {
 		return postleitzahl * 100 + zusatzziffern;
 	}
 
+	@Override
+	public int hashCode() {
+		return onrp;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Plz other = (Plz) obj;
+		return other.onrp == onrp;
+	}
+
 }
