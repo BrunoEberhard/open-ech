@@ -33,7 +33,7 @@ public class Zip {
 	
 	public String display() {
 		if (!StringUtils.isBlank(swissZipCode)) {
-			if (!StringUtils.isBlank(swissZipCodeAddOn)) {
+			if (!StringUtils.isBlank(swissZipCodeAddOn) && !"0".equals(swissZipCodeAddOn)) {
 				return swissZipCode + " " + swissZipCodeAddOn;
 			} else {
 				return swissZipCode;
