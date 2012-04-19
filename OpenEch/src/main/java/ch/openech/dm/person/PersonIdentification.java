@@ -52,11 +52,6 @@ public class PersonIdentification {
 		}
 	}
 	
-	public void display(StringBuilder s) {
-		StringUtils.appendLine(s, firstName, officialName);
-		StringUtils.appendLine(s, DateUtils.formatCH(dateOfBirth));
-	}
-
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		s.append("<HTML>");
