@@ -27,8 +27,10 @@ public class Organisation {
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 	
+	@Required @FormatName(EchFormats.organisationName)
+	public String organisationName; 
 	@FormatName(EchFormats.organisationName)
-	public String organisationName, organisationLegalName, organisationAdditionalName;
+	public String organisationLegalName, organisationAdditionalName;
 	public String legalForm;
 	
 	// 98 : Daten
