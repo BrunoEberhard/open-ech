@@ -1,13 +1,11 @@
 package ch.openech.client.ewk.event;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileInputStream;
-
-import javax.swing.JFileChooser;
+import java.io.InputStream;
 
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.swing.FrameManager;
+import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0020;
 
@@ -18,35 +16,32 @@ public class ImportAllAction extends ResourceAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		imprt();
+		InputStream inputStream = ClientToolkit.getToolkit().imprt(e.getSource(), "Datei wählen");
+		if (inputStream != null) {
+			imprt(inputStream, e.getSource());
+		}
 	}
 	
-	public void imprt() {
-		JFileChooser chooser = new JFileChooser();
-		chooser.setMultiSelectionEnabled(false);
-		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		if (JFileChooser.APPROVE_OPTION == chooser.showDialog(null, "Datei wählen")) {
-			File inputFile = chooser.getSelectedFile();
-			imprt(inputFile);
-		}				
-	}
-	
-	public void imprt(final File inputFile) {
-		final ThreadSafeProgressMonitor progressMonitor = new ThreadSafeProgressMonitor(null, "Import Gesamtbestand", "Initialisierung", 0, 100);
+	public void imprt(final InputStream inputStream, final Object parent) {
+//		final ProgressListener progress = ClientToolkit.getToolkit().showProgress(parent, "Import");
 		
 		new Thread() {
 			@Override
 			public void run() {
 				try {
+					while (inputStream.available() == 0) {
+						Thread.sleep(1000);
+					}
 					StaxEch0020 ech0020 = new StaxEch0020(EchServer.getInstance().getPersistence());
 
-					FileInputStream fis = new FileInputStream(inputFile);
-					progressMonitor.invokeSetNote("Importiere Personen");
-					ech0020.process(fis, inputFile.getName(), progressMonitor);
-					progressMonitor.showInformation("Import erfolgreich abgeschlossen");
-					fis.close();
+//					progressMonitor.invokeSetNote("Importiere Personen");
+					ech0020.process(inputStream, "ImportDatei", null);
+					ClientToolkit.getToolkit().showMessage(parent, "Import erfolgreich abgeschlossen");
+					inputStream.close();
+				} catch (IllegalStateException ise) {
+					// silent, probably CloseablePipedInputStream was closed
 				} catch (Exception x) {
-					progressMonitor.showInformation("Import fehlgeschlagen\n\n" + x.getMessage());
+					ClientToolkit.getToolkit().showError(parent, "Import fehlgeschlagen\n\n" + x.getMessage());
 					x.printStackTrace();
 				} finally {
 					FrameManager.getInstance().refresh();

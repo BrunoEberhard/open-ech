@@ -8,6 +8,7 @@ import javax.swing.Action;
 import ch.openech.client.ewk.BaseDeliveryEditor;
 import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.client.ewk.event.ExportAllAction;
+import ch.openech.client.ewk.event.ImportAllAction;
 import ch.openech.client.ewk.event.KeyDeliveryAction;
 import ch.openech.client.ewk.event.birth.BirthEvent;
 import ch.openech.client.ewk.event.moveIn.MoveInWizard;
@@ -23,7 +24,6 @@ import ch.openech.dm.code.ApplicationMode;
 import ch.openech.mj.application.ApplicationConfig;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.EditorDialogAction;
-import ch.openech.mj.edit.EditorPageAction;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -74,6 +74,7 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 			}
 			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
 			imprt.add(new EditorDialogAction(new BaseDeliveryEditor(ewkNamespaceContext)));
+			imprt.add(new ImportAllAction());
 //			imprt.add(new EditorPageAction(BaseDeliveryEditor.class, ewkNamespaceContext.getVersion()));
 			if (isDevMode) {
 				imprt.add(new GeneratePersonAction(ewkNamespaceContext));

@@ -16,7 +16,7 @@ import ch.openech.xml.write.EchNamespaceContext;
 public class PersonViewPage extends ObjectViewPage<Person> {
 
 	private final String personId;
-	private final int time;
+	private final Integer time;
 	private final EchNamespaceContext echNamespaceContext;
 	private final PersonPanel personPanel;
 	private final PersonEditMenu menu;
@@ -25,9 +25,9 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 		super(context);
 		this.echNamespaceContext = EchNamespaceContext.getNamespaceContext(20, arguments[0]);
 		this.personId = arguments[1];
-		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
+		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : null;
 		this.personPanel = new PersonPanel(PersonPanelType.DISPLAY, echNamespaceContext);
-		this.menu = time == 0 ? new PersonEditMenu(echNamespaceContext) : null; 
+		this.menu = time == null ? new PersonEditMenu(echNamespaceContext) : null; 
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 	@Override
 	protected Person loadObject() {
 		Person actualPerson = EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
-		if (time == 0) {
+		if (time == null) {
 			return actualPerson;
 		} else {
 			try {

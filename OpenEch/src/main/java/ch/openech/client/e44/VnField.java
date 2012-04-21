@@ -7,7 +7,6 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.toolkit.TextField.TextFieldFilter;
 import ch.openech.mj.util.StringUtils;
@@ -53,23 +52,13 @@ public class VnField extends AbstractEditField<String> implements DemoEnabled, V
 		private final int limit = 13;
 
 		@Override
-		public String filter(IComponent textField, String str) {
-			if (str == null)
-				return null;
+		public int getLimit() {
+			return limit;
+		}
 
-			for (int i = 0; i<str.length(); i++) {
-				if (!Character.isDigit(str.charAt(i))) {
-					showBubble(textField, "Es können nur Zahlen eingegeben werden");
-					return null;
-				}
-			}
-			
-			if (str.length() <= limit) {
-				return str;
-			} else {
-				ClientToolkit.getToolkit().showNotification(textField, "Eingabe auf " + limit + " Zeichen beschränkt");
-				return str.substring(0, limit);
-			}
+		@Override
+		public String getAllowedCharacters() {
+			return "0123456789";
 		}
 	}
 	

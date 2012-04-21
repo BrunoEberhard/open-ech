@@ -8,7 +8,6 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.toolkit.TextField.TextFieldFilter;
 import ch.openech.mj.util.StringUtils;
@@ -52,27 +51,16 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 	}
 
 	private static class CantonTextFieldFilter implements TextFieldFilter {
-		private static final int limit = 2;
+		private static final String ALLOWED_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 		@Override
-		public String filter(IComponent textField, String str) {
-			if (str == null)
-				return null;
+		public int getLimit() {
+			return 2;
+		}
 
-			for (int i = 0; i<str.length(); i++) {
-				if (!Character.isLetter(str.charAt(i))) {
-					showBubble(textField, "Es können nur Buchstaben eingegeben werden");
-					return null;
-				}
-			}
-			str = str.toUpperCase();
-			
-			if (str.length() <= limit) {
-				return str;
-			} else {
-				showBubble(textField, "Eingabe auf " + limit + " Zeichen beschränkt");
-				return str.substring(0, limit);
-			}
+		@Override
+		public String getAllowedCharacters() {
+			return ALLOWED_CHARACTERS;
 		}
 	}	
 

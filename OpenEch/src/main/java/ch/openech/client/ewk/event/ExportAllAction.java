@@ -1,15 +1,13 @@
 package ch.openech.client.ewk.event;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-
-import javax.swing.JFileChooser;
 
 import ch.openech.dm.person.Person;
 import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.ClientToolkit;
+import ch.openech.mj.util.ProgressListener;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
@@ -25,60 +23,56 @@ public class ExportAllAction extends ResourceAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JFileChooser chooser = new JFileChooser();
-		chooser.setMultiSelectionEnabled(false);
-		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		if (JFileChooser.APPROVE_OPTION == chooser.showDialog(null, "Ausgabedatei wählen")) {
-			File outputFile = chooser.getSelectedFile();
-			export(outputFile, (Component)e.getSource());
+		OutputStream outputStream = ClientToolkit.getToolkit().export(e.getSource(), "Ausgabedatei wählen");
+		if (outputStream != null) {
+			export(outputStream, e.getSource());
 		}
 	}
 
-	private void export(final File outputFile, Component parentComponent) {
-		final ThreadSafeProgressMonitor progressMonitor = new ThreadSafeProgressMonitor(parentComponent, "Export", "Initialisierung", 0, 100);
-		
+	private void export(final OutputStream outputStream, final Object parent) {
+		final ProgressListener progress = ClientToolkit.getToolkit().showProgress(parent, "Export");
+
 		new Thread() {
+			ProgressListener progress = ClientToolkit.getToolkit().showProgress(parent, "Export");
+			
 			@Override
 			public void run() {
 				try {
 					int maxId = EchServer.getInstance().getPersistence().person().getMaxId();
-					progressMonitor.invokeSetMaximum(maxId);
 					
-					FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
-					OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
+					OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
 					
 					WriterEch0020 writer = new WriterEch0020(echNamespaceContext);
 					WriterElement delivery = writer.delivery(outputStreamWriter);
 					WriterElement baseDelivery = createBaseDelivery(writer, delivery, maxId);
 
-					int nv = 0;
-					boolean canceled = false;
+//					boolean canceled = false;
 					for (int id = 1; id<=maxId; id++) {
-						progressMonitor.invokeSetNote("Exportiere Person " + id);
-						progressMonitor.invokeSetProgress(nv++);
 						Person person = EchServer.getInstance().getPersistence().person().read(id);
 						if (person != null) {
 							writePerson(writer, baseDelivery, person);
 						} else {
 							// Person was deleted
 						}
-						if (progressMonitor.isCanceled()) {
-							canceled = true;
-							break;
-						}
+//						if (progressMonitor.isCanceled()) {
+//							canceled = true;
+//							break;
+//						}
+						progress.showProgress(id, maxId);
 					}
 
 					writer.endDocument();
 					outputStreamWriter.close();
-					fileOutputStream.close();
+					outputStream.close();
 
-					if (!canceled) {
-						progressMonitor.showInformation(maxId + " Personen erfolgreich exportiert");
-					} else {
-						progressMonitor.showInformation("Export nach " + nv + " Personen abgebrochen");
-					}
+//					if (!canceled) {
+//						progressMonitor.showInformation(maxId + " Personen erfolgreich exportiert");
+//					} else {
+//						progressMonitor.showInformation("Export nach " + nv + " Personen abgebrochen");
+//					}
+					ClientToolkit.getToolkit().showMessage(parent, maxId + " Personen erfolgreich exportiert");
 				} catch (Exception x) {
-					progressMonitor.showInformation("Export fehlgeschlagen\n\n" + x.getMessage());
+					ClientToolkit.getToolkit().showError(parent, "Export fehlgeschlagen\n\n" + x.getMessage());
 				}
 			}
 
