@@ -7,7 +7,6 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.toolkit.TextField.TextFieldFilter;
 import ch.openech.mj.util.StringUtils;
@@ -46,17 +45,13 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 		private static final int limit = 12;
 
 		@Override
-		public String filter(IComponent textField, String str) {
-			if (str == null)
-				return null;
-			
-			str = str.toUpperCase();
-			if (str.length() <= limit) {
-				return str;
-			} else {
-				ClientToolkit.getToolkit().showNotification(textField, "Eingabe auf " + limit + " Zeichen beschränkt");
-				return str.substring(0, limit);
-			}
+		public int getLimit() {
+			return limit;
+		}
+
+		@Override
+		public String getAllowedCharacters() {
+			return null;
 		}
 	}
 
