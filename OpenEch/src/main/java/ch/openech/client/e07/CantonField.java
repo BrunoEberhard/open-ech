@@ -51,7 +51,7 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 	}
 
 	private static class CantonTextFieldFilter implements TextFieldFilter {
-		private static final String ALLOWED_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		private static final String ALLOWED_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 		@Override
 		public int getLimit() {

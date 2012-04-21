@@ -7,8 +7,8 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
+import ch.openech.mj.toolkit.MaxLengthTextFieldFilter;
 import ch.openech.mj.toolkit.TextField;
-import ch.openech.mj.toolkit.TextField.TextFieldFilter;
 import ch.openech.mj.util.StringUtils;
 
 
@@ -20,7 +20,7 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 	public OrganisationUidField(Object key, boolean editable) {
 		super(key, editable);
 		if (editable) {
-			textField = ClientToolkit.getToolkit().createTextField(listener(), new OrganisationTextFieldFilter());
+			textField = ClientToolkit.getToolkit().createTextField(listener(), new MaxLengthTextFieldFilter(12));
 		} else {
 			textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 		}
@@ -39,20 +39,6 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 	@Override
 	public void setObject(String value) {
 		textField.setText(value);
-	}
-
-	private class OrganisationTextFieldFilter implements TextFieldFilter {
-		private static final int limit = 12;
-
-		@Override
-		public int getLimit() {
-			return limit;
-		}
-
-		@Override
-		public String getAllowedCharacters() {
-			return null;
-		}
 	}
 
 	@Override
