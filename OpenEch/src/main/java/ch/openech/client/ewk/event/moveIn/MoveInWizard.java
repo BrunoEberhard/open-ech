@@ -26,6 +26,7 @@ import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
+import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -357,18 +358,14 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			showXML();
-		}
-		
-		private void showXML() {
 			try {
 				xmls = new ArrayList<String>();
 				for (Person person : getObject().persons) {
 					try {
 						xmls.add(getWriterEch0020().moveIn(person));
-					} catch (Exception e) {
+					} catch (Exception ex) {
 						// TODO
-						e.printStackTrace();
+						ex.printStackTrace();
 					}
 				}
 			} catch (Exception x) {
@@ -383,7 +380,8 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			};
 			form.area(new XmlTextFormField("xmls"));
 			form.setObject(this);
-			ClientToolkit.getToolkit().openDialog(null, form, "XML").openDialog();
+			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(e.getSource());
+			ClientToolkit.getToolkit().openDialog(pageContext.getComponent(), form, "XML").openDialog();
 		}
 	}
 
