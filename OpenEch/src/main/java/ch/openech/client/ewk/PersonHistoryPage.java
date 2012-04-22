@@ -49,7 +49,7 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 				person = EchServer.getInstance().getPersistence().person().read(id, time);
 				version = new HistoryVersion();
 				version.object = person;
-				version.version = time;
+				version.version = "" + time;
 				version.time = getTime(person);
 				version.description = getDescription(person);
 				versions.add(version);
@@ -71,8 +71,12 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 	}
 
 	@Override
-	protected String link(Person object, int version) {
-		return link(PersonViewPage.class, echNamespaceContext.getVersion(), object.getId(), "" + version);
+	protected String link(Person object, String version) {
+		if (version != null) {
+			return link(PersonViewPage.class, echNamespaceContext.getVersion(), object.getId(), version);
+		} else {
+			return link(PersonViewPage.class, echNamespaceContext.getVersion(), object.getId());
+		}
 	}
 	
 }

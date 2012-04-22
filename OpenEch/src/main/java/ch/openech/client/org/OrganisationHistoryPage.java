@@ -49,7 +49,7 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 				organisation = EchServer.getInstance().getPersistence().organisation().read(id, time);
 				version = new HistoryVersion();
 				version.object = organisation;
-				version.version = time;
+				version.version = "" + time;
 				version.time = getTime(organisation);
 				version.description = getDescription(organisation);
 				versions.add(version);
@@ -71,8 +71,12 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	}
 
 	@Override
-	protected String link(Organisation object, int version) {
-		return link(OrganisationViewPage.class, echNamespaceContext.getVersion(), object.getId(), "" + version);
+	protected String link(Organisation object, String version) {
+		if (version != null) {
+			return link(OrganisationViewPage.class, echNamespaceContext.getVersion(), object.getId(), version);
+		} else {
+			return link(OrganisationViewPage.class, echNamespaceContext.getVersion(), object.getId());
+		}
 	}
 	
 }
