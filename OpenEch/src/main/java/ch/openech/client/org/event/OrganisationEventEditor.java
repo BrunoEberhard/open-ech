@@ -9,7 +9,6 @@ import ch.openech.client.org.OrganisationViewPage;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.util.GenericUtils;
 import ch.openech.server.EchServer;
@@ -29,14 +28,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	public FormVisual<T> createForm() {
 		@SuppressWarnings("unchecked")
 		Class<T> genericClass = (Class<T>) GenericUtils.getGenericClass(getClass());
-
-		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, getEchNamespaceContext(), getFormColumns()) {
-			@Override
-			public void validate(List<ValidationMessage> resultList) {
-				super.validate(resultList);
-				OrganisationEventEditor.this.validate(getObject(), resultList);
-			}
-		};
+		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, getEchNamespaceContext(), getFormColumns());
 		fillForm(formPanel);
 		return formPanel;
 	}

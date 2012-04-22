@@ -8,7 +8,6 @@ import ch.openech.client.ewk.XmlResult;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.util.GenericUtils;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -27,13 +26,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 		@SuppressWarnings("unchecked")
 		Class<T> genericClass = (Class<T>) GenericUtils.getGenericClass(getClass());
 
-		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, getEchNamespaceContext(), getFormColumns()) {
-			@Override
-			public void validate(List<ValidationMessage> resultList) {
-				super.validate(resultList);
-				PersonEventEditor.this.validate(getObject(), resultList);
-			}
-		};
+		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, getEchNamespaceContext(), getFormColumns());
 		fillForm(formPanel);
 		return formPanel;
 	}
