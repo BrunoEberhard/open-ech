@@ -9,7 +9,8 @@ import ch.openech.dm.person.Person;
 import ch.openech.mj.application.HistoryPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
-import ch.openech.mj.util.DateUtils;
+import ch.openech.mj.resources.Resources;
+import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 
@@ -62,12 +63,17 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 
 	@Override
 	protected String getTime(Person object) {
-		return object.event != null ? DateUtils.formatCH(object.event.time) : "-";
+		return object.event != null ? object.event.time : "-";
 	}
 
 	@Override
 	protected String getDescription(Person object) {
-		return object.event != null ? object.event.type : "-";
+		if (object.event != null) {
+			String resourceName = StringUtils.upperFirstChar(object.event.type) + "Event.text";
+			return Resources.getString(resourceName);
+		} else {
+			return "-";
+		}
 	}
 
 	@Override
