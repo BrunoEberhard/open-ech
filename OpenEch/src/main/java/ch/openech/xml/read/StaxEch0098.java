@@ -65,14 +65,14 @@ public class StaxEch0098 {
 		}
 	}
 	
-	private static void foundationOrLiquidation(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
+	public static void foundationOrLiquidation(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (StringUtils.equals(startName,  FOUNDATION_REASON,  LIQUIDATION_REASON)) organisation.set(startName, token(xml));
-				else if (StringUtils.equals(startName, FOUNDATION_DATE,  LIQUIDATION_DATE)) organisation.set(startName, StaxEch0044.datePartiallyKnown(xml));
+				else if (StringUtils.equals(startName, FOUNDATION_DATE,  LIQUIDATION_DATE, LIQUIDATION_ENTRY_DATE)) organisation.set(startName, StaxEch0044.datePartiallyKnown(xml));
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;

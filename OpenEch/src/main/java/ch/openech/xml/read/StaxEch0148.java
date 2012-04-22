@@ -197,6 +197,7 @@ public class StaxEch0148 implements StaxEchParser {
 				else if (startName.equals(COMES_FROM)) organisation.comesFrom = StaxEch0011.destination(xml);
 				else if (startName.equals(BUSINESS_ADDRESS)) organisation.businessAddress = StaxEch0011.dwellingAddress(xml);
 				else if (StringUtils.equals(startName, HAS_MAIN_RESIDENCE, HAS_SECONDARY_RESIDENCE, HAS_OTHER_RESIDENCE, MOVE_OUT_REPORTING_DESTINATION, MOVE_REPORTING_ADDRESS)) StaxEch0098.residence(xml, organisation);
+				else if (StringUtils.equals(startName, FOUNDATION, LIQUIDATION)) StaxEch0098.foundationOrLiquidation(xml, organisation);
 				else organisation.set(startName, token(xml));
 			} else if (event.isEndElement()) {
 				simpleOrganisationEvent(eventName, organisation);
