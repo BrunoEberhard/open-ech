@@ -24,6 +24,7 @@ import ch.openech.dm.code.ApplicationMode;
 import ch.openech.mj.application.ApplicationConfig;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.EditorDialogAction;
+import ch.openech.mj.edit.EditorPageAction;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -63,8 +64,8 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		ActionGroup niu = file.getOrCreateActionGroup(ActionGroup.NEW);
 		
 		if (ewkNamespaceContext != null) {
-			niu.add(new EditorDialogAction(new MoveInWizard(ewkNamespaceContext)));
-//			niu.add(new EditorPageAction(MoveInWizard.class, ewkNamespaceContext.getVersion()));
+//			niu.add(new EditorDialogAction(new MoveInWizard(ewkNamespaceContext)));
+			niu.add(new EditorPageAction(MoveInWizard.class, ewkNamespaceContext.getVersion()));
 			niu.add(new EditorDialogAction(new BirthEvent(ewkNamespaceContext)));
 			
 			ActionGroup export = file.getOrCreateActionGroup(ActionGroup.EXPORT);
