@@ -10,6 +10,7 @@ import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Boolean;
 import ch.openech.mj.db.model.annotation.Date;
+import ch.openech.mj.edit.fields.CheckBoxField;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
@@ -58,6 +59,13 @@ public abstract class ChangeWithSecondPersonEvent extends
 			data.registerPartner = "1";
 		}
 		return data;
+	}
+
+	public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
+		if (data.registerPartner() && data.relationPartner == null) {
+			validationMessages.add(new ValidationMessage(ChangeWithSecondPersonEventData.DATA.registerPartner,
+					"Für Partnereintrag ist vorhandener Partner bei Person erforderlich"));
+		}
 	}
 
 	@BusinessRule("Neues Zivilstandsereignis darf nicht vor dem gültigen sein")
@@ -116,6 +124,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
+			super.validate(data, validationMessages);
 			Person.validateEventNotBeforeBirth(validationMessages, getPerson().personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
 		}
 	}
@@ -152,6 +161,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
+			super.validate(data, validationMessages);
 			Person.validateEventNotBeforeBirth(validationMessages, getPerson().personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
 		}
 	}
@@ -170,6 +180,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
+			super.validate(data, validationMessages);
 			validateEventNotBeforeDateOfMaritalStatus(data, validationMessages);
 		}
 
@@ -210,11 +221,6 @@ public abstract class ChangeWithSecondPersonEvent extends
 			}
 			return xmls;
 		}
-		
-		@Override
-		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
-			// nothing to validate
-		}
 	}
 
 	public static class DivorceEvent extends ChangeWithSecondPersonEvent {
@@ -230,6 +236,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
+			super.validate(data, validationMessages);
 			validateEventNotBeforeDateOfMaritalStatus(data, validationMessages);
 		}
 
@@ -261,6 +268,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
+			super.validate(data, validationMessages);
 			validateEventNotBeforeDateOfMaritalStatus(data, validationMessages);
 		}
 
@@ -291,6 +299,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
+			super.validate(data, validationMessages);
 			validateEventNotBeforeDateOfMaritalStatus(data, validationMessages);
 		}
 
