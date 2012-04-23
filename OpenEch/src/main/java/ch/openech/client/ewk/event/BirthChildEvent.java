@@ -6,7 +6,7 @@ import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
-import ch.openech.client.preferences.PreferenceData;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
@@ -14,6 +14,7 @@ import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.PageContext;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
@@ -40,7 +41,7 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 
 	@Override
 	public Person load() {
-		return calculatePresets(getPerson());
+		return calculatePresets(getPerson(), context);
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 	
 	//
 	
-	private static Person calculatePresets(Person parentPerson) {
+	private static Person calculatePresets(Person parentPerson, PageContext context) {
 		Person person = new Person();
 
 		Person mother = null;
@@ -99,10 +100,10 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 		presetPlaceOfOrigin(person, father, mother);
 		// presetContact(person, father, mother);
 
-		PreferenceData preferenceData = PreferenceData.load();
-		if (preferenceData.preferencesDefaultsData.residence != null) {
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		if (preferences.preferencesDefaultsData.residence != null) {
 			person.placeOfBirth = new Place();
-			person.placeOfBirth.setMunicipalityIdentification(preferenceData.preferencesDefaultsData.residence);
+			person.placeOfBirth.setMunicipalityIdentification(preferences.preferencesDefaultsData.residence);
 		}
 		return person;
 	}

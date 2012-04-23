@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.FileWriter;
 
 import ch.openech.dm.Envelope;
-import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.xml.write.WriterEch0090;
 
 public class SedexOutputGenerator {
 
 	
 	public static boolean sedexOutputDirectoryAvailable() {
-		String directoryName = PreferencesHelper.preferences().get("sedexOutput", null);
+		String directoryName = null; // TODO PreferencesHelper.preferences().get("sedexOutput", null);
 		if (directoryName != null) {
 			File directory = new File(directoryName);
 			return directory.isDirectory() && directory.canWrite();
@@ -23,7 +22,7 @@ public class SedexOutputGenerator {
 	public static void generateSedex(String xml, Envelope envelope) {
 		try {
 			String xmlEnvelope = new WriterEch0090().envelope(envelope);
-			String directoryName = PreferencesHelper.preferences().get("sedexOutput", null);
+			String directoryName = null; // TODO = PreferencesHelper.preferences().get("sedexOutput", null);
 			File directory = new File(directoryName);
 			FileWriter fileWriter = new FileWriter(new File(directory, "envl_" + envelope.messageId +".xml"));
 			fileWriter.write(xmlEnvelope);

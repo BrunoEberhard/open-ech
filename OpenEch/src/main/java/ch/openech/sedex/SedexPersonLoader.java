@@ -5,14 +5,13 @@ import java.io.FileInputStream;
 
 import ch.openech.dm.Envelope;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.xml.read.ParserTarget93;
 import ch.openech.xml.read.StaxEch0093;
 
 public class SedexPersonLoader {
 
 	public static Person readPerson(Envelope envelope) {
-		String directoryName = PreferencesHelper.preferences().get("sedexInput", null);
+		String directoryName = null; // TODO PreferencesHelper.preferences().get("sedexInput", null);
 		File directory = new File(directoryName);
 		
 		class OverviewParserTarget93  implements ParserTarget93 {

@@ -6,11 +6,12 @@ import java.util.List;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.ewk.XmlEditor;
-import ch.openech.client.preferences.PreferenceData;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.PageContext;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
@@ -28,7 +29,7 @@ public class BirthEvent extends XmlEditor<Person> {
 
 	@Override
 	public Person newInstance() {
-		return calculatePresets();
+		return calculatePresets(context);
 	}
 
 	@Override
@@ -52,13 +53,13 @@ public class BirthEvent extends XmlEditor<Person> {
 	
 	//
 	
-	private static Person calculatePresets() {
+	private static Person calculatePresets(PageContext context) {
 		Person person = new Person();
 
-		PreferenceData preferenceData = PreferenceData.load();
-		if (preferenceData.preferencesDefaultsData.residence != null) {
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		if (preferences.preferencesDefaultsData.residence != null) {
 			person.placeOfBirth = new Place();
-			person.placeOfBirth.setMunicipalityIdentification(preferenceData.preferencesDefaultsData.residence);
+			person.placeOfBirth.setMunicipalityIdentification(preferences.preferencesDefaultsData.residence);
 		}
 		return person;
 	}

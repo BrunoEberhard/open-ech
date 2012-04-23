@@ -21,32 +21,30 @@ package ch.openech.client.ewk;
 import java.util.Locale;
 import java.util.prefs.Preferences;
 
-import javax.swing.JOptionPane;
-
 import ch.openech.client.ApplicationConfigOpenEch;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.mj.swing.FrameManager;
-import ch.openech.mj.swing.GraphicalLogHandler;
 import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.mj.swing.SwingApplication;
-import ch.openech.server.EchPersistence;
 import ch.openech.server.EchServer;
 
 public class OpenEchApplication extends SwingApplication {
 	
-	private final String[] args;
-	private GraphicalLogHandler graphicalLogHandler;
+//	private final String[] args;
 	
 	public OpenEchApplication(String... args) {
-		this.args = args;
+//		this.args = args;
 		Locale.setDefault(Locale.GERMAN);
 	}
 	
 	@Override
 	public void run() {
-		PreferencesHelper.setPreferences(Preferences.userNodeForPackage(OpenEchApplication.class));
+		OpenEchPreferences preferences = new OpenEchPreferences();
+		PreferencesHelper.load(Preferences.userNodeForPackage(OpenEchApplication.class), preferences);
+		getApplicationContext().setPreferences(preferences);
+		
 		FrameManager.setSystemLookAndFeel();
 		
-		PreferencesHelper.preferences().putBoolean("dbMemory", true);
 //		if (args != null && args.length >= 3) {
 //			// EchServer server = new EchServer(args[0], args[1], args[2]);
 //			checkDbVersion();
@@ -56,20 +54,16 @@ public class OpenEchApplication extends SwingApplication {
 		// Initialize Server
 		EchServer.getInstance();
 		
-		graphicalLogHandler = new GraphicalLogHandler();
-		graphicalLogHandler.addFilterButton("SQL", null, EchPersistence.logger.getName());
-		graphicalLogHandler.addFilterButton("XML ->", null, EchServer.logger.getName());
-	
 		FrameManager.getInstance().openNavigationFrame();
 	}
 
-	private void checkDbVersion() {
-		if (!EchServer.getInstance().getPersistence().isValidDbVersion()) {
-			JOptionPane.showMessageDialog(null, "Die Datenbank wurde mit einer älteren\nVersion erstellt und kann nicht verwendet werden.\n",
-					"Hinweis", JOptionPane.ERROR_MESSAGE);
-			System.exit(-1);
-		}
-	}
+//	private void checkDbVersion() {
+//		if (!EchServer.getInstance().getPersistence().isValidDbVersion()) {
+//			JOptionPane.showMessageDialog(null, "Die Datenbank wurde mit einer älteren\nVersion erstellt und kann nicht verwendet werden.\n",
+//					"Hinweis", JOptionPane.ERROR_MESSAGE);
+//			System.exit(-1);
+//		}
+//	}
 
 	/*
 	 * MAIN

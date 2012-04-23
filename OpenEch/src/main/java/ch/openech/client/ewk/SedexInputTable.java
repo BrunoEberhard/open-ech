@@ -18,7 +18,6 @@ import javax.swing.table.DefaultTableModel;
 
 import ch.openech.dm.Envelope;
 import ch.openech.mj.edit.value.PropertyAccessor;
-import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.sedex.SedexDirectoryScanner;
 
@@ -83,7 +82,7 @@ public class SedexInputTable extends JTable {
 	}
 
 	public void refresh() {
-		String directory = PreferencesHelper.preferences().get("sedexInput", null);
+		String directory = null; // TODO PreferencesHelper.preferences().get("sedexInput", null);
 		if (directory == null) {
 			JOptionPane.showMessageDialog(null, "Sedex Input Verzeichnis nicht gesetzt");
 			return;

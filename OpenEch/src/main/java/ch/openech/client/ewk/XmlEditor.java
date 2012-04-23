@@ -1,24 +1,19 @@
 package ch.openech.client.ewk;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.prefs.PreferenceChangeEvent;
-import java.util.prefs.PreferenceChangeListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.ewk.event.XmlTextFormField;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
@@ -64,7 +59,12 @@ public abstract class XmlEditor<T> extends Editor<T> {
 
 	@Override
 	public Action[] getActions() {
-		return new Action[]{demoDataAction, xmlAction, cancelAction, saveAction};
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		if (preferences.devMode()) {
+			return new Action[]{demoDataAction, xmlAction, cancelAction, saveAction};
+		} else {
+			return new Action[]{cancelAction, saveAction};
+		}
 	}
 
 	@Override
@@ -143,19 +143,19 @@ public abstract class XmlEditor<T> extends Editor<T> {
 			super("Vorschau XML");
 		}
 		
-		public void addEditorControlPreferenceChangeListener(Component component) {
-			component.addComponentListener(new EditorControlPreferenceChangeListener());
-		}
+//		public void addEditorControlPreferenceChangeListener(Component component) {
+//			component.addComponentListener(new EditorControlPreferenceChangeListener());
+//		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			showXML();
 		}
 		
-		private void updateXmlButtonVisibility() {
-			boolean visible = PreferencesHelper.preferences().getBoolean("showXml", false);
-			putValue("visible", visible);
-		}
+//		private void updateXmlButtonVisibility() {
+//			boolean visible = context.getPreferences().getBoolean("showXml", false);
+//			putValue("visible", visible);
+//		}
 		
 		private void showXML() {
 			try {
@@ -172,24 +172,26 @@ public abstract class XmlEditor<T> extends Editor<T> {
 			};
 			form.area(new XmlTextFormField("xmls"));
 			form.setObject(this);
-			ClientToolkit.getToolkit().openDialog(null, form, "XML").openDialog();
+			ClientToolkit.getToolkit().openDialog(context.getComponent(), form, "XML").openDialog();
 		}
 
-		private class EditorControlPreferenceChangeListener extends ComponentAdapter implements PreferenceChangeListener {
-
-		    public void componentShown(ComponentEvent e) {
-		    	PreferencesHelper.preferences().addPreferenceChangeListener(this);
-		    }
-		    
-		    public void componentHidden(ComponentEvent e) {
-		    	PreferencesHelper.preferences().removePreferenceChangeListener(this);
-		    }
-		    
-			@Override
-			public void preferenceChange(PreferenceChangeEvent evt) {
-				updateXmlButtonVisibility();
-			}
-		}
+//		private class EditorControlPreferenceChangeListener extends ComponentAdapter implements PreferenceChangeListener {
+//
+//		    @Override
+//			public void componentShown(ComponentEvent e) {
+//		    	context.getPreferences().addPreferenceChangeListener(this);
+//		    }
+//		    
+//		    @Override
+//			public void componentHidden(ComponentEvent e) {
+//		    	context.getPreferences().removePreferenceChangeListener(this);
+//		    }
+//		    
+//			@Override
+//			public void preferenceChange(PreferenceChangeEvent evt) {
+//				updateXmlButtonVisibility();
+//			}
+//		}
 	}
 
 }

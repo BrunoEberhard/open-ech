@@ -3,6 +3,7 @@ package ch.openech.client.e11;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.PlaceOfOrigin;
@@ -15,7 +16,6 @@ import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.swing.PreferencesHelper;
 
 public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements Validatable, DependingOnFieldAbove<Nationality>, DemoEnabled {
 	public static final boolean WITHOUT_ADD_ON = false;
@@ -44,8 +44,8 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		@Override
 		protected PlaceOfOrigin getPart(List<PlaceOfOrigin> object) {
 			PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
-			// TODO diese konstante sollte woanders herkommen
-			placeOfOrigin.canton = PreferencesHelper.preferences().get(PlaceOfOrigin.PLACE_OF_ORIGIN.canton, null);
+			OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+			placeOfOrigin.canton = preferences.preferencesDefaultsData.cantonAbbreviation;
 			placeOfOrigin.reasonOfAcquisition = "1";
 			return placeOfOrigin;
 		}

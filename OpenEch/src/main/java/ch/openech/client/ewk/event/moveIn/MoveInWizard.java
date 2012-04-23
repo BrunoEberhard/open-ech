@@ -13,6 +13,7 @@ import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.client.ewk.event.XmlTextFormField;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.code.TypeOfRelationship;
 import ch.openech.dm.code.TypeOfRelationshipInverted;
 import ch.openech.dm.person.Person;
@@ -25,8 +26,8 @@ import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -36,7 +37,6 @@ import ch.openech.xml.write.WriterEch0020;
 public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	private final EchNamespaceContext echNamespaceContext;
-	private final Person person;
 	private final MoveInPersonWizardPage moveInPersonWizardPage;
 	private final MoveInNextPersonWizardPage moveInNextPersonWizardPage;
 	private int personIndex; // merge with currentPageIndex?
@@ -46,12 +46,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 	
 	public MoveInWizard(EchNamespaceContext echNamespaceContext) {
-		this(echNamespaceContext, null);
-	}
-	
-	public MoveInWizard(EchNamespaceContext echNamespaceContext, Person person) {
 		this.echNamespaceContext = echNamespaceContext;
-		this.person = person;
 		this.moveInPersonWizardPage = new MoveInPersonWizardPage();
 		this.moveInNextPersonWizardPage = new MoveInNextPersonWizardPage();
 	}
@@ -107,8 +102,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	@Override
 	public Action[] getActions() {
-		return new Action[]{demoDataAction, new XmlAction(), cancelAction, prevAction, nextAction, saveAction};
-
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		if (preferences.devMode()) {
+			return new Action[]{demoDataAction, new XmlAction(), cancelAction, prevAction, nextAction, saveAction};
+		} else {
+			return new Action[]{cancelAction, prevAction, nextAction, saveAction};
+		}
 	}
 
 	private class MoveInPersonWizardPage extends WizardPage<Person> {
@@ -163,6 +162,10 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 					person = createNextPerson(wizardData.nextPersons.get(personIndex-1));
 				} else {
 					person = new Person();
+					OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+					person.languageOfCorrespondance = preferences.preferencesDefaultsData.language;
+					person.religion = preferences.preferencesDefaultsData.religion;
+					person.residence.reportingMunicipality = CloneHelper.clone(preferences.preferencesDefaultsData.residence);
 				}
 				wizardData.persons.add(person);
 			}
@@ -380,8 +383,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			};
 			form.area(new XmlTextFormField("xmls"));
 			form.setObject(this);
-			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(e.getSource());
-			ClientToolkit.getToolkit().openDialog(pageContext.getComponent(), form, "XML").openDialog();
+			ClientToolkit.getToolkit().openDialog(context.getComponent(), form, "XML").openDialog();
 		}
 	}
 

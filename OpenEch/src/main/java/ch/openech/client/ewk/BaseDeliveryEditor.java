@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
-import ch.openech.client.preferences.PreferenceData;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -34,9 +34,9 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 	@Override
 	public Person newInstance() {
 		Person person = new Person();
-		PreferenceData preferenceData = PreferenceData.load();
-		person.religion = preferenceData.preferencesDefaultsData.religion;
-		person.residence.reportingMunicipality = preferenceData.preferencesDefaultsData.residence;
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		person.religion = preferences.preferencesDefaultsData.religion;
+		person.residence.reportingMunicipality = preferences.preferencesDefaultsData.residence;
 		// sonst noch was?
 		return person;
 	}
