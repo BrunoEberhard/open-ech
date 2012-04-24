@@ -11,7 +11,6 @@ import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.swing.FrameManager;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -49,6 +48,11 @@ public class GeneratePersonAction extends EditorDialogAction {
 		@Override
 		protected void validate(GeneratePersonData object, List<ValidationMessage> resultList) {
 			// nothing to validate
+		}
+
+		@Override
+		protected boolean isSaveSynchron() {
+			return false;
 		}
 
 		@Override
