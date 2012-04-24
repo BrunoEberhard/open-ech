@@ -7,8 +7,8 @@ import ch.openech.dm.common.Zip;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.Formats;
+import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -19,13 +19,13 @@ import ch.openech.mj.util.StringUtils;
 import ch.openech.util.PlzImport;
 
 // TODO implement ZipTownField
-public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<String>, DemoEnabled {
+public class ZipField extends AbstractEditField<Zip> implements DependingOnFieldAbove<String>, DemoEnabled {
 	private final ComboBox<Zip> comboBoxSwiss;
 	private final TextField textFieldForeign;
 	private final SwitchLayout switchLayout;
 	
 	public ZipField(Object key) {
-		super(Constants.getConstant(key));
+		super(Constants.getConstant(key), true);
 		
 		comboBoxSwiss = ClientToolkit.getToolkit().createComboBox(listener());
 		comboBoxSwiss.setObjects(PlzImport.getInstance().getZipList());
@@ -43,13 +43,12 @@ public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<
 	
 	@Override
 	public Zip getObject() {
-		Zip zip = super.getObject();
+		Zip zip = new Zip();
 		if (switchLayout.getShownComponent() == comboBoxSwiss) {
 			if (comboBoxSwiss.getSelectedObject() != null) {
 				CloneHelper.deepCopy(comboBoxSwiss.getSelectedObject(), zip);
 			}
 		} else if (switchLayout.getShownComponent() == textFieldForeign) {
-			zip.clear();
 			zip.foreignZipCode = textFieldForeign.getText();
 		}
 		return zip;
@@ -64,7 +63,7 @@ public class ZipField extends ObjectField<Zip> implements DependingOnFieldAbove<
 	}
 	
 	@Override
-	protected void show(Zip zip) {
+	public void setObject(Zip zip) {
 		if (zip.isForeign()) {
 			switchLayout.show(textFieldForeign);
 			textFieldForeign.setText(zip.foreignZipCode);

@@ -8,7 +8,7 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -19,7 +19,7 @@ import ch.openech.mj.toolkit.TextField;
 import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
 
-public class PlaceField extends ObjectField<Place> implements DemoEnabled, Validatable {
+public class PlaceField extends AbstractEditField<Place> implements DemoEnabled, Validatable {
 	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
 
 	private final ComboBox<CountryIdentification> comboBoxCountry;
@@ -31,7 +31,7 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 	private final HorizontalLayout horizontalLayout;
 
 	public PlaceField(Object key) {
-		super(key);
+		super(key, true);
 
 		comboBoxCountry = ClientToolkit.getToolkit().createComboBox(listener());
 		comboBoxCountry.setObjects(StaxEch0072.getInstance().getCountryIdentifications());
@@ -63,19 +63,32 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		return horizontalLayout;
 	}
 
-	// 
-	
 	@Override
-	public void setObject(Place value) {
-		if (value == null) {
-			value = new Place();
+	public void setObject(Place place) {
+		if (place == null) {
+			place = new Place();
 		}
-		super.setObject(value);
+		if (!place.countryIdentification.isEmpty()) {
+			comboBoxCountry.setSelectedObject(place.countryIdentification);
+		} else {
+			comboBoxCountry.setSelectedObject(null);
+		}
+		if (place.isSwiss()) {
+			comboBoxMunicipality.setSelectedObject(place.municipalityIdentification);
+			switchLayoutMunicipality.show(comboBoxMunicipality);
+		} else if (place.isForeign()) {
+			textForeignTown.setText(place.foreignTown);
+			switchLayoutMunicipality.show(textForeignTown);
+		} else {
+			logger.info("Empty Place");
+			switchLayoutMunicipality.show(comboBoxMunicipality);
+			comboBoxMunicipality.setSelectedObject(null);
+		}
 	}
 	
 	@Override
 	public Place getObject() {
-		Place place = super.getObject();
+		Place place = new Place();
 		if (comboBoxCountry.getSelectedObject() != null) {
 			((CountryIdentification) comboBoxCountry.getSelectedObject()).copyTo(place.countryIdentification);
 		} else {
@@ -94,26 +107,6 @@ public class PlaceField extends ObjectField<Place> implements DemoEnabled, Valid
 		}
 		
 		return place;
-	}
-
-	@Override
-	public void show(Place value) {
-		if (!value.countryIdentification.isEmpty()) {
-			comboBoxCountry.setSelectedObject(value.countryIdentification);
-		} else {
-			comboBoxCountry.setSelectedObject(null);
-		}
-		if (value.isSwiss()) {
-			comboBoxMunicipality.setSelectedObject(value.municipalityIdentification);
-			switchLayoutMunicipality.show(comboBoxMunicipality);
-		} else if (value.isForeign()) {
-			textForeignTown.setText(value.foreignTown);
-			switchLayoutMunicipality.show(textForeignTown);
-		} else {
-			logger.info("Empty Place");
-			switchLayoutMunicipality.show(comboBoxMunicipality);
-			comboBoxMunicipality.setSelectedObject(null);
-		}
 	}
 
 	@Override

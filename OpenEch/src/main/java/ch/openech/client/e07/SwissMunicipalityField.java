@@ -8,12 +8,12 @@ import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.xml.read.StaxEch0071;
 
-public class SwissMunicipalityField extends ObjectField<MunicipalityIdentification> implements DemoEnabled {
+public class SwissMunicipalityField extends AbstractEditField<MunicipalityIdentification> implements DemoEnabled {
 	private final List<MunicipalityIdentification> municipalities;
 	private final ComboBox<MunicipalityIdentification> comboBox;
 
@@ -22,7 +22,7 @@ public class SwissMunicipalityField extends ObjectField<MunicipalityIdentificati
 	}
 	
 	public SwissMunicipalityField(Object key, boolean allowFederalRegister) {
-		super(Constants.getConstant(key));
+		super(Constants.getConstant(key), true);
 		
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 		
@@ -47,27 +47,19 @@ public class SwissMunicipalityField extends ObjectField<MunicipalityIdentificati
 		if (object == null) { 
 			object = new MunicipalityIdentification();
 		}
-		super.setObject(object);
+		comboBox.setSelectedObject(object);
 	}
 	
 	@Override
 	public MunicipalityIdentification getObject() {
-		MunicipalityIdentification municipality = super.getObject();
-		
+		MunicipalityIdentification municipality = new MunicipalityIdentification();
 		if (comboBox.getSelectedObject() != null) {
 			comboBox.getSelectedObject().copyTo(municipality);
-		} else {
-			municipality.clear();
 		}
 		return municipality;
 	}
 	
 	// 
-
-	@Override
-	protected void show(MunicipalityIdentification object) {
-		comboBox.setSelectedObject(object);
-	}
 
 	private static class FederalRegisterMunicipality extends MunicipalityIdentification {
 		private final int key;

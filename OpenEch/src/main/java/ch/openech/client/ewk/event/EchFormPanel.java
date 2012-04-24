@@ -22,7 +22,6 @@ import ch.openech.client.e11.PlaceField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
 import ch.openech.client.e11.ResidenceField;
-import ch.openech.client.e11.SeparationField;
 import ch.openech.client.e21.OccupationField;
 import ch.openech.client.e44.PersonIdentificationField;
 import ch.openech.client.e46.ContactField;
@@ -45,7 +44,6 @@ import ch.openech.dm.person.PersonExtendedInformation;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Residence;
-import ch.openech.dm.person.Separation;
 import ch.openech.mj.db.model.AccessorInterface;
 import ch.openech.mj.db.model.Format;
 import ch.openech.mj.edit.fields.FormField;
@@ -136,8 +134,6 @@ public class EchFormPanel<T> extends AbstractFormVisual<T> {
 			return new PersonIdentificationField(name);
 		} else if (type == Person.class) {
 			return new ch.openech.client.e44.PersonField(name);
-		} else if (type == Separation.class) {
-			return new SeparationField(name, namespaceContext, editable);
 		} else if (type == Nationality.class) {
 			return editable ? new NationalityField(name) : new NationalityReadOnlyField(name);
 		} else if (type == ContactPerson.class) {

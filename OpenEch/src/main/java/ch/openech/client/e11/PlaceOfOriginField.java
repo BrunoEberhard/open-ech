@@ -115,7 +115,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 			Nationality nationality = field.getObject();
 			swiss = nationality.isSwiss();
 		}
-		getVisual().setEnabled(swiss);
+		setEnabled(swiss);
 		if (!swiss && getObject() != null) {
 			getObject().clear();
 		}

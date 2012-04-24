@@ -2,7 +2,6 @@ package ch.openech.client.e10;
 
 import java.util.logging.Logger;
 
-import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.Plz;
 import ch.openech.dm.common.Zip;
@@ -10,15 +9,15 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.Formats;
+import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.fields.ObjectField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.util.PlzImport;
 
-public class TownField extends ObjectField<String> implements DemoEnabled, DependingOnFieldAbove<Zip> {
+public class TownField extends AbstractEditField<String> implements DemoEnabled, DependingOnFieldAbove<Zip> {
 	private static final Logger logger = Logger.getLogger(TownField.class.getName());
 	
 	private final SwitchLayout switchLayout;
@@ -26,7 +25,7 @@ public class TownField extends ObjectField<String> implements DemoEnabled, Depen
 	private final TextField textFieldZipForeign;
 	
 	public TownField(Object key) {
-		super(Constants.getConstant(key));
+		super(Constants.getConstant(key), true);
 		
 		textFieldSwiss = ClientToolkit.getToolkit().createReadOnlyTextField();
 		textFieldZipForeign = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(Zip.class, Zip.ZIP_TOWN.foreignZipCode).getSize());
@@ -52,7 +51,7 @@ public class TownField extends ObjectField<String> implements DemoEnabled, Depen
 	}
 
 	@Override
-	protected void show(String town) {
+	public void setObject(String town) {
 		if (switchLayout.getShownComponent() == textFieldSwiss) {
 			textFieldSwiss.setText(town);
 		} else if (switchLayout.getShownComponent() == textFieldZipForeign) {

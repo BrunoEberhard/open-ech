@@ -7,17 +7,18 @@ import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.common.TechnicalIds;
 import ch.openech.mj.edit.fields.ObjectFlowField;
+import ch.openech.mj.edit.fields.ObjectLinkField;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.resources.ResourceAction;
 
-public class TechnicalIdsField extends ObjectFlowField<TechnicalIds> {
+public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	public static final boolean WITH_EU_IDS = true;
 	public static final boolean WITHOUT_EU_IDS = false;
 	
 	private final boolean hasSpecialEuIds;
 
 	public TechnicalIdsField(Object key, boolean hasSpecialEuIds, boolean editable) {
-		super(key, editable, false);
+		super(key, editable);
 		this.hasSpecialEuIds = hasSpecialEuIds;
 	}
 
@@ -31,21 +32,17 @@ public class TechnicalIdsField extends ObjectFlowField<TechnicalIds> {
 	}
 	
 	@Override
-	protected void show(TechnicalIds technicalIds) {
-		int maxLength = isEditable() ? 10 : 25;
+	protected String display(TechnicalIds technicalIds) {
+		int maxLength = 25;
 		if (technicalIds.localId.personId != null) {
 			if (technicalIds.localId.personId.length() <= maxLength) {
-				addObject(technicalIds.localId.personId);
+				return technicalIds.localId.personId;
 			} else {
-				addObject(technicalIds.localId.personId.substring(0, maxLength-1) + "...");
+				return technicalIds.localId.personId.substring(0, maxLength-1) + "...";
 			}
+		} else {
+			return "Bearbeiten";
 		}
-	}
-
-	@Override
-	protected void showActions() {
-		addGap();
-		addAction(new ObjectFieldEditor());
 	}
 
 	@Override

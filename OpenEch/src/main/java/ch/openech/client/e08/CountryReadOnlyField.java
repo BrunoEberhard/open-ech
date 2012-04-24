@@ -1,18 +1,20 @@
 package ch.openech.client.e08;
 
 import ch.openech.dm.common.CountryIdentification;
-import ch.openech.mj.edit.fields.ObjectField;
+import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.toolkit.ClientToolkit;
+import ch.openech.mj.toolkit.IComponentDelegate;
 import ch.openech.mj.toolkit.TextField;
 
 /* Dieses Feld wurde erst mit ech 112 gebraucht. Dazu wurde 
  * das PlaceField eingedampft (alles was mit Municipality zu tun hatte entfernt).
  */
-public class CountryReadOnlyField extends ObjectField<CountryIdentification> {
+public class CountryReadOnlyField implements FormField<CountryIdentification>, IComponentDelegate {
 	private final TextField textCountry;
+	private final String name;
 	
 	public CountryReadOnlyField(String name) {
-		super(name);
+		this.name = name;
 		textCountry = ClientToolkit.getToolkit().createReadOnlyTextField();
 	}
 	
@@ -21,11 +23,14 @@ public class CountryReadOnlyField extends ObjectField<CountryIdentification> {
 		return textCountry;
 	}
 	
-	//
+	@Override
+	public void setObject(CountryIdentification country) {
+		textCountry.setText(country != null ? country.countryNameShort : "");
+	}
 
 	@Override
-	public void show(CountryIdentification value) {
-		textCountry.setText(value.countryNameShort);
+	public String getName() {
+		return name;
 	}
 
 }

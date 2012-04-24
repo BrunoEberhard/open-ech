@@ -60,7 +60,7 @@ public class ForeignField extends ObjectFlowField<Foreign> implements Validatabl
 	public void setDependedField(EditField<Nationality> field) {
 		Nationality nationality = field.getObject();
 		swiss = nationality.isSwiss();
-		getVisual().setEnabled(!swiss);
+		setEnabled(!swiss);
 		fireObjectChange();
 	}
 
