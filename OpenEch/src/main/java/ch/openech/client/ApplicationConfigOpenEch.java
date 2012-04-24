@@ -57,7 +57,6 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		ActionGroup niu = file.getOrCreateActionGroup(ActionGroup.NEW);
 		
 		if (ewkNamespaceContext != null) {
-//			niu.add(new EditorDialogAction(new MoveInWizard(ewkNamespaceContext)));
 			niu.add(new EditorPageAction(MoveInWizard.class, ewkNamespaceContext.getVersion()));
 			niu.add(new EditorDialogAction(new BirthEvent(ewkNamespaceContext)));
 			
@@ -67,18 +66,17 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 				export.add(new KeyDeliveryAction(ewkNamespaceContext));
 			}
 			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
-			imprt.add(new EditorDialogAction(new BaseDeliveryEditor(ewkNamespaceContext)));
+			imprt.add(new EditorPageAction(BaseDeliveryEditor.class, ewkNamespaceContext.getVersion()));
 			imprt.add(new ImportAllAction());
-//			imprt.add(new EditorPageAction(BaseDeliveryEditor.class, ewkNamespaceContext.getVersion()));
 			if (isDevMode) {
 				imprt.add(new GeneratePersonAction(ewkNamespaceContext));
 			}
 		}
 		
 		if (orgNamespaceContext != null) {
-			niu.add(new EditorDialogAction(new BaseDeliveryOrganisationEditor(orgNamespaceContext)));
-			niu.add(new EditorDialogAction(new FoundationEditor(orgNamespaceContext)));
-			niu.add(new EditorDialogAction(new MoveInEditor(orgNamespaceContext)));
+			niu.add(new EditorPageAction(BaseDeliveryOrganisationEditor.class, orgNamespaceContext.getVersion()));
+			niu.add(new EditorPageAction(FoundationEditor.class, orgNamespaceContext.getVersion()));
+			niu.add(new EditorPageAction(MoveInEditor.class, orgNamespaceContext.getVersion()));
 		}
 		
 		if (tpnNamespaceContext != null) {

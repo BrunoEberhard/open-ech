@@ -18,6 +18,10 @@ import ch.openech.xml.write.WriterEch0148;
 public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
 	private final WriterEch0148 writerEch0148;
 	
+	public BaseDeliveryOrganisationEditor(String version) {
+		this(EchNamespaceContext.getNamespaceContext(148, version));
+	}
+	
 	public BaseDeliveryOrganisationEditor(EchNamespaceContext echNamespaceContext) {
 		super(echNamespaceContext);
 		this.writerEch0148 = new WriterEch0148(echNamespaceContext);
