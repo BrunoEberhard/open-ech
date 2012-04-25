@@ -9,12 +9,10 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 
 import ch.openech.client.ewk.event.PersonEventEditor;
-import ch.openech.client.ewk.event.XmlTextFormField;
 import ch.openech.client.preferences.OpenEchPreferences;
+import ch.openech.client.xmlpreview.XmlPreview;
 import ch.openech.mj.edit.Editor;
-import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -135,46 +133,22 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		}
 	}
 	
-	// public for access on xmls
-	public class XmlAction extends AbstractAction {
-		public List<String> xmls;
-		
+	private class XmlAction extends AbstractAction {
 		public XmlAction() {
 			super("Vorschau XML");
 		}
 		
-//		public void addEditorControlPreferenceChangeListener(Component component) {
-//			component.addComponentListener(new EditorControlPreferenceChangeListener());
-//		}
-		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			showXML();
-		}
-		
-//		private void updateXmlButtonVisibility() {
-//			boolean visible = context.getPreferences().getBoolean("showXml", false);
-//			putValue("visible", visible);
-//		}
-		
-		private void showXML() {
 			try {
-				xmls = getXml(getObject());
+				List<String> xmls = getXml(getObject());
+				XmlPreview.viewXml(context, xmls);
 			} catch (Exception x) {
-				throw new RuntimeException("XML Generierung fehlgeschlagen", x);
+				throw new RuntimeException("XML Preview fehlgeschlagen", x);
 			}
-			
-			AbstractFormVisual<XmlAction> form = new AbstractFormVisual(XmlAction.class, null, false) {
-				@Override
-				protected int getColumnWidthPercentage() {
-					return 1000;
-				}
-			};
-			form.area(new XmlTextFormField("xmls"));
-			form.setObject(this);
-			ClientToolkit.getToolkit().openDialog(context.getComponent(), form, "XML").openDialog();
 		}
-
+	}
+	
 //		private class EditorControlPreferenceChangeListener extends ComponentAdapter implements PreferenceChangeListener {
 //
 //		    @Override
@@ -192,6 +166,5 @@ public abstract class XmlEditor<T> extends Editor<T> {
 //				updateXmlButtonVisibility();
 //			}
 //		}
-	}
 
 }

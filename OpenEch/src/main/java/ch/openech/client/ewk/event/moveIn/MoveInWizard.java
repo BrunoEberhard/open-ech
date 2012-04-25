@@ -12,8 +12,8 @@ import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.event.EchFormPanel;
-import ch.openech.client.ewk.event.XmlTextFormField;
 import ch.openech.client.preferences.OpenEchPreferences;
+import ch.openech.client.xmlpreview.XmlPreview;
 import ch.openech.dm.code.TypeOfRelationship;
 import ch.openech.dm.code.TypeOfRelationshipInverted;
 import ch.openech.dm.person.Person;
@@ -22,7 +22,6 @@ import ch.openech.mj.edit.Wizard;
 import ch.openech.mj.edit.WizardPage;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -351,10 +350,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		
 	}
 
-	// public for access on xmls
-	public class XmlAction extends AbstractAction {
-		public List<String> xmls;
-		
+	private class XmlAction extends AbstractAction {
 		public XmlAction() {
 			super("Vorschau XML");
 		}
@@ -362,28 +358,14 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				xmls = new ArrayList<String>();
+				List<String> xmls = new ArrayList<String>();
 				for (Person person : getObject().persons) {
-					try {
-						xmls.add(getWriterEch0020().moveIn(person));
-					} catch (Exception ex) {
-						// TODO
-						ex.printStackTrace();
-					}
+					xmls.add(getWriterEch0020().moveIn(person));
 				}
+				XmlPreview.viewXml(context, xmls);
 			} catch (Exception x) {
-				throw new RuntimeException("XML Generierung fehlgeschlagen", x);
+				throw new RuntimeException("XML Preview fehlgeschlagen", x);
 			}
-			
-			AbstractFormVisual<XmlAction> form = new AbstractFormVisual(XmlAction.class, null, false) {
-				@Override
-				protected int getColumnWidthPercentage() {
-					return 1000;
-				}
-			};
-			form.area(new XmlTextFormField("xmls"));
-			form.setObject(this);
-			ClientToolkit.getToolkit().openDialog(context.getComponent(), form, "XML").openDialog();
 		}
 	}
 
