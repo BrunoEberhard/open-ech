@@ -19,12 +19,9 @@
 package ch.openech.client.ewk;
 
 import java.util.Locale;
-import java.util.prefs.Preferences;
 
 import ch.openech.client.ApplicationConfigOpenEch;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.mj.swing.FrameManager;
-import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.mj.swing.SwingApplication;
 import ch.openech.server.EchServer;
 
@@ -36,13 +33,9 @@ public class OpenEchApplication extends SwingApplication {
 //		this.args = args;
 		Locale.setDefault(Locale.GERMAN);
 	}
-	
+
 	@Override
 	public void run() {
-		OpenEchPreferences preferences = new OpenEchPreferences();
-		PreferencesHelper.load(Preferences.userNodeForPackage(OpenEchApplication.class), preferences);
-		getApplicationContext().setPreferences(preferences);
-		
 		FrameManager.setSystemLookAndFeel();
 		
 //		if (args != null && args.length >= 3) {

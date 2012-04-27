@@ -4,9 +4,6 @@ import java.util.ResourceBundle;
 
 import ch.openech.client.ewk.BaseDeliveryEditor;
 import ch.openech.client.ewk.SearchPersonPage;
-import ch.openech.client.ewk.event.ExportAllAction;
-import ch.openech.client.ewk.event.ImportAllAction;
-import ch.openech.client.ewk.event.KeyDeliveryAction;
 import ch.openech.client.ewk.event.birth.BirthEvent;
 import ch.openech.client.ewk.event.moveIn.MoveInWizard;
 import ch.openech.client.org.BaseDeliveryOrganisationEditor;
@@ -43,6 +40,11 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 	}
 
 	@Override
+	public Class<?> getPreferencesClass() {
+		return OpenEchPreferences.class;
+	}
+
+	@Override
 	public Class<?>[] getSearchClasses() {
 		return new Class<?>[]{SearchPersonPage.class, SearchOrganisationPage.class};
 	}
@@ -62,12 +64,12 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 			niu.add(new EditorPageAction(BaseDeliveryEditor.class, ewkNamespaceContext.getVersion()));
 			
 			ActionGroup export = file.getOrCreateActionGroup(ActionGroup.EXPORT);
-			export.add(new ExportAllAction(ewkNamespaceContext));
-			if (ewkNamespaceContext.keyDeliveryPossible()) {
-				export.add(new KeyDeliveryAction(ewkNamespaceContext));
-			}
+//			export.add(new ExportAllAction(ewkNamespaceContext));
+//			if (ewkNamespaceContext.keyDeliveryPossible()) {
+//				export.add(new KeyDeliveryAction(ewkNamespaceContext));
+//			}
 			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
-			imprt.add(new ImportAllAction());
+//			imprt.add(new ImportAllAction());
 			if (isDevMode) {
 				imprt.add(new GeneratePersonAction(ewkNamespaceContext));
 			}

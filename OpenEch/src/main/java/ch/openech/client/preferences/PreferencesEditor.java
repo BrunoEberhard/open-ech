@@ -1,16 +1,13 @@
 package ch.openech.client.preferences;
 
 import java.util.List;
-import java.util.prefs.Preferences;
 
 import javax.swing.Action;
 
-import ch.openech.client.ewk.OpenEchApplication;
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.swing.PreferencesHelper;
 import ch.openech.mj.util.StringUtils;
 
 public class PreferencesEditor extends Editor<OpenEchPreferences> {
@@ -34,8 +31,7 @@ public class PreferencesEditor extends Editor<OpenEchPreferences> {
 
 	@Override
 	protected boolean save(OpenEchPreferences object) {
-		PreferencesHelper.save(Preferences.userNodeForPackage(OpenEchApplication.class), object);
-		context.getApplicationContext().setPreferences(object);
+		context.getApplicationContext().savePreferences(object);
 		return true;
 	}
 
