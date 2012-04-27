@@ -46,6 +46,7 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 			data.householdID = dwellingAddress.householdID;
 			data.mailAddress = dwellingAddress.mailAddress;
 			data.typeOfHousehold = dwellingAddress.typeOfHousehold;
+			data.reportingMunicipality = getPerson().residence.reportingMunicipality;
 		}
 		data.movingDate = null;
 		return data;
