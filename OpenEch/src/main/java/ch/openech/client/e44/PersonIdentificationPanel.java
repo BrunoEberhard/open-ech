@@ -4,8 +4,6 @@ import static ch.openech.dm.person.PersonIdentification.PERSON_IDENTIFICATION;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.person.PersonIdentification;
 
-//setTitle("Personenidentifikation");
-//setInformation("<html><b>Hinweis:</b> Normalerweise kann eine Person über die Suche ausgewählt werden.<br>Nur bei Ausnahmen sollten hier die Identifikationsmerkmale der Person direkt eingegeben werden.</html>");
 public class PersonIdentificationPanel extends EchFormPanel<PersonIdentification> {
 
 	public PersonIdentificationPanel() {
@@ -17,7 +15,7 @@ public class PersonIdentificationPanel extends EchFormPanel<PersonIdentification
 		super(2);
 		TechnicalIdsField technicalIdField = new TechnicalIdsField(PERSON_IDENTIFICATION.technicalIds, partner ? TechnicalIdsField.WITHOUT_EU_IDS : TechnicalIdsField.WITH_EU_IDS, editable);
 		
-		text("<html><b>Hinweis:</b> Normalerweise kann eine Person über die Suche ausgewählt werden.<br>Nur bei Ausnahmen sollten hier die Identifikationsmerkmale der Person direkt eingegeben werden.</html>", 2);
+		text("<b>Hinweis:</b> Normalerweise kann eine Person über die Suche ausgewählt werden.<br>Nur bei Ausnahmen sollten hier die Identifikationsmerkmale der Person direkt eingegeben werden.", 2);
         line(PERSON_IDENTIFICATION.officialName);
         line(PERSON_IDENTIFICATION.firstName);
         line(PERSON_IDENTIFICATION.dateOfBirth, PERSON_IDENTIFICATION.sex);

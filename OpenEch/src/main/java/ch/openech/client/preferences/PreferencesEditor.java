@@ -40,11 +40,6 @@ public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	}
 
 	@Override
-	public String getInformation() {
-		return "<html><b>Hinweis:</b> Die Einstellungen werden erst bei<br>einem neu geöffneten Fenster aktiv</html>";
-	}
-
-	@Override
 	public Action[] getActions() {
 		// ignore demoAction, doesnt make sense in Preferences
 		return new Action[]{cancelAction, saveAction};
