@@ -6,6 +6,7 @@ import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
+import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
@@ -14,6 +15,7 @@ import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.form.AbstractFormVisual;
 import ch.openech.mj.edit.form.FormVisual;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
@@ -49,6 +51,12 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 		return Collections.singletonList(writerEch0020.birth(changedPerson));
 	}
 	
+	@Override
+	public boolean save(Person object) {
+		setFollowLink(Page.link(PersonViewPage.class, getEchNamespaceContext().getVersion(), object.getId()));
+		return super.save(object);
+	}
+
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		person.validate(resultList);
