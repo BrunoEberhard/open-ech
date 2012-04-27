@@ -24,6 +24,11 @@ public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> 
 	}
 
 	@Override
+	protected int getFormColumns() {
+		return 2;
+	}
+	
+	@Override
 	public Organisation load() {
 		return getOrganisation();
 	}
