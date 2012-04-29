@@ -7,33 +7,36 @@ import java.io.OutputStreamWriter;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.util.ProgressListener;
+import ch.openech.mj.toolkit.ExportHandler;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
 
-public class ExportAllAction extends ResourceAction {
-
+public class ExportAllAction extends ResourceAction implements ExportHandler {
 	private EchNamespaceContext echNamespaceContext;
+	private Object source;
 	
 	public ExportAllAction(EchNamespaceContext echNamespaceContext) {
 		this.echNamespaceContext = echNamespaceContext;
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		OutputStream outputStream = ClientToolkit.getToolkit().export(e.getSource(), "Ausgabedatei wählen");
-		if (outputStream != null) {
-			export(outputStream, e.getSource());
-		}
+		source = e.getSource();
+		ClientToolkit.getToolkit().export(e.getSource(), "text", this);
+	}
+
+	@Override
+	public void export(OutputStream stream) {
+		export(stream, source);
 	}
 
 	private void export(final OutputStream outputStream, final Object parent) {
-		final ProgressListener progress = ClientToolkit.getToolkit().showProgress(parent, "Export");
+		// final ProgressListener progress = ClientToolkit.getToolkit().showProgress(parent, "Export");
 
 		new Thread() {
-			ProgressListener progress = ClientToolkit.getToolkit().showProgress(parent, "Export");
+//			ProgressListener progress = ClientToolkit.getToolkit().showProgress(parent, "Export");
 			
 			@Override
 			public void run() {
@@ -58,7 +61,7 @@ public class ExportAllAction extends ResourceAction {
 //							canceled = true;
 //							break;
 //						}
-						progress.showProgress(id, maxId);
+//						progress.showProgress(id, maxId);
 					}
 
 					writer.endDocument();
@@ -70,7 +73,7 @@ public class ExportAllAction extends ResourceAction {
 //					} else {
 //						progressMonitor.showInformation("Export nach " + nv + " Personen abgebrochen");
 //					}
-					ClientToolkit.getToolkit().showMessage(parent, maxId + " Personen erfolgreich exportiert");
+//					ClientToolkit.getToolkit().showMessage(parent, maxId + " Personen erfolgreich exportiert");
 				} catch (Exception x) {
 					ClientToolkit.getToolkit().showError(parent, "Export fehlgeschlagen\n\n" + x.getMessage());
 				}
@@ -93,4 +96,5 @@ public class ExportAllAction extends ResourceAction {
 	protected void writePerson(WriterEch0020 writer, WriterElement baseDelivery, Person person) throws Exception {
 		writer.eventBaseDelivery(baseDelivery, person);
 	}
+
 }
