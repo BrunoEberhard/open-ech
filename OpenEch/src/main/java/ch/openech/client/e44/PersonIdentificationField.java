@@ -7,7 +7,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.server.EchServer;
 
 public class PersonIdentificationField extends ObjectFlowField<PersonIdentification> {
@@ -17,7 +17,7 @@ public class PersonIdentificationField extends ObjectFlowField<PersonIdentificat
 	}
 	
 	@Override
-	public FormVisual<PersonIdentification> createFormPanel() {
+	public IForm<PersonIdentification> createFormPanel() {
 		return new PersonIdentificationPanel();
 	}
 

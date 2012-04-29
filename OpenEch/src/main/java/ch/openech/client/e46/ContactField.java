@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
 
 public class ContactField extends ObjectFlowField<Contact> {
@@ -38,7 +38,7 @@ public class ContactField extends ObjectFlowField<Contact> {
 		}
 		
 		@Override
-		public FormVisual<ContactEntry> createForm() {
+		public IForm<ContactEntry> createForm() {
 			return new ContactEntryPanel(type, person);
 		}
 
@@ -75,7 +75,7 @@ public class ContactField extends ObjectFlowField<Contact> {
 	//
 	
 	@Override
-	public FormVisual<Contact> createFormPanel() {
+	public IForm<Contact> createFormPanel() {
 		// unused
 		return null;
 	}

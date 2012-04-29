@@ -6,8 +6,8 @@ import java.util.List;
 import ch.openech.client.e11.OriginPanel;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.mj.edit.form.AbstractFormVisual;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
@@ -19,12 +19,12 @@ public class NaturalizeSwissEvent extends PersonEventEditor<PlaceOfOrigin> {
 	}
 
 	@Override
-	public FormVisual<PlaceOfOrigin> createForm() {
+	public IForm<PlaceOfOrigin> createForm() {
 		return new OriginPanel(true, false); // true -> withReasonAndDate, false -> no expirationDate
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<PlaceOfOrigin> formPanel) {
+	protected void fillForm(Form<PlaceOfOrigin> formPanel) {
 		// not used
 	}
 

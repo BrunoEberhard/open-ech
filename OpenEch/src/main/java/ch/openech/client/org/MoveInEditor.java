@@ -7,7 +7,7 @@ import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.server.EchServer;
@@ -28,7 +28,7 @@ public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<O
 	}
 
 	@Override
-	public FormVisual<Organisation> createForm() {
+	public IForm<Organisation> createForm() {
 		return new OrganisationPanel(OrganisationPanelType.MOVE_IN, getEchNamespaceContext());
 	}
 

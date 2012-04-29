@@ -16,7 +16,7 @@ import ch.openech.mj.edit.fields.CheckBoxStringField;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.TextEditField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
@@ -53,7 +53,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 	
 	@Override
-	protected void fillForm(AbstractFormVisual<Partnership> formPanel) {
+	protected void fillForm(Form<Partnership> formPanel) {
 		PersonField partner1 = new PersonField(PARTNERSHIP.partner1); 
 		PersonField partner2 = new PersonField(PARTNERSHIP.partner2);
 		

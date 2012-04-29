@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -20,7 +20,7 @@ public class UndoMissingEvent extends PersonEventEditor<Object> {
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Object> formPanel) {
+	protected void fillForm(Form<Object> formPanel) {
 		formPanel.text("<b>Hinweis:</b> Eventuelle Änderungen bei einer Ehe/Partnerschaft müssen zusätzlich erfasst werden.");
 	}
 

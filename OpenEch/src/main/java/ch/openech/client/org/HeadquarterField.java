@@ -2,7 +2,7 @@ package ch.openech.client.org;
 
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 
 public class HeadquarterField extends ObjectFlowField<Organisation> {
 
@@ -11,7 +11,7 @@ public class HeadquarterField extends ObjectFlowField<Organisation> {
 	}
 
 	@Override
-	protected FormVisual<Organisation> createFormPanel() {
+	protected IForm<Organisation> createFormPanel() {
 		return null;
 	}
 

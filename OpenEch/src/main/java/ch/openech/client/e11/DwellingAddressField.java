@@ -5,7 +5,7 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.xml.write.EchNamespaceContext;
 
 public class DwellingAddressField extends ObjectFlowField<DwellingAddress> implements DemoEnabled {
@@ -28,7 +28,7 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 	}
 	
 	@Override
-	public FormVisual<DwellingAddress> createFormPanel() {
+	public IForm<DwellingAddress> createFormPanel() {
 		return new DwellingAddressPanel(namespaceContext);
 	}
 

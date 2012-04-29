@@ -15,7 +15,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.ResourceAction;
@@ -127,7 +127,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
     // Identifikationen der Kontaktpersonen frei erfassen
 	public class EnterPersonContactEditor extends ObjectFieldPartEditor<PersonIdentification> {
 		@Override
-		public FormVisual<PersonIdentification> createForm() {
+		public IForm<PersonIdentification> createForm() {
 			return new PersonIdentificationPanel();
 		}
 
@@ -160,7 +160,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		}
 
 		@Override
-		public FormVisual<Address> createForm() {
+		public IForm<Address> createForm() {
 			return new AddressPanel(false, person, !person);
 		}
 
@@ -206,7 +206,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	}
 
 	@Override
-	public FormVisual<ContactPerson> createFormPanel() {
+	public IForm<ContactPerson> createFormPanel() {
 		// not used
 		return null;
 	}

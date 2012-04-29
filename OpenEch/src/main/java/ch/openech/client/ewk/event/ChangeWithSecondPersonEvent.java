@@ -11,7 +11,7 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Boolean;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.edit.fields.CheckBoxField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.BusinessRule;
@@ -42,10 +42,10 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 	}
 
-	protected abstract void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel);
+	protected abstract void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel);
 
 	@Override
-	protected void fillForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
+	protected void fillForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 		createSpecificForm(formPanel);
 		formPanel.line(ChangeWithSecondPersonEventData.DATA.registerPartner);
 		formPanel.line(new SecondPersonField(ChangeWithSecondPersonEventData.DATA.relationPartner));
@@ -87,7 +87,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
+		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
 		}
 
@@ -136,7 +136,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
+		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
 		}
 
@@ -173,7 +173,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
+		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(Person.PERSON.separation);
 			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
 		}
@@ -205,7 +205,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
+		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 			// nothing in it
 		}
 
@@ -230,7 +230,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
+		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
 		}
 
@@ -261,7 +261,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
+		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
 			formPanel.line(ChangeWithSecondPersonEventData.DATA.cancelationReason);
 		}
@@ -293,7 +293,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		}
 
 		@Override
-		protected void createSpecificForm(AbstractFormVisual<ChangeWithSecondPersonEventData> formPanel) {
+		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
 		}
 

@@ -11,7 +11,7 @@ import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -30,7 +30,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 	}
 	
 	@Override
-	protected void fillForm(AbstractFormVisual<UndoCitizenData> formPanel) {
+	protected void fillForm(Form<UndoCitizenData> formPanel) {
 		originField = new UndoCitizenField(UndoCitizenData.UNDO_CITIZEN_DATA.placeOfOrigin);
 	    formPanel.line(originField);
 	    formPanel.line(UndoCitizenData.UNDO_CITIZEN_DATA.expatriationDate);

@@ -7,8 +7,8 @@ import ch.openech.client.org.OrganisationPanel;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.client.org.event.OrganisationEventEditor;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.edit.form.AbstractFormVisual;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0148;
 
@@ -19,12 +19,12 @@ public class CorrectReportingEvent extends OrganisationEventEditor<Organisation>
 	}
 
 	@Override
-	public FormVisual<Organisation> createForm() {
+	public IForm<Organisation> createForm() {
 		return new OrganisationPanel(OrganisationPanelType.CHANGE_RESIDENCE_TYPE, getEchNamespaceContext());
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Organisation> formPanel) {
+	protected void fillForm(Form<Organisation> formPanel) {
 		// not used
 	}
 

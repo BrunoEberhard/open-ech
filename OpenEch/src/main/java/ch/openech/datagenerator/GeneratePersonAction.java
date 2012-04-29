@@ -7,8 +7,8 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Int;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.EditorDialogAction;
-import ch.openech.mj.edit.form.AbstractFormVisual;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -34,8 +34,8 @@ public class GeneratePersonAction extends EditorDialogAction {
 		}
 
 		@Override
-		protected FormVisual<GeneratePersonData> createForm() {
-			AbstractFormVisual<GeneratePersonData> form = new AbstractFormVisual<GeneratePersonData>(GeneratePersonData.class, null, true);
+		protected IForm<GeneratePersonData> createForm() {
+			Form<GeneratePersonData> form = new Form<GeneratePersonData>(GeneratePersonData.class, null, true);
 			form.line(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons);
 			return form;
 		}

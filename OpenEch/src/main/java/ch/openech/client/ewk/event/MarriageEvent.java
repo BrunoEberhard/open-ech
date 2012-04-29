@@ -18,7 +18,7 @@ import ch.openech.mj.db.model.annotation.FormatName;
 import ch.openech.mj.edit.fields.CheckBoxStringField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.TextEditField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
@@ -56,7 +56,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	}
 	
 	@Override
-	protected void fillForm(AbstractFormVisual<Marriage> formPanel) {
+	protected void fillForm(Form<Marriage> formPanel) {
 		PersonField partner1 = new PersonField(MARRIAGE.partner1); 
 		PersonField partner2 = new PersonField(MARRIAGE.partner2);
 	

@@ -3,7 +3,7 @@ package ch.openech.client.xmlpreview;
 import java.util.List;
 
 import ch.openech.client.ewk.event.XmlTextFormField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
 
@@ -19,7 +19,7 @@ public class XmlPreview {
 			component.getWindow().addWindow(xmlFrame);
 			xmlFrame.setVisible(true);
 		} else {
-			AbstractFormVisual<XmlPreviewValue> form = new AbstractFormVisual(XmlPreviewValue.class, null, false) {
+			Form<XmlPreviewValue> form = new Form(XmlPreviewValue.class, null, false) {
 				@Override
 				protected int getColumnWidthPercentage() {
 					return 400;

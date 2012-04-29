@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0148;
 
@@ -15,7 +15,7 @@ public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> 
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Organisation> formPanel) {
+	protected void fillForm(Form<Organisation> formPanel) {
 		formPanel.line(Organisation.ORGANISATION.typeOfResidenceOrganisation, Organisation.ORGANISATION.reportingMunicipality);
 		formPanel.line(Organisation.ORGANISATION.arrivalDate, Organisation.ORGANISATION.comesFrom);
 		formPanel.area(Organisation.ORGANISATION.businessAddress);

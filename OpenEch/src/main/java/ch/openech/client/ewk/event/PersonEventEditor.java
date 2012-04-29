@@ -6,8 +6,8 @@ import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.AbstractFormVisual;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.util.GenericUtils;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -22,7 +22,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 	}
 	
 	@Override
-	public FormVisual<T> createForm() {
+	public IForm<T> createForm() {
 		@SuppressWarnings("unchecked")
 		Class<T> genericClass = (Class<T>) GenericUtils.getGenericClass(getClass());
 
@@ -31,7 +31,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 		return formPanel;
 	}
 	
-	protected abstract void fillForm(AbstractFormVisual<T> formPanel);
+	protected abstract void fillForm(Form<T> formPanel);
 
 	public void setPerson(Person person) {
 		this.person = person;

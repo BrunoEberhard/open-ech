@@ -47,12 +47,12 @@ import ch.openech.dm.person.Residence;
 import ch.openech.mj.db.model.AccessorInterface;
 import ch.openech.mj.db.model.Format;
 import ch.openech.mj.edit.fields.FormField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.GenericUtils;
 import ch.openech.xml.write.EchNamespaceContext;
 
-public class EchFormPanel<T> extends AbstractFormVisual<T> {
+public class EchFormPanel<T> extends Form<T> {
 	private final EchNamespaceContext namespaceContext;
 	
 	protected EchFormPanel() {

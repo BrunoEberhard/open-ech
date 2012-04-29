@@ -2,7 +2,7 @@ package ch.openech.client.e21;
 
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.xml.write.EchNamespaceContext;
 
 // Eigentlich relationField
@@ -37,7 +37,7 @@ public class PartnerField extends ObjectFlowField<Relation> {
 //			connectedNameField.setText(name);
 //		}
 	@Override
-	public FormVisual<Relation> createFormPanel() {
+	public IForm<Relation> createFormPanel() {
 		return new RelationPanel(echNamespaceContext, false);
 	}
 }

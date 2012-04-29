@@ -16,9 +16,9 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
@@ -41,8 +41,8 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 	public final class ResidenceMainEditor extends ObjectFieldPartEditor<Residence> {
 
 		@Override
-		public FormVisual<Residence> createForm() {
-			AbstractFormVisual<Residence> form = new EchFormPanel<Residence>(Residence.class);
+		public IForm<Residence> createForm() {
+			Form<Residence> form = new EchFormPanel<Residence>(Residence.class);
 			form.line(new SwissMunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
 		}
@@ -67,8 +67,8 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 	public final class ResidenceAddSecondaryEditor extends Editor<Residence> {
 
 		@Override
-		public FormVisual<Residence> createForm() {
-			AbstractFormVisual<Residence> form = new EchFormPanel<Residence>(Residence.class);
+		public IForm<Residence> createForm() {
+			Form<Residence> form = new EchFormPanel<Residence>(Residence.class);
 			form.line(new SwissMunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
 		}
@@ -250,7 +250,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 	}
 
 	@Override
-	public FormVisual<Residence> createFormPanel() {
+	public IForm<Residence> createFormPanel() {
 		// not used
 		return null;
 	}

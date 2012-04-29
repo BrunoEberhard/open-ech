@@ -6,7 +6,7 @@ import java.util.List;
 
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
 
 public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
@@ -42,7 +42,7 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 	}
 
 	@Override
-	protected FormVisual<List<T>> createFormPanel() {
+	protected IForm<List<T>> createFormPanel() {
 		// not used
 		return null;
 	}

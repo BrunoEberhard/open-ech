@@ -5,7 +5,7 @@ import java.util.List;
 
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -17,7 +17,7 @@ public class CorrectLanguageOfCorrespondanceEvent extends PersonEventEditor<Pers
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Person> formPanel) {
+	protected void fillForm(Form<Person> formPanel) {
 		formPanel.line(Person.PERSON.languageOfCorrespondance);
 	}
 

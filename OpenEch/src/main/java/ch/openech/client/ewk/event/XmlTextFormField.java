@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
@@ -48,7 +48,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 	}
 
 	@Override
-	protected FormVisual<List<String>> createFormPanel() {
+	protected IForm<List<String>> createFormPanel() {
 		// not udes
 		return null;
 	}

@@ -12,7 +12,7 @@ import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
@@ -37,7 +37,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	
 	public class AddOriginEditor extends ObjectFieldPartEditor<PlaceOfOrigin> {
 		@Override
-		public FormVisual<PlaceOfOrigin> createForm() {
+		public IForm<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
 		}
 
@@ -64,7 +64,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		}
 
 		@Override
-		public FormVisual<PlaceOfOrigin> createForm() {
+		public IForm<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
 		}
 
@@ -132,7 +132,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	}
 
 	@Override
-	public FormVisual<List<PlaceOfOrigin>> createFormPanel() {
+	public IForm<List<PlaceOfOrigin>> createFormPanel() {
 		// unused
 		return null;
 	}

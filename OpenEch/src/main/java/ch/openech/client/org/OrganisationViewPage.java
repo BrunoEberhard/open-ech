@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.application.ObjectViewPage;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.Resources;
@@ -60,7 +60,7 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 	}
 
 	@Override
-	public FormVisual<Organisation> createForm() {
+	public IForm<Organisation> createForm() {
 		return organisationPanel;
 	}
 	

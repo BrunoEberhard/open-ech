@@ -7,7 +7,7 @@ import ch.openech.dm.person.Nationality;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.StringUtils;
@@ -37,7 +37,7 @@ public class ForeignField extends ObjectFlowField<Foreign> implements Validatabl
 	}
 	
 	@Override
-	public FormVisual<Foreign> createFormPanel() {
+	public IForm<Foreign> createFormPanel() {
 		return new ForeignPanel(namespaceContext);
 	}
 

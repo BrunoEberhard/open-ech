@@ -6,7 +6,7 @@ import java.util.List;
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -17,7 +17,7 @@ public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Person> formPanel) {
+	protected void fillForm(Form<Person> formPanel) {
 		boolean includeParents = getEchNamespaceContext().correctRelationshipPersonIncludesParents();
 		formPanel.area(new RelationField(Person.PERSON.relation, getEchNamespaceContext(), includeParents, true));
 	}

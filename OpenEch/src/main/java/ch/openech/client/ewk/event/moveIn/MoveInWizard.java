@@ -23,7 +23,7 @@ import ch.openech.mj.edit.WizardPage;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.Page;
@@ -112,7 +112,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	private class MoveInPersonWizardPage extends WizardPage<Person> {
 
 		@Override
-		protected FormVisual<Person> createForm() {
+		protected IForm<Person> createForm() {
 			return new PersonPanel(PersonPanelType.MOVE_IN, echNamespaceContext);
 		}
 
@@ -180,7 +180,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	private class MoveInNextPersonWizardPage extends WizardPage<MoveInNextPerson> {
 
 		@Override
-		protected FormVisual<MoveInNextPerson> createForm() {
+		protected IForm<MoveInNextPerson> createForm() {
 			EchFormPanel<MoveInNextPerson> form = new EchFormPanel<MoveInNextPerson>(MoveInNextPerson.class, 2);
 			
 			form.line(MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted);

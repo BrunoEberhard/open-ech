@@ -10,7 +10,7 @@ import ch.openech.client.ewk.event.RenewPermitEvent.RenewPermitActionData;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
@@ -26,7 +26,7 @@ public class RenewPermitEvent extends PersonEventEditor<RenewPermitActionData> {
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<RenewPermitActionData> formPanel) {
+	protected void fillForm(Form<RenewPermitActionData> formPanel) {
 		formPanel.line(PERSON.foreign.residencePermit);
 		if (getEchNamespaceContext().renewPermitHasTill()) {
 			// bei Change ist diese Angabe obligatorisch, bei Correct und Renew nicht

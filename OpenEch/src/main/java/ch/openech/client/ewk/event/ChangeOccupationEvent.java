@@ -6,8 +6,8 @@ import java.util.List;
 import ch.openech.client.e21.OccupationPanel;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.AbstractFormVisual;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -21,12 +21,12 @@ public class ChangeOccupationEvent extends PersonEventEditor<Occupation> {
 	}
 	
 	@Override
-	public FormVisual<Occupation> createForm() {
+	public IForm<Occupation> createForm() {
 		return new OccupationPanel(getEchNamespaceContext());
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Occupation> formPanel) {
+	protected void fillForm(Form<Occupation> formPanel) {
 		// not used
 	}
 	

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0148;
 
@@ -20,7 +20,7 @@ public class ChangeLegalFormEvent extends OrganisationEventEditor<Organisation> 
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Organisation> formPanel) {
+	protected void fillForm(Form<Organisation> formPanel) {
 		formPanel.line(Organisation.ORGANISATION.legalForm);
 	}
 

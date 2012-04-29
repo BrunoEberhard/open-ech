@@ -7,7 +7,7 @@ import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.ResourceAction;
@@ -38,7 +38,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		}
 		
 		@Override
-		public FormVisual<Relation> createForm() {
+		public IForm<Relation> createForm() {
 			return new RelationPanel(echNamespaceContext, withNameOfParents);
 		}
 	}
@@ -72,7 +72,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 	}
 	
 	@Override
-	public FormVisual<List<Relation>> createFormPanel() {
+	public IForm<List<Relation>> createFormPanel() {
 		// not used
 		return null;
 	}

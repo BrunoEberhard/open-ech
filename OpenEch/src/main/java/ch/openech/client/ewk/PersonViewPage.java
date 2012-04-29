@@ -6,7 +6,7 @@ import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.application.ObjectViewPage;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.Resources;
@@ -61,7 +61,7 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 	}
 
 	@Override
-	public FormVisual<Person> createForm() {
+	public IForm<Person> createForm() {
 		return personPanel;
 	}
 	

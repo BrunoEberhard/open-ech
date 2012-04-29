@@ -6,7 +6,7 @@ import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.server.EchServer;
 
 public class PersonField extends ObjectFlowField<Person> {
@@ -17,7 +17,7 @@ public class PersonField extends ObjectFlowField<Person> {
 	}
 	
 	@Override
-	public FormVisual<Person> createFormPanel() {
+	public IForm<Person> createFormPanel() {
 		// not used
 		return null;
 	}

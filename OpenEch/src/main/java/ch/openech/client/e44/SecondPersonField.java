@@ -2,7 +2,7 @@ package ch.openech.client.e44;
 
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 
 public class SecondPersonField extends ObjectFlowField<Relation> {
 	
@@ -16,7 +16,7 @@ public class SecondPersonField extends ObjectFlowField<Relation> {
 	}
 
 	@Override
-	protected FormVisual<Relation> createFormPanel() {
+	protected IForm<Relation> createFormPanel() {
 		return null;
 	}
 

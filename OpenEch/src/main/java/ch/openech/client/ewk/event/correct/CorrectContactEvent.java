@@ -5,7 +5,7 @@ import java.util.List;
 
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -18,7 +18,7 @@ public class CorrectContactEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Person> formPanel) {
+	protected void fillForm(Form<Person> formPanel) {
 		if (getEchNamespaceContext().contactHasValidTill()) {
 			formPanel.line(Person.PERSON.contactPerson.validTill);
 		}

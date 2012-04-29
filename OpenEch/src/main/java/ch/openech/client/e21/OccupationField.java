@@ -6,7 +6,7 @@ import java.util.List;
 import ch.openech.dm.person.Occupation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.xml.write.EchNamespaceContext;
 
@@ -34,7 +34,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 		}
 		
 		@Override
-		public FormVisual<Occupation> createForm() {
+		public IForm<Occupation> createForm() {
 			return new OccupationPanel(namespaceContext);
 		}
 	}
@@ -54,7 +54,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 	}
 	
 	@Override
-	public FormVisual<List<Occupation>> createFormPanel() {
+	public IForm<List<Occupation>> createFormPanel() {
 		// not used
 		return null;
 	}

@@ -4,7 +4,7 @@ import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 
 public class AddressField extends ObjectFlowField<Address> implements DemoEnabled {
 	private final boolean swiss;
@@ -28,7 +28,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	
 	}
 
-	public FormVisual<Address> createEditFrame() {
+	public IForm<Address> createEditFrame() {
 		return new AddressPanel(swiss, person, organisation);
 	}
 	
@@ -42,7 +42,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	}
 
 	@Override
-	public FormVisual<Address> createFormPanel() {
+	public IForm<Address> createFormPanel() {
 		return new AddressPanel(swiss, person, organisation);
 	}
 

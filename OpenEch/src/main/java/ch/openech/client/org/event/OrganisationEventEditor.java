@@ -7,8 +7,8 @@ import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.client.org.OrganisationViewPage;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.edit.form.AbstractFormVisual;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.util.GenericUtils;
 import ch.openech.server.EchServer;
@@ -25,7 +25,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	}
 	
 	@Override
-	public FormVisual<T> createForm() {
+	public IForm<T> createForm() {
 		@SuppressWarnings("unchecked")
 		Class<T> genericClass = (Class<T>) GenericUtils.getGenericClass(getClass());
 		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, getEchNamespaceContext(), getFormColumns());
@@ -33,7 +33,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 		return formPanel;
 	}
 	
-	protected abstract void fillForm(AbstractFormVisual<T> formPanel);
+	protected abstract void fillForm(Form<T> formPanel);
 
 	public void setOrganisation(Organisation organisation) {
 		this.organisation = organisation;

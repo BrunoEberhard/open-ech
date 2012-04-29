@@ -8,7 +8,7 @@ import ch.openech.dm.common.NamedId;
 import ch.openech.dm.common.TechnicalIds;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.fields.ObjectLinkField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
 
 public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
@@ -46,7 +46,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	}
 
 	@Override
-	public FormVisual<TechnicalIds> createFormPanel() {
+	public IForm<TechnicalIds> createFormPanel() {
 		EchFormPanel<TechnicalIds> form = new EchFormPanel<TechnicalIds>(TechnicalIds.class);
 		form.line(TechnicalIds.TECHNICAL_IDS.localId.personIdCategory);
 		form.line(TechnicalIds.TECHNICAL_IDS.localId.personId);
@@ -64,7 +64,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 		}
 
 		@Override
-		protected FormVisual<List<NamedId>> createFormPanel() {
+		protected IForm<List<NamedId>> createFormPanel() {
 			// not used
 			return null;
 		}
@@ -85,7 +85,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 
 		private class AddOtherIdAction extends ObjectFieldPartEditor<NamedId> {
 			@Override
-			public FormVisual<NamedId> createForm() {
+			public IForm<NamedId> createForm() {
 				return new NamedIdPanel();
 			}
 

@@ -5,8 +5,8 @@ import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.contact.Contact;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.form.IForm;
 
 public class ContractorField extends ObjectFlowField<Contact> {
 	
@@ -33,8 +33,8 @@ public class ContractorField extends ObjectFlowField<Contact> {
 	}
 
 	@Override
-	public FormVisual<Contact> createFormPanel() {
-		AbstractFormVisual<Contact> form = new EchFormPanel<Contact>(Contact.class);
+	public IForm<Contact> createFormPanel() {
+		Form<Contact> form = new EchFormPanel<Contact>(Contact.class);
 		form.line(Contact.CONTACT.stringId);
 		form.area(new ContactField(null));
 		return form;

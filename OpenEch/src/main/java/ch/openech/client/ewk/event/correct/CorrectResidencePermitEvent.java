@@ -8,7 +8,7 @@ import java.util.List;
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -19,7 +19,7 @@ public class CorrectResidencePermitEvent extends PersonEventEditor<Foreign> {
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Foreign> formPanel) {
+	protected void fillForm(Form<Foreign> formPanel) {
 		formPanel.line(PERSON.foreign.residencePermit);
 		
 		// bei Change ist diese Angabe obligatorisch, bei Correct nicht

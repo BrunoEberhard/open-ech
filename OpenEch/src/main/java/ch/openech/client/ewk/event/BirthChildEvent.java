@@ -12,8 +12,8 @@ import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
-import ch.openech.mj.edit.form.AbstractFormVisual;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
@@ -32,12 +32,12 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public FormVisual<Person> createForm() {
+	public IForm<Person> createForm() {
 		return new PersonPanel(PersonPanelType.BIRTH, getEchNamespaceContext());
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Person> formPanel) {
+	protected void fillForm(Form<Person> formPanel) {
 		// not used
 	}
 

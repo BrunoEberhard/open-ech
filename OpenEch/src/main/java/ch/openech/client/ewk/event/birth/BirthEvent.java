@@ -9,7 +9,7 @@ import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.util.BusinessRule;
@@ -23,7 +23,7 @@ public class BirthEvent extends XmlEditor<Person> {
 	}
 
 	@Override
-	public FormVisual<Person> createForm() {
+	public IForm<Person> createForm() {
 		return new PersonPanel(PersonPanelType.BIRTH, getEchNamespaceContext());
 	}
 

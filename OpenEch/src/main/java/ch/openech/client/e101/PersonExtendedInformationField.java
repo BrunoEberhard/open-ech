@@ -3,7 +3,7 @@ package ch.openech.client.e101;
 import ch.openech.dm.person.PersonExtendedInformation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 
 public class PersonExtendedInformationField extends ObjectFlowField<PersonExtendedInformation> {
 
@@ -25,7 +25,7 @@ public class PersonExtendedInformationField extends ObjectFlowField<PersonExtend
 	}
 	
 	@Override
-	public FormVisual<PersonExtendedInformation> createFormPanel() {
+	public IForm<PersonExtendedInformation> createFormPanel() {
 		return new PersonExtendedInformationPanel();
 	}
 

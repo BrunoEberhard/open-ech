@@ -6,14 +6,14 @@ import javax.swing.Action;
 
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.mj.edit.Editor;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.StringUtils;
 
 public class PreferencesEditor extends Editor<OpenEchPreferences> {
 
 	@Override
-	protected FormVisual<OpenEchPreferences> createForm() {
+	protected IForm<OpenEchPreferences> createForm() {
 		return new PreferenceForm();
 	}
 	

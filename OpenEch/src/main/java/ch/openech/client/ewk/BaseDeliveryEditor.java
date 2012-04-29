@@ -6,7 +6,7 @@ import java.util.List;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -27,7 +27,7 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 	}
 
 	@Override
-	public FormVisual<Person> createForm() {
+	public IForm<Person> createForm() {
 		return new PersonPanel(PersonPanelType.BASE_DELIVERY, getEchNamespaceContext());
 	}
 

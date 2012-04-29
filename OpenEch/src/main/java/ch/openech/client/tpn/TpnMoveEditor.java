@@ -10,7 +10,7 @@ import java.util.List;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.tpn.ThirdPartyMove;
-import ch.openech.mj.edit.form.FormVisual;
+import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.read.StaxEch0046;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -105,7 +105,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	}
 
 	@Override
-	protected FormVisual<ThirdPartyMove> createForm() {
+	protected IForm<ThirdPartyMove> createForm() {
 		return new TpnMoveForm(direction);
 	}
 

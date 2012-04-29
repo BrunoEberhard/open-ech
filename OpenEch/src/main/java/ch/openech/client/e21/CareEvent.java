@@ -11,7 +11,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.fields.CodeEditField;
-import ch.openech.mj.edit.form.AbstractFormVisual;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
@@ -30,7 +30,7 @@ public class CareEvent extends PersonEventEditor<Relation> {
 	}
 
 	@Override
-	protected void fillForm(AbstractFormVisual<Relation> formPanel) {
+	protected void fillForm(Form<Relation> formPanel) {
 		formPanel.line(new CodeEditField(RELATION.typeOfRelationship, EchCodes.careTypeOfRelationship));
 		formPanel.line(RELATION.care);
 		formPanel.area(RELATION.partner);
