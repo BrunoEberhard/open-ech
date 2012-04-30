@@ -1,6 +1,5 @@
 package ch.openech.datagenerator;
 
-import java.util.Collections;
 import java.util.List;
 
 import ch.openech.mj.db.model.Constants;
@@ -46,8 +45,13 @@ public class GeneratePersonAction extends EditorDialogAction {
 		}
 
 		@Override
-		protected void validate(GeneratePersonData object, List<ValidationMessage> resultList) {
-			// nothing to validate
+		protected void validate(GeneratePersonData data, List<ValidationMessage> resultList) {
+			if (!StringUtils.isBlank(data.numberOfPersons)) {
+				int i = Integer.parseInt(data.numberOfPersons);
+				if (i < 1) {
+					resultList.add(new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons, "Eingabe grösser 0 erforderlich"));
+				}
+			}
 		}
 
 		@Override
@@ -72,23 +76,7 @@ public class GeneratePersonAction extends EditorDialogAction {
 				return false;
 			}
 			return true;
-		}
-
-		@Override
-		protected List<ValidationMessage> validate(GeneratePersonData data) {
-			if (StringUtils.isBlank(data.numberOfPersons)) {
-				ValidationMessage message = new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons, "Eingabe erforderlich");
-				return Collections.singletonList(message);
-			} else {
-				int i = Integer.parseInt(data.numberOfPersons);
-				if (i < 1) {
-					ValidationMessage message = new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons, "Eingabe erforderlich");
-					return Collections.singletonList(message);
-				}
-			}
-			return Collections.emptyList();
-		}
-		
+		}		
 		
 	}
 

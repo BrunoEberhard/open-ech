@@ -12,6 +12,7 @@ import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.xmlpreview.XmlPreview;
 import ch.openech.mj.edit.Editor;
+import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
@@ -26,6 +27,7 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	public XmlEditor(EchNamespaceContext echNamespaceContext) {
 		this.echNamespaceContext = echNamespaceContext;
 		this.xmlAction = new XmlAction();
+		setIndicator(xmlAction);
 	}
 	
 	protected EchNamespaceContext getEchNamespaceContext() {
@@ -102,38 +104,7 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		return true;
 	}
 	
-	@Override
-	protected void indicate(List<ValidationMessage> validationResult) {
-		super.indicate(validationResult);
-		xmlAction.setEnabled(validationResult.isEmpty());
-		updateXmlStatus();
-	}
-	
-	
-	private void updateXmlStatus() {
-		if (!xmlAction.isEnabled()) return;
-		try {
-			List<String> xmls = getXml(getObject());
-			boolean ok = true;
-			String result = "ok";
-			for (String string : xmls) {
-				result = EchServer.validate(string);
-				if (!"ok".equals(result)) {
-					ok = false;
-					break;
-				}
-			}
-			xmlAction.putValue("foreground", (ok ? Color.BLACK : Color.RED));
-			xmlAction.putValue(AbstractAction.SHORT_DESCRIPTION, result);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			xmlAction.putValue("foreground",Color.BLUE);
-			xmlAction.putValue(AbstractAction.SHORT_DESCRIPTION, e1.getMessage());
-		}
-	}
-	
-	private class XmlAction extends AbstractAction {
+	private class XmlAction extends AbstractAction implements Indicator {
 		public XmlAction() {
 			super("Vorschau XML");
 		}
@@ -145,6 +116,35 @@ public abstract class XmlEditor<T> extends Editor<T> {
 				XmlPreview.viewXml(context, xmls);
 			} catch (Exception x) {
 				throw new RuntimeException("XML Preview fehlgeschlagen", x);
+			}
+		}
+		
+		@Override
+		public void setValidationMessages(List<ValidationMessage> validationMessages) {
+			xmlAction.setEnabled(validationMessages.isEmpty());
+			updateXmlStatus();
+		}	
+		
+		private void updateXmlStatus() {
+			if (!isEnabled()) return;
+			try {
+				List<String> xmls = getXml(getObject());
+				boolean ok = true;
+				String result = "ok";
+				for (String string : xmls) {
+					result = EchServer.validate(string);
+					if (!"ok".equals(result)) {
+						ok = false;
+						break;
+					}
+				}
+				putValue("foreground", (ok ? Color.BLACK : Color.RED));
+				putValue(AbstractAction.SHORT_DESCRIPTION, result);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				putValue("foreground",Color.BLUE);
+				putValue(AbstractAction.SHORT_DESCRIPTION, e1.getMessage());
 			}
 		}
 	}
