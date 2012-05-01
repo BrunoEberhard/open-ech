@@ -33,22 +33,16 @@ public class CareEvent extends PersonEventEditor<Relation> {
 	protected void fillForm(Form<Relation> formPanel) {
 		formPanel.line(new CodeEditField(RELATION.typeOfRelationship, EchCodes.careTypeOfRelationship));
 		formPanel.line(RELATION.care);
+		formPanel.setRequired(RELATION.care);
 		formPanel.area(RELATION.partner);
+		formPanel.setRequired(RELATION.partner);
 	}
 
 	@Override
 	public void validate(Relation relation, List<ValidationMessage> resultList) {
-		validatePerson(relation, resultList);
 		validateSex(relation, resultList);
 	}
 
-	private void validatePerson(Relation relation, List<ValidationMessage> resultList) {
-		PersonIdentification person = relation.partner;
-		if (person == null) {
-			resultList.add(new ValidationMessage(RELATION.partner, "Auswahl der Person erforderlich"));
-		}
-	}
-		
 	@BusinessRule("Bei Änderung Sorgerecht müssen Eltern das richtige Geschlecht haben")
 	private void validateSex(Relation relation, List<ValidationMessage> resultList) {
 		PersonIdentification person = relation.partner;
