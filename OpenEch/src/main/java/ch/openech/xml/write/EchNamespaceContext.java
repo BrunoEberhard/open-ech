@@ -280,7 +280,9 @@ public class EchNamespaceContext {
 	 * angegeben werden, ob das Sorgerecht beinhatlet ist
 	 */
 	public boolean gardianMeasureRelationshipHasCare() {
-		return getNamespaceVersion(20) > 1 || getNamespaceMinorVersion(20) > 1; //  !StringUtils.equals(ewkVersion, "1.0", "2.0", "2.1");
+		return getNamespaceVersion(20) == 1 && getNamespaceMinorVersion(20) > 0 || //
+				 getNamespaceVersion(20) == 2 && getNamespaceMinorVersion(20) > 1 || //
+				 getNamespaceVersion(20) > 2;
 	}
 
 	/* Ab Version 1.1 und 2.2 
@@ -330,6 +332,12 @@ public class EchNamespaceContext {
 	 */
 	public boolean reducedBasedOnLawCode() {
 		return getNamespaceVersion(20) > 1; // return ewkVersion.compareTo("2.0") >= 0;
+	}
+	
+	/* basedOnLaw bei gardianMeasure wurde mit Version 2.1 nicht mehr zwingend
+	 */
+	public boolean basedOnLawCodeRequired() {
+		return getNamespaceVersion(20) == 1 || getNamespaceVersion(20) == 2 && getNamespaceMinorVersion(20) == 0;
 	}
 	
 	/*

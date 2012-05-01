@@ -201,11 +201,6 @@ public class WriterEch0020 extends DeliveryWriter {
 			partner(element, relation);
 			if (!StringUtils.isEmpty(relation.basedOnLaw)) {
 				element.text(BASED_ON_LAW, relation.basedOnLaw);
-			} else {
-				if (gardian) {
-					// die Eingabe ist nicht zwingend, aber das Element muss laut Schemas immer vorhanden sein
-					element.create(URI, BASED_ON_LAW);
-				}
 			}
 			if (gardian && context.gardianMeasureRelationshipHasCare()) {
 				element.values(relation, CARE);

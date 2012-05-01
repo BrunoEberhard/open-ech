@@ -10,7 +10,6 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.fields.CodeEditField;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -22,24 +21,27 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 
 	@Override
 	protected void fillForm(Form<Relation> formPanel) {
+		fillForm(getEchNamespaceContext(), formPanel);
+	}
+	
+	static void fillForm(EchNamespaceContext namespaceContext, Form<Relation> formPanel) {
+		// also used by ChangeGardianEvent
 		formPanel.line(new CodeEditField(RELATION.typeOfRelationship, EchCodes.guardianTypeOfRelationship));
+
 		formPanel.line(RELATION.basedOnLaw);
-		if (getEchNamespaceContext().gardianMeasureRelationshipHasCare()) {
+		formPanel.setRequired(RELATION.basedOnLaw, namespaceContext.basedOnLawCodeRequired());
+		
+		if (namespaceContext.gardianMeasureRelationshipHasCare()) {
 			formPanel.line(RELATION.care);
 		}
+		
 		formPanel.area(RELATION.partner);
+		formPanel.setRequired(RELATION.partner);
 	}
 	
 	@Override
 	public Relation load() {
 		return new Relation();
-	}
-
-	@Override
-	public void validate(Relation relation, List<ValidationMessage> resultList) {
-		if (relation.partner == null) {
-			resultList.add(new ValidationMessage(RELATION.partner, "Auswahl der Person erforderlich"));
-		}
 	}
 
 	@Override
