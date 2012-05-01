@@ -497,7 +497,6 @@ public class StaxEch0020 implements StaxEchParser {
 						personToChange.contactPerson.address = null; personToChange.contactPerson.person = null; personToChange.contactPerson.validTill = null;
 					}
 					if (CORRECT_REPORTING.equals(eventName)) personToChange.residence.secondary.clear();
-					//					if (CORRECT_PERSON.equals(eventName)) personToChange.dateOfDeath = null;
 				}
 				else if (startName.equals(OCCUPATION)) personToChange.occupation.add(StaxEch0021.occupation(xml));
 				else if (startName.equals(_RELATIONSHIP) || startName.equals(RELATIONSHIP) || startName.equals(_RELATIONSHIP_TYPE) || //
@@ -581,6 +580,11 @@ public class StaxEch0020 implements StaxEchParser {
 						personToChange.aliasName = null;
 						personToChange.otherName = null;
 						personToChange.callName = null;
+						if (CORRECT_PERSON.equals(eventName)) {
+							personToChange.dateOfDeath = null;
+							personToChange.languageOfCorrespondance = null;
+							personToChange.separation.clear();
+						}
 					}
 				} else if (startName.equals(PERSON_IDENTIFICATION_AFTER)) {
 					// die lokale Id darf von aussen nicht verändert werden.
