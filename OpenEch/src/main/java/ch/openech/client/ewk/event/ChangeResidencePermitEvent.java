@@ -21,12 +21,11 @@ public class ChangeResidencePermitEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.area(PERSON.foreign.residencePermit);
-		formPanel.area(PERSON.foreign.residencePermitTill);
-//		formPanel.line(OpenEchCodeField.residencePermit(getEchNamespaceContext().residencePermitDetailed()));
-//		formPanel.line(new DateField(FOREIGN.residencePermitTill, DateField.REQUIRED)); 
+		formPanel.line(PERSON.foreign.residencePermit);
+		formPanel.line(PERSON.foreign.residencePermitTill);
 		formPanel.area(PERSON.occupation);
 
+		formPanel.setRequired(PERSON.foreign.residencePermit);
 		// bei Change ist diese Angabe obligatorisch, bei Correct nicht
 		formPanel.setRequired(PERSON.foreign.residencePermitTill);
 	}

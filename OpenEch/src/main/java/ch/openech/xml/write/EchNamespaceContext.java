@@ -288,7 +288,9 @@ public class EchNamespaceContext {
 	/* Ab Version 1.1 und 2.2 
 	 */
 	public boolean renewPermitHasTill() {
-		return getNamespaceVersion(20) > 1 || getNamespaceMinorVersion(20) > 1; //  !StringUtils.equals(ewkVersion, "1.0", "2.0", "2.1");
+		return getNamespaceVersion(20) == 1 && getNamespaceMinorVersion(20) > 0 || //
+				 getNamespaceVersion(20) == 2 && getNamespaceMinorVersion(20) > 1 || //
+				 getNamespaceVersion(20) > 2;
 	}
 
 	/* In den alten Versionen musste bei der Korrektur der Berufsdaten mindestens

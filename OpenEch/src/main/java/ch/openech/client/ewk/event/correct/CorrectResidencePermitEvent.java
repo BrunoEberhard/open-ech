@@ -1,6 +1,6 @@
 package ch.openech.client.ewk.event.correct;
 
-import static ch.openech.dm.person.Person.PERSON;
+import static ch.openech.dm.person.Foreign.FOREIGN;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,10 +20,12 @@ public class CorrectResidencePermitEvent extends PersonEventEditor<Foreign> {
 
 	@Override
 	protected void fillForm(Form<Foreign> formPanel) {
-		formPanel.line(PERSON.foreign.residencePermit);
+		formPanel.line(FOREIGN.residencePermit);
 		
 		// bei Change ist diese Angabe obligatorisch, bei Correct nicht
-		formPanel.line(PERSON.foreign.residencePermitTill); 
+		formPanel.line(FOREIGN.residencePermitTill); 
+		
+		formPanel.setRequired(FOREIGN.residencePermit);
 	}
 
 	@Override

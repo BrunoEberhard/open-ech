@@ -575,11 +575,11 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	// code 35
-	public String renewPermit(PersonIdentification personIdentification, Foreign foreign, List<Occupation> occupation) throws Exception {
+	public String renewPermit(PersonIdentification personIdentification, Person person) throws Exception {
         WriterElement event = simplePersonEvent(RENEW_PERMIT, personIdentification);
         // Die Reihenfolge der WriterElement ist hier anders als bei changePermit, occupation kommen am Schluss
-        event.values(foreign, RESIDENCE_PERMIT, RESIDENCE_PERMIT_TILL); // residencePermitTill bei Version 1.0 noch nicht 
-        for (Occupation o : occupation) ech21.occupation(event, o);
+        event.values(person.foreign, RESIDENCE_PERMIT, RESIDENCE_PERMIT_TILL); // residencePermitTill bei Version 1.0 noch nicht 
+        for (Occupation o : person.occupation) ech21.occupation(event, o);
         return result();
 	}
 	
