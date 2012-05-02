@@ -6,11 +6,12 @@ import ch.openech.dm.code.EchCodes;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.db.model.annotation.Int;
+import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
-public class DwellingAddress {
+public class DwellingAddress implements Validatable {
 
 	public static final DwellingAddress DWELLING_ADDRESS = Constants.of(DwellingAddress.class);
 	
