@@ -72,11 +72,9 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Foreign;
-import ch.openech.dm.person.MaritalStatus;
 import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.dm.person.Separation;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0011 {
