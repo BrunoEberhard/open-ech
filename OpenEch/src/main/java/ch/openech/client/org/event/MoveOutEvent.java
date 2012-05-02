@@ -17,7 +17,12 @@ public class MoveOutEvent extends OrganisationEventEditor<Organisation> {
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
 		formPanel.line(Organisation.ORGANISATION.reportingMunicipality);
-		formPanel.area(Organisation.ORGANISATION.businessAddress);
+		formPanel.line(Organisation.ORGANISATION.departureDate);
+		formPanel.area(Organisation.ORGANISATION.goesTo);
+		
+		formPanel.setRequired(Organisation.ORGANISATION.reportingMunicipality);
+		formPanel.setRequired(Organisation.ORGANISATION.departureDate);
+		formPanel.setRequired(Organisation.ORGANISATION.goesTo);
 	}
 
 	@Override
