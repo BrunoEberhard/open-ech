@@ -5,14 +5,12 @@ import ch.openech.dm.code.EchCodes;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.db.model.annotation.FormatName;
-import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class Foreign {
 	public static final Foreign FOREIGN = Constants.of(Foreign.class);
 	
-	@Required
 	public String residencePermit;
 	
 	@Date 
