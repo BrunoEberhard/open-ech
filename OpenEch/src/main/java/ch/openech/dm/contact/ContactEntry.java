@@ -9,11 +9,12 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.db.model.annotation.FormatName;
 import ch.openech.mj.db.model.annotation.Varchar;
+import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
-public class ContactEntry {
+public class ContactEntry implements Validatable {
 
 	public static ContactEntry CONTACT_ENTRY = Constants.of(ContactEntry.class);
 	
@@ -101,26 +102,33 @@ public class ContactEntry {
 		return s.toString();
 	}
 
-	public void validate(List<ValidationMessage> validationMessages, String key) {
+	@Override
+	public void validate(List<ValidationMessage> validationMessages) {
 		// Die Regex stammen aus dem eCH-0046-2-0.xsd
-		
-		if (isEmail()) {
-			String regex = "[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+(\\.[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+)*@[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+(\\.[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+)*";
-			if (!Pattern.matches(regex, value)) {
-				validationMessages.add(new ValidationMessage(key, "Ungültige EMail - Adresse"));
+		if (isAddressEntry()) {
+			if (address == null || address.isEmpty()) {
+				validationMessages.add(new ValidationMessage(CONTACT_ENTRY.address, "Adresse erforderlich"));
 			}
-		} else if (isPhone()) {
-			String regex = "\\d{10,20}";
-			if (!Pattern.matches(regex, value)) {
-				validationMessages.add(new ValidationMessage(key, "Ungültige Telefonnummer (10-20 Zahlen)"));
-			}
-		} else if (isInternet()) {
-			String regex = "http://.*";
-			if (!Pattern.matches(regex, value)) {
-				validationMessages.add(new ValidationMessage(key, "Ungültige Internetadresse (muss mit http:// beginnen)"));
+		} else {
+			if (StringUtils.isEmpty(value)) {
+				validationMessages.add(new ValidationMessage(CONTACT_ENTRY.value, "Eingabe erforderlich"));
+			} else if (isEmail()) {
+				String regex = "[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+(\\.[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+)*@[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+(\\.[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+)*";
+				if (!Pattern.matches(regex, value)) {
+					validationMessages.add(new ValidationMessage(CONTACT_ENTRY.value, "Ungültige EMail - Adresse"));
+				}
+			} else if (isPhone()) {
+				String regex = "\\d{10,20}";
+				if (!Pattern.matches(regex, value)) {
+					validationMessages.add(new ValidationMessage(CONTACT_ENTRY.value, "Ungültige Telefonnummer (10-20 Zahlen)"));
+				}
+			} else if (isInternet()) {
+				String regex = "http://.*";
+				if (!Pattern.matches(regex, value)) {
+					validationMessages.add(new ValidationMessage(CONTACT_ENTRY.value, "Ungültige Internetadresse (muss mit http:// beginnen)"));
+				}
 			}
 		}
-		
 	}
 	
 }
