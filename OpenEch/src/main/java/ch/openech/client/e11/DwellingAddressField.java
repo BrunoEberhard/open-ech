@@ -36,7 +36,12 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 
 	@Override
 	public void fillWithDemoData() {
-		setObject(DataGenerator.dwellingAddress());
+		DwellingAddress dwellingAddress = DataGenerator.dwellingAddress();
+		if (namespaceContext.addressesAreBusiness()) {
+			// Kollektivhaushalt oder ähnliches passt auch bei Unternehmen nicht wirklich
+			dwellingAddress.typeOfHousehold = null;
+		}
+		setObject(dwellingAddress);
 	}
 	
 }
