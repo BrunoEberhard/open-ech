@@ -142,7 +142,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			if (type != PersonPanelType.CORRECT_PERSON) {
 				line(PERSON.arrivalDate, PERSON.departureDate);
 				line(PERSON.comesFrom, PERSON.goesTo);
-				line(PERSON.comesFromAddress, PERSON.goesToAddress);
+				area(PERSON.comesFromAddress, PERSON.goesToAddress);
 
 				if (type != PersonPanelType.DISPLAY) {
 					if (editable) setRequired(PERSON.arrivalDate);
