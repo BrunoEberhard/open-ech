@@ -6,6 +6,7 @@ import static ch.openech.dm.XmlConstants.COMES_FROM;
 import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_INFORMATION;
 import static ch.openech.dm.XmlConstants.CONTACT;
 import static ch.openech.dm.XmlConstants.CORRECT_LIQUIDATION;
+import static ch.openech.dm.XmlConstants.CORRECT_REPORTING;
 import static ch.openech.dm.XmlConstants.DELIVERY;
 import static ch.openech.dm.XmlConstants.DELIVERY_HEADER;
 import static ch.openech.dm.XmlConstants.FOUNDATION;
@@ -226,13 +227,27 @@ public class StaxEch0148 implements StaxEchParser {
 				else if (startName.equals(ARRIVAL_DATE)) organisation.arrivalDate = StaxEch.date(xml);
 				else if (startName.equals(COMES_FROM)) organisation.comesFrom = StaxEch0011.destination(xml);
 				else if (startName.equals(BUSINESS_ADDRESS)) organisation.businessAddress = StaxEch0011.dwellingAddress(xml);
-				else if (StringUtils.equals(startName, HAS_MAIN_RESIDENCE, HAS_SECONDARY_RESIDENCE, HAS_OTHER_RESIDENCE, MOVE_OUT_REPORTING_DESTINATION, MOVE_REPORTING_ADDRESS)) StaxEch0098.residence(xml, organisation);
+				else if (StringUtils.equals(startName, HAS_MAIN_RESIDENCE, HAS_SECONDARY_RESIDENCE, HAS_OTHER_RESIDENCE, MOVE_OUT_REPORTING_DESTINATION, MOVE_REPORTING_ADDRESS)) {
+					setTypeOfResidenceInCorrectReportingEvent(eventName, startName, organisation);
+					StaxEch0098.residence(xml, organisation);
+				}
 				else if (StringUtils.equals(startName, FOUNDATION, LIQUIDATION)) StaxEch0098.foundationOrLiquidation(xml, organisation);
 				else organisation.set(startName, token(xml));
 			} else if (event.isEndElement()) {
 				simpleOrganisationEvent(eventName, organisation);
 				return;
 			} // else skip
+		}
+	}
+
+	private void setTypeOfResidenceInCorrectReportingEvent(String eventName, String startName, Organisation organisation) {
+		// Bei dem Event CorrectReporting wird der TYP_OF_RESIDENCE nicht übertragen. Dennoch ist aufgrund
+		// des vorhandenen XML Elements klar, ob ein Wechsel des Typs stattfinden soll. Bei ChangeReporting muss
+		// das nicht gemacht werden, weil dort der Typ übertragen wird.
+		if (StringUtils.equals(eventName, CORRECT_REPORTING)) {
+			if (StringUtils.equals(startName, HAS_MAIN_RESIDENCE)) organisation.typeOfResidenceOrganisation = "1";
+			else if (StringUtils.equals(startName, HAS_SECONDARY_RESIDENCE)) organisation.typeOfResidenceOrganisation = "2";
+			else if (StringUtils.equals(startName, HAS_OTHER_RESIDENCE)) organisation.typeOfResidenceOrganisation = "3";
 		}
 	}
 
