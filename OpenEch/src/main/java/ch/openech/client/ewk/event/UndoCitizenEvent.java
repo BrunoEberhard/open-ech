@@ -88,11 +88,6 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 			comboBox.setSelectedObject(object);
 		}
 		
-		@Override
-		public boolean isEmpty() {
-			return getObject() == null;
-		}
-
 		public void setValues(List<PlaceOfOrigin> placeOfOrigin) {
 			comboBox.setObjects(placeOfOrigin);
 		}

@@ -61,6 +61,11 @@ public class SwissMunicipalityField extends AbstractEditField<MunicipalityIdenti
 	
 	// 
 
+	@Override
+	public boolean isEmpty() {
+		return getObject().isEmpty();
+	}
+
 	private static class FederalRegisterMunicipality extends MunicipalityIdentification {
 		private final int key;
 

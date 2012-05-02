@@ -5,6 +5,7 @@ import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.code.MrMrs;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.StringUtils;
 
 public class Address {
@@ -32,6 +33,7 @@ public class Address {
 	public String locality;
 	public String country = "CH";
 	public final Zip zip = new Zip();
+	@Required
 	public String town;
 	
 	public void setMrMrs(MrMrs mrMrs) {
@@ -39,7 +41,7 @@ public class Address {
 	}
 	
 	public boolean isEmpty() {
-		return StringUtils.isBlank(street) || StringUtils.isBlank(town);
+		return StringUtils.isBlank(town);
  	}
 	
 	public boolean isOrganisation() {

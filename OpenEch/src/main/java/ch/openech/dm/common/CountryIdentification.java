@@ -3,6 +3,7 @@ package ch.openech.dm.common;
 import java.io.Serializable;
 
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.StringUtils;
 
 public class CountryIdentification implements Comparable<CountryIdentification>, Serializable, Cloneable {
@@ -11,6 +12,7 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 
 	public String countryId;
 	public String countryIdISO2;
+	@Required
 	public String countryNameShort;
 
 	public String toStringReadable() {

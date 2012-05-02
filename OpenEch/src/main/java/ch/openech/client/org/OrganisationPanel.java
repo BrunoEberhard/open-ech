@@ -60,6 +60,9 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 		} else {
 			area(ORGANISATION.businessAddress, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
 		}
+		setRequired(ORGANISATION.arrivalDate);
+		setRequired(ORGANISATION.reportingMunicipality);
+		setRequired(ORGANISATION.businessAddress);
 	}
 
 	//

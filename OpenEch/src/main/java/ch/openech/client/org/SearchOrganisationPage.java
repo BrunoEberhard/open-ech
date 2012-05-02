@@ -1,5 +1,7 @@
 package ch.openech.client.org;
 
+import static ch.openech.dm.organisation.Organisation.ORGANISATION;
+
 import java.util.List;
 
 import ch.openech.dm.organisation.Organisation;
@@ -13,8 +15,6 @@ import ch.openech.mj.toolkit.VisualTable.ClickListener;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 
-import static ch.openech.dm.organisation.Organisation.ORGANISATION;
-
 public class SearchOrganisationPage extends Page implements RefreshablePage {
 
 	private final EchNamespaceContext echNamespaceContext;
@@ -23,7 +23,9 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 
 	public static final Object[] FIELD_NAMES = {
 		ORGANISATION.organisationName, //
-		ORGANISATION.reportingMunicipality.municipalityName, //
+		ORGANISATION.businessAddress.mailAddress.street, //
+		ORGANISATION.businessAddress.mailAddress.houseNumber.houseNumber, //
+		ORGANISATION.businessAddress.mailAddress.town, //
 	};
 	
 	// Damit wird die Version des Fenster overruled

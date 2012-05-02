@@ -21,6 +21,7 @@ public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> 
 		formPanel.area(Organisation.ORGANISATION.businessAddress);
 		formPanel.setRequired(Organisation.ORGANISATION.typeOfResidenceOrganisation);
 		formPanel.setRequired(Organisation.ORGANISATION.reportingMunicipality);
+		formPanel.setRequired(Organisation.ORGANISATION.businessAddress);
 	}
 
 	@Override
