@@ -1,6 +1,31 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
+import static ch.openech.dm.XmlConstants.BUSINESS_ADDRESS;
+import static ch.openech.dm.XmlConstants.COMES_FROM;
+import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_INFORMATION;
+import static ch.openech.dm.XmlConstants.CONTACT;
+import static ch.openech.dm.XmlConstants.CORRECT_LIQUIDATION;
+import static ch.openech.dm.XmlConstants.DELIVERY;
+import static ch.openech.dm.XmlConstants.DELIVERY_HEADER;
+import static ch.openech.dm.XmlConstants.FOUNDATION;
+import static ch.openech.dm.XmlConstants.HAS_MAIN_RESIDENCE;
+import static ch.openech.dm.XmlConstants.HAS_OTHER_RESIDENCE;
+import static ch.openech.dm.XmlConstants.HAS_SECONDARY_RESIDENCE;
+import static ch.openech.dm.XmlConstants.HEADER;
+import static ch.openech.dm.XmlConstants.LIQUIDATION;
+import static ch.openech.dm.XmlConstants.MOVE_IN;
+import static ch.openech.dm.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
+import static ch.openech.dm.XmlConstants.MOVE_REPORTING_ADDRESS;
+import static ch.openech.dm.XmlConstants.NUMBER_OF_ORGANISATIONS;
+import static ch.openech.dm.XmlConstants.ORGANISATION_BASE_DELIVERY;
+import static ch.openech.dm.XmlConstants.ORGANISATION_IDENTIFICATION;
+import static ch.openech.dm.XmlConstants.REPORTED_ORGANISATION;
+import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.TYP_OF_RESIDENCE;
+import static ch.openech.dm.XmlConstants.UIDREG_INFORMATION;
+import static ch.openech.dm.XmlConstants.UIDREG_SOURCE;
+import static ch.openech.dm.XmlConstants.VAT_REGISTER_INFORMATION;
 import static ch.openech.xml.read.StaxEch.date;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
@@ -185,6 +210,11 @@ public class StaxEch0148 implements StaxEchParser {
 				if (StringUtils.equals(startName, ORGANISATION_IDENTIFICATION)) {
 					StaxEch0097.organisationIdentification(xml, organisationIdentification);
 					organisation = getOrganisation(organisationIdentification);
+					if (StringUtils.equals(eventName, CORRECT_LIQUIDATION)) {
+						organisation.liquidationEntryDate = null;
+						organisation.liquidationDate = null;
+						organisation.liquidationReason = null;
+					}
 				}
 				// TODO valid dateValidFrom
 			
