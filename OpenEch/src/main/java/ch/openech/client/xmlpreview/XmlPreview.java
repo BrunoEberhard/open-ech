@@ -17,9 +17,10 @@ public class XmlPreview {
 			com.vaadin.ui.Component component = (com.vaadin.ui.Component) context.getComponent();
 			XmlVaadinFrame xmlFrame = new XmlVaadinFrame(xmls);
 			component.getWindow().addWindow(xmlFrame);
+			xmlFrame.setPositionY(0);
 			xmlFrame.setVisible(true);
 		} else {
-			Form<XmlPreviewValue> form = new Form(XmlPreviewValue.class, null, false) {
+			Form<XmlPreviewValue> form = new Form<XmlPreviewValue>(XmlPreviewValue.class, null, false) {
 				@Override
 				protected int getColumnWidthPercentage() {
 					return 400;
