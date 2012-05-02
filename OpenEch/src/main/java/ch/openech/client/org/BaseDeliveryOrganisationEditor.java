@@ -34,30 +34,7 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> impl
 
 	@Override
 	public Organisation newInstance() {
-		Organisation organisation = new Organisation();
-		// TODO Presets
-		
-//		for (String key : getStringKeys()) {
-//			String setting = AbstractApplication.preferences().get(key, null);
-//			if (setting != null) {
-//				set(key, setting);
-//			}
-//		}
-//		if (reportingMunicipalityField != null) {
-//			// TODO das sollte das Formpanel von sich aus können
-//			MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
-//			for (String key : municipalityIdentification.keySet()) {
-//				String setting = AbstractApplication.preferences().get(key, null);
-//				if (setting != null) {
-//					municipalityIdentification.set(key, setting);
-//				}
-//			}
-//			Residence residence = residenceField.getObject();
-//			residence.reportingMunicipality = municipalityIdentification;
-//			residenceField.setObject(residence);
-//		}
-
-		return organisation;
+		return MoveInEditor.newInstance(context);
 	}
 
 	@Override

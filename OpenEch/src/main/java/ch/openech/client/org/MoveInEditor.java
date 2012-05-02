@@ -6,10 +6,13 @@ import java.util.List;
 import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.Page;
+import ch.openech.mj.page.PageContext;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0148;
@@ -34,13 +37,19 @@ public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<O
 
 	@Override
 	public Organisation newInstance() {
-		Organisation organisation = new Organisation();
-
-		// TODO Presets
-
-		return organisation;
+		return newInstance(context);
 	}
 
+	static Organisation newInstance(PageContext context) {
+		Organisation organisation = new Organisation();
+		
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		organisation.languageOfCorrespondance = preferences.preferencesDefaultsData.language;
+		organisation.reportingMunicipality = CloneHelper.clone(preferences.preferencesDefaultsData.residence);
+		
+		return organisation;
+	}
+	
 	@Override
 	public void validate(Organisation object, List<ValidationMessage> resultList) {
 	}

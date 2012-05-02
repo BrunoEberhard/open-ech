@@ -7,6 +7,7 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 
 public class AddressField extends ObjectFlowField<Address> implements DemoEnabled {
+	// TODO private final PageContext context;
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;
@@ -22,6 +23,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	
 	public AddressField(Object key, boolean editable, boolean swiss, boolean person, boolean organisation) {
 		super(key, editable);
+//		this.context = context;
 		this.swiss = swiss;
 		this.person = person;
 		this.organisation = organisation;
@@ -60,4 +62,13 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 			addAction(new RemoveObjectAction());
 		}
 	}
+
+	@Override
+	protected Address newInstance() {
+		Address address = new Address();
+		// context.getApplicationContext();
+		return address;
+	}
+	
+	
 }
