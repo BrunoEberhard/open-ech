@@ -1,17 +1,13 @@
 package ch.openech.dm.common;
 
-import java.util.List;
-
 import ch.openech.dm.code.EchCodes;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Date;
 import ch.openech.mj.db.model.annotation.Int;
-import ch.openech.mj.edit.validation.Validatable;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
-public class DwellingAddress implements Validatable {
+public class DwellingAddress {
 
 	public static final DwellingAddress DWELLING_ADDRESS = Constants.of(DwellingAddress.class);
 	
@@ -25,21 +21,6 @@ public class DwellingAddress implements Validatable {
 	public String typeOfHousehold; // not for organisation
 	@Date
 	public String movingDate;
-	
-	public void validate(List<ValidationMessage> resultList) {
-		if (!StringUtils.isBlank(EGID)) {
-			if (!StringUtils.isBlank(EWID) && !StringUtils.isBlank(householdID)) {
-				resultList.add(new ValidationMessage(DWELLING_ADDRESS.householdID, "Bei gesetzter EGID können nicht EWID und Haushalt ID gesetzt sein"));
-			}
-		} else {
-			if (StringUtils.isBlank(householdID)) {
-				resultList.add(new ValidationMessage(DWELLING_ADDRESS.householdID, "Bei fehlender EGID muss die Haushalt ID gesetzt sein"));
-			}
-		}
-		if (mailAddress == null ||  mailAddress.isEmpty()) {
-			resultList.add(new ValidationMessage(DWELLING_ADDRESS.mailAddress, "Postadresse muss gesetzt sein"));
-		}
-	}
 
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
