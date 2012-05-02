@@ -17,8 +17,11 @@ public class CorrectUidBrancheEvent extends OrganisationEventEditor<Organisation
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.area(Organisation.ORGANISATION.uidBrancheText);
-		formPanel.area(Organisation.ORGANISATION.nogaCode);
+		formPanel.line(Organisation.ORGANISATION.uidBrancheText);
+		formPanel.line(Organisation.ORGANISATION.nogaCode);
+
+		formPanel.setRequired(Organisation.ORGANISATION.uidBrancheText);
+		formPanel.setRequired(Organisation.ORGANISATION.nogaCode);
 	}
 
 	@Override
