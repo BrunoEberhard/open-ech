@@ -36,6 +36,8 @@ public class StaxEch0071 {
 	private static StaxEch0071 instance;
 	private final List<MunicipalityIdentification> municipalityIdentifications = new ArrayList<MunicipalityIdentification>(10000);
 	private final List<Canton> cantons = new ArrayList<Canton>(30);
+	private final List<MunicipalityIdentification> municipalitiesUnmodifiable;
+	private final List<Canton> cantonsUnmodifiable;
 	
 	private StaxEch0071() {
 		String path = this.getClass().getPackage().getName().replace('.', '/');
@@ -47,6 +49,9 @@ public class StaxEch0071 {
 		}
 		Collections.sort(cantons);
 		Collections.sort(municipalityIdentifications);
+		
+		municipalitiesUnmodifiable = Collections.unmodifiableList(municipalityIdentifications);
+		cantonsUnmodifiable = Collections.unmodifiableList(cantons);
 	}
 
 	public static synchronized StaxEch0071 getInstance() {
@@ -57,11 +62,11 @@ public class StaxEch0071 {
 	}
 	
 	public List<Canton> getCantons() {
-		return Collections.unmodifiableList(cantons);
+		return cantonsUnmodifiable;
 	}
 	
 	public List<MunicipalityIdentification> getMunicipalityIdentifications() {
-		return Collections.unmodifiableList(municipalityIdentifications);
+		return municipalitiesUnmodifiable;
 	}
 
 	private void municipality(XMLEventReader xml) throws XMLStreamException, SQLException {

@@ -29,6 +29,10 @@ public class StaxEch0072 {
 	private final List<String> countryNames = new ArrayList<String>(300);
 	private final List<String> countryIdISO2s = new ArrayList<String>(300);
 
+	private final List<CountryIdentification> countriesUnmodifiable;
+	private final List<String> countryNamesUnmodifiable;
+	private final List<String> countryIdISO2sUnmodifiable;
+	
 	private StaxEch0072() {
 		String path = this.getClass().getPackage().getName().replace('.', '/');
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path + "/eCH0072.xml");
@@ -37,6 +41,10 @@ public class StaxEch0072 {
 		} catch (Exception x) {
 			throw new RuntimeException("Read of Countries failed", x);
 		}
+		
+		countriesUnmodifiable = Collections.unmodifiableList(countryIdentifications);
+		countryNamesUnmodifiable = Collections.unmodifiableList(countryNames);
+		countryIdISO2sUnmodifiable = Collections.unmodifiableList(countryIdISO2s);
 	}
 	
 	public static synchronized StaxEch0072 getInstance() {
@@ -47,15 +55,15 @@ public class StaxEch0072 {
 	}
 	
 	public List<CountryIdentification> getCountryIdentifications() {
-		return Collections.unmodifiableList(countryIdentifications);
+		return countriesUnmodifiable;
 	}
 
 	public List<String> getCountryNames() {
-		return Collections.unmodifiableList(countryNames);
+		return countryNamesUnmodifiable;
 	}
 	
 	public List<String> getCountryIdISO2s() {
-		return Collections.unmodifiableList(countryIdISO2s);
+		return countryIdISO2sUnmodifiable;
 	}
 
 	private void country(XMLEventReader xml) throws XMLStreamException, SQLException {
