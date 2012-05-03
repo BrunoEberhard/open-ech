@@ -2,8 +2,6 @@ package ch.openech.client.preferences;
 
 import java.util.List;
 
-import javax.swing.Action;
-
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.IForm;
@@ -33,12 +31,6 @@ public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	protected boolean save(OpenEchPreferences object) {
 		context.getApplicationContext().savePreferences(object);
 		return true;
-	}
-
-	@Override
-	public Action[] getActions() {
-		// ignore demoAction, doesnt make sense in Preferences
-		return new Action[]{cancelAction, saveAction};
 	}
 	
 }

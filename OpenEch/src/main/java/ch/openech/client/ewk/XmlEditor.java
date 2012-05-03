@@ -61,9 +61,9 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	public Action[] getActions() {
 		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 		if (preferences.devMode()) {
-			return new Action[]{demoDataAction, xmlAction, cancelAction, saveAction};
+			return new Action[]{demoAction(), xmlAction, cancelAction(), saveAction()};
 		} else {
-			return new Action[]{cancelAction, saveAction};
+			return new Action[]{cancelAction(), saveAction()};
 		}
 	}
 

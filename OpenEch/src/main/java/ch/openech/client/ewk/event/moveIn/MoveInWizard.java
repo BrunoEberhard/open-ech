@@ -103,9 +103,9 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	public Action[] getActions() {
 		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 		if (preferences.devMode()) {
-			return new Action[]{demoDataAction, new XmlAction(), cancelAction, prevAction, nextAction, saveAction};
+			return new Action[]{demoAction(), new XmlAction(), cancelAction(), prevAction, nextAction, saveAction()};
 		} else {
-			return new Action[]{cancelAction, prevAction, nextAction, saveAction};
+			return new Action[]{cancelAction(), prevAction, nextAction, saveAction()};
 		}
 	}
 
