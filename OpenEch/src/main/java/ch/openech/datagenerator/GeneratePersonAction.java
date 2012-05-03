@@ -40,11 +40,6 @@ public class GeneratePersonAction extends EditorDialogAction {
 		}
 
 		@Override
-		protected GeneratePersonData newInstance() {
-			return new GeneratePersonData();
-		}
-
-		@Override
 		protected void validate(GeneratePersonData data, List<ValidationMessage> resultList) {
 			if (!StringUtils.isBlank(data.numberOfPersons)) {
 				int i = Integer.parseInt(data.numberOfPersons);

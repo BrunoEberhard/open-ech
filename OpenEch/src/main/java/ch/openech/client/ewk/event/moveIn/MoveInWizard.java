@@ -96,11 +96,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 	
 	@Override
-	protected MoveInEditorData newInstance() {
-		return new MoveInEditorData();
-	}
-
-	@Override
 	public Action[] getActions() {
 		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 		if (preferences.devMode()) {
