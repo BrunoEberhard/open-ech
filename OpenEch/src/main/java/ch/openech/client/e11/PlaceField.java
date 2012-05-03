@@ -14,6 +14,7 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.HorizontalLayout;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.xml.read.StaxEch0071;
@@ -59,7 +60,7 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled,
 	}
 
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return horizontalLayout;
 	}
 

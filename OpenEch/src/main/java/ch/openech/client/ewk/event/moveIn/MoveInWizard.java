@@ -29,6 +29,7 @@ import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -324,7 +325,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public Object getComponent() {
+		public IComponent getComponent() {
 			return comboBox;
 		}
 

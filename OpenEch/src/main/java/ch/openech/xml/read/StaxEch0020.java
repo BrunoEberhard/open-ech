@@ -22,8 +22,8 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
+import ch.openech.mj.toolkit.ProgressListener;
 import ch.openech.mj.util.DateUtils;
-import ch.openech.mj.util.ProgressListener;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchPersistence;
 

@@ -30,7 +30,7 @@ public class XmlPreview {
 			XmlPreviewValue value = new XmlPreviewValue();
 			value.xmls = xmls;
 			form.setObject(value);
-			ClientToolkit.getToolkit().openDialog(context.getComponent(), form, "XML").openDialog();
+			ClientToolkit.getToolkit().openDialog(context.getComponent(), form.getComponent(), "XML").openDialog();
 		}
 	}
 	

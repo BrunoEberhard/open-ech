@@ -44,8 +44,8 @@ import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.dm.Event;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.toolkit.ProgressListener;
 import ch.openech.mj.util.DateUtils;
-import ch.openech.mj.util.ProgressListener;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchPersistence;
 

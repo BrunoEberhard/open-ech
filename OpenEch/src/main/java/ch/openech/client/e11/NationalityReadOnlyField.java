@@ -4,11 +4,10 @@ import ch.openech.dm.person.Nationality;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.IComponentDelegate;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
 
-public class NationalityReadOnlyField implements IComponentDelegate, FormField<Nationality> {
+public class NationalityReadOnlyField implements FormField<Nationality> {
 	private final String name;
 	private final TextField textField;
 	

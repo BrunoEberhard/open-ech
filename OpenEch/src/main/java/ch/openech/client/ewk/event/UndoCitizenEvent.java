@@ -16,6 +16,7 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -74,7 +75,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		}
 
 		@Override
-		public Object getComponent() {
+		public IComponent getComponent() {
 			return comboBox;
 		}
 

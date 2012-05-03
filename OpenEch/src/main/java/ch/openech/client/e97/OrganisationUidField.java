@@ -7,6 +7,7 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.MaxLengthTextFieldFilter;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
@@ -27,7 +28,7 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return textField;
 	}
 

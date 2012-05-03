@@ -28,7 +28,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String message = EchServer.validate(xml);
-			ClientToolkit.getToolkit().showNotification(XmlTextFormField.this, message);
+			ClientToolkit.getToolkit().showNotification(XmlTextFormField.this.getComponent(), message);
 		}
 	}
 

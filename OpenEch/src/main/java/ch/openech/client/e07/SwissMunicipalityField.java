@@ -11,6 +11,7 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.read.StaxEch0071;
 
 public class SwissMunicipalityField extends AbstractEditField<MunicipalityIdentification> implements DemoEnabled {
@@ -38,7 +39,7 @@ public class SwissMunicipalityField extends AbstractEditField<MunicipalityIdenti
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return comboBox;
 	}
 

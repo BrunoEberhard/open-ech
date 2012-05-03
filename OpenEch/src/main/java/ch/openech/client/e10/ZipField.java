@@ -13,6 +13,7 @@ import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
@@ -37,7 +38,7 @@ public class ZipField extends AbstractEditField<Zip> implements DependingOnField
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return switchLayout;
 	}
 	

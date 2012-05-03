@@ -5,6 +5,7 @@ import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.HorizontalLayout;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
 public class HouseNumberField extends AbstractEditField<HouseNumber> {
@@ -23,7 +24,7 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return horizontalLayout;
 	}
 

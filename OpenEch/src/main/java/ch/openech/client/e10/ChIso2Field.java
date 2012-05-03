@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
 public class ChIso2Field extends AbstractEditField<String> implements ChangeListener {
@@ -19,7 +20,7 @@ public class ChIso2Field extends AbstractEditField<String> implements ChangeList
 	}
 	
 		@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return textField;
 	}
 

@@ -4,10 +4,10 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponentDelegate;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
-public class SwissMunicipalityReadOnlyField implements IComponentDelegate, FormField<MunicipalityIdentification> {
+public class SwissMunicipalityReadOnlyField implements FormField<MunicipalityIdentification> {
 	private final String name;
 	private final TextField textField;
 
@@ -22,7 +22,7 @@ public class SwissMunicipalityReadOnlyField implements IComponentDelegate, FormF
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return textField;
 	}
 

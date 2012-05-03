@@ -9,6 +9,7 @@ import javax.swing.event.ChangeListener;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.read.StaxEch0072;
 
 public class CountryIso2Field extends AbstractEditField<String> implements ChangeListener {
@@ -26,7 +27,7 @@ public class CountryIso2Field extends AbstractEditField<String> implements Chang
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return comboBox;
 	}
 

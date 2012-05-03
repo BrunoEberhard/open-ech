@@ -8,6 +8,7 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
+import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.read.StaxEch0072;
 
 /* Dieses Feld wurde erst mit ech 112 gebraucht. 
@@ -25,7 +26,7 @@ public class CountryField extends AbstractEditField<CountryIdentification> imple
 	}
 	
 	@Override
-	public Object getComponent() {
+	public IComponent getComponent() {
 		return comboBox;
 	}
 	

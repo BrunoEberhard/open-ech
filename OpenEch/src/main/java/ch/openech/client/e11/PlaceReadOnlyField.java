@@ -5,11 +5,10 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.IComponentDelegate;
 import ch.openech.mj.toolkit.TextField;
 
 
-public class PlaceReadOnlyField implements FormField<Place>, IComponentDelegate {
+public class PlaceReadOnlyField implements FormField<Place> {
 	private final TextField textField;
 	private final String name;
 	
