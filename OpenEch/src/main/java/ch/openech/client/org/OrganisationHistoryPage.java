@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.application.HistoryPage;
+import ch.openech.mj.page.HistoryPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.resources.Resources;
