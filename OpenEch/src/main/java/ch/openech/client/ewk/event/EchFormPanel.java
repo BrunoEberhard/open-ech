@@ -3,8 +3,8 @@ package ch.openech.client.ewk.event;
 import java.util.List;
 
 import ch.openech.client.e07.CantonField;
-import ch.openech.client.e07.SwissMunicipalityField;
-import ch.openech.client.e07.SwissMunicipalityReadOnlyField;
+import ch.openech.client.e07.MunicipalityField;
+import ch.openech.client.e07.MunicipalityReadOnlyField;
 import ch.openech.client.e08.CountryField;
 import ch.openech.client.e08.CountryReadOnlyField;
 import ch.openech.client.e10.AddressField;
@@ -159,7 +159,7 @@ public class EchFormPanel<T> extends Form<T> {
 		} else if (type == CountryIdentification.class) {
 			return editable ? new CountryField(name) : new CountryReadOnlyField(name);
 		} else if (type == MunicipalityIdentification.class) {
-			return editable ? new SwissMunicipalityField(name, false) : new SwissMunicipalityReadOnlyField(name);
+			return editable ? new MunicipalityField(name, false) : new MunicipalityReadOnlyField(name);
 		} else if (type == List.class) {
 			Class<?> listClass = GenericUtils.getGenericClass(accessor.getType());
 			if (listClass == Occupation.class) {

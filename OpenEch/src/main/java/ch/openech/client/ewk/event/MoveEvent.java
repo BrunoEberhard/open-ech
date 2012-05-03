@@ -3,7 +3,7 @@ package ch.openech.client.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.e07.SwissMunicipalityField;
+import ch.openech.client.e07.MunicipalityField;
 import ch.openech.client.e10.AddressField;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
@@ -33,7 +33,7 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 		formPanel.line(MED.householdID);
 		formPanel.area(new AddressField(MED.mailAddress, true, false, false));
 		formPanel.line(MED.typeOfHousehold);
-		formPanel.area(new SwissMunicipalityField(MED.reportingMunicipality, true));
+		formPanel.area(new MunicipalityField(MED.reportingMunicipality, true));
 	}
 
 	@Override

@@ -7,11 +7,11 @@ import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 
-public class SwissMunicipalityReadOnlyField implements FormField<MunicipalityIdentification> {
+public class MunicipalityReadOnlyField implements FormField<MunicipalityIdentification> {
 	private final String name;
 	private final TextField textField;
 
-	public SwissMunicipalityReadOnlyField(Object key) {
+	public MunicipalityReadOnlyField(Object key) {
 		this.name = Constants.getConstant(key);
 		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 	}

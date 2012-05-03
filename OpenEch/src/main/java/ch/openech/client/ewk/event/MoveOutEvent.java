@@ -3,7 +3,7 @@ package ch.openech.client.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.e07.SwissMunicipalityField;
+import ch.openech.client.e07.MunicipalityField;
 import ch.openech.client.ewk.event.MoveOutEvent.MoveOutData;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
@@ -44,7 +44,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 	@Override
 	protected void fillForm(Form<MoveOutData> formPanel) {
 		formPanel.line(MOD.departureDate);
-		formPanel.line(new SwissMunicipalityField(MOD.reportingMunicipality, true));
+		formPanel.line(new MunicipalityField(MOD.reportingMunicipality, true));
 		formPanel.line(MOD.goesTo);
 	}
 	

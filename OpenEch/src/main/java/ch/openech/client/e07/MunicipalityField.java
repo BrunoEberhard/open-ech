@@ -14,15 +14,15 @@ import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.read.StaxEch0071;
 
-public class SwissMunicipalityField extends AbstractEditField<MunicipalityIdentification> implements DemoEnabled {
+public class MunicipalityField extends AbstractEditField<MunicipalityIdentification> implements DemoEnabled {
 	private final List<MunicipalityIdentification> municipalities;
 	private final ComboBox<MunicipalityIdentification> comboBox;
 
-	public SwissMunicipalityField(boolean allowFederalRegister) {
+	public MunicipalityField(boolean allowFederalRegister) {
 		this(null, allowFederalRegister);
 	}
 	
-	public SwissMunicipalityField(Object key, boolean allowFederalRegister) {
+	public MunicipalityField(Object key, boolean allowFederalRegister) {
 		super(Constants.getConstant(key), true);
 		
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());

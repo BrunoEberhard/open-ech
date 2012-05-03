@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.swing.Action;
 
-import ch.openech.client.e07.SwissMunicipalityField;
+import ch.openech.client.e07.MunicipalityField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.MunicipalityIdentification;
@@ -43,7 +43,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 		@Override
 		public IForm<Residence> createForm() {
 			Form<Residence> form = new EchFormPanel<Residence>(Residence.class);
-			form.line(new SwissMunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
+			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
 		}
 
@@ -69,7 +69,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 		@Override
 		public IForm<Residence> createForm() {
 			Form<Residence> form = new EchFormPanel<Residence>(Residence.class);
-			form.line(new SwissMunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
+			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
 		}
 
