@@ -9,7 +9,6 @@ import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
@@ -50,10 +49,6 @@ public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<O
 		return organisation;
 	}
 	
-	@Override
-	public void validate(Organisation object, List<ValidationMessage> resultList) {
-	}
-
 	@Override
 	public boolean save(Organisation organisation) {
 		String xml;

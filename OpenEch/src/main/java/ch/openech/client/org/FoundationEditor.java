@@ -8,7 +8,6 @@ import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
@@ -35,10 +34,6 @@ public class FoundationEditor extends XmlEditor<Organisation> implements XmlResu
 	@Override
 	public Organisation newInstance() {
 		return MoveInEditor.newInstance(context);
-	}
-
-	@Override
-	public void validate(Organisation object, List<ValidationMessage> resultList) {
 	}
 
 	@Override

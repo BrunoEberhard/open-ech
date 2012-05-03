@@ -11,7 +11,6 @@ import ch.openech.client.ewk.XmlEditor;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.tpn.ThirdPartyMove;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.read.StaxEch0046;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0046;
@@ -139,9 +138,4 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 		return thirdPartyMove;
 	}
 
-	@Override
-	public void validate(ThirdPartyMove object, List<ValidationMessage> resultList) {
-		// nothing to do
-	}
-	
 }

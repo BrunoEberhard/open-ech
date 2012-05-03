@@ -38,11 +38,6 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		return 1;
 	}
 
-	@Override
-	public void validate(T object, List<ValidationMessage> resultList) {
-		// to be overwritten
-	}
-
 	public abstract List<String> getXml(T object) throws Exception;
 	
 	public void generateSedexOutput(T object) throws Exception {

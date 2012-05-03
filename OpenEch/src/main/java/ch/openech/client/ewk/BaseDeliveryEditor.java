@@ -7,7 +7,6 @@ import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
@@ -40,12 +39,6 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 		// sonst noch was?
 		return person;
 	}
-
-	@Override
-	public void validate(Person object, List<ValidationMessage> resultList) {
-		// nothing special to validate
-	}
-	
 
 	@Override
 	public boolean save(Person person) {

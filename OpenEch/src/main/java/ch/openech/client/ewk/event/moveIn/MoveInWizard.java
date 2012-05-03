@@ -24,7 +24,6 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -166,11 +165,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			}
 			return wizardData.persons.get(personIndex);
 		}
-
-		@Override
-		protected void validate(Person object, List<ValidationMessage> resultList) {
-			// nothing special to validate
-		}
 	}
 	
 	private class MoveInNextPersonWizardPage extends WizardPage<MoveInNextPerson> {
@@ -241,12 +235,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		public WizardPage<?> getPreviousPage() {
 			return moveInPersonWizardPage;
 		}
-
-		@Override
-		protected void validate(MoveInNextPerson object, List<ValidationMessage> resultList) {
-			// nothing special to validate
-		}
-
 	}
 	
 	private Person createNextPerson(MoveInNextPerson moveInNextPerson) {

@@ -16,8 +16,8 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -55,10 +55,6 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 		}
 
 		@Override
-		public void validate(Residence object, List<ValidationMessage> resultList) {
-		}
-
-		@Override
 		public void setPart(Residence residence, Residence value) {
 			setObject(value);
 		}
@@ -78,10 +74,6 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 			Residence residence = new Residence();
 			residence.reportingMunicipality = ResidenceField.this.getObject().reportingMunicipality;
 			return residence;
-		}
-
-		@Override
-		public void validate(Residence object, List<ValidationMessage> resultList) {
 		}
 
 		@Override
