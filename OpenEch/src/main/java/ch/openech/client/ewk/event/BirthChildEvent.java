@@ -52,7 +52,7 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 	}
 	
 	@Override
-	public boolean save(Person object) {
+	public boolean save(Person object) throws Exception {
 		setFollowLink(Page.link(PersonViewPage.class, getEchNamespaceContext().getVersion(), object.getId()));
 		return super.save(object);
 	}
