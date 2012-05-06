@@ -27,6 +27,7 @@ public class DbPersonCrudTest {
 		address.street = "Grütstrasse";
 		address.mrMrs = "1";
 		address.houseNumber.houseNumber = "10";
+		address.town = "Jona";
 		address.country = "CH";
 		
 		int id = addressTable.getOrCreateId(address);
@@ -124,6 +125,7 @@ public class DbPersonCrudTest {
 		Address address = new Address();
 		address.addressLine1 = "Ne Linie";
 		address.houseNumber.dwellingNumber = "5";
+		address.town = "Jona";
 		occupation2.placeOfEmployer = address;
 		
 		person.occupation.add(occupation2);
@@ -161,6 +163,7 @@ public class DbPersonCrudTest {
 		Address address = new Address();
 		address.addressLine1 = "Ne Linie";
 		address.houseNumber.dwellingNumber = "5";
+		address.town = "Jona";
 		occupation2.placeOfEmployer = address;
 		
 		person.occupation.add(occupation2);
@@ -196,6 +199,7 @@ public class DbPersonCrudTest {
 		Address address = new Address();
 		address.addressLine1 = "Ne Linie";
 		address.houseNumber.dwellingNumber = "5";
+		address.town = "Jona";
 		occupation2.placeOfEmployer = address;
 		
 		person.occupation.add(occupation2);
