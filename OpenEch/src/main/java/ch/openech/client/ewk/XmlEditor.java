@@ -63,15 +63,10 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	}
 
 	@Override
-	public boolean save(T object) {
-		List<String> xmls;
-		try {
-			xmls = getXml(object);
-			send(xmls);
-			return true;
-		} catch (Exception e) {
-			throw new RuntimeException("Konnte XML nicht erstellen", e);
-		}
+	public boolean save(T object) throws Exception {
+		List<String> xmls = getXml(object);
+		send(xmls);
+		return true;
 	}
 
 	public static boolean send(final List<String> xmls) {
