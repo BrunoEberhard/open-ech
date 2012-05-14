@@ -18,7 +18,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.mj.db.model.Format;
-import ch.openech.mj.db.model.IntegerFormat;
+import ch.openech.mj.db.model.NumberFormat;
 import ch.openech.mj.db.model.PlainFormat;
 
 public class EchNamespaceContext {
@@ -210,7 +210,7 @@ public class EchNamespaceContext {
 						System.out.println("Warnung: Grösse nicht bestimmbar: " + name);
 						size = 10;
 					}
-					simpleTypes.put(name, new IntegerFormat(Integer.class, size, false));
+					simpleTypes.put(name, new NumberFormat(Integer.class, size, false));
 				} else {
 					simpleTypes.put(name, new PlainFormat(size));
 				}
