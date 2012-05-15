@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.io.InputStream;
 
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.swing.FrameManager;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0020;
@@ -44,7 +43,8 @@ public class ImportAllAction extends ResourceAction {
 					ClientToolkit.getToolkit().showError(parent, "Import fehlgeschlagen\n\n" + x.getMessage());
 					x.printStackTrace();
 				} finally {
-					FrameManager.getInstance().refresh();
+					// TODO refresh über Application, nicht über FrameManager
+					// FrameManager.getInstance().refresh();
 				}
 			}
 		}.start();
