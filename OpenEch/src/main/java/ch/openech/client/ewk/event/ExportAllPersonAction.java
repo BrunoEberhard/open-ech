@@ -13,11 +13,11 @@ import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
 
-public class ExportAllAction extends ResourceAction implements ExportHandler {
+public class ExportAllPersonAction extends ResourceAction implements ExportHandler {
 	private EchNamespaceContext echNamespaceContext;
 	private Object source;
 	
-	public ExportAllAction(EchNamespaceContext echNamespaceContext) {
+	public ExportAllPersonAction(EchNamespaceContext echNamespaceContext) {
 		this.echNamespaceContext = echNamespaceContext;
 	}
 	
