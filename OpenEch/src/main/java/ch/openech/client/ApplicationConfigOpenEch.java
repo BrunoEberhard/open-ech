@@ -76,9 +76,6 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 			}
 			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
 			imprt.add(new ImportAllPersonAction());
-			if (isDevMode) {
-				imprt.add(new GeneratePersonAction(ewkNamespaceContext));
-			}
 		}
 //		
 		if (orgNamespaceContext != null) {
@@ -97,6 +94,11 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 //		if (tpnNamespaceContext != null) {
 ////			niu.add(new EditorDialogAction(new TpnMoveEditor(MoveDirection.IN.toString())));
 //		}
+
+		if (isDevMode && (ewkNamespaceContext != null || orgNamespaceContext != null)) {
+			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
+			imprt.add(new GeneratePersonAction(ewkNamespaceContext, orgNamespaceContext));
+		}
 		
 		ActionGroup window = actionGroup.getOrCreateActionGroup(ActionGroup.WINDOW);
 		window.addSeparator();

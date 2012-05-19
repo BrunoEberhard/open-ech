@@ -10,18 +10,21 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.common.Plz;
+import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameGenerator;
+import ch.openech.mj.autofill.OrganisationNameGenerator;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.value.PropertyAccessor;
 import ch.openech.server.EchServer;
 import ch.openech.util.PlzImport;
 import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.write.WriterEch0020;
+import ch.openech.xml.write.WriterEch0148;
 
 public class DataGenerator {
 
@@ -189,6 +192,35 @@ public class DataGenerator {
 		}
 		
 		return address;
+	}
+	
+	public static Organisation organisation() {
+		Organisation organisation = new Organisation();
+		organisation.organisationName = OrganisationNameGenerator.getName();
+		if (organisation.organisationName.length() > 60) {
+			organisation.organisationAdditionalName = organisation.organisationName.substring(60);
+			organisation.organisationName = organisation.organisationName.substring(0, 60);
+		}
+		organisation.uid = "ADM323423421";
+		organisation.foundationDate = DateField.generateRandom();
+		organisation.arrivalDate = DateField.generateRandom();
+		organisation.reportingMunicipality = createJona();
+		organisation.businessAddress = dwellingAddress();
+		
+		if (Math.random() < .2) {
+			organisation.comesFrom = place();
+		}
+
+		return organisation;
+	}
+	
+	public static void generateOrganisation(WriterEch0148 writerEch0148) {
+		try {
+			String xml = writerEch0148.moveIn(organisation());
+			EchServer.getInstance().processOrg(xml);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
