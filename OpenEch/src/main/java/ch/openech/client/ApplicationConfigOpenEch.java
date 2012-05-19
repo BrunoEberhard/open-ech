@@ -4,13 +4,16 @@ import java.util.ResourceBundle;
 
 import ch.openech.client.ewk.BaseDeliveryEditor;
 import ch.openech.client.ewk.SearchPersonPage;
-import ch.openech.client.ewk.event.ExportAllAction;
-import ch.openech.client.ewk.event.ImportAllAction;
-import ch.openech.client.ewk.event.KeyDeliveryAction;
+import ch.openech.client.ewk.event.ExportAllPersonAction;
+import ch.openech.client.ewk.event.ImportAllPersonAction;
+import ch.openech.client.ewk.event.KeyDeliveryPersonAction;
 import ch.openech.client.ewk.event.birth.BirthEvent;
 import ch.openech.client.ewk.event.moveIn.MoveInWizard;
 import ch.openech.client.org.BaseDeliveryOrganisationEditor;
+import ch.openech.client.org.ExportAllOrganisationAction;
 import ch.openech.client.org.FoundationEditor;
+import ch.openech.client.org.ImportAllOrganisationAction;
+import ch.openech.client.org.KeyDeliveryOrganisationAction;
 import ch.openech.client.org.MoveInEditor;
 import ch.openech.client.org.SearchOrganisationPage;
 import ch.openech.client.preferences.OpenEchPreferences;
@@ -66,13 +69,13 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 			niu.add(new EditorPageAction(BaseDeliveryEditor.class, ewkNamespaceContext.getVersion()));
 			
 			ActionGroup export = file.getOrCreateActionGroup(ActionGroup.EXPORT);
-			export.add(new ExportAllAction(ewkNamespaceContext));
+			export.add(new ExportAllPersonAction(ewkNamespaceContext));
 //			export.add(new ExportAllDialogAction(ewkNamespaceContext));
 			if (ewkNamespaceContext.keyDeliveryPossible()) {
-				export.add(new KeyDeliveryAction(ewkNamespaceContext));
+				export.add(new KeyDeliveryPersonAction(ewkNamespaceContext));
 			}
 			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
-			imprt.add(new ImportAllAction());
+			imprt.add(new ImportAllPersonAction());
 			if (isDevMode) {
 				imprt.add(new GeneratePersonAction(ewkNamespaceContext));
 			}
@@ -82,6 +85,13 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 			niu.add(new EditorPageAction(FoundationEditor.class, orgNamespaceContext.getVersion()));
 			niu.add(new EditorPageAction(MoveInEditor.class, orgNamespaceContext.getVersion()));
 			niu.add(new EditorPageAction(BaseDeliveryOrganisationEditor.class, orgNamespaceContext.getVersion()));
+
+			ActionGroup export = file.getOrCreateActionGroup(ActionGroup.EXPORT);
+			export.add(new ExportAllOrganisationAction(orgNamespaceContext));
+			export.add(new KeyDeliveryOrganisationAction(orgNamespaceContext));
+
+			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
+			imprt.add(new ImportAllOrganisationAction());
 		}
 //		
 //		if (tpnNamespaceContext != null) {

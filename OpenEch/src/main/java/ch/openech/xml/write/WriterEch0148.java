@@ -1,6 +1,46 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
+import static ch.openech.dm.XmlConstants.BUSINESS_ADDRESS;
+import static ch.openech.dm.XmlConstants.CHANGE_LEGAL_FORM;
+import static ch.openech.dm.XmlConstants.CHANGE_ORGANISATION_NAME;
+import static ch.openech.dm.XmlConstants.CHANGE_REPORTING;
+import static ch.openech.dm.XmlConstants.COMES_FROM;
+import static ch.openech.dm.XmlConstants.CONTACT;
+import static ch.openech.dm.XmlConstants.CORRECT_CONTACT;
+import static ch.openech.dm.XmlConstants.CORRECT_FOUNDATION;
+import static ch.openech.dm.XmlConstants.CORRECT_LANGUAGE_OF_CORRESPONDANCE;
+import static ch.openech.dm.XmlConstants.CORRECT_LEGAL_FORM;
+import static ch.openech.dm.XmlConstants.CORRECT_LIQUIDATION;
+import static ch.openech.dm.XmlConstants.CORRECT_ORGANISATION_NAME;
+import static ch.openech.dm.XmlConstants.CORRECT_REPORTING;
+import static ch.openech.dm.XmlConstants.CORRECT_UID_BRANCHE;
+import static ch.openech.dm.XmlConstants.DEPARTURE_DATE;
+import static ch.openech.dm.XmlConstants.FOUNDATION;
+import static ch.openech.dm.XmlConstants.GOES_TO;
+import static ch.openech.dm.XmlConstants.INLIQUIDATION;
+import static ch.openech.dm.XmlConstants.KEY_EXCHANGE;
+import static ch.openech.dm.XmlConstants.LANGUAGE_OF_CORRESPONDANCE;
+import static ch.openech.dm.XmlConstants.LEGAL_FORM;
+import static ch.openech.dm.XmlConstants.LIQUIDATION;
+import static ch.openech.dm.XmlConstants.LIQUIDATION_DATE;
+import static ch.openech.dm.XmlConstants.LIQUIDATION_ENTRY_DATE;
+import static ch.openech.dm.XmlConstants.LIQUIDATION_REASON;
+import static ch.openech.dm.XmlConstants.MOVE;
+import static ch.openech.dm.XmlConstants.MOVE_IN;
+import static ch.openech.dm.XmlConstants.MOVE_OUT;
+import static ch.openech.dm.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
+import static ch.openech.dm.XmlConstants.MOVE_REPORTING_ADDRESS;
+import static ch.openech.dm.XmlConstants.NOGA_CODE;
+import static ch.openech.dm.XmlConstants.NUMBER_OF_ORGANISATIONS;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ADDITIONAL_NAME;
+import static ch.openech.dm.XmlConstants.ORGANISATION_BASE_DELIVERY;
+import static ch.openech.dm.XmlConstants.ORGANISATION_LEGAL_NAME;
+import static ch.openech.dm.XmlConstants.ORGANISATION_NAME;
+import static ch.openech.dm.XmlConstants.REPORTED_ORGANISATION;
+import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.TYP_OF_RESIDENCE;
+import static ch.openech.dm.XmlConstants.UID_BRANCHE_TEXT;
 
 import java.util.List;
 
@@ -41,21 +81,31 @@ public class WriterEch0148 extends DeliveryWriter {
 	
 	// 
 	
+	public WriterElement organisationBaseDelivery(WriterElement element) throws Exception {
+		WriterElement organisationBaseDelivery = element.create(URI, ORGANISATION_BASE_DELIVERY);
+		return organisationBaseDelivery;
+	}
+	
 	public String organisationBaseDelivery(List<Organisation> organisations) throws Exception {
-		WriterElement organisationBaseDelivery = delivery().create(URI, ORGANISATION_BASE_DELIVERY);
+		WriterElement organisationBaseDelivery = organisationBaseDelivery(delivery());
 		for (Organisation organisation : organisations) {
 			ech98.reportedOrganisationType(organisationBaseDelivery, REPORTED_ORGANISATION, organisation);
 		}
-		organisationBaseDelivery.text(NUMBER_OF_ORGANISATIONS, String.valueOf(organisations.size()));
+		numberOfOrganisations(organisationBaseDelivery, organisations.size());
 		return result();
 	}
 
-	public String keyExchange(List<Organisation> organisations) throws Exception {
-		WriterElement organisationBaseDelivery = delivery().create(URI, KEY_EXCHANGE);
-		for (Organisation organisation : organisations) {
-			ech97.organisationIdentification(organisationBaseDelivery, organisation);
-		}
-		return result();
+	public void numberOfOrganisations(WriterElement organisationBaseDelivery, int number)
+			throws Exception {
+		organisationBaseDelivery.text(NUMBER_OF_ORGANISATIONS, String.valueOf(number));
+	}
+
+	public WriterElement keyExchange(WriterElement element) throws Exception {
+		WriterElement keyExhange = element.create(URI, KEY_EXCHANGE);
+		return keyExhange;
+//		for (Organisation organisation : organisations) {
+//			ech97.organisationIdentification(organisationBaseDelivery, organisation);
+//		}
 	}
 
 	// Elemente für alle Events
