@@ -8,9 +8,9 @@ import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0020;
 
-public class ImportAllAction extends ResourceAction {
+public class ImportAllPersonAction extends ResourceAction {
 
-	public ImportAllAction() {
+	public ImportAllPersonAction() {
 	}
 
 	@Override
