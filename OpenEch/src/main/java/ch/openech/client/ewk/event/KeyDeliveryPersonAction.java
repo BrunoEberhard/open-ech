@@ -5,9 +5,9 @@ import ch.openech.xml.write.EchNamespaceContext;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
 
-public class KeyDeliveryAction extends ExportAllAction {
+public class KeyDeliveryPersonAction extends ExportAllPersonAction {
 	
-	public KeyDeliveryAction(EchNamespaceContext echNamespaceContext) {
+	public KeyDeliveryPersonAction(EchNamespaceContext echNamespaceContext) {
 		super(echNamespaceContext);
 	}
 
