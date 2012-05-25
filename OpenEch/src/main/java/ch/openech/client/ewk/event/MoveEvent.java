@@ -5,18 +5,19 @@ import java.util.List;
 
 import ch.openech.client.e07.MunicipalityField;
 import ch.openech.client.e10.AddressField;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 	
-	public MoveEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public MoveEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	public static class MoveEventData extends DwellingAddress {

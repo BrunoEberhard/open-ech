@@ -9,14 +9,14 @@ import ch.openech.dm.person.PersonExtendedInformation;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0101;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0101;
 
 public class PersonExtendedInformationXmlTest {
 
 	@Test
 	public void RoundTripTest() throws Exception {
-		WriterEch0101 writer = new WriterEch0101(EchNamespaceContext.getNamespaceContext(101, "1.0"));
+		WriterEch0101 writer = new WriterEch0101(EchSchema.getNamespaceContext(101, "1.0"));
 	
 		PersonExtendedInformation information = new PersonExtendedInformation();
 		information.armedForcesLiability = "1";

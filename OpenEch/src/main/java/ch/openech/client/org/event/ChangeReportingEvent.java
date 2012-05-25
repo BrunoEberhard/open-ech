@@ -3,15 +3,16 @@ package ch.openech.client.org.event;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
 public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> {
 	
-	public ChangeReportingEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public ChangeReportingEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override

@@ -11,15 +11,15 @@ import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class ForeignField extends ObjectFlowField<Foreign> implements Validatable, DependingOnFieldAbove<Nationality> {
-	private final EchNamespaceContext namespaceContext;
+	private final EchSchema echSchema;
 	private boolean swiss = true;
 	
-	public ForeignField(Object key, EchNamespaceContext namespaceContext, boolean editable) {
+	public ForeignField(Object key, EchSchema echSchema, boolean editable) {
 		super(key, editable);
-		this.namespaceContext = namespaceContext;
+		this.echSchema = echSchema;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ForeignField extends ObjectFlowField<Foreign> implements Validatabl
 	
 	@Override
 	public IForm<Foreign> createFormPanel() {
-		return new ForeignPanel(namespaceContext);
+		return new ForeignPanel(echSchema);
 	}
 
 	@Override

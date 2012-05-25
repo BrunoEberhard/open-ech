@@ -11,25 +11,25 @@ import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0148;
 
 
 public class GeneratePersonAction extends EditorDialogAction {
 
-	public GeneratePersonAction(EchNamespaceContext ewkNamespaceContext, EchNamespaceContext orgNamespaceContext) {
+	public GeneratePersonAction(EchSchema ewkNamespaceContext, EchSchema orgNamespaceContext) {
 		super(new GeneratePersonEditor(ewkNamespaceContext, orgNamespaceContext));
 	}
 	
 	public static class GeneratePersonEditor extends Editor<GeneratePersonData> {
 
-		private final EchNamespaceContext ewkNamespaceContext;
-		private final EchNamespaceContext orgNamespaceContext;
+		private final EchSchema ewkNamespaceContext;
+		private final EchSchema orgNamespaceContext;
 		private int count;
 		private int saveProgress;
 		
-		public GeneratePersonEditor(EchNamespaceContext ewkNamespaceContext, EchNamespaceContext orgNamespaceContext) {
+		public GeneratePersonEditor(EchSchema ewkNamespaceContext, EchSchema orgNamespaceContext) {
 			this.ewkNamespaceContext = ewkNamespaceContext;
 			this.orgNamespaceContext = orgNamespaceContext;
 		}

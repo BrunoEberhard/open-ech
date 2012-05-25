@@ -4,15 +4,16 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.org.event.OrganisationEventEditor;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectLegalFormEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectLegalFormEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public CorrectLegalFormEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override

@@ -15,6 +15,8 @@ import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
 
 public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements Validatable, DependingOnFieldAbove<Nationality>, DemoEnabled {
@@ -44,6 +46,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		@Override
 		protected PlaceOfOrigin getPart(List<PlaceOfOrigin> object) {
 			PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
+			PageContext context = PageContextHelper.findContext(visual);
 			OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 			placeOfOrigin.canton = preferences.preferencesDefaultsData.cantonAbbreviation;
 			placeOfOrigin.reasonOfAcquisition = "1";

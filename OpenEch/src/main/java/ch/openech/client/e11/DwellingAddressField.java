@@ -6,14 +6,14 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class DwellingAddressField extends ObjectFlowField<DwellingAddress> implements DemoEnabled {
-	private final EchNamespaceContext namespaceContext;
+	private final EchSchema echSchema;
 	
-	public DwellingAddressField(Object key, EchNamespaceContext namespaceContext, boolean editable) {
+	public DwellingAddressField(Object key, EchSchema echSchema, boolean editable) {
 		super(key, editable);
-		this.namespaceContext = namespaceContext;
+		this.echSchema = echSchema;
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 	
 	@Override
 	public IForm<DwellingAddress> createFormPanel() {
-		return new DwellingAddressPanel(namespaceContext);
+		return new DwellingAddressPanel(echSchema);
 	}
 
 	//
@@ -37,7 +37,7 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 	@Override
 	public void fillWithDemoData() {
 		DwellingAddress dwellingAddress = DataGenerator.dwellingAddress();
-		if (namespaceContext.addressesAreBusiness()) {
+		if (echSchema.addressesAreBusiness()) {
 			// Kollektivhaushalt oder ähnliches passt auch bei Unternehmen nicht wirklich
 			dwellingAddress.typeOfHousehold = null;
 		}

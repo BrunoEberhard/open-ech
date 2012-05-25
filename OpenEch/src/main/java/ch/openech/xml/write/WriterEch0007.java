@@ -9,7 +9,7 @@ public class WriterEch0007 {
 	public final String URI;
 	public final boolean HAS_TYPO;
 	
-	public WriterEch0007(EchNamespaceContext context) {
+	public WriterEch0007(EchSchema context) {
 		URI = context.getNamespaceURI(7);
 		HAS_TYPO = EchNamespaceUtil.extractSchemaMajorVersion(URI) < 4;
 	}

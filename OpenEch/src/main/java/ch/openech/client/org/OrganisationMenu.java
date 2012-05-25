@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.Action;
 
+import page.OrganisationHistoryPage;
+
 import ch.openech.client.org.event.ChangeLegalFormEvent;
 import ch.openech.client.org.event.ChangeOrganisationNameEvent;
 import ch.openech.client.org.event.ChangeReportingEvent;
@@ -23,6 +25,7 @@ import ch.openech.client.org.event.correct.CorrectLiquidationEvent;
 import ch.openech.client.org.event.correct.CorrectOrganisationNameEvent;
 import ch.openech.client.org.event.correct.CorrectReportingEvent;
 import ch.openech.client.org.event.correct.CorrectUidBrancheEvent;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.page.ActionGroup;
@@ -31,12 +34,12 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.SeparatorAction;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.BusinessRule;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class OrganisationMenu {
 
-	private final EchNamespaceContext echNamespaceContext;
-	private PageContext pageContext;
+	private final EchSchema echSchema;
+	private final PageContext context;
 	private Organisation organisation;
 	
 	private HistoryAction showHistory;
@@ -47,15 +50,14 @@ public class OrganisationMenu {
 	
 	private final List<Action> correctEditors = new ArrayList<Action>();
 
-	public OrganisationMenu(EchNamespaceContext echNamespaceContext) {
-		this.echNamespaceContext = echNamespaceContext;
+	public OrganisationMenu(PageContext pageContext, EchSchema echSchema) {
+		this.echSchema = echSchema;
+		this.context = pageContext;
 		createMenuItems();
 	}
 	
-	public void fillActionGroup(PageContext pageContext, ActionGroup actionGroup) {
+	public void fillActionGroup(ActionGroup actionGroup) {
 		if (organisation == null) return;
-		
-		this.pageContext = pageContext;
 		
 		ActionGroup organisationActionGroup = actionGroup.getOrCreateActionGroup(ActionGroup.OBJECT);
 		organisationActionGroup.putValue(Action.NAME, "Organisation");
@@ -115,7 +117,7 @@ public class OrganisationMenu {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pageContext.show(Page.link(OrganisationHistoryPage.class, echNamespaceContext.getVersion(), organisation.getId()));
+			context.show(Page.link(OrganisationHistoryPage.class, echSchema.getVersion(), organisation.getId()));
 		}
 		
 		public void setOrganisation(Organisation organisation) {
@@ -125,29 +127,33 @@ public class OrganisationMenu {
 	}	
 
 	private void createMenuItems() {
-		move = new OrganisationEditMenuAction(new MoveEvent(echNamespaceContext));
-		moveOut = new OrganisationEditMenuAction(new MoveOutEvent(echNamespaceContext));
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 
-		contact = new OrganisationEditMenuAction(new ContactEvent(echNamespaceContext));
-		changeOrganisationName = new OrganisationEditMenuAction(new ChangeOrganisationNameEvent(echNamespaceContext));
-		changeLegalForm = new OrganisationEditMenuAction(new ChangeLegalFormEvent(echNamespaceContext));
-		changeReporting = new OrganisationEditMenuAction(new ChangeReportingEvent(echNamespaceContext));
+		move = new OrganisationEditMenuAction(new MoveEvent(echSchema, preferences));
+		moveOut = new OrganisationEditMenuAction(new MoveOutEvent(echSchema, preferences));
 
-		inLiquidation = new OrganisationEditMenuAction(new InLiquidationEvent(echNamespaceContext));
-		liquidation = new OrganisationEditMenuAction(new LiquidationEvent(echNamespaceContext));
+		contact = new OrganisationEditMenuAction(new ContactEvent(echSchema, preferences));
+		changeOrganisationName = new OrganisationEditMenuAction(new ChangeOrganisationNameEvent(echSchema, preferences));
+		changeLegalForm = new OrganisationEditMenuAction(new ChangeLegalFormEvent(echSchema, preferences));
+		changeReporting = new OrganisationEditMenuAction(new ChangeReportingEvent(echSchema, preferences));
+
+		inLiquidation = new OrganisationEditMenuAction(new InLiquidationEvent(echSchema, preferences));
+		liquidation = new OrganisationEditMenuAction(new LiquidationEvent(echSchema, preferences));
 		
 		showHistory = new HistoryAction();
 	}
 
 	private void fillCorrectionActionList() {
-		addCorrectAction(new CorrectOrganisationNameEvent(echNamespaceContext));
-		addCorrectAction(new CorrectLegalFormEvent(echNamespaceContext));
-		addCorrectAction(new CorrectUidBrancheEvent(echNamespaceContext));
-		addCorrectAction(new CorrectFoundationEvent(echNamespaceContext));
-		addCorrectAction(new CorrectLiquidationEvent(echNamespaceContext));
-		addCorrectAction(new CorrectContactEvent(echNamespaceContext));
-		addCorrectAction(new CorrectLanguageOfCorrespondanceEvent(echNamespaceContext));
-		addCorrectAction(new CorrectReportingEvent(echNamespaceContext));
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+
+		addCorrectAction(new CorrectOrganisationNameEvent(echSchema, preferences));
+		addCorrectAction(new CorrectLegalFormEvent(echSchema, preferences));
+		addCorrectAction(new CorrectUidBrancheEvent(echSchema, preferences));
+		addCorrectAction(new CorrectFoundationEvent(echSchema, preferences));
+		addCorrectAction(new CorrectLiquidationEvent(echSchema, preferences));
+		addCorrectAction(new CorrectContactEvent(echSchema, preferences));
+		addCorrectAction(new CorrectLanguageOfCorrespondanceEvent(echSchema, preferences));
+		addCorrectAction(new CorrectReportingEvent(echSchema, preferences));
 	}
 	
 	private void addCorrectAction(OrganisationEventEditor<?> editor) {

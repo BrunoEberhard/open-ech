@@ -35,7 +35,7 @@ import ch.openech.mj.swing.FrameManager;
 import ch.openech.mj.swing.toolkit.SwingClientToolkit;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class PersonPanel extends EchFormPanel<Person>  {
 
@@ -45,15 +45,15 @@ public class PersonPanel extends EchFormPanel<Person>  {
 
 	private final PersonPanelType type;
 	
-	public PersonPanel(PersonPanelType type, EchNamespaceContext context) {
-		super(context, PersonPanelType.DISPLAY != type, 4);
+	public PersonPanel(PersonPanelType type, EchSchema echSchema) {
+		super(echSchema, PersonPanelType.DISPLAY != type, 4);
 		this.type = type;
 		createContent();
 	}
 
 	private boolean extensionAvailable() {
 		// TODO remove == null test
-		return getNamespaceContext() == null || getNamespaceContext().extensionAvailable();
+		return echSchema == null || echSchema.extensionAvailable();
 	}
 	
 	private void createContent() {
@@ -104,7 +104,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 					PERSON.cancelationReason, PERSON.callName);
 		}
 
-		if (getNamespaceContext().separationTillAvailable()) {
+		if (echSchema.separationTillAvailable()) {
 			if (!correctName) {
 				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
 						PERSON.separation.separationTill, PERSON.languageOfCorrespondance);
@@ -198,7 +198,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		case CHANGE_RESIDENCE_TYPE:
 			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
 			area(PERSON.dwellingAddress);
-			area(new RelationField(PERSON.relation, getNamespaceContext(), true, editable));
+			area(new RelationField(PERSON.relation, echSchema, true, editable));
 			area(PERSON.occupation);
 			break;
 		case CORRECT_PERSON:
@@ -211,8 +211,8 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			break;
 		case BIRTH:
 			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
-			PartnerField mother = new PartnerField("mother", getNamespaceContext());
-			PartnerField father = new PartnerField("father", getNamespaceContext());
+			PartnerField mother = new PartnerField("mother", echSchema);
+			PartnerField father = new PartnerField("father", echSchema);
 			// Das ist zur Zeit nicht mehr möglich, das Mutter - Feld müsste oberhalb des Namensfeld sein
 			// mother.setConnectedNameField((TextField) getField(PERSON_IDENTIFICATION.officialName));
 			area(mother);
@@ -220,7 +220,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			break;
 		default:
 			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign, PERSON.dwellingAddress, PERSON.contactPerson);
-			RelationField relationField = new RelationField(PERSON.relation, getNamespaceContext(), true, editable);
+			RelationField relationField = new RelationField(PERSON.relation, echSchema, true, editable);
 			if (extensionAvailable()) {
 				area(PERSON.occupation, relationField, PERSON.personExtendedInformation, PERSON.contact);
 			} else {

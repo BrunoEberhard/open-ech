@@ -1,39 +1,33 @@
-package ch.openech.client.ewk;
+package editor;
 
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.XmlEditor;
+import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.page.PageContext;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
-import ch.openech.xml.write.WriterEch0020;
+import ch.openech.xml.write.EchSchema;
 
 
 public class BaseDeliveryEditor extends XmlEditor<Person> {
-	private final WriterEch0020 writerEch0020;
 	
-	public BaseDeliveryEditor(String version) {
-		super(EchNamespaceContext.getNamespaceContext(20, version));
-		this.writerEch0020 = new WriterEch0020(getEchNamespaceContext());
+	public BaseDeliveryEditor(PageContext context, String version) {
+		super(EchSchema.getNamespaceContext(20, version), (OpenEchPreferences) context.getApplicationContext().getPreferences() );
 	}
 	
-	public BaseDeliveryEditor(EchNamespaceContext echNamespaceContext) {
-		super(echNamespaceContext);
-		this.writerEch0020 = new WriterEch0020(echNamespaceContext);
-	}
-
 	@Override
 	public IForm<Person> createForm() {
-		return new PersonPanel(PersonPanelType.BASE_DELIVERY, getEchNamespaceContext());
+		return new PersonPanel(PersonPanelType.BASE_DELIVERY, echSchema);
 	}
 
 	@Override
 	public Person newInstance() {
 		Person person = new Person();
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 		person.religion = preferences.preferencesDefaultsData.religion;
 		person.residence.reportingMunicipality = preferences.preferencesDefaultsData.residence;
 		// sonst noch was?
@@ -54,7 +48,7 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 	
 	@Override
 	public List<String> getXml(Person person) throws Exception {
-		return Collections.singletonList(writerEch0020.person(person));
+		return Collections.singletonList(echSchema.getWriterEch0020().person(person));
 	}
 
 }

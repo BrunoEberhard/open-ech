@@ -2,23 +2,25 @@ package ch.openech.client.ewk.event;
 
 import java.util.List;
 
-import ch.openech.client.ewk.PersonViewPage;
-import ch.openech.client.ewk.XmlEditor;
+import page.PersonViewPage;
+
+import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.util.GenericUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlResult<T> {
 
 	private Person person;
 	
-	protected PersonEventEditor(EchNamespaceContext echNamespaceContext) {
-		super(echNamespaceContext);
+	protected PersonEventEditor(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 	
 	@Override
@@ -26,7 +28,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 		@SuppressWarnings("unchecked")
 		Class<T> genericClass = (Class<T>) GenericUtils.getGenericClass(getClass());
 
-		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, getEchNamespaceContext(), getFormColumns());
+		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, echSchema, getFormColumns());
 		fillForm(formPanel);
 		return formPanel;
 	}
@@ -35,7 +37,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 
 	public void setPerson(Person person) {
 		this.person = person;
-		setFollowLink(Page.link(PersonViewPage.class, getEchNamespaceContext().getVersion(), person.getId()));
+		setFollowLink(Page.link(PersonViewPage.class, echSchema.getVersion(), person.getId()));
 	}
 	
 	public Person getPerson() {
@@ -44,7 +46,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 	
 	@Override
 	public List<String> getXml(T object) throws Exception {
-		return getXml(getPerson(), object, getEchNamespaceContext().getWriterEch0020());
+		return getXml(getPerson(), object, echSchema.getWriterEch0020());
 	}
 	
 	protected abstract List<String> getXml(Person person, T object, WriterEch0020 writerEch0020) throws Exception;

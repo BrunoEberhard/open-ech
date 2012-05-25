@@ -9,7 +9,7 @@ public class WriterEch0108 extends DeliveryWriter {
 	public final WriterEch0098 ech98;
 	public final WriterEch0097 ech97;
 	
-	public WriterEch0108(EchNamespaceContext context) {
+	public WriterEch0108(EchSchema context) {
 		super(context);
 		
 		URI = context.getNamespaceURI(108);

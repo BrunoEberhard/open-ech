@@ -1,7 +1,7 @@
 package ch.openech.client.org;
 
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0097;
 import ch.openech.xml.write.WriterEch0098;
 import ch.openech.xml.write.WriterEch0148;
@@ -11,7 +11,7 @@ public class KeyDeliveryOrganisationAction extends ExportAllOrganisationAction {
 	
 	private final WriterEch0097 ech97;
 	
-	public KeyDeliveryOrganisationAction(EchNamespaceContext echNamespaceContext) {
+	public KeyDeliveryOrganisationAction(EchSchema echNamespaceContext) {
 		super(echNamespaceContext);
 		ech97 = new WriterEch0097(echNamespaceContext);
 	}

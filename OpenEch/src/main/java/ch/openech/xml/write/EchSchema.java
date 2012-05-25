@@ -21,7 +21,8 @@ import ch.openech.mj.db.model.Format;
 import ch.openech.mj.db.model.NumberFormat;
 import ch.openech.mj.db.model.PlainFormat;
 
-public class EchNamespaceContext {
+public class EchSchema {
+	private static Map<String, EchSchema> contexts = new HashMap<String, EchSchema>();
 
 	private final Map<Integer, String> namespaceURIs = new HashMap<Integer, String>();
 	private final Map<Integer, String> namespaceLocations = new HashMap<Integer, String>();
@@ -32,15 +33,33 @@ public class EchNamespaceContext {
 	private String openEchNamespaceLocation;
 	private final Map<String, Format> simpleTypes = new HashMap<String, Format>();
 	private WriterEch0020 writerEch0020;
+	private WriterEch0112 writerEch0112;
 	private WriterEch0148 writerEch0148;
 	
-	private EchNamespaceContext(int rootNumber, String version) {
+	private EchSchema(int rootNumber, String version) {
 		read(rootNumber, version);
 		this.rootNumber = rootNumber;
 		this.version = version;
 	}
 	
-	public void read(int rootNumber, String version) {
+	public static EchSchema getNamespaceContext(int rootNumber, String version) {
+		String location = EchNamespaceUtil.schemaLocation(rootNumber, version);
+		if (!contexts.containsKey(location)) {
+			EchSchema namespaceContext = new EchSchema(rootNumber, version);
+			try {
+				namespaceContext.read(location);
+				contexts.put(location, namespaceContext);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return contexts.get(location);
+	}
+	
+	//
+	
+	private void read(int rootNumber, String version) {
 		int pos = version.indexOf('.');
 		String major = version.substring(0, pos);
 		String minor = version.substring(pos + 1);
@@ -87,19 +106,18 @@ public class EchNamespaceContext {
 		return openEchNamespaceLocation;
 	}
 	
-	public void read(String namespaceLocation) throws XMLStreamException, IOException {
+	private void read(String namespaceLocation) throws XMLStreamException, IOException {
 		if (namespaceLocations.containsValue(namespaceLocation)) return;
-		System.out.println("Read: " + namespaceLocation);
 		registerLocation(namespaceLocation);
 		process(namespaceLocation);
 	}
 	
-	public void readOpenEch(String openEchNamespaceLocation) throws XMLStreamException, IOException {
+	private void readOpenEch(String openEchNamespaceLocation) throws XMLStreamException, IOException {
 		this.openEchNamespaceLocation = openEchNamespaceLocation;
 		process(openEchNamespaceLocation);
 	}
 	
-	public void process(String namespaceLocation) throws XMLStreamException, IOException {
+	private void process(String namespaceLocation) throws XMLStreamException, IOException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = null;
 		try {
@@ -219,24 +237,7 @@ public class EchNamespaceContext {
 		}
 	}
 	
-	//
-	
-	private static Map<String, EchNamespaceContext> contexts = new HashMap<String, EchNamespaceContext>();
-	
-	public static EchNamespaceContext getNamespaceContext(int rootNumber, String version) {
-		String location = EchNamespaceUtil.schemaLocation(rootNumber, version);
-		if (!contexts.containsKey(location)) {
-			EchNamespaceContext namespaceContext = new EchNamespaceContext(rootNumber, version);
-			try {
-				namespaceContext.read(location);
-				contexts.put(location, namespaceContext);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return contexts.get(location);
-	}
+
 	//
 	
 	public WriterEch0020 getWriterEch0020() {
@@ -245,7 +246,14 @@ public class EchNamespaceContext {
 		}
 		return writerEch0020;
 	}
-	
+
+	public WriterEch0112 getWriterEch0112() {
+		if (writerEch0112 == null) {
+			writerEch0112 = new WriterEch0112(this);
+		}
+		return writerEch0112;
+	}
+
 	public WriterEch0148 getWriterEch0148() {
 		if (writerEch0148 == null) {
 			writerEch0148 = new WriterEch0148(this); // 1100 - 1400ms

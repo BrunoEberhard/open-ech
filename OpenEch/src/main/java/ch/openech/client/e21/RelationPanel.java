@@ -14,12 +14,12 @@ import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class RelationPanel extends EchFormPanel<Relation> {
 	
-	public RelationPanel(EchNamespaceContext echNamespaceContext, boolean withNameOfParents) {
-		super(echNamespaceContext);
+	public RelationPanel(EchSchema echSchema, boolean withNameOfParents) {
+		super(echSchema);
 		
 		area(RELATION.partner);
 		area(new AddressField(RELATION.address, true));
@@ -51,7 +51,7 @@ public class RelationPanel extends EchFormPanel<Relation> {
 	private class BasedOnLawField extends CodeEditField implements DependingOnFieldAbove<String> {
 		
 		public BasedOnLawField() {
-			super(RELATION.basedOnLaw, getNamespaceContext() == null || getNamespaceContext().reducedBasedOnLawCode() ?  EchCodes.basedOnLaw3 :  EchCodes.basedOnLaw);
+			super(RELATION.basedOnLaw, echSchema == null || echSchema.reducedBasedOnLawCode() ?  EchCodes.basedOnLaw3 :  EchCodes.basedOnLaw);
 		}
 
 		@Override

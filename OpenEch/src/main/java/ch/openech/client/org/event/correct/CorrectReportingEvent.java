@@ -6,21 +6,22 @@ import java.util.List;
 import ch.openech.client.org.OrganisationPanel;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.client.org.event.OrganisationEventEditor;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectReportingEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectReportingEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public CorrectReportingEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override
 	public IForm<Organisation> createForm() {
-		return new OrganisationPanel(OrganisationPanelType.CHANGE_RESIDENCE_TYPE, getEchNamespaceContext());
+		return new OrganisationPanel(OrganisationPanelType.CHANGE_RESIDENCE_TYPE, echSchema);
 	}
 
 	@Override

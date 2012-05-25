@@ -18,25 +18,25 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class SedexInputPage extends Page implements RefreshablePage {
 
-	private final EchNamespaceContext echNamespaceContext;
+	private final EchSchema echNamespaceContext;
 	private JPanel panel;
 	private SedexInputTable table;
 
 	public SedexInputPage(PageContext context, String echVersion) {
-		this(context, EchNamespaceContext.getNamespaceContext(20, echVersion));
+		this(context, EchSchema.getNamespaceContext(20, echVersion));
 	}
 	
-	public SedexInputPage(PageContext context, EchNamespaceContext echNamespaceContext) {
+	public SedexInputPage(PageContext context, EchSchema echNamespaceContext) {
 		super(context);
 		this.echNamespaceContext = echNamespaceContext;
 	}
 
 	@Override
-	public IComponent getPanel() {
+	public IComponent getComponent() {
 		if (panel == null) {
 			createPanel();
 		}

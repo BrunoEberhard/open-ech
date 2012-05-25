@@ -2,7 +2,8 @@ package ch.openech.client.e44;
 
 import java.util.List;
 
-import ch.openech.client.ewk.SearchPersonPage;
+import page.SearchPersonPage;
+
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.edit.SearchDialogAction;

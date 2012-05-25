@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.client.e44.SecondPersonField;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.annotation.Boolean;
 import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.edit.fields.CheckBoxField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0093;
 
 public abstract class ChangeWithSecondPersonEvent extends
 		PersonEventEditor<ChangeWithSecondPersonEvent.ChangeWithSecondPersonEventData> {
 
-	public ChangeWithSecondPersonEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public ChangeWithSecondPersonEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	public static class ChangeWithSecondPersonEventData {
@@ -82,8 +82,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class DeathEvent extends ChangeWithSecondPersonEvent {
 
-		public DeathEvent(EchNamespaceContext namespaceContext) {
-			super(namespaceContext);
+		public DeathEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+			super(echSchema, preferences);
 		}
 
 		@Override
@@ -114,7 +114,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		public void generateSedexOutput(ChangeWithSecondPersonEventData object) throws Exception {
 			if (getPerson().isMainResidence() && getPerson().residence.secondary != null) {
 				for (MunicipalityIdentification secondaryResidence : getPerson().residence.secondary) {
-					WriterEch0093 sedexWriter = new WriterEch0093(getEchNamespaceContext());
+					WriterEch0093 sedexWriter = new WriterEch0093(echSchema);
 					sedexWriter.setRecepientMunicipality(secondaryResidence);
 					String sedexOutput = sedexWriter.death(getPerson().personIdentification, object.date);
 					SedexOutputGenerator.generateSedex(sedexOutput, sedexWriter.getEnvelope());
@@ -131,8 +131,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class MissingEvent extends ChangeWithSecondPersonEvent {
 
-		public MissingEvent(EchNamespaceContext namespaceContext) {
-			super(namespaceContext);
+		public MissingEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+			super(echSchema, preferences);
 		}
 
 		@Override
@@ -168,8 +168,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class SeparationEvent extends ChangeWithSecondPersonEvent {
 
-		public SeparationEvent(EchNamespaceContext namespaceContext) {
-			super(namespaceContext);
+		public SeparationEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+			super(echSchema, preferences);
 		}
 
 		@Override
@@ -200,8 +200,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoSeparationEvent extends ChangeWithSecondPersonEvent {
 
-		public UndoSeparationEvent(EchNamespaceContext namespaceContext) {
-			super(namespaceContext);
+		public UndoSeparationEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+			super(echSchema, preferences);
 		}
 
 		@Override
@@ -225,8 +225,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class DivorceEvent extends ChangeWithSecondPersonEvent {
 
-		public DivorceEvent(EchNamespaceContext namespaceContext) {
-			super(namespaceContext);
+		public DivorceEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+			super(echSchema, preferences);
 		}
 
 		@Override
@@ -256,8 +256,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoPartnershipEvent extends ChangeWithSecondPersonEvent {
 
-		public UndoPartnershipEvent(EchNamespaceContext namespaceContext) {
-			super(namespaceContext);
+		public UndoPartnershipEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+			super(echSchema, preferences);
 		}
 
 		@Override
@@ -288,8 +288,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoMarriageEvent extends ChangeWithSecondPersonEvent  {
 
-		public UndoMarriageEvent(EchNamespaceContext namespaceContext) {
-			super(namespaceContext);
+		public UndoMarriageEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+			super(echSchema, preferences);
 		}
 
 		@Override

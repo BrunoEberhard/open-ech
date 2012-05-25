@@ -3,15 +3,15 @@ package ch.openech.client.e21;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 // Eigentlich relationField
 public class PartnerField extends ObjectFlowField<Relation> {
-	private final EchNamespaceContext echNamespaceContext;
+	private final EchSchema echSchema;
 	
-	public PartnerField(Object key, EchNamespaceContext echNamespaceContext) {
+	public PartnerField(Object key, EchSchema echSchema) {
 		super(key);
-		this.echNamespaceContext = echNamespaceContext;
+		this.echSchema = echSchema;
 	}
 	
 	public class PartnerEditor extends ObjectFieldEditor {
@@ -38,6 +38,6 @@ public class PartnerField extends ObjectFlowField<Relation> {
 //		}
 	@Override
 	public IForm<Relation> createFormPanel() {
-		return new RelationPanel(echNamespaceContext, false);
+		return new RelationPanel(echSchema, false);
 	}
 }

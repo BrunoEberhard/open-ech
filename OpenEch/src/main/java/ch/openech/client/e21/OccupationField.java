@@ -8,15 +8,15 @@ import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class OccupationField extends ObjectFlowField<List<Occupation>> {
 	
-	private final EchNamespaceContext namespaceContext;
+	private final EchSchema echSchema;
 	
-	public OccupationField(Object key, EchNamespaceContext namespaceContext, boolean editable) {
+	public OccupationField(Object key, EchSchema echSchema, boolean editable) {
 		super(key, editable);
-		this.namespaceContext = namespaceContext;
+		this.echSchema = echSchema;
 	}
 
 	public class AddOccupationEditor extends ObjectFieldPartEditor<Occupation> {
@@ -35,7 +35,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 		
 		@Override
 		public IForm<Occupation> createForm() {
-			return new OccupationPanel(namespaceContext);
+			return new OccupationPanel(echSchema);
 		}
 	}
 	

@@ -3,12 +3,18 @@ package ch.openech.client.preferences;
 import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
+import ch.openech.mj.application.ApplicationContext;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.StringUtils;
 
 public class PreferencesEditor extends Editor<OpenEchPreferences> {
+	private final ApplicationContext applicationContext;
+	
+	public PreferencesEditor(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	@Override
 	protected IForm<OpenEchPreferences> createForm() {
@@ -17,7 +23,7 @@ public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	
 	@Override
 	protected OpenEchPreferences load() {
-		return (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		return (OpenEchPreferences) applicationContext.getPreferences();
 	}
 
 	@Override
@@ -29,7 +35,7 @@ public class PreferencesEditor extends Editor<OpenEchPreferences> {
 
 	@Override
 	protected boolean save(OpenEchPreferences object) {
-		context.getApplicationContext().savePreferences(object);
+		applicationContext.savePreferences(object);
 		return true;
 	}
 	

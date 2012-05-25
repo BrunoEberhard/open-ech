@@ -9,7 +9,7 @@ public class WriterEch0102 {
 	public final String URI;
 	public final WriterEch0058 ech58;
 	
-	public WriterEch0102(EchNamespaceContext context) {
+	public WriterEch0102(EchSchema context) {
 		URI = context.getNamespaceURI(102);
 		ech58 = new WriterEch0058(context);
 	}

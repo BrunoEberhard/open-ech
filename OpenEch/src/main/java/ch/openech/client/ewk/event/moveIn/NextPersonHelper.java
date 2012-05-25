@@ -1,10 +1,10 @@
 package ch.openech.client.ewk.event.moveIn;
 
-import ch.openech.client.ewk.event.moveIn.MoveInWizard.MoveInNextPerson;
 import ch.openech.dm.code.TypeOfRelationship;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.util.BusinessRule;
+import editor.MoveInWizard.MoveInNextPerson;
 
 public class NextPersonHelper {
 

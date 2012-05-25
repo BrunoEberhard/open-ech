@@ -1,4 +1,4 @@
-package ch.openech.client.ewk;
+package page;
 
 import static ch.openech.dm.person.Person.PERSON;
 
@@ -14,12 +14,12 @@ import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.VisualTable;
 import ch.openech.mj.toolkit.VisualTable.ClickListener;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 
 public class SearchPersonPage extends Page implements RefreshablePage {
 
-	private final EchNamespaceContext echNamespaceContext;
+	private final EchSchema echSchema;
 	private String text;
 	private VisualTable<Person> table;
 	private List<Person> resultList;
@@ -43,7 +43,7 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 	
 	public SearchPersonPage(PageContext context, String version, String text) {
 		super(context);
-		this.echNamespaceContext = EchNamespaceContext.getNamespaceContext(20, version);
+		this.echSchema = EchSchema.getNamespaceContext(20, version);
 		this.text = text;
 		table = ClientToolkit.getToolkit().createVisualTable(Person.class, FIELD_NAMES);
 		table.setClickListener(new PersonTableClickListener());
@@ -51,7 +51,7 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 	}
 
 	@Override
-	public IComponent getPanel() {
+	public IComponent getComponent() {
 		return table;
 	}
 
@@ -63,7 +63,7 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 			if (index >= 0) {
 				List<String> pageLinks = new ArrayList<String>(resultList.size());
 				for (Person person : resultList) {
-					String link = link(PersonViewPage.class, echNamespaceContext.getVersion(), person.getId());
+					String link = link(PersonViewPage.class, echSchema.getVersion(), person.getId());
 					pageLinks.add(link);
 				}
 				getPageContext().show(pageLinks, index);

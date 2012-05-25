@@ -11,14 +11,14 @@ import ch.openech.mj.db.model.ColumnAccess;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0046;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0046;
 
 public class ContactXmlTest {
 
 	@Test
 	public void RoundTripTest() throws Exception {
-		WriterEch0046 writer = new WriterEch0046(EchNamespaceContext.getNamespaceContext(46, "2.0"));
+		WriterEch0046 writer = new WriterEch0046(EchSchema.getNamespaceContext(46, "2.0"));
 	
 		Contact contact = new Contact();
 		contact.stringId = "13";

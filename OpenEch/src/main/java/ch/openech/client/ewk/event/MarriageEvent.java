@@ -6,6 +6,7 @@ import java.util.List;
 
 import ch.openech.client.RemoveEntriesListField;
 import ch.openech.client.e44.PersonField;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
@@ -18,20 +19,20 @@ import ch.openech.mj.db.model.annotation.FormatName;
 import ch.openech.mj.edit.fields.CheckBoxStringField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.TextEditField;
-import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
-	public MarriageEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public MarriageEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	public static class Marriage {

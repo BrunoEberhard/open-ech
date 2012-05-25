@@ -5,15 +5,16 @@ import static ch.openech.dm.person.Person.PERSON;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class ChangeNameEvent extends PersonEventEditor<Person> {
 
-	public ChangeNameEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public ChangeNameEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override
@@ -23,7 +24,7 @@ public class ChangeNameEvent extends PersonEventEditor<Person> {
 		panel.line(PERSON.originalName, PERSON.alliancePartnershipName);
 		panel.line(PERSON.aliasName, PERSON.otherName);
 		panel.line(PERSON.callName, PERSON.foreign.nameOnPassport);
-	    if (getEchNamespaceContext().changeNameWithParents()) {
+	    if (echSchema.changeNameWithParents()) {
 	    	panel.line("fatherFirstNameAtBirth", "motherFirstNameAtBirth");
 	    	panel.line("fatherOfficialNameAtBirth", "motherOfficialNameAtBirth");
 	    }

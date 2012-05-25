@@ -5,7 +5,7 @@ import ch.openech.client.e44.TechnicalIdsField;
 import ch.openech.client.e97.OrganisationUidField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class OrganisationPanel extends EchFormPanel<Organisation> {
 
@@ -15,7 +15,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 
 	private final OrganisationPanelType type;
 	
-	public OrganisationPanel(OrganisationPanelType type, EchNamespaceContext context) {
+	public OrganisationPanel(OrganisationPanelType type, EchSchema context) {
 		super(context, OrganisationPanelType.DISPLAY != type, 4);
 		this.type = type;
 		

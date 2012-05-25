@@ -13,7 +13,7 @@ public class WriterEch0046 extends DeliveryWriter {
 	public final WriterEch0010 ech10;
 	public final WriterEch0044 ech44;
 	
-	public WriterEch0046(EchNamespaceContext context) {
+	public WriterEch0046(EchSchema context) {
 		super(context);
 		URI = context.getNamespaceURI(46);
 		ech10 = new WriterEch0010(context);

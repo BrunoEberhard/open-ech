@@ -1,9 +1,10 @@
-package ch.openech.client.org;
+package page;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.page.HistoryPage;
@@ -12,11 +13,11 @@ import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class OrganisationHistoryPage extends HistoryPage<Organisation> implements RefreshablePage {
 
-	private final EchNamespaceContext echNamespaceContext;
+	private final EchSchema echNamespaceContext;
 	private final String organisationId;
 
 	public OrganisationHistoryPage(PageContext context, String[] arguments) {
@@ -24,10 +25,10 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	}
 	
 	public OrganisationHistoryPage(PageContext context, String version, String organisationId) {
-		this(context, EchNamespaceContext.getNamespaceContext(20, version), organisationId);
+		this(context, EchSchema.getNamespaceContext(20, version), organisationId);
 	}
 	
-	public OrganisationHistoryPage(PageContext context, EchNamespaceContext echNamespaceContext, String organisationId) {
+	public OrganisationHistoryPage(PageContext context, EchSchema echNamespaceContext, String organisationId) {
 		super(context);
 		this.organisationId = organisationId;
 		this.echNamespaceContext = echNamespaceContext;

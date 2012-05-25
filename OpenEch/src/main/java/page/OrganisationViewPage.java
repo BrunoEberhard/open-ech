@@ -1,7 +1,9 @@
-package ch.openech.client.org;
+package page;
 
 import java.sql.SQLException;
 
+import ch.openech.client.org.OrganisationMenu;
+import ch.openech.client.org.OrganisationPanel;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
@@ -10,23 +12,23 @@ import ch.openech.mj.page.ObjectViewPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.Resources;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 
 	private final String organisationId;
 	private final int time;
-	private final EchNamespaceContext echNamespaceContext;
+	private final EchSchema echSchema;
 	private final OrganisationPanel organisationPanel;
 	private final OrganisationMenu menu;
 
 	public OrganisationViewPage(PageContext context, String[] arguments) {
 		super(context);
-		this.echNamespaceContext = EchNamespaceContext.getNamespaceContext(148, arguments[0]);
+		this.echSchema = EchSchema.getNamespaceContext(148, arguments[0]);
 		this.organisationId = arguments[1];
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
-		this.organisationPanel = new OrganisationPanel(OrganisationPanelType.DISPLAY, echNamespaceContext);
-		this.menu = time == 0 ? new OrganisationMenu(echNamespaceContext) : null;  
+		this.organisationPanel = new OrganisationPanel(OrganisationPanelType.DISPLAY, echSchema);
+		this.menu = time == 0 ? new OrganisationMenu(context, echSchema) : null;  
 	}
 
 	@Override
@@ -39,9 +41,9 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 	}
 	
 	@Override
-	public void fillActionGroup(PageContext pageContext, ActionGroup actionGroup) {
+	public void fillActionGroup(ActionGroup actionGroup) {
 		if (menu != null) {
-			menu.fillActionGroup(pageContext, actionGroup);
+			menu.fillActionGroup(actionGroup);
 		}
 	}
 

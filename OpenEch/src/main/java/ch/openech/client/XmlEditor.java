@@ -1,4 +1,4 @@
-package ch.openech.client.ewk;
+package ch.openech.client;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -14,24 +14,25 @@ import ch.openech.client.xmlpreview.XmlPreview;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.PageContextHelper;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 
 public abstract class XmlEditor<T> extends Editor<T> {
 	public static final Logger logger = Logger.getLogger(PersonEventEditor.class.getName());
-	private final EchNamespaceContext echNamespaceContext;
+	protected final EchSchema echSchema;
+	protected final OpenEchPreferences preferences;
+	
 	private final XmlAction xmlAction;
 	
-	public XmlEditor(EchNamespaceContext echNamespaceContext) {
-		this.echNamespaceContext = echNamespaceContext;
+	public XmlEditor(EchSchema echSchema, OpenEchPreferences preferences) {
+		this.echSchema = echSchema;
+		this.preferences = preferences;
 		this.xmlAction = new XmlAction();
 		setIndicator(xmlAction);
-	}
-	
-	protected EchNamespaceContext getEchNamespaceContext() {
-		return echNamespaceContext;
 	}
 
 	protected int getFormColumns() {
@@ -54,7 +55,6 @@ public abstract class XmlEditor<T> extends Editor<T> {
 
 	@Override
 	public Action[] getActions() {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 		if (preferences.devMode()) {
 			return new Action[]{demoAction(), xmlAction, cancelAction(), saveAction()};
 		} else {
@@ -103,6 +103,7 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				List<String> xmls = getXml(getObject());
+				PageContext context = PageContextHelper.findContext(e.getSource());
 				XmlPreview.viewXml(context, xmls);
 			} catch (Exception x) {
 				throw new RuntimeException("XML Preview fehlgeschlagen", x);

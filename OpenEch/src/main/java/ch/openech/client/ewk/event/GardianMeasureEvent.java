@@ -5,26 +5,27 @@ import static ch.openech.dm.person.Relation.RELATION;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.fields.CodeEditField;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 
-	public GardianMeasureEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public GardianMeasureEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override
 	protected void fillForm(Form<Relation> formPanel) {
-		fillForm(getEchNamespaceContext(), formPanel);
+		fillForm(echSchema, formPanel);
 	}
 	
-	static void fillForm(EchNamespaceContext namespaceContext, Form<Relation> formPanel) {
+	static void fillForm(EchSchema namespaceContext, Form<Relation> formPanel) {
 		// also used by ChangeGardianEvent
 		formPanel.line(new CodeEditField(RELATION.typeOfRelationship, EchCodes.guardianTypeOfRelationship));
 

@@ -3,16 +3,16 @@ package ch.openech.client.org.event;
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.org.event.OrganisationEventEditor;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
 public class InLiquidationEvent extends OrganisationEventEditor<Organisation> {
 	
-	public InLiquidationEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public InLiquidationEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override

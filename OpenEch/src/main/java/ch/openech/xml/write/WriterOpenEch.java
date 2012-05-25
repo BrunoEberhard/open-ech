@@ -9,7 +9,7 @@ public class WriterOpenEch extends DeliveryWriter {
 	public final WriterEch0101 ech101;
 	public final WriterEch0046 ech46;
 	
-	public WriterOpenEch(EchNamespaceContext context) {
+	public WriterOpenEch(EchSchema context) {
 		super(context);
 		
 		ech101 = new WriterEch0101(context);

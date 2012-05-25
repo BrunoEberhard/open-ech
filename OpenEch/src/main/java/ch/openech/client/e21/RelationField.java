@@ -3,22 +3,22 @@ package ch.openech.client.e21;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import ch.openech.client.ewk.PersonViewPage;
+import page.PersonViewPage;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class RelationField extends ObjectFlowField<List<Relation>> {
 	private final boolean withNameOfParents;
-	private final EchNamespaceContext echNamespaceContext;
+	private final EchSchema echNamespaceContext;
 	
-	public RelationField(Object key, EchNamespaceContext echNamespaceContext, boolean withNameOfParents, boolean editable) {
+	public RelationField(Object key, EchSchema echNamespaceContext, boolean withNameOfParents, boolean editable) {
 		super(key, editable);
 		
 		this.withNameOfParents = withNameOfParents;
@@ -66,8 +66,8 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(e.getSource());
-			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
+			PageContext context = PageContextHelper.findContext(e.getSource());
+			context.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
 		}
 	}
 	

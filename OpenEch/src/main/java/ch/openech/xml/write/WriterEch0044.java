@@ -15,7 +15,7 @@ public class WriterEch0044 {
 
 	public final String URI;
 	
-	public WriterEch0044(EchNamespaceContext context) {
+	public WriterEch0044(EchSchema context) {
 		URI = context.getNamespaceURI(44);
 	}
 

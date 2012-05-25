@@ -1,4 +1,4 @@
-package ch.openech.client.tpn;
+package editor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,12 +7,16 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.openech.client.ewk.XmlEditor;
+import ch.openech.client.XmlEditor;
+import ch.openech.client.preferences.OpenEchPreferences;
+import ch.openech.client.tpn.MoveDirection;
+import ch.openech.client.tpn.TpnMoveForm;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.tpn.ThirdPartyMove;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.page.PageContext;
 import ch.openech.xml.read.StaxEch0046;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0046;
 import ch.openech.xml.write.WriterEch0112;
 import ch.openech.xml.write.WriterElement;
@@ -20,12 +24,12 @@ import ch.openech.xml.write.WriterElement;
 public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	private final MoveDirection direction;
 
-	public TpnMoveEditor(String direction) {
-		this(MoveDirection.valueOf(direction));
+	public TpnMoveEditor(PageContext context, String direction) {
+		this(context, MoveDirection.valueOf(direction));
 	}
 		
-	public TpnMoveEditor(MoveDirection direction) {
-		super(EchNamespaceContext.getNamespaceContext(112, "1.0"));
+	public TpnMoveEditor(PageContext context, MoveDirection direction) {
+		super(EchSchema.getNamespaceContext(112, "1.0"), (OpenEchPreferences) context.getApplicationContext().getPreferences());
 		this.direction = direction;
 	}
 	
@@ -45,7 +49,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	public boolean save(ThirdPartyMove tpm) {
 		String xml;
 		try {
-			WriterEch0112 writer = new WriterEch0112(getEchNamespaceContext());
+			WriterEch0112 writer = echSchema.getWriterEch0112();
 			xml = isDirectionIn() ? writer.moveIn(tpm) : writer.moveIn(tpm);
 			saveContractor(tpm.contractor);
 			// MoveIn result = StaxEch0108.process(xml);
@@ -61,9 +65,9 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	public List<String> getXml(ThirdPartyMove tpm) throws Exception {
 		List<String> xmlList = new ArrayList<String>();
 		if (isDirectionIn()) {
-			xmlList.add(new WriterEch0112(getEchNamespaceContext()).moveIn(tpm));
+			xmlList.add(new WriterEch0112(echSchema).moveIn(tpm));
 		} else {
-			xmlList.add(new WriterEch0112(getEchNamespaceContext()).moveOut(tpm));
+			xmlList.add(new WriterEch0112(echSchema).moveOut(tpm));
 		}
 		return xmlList;
 	}
@@ -92,7 +96,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
 			
-			WriterEch0046 writer = new WriterEch0046(EchNamespaceContext.getNamespaceContext(46, "2.0"));
+			WriterEch0046 writer = new WriterEch0046(EchSchema.getNamespaceContext(46, "2.0"));
 			WriterElement writerElement = writer.delivery(outputStreamWriter);
 			writer.contact(writerElement, contractor);
 			writer.result();

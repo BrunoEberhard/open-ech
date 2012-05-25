@@ -1,39 +1,36 @@
-package ch.openech.client.org;
+package editor;
 
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.ewk.XmlEditor;
+import page.OrganisationViewPage;
+import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
+import ch.openech.client.org.OrganisationPanel;
 import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
+import ch.openech.mj.page.PageContext;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
-import ch.openech.xml.write.WriterEch0148;
+import ch.openech.xml.write.EchSchema;
 
 
 public class FoundationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
-	private final WriterEch0148 writerEch0148;
 	
-	public FoundationEditor(String version) {
-		this(EchNamespaceContext.getNamespaceContext(148, version));
-	}
-	
-	public FoundationEditor(EchNamespaceContext echNamespaceContext) {
-		super(echNamespaceContext);
-		this.writerEch0148 = new WriterEch0148(echNamespaceContext);
+	public FoundationEditor(PageContext context, String version) {
+		super(EchSchema.getNamespaceContext(148, version), (OpenEchPreferences) context.getApplicationContext().getPreferences() );
 	}
 
 	@Override
 	public IForm<Organisation> createForm() {
-		return new OrganisationPanel(OrganisationPanelType.FOUNDATION, getEchNamespaceContext());
+		return new OrganisationPanel(OrganisationPanelType.FOUNDATION, echSchema);
 	}
 
 	@Override
 	public Organisation newInstance() {
-		return MoveInEditor.newInstance(context);
+		return MoveInEditor.newInstance(preferences);
 	}
 
 	@Override
@@ -42,7 +39,7 @@ public class FoundationEditor extends XmlEditor<Organisation> implements XmlResu
 		try {
 			xml = getXml(organisation).get(0);
 			EchServer.getInstance().processOrg(xml);
-			setFollowLink(Page.link(OrganisationViewPage.class, getEchNamespaceContext().getVersion(), getObject().getId()));
+			setFollowLink(Page.link(OrganisationViewPage.class, echSchema.getVersion(), getObject().getId()));
 			return true;
 		} catch (Exception e) {
 			throw new RuntimeException("Organisation konnte nicht gespeichert werden", e);
@@ -51,7 +48,7 @@ public class FoundationEditor extends XmlEditor<Organisation> implements XmlResu
 	
 	@Override
 	public List<String> getXml(Organisation organisation) throws Exception {
-		return Collections.singletonList(writerEch0148.foundation(organisation));
+		return Collections.singletonList(echSchema.getWriterEch0148().foundation(organisation));
 	}
 
 }

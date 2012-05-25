@@ -5,21 +5,22 @@ import java.util.List;
 
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.ewk.event.PersonEventEditor;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 
-	public CorrectRelationshipEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public CorrectRelationshipEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		boolean includeParents = getEchNamespaceContext().correctRelationshipPersonIncludesParents();
-		formPanel.area(new RelationField(Person.PERSON.relation, getEchNamespaceContext(), includeParents, true));
+		boolean includeParents = echSchema.correctRelationshipPersonIncludesParents();
+		formPanel.area(new RelationField(Person.PERSON.relation, echSchema, includeParents, true));
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected List<String> getXml(Person person, Person changedPerson, WriterEch0020 writerEch0020) throws Exception {
-		boolean includeParents = getEchNamespaceContext().correctRelationshipPersonIncludesParents();
+		boolean includeParents = echSchema.correctRelationshipPersonIncludesParents();
       return Collections.singletonList(writerEch0020.correctRelationship(changedPerson, includeParents));
 	}
 	

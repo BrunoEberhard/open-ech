@@ -45,7 +45,7 @@ public class WriterEch0098 {
 	public final WriterEch0046 ech46;
 	public final WriterEch0097 ech97;
 	
-	public WriterEch0098(EchNamespaceContext context) {
+	public WriterEch0098(EchSchema context) {
 		URI = context.getNamespaceURI(98);
 		ech7 = new WriterEch0007(context);
 		ech8 = new WriterEch0008(context);

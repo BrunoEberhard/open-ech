@@ -1,4 +1,4 @@
-package ch.openech.client.org;
+package page;
 
 import static ch.openech.dm.organisation.Organisation.ORGANISATION;
 
@@ -13,11 +13,11 @@ import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.VisualTable;
 import ch.openech.mj.toolkit.VisualTable.ClickListener;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class SearchOrganisationPage extends Page implements RefreshablePage {
 
-	private final EchNamespaceContext echNamespaceContext;
+	private final EchSchema echSchema;
 	private String text;
 	private VisualTable<Organisation> table;
 
@@ -36,7 +36,7 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 	
 	public SearchOrganisationPage(PageContext context, String version, String text) {
 		super(context);
-		this.echNamespaceContext = EchNamespaceContext.getNamespaceContext(148, version);
+		this.echSchema = EchSchema.getNamespaceContext(148, version);
 		this.text = text;
 		table = ClientToolkit.getToolkit().createVisualTable(Organisation.class, FIELD_NAMES);
 		table.setClickListener(new OrganisationTableClickListener());
@@ -44,7 +44,7 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 	}
 
 	@Override
-	public IComponent getPanel() {
+	public IComponent getComponent() {
 		return table;
 	}
 
@@ -54,7 +54,7 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 		public void clicked() {
 			Organisation organisation = table.getSelectedObject();
 			if (organisation != null) {
-				show(OrganisationViewPage.class, echNamespaceContext.getVersion(), organisation.getId());
+				show(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
 			}
 		}
 	}

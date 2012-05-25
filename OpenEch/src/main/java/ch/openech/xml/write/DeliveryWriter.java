@@ -25,11 +25,11 @@ public abstract class DeliveryWriter {
 	private Writer writer;
 	private XMLStreamWriter xmlStreamWriter;
 	private WriterElement rootElement;
-	protected final EchNamespaceContext context;
+	protected final EchSchema context;
 	private String recipientId = "1-23-4";
 	private String senderId = "1-23-4";
 	
-	protected DeliveryWriter(EchNamespaceContext context)  {
+	protected DeliveryWriter(EchSchema context)  {
 		this.context = context;
 	}
 
@@ -134,14 +134,14 @@ public abstract class DeliveryWriter {
 				context.getNamespaceLocation(getSchemaNumber()));
 	}
 
-	private void setPrefixs(EchNamespaceContext namespaceContext, List<Integer> namespaceNumbers) throws XMLStreamException {
+	private void setPrefixs(EchSchema namespaceContext, List<Integer> namespaceNumbers) throws XMLStreamException {
 		xmlStreamWriter.setPrefix("xsi", XMLSchema_URI);
 		for (int number : namespaceNumbers) {
 			xmlStreamWriter.setPrefix("e" + number, namespaceContext.getNamespaceURI(number));
 		}
 	}
 	
-	private void writeNamespaces(EchNamespaceContext namespaceContext, List<Integer> namespaceNumbers) throws XMLStreamException {
+	private void writeNamespaces(EchSchema namespaceContext, List<Integer> namespaceNumbers) throws XMLStreamException {
 		xmlStreamWriter.writeNamespace("xsi", XMLSchema_URI);
 		for (int number : namespaceNumbers) {
 			xmlStreamWriter.writeNamespace("e" + number, namespaceContext.getNamespaceURI(number));

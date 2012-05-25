@@ -11,16 +11,16 @@ import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ExportHandler;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0098;
 import ch.openech.xml.write.WriterEch0148;
 import ch.openech.xml.write.WriterElement;
 
 public class ExportAllOrganisationAction extends ResourceAction implements ExportHandler {
-	private EchNamespaceContext echNamespaceContext;
+	private EchSchema echNamespaceContext;
 	private Object source;
 	
-	public ExportAllOrganisationAction(EchNamespaceContext echNamespaceContext) {
+	public ExportAllOrganisationAction(EchSchema echNamespaceContext) {
 		this.echNamespaceContext = echNamespaceContext;
 	}
 	

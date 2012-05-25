@@ -1,14 +1,12 @@
 package ch.openech.client.e11;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
+import page.PersonViewPage;
+import page.SearchPersonPage;
 import ch.openech.client.e10.AddressPanel;
 import ch.openech.client.e44.PersonIdentificationPanel;
-import ch.openech.client.ewk.PersonViewPage;
-import ch.openech.client.ewk.SearchPersonPage;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Person;
@@ -18,26 +16,24 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	
-	private final PageContext pageContext;
-	private final EchNamespaceContext echNamespaceContext;
+	private final EchSchema echSchema;
 	
-	public ContactPersonField(Object key, EchNamespaceContext echNamespaceContext, boolean editable) {
-		this(key, null, echNamespaceContext, editable);
+	public ContactPersonField(Object key) {
+		this(key, null, true);
 	}
 
-	public ContactPersonField(Object key, PageContext pageContext, EchNamespaceContext echNamespaceContext, boolean editable) {
+	public ContactPersonField(Object key, EchSchema echSchema, boolean editable) {
 		super(key, editable);
-		this.pageContext = pageContext;
-		this.echNamespaceContext = echNamespaceContext;
+		this.echSchema = echSchema;
 	}
 	
 	@Override
@@ -86,8 +82,8 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			PageContext pageContext = ClientToolkit.getToolkit().findPageContext(e.getSource());
-			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), person.getId()));
+			PageContext context = PageContextHelper.findContext(e.getSource());
+			context.show(Page.link(PersonViewPage.class, echSchema.getVersion(), person.getId()));
 		}
 	}
 	
@@ -194,16 +190,6 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 //		menuItem.doClick();
 //		fieldMenu.fillWithDemoData();
 //	}
-
-	private class ContactMouseListener extends MouseAdapter {
-	    @Override
-		public void mouseClicked(MouseEvent e) {
-	    	PersonIdentification contactPerson = getObject().person;
-	    	if (contactPerson != null) {
-    			pageContext.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), contactPerson.getId()));
-	    	}
-	    }
-	}
 
 	@Override
 	public IForm<ContactPerson> createFormPanel() {

@@ -6,7 +6,7 @@ public class WriterEch0008 {
 
 	public final String URI;
 	
-	public WriterEch0008(EchNamespaceContext context) {
+	public WriterEch0008(EchSchema context) {
 		URI = context.getNamespaceURI(8);
 	}
 	

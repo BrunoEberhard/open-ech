@@ -5,18 +5,19 @@ import static ch.openech.dm.person.Person.PERSON;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 
 public class ChangeResidencePermitEvent extends PersonEventEditor<Person> {
 
-	public ChangeResidencePermitEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public ChangeResidencePermitEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override

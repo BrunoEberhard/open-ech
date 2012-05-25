@@ -50,52 +50,52 @@ import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.GenericUtils;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 public class EchFormPanel<T> extends Form<T> {
-	private final EchNamespaceContext namespaceContext;
+	protected final EchSchema echSchema;
 	
 	protected EchFormPanel() {
 		this(1);
 	}
 	
 	public EchFormPanel(int columns) {
-		this((EchNamespaceContext) null, columns);
+		this((EchSchema) null, columns);
 	}
 
-	protected EchFormPanel(EchNamespaceContext namespaceContext) {
-		this(namespaceContext, 1);
+	protected EchFormPanel(EchSchema echSchema) {
+		this(echSchema, 1);
 	}
 	
-	public EchFormPanel(EchNamespaceContext namespaceContext, int columns) {
+	public EchFormPanel(EchSchema echSchema, int columns) {
 		super(null, Resources.getResourceBundle(), true, columns);
-		this.namespaceContext = namespaceContext;
+		this.echSchema = echSchema;
 	}
 
-	protected EchFormPanel(EchNamespaceContext namespaceContext, boolean editable, int columns) {
+	protected EchFormPanel(EchSchema echSchema, boolean editable, int columns) {
 		super(null, Resources.getResourceBundle(), editable, columns);
-		this.namespaceContext = namespaceContext;
+		this.echSchema = echSchema;
 	}
 	
 	//
 
 	public EchFormPanel(Class<T> objectClass) {
 		super(objectClass, Resources.getResourceBundle(), true);
-		this.namespaceContext = null;
+		this.echSchema = null;
 	}
 	
 	public EchFormPanel(Class<T> objectClass, int columns) {
 		this(objectClass, null, columns);
 	}
 
-	public EchFormPanel(Class<T> objectClass, EchNamespaceContext namespaceContext) {
+	public EchFormPanel(Class<T> objectClass, EchSchema echSchema) {
 		super(objectClass, Resources.getResourceBundle(), true);
-		this.namespaceContext = namespaceContext;
+		this.echSchema = echSchema;
 	}
 	
-	public EchFormPanel(Class<T> objectClass, EchNamespaceContext namespaceContext, int columns) {
+	public EchFormPanel(Class<T> objectClass, EchSchema echSchema, int columns) {
 		super(objectClass, Resources.getResourceBundle(), true, columns);
-		this.namespaceContext = namespaceContext;
+		this.echSchema = echSchema;
 	}
 
 	@Override
@@ -104,15 +104,15 @@ public class EchFormPanel<T> extends Form<T> {
 			return new CantonField(name);
 		}
 		
-		if (namespaceContext != null) {
+		if (echSchema != null) {
 			if (format == EchCodes.basedOnLaw) {
-				if (namespaceContext.reducedBasedOnLawCode()) {
+				if (echSchema.reducedBasedOnLawCode()) {
 					format = EchCodes.basedOnLaw3;
 				}
 			} 
 			
 			if (format == EchCodes.residencePermit) {
-				if (namespaceContext.residencePermitDetailed()) {
+				if (echSchema.residencePermitDetailed()) {
 					format = EchCodes.residencePermitDetailed;
 				}
 			}
@@ -137,9 +137,9 @@ public class EchFormPanel<T> extends Form<T> {
 		} else if (type == Nationality.class) {
 			return editable ? new NationalityField(name) : new NationalityReadOnlyField(name);
 		} else if (type == ContactPerson.class) {
-			return new ContactPersonField(name, namespaceContext, editable);
+			return new ContactPersonField(name, echSchema, editable);
 		} else if (type == Foreign.class) {
-			return new ForeignField(name, namespaceContext, editable);
+			return new ForeignField(name, echSchema, editable);
 		} else if (type == Residence.class) {
 			return new ResidenceField(name, editable);
 		} else if (type == Place.class) {
@@ -147,7 +147,7 @@ public class EchFormPanel<T> extends Form<T> {
 		} else if (type == Address.class) {
 			return new AddressField(name, editable);
 		} else if (type == DwellingAddress.class) {
-			return new DwellingAddressField(name, namespaceContext, editable);
+			return new DwellingAddressField(name, echSchema, editable);
 		} else if (type == PersonExtendedInformation.class) {
 			return new PersonExtendedInformationField(name, editable);
 		} else if (type == Contact.class) {
@@ -163,7 +163,7 @@ public class EchFormPanel<T> extends Form<T> {
 		} else if (type == List.class) {
 			Class<?> listClass = GenericUtils.getGenericClass(accessor.getType());
 			if (listClass == Occupation.class) {
-				return new OccupationField(name, namespaceContext, editable);
+				return new OccupationField(name, echSchema, editable);
 //				} else if (listClass == Relation.class) {
 //					return new RelationField(name, editable);
 			} else if (listClass == PlaceOfOrigin.class) {
@@ -174,7 +174,4 @@ public class EchFormPanel<T> extends Form<T> {
 		return super.createField(accessor);
 	}
 
-	public EchNamespaceContext getNamespaceContext() {
-		return namespaceContext;
-	}
 }

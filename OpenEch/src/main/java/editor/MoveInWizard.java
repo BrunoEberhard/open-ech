@@ -1,4 +1,4 @@
-package ch.openech.client.ewk.event.moveIn;
+package editor;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -7,11 +7,13 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
+import page.PersonViewPage;
+
+import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
-import ch.openech.client.ewk.PersonViewPage;
-import ch.openech.client.ewk.XmlEditor;
 import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.moveIn.NextPersonHelper;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.xmlpreview.XmlPreview;
 import ch.openech.dm.code.TypeOfRelationship;
@@ -26,26 +28,25 @@ import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.Page;
+import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.IComponent;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 
 public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
-	private final EchNamespaceContext echNamespaceContext;
+	private final PageContext context;
+	private final EchSchema echNamespaceContext;
 	private final MoveInPersonWizardPage moveInPersonWizardPage;
 	private final MoveInNextPersonWizardPage moveInNextPersonWizardPage;
 	private int personIndex; // merge with currentPageIndex?
 	
-	public MoveInWizard(String version) {
-		this(EchNamespaceContext.getNamespaceContext(20, version));
-	}
-	
-	public MoveInWizard(EchNamespaceContext echNamespaceContext) {
-		this.echNamespaceContext = echNamespaceContext;
+	public MoveInWizard(PageContext context, String version) {
+		this.context = context;
+		this.echNamespaceContext = EchSchema.getNamespaceContext(20, version);
 		this.moveInPersonWizardPage = new MoveInPersonWizardPage();
 		this.moveInNextPersonWizardPage = new MoveInNextPersonWizardPage();
 	}
@@ -81,7 +82,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	
 	public void generateSedexOutput(Person person) throws Exception {
 //		if (person.comesFrom != null && !person.comesFrom.municipalityIdentification.isEmpty()) {
-//			WriterEch0093 sedexWriter = new WriterEch0093(getEchNamespaceContext());
+//			WriterEch0093 sedexWriter = new WriterEch0093(echSchema);
 //			sedexWriter.setRecepientMunicipality(person.comesFrom.municipalityIdentification);
 //			String sedexOutput = sedexWriter.moveIn(person);
 //			SedexOutputGenerator.generateSedex(sedexOutput, sedexWriter.getEnvelope());

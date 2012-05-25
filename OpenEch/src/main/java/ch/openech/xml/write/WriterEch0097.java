@@ -22,7 +22,7 @@ public class WriterEch0097 {
 
 	public final String URI;
 	
-	public WriterEch0097(EchNamespaceContext context) {
+	public WriterEch0097(EchSchema context) {
 		URI = context.getNamespaceURI(97);
 	}
 	public void organisationIdentification(WriterElement parent, Organisation values) throws Exception {

@@ -73,7 +73,7 @@ import ch.openech.mj.util.StringUtils;
 public class WriterEch0011 {
 	private static final Logger logger = Logger.getLogger(WriterEch0011.class.getName());
 
-	private final EchNamespaceContext context;
+	private final EchSchema context;
 	
 	public final String URI;
 	public final WriterEch0007 ech7;
@@ -81,7 +81,7 @@ public class WriterEch0011 {
 	public final WriterEch0010 ech10;
 	public final WriterEch0044 ech44;
 	
-	public WriterEch0011(EchNamespaceContext context) {
+	public WriterEch0011(EchSchema context) {
 		this.context = context;
 		
 		URI = context.getNamespaceURI(11);

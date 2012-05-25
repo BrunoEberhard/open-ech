@@ -5,15 +5,16 @@ import java.util.List;
 
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.ewk.event.PersonEventEditor;
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class CorrectOriginEvent extends PersonEventEditor<Person> {
 
-	public CorrectOriginEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public CorrectOriginEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override

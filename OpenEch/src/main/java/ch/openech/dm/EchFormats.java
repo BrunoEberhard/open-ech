@@ -7,7 +7,7 @@ import ch.openech.mj.db.model.Code;
 import ch.openech.mj.db.model.Format;
 import ch.openech.mj.db.model.Formats;
 import ch.openech.mj.db.model.PlainFormat;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 
 
 public class EchFormats {
@@ -66,7 +66,7 @@ public class EchFormats {
 	}
 	
 	static void registerXmlSimpleTypes(int root, String version) {
-		EchNamespaceContext echNamespaceContext = EchNamespaceContext.getNamespaceContext(root, version);
+		EchSchema echNamespaceContext = EchSchema.getNamespaceContext(root, version);
 		for (Entry<String, Format> type : echNamespaceContext.getSimpleTypes().entrySet()) {
 			Formats.getInstance().register(type.getKey(), type.getValue());
 		}

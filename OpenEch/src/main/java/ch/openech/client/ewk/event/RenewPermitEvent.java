@@ -5,22 +5,23 @@ import static ch.openech.dm.person.Person.PERSON;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class RenewPermitEvent extends PersonEventEditor<Person> {
 	
-	public RenewPermitEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public RenewPermitEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
 		formPanel.line(PERSON.foreign.residencePermit);
-		if (getEchNamespaceContext().renewPermitHasTill()) {
+		if (echSchema.renewPermitHasTill()) {
 			// bei Change ist diese Angabe obligatorisch, bei Correct und Renew nicht
 			formPanel.line(PERSON.foreign.residencePermitTill);
 		}
@@ -36,7 +37,7 @@ public class RenewPermitEvent extends PersonEventEditor<Person> {
 	
 	@Override
 	protected List<String> getXml(Person person, Person data, WriterEch0020 writerEch0020) throws Exception {
-		if (!getEchNamespaceContext().renewPermitHasTill()) {
+		if (!echSchema.renewPermitHasTill()) {
 			data.foreign.residencePermitTill = null;
 		}
 		return Collections.singletonList(writerEch0020.renewPermit(person.personIdentification, data));

@@ -5,16 +5,17 @@ import static ch.openech.dm.person.Person.PERSON;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 // in e20 wird das AddressLock genannt, überall sonst, z.B. e21 DataLock
 public class AddressLockEvent extends PersonEventEditor<Person> {
 
-	public AddressLockEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public AddressLockEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override

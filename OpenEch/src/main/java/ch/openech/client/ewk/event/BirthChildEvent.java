@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import page.PersonViewPage;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
-import ch.openech.client.ewk.PersonViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
@@ -16,24 +16,23 @@ import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 // Ein etwas spezieller Event, da er nicht die momentan gewählte Person betrifft,
 // sondern als Resultat eine neue Person erstellt.
 public class BirthChildEvent extends PersonEventEditor<Person> {
 
-	public BirthChildEvent(EchNamespaceContext namespaceContext) {
-		super(namespaceContext);
+	public BirthChildEvent(EchSchema echSchema, OpenEchPreferences preferences) {
+		super(echSchema, preferences);
 	}
 
 	@Override
 	public IForm<Person> createForm() {
-		return new PersonPanel(PersonPanelType.BIRTH, getEchNamespaceContext());
+		return new PersonPanel(PersonPanelType.BIRTH, echSchema);
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 
 	@Override
 	public Person load() {
-		return calculatePresets(getPerson(), context);
+		return calculatePresets(getPerson(), preferences);
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 	
 	@Override
 	public boolean save(Person object) throws Exception {
-		setFollowLink(Page.link(PersonViewPage.class, getEchNamespaceContext().getVersion(), object.getId()));
+		setFollowLink(Page.link(PersonViewPage.class, echSchema.getVersion(), object.getId()));
 		return super.save(object);
 	}
 
@@ -65,14 +64,14 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 
 	@BusinessRule("Geburtsort muss bei Erfassung einer Geburt angegeben werden")
 	public void validatePlaceOfBirth(Person person, List<ValidationMessage> resultList) {
-		if (getEchNamespaceContext().birthPlaceMustNotBeUnknown() && (person.placeOfBirth == null || person.placeOfBirth.isUnknown())) {
+		if (echSchema.birthPlaceMustNotBeUnknown() && (person.placeOfBirth == null || person.placeOfBirth.isUnknown())) {
 			resultList.add(new ValidationMessage(Person.PERSON.placeOfBirth, "Geburtsort erforderlich"));
 		}
 	}
 	
 	//
 	
-	private static Person calculatePresets(Person parentPerson, PageContext context) {
+	private static Person calculatePresets(Person parentPerson, OpenEchPreferences preferences) {
 		Person person = new Person();
 
 		Person mother = null;
@@ -108,7 +107,6 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 		presetPlaceOfOrigin(person, father, mother);
 		// presetContact(person, father, mother);
 
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 		if (preferences.preferencesDefaultsData.residence != null) {
 			person.placeOfBirth = new Place();
 			person.placeOfBirth.setMunicipalityIdentification(preferences.preferencesDefaultsData.residence);

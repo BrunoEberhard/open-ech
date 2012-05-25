@@ -15,7 +15,7 @@ import ch.openech.mj.resources.Resources;
 import ch.openech.server.EchPersistence;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
-import ch.openech.xml.write.EchNamespaceContext;
+import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public abstract class AbstractServerTest {
@@ -80,7 +80,7 @@ public abstract class AbstractServerTest {
 	
 	public static WriterEch0020 writer() {
 		if (writer == null) {
-			EchNamespaceContext echNamespaceContext = EchNamespaceContext.getNamespaceContext(20, "2.2"); // !!
+			EchSchema echNamespaceContext = EchSchema.getNamespaceContext(20, "2.2"); // !!
 			writer = new WriterEch0020(echNamespaceContext);
 		}
 		return writer;
