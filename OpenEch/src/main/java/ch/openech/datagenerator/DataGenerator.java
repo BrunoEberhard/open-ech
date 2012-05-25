@@ -17,6 +17,7 @@ import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameGenerator;
+import ch.openech.mj.autofill.OrganisationNameGenerator;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.value.PropertyAccessor;
 import ch.openech.server.EchServer;
@@ -195,7 +196,7 @@ public class DataGenerator {
 	
 	public static Organisation organisation() {
 		Organisation organisation = new Organisation();
-		// TODO reactivate organisation.organisationName = OrganisationNameGenerator.getName();
+		organisation.organisationName = OrganisationNameGenerator.getName();
 		if (organisation.organisationName.length() > 60) {
 			organisation.organisationAdditionalName = organisation.organisationName.substring(60);
 			organisation.organisationName = organisation.organisationName.substring(0, 60);
