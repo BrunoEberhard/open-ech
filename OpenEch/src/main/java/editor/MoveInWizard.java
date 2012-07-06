@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 
 import page.PersonViewPage;
-
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.PersonPanel.PersonPanelType;
@@ -21,7 +20,7 @@ import ch.openech.dm.code.TypeOfRelationshipInverted;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.Wizard;
-import ch.openech.mj.edit.WizardPage;
+import ch.openech.mj.edit.WizardStep;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
@@ -40,15 +39,15 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	private final PageContext context;
 	private final EchSchema echNamespaceContext;
-	private final MoveInPersonWizardPage moveInPersonWizardPage;
-	private final MoveInNextPersonWizardPage moveInNextPersonWizardPage;
-	private int personIndex; // merge with currentPageIndex?
+	private final MoveInPersonWizardStep moveInPersonWizardStep;
+	private final MoveInNextPersonWizardStep moveInNextPersonWizardStep;
+	private int personIndex; // merge with currentStepIndex?
 	
 	public MoveInWizard(PageContext context, String version) {
 		this.context = context;
 		this.echNamespaceContext = EchSchema.getNamespaceContext(20, version);
-		this.moveInPersonWizardPage = new MoveInPersonWizardPage();
-		this.moveInNextPersonWizardPage = new MoveInNextPersonWizardPage();
+		this.moveInPersonWizardStep = new MoveInPersonWizardStep();
+		this.moveInNextPersonWizardStep = new MoveInNextPersonWizardStep();
 	}
 
 	public static class MoveInNextPerson {
@@ -72,8 +71,8 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	@Override
-	protected WizardPage<?> getFirstPage() {
-		return moveInPersonWizardPage;
+	protected WizardStep<?> getFirstStep() {
+		return moveInPersonWizardStep;
 	}
 
 	protected WriterEch0020 getWriterEch0020() {
@@ -105,7 +104,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 	}
 
-	private class MoveInPersonWizardPage extends WizardPage<Person> {
+	private class MoveInPersonWizardStep extends WizardStep<Person> {
 
 		@Override
 		protected IForm<Person> createForm() {
@@ -133,14 +132,14 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public WizardPage<?> getNextPage() {
-			return moveInNextPersonWizardPage;
+		public WizardStep<?> getNextStep() {
+			return moveInNextPersonWizardStep;
 		}
 
 		@Override
-		public WizardPage<?> getPreviousPage() {
+		public WizardStep<?> getPreviousStep() {
 			personIndex = personIndex - 1;
-			return moveInNextPersonWizardPage;
+			return moveInNextPersonWizardStep;
 		}
 		
 		@Override
@@ -168,7 +167,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 	}
 	
-	private class MoveInNextPersonWizardPage extends WizardPage<MoveInNextPerson> {
+	private class MoveInNextPersonWizardStep extends WizardStep<MoveInNextPerson> {
 
 		@Override
 		protected IForm<MoveInNextPerson> createForm() {
@@ -227,14 +226,14 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public WizardPage<?> getNextPage() {
+		public WizardStep<?> getNextStep() {
 			personIndex = personIndex + 1;
-			return moveInPersonWizardPage;
+			return moveInPersonWizardStep;
 		}
 
 		@Override
-		public WizardPage<?> getPreviousPage() {
-			return moveInPersonWizardPage;
+		public WizardStep<?> getPreviousStep() {
+			return moveInPersonWizardStep;
 		}
 	}
 	
