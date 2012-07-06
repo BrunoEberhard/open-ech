@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import ch.openech.dm.common.Plz;
 import ch.openech.dm.common.Zip;
 
 public class PlzImport {

@@ -2,6 +2,7 @@ package ch.openech.dm.common;
 
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.util.StringUtils;
+import ch.openech.util.Plz;
 
 public class Zip {
 	public static final Zip ZIP_TOWN = Constants.of(Zip.class);

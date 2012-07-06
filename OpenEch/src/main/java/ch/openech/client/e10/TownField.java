@@ -3,7 +3,6 @@ package ch.openech.client.e10;
 import java.util.logging.Logger;
 
 import ch.openech.dm.common.Address;
-import ch.openech.dm.common.Plz;
 import ch.openech.dm.common.Zip;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
@@ -16,6 +15,7 @@ import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
+import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 
 public class TownField extends AbstractEditField<String> implements DemoEnabled, DependingOnFieldAbove<Zip> {

@@ -1,4 +1,4 @@
-package ch.openech.dm.common;
+package ch.openech.util;
 
 import java.io.Serializable;
 
