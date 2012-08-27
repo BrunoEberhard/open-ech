@@ -1,11 +1,11 @@
 package ch.openech.dm.person;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.DatePartially;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.Sex;
 import ch.openech.dm.common.TechnicalIds;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
@@ -20,13 +20,13 @@ public class PersonIdentification {
 
 	public String vn;
 	
-	@Required @FormatName(EchFormats.baseName) 
+	@Required @Is(EchFormats.baseName) 
 	public String firstName, officialName;
 	
 	@Required 
 	public String sex = Sex.getDefault();
 	
-	@Required @Date(partialAllowed = true)
+	@Required @Is(DatePartially)
 	public String dateOfBirth;
 	
 	//

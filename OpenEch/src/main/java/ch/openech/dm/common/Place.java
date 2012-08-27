@@ -1,7 +1,7 @@
 package ch.openech.dm.common;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.value.Reference;
 
 // Verwendung als Birthplace und als Destination
@@ -9,7 +9,7 @@ public class Place {
 	
 	@Reference public final MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
 	@Reference public final CountryIdentification countryIdentification = Swiss.createCountryIdentification();
-	@FormatName(EchFormats.baseName) // TODO REMOVE
+	@Is(EchFormats.baseName) // TODO REMOVE
 	public String foreignTown;
 	public Address mailAddress; // nur bei Verwendung als Destination
 	

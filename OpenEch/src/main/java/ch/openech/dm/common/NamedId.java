@@ -1,9 +1,11 @@
 package ch.openech.dm.common;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.String36;
+
 import java.util.UUID;
 
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Varchar;
+import ch.openech.mj.db.model.annotation.Is;
 
 public class NamedId {
 
@@ -12,7 +14,7 @@ public class NamedId {
 	
 	public String personIdCategory;
 	
-	@Varchar(36)
+	@Is(String36)
 	public String personId;
 	
 	public String display() {

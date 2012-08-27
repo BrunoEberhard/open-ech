@@ -1,9 +1,12 @@
 package ch.openech.dm.common;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int12;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int3;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int9;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.db.model.annotation.Int;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
@@ -11,15 +14,15 @@ public class DwellingAddress {
 
 	public static final DwellingAddress DWELLING_ADDRESS = Constants.of(DwellingAddress.class);
 	
-	@Int(9)
+	@Is(Int9)
 	public String EGID;
-	@Int(3)
+	@Is(Int3)
 	public String EWID;
-	@Int(12) // ist nicht bekannt aus Schema
+	@Is(Int12) // ist nicht bekannt aus Schema
 	public String householdID; // not for organisation
 	public Address mailAddress;
 	public String typeOfHousehold; // not for organisation
-	@Date
+	@Is(Date)
 	public String movingDate;
 
 	public String toHtml() {

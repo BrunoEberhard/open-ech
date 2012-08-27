@@ -1,6 +1,7 @@
 package ch.openech.dm.person;
 
 import static ch.openech.dm.EchFormats.baseName;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,7 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.contact.Contact;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Reference;
 import ch.openech.mj.edit.value.Required;
@@ -49,21 +49,21 @@ public class Person {
 	@Reference
 	public final PersonIdentification personIdentification = new PersonIdentification();
 	
-	@FormatName(baseName) 
+	@Is(baseName) 
 	public String originalName, alliancePartnershipName, aliasName, otherName, callName;
 
 	public Place placeOfBirth;
-	@Date 
+	@Is(Date) 
 	public String dateOfDeath;
 	
 	public final MaritalStatus maritalStatus = new MaritalStatus();
 	public final Separation separation = new Separation();
-	@FormatName("partnerShipAbolition")
+	@Is("partnerShipAbolition")
 	public String cancelationReason;
 	public final Nationality nationality = new Nationality();
 	public final ContactPerson contactPerson = new ContactPerson();
 	
-	@FormatName("language")
+	@Is("language")
 	public String languageOfCorrespondance = "de";
 	@Required
 	public String religion = "000";
@@ -74,7 +74,7 @@ public class Person {
 	public String typeOfResidence = "1"; // residence (hasMainResidence / hasSecondaryResidence / hasOtherResidence)
 	public final Residence residence = new Residence();
 	
-	@Date 
+	@Is(Date) 
 	public String arrivalDate, departureDate;
 	public Place comesFrom, goesTo;
 	public Address comesFromAddress, goesToAddress;

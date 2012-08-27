@@ -1,6 +1,7 @@
 package ch.openech.client.ewk.event;
 
 import static ch.openech.dm.person.PlaceOfOrigin.PLACE_OF_ORIGIN;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +11,7 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -100,7 +101,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		
 		@Required
 		public PlaceOfOrigin placeOfOrigin;
-		@Required @Date
+		@Required @Is(Date)
 		public String expatriationDate;
 	}
 

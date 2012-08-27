@@ -1,6 +1,7 @@
 package ch.openech.dm.person;
 
-import ch.openech.mj.db.model.annotation.Date;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.value.Required;
 
 
@@ -8,7 +9,7 @@ public class MaritalStatus {
 
 	@Required
 	public String maritalStatus = ch.openech.dm.code.MaritalStatus.Ledig.value;
-	@Date
+	@Is(Date)
 	public String dateOfMaritalStatus;
 
 	public boolean isLedig() {

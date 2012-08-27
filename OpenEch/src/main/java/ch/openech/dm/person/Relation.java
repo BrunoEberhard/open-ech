@@ -5,7 +5,7 @@ import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.code.TypeOfRelationship;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.StringUtils;
 
@@ -16,13 +16,13 @@ public class Relation {
 	@Required
 	public String typeOfRelationship;
 	public String basedOnLaw;
-	@FormatName(EchFormats.yesNo)
+	@Is(EchFormats.yesNo)
 	public String care = "0";
 	public PersonIdentification partner;
 	
 	public Address address;
 	
-	@FormatName(EchFormats.baseName)
+	@Is(EchFormats.baseName)
 	public String firstNameAtBirth, officialNameAtBirth; // only for parent
 	
 	// 

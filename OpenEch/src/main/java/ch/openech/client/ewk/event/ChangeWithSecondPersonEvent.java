@@ -1,5 +1,7 @@
 package ch.openech.client.ewk.event;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Boolean;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +11,8 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Boolean;
-import ch.openech.mj.db.model.annotation.Date;
+import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.db.model.annotation.PredefinedFormat;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
@@ -29,11 +31,11 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class ChangeWithSecondPersonEventData {
 		public static final ChangeWithSecondPersonEventData DATA = Constants.of(ChangeWithSecondPersonEventData.class);
-		@Required @Date
+		@Required @Is(PredefinedFormat.Date)
 		public String date;
 		public String separation;
 		public String cancelationReason;
-		@Boolean
+		@Is(Boolean)
 		public String registerPartner = "0";
 		public Relation relationPartner;
 		

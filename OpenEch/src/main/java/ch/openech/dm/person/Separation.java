@@ -1,7 +1,8 @@
 package ch.openech.dm.person;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
+import ch.openech.mj.db.model.annotation.Is;
 
 public class Separation {
 
@@ -9,7 +10,7 @@ public class Separation {
 	
 	public String separation;
 	
-	@Date
+	@Is(Date)
 	public String dateOfSeparation, separationTill;
 	
 	public void clear() {

@@ -1,5 +1,8 @@
 package ch.openech.client.ewk.event;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Boolean;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,9 +16,7 @@ import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Boolean;
-import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.fields.CheckBoxStringField;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.TextEditField;
@@ -36,14 +37,14 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	}
 
 	public static class Marriage {
-		@Required @Date
+		@Required @Is(Date)
 		public String dateOfMaritalStatus;
-		@Boolean
+		@Is(Boolean)
 		public String registerPartner2 = "1";
 		public Person partner1, partner2;
-		@Boolean
+		@Is(Boolean)
 		public String changeName1, changeName2;
-		@FormatName(EchFormats.baseName)
+		@Is(EchFormats.baseName)
 		public String name1, name2;
 		public final List<PlaceOfOrigin> origin1 = new ArrayList<PlaceOfOrigin>();
 		public final List<PlaceOfOrigin> origin2 = new ArrayList<PlaceOfOrigin>();

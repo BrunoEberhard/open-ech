@@ -3,7 +3,7 @@ package ch.openech.dm.person;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.util.StringUtils;
 
 public class PersonExtendedInformation {
@@ -12,22 +12,22 @@ public class PersonExtendedInformation {
 	
 	public PersonIdentification personIdentification;
 	
-	@FormatName(EchFormats.yesNo)
+	@Is(EchFormats.yesNo)
 	public String armedForcesService, armedForcesLiability;
 	
-	@FormatName(EchFormats.yesNo)
+	@Is(EchFormats.yesNo)
 	public String civilDefense;
 	
-	@FormatName(EchFormats.yesNo)
+	@Is(EchFormats.yesNo)
 	public String fireService, fireServiceLiability;
 	
-	@FormatName(EchFormats.yesNo)
+	@Is(EchFormats.yesNo)
 	public String healthInsured;
-	@FormatName(EchFormats.baseName) // TODO REMOVE
+	@Is(EchFormats.baseName) // TODO REMOVE
 	public String insuranceName;
 	public Address insuranceAddress;
 	
-	@FormatName(EchFormats.baseName) // TODO REMOVE
+	@Is(EchFormats.baseName) // TODO REMOVE
 	public String matrimonialInheritanceArrangement;
 
 	public boolean isEmpty() {

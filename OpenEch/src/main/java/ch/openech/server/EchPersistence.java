@@ -8,6 +8,7 @@ import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.tpn.ThirdPartyMove;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.Table;
+import ch.openech.mj.db.model.annotation.PredefinedFormat;
 
 public class EchPersistence extends DbPersistence {
 
@@ -18,6 +19,7 @@ public class EchPersistence extends DbPersistence {
 	private final Table<ThirdPartyMove> thirdPartyMove = null;
 
 	public EchPersistence() throws SQLException {
+		PredefinedFormat.initialize();
 		EchFormats.initialize();
 		
 		personIdentification = addClass(PersonIdentification.class);

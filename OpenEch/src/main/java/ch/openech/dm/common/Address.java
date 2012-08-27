@@ -4,7 +4,7 @@ import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.code.MrMrs;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.StringUtils;
 
@@ -13,7 +13,7 @@ public class Address {
 	public static final Address ADDRESS = Constants.of(Address.class);
 
 	// organisation
-	@FormatName(EchFormats.organisationName)
+	@Is(EchFormats.organisationName)
 	public String organisationName, organisationNameAddOn1, organisationNameAddOn2;
 
 	// person
@@ -24,7 +24,7 @@ public class Address {
 	public String firstName, lastName;
 	
 	// all
-	@FormatName(EchFormats.addressLine)
+	@Is(EchFormats.addressLine)
 	public String addressLine1, addressLine2;
 	public String street;
 	public final HouseNumber houseNumber = new HouseNumber();

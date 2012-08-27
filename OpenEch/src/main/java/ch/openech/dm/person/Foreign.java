@@ -1,10 +1,10 @@
 package ch.openech.dm.person;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
@@ -13,10 +13,10 @@ public class Foreign {
 	
 	public String residencePermit;
 	
-	@Date 
+	@Is(Date) 
 	public String residencePermitTill;
 	
-	@FormatName(EchFormats.baseName) 
+	@Is(EchFormats.baseName) 
 	public String nameOnPassport;
 
 	public String toHtml() {

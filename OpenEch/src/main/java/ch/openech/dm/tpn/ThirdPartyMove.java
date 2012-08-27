@@ -1,10 +1,12 @@
 package ch.openech.dm.tpn;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.DatePartially;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.contact.Contact;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
+import ch.openech.mj.db.model.annotation.Is;
 
 // e46
 public class ThirdPartyMove {
@@ -15,12 +17,12 @@ public class ThirdPartyMove {
 	
 	// Person
 	public String officialName, callName;
-	@Date(partialAllowed = true)
+	@Is(DatePartially)
 	public String dateOfBirth;
 	public String sex;
 	public CountryIdentification nationality;
 	
-	@Date
+	@Is(Date)
 	public String beginOfContract, endOfContract;
 	
 	// Building

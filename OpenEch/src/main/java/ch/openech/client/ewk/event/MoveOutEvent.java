@@ -1,5 +1,7 @@
 package ch.openech.client.ewk.event;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.xml.write.EchSchema;
@@ -24,7 +26,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 	}
 
 	public static class MoveOutData {
-		@Required @Date
+		@Required @Is(Date)
 		public String departureDate;
 		public MunicipalityIdentification reportingMunicipality;
 		public Place goesTo;

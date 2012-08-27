@@ -1,14 +1,15 @@
 package ch.openech.dm.contact;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.String2;
+
 import java.util.List;
 import java.util.regex.Pattern;
 
 import ch.openech.dm.code.EchCodes;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.db.model.annotation.FormatName;
-import ch.openech.mj.db.model.annotation.Varchar;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.DateUtils;
@@ -20,18 +21,18 @@ public class ContactEntry implements Validatable {
 	
 	public String typeOfContact; // A, E, P, I
 	
-	@Varchar(2)
+	@Is(String2)
 	public String categoryCode;
-	@FormatName("freeKategoryText") // sic!
+	@Is("freeKategoryText") // sic!
 	public String categoryOther;
 	
 	// Address only for Address Entries, value for the other types
 	public Address address;
-	@FormatName("emailAddress")
+	@Is("emailAddress")
 	public String value;
 	
 	// Validity
-	@Date
+	@Is(Date)
 	public String dateFrom, dateTo;
 
 	public boolean isAddressEntry() {

@@ -3,7 +3,7 @@ package ch.openech.dm.common;
 import java.io.Serializable;
 
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.util.StringUtils;
 
 public class MunicipalityIdentification implements Comparable<MunicipalityIdentification>, Serializable {
@@ -13,7 +13,7 @@ public class MunicipalityIdentification implements Comparable<MunicipalityIdenti
 	public String municipalityId;
 	public String municipalityName;
 	public String cantonAbbreviation;
-	@FormatName("municipalityId")
+	@Is("municipalityId")
 	public String historyMunicipalityId;
 	
 	public void clear() {

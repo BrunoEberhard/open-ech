@@ -1,10 +1,12 @@
 package ch.openech.dm.contact;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int9;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Int;
+import ch.openech.mj.db.model.annotation.Is;
 
 // e46
 // Für Personen, aber auch für Vermieter
@@ -12,7 +14,7 @@ public class Contact {
 
 	public static final Contact CONTACT = Constants.of(Contact.class);
 	
-	@Int(9)
+	@Is(Int9)
 	// TODO in Contact stringId eventuell durch NamedId ersetzen
 	public String stringId;
 	public final List<ContactEntry> entries = new ArrayList<ContactEntry>();

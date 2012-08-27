@@ -1,9 +1,11 @@
 package ch.openech.datagenerator;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int4;
+
 import java.util.List;
 
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Int;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.form.Form;
@@ -107,10 +109,10 @@ public class GeneratePersonAction extends EditorDialogAction {
 	public static class GeneratePersonData {
 		public static final GeneratePersonData GENERATE_PERSON_DATA = Constants.of(GeneratePersonData.class);
 
-		@Int(4)
+		@Is(Int4)
 		public String numberOfPersons;
 
-		@Int(4)
+		@Is(Int4)
 		public String numberOfOrganisations;
 
 	}

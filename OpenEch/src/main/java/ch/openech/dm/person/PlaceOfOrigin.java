@@ -1,10 +1,10 @@
 package ch.openech.dm.person;
 
+import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.EchCodes;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Date;
-import ch.openech.mj.db.model.annotation.FormatName;
+import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
@@ -14,12 +14,12 @@ public class PlaceOfOrigin {
 	
 	// 11: placeOfOriginType
 	public String originName;
-	@FormatName(EchFormats.cantonAbbreviation)
+	@Is(EchFormats.cantonAbbreviation)
 	public String canton;
 	
 	// 21:placeOfOriginAddonType
 	public String reasonOfAcquisition;
-	@Date
+	@Is(Date)
 	public String naturalizationDate, expatriationDate;
 	
 	@Override
