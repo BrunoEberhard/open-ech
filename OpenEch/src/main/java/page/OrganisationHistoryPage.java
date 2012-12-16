@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.page.HistoryPage;
@@ -35,21 +36,21 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	}
 
 	@Override
-	protected List<HistoryVersion> loadVersions() {
-		List<HistoryVersion> versions = new ArrayList<HistoryVersion>();
+	protected List<HistoryVersion<Organisation>> loadVersions() {
+		List<HistoryVersion<Organisation>> versions = new ArrayList<HistoryVersion<Organisation>>();
 		try {
 			Organisation organisation = EchServer.getInstance().getPersistence().organisation().getByLocalOrganisationId(organisationId);
 			int id = EchServer.getInstance().getPersistence().organisation().getId(organisation);
 			List<Integer> times = EchServer.getInstance().getPersistence().organisation().readVersions(id);
 			Collections.reverse(times);
-			HistoryVersion version = new HistoryVersion();
+			HistoryVersion<Organisation> version = new HistoryVersion<Organisation>();
 			version.object = organisation;
 			version.time = getTime(organisation);
 			version.description = getDescription(organisation);
 			versions.add(version);
 			for (int time : times) {
 				organisation = EchServer.getInstance().getPersistence().organisation().read(id, time);
-				version = new HistoryVersion();
+				version = new HistoryVersion<Organisation>();
 				version.object = organisation;
 				version.version = "" + time;
 				version.time = getTime(organisation);
@@ -63,8 +64,8 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	}
 
 	@Override
-	protected String getTime(Organisation object) {
-		return object.event != null ? object.event.time : "-";
+	protected LocalDateTime getTime(Organisation object) {
+		return object.event.time;
 	}
 
 	@Override

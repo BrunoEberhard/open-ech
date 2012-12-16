@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import ch.openech.client.org.OrganisationMenu;
 import ch.openech.client.org.OrganisationPanel;
-import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.ActionGroup;
@@ -27,7 +26,7 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 		this.echSchema = EchSchema.getNamespaceContext(148, arguments[0]);
 		this.organisationId = arguments[1];
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
-		this.organisationPanel = new OrganisationPanel(OrganisationPanelType.DISPLAY, echSchema);
+		this.organisationPanel = new OrganisationPanel(Organisation.EditMode.DISPLAY, echSchema);
 		this.menu = time == 0 ? new OrganisationMenu(context, echSchema) : null;  
 	}
 

@@ -40,9 +40,9 @@ public class UndoSwissEvent extends PersonEventEditor<Person> {
 	public void validate(Person object, List<ValidationMessage> resultList) {
 		Nationality nationality = object.nationality;
 		if (nationality == null || nationality.nationalityCountry == null || nationality.nationalityCountry.isEmpty()) {
-			resultList.add(new ValidationMessage("nationality", "Nationalität muss gesetzt sein"));
+			resultList.add(new ValidationMessage(Person.PERSON.nationality, "Nationalität muss gesetzt sein"));
 		} else if (nationality != null && nationality.nationalityCountry != null && nationality.nationalityCountry.isSwiss()) {
-			resultList.add(new ValidationMessage("nationality", "Nationalität darf nicht Schweiz sein"));
+			resultList.add(new ValidationMessage(Person.PERSON.nationality, "Nationalität darf nicht Schweiz sein"));
 		}
 	}
 	

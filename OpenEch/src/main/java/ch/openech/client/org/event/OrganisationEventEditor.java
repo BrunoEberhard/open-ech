@@ -29,7 +29,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 
 	protected static EchSchema getNamespaceContextOrg(PageContext context) {
 		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-		return EchSchema.getNamespaceContext(148, preferences.applicationSchemaData.schema148);
+		return EchSchema.getNamespaceContext(preferences.applicationSchemaData.schema148);
 	}
 
 	@Override

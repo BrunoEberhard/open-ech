@@ -2,16 +2,20 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.openech.dm.code.MaritalStatus;
+import ch.openech.dm.code.NationalityStatus;
+import ch.openech.dm.code.ResidencePermit;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
+import ch.openech.dm.person.types.Religion;
+import ch.openech.dm.types.Language;
 import ch.openech.server.EchServer;
 
 /*
@@ -49,12 +53,12 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctNationality0() throws Exception {
 		Person person = load(id);
-		person.nationality.nationalityStatus = "0";
+		person.nationality.nationalityStatus = NationalityStatus.unknown;
 		
 		process(writer().correctNationality(person));
 		
 		person = load(id);
-		Assert.assertEquals("0", person.nationality.nationalityStatus);
+		Assert.assertEquals(NationalityStatus.unknown, person.nationality.nationalityStatus);
 	}
 
 	@Test
@@ -73,18 +77,18 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctNationality2() throws Exception {
 		Person person = load(id);
-		person.nationality.nationalityStatus = "2";
+		person.nationality.nationalityStatus = NationalityStatus.with;
 		person.nationality.nationalityCountry.countryIdISO2 = "CX";
 		person.nationality.nationalityCountry.countryNameShort = "CX Name";
-		person.nationality.nationalityCountry.countryId = "4242";
+		person.nationality.nationalityCountry.countryId = 4242;
 		
 		process(writer().correctNationality(person));
 		
 		person = load(id);
-		Assert.assertEquals("2", person.nationality.nationalityStatus);
+		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
 		Assert.assertEquals("CX", person.nationality.nationalityCountry.countryIdISO2);
 		Assert.assertEquals("CX Name", person.nationality.nationalityCountry.countryNameShort);
-		Assert.assertEquals("4242", person.nationality.nationalityCountry.countryId);
+		Assert.assertEquals(Integer.valueOf(4242), person.nationality.nationalityCountry.countryId);
 	}
 	
 	@Test
@@ -126,25 +130,25 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctReligion() throws Exception {
 		Person person = load(id);
 		
-		process(writer().correctReligion(person, "222"));
+		process(writer().correctReligion(person, Religion.christ_katolisch));
 		
 		person = load(id);
-		Assert.assertEquals("222", person.religion);
+		Assert.assertEquals(Religion.christ_katolisch, person.religion);
 	}
 	
 	@Test
 	public void correctOrigin() throws Exception {
 		Person person = load(id);
 		PlaceOfOrigin origin1 = new PlaceOfOrigin();
-		origin1.canton = "TG";
+		origin1.cantonAbbreviation.canton = "TG";
 		origin1.originName = "Heimat 1";
-		origin1.naturalizationDate = "1974-02-28";
-		origin1.expatriationDate = "2007-10-11";
+		origin1.naturalizationDate = new LocalDate(1974, 2, 28);
+		origin1.expatriationDate = new LocalDate(2007, 10, 11);
 		
 		PlaceOfOrigin origin2 = new PlaceOfOrigin();
-		origin2.canton = "TI";
+		origin2.cantonAbbreviation.canton = "TI";
 		origin2.originName = "Heimat 2";
-		origin2.naturalizationDate = "2007-10-11";
+		origin2.naturalizationDate = new LocalDate(2007, 10, 11);
 
 		person.placeOfOrigin.clear();
 		person.placeOfOrigin.add(origin1);
@@ -163,20 +167,20 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctResidencePermit() throws Exception {
 		Person person = load(foreignId);
 		Foreign foreign = new Foreign();
-		foreign.residencePermit = "0402";
-		foreign.residencePermitTill = "2020-10-11";
+		foreign.residencePermit = ResidencePermit.Aufenthalter_nach_eu_efta_abkommen;
+		foreign.residencePermitTill = new LocalDate(2020, 10, 11);
 
 		process(writer().correctResidencePermit(person, foreign));
 		
 		person = load(foreignId);
-		Assert.assertEquals("0402", person.foreign.residencePermit);
-		Assert.assertEquals("2020-10-11", person.foreign.residencePermitTill);	
+		Assert.assertEquals(ResidencePermit.Aufenthalter_nach_eu_efta_abkommen, person.foreign.residencePermit);
+		Assert.assertEquals(new LocalDate(2020, 10, 11), person.foreign.residencePermitTill);	
 	}
 	
 	@Test
 	public void correctMaritalData2() throws Exception {
 		Person person = load(id);
-		person.maritalStatus.maritalStatus = MaritalStatus.Verheiratet.value;
+		person.maritalStatus.maritalStatus = ch.openech.dm.person.types.MaritalStatus.verheiratet;
 		
 		process(writer().correctMaritalData(person));
 		
@@ -187,7 +191,7 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctMaritalData1() throws Exception {
 		Person person = load(id);
-		person.maritalStatus.maritalStatus = MaritalStatus.Ledig.value;;
+		person.maritalStatus.maritalStatus = ch.openech.dm.person.types.MaritalStatus.ledig;
 		
 		process(writer().correctMaritalData(person));
 		
@@ -198,25 +202,25 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctPlaceOfBirth_Swiss() throws Exception {
 		Person person = load(id);
-		person.placeOfBirth.municipalityIdentification.cantonAbbreviation = "SG";
-		person.placeOfBirth.municipalityIdentification.historyMunicipalityId = "20";
-		person.placeOfBirth.municipalityIdentification.municipalityId = "2";
+		person.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton = "SG";
+		person.placeOfBirth.municipalityIdentification.historyMunicipalityId = 20;
+		person.placeOfBirth.municipalityIdentification.municipalityId = 2;
 		person.placeOfBirth.municipalityIdentification.municipalityName = "Testwil";
 		
 		process(writer().correctPlaceOfBirth(person));
 		
 		person = load(id);
 		Assert.assertEquals(Swiss.createCountryIdentification().toStringReadable(), person.placeOfBirth.countryIdentification.toStringReadable());
-		Assert.assertEquals("SG", person.placeOfBirth.municipalityIdentification.cantonAbbreviation);
-		Assert.assertEquals("20", person.placeOfBirth.municipalityIdentification.historyMunicipalityId);
-		Assert.assertEquals("2", person.placeOfBirth.municipalityIdentification.municipalityId);
+		Assert.assertEquals("SG", person.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton);
+		Assert.assertEquals(Integer.valueOf(20), person.placeOfBirth.municipalityIdentification.historyMunicipalityId);
+		Assert.assertEquals(Integer.valueOf(2), person.placeOfBirth.municipalityIdentification.municipalityId);
 		Assert.assertEquals("Testwil", person.placeOfBirth.municipalityIdentification.municipalityName);
 	}
 	
 	@Test
 	public void correctPlaceOfBirth_Foreign() throws Exception {
 		Person person = load(id);
-		person.placeOfBirth.countryIdentification.countryId = "4242";
+		person.placeOfBirth.countryIdentification.countryId = 4242;
 		person.placeOfBirth.countryIdentification.countryIdISO2 = "CZ";
 		person.placeOfBirth.countryIdentification.countryNameShort = "CZ Name";
 		person.placeOfBirth.foreignTown = "Testtown";
@@ -224,7 +228,7 @@ public class CorrectTest extends AbstractServerTest {
 		process(writer().correctPlaceOfBirth(person));
 		
 		person = load(id);
-		Assert.assertEquals("4242", person.placeOfBirth.countryIdentification.countryId);
+		Assert.assertEquals(Integer.valueOf(4242), person.placeOfBirth.countryIdentification.countryId);
 		Assert.assertEquals("CZ", person.placeOfBirth.countryIdentification.countryIdISO2);
 		Assert.assertEquals("CZ Name", person.placeOfBirth.countryIdentification.countryNameShort);
 		Assert.assertEquals("Testtown", person.placeOfBirth.foreignTown);
@@ -234,12 +238,12 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctDateOfDeath() throws Exception {
 		Person person = load(id);
-		person.dateOfDeath = "2012-12-31";
+		person.dateOfDeath = new LocalDate(2012, 12, 31);
 		
 		process(writer().correctDateOfDeath(person));
 		
 		person = load(id);
-		Assert.assertEquals("2012-12-31", person.dateOfDeath);
+		Assert.assertEquals(new LocalDate(2012, 12, 31), person.dateOfDeath);
 	}
 	
 	@Test
@@ -256,12 +260,12 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctLanguageOfCorrespondance() throws Exception {
 		Person person = load(id);
-		person.languageOfCorrespondance = "3";
+		person.languageOfCorrespondance = Language.it;
 		
 		process(writer().correctLanguageOfCorrespondance(person));
 		
 		person = load(id);
-		Assert.assertEquals("3", person.languageOfCorrespondance);
+		Assert.assertEquals(Language.it, person.languageOfCorrespondance);
 	}
 	
 }

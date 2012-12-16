@@ -33,7 +33,7 @@ public class CorrectOccupationEvent extends PersonEventEditor<Person> {
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		if (echSchema.correctOccupationMustHaveOccupation()) {
 			if (person.occupation.isEmpty()) {
-				resultList.add(new ValidationMessage("occupation",
+				resultList.add(new ValidationMessage(Person.PERSON.occupation,
 						"In der aktiven Schema - Version muss hier min. 1 Beruf eingetragen sein"));
 			}
 		}

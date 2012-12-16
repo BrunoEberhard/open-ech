@@ -5,6 +5,8 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.openech.dm.code.NationalityStatus;
+import ch.openech.dm.code.ResidencePermit;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
@@ -33,35 +35,35 @@ public class NaturalizeSwissTest extends AbstractServerTest {
 		person = load(id);
 		
 		Assert.assertNotNull(person);
-		Assert.assertEquals("2", person.nationality.nationalityStatus);
+		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
 		Assert.assertEquals(Swiss.SWISS_COUNTRY_ID, person.nationality.nationalityCountry.countryId);	
 		Assert.assertEquals(Swiss.SWISS_COUNTRY_NAME_SHORT, person.nationality.nationalityCountry.countryNameShort);	
 
 		Assert.assertEquals(placeOfOriginCountBefore + 1, person.placeOfOrigin.size());
 		PlaceOfOrigin placeOfOrigin = person.placeOfOrigin.get(person.placeOfOrigin.size() - 1);
 		Assert.assertEquals("Murten", placeOfOrigin.originName);
-		Assert.assertEquals("FR", placeOfOrigin.canton);
+		Assert.assertEquals("FR", placeOfOrigin.cantonAbbreviation.canton);
 	}
 
 	@Test
 	public void undoSwiss() throws Exception {
 		Person person = load(id);
-		person.nationality.nationalityCountry.countryId = "8345";
+		person.nationality.nationalityCountry.countryId = 8345;
 		person.nationality.nationalityCountry.countryIdISO2 = "SN";
 		person.nationality.nationalityCountry.countryNameShort = "Senegal";
-		person.foreign.residencePermit = "01";
+		person.foreign.residencePermit = ResidencePermit.Saisonarbeiter;
 		
 		process(writer().undoSwiss(person));
 
 		person = load(id);
 		Assert.assertNotNull(person);
-		Assert.assertEquals("2", person.nationality.nationalityStatus);
-		Assert.assertEquals("8345", person.nationality.nationalityCountry.countryId);	
+		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
+		Assert.assertEquals(Integer.valueOf(8345), person.nationality.nationalityCountry.countryId);	
 		Assert.assertEquals("Senegal", person.nationality.nationalityCountry.countryNameShort);	
 		Assert.assertEquals("SN", person.nationality.nationalityCountry.countryIdISO2);	
 		
 		// Assert.assertEquals("Passname", person.nameOnPassport);	
-		Assert.assertEquals("01", person.foreign.residencePermit);	
+		Assert.assertEquals(ResidencePermit.Saisonarbeiter, person.foreign.residencePermit);	
 	}
 	
 }

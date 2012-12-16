@@ -4,14 +4,15 @@ import ch.openech.client.e46.ContactField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.contact.Contact;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 
 public class ContractorField extends ObjectFlowField<Contact> {
 	
-	public ContractorField(Object key) {
-		super(key, true);
+	public ContractorField(PropertyInterface property) {
+		super(property, true);
 	}
 	
 	@Override

@@ -1,7 +1,19 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
-
+import static ch.openech.dm.XmlConstants.ADDRESS;
+import static ch.openech.dm.XmlConstants.CONTACT;
+import static ch.openech.dm.XmlConstants.CONTACT_ROOT;
+import static ch.openech.dm.XmlConstants.DATE_FROM;
+import static ch.openech.dm.XmlConstants.DATE_TO;
+import static ch.openech.dm.XmlConstants.EMAIL;
+import static ch.openech.dm.XmlConstants.EMAIL_ADDRESS;
+import static ch.openech.dm.XmlConstants.INTERNET;
+import static ch.openech.dm.XmlConstants.INTERNET_ADDRESS;
+import static ch.openech.dm.XmlConstants.LOCAL_I_D;
+import static ch.openech.dm.XmlConstants.PHONE;
+import static ch.openech.dm.XmlConstants.PHONE_NUMBER;
+import static ch.openech.dm.XmlConstants.POSTAL_ADDRESS;
+import static ch.openech.dm.XmlConstants.VALIDITY;
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
@@ -94,7 +106,8 @@ public class WriterEch0046 extends DeliveryWriter {
 	private WriterElement entryElementWithCategory(WriterElement parent, ContactEntry entry, String type) throws Exception {
 		WriterElement element = parent.create(URI, type);
 
-		if (!StringUtils.isBlank(entry.categoryCode)) {
+		Enum<?> code = PHONE.equals(type) ? entry.phoneCategory : entry.categoryCode;
+		if (code != null) {
 			element.text(type + "Category", entry.categoryCode);
 		}
 		if (!StringUtils.isBlank(entry.categoryOther)) {

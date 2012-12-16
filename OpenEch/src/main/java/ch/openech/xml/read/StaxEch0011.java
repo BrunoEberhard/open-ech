@@ -59,6 +59,7 @@ import static ch.openech.dm.XmlConstants.WITHOUT_E_G_I_D;
 import static ch.openech.dm.XmlConstants._E_G_I_D;
 import static ch.openech.dm.XmlConstants._E_W_I_D;
 import static ch.openech.xml.read.StaxEch.date;
+import static ch.openech.xml.read.StaxEch.enuum;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -67,7 +68,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.code.EchCodes;
+import ch.openech.dm.code.FederalRegister;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
@@ -75,6 +76,8 @@ import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
+import ch.openech.mj.db.model.ColumnProperties;
+import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0011 {
@@ -172,7 +175,7 @@ public class StaxEch0011 {
 				else if (startName.equals(HOUSEHOLD_I_D)) dwelingAddress.householdID = token(xml);
 				else if (startName.equals(WITHOUT_E_G_I_D)) withoutEGID(xml, dwelingAddress);
 				else if (startName.equals(ADDRESS)) dwelingAddress.mailAddress = StaxEch0010.address(xml);
-				else if (startName.equals(TYPE_OF_HOUSEHOLD)) dwelingAddress.typeOfHousehold = token(xml);
+				else if (startName.equals(TYPE_OF_HOUSEHOLD)) enuum(xml, dwelingAddress, DwellingAddress.DWELLING_ADDRESS.typeOfHousehold);
 				else if (startName.equals(MOVING_DATE)) dwelingAddress.movingDate = date(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
@@ -201,12 +204,12 @@ public class StaxEch0011 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(MARITAL_STATUS)) person.maritalStatus.maritalStatus = token(xml);
+				if (startName.equals(MARITAL_STATUS)) enuum(xml, person, Person.PERSON.maritalStatus.maritalStatus);
 				else if (startName.equals(DATE_OF_MARITAL_STATUS)) person.maritalStatus.dateOfMaritalStatus = date(xml);
-				else if (startName.equals(SEPARATION)) person.separation.separation = token(xml);
+				else if (startName.equals(SEPARATION)) enuum(xml, person, Person.PERSON.separation.separation);
 				else if (startName.equals(DATE_OF_SEPARATION)) person.separation.dateOfSeparation = date(xml);
 				else if (startName.equals(SEPARATION_TILL)) person.separation.separationTill = date(xml);
-				else if (startName.equals(CANCELATION_REASON)) person.cancelationReason = token(xml);
+				else if (startName.equals(CANCELATION_REASON)) enuum(xml, person, Person.PERSON.cancelationReason);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
@@ -220,19 +223,28 @@ public class StaxEch0011 {
 			if (event.isStartElement()) {
 				StartElement element = event.asStartElement();
 				String name = element.getName().getLocalPart();
-				if (name.equals(ORIGINAL_NAME)) person.originalName = token(xml);
-				else if (name.equals(ALLIANCE_PARTNERSHIP_NAME)) person.alliancePartnershipName = token(xml);
-				else if (name.equals(ALIAS_NAME)) person.aliasName = token(xml);
-				else if (name.equals(OTHER_NAME)) person.otherName = token(xml);
-				else if (name.equals(CALL_NAME)) person.callName = token(xml);
+				if (StringUtils.equals(name, ORIGINAL_NAME, ALLIANCE_PARTNERSHIP_NAME,ALIAS_NAME, OTHER_NAME, CALL_NAME)) ColumnProperties.setValue(person, name, token(xml));
 				else if (name.equals(PLACE_OF_BIRTH)) person.placeOfBirth = birthplace(xml);
-				else if (name.equals(DATE_OF_DEATH))person.setDateOfBirth(date(xml));
+				else if (name.equals(DATE_OF_DEATH)) person.personIdentification.dateOfBirth = date(xml);
 				else if (name.equals(MARITAL_DATA)) maritalData(xml, person);
 				else if (name.equals(NATIONALITY)) nationality(xml, person.nationality);
 				else if (name.equals(CONTACT)) contact(xml, person);
-				else if (name.equals(LANGUAGE_OF_CORRESPONDANCE)) person.languageOfCorrespondance = token(xml);
-				else if (name.equals(RELIGION)) person.religion = token(xml);
-				else skip(xml);
+				else if (StringUtils.equals(name, LANGUAGE_OF_CORRESPONDANCE)) enuum(xml, person, Person.PERSON.languageOfCorrespondance);
+				else if (StringUtils.equals(name, RELIGION)) enuum(xml, person, Person.PERSON.religion);
+					
+//				if (name.equals(ORIGINAL_NAME)) person.originalName = token(xml);
+//				else if (name.equals(ALLIANCE_PARTNERSHIP_NAME)) person.alliancePartnershipName = token(xml);
+//				else if (name.equals(ALIAS_NAME)) person.aliasName = token(xml);
+//				else if (name.equals(OTHER_NAME)) person.otherName = token(xml);
+//				else if (name.equals(CALL_NAME)) person.callName = token(xml);
+//				else if (name.equals(PLACE_OF_BIRTH)) person.placeOfBirth = birthplace(xml);
+//				else if (name.equals(DATE_OF_DEATH))person.setDateOfBirth(date(xml));
+//				else if (name.equals(MARITAL_DATA)) maritalData(xml, person);
+//				else if (name.equals(NATIONALITY)) nationality(xml, person.nationality);
+//				else if (name.equals(CONTACT)) contact(xml, person);
+//				else if (name.equals(LANGUAGE_OF_CORRESPONDANCE)) enuum(xml, person, Person.PERSON.languageOfCorrespondance);
+//				else if (name.equals(RELIGION)) person.religion = token(xml);
+//				else skip(xml);
 			} else if (event.isEndElement()) return;
 			// else skip
 		}
@@ -244,7 +256,7 @@ public class StaxEch0011 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(NATIONALITY_STATUS)) nationality.nationalityStatus = token(xml);
+				if (startName.equals(NATIONALITY_STATUS)) enuum(xml, nationality, Nationality.NATIONALITY.nationalityStatus);
 				else if (startName.equals(COUNTRY)) StaxEch0008.country(xml, nationality.nationalityCountry);
 				else skip(xml);
 			} else if (event.isEndElement()) return;
@@ -283,7 +295,7 @@ public class StaxEch0011 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(ORIGIN_NAME)) placeOfOrigin.originName = token(xml);
-				else if (startName.equals(CANTON)) placeOfOrigin.canton = token(xml);
+				else if (startName.equals(CANTON)) placeOfOrigin.cantonAbbreviation.canton = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
@@ -316,7 +328,7 @@ public class StaxEch0011 {
 					// eventuell wurden diese Daten schon mit AddOn geliefert, in dem Fall werden sie ignoriert
 					boolean alreadyKnown = false;
 					for (PlaceOfOrigin p : person.placeOfOrigin) {
-						if (StringUtils.equals(placeOfOrigin.canton, p.canton) && StringUtils.equals(placeOfOrigin.originName, p.originName)) {
+						if (StringUtils.equals(placeOfOrigin.cantonAbbreviation.canton, p.cantonAbbreviation.canton) && StringUtils.equals(placeOfOrigin.originName, p.originName)) {
 							alreadyKnown = true; break;
 						}
 					}
@@ -336,8 +348,8 @@ public class StaxEch0011 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(RESIDENCE_PERMIT)) foreign.residencePermit = token(xml);
-				else if (startName.equals(RESIDENCE_PERMIT_TILL)) foreign.residencePermitTill = token(xml);
+				if (startName.equals(RESIDENCE_PERMIT)) enuum(xml, foreign, Foreign.FOREIGN.residencePermit);
+				else if (startName.equals(RESIDENCE_PERMIT_TILL)) foreign.residencePermitTill = date(xml);
 				else if (startName.equals(NAME_ON_PASSPORT)) foreign.nameOnPassport = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) return;
@@ -373,9 +385,9 @@ public class StaxEch0011 {
 						municipalityIdentification = StaxEch0007.municipality(xml);
 					} else {
 						municipalityIdentification = new MunicipalityIdentification();
-						String federRegister = token(xml);
-						municipalityIdentification.historyMunicipalityId = "-" + federRegister;
-						municipalityIdentification.municipalityName = EchCodes.federalRegister.getText(federRegister);
+						Integer federRegister = StaxEch.integer(xml);
+						municipalityIdentification.historyMunicipalityId = -federRegister;
+						municipalityIdentification.municipalityName = EnumUtils.getText(FederalRegister.values()[federRegister-1]);
 					}
 					if (main) {
 						person.residence.reportingMunicipality = municipalityIdentification;

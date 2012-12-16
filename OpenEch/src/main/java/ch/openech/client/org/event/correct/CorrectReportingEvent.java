@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.org.OrganisationPanel;
-import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.client.org.event.OrganisationEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
@@ -21,7 +20,7 @@ public class CorrectReportingEvent extends OrganisationEventEditor<Organisation>
 
 	@Override
 	public IForm<Organisation> createForm() {
-		return new OrganisationPanel(OrganisationPanelType.CHANGE_RESIDENCE_TYPE, echSchema);
+		return new OrganisationPanel(Organisation.EditMode.CHANGE_RESIDENCE_TYPE, echSchema);
 	}
 
 	@Override

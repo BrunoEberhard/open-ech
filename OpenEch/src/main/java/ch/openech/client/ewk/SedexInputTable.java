@@ -17,8 +17,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import ch.openech.dm.Envelope;
-import ch.openech.mj.edit.value.PropertyAccessor;
-import ch.openech.mj.util.DateUtils;
+import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.sedex.SedexDirectoryScanner;
 
 public class SedexInputTable extends JTable {
@@ -36,12 +35,7 @@ public class SedexInputTable extends JTable {
 		tableModel = new AbstractTableModel() {
 			@Override
 			public Object getValueAt(int row, int column) {
-				Object value = PropertyAccessor.get(envelopes.get(row), COLUMNS[column]);
-				if (value != null) {
-					if (column == 2 || column == 6) {
-						value = DateUtils.formatCH(value.toString());
-					}
-				}
+				Object value = ColumnProperties.getValue(envelopes.get(row), COLUMNS[column]);
 				return value;
 			}
 

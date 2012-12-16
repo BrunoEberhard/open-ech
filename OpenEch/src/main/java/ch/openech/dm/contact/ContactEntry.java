@@ -1,55 +1,58 @@
 package ch.openech.dm.contact;
 
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.String2;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import ch.openech.dm.code.EchCodes;
+import org.joda.time.LocalDate;
+
+import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
+import ch.openech.dm.types.ContactCategory;
+import ch.openech.dm.types.PhoneCategory;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
-import ch.openech.mj.edit.validation.Validatable;
+import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
-public class ContactEntry implements Validatable {
+public class ContactEntry implements Validation {
 
 	public static ContactEntry CONTACT_ENTRY = Constants.of(ContactEntry.class);
 	
-	public String typeOfContact; // A, E, P, I
+	public ContactEntryType typeOfContact;
 	
-	@Is(String2)
-	public String categoryCode;
-	@Is("freeKategoryText") // sic!
+	public ContactCategory categoryCode;
+	public PhoneCategory phoneCategory;
+	
+	@Size(EchFormats.freeKategoryText) // sic!
 	public String categoryOther;
 	
 	// Address only for Address Entries, value for the other types
 	public Address address;
-	@Is("emailAddress")
+	@Size(100)
 	public String value;
 	
 	// Validity
-	@Is(Date)
-	public String dateFrom, dateTo;
+	public LocalDate dateFrom, dateTo;
 
 	public boolean isAddressEntry() {
 		// darf nicht isAddress heissen, weil sonst mit dem Attribut address kollidiert!
-		return "A".equals(typeOfContact);
+		return typeOfContact == ContactEntryType.Address;
 	}
 	
 	public boolean isEmail() {
-		return "E".equals(typeOfContact);
+		return typeOfContact == ContactEntryType.Email;
 	}
 
 	public boolean isPhone() {
-		return "P".equals(typeOfContact);
+		return typeOfContact == ContactEntryType.Phone;
 	}
 
 	public boolean isInternet() {
-		return "I".equals(typeOfContact);
+		return typeOfContact == ContactEntryType.Internet;
 	}
 	
 	public String toHtml() {
@@ -57,10 +60,8 @@ public class ContactEntry implements Validatable {
 		s.append("<HTML>");
 		if (typeOfContact != null) {
 			if (categoryCode != null) {
-				if (isAddressEntry()) s.append(EchCodes.addressCategory.getText(categoryCode));
-				if (isPhone()) s.append(EchCodes.phoneCategory.getText(categoryCode));
-				if (isEmail()) s.append(EchCodes.emailCategory.getText(categoryCode));
-				if (isInternet()) s.append(EchCodes.internetCategory.getText(categoryCode));
+				if (isAddressEntry() | isEmail() || isInternet()) s.append(EnumUtils.getText(categoryCode));
+				if (isPhone()) s.append(EnumUtils.getText(phoneCategory));
 			} else if (!StringUtils.isBlank(categoryOther)) {
 				s.append(categoryOther);
 			} else {
@@ -72,17 +73,17 @@ public class ContactEntry implements Validatable {
 			s.append("<BR>");
 		}
 		s.append("<SMALL>");
-		if (!StringUtils.isBlank(dateFrom) && !StringUtils.isBlank(dateTo)) {
+		if (dateFrom != null && dateTo != null) {
 			s.append("Gültig ");
 			s.append(DateUtils.formatCH(dateFrom)); 
 			s.append(" - ");
 			s.append(DateUtils.formatCH(dateTo)); 
 			s.append("<BR>");
-		} else if (!StringUtils.isBlank(dateFrom)) {
+		} else if (dateFrom != null) {
 			s.append("Gültig ab ");
 			s.append(DateUtils.formatCH(dateFrom)); 
 			s.append("<BR>");
-		} else if (!StringUtils.isBlank(dateTo)) {
+		} else if (dateTo != null) {
 			s.append("Gültig bis "); s.append(DateUtils.formatCH(dateTo));
 			s.append("<BR>");
 		}

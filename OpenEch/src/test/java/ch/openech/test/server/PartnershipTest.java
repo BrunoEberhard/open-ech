@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.server.ServerCallResult;
 
 public class PartnershipTest extends AbstractServerTest {
@@ -27,13 +28,13 @@ public class PartnershipTest extends AbstractServerTest {
 		Assert.assertNotNull(person1);
 		Assert.assertTrue(person1.maritalStatus.isPartnerschaft());
 		Relation relation1 = person1.getPartner();
-		Assert.assertEquals("2", relation1.typeOfRelationship);
+		Assert.assertEquals(TypeOfRelationship.Partner, relation1.typeOfRelationship);
 		Assert.assertTrue(person2.personIdentification.isEqual(relation1.partner));
 		
 		Assert.assertNotNull(person2);
 		Assert.assertTrue(person2.maritalStatus.isPartnerschaft());
 		Relation relation2 = person2.getPartner();
-		Assert.assertEquals("2", relation2.typeOfRelationship);
+		Assert.assertEquals(TypeOfRelationship.Partner, relation2.typeOfRelationship);
 		Assert.assertTrue(person1.personIdentification.isEqual(relation2.partner));
 	}
 	

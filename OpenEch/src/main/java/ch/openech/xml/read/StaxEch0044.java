@@ -21,9 +21,11 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.joda.time.LocalDate;
+
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.person.PersonIdentification;
-import ch.openech.mj.db.model.ColumnAccess;
+import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0044 {
@@ -45,11 +47,14 @@ public class StaxEch0044 {
 				else if (StringUtils.equals(startName, OTHER_PERSON_ID, OTHER_PERSON_ID)) personIdentification.technicalIds.otherId.add(namedId(xml));
 				else if (StringUtils.equals(startName, EU_PERSON_ID, "EuPersonId")) personIdentification.technicalIds.euId.add(namedId(xml));
 				
-				else if (StringUtils.equals(startName, VN, OFFICIAL_NAME, FIRST_NAME, SEX)) {
-					ColumnAccess.setValue(personIdentification, startName, token(xml));
+				else if (StringUtils.equals(startName, VN, OFFICIAL_NAME, FIRST_NAME)) {
+					ColumnProperties.setValue(personIdentification, startName, token(xml));
+				}
+				else if (StringUtils.equals(startName, SEX)) {
+					StaxEch.enuum(xml,  personIdentification, PersonIdentification.PERSON_IDENTIFICATION.sex);
 				}
 				else if (startName.equals(DATE_OF_BIRTH)) {
-					ColumnAccess.setValue(personIdentification, startName, datePartiallyKnown(xml));
+					ColumnProperties.setValue(personIdentification, startName, datePartiallyKnown(xml));
 				}
 				else skip(xml);
 			} else if (event.isEndElement()) {
@@ -79,8 +84,8 @@ public class StaxEch0044 {
 	}
 
 	// also used by 98
-	public static String datePartiallyKnown(XMLEventReader xml) throws XMLStreamException {
-		String date = null;
+	public static LocalDate datePartiallyKnown(XMLEventReader xml) throws XMLStreamException {
+		LocalDate date = null;
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

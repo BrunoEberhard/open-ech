@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 import ch.openech.client.ewk.PersonEditMenu;
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonEditMode;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.ActionGroup;
@@ -28,7 +28,7 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 		this.echSchema = EchSchema.getNamespaceContext(20, arguments[0]);
 		this.personId = arguments[1];
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : null;
-		this.personPanel = new PersonPanel(PersonPanelType.DISPLAY, echSchema);
+		this.personPanel = new PersonPanel(PersonEditMode.DISPLAY, echSchema);
 		this.menu = time == null ? new PersonEditMenu(context, echSchema) : null; 
 	}
 

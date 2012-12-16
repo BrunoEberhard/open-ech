@@ -1,6 +1,11 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_INFORMATION;
+import static ch.openech.dm.XmlConstants.ORGANISATION;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ROOT;
+import static ch.openech.dm.XmlConstants.UIDREG_INFORMATION;
+import static ch.openech.dm.XmlConstants.UIDREG_SOURCE;
+import static ch.openech.dm.XmlConstants.VAT_REGISTER_INFORMATION;
 import static ch.openech.xml.read.StaxEch.date;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
@@ -82,7 +87,7 @@ public class StaxEch0108 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.endsWith("Date")) organisation.set(startName, date(xml));
-				else if (startName.equals(UIDREG_SOURCE)) organisation.uidregSourceUid = StaxEch0097.uidStructure(xml);
+				else if (startName.equals(UIDREG_SOURCE)) StaxEch0097.uidStructure(xml, organisation.uidregSourceUid);
 				else organisation.set(startName, token(xml));
 			} else if (event.isEndElement()) {
 				return;

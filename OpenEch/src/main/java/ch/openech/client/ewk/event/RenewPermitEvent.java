@@ -7,6 +7,7 @@ import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
+import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.write.EchSchema;
@@ -26,8 +27,6 @@ public class RenewPermitEvent extends PersonEventEditor<Person> {
 			formPanel.line(PERSON.foreign.residencePermitTill);
 		}
 		formPanel.area(PERSON.occupation);
-		
-		formPanel.setRequired(PERSON.foreign.residencePermit);
 	}
 
 	@Override
@@ -45,8 +44,10 @@ public class RenewPermitEvent extends PersonEventEditor<Person> {
 	
 	@Override
 	public void validate(Person data, List<ValidationMessage> resultList) {
+		super.validate(data, resultList);
+		EmptyValidator.validate(resultList, data, PERSON.foreign.residencePermit);
 		if (data.occupation.isEmpty()) {
-			resultList.add(new ValidationMessage("occupation", "Beruf erforderlich"));
+			resultList.add(new ValidationMessage(Person.PERSON.occupation, "Beruf erforderlich"));
 		}
 	}
 

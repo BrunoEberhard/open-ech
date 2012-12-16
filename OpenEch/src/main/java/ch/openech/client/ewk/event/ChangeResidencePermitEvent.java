@@ -7,9 +7,9 @@ import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
+import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -25,10 +25,6 @@ public class ChangeResidencePermitEvent extends PersonEventEditor<Person> {
 		formPanel.line(PERSON.foreign.residencePermit);
 		formPanel.line(PERSON.foreign.residencePermitTill);
 		formPanel.area(PERSON.occupation);
-
-		formPanel.setRequired(PERSON.foreign.residencePermit);
-		// bei Change ist diese Angabe obligatorisch, bei Correct nicht
-		formPanel.setRequired(PERSON.foreign.residencePermitTill);
 	}
 
 	@Override
@@ -38,10 +34,10 @@ public class ChangeResidencePermitEvent extends PersonEventEditor<Person> {
 
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
-		String residencePermit = person.foreign.residencePermit;
-		if (StringUtils.isBlank(residencePermit)) {
-			resultList.add(new ValidationMessage(PERSON.foreign.residencePermit, "Ausländerkategorie muss gesetzt sein"));
-		}
+		super.validate(person, resultList);
+		EmptyValidator.validate(resultList, person, person.foreign.residencePermit);
+		// bei Change ist diese Angabe obligatorisch, bei Correct nicht
+		EmptyValidator.validate(resultList, person, person.foreign.residencePermitTill);
 	}
 
 	@Override

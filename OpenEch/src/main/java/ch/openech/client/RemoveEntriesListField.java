@@ -12,8 +12,8 @@ import ch.openech.mj.resources.ResourceAction;
 public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 	private List<T> values = new ArrayList<T>();
 
-	public RemoveEntriesListField(Object key) {
-		super(Constants.getConstant(key), true);
+	public RemoveEntriesListField(List<T> key) {
+		super(Constants.getProperty(key), true);
 	}
 
 	public void setValues(List<T> values) {

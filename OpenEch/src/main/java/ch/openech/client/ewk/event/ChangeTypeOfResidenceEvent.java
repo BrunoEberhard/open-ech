@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -22,7 +22,7 @@ public class ChangeTypeOfResidenceEvent extends PersonEventEditor<Person> {
 
 	@Override
 	public IForm<Person> createForm() {
-		return new PersonPanel(PersonPanelType.CHANGE_RESIDENCE_TYPE, echSchema);
+		return new PersonPanel(PersonEditMode.CHANGE_RESIDENCE_TYPE, echSchema);
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public class ChangeTypeOfResidenceEvent extends PersonEventEditor<Person> {
 	public Person load() {
 		return getPerson();
 	}
-
+	
 	@Override
 	protected List<String> getXml(Person person, Person changedPerson, WriterEch0020 writerEch0020) throws Exception {
 		return Collections.singletonList(writerEch0020.changeResidenceType(person.personIdentification, changedPerson));
@@ -43,10 +43,10 @@ public class ChangeTypeOfResidenceEvent extends PersonEventEditor<Person> {
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		if (person.comesFrom == null || person.comesFrom.isUnknown()) {
-			resultList.add(new ValidationMessage("comesFrom", "Herkunftsort erforderlich"));
+			resultList.add(new ValidationMessage(Person.PERSON.comesFrom, "Herkunftsort erforderlich"));
 		}
 		if (person.comesFrom == null || person.comesFrom.mailAddress == null || person.comesFrom.mailAddress.isEmpty()) {
-			resultList.add(new ValidationMessage("comesFromAddress", "Herkunftsadresse erforderlich"));
+			resultList.add(new ValidationMessage(Person.PERSON.comesFromAddress, "Herkunftsadresse erforderlich"));
 		}
 	}
 	

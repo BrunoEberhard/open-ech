@@ -1,28 +1,49 @@
 package ch.openech.dm.person;
 
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
-import ch.openech.dm.code.EchCodes;
+import java.util.List;
+
+import org.joda.time.LocalDate;
+
+import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
+import ch.openech.dm.person.types.KindOfEmployment;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.db.model.EmptyValidator;
+import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.edit.validation.Validatable;
+import ch.openech.mj.edit.validation.Validation;
+import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
+import ch.openech.xml.write.EchSchema;
 
-public class Occupation {
+@Sizes(EchFormats.class)
+public class Occupation implements Validation {
 
 	public static final Occupation OCCUPATION = Constants.of(Occupation.class);
 	
-	public String jobTitle;
-	public String employer;
-	public String kindOfEmployment;
-	@Is(Date)
-	public String occupationValidTill;
+	private final transient EchSchema echSchema;
+	
+	@Size(100) // Wird tatsächlich in xsd nicht als Type definiert, daher nicht in EchFormats
+	public String jobTitle, employer;
+	public KindOfEmployment kindOfEmployment;
+	public LocalDate occupationValidTill;
 	
 	public Address placeOfWork;
 	public Address placeOfEmployer;
 	
 	//
-	
+
+	public Occupation() {
+		this.echSchema = null;
+	}
+
+	public Occupation(EchSchema echSchema) {
+		this.echSchema = echSchema;
+	}
+
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		s.append("<HTML>");
@@ -31,10 +52,8 @@ public class Occupation {
 			StringUtils.appendLine(s, "Bezeichnung:", jobTitle);
 		}
 
-		if (!StringUtils.isBlank(kindOfEmployment)) {
-			String text = EchCodes.kindOfEmployment.getText(kindOfEmployment);
-			if (!StringUtils.isBlank(text)) StringUtils.appendLine(s, "Erwerbsart:", text);
-			else StringUtils.appendLine(s, "Erwerbsart:", kindOfEmployment);
+		if (kindOfEmployment != null) {
+			StringUtils.appendLine(s, EnumUtils.getText(kindOfEmployment));
 		}
 
 		if (!StringUtils.isBlank(employer)) {
@@ -51,7 +70,7 @@ public class Occupation {
 			placeOfEmployer.toHtml(s);
 		}
 		
-		if (!StringUtils.isBlank(occupationValidTill)) {
+		if (occupationValidTill != null) {
 			s.append("Gültig bis "); s.append(DateUtils.formatCH(occupationValidTill));
 		}
 		
@@ -66,10 +85,8 @@ public class Occupation {
 			StringUtils.appendLine(s, "Bezeichnung:", jobTitle);
 		}
 
-		if (!StringUtils.isBlank(kindOfEmployment)) {
-			String text = EchCodes.kindOfEmployment.getText(kindOfEmployment);
-			if (!StringUtils.isBlank(text)) StringUtils.appendLine(s, "Erwerbsart:", text);
-			else StringUtils.appendLine(s, "Erwerbsart:", kindOfEmployment);
+		if (kindOfEmployment != null) {
+			StringUtils.appendLine(s, EnumUtils.getText(kindOfEmployment));
 		}
 
 		if (!StringUtils.isBlank(employer)) {
@@ -87,5 +104,13 @@ public class Occupation {
 		}
 		return s.toString().replace("<br>", "\n");
 	}
+
+	@Override
+	public void validate(List<ValidationMessage> resultList) {
+		if (echSchema.kindOfEmploymentMandatory()) {
+			EmptyValidator.validate(resultList, this, OCCUPATION.kindOfEmployment);
+		}
+	}
+	
 	
 }

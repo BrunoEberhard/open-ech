@@ -1,12 +1,13 @@
 package ch.openech.dm.person;
 
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.DatePartially;
+import org.joda.time.LocalDate;
+
 import ch.openech.dm.EchFormats;
-import ch.openech.dm.code.Sex;
 import ch.openech.dm.common.TechnicalIds;
+import ch.openech.dm.types.Sex;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
@@ -18,16 +19,20 @@ public class PersonIdentification {
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 
+	// TODO Make Class
+	// Ist erstaunlicherweise wirklich nicht zwingend
+	@Size(13)
 	public String vn;
 	
-	@Required @Is(EchFormats.baseName) 
+	@Required @Size(EchFormats.baseName)
 	public String firstName, officialName;
 	
 	@Required 
-	public String sex = Sex.getDefault();
+	public Sex sex;
 	
-	@Required @Is(DatePartially)
-	public String dateOfBirth;
+	@Required 
+	// @Date(partialAllowed = true)
+	public LocalDate dateOfBirth;
 	
 	//
 	
@@ -35,8 +40,9 @@ public class PersonIdentification {
 	}
 	
 	public void clear() {
-		vn = firstName = dateOfBirth = officialName = null;
-		sex = "1";
+		vn = firstName = officialName = null;
+		dateOfBirth = null;
+		sex = null;
 		technicalIds.clear();
 	}
 	
@@ -45,7 +51,7 @@ public class PersonIdentification {
 	}
 	
 	public String getId() {
-		if (technicalIds.localId.isOpenEch()) {
+		if (technicalIds.localId.openEch()) {
 			return technicalIds.localId.personId;
 		} else {
 			return null;
@@ -66,11 +72,11 @@ public class PersonIdentification {
 	}
 	
 	public boolean isMale() {
-		return Sex.Maennlich.getKey().equals(sex);
+		return Sex.maennlich.equals(sex);
 	}
 
 	public boolean isFemale() {
-		return Sex.Weiblich.getKey().equals(sex);
+		return Sex.weiblich.equals(sex);
 	}
 
 	public boolean isEqual(PersonIdentification partner) {

@@ -1,44 +1,43 @@
 package ch.openech.dm.common;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.dm.code.EchCodes;
-import ch.openech.dm.code.MrMrs;
+import ch.openech.dm.types.MrMrs;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
 
+@Sizes(EchFormats.class)
 public class Address {
 	
 	public static final Address ADDRESS = Constants.of(Address.class);
 
 	// organisation
-	@Is(EchFormats.organisationName)
+	@Size(EchFormats.organisationName)
 	public String organisationName, organisationNameAddOn1, organisationNameAddOn2;
 
 	// person
-	public String mrMrs;
+	public MrMrs mrMrs;
 	
 	// organisation oder person
 	public String title;
 	public String firstName, lastName;
 	
 	// all
-	@Is(EchFormats.addressLine)
+	@Size(EchFormats.addressLine)
 	public String addressLine1, addressLine2;
 	public String street;
 	public final HouseNumber houseNumber = new HouseNumber();
-	public String postOfficeBoxNumber;
+	@Size(4)
+	public Integer postOfficeBoxNumber;
 	public String postOfficeBoxText;
 	public String locality;
 	public String country = "CH";
 	public final Zip zip = new Zip();
 	@Required
 	public String town;
-	
-	public void setMrMrs(MrMrs mrMrs) {
-		this.mrMrs = mrMrs.getKey();
-	}
 	
 	public boolean isEmpty() {
 		return StringUtils.isBlank(town);
@@ -67,11 +66,11 @@ public class Address {
 		StringUtils.appendLine(s, organisationNameAddOn1);
 		StringUtils.appendLine(s, organisationNameAddOn2);
 
-		StringUtils.appendLine(s, EchCodes.mrMrs.getText(mrMrs), title, firstName, lastName);
+		StringUtils.appendLine(s, EnumUtils.getText(mrMrs), title, firstName, lastName);
 		StringUtils.appendLine(s, addressLine1);
 		StringUtils.appendLine(s, addressLine2);
 		StringUtils.appendLine(s, street, houseNumber.concatNumbers());
-		StringUtils.appendLine(s, postOfficeBoxText, postOfficeBoxNumber);
+		StringUtils.appendLine(s, postOfficeBoxText, postOfficeBoxNumber != null ? postOfficeBoxNumber.toString() : null);
 		if ("CH".equals(country)) {
 			StringUtils.appendLine(s, zip.display(), town);
 		} else {

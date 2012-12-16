@@ -1,7 +1,9 @@
 package ch.openech.dm.organisation;
 
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.DatePartially;
+import java.util.List;
+
+import org.joda.time.LocalDate;
+
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.Event;
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
@@ -10,84 +12,101 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.common.TechnicalIds;
 import ch.openech.dm.contact.Contact;
+import ch.openech.dm.types.Language;
+import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
-import ch.openech.mj.edit.value.PropertyAccessor;
+import ch.openech.mj.db.model.EmptyValidator;
+import ch.openech.mj.edit.validation.Validatable;
+import ch.openech.mj.edit.validation.Validation;
+import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Size;
 
-public class Organisation {
+public class Organisation implements Validation {
 
 	public static final Organisation ORGANISATION = Constants.of(Organisation.class);
+	
+	public static enum EditMode { DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, IN_LIQUIDATION, LIQUIDATION, CHANGE_REPORTING }
+	
+	public EditMode editMode;
 	
 	// Der eCH - Event, mit dem die aktuelle Version erstellt oder verändert wurde
 	public Event event;
 	
 	// 97 : Identification
-	@Is(EchFormats.uidStructure)
-	public String uid; // ADM000000001 - CHE999999999
+	public final UidStructure uid = new UidStructure(); 
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 	
-	@Required @Is(EchFormats.organisationName)
+	@Required @Size(EchFormats.organisationName)
 	public String organisationName; 
-	@Is(EchFormats.organisationName)
+	@Size(EchFormats.organisationName)
 	public String organisationLegalName, organisationAdditionalName;
+	@Size(2) // TODO
 	public String legalForm;
 	
 	// 98 : Daten
 	
+	@Size(2) // TODO
 	public String uidBrancheText;
+	@Size(6) // TODO
 	public String nogaCode; // 00 - 999999
 	
-	@Is(DatePartially) @Required
-	public String foundationDate;
+//	@Is(DatePartially) 
+	@Required
+	public LocalDate foundationDate;
+	@Size(2) // TODO
 	public String foundationReason;
 	
-	@Is(Date)
-	public String liquidationEntryDate;
-	@Is(DatePartially)
-	public String liquidationDate;
+	public LocalDate liquidationEntryDate;
+	// @Is(DatePartially)
+	public LocalDate liquidationDate;
+	@Size(2) // TODO
 	public String liquidationReason;
 	
-	@Is("language")
-	public String languageOfCorrespondance;
+	public Language languageOfCorrespondance;
 	
 	// 108 : Informationen andere Register
 	
 	// uidregInformationType
+	@Size(2) // TODO
 	public String uidregStatusEnterpriseDetail; // 1-7
+	@Size(2) // TODO
 	public String uidregPublicStatus; // 0-1
+	@Size(2) // TODO
 	public String uidregOrganisationType; // 1-12
+	@Size(2) // TODO
 	public String uidregLiquidationReason; // 1-8
 	
-	@Is(EchFormats.uidStructure)
-	public String uidregSourceUid; // ADM000000001 - CHE999999999
+	public final UidStructure uidregSourceUid = new UidStructure(); 
 	
 	// commercialRegisterInformation
+	@Size(2) // TODO
 	public String commercialRegisterStatus; // 1-3
+	@Size(2) // TODO
 	public String commercialRegisterEntryStatus; // 1-2
-	@Is(EchFormats.organisationName)
+	@Size(EchFormats.organisationName)
 	public String commercialRegisterNameTranslation;
-	@Is(Date)
-	public String commercialRegisterEntryDate, commercialRegisterLiquidationDate;
+	public LocalDate commercialRegisterEntryDate, commercialRegisterLiquidationDate;
 	
 	// vatRegisterInformation
+	@Size(2) // TODO
 	public String vatStatus; // 1-3
+	@Size(2) // TODO
 	public String vatEntryStatus; // 1-2
-	@Is(Date)
-	public String vatEntryDate, vatLiquidationDate;
+	public LocalDate vatEntryDate, vatLiquidationDate;
 	
 	// if reported (gemeldet)
-	public String typeOfResidenceOrganisation = "1";
+	public TypeOfResidenceOrganisation typeOfResidenceOrganisation = TypeOfResidenceOrganisation.Hauptsitz;
 	// Achtung: Im Gegensatz zu einer Person kann eine Organisation nur einen primary, secondary oder other Eintrag haben
 	//          Die folgenden Felder sind dabei bei allen 3 Möglichkeiten *genau* gleich.
+	@Required
 	public MunicipalityIdentification reportingMunicipality;
-	@Is(Date) @Required
-	public String arrivalDate;
+	@Required
+	public LocalDate arrivalDate;
 	public Place comesFrom;
 	public DwellingAddress businessAddress;
-	@Is(Date)
-	public String departureDate;
+	public LocalDate departureDate;
 	public Place goesTo;
 	
 	// secondaryResidence / otherResidence
@@ -98,17 +117,17 @@ public class Organisation {
 	//
 	
 	public Object get(String propertyName) {
-		return PropertyAccessor.get(this, propertyName);
+		return ColumnProperties.getValue(this, propertyName);
 	}
 
 	public void set(String propertyName, Object value) {
-		PropertyAccessor.set(this, propertyName, value);
+		ColumnProperties.setValue(this, propertyName, value);
 	}
 	
 	//
 	
 	public String getId() {
-		if (technicalIds.localId.isOpenEch()) {
+		if (technicalIds.localId.openEch()) {
 			return technicalIds.localId.personId;
 		} else {
 			return null;
@@ -116,15 +135,36 @@ public class Organisation {
 	}
 	
 	public boolean hasMainResidence() {
-		return TypeOfResidenceOrganisation.Hauptsitz.getKey().equals(typeOfResidenceOrganisation);
+		return TypeOfResidenceOrganisation.Hauptsitz == typeOfResidenceOrganisation;
 	}
 
 	public boolean hasSecondaryResidence() {
-		return TypeOfResidenceOrganisation.Nebensitz.getKey().equals(typeOfResidenceOrganisation);
+		return TypeOfResidenceOrganisation.Nebensitz == typeOfResidenceOrganisation;
 	}
 
 	public boolean hasOtherResidence() {
-		return TypeOfResidenceOrganisation.Anderersitz.getKey().equals(typeOfResidenceOrganisation);
+		return TypeOfResidenceOrganisation.Anderersitz == typeOfResidenceOrganisation;
 	}
+
+	@Override
+	public void validate(List<ValidationMessage> resultList) {
+		if (editMode == EditMode.IN_LIQUIDATION || editMode == EditMode.LIQUIDATION) {
+			EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.liquidationReason);
+			if (editMode == EditMode.IN_LIQUIDATION) {
+				EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.liquidationEntryDate);
+			} else {
+				EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.liquidationDate);
+			}
+		} else if (editMode != null) {
+			EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.businessAddress);
+			if (editMode == EditMode.CHANGE_REPORTING) {
+				EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.typeOfResidenceOrganisation);
+			} else {
+				EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.arrivalDate);
+			}
+		}
+	}
+	
+	
 
 }

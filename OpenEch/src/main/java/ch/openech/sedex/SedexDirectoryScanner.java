@@ -11,7 +11,7 @@ import javax.xml.stream.XMLStreamException;
 import ch.openech.dm.Envelope;
 import ch.openech.dm.SedexMessageInformation;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.db.model.ColumnAccess;
+import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.xml.read.ParserTarget93;
 import ch.openech.xml.read.StaxEch0090;
 import ch.openech.xml.read.StaxEch0093;
@@ -48,24 +48,24 @@ public class SedexDirectoryScanner {
 	
 	private static SedexMessageInformation readMessageInformation(Envelope envelope, File directory, String fileNameEnvelope) {
 		final SedexMessageInformation message = new SedexMessageInformation();
-		ColumnAccess.copy(envelope, message);
+		ColumnProperties.copy(envelope, message);
 
 		class OverviewParserTarget93 implements ParserTarget93 {
 			@Override
 			public void death(Person person) {
 				message.type = "death";
-				ColumnAccess.copy(person, message);
+				ColumnProperties.copy(person, message);
 			}
 
 			@Override
 			public void moveIn(Person person) {
 				message.type = "moveIn";
-				ColumnAccess.copy(person, message);
+				ColumnProperties.copy(person, message);
 			}
 
 			@Override
 			public void moveOut(Person person) {
-				ColumnAccess.copy(person, message);
+				ColumnProperties.copy(person, message);
 			}
 		}
 		

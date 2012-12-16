@@ -1,29 +1,35 @@
 package ch.openech.dm.common;
 
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int12;
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int3;
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int9;
-import ch.openech.dm.code.EchCodes;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.LocalDate;
+
+import ch.openech.dm.types.TypeOfHousehold;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.edit.validation.Validation;
+import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
+import ch.openech.xml.write.EchSchema;
 
-public class DwellingAddress {
+public class DwellingAddress implements Validation {
 
 	public static final DwellingAddress DWELLING_ADDRESS = Constants.of(DwellingAddress.class);
 	
-	@Is(Int9)
+	public transient EchSchema echSchema;
+	
+	@Size(9)
 	public String EGID;
-	@Is(Int3)
+	@Size(3)
 	public String EWID;
-	@Is(Int12) // ist nicht bekannt aus Schema
+	@Size(12) // ist nicht bekannt aus Schema
 	public String householdID; // not for organisation
 	public Address mailAddress;
-	public String typeOfHousehold; // not for organisation
-	@Is(Date)
-	public String movingDate;
+	public TypeOfHousehold typeOfHousehold; // not for organisation
+	public LocalDate movingDate;
 
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
@@ -50,24 +56,14 @@ public class DwellingAddress {
 			s.append(householdID);
 		}
 		s.append("<BR>");
-		if (StringUtils.isBlank(typeOfHousehold)) {
-			// print nothing
-		} else if (typeOfHouseHoldIsCode()) {
-			// Die Codes der Haushaltsart sind sprechend genug, man kann sich daher das Textlabel sparen
-			s.append(EchCodes.typeOfHousehold.getText(typeOfHousehold));
-		} else {
-			s.append("Haushaltsart: ");
-			s.append(typeOfHousehold);
+		if (typeOfHousehold != null) {
+			s.append(EnumUtils.getText(typeOfHousehold));
 		}
 		s.append("<BR>");
-		if (!StringUtils.isBlank(movingDate)) {
+		if (movingDate != null) {
 			s.append("Umzugsdatum: " ); s.append(DateUtils.formatCH(movingDate));
 		}
 		s.append("</HTML>");
-	}
-	
-	private boolean typeOfHouseHoldIsCode() {
-		return !StringUtils.isBlank(typeOfHousehold) && "0".compareTo(typeOfHousehold)  <= 0 && "3".compareTo(typeOfHousehold) >=0; 
 	}
 	
 	public void displayWidth(StringBuilder s) {
@@ -82,10 +78,27 @@ public class DwellingAddress {
 			mailAddress.toHtml(s);
 		}
 		s.append("Haushaltsart: ");
-		if (!StringUtils.isBlank(typeOfHousehold)) s.append(EchCodes.typeOfHousehold.getText(typeOfHousehold)); else s.append("- ");
+		if (typeOfHousehold != null) s.append(EnumUtils.getText(typeOfHousehold)); else s.append("- ");
 		s.append("\n");
-		if (!StringUtils.isBlank(movingDate)) {
+		if (movingDate != null) {
 			s.append("Umzugsdatum: " ); s.append(DateUtils.formatCH(movingDate));
+		}
+	}
+	
+	public void validate(List<ValidationMessage> resultList) {
+		if (!echSchema.addressesAreBusiness()) {
+			if (!StringUtils.isBlank(EGID)) {
+				if (!StringUtils.isBlank(EWID) && !StringUtils.isBlank(householdID)) {
+					resultList.add(new ValidationMessage(DWELLING_ADDRESS.householdID, "Bei gesetzter EGID können nicht EWID und Haushalt ID gesetzt sein"));
+				}
+			} else {
+				if (StringUtils.isBlank(householdID)) {
+					resultList.add(new ValidationMessage(DWELLING_ADDRESS.householdID, "Bei fehlender EGID muss die Haushalt ID gesetzt sein"));
+				}
+			}
+		}
+		if (mailAddress == null || mailAddress.isEmpty()) {
+			resultList.add(new ValidationMessage(DWELLING_ADDRESS.mailAddress, "Postadresse erforderlich"));
 		}
 	}
 

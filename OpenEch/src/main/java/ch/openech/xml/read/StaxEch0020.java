@@ -1,6 +1,7 @@
 package ch.openech.xml.read;
 
 import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.enuum;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -15,15 +16,20 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.joda.time.LocalDateTime;
+
 import ch.openech.dm.Event;
 import ch.openech.dm.XmlConstants;
 import ch.openech.dm.common.MunicipalityIdentification;
+import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.ReasonOfAcquisition;
+import ch.openech.dm.types.TypeOfResidence;
+import ch.openech.dm.types.YesNo;
 import ch.openech.mj.toolkit.ProgressListener;
-import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchPersistence;
 
@@ -136,7 +142,7 @@ public class StaxEch0020 implements StaxEchParser {
 					e = new Event();
 					e.type = startName;
 					// e.message = xmlString;
-					e.time = DateUtils.getToday();
+					e.time = new LocalDateTime();
 					
 					if (startName.equals(BASE_DELIVERY)) baseDelivery(xml, progressListener);
 					else if (startName.equals(BIRTH)) eventBirth(xml);
@@ -186,8 +192,8 @@ public class StaxEch0020 implements StaxEchParser {
 				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.getMother());
 				else if (startName.equals(_RELATIONSHIP) || startName.equals(RELATIONSHIP)) StaxEch0021.relation(xml, person);
 				else if (startName.equals(OCCUPATION)) person.occupation.add(StaxEch0021.occupation(xml));
-				else if (startName.equals(DATA_LOCK)) person.dataLock = token(xml);
-				else if (startName.equals(PAPER_LOCK)) person.paperLock = token(xml);
+				else if (startName.equals(DATA_LOCK)) enuum(xml, person, Person.PERSON.dataLock);
+				else if (startName.equals(PAPER_LOCK)) enuum(xml, person, Person.PERSON.paperLock);
 				else if (startName.equals(EXTENSION)) extension(xml, person);
 				// TODO householdNumber
 				else residenceChoiceOrSkip(startName, xml, person);
@@ -201,13 +207,13 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	public static void residenceChoiceOrSkip(String startName, XMLEventReader xml, Person person) throws XMLStreamException {
 		if (startName.equals(HAS_MAIN_RESIDENCE)) {
-			person.typeOfResidence = "1";
+			person.typeOfResidence = TypeOfResidence.hasMainResidence;
 			StaxEch0011.mainResidenceType(xml, person);
 		} else if (startName.equals(HAS_SECONDARY_RESIDENCE)) {
-			person.typeOfResidence = "2";
+			person.typeOfResidence = TypeOfResidence.hasSecondaryResidence;
 			StaxEch0011.secondaryResidenceType(xml, person);
 		} else if (startName.equals(HAS_OTHER_RESIDENCE)) {
-			person.typeOfResidence = "3";
+			person.typeOfResidence = TypeOfResidence.hasOtherResidence;
 			StaxEch0011.otherResidenceType(xml, person);
 		} else {
 			System.out.println("Skipping: " + startName);
@@ -270,8 +276,8 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	private void completePlaceOfOrigins(Person person) {
 		for (PlaceOfOrigin placeOfOrigin : person.placeOfOrigin) {
-			placeOfOrigin.naturalizationDate = person.getDateOfBirth();
-			placeOfOrigin.reasonOfAcquisition = "1"; // Abstammung
+			placeOfOrigin.naturalizationDate = person.personIdentification.dateOfBirth;
+			placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
 		}
 	}
 	
@@ -298,10 +304,10 @@ public class StaxEch0020 implements StaxEchParser {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(TYPE_OF_RELATIONSHIP)) relation.typeOfRelationship = token(xml);
+				if (startName.equals(TYPE_OF_RELATIONSHIP)) enuum(xml, relation, Relation.RELATION.typeOfRelationship);
 				else if (startName.equals(PARTNER)) {
 					birthPartner(xml, relation);
-					relation.care = "1";
+					relation.care = YesNo.Yes;
 					person.relation.add(relation);
 				}
 				else if (startName.equals(NAME_AT_BIRTH)) StaxEch0021.nameOfParentAtBirth(xml, father ? person.getFather() : person.getMother());
@@ -369,7 +375,7 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	private MunicipalityIdentification federalRegister(XMLEventReader xml) throws XMLStreamException {
 		MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
-		municipalityIdentification.historyMunicipalityId = "-" + token(xml);
+		municipalityIdentification.historyMunicipalityId = -StaxEch.integer(xml);
 		return municipalityIdentification;
 	}
 	
@@ -407,8 +413,8 @@ public class StaxEch0020 implements StaxEchParser {
 				else if (name.equals(PLACE_OF_BIRTH)) person.placeOfBirth = StaxEch0011.birthplace(xml);
 				else if (name.equals(NATIONALITY)) StaxEch0011.nationality(xml, person.nationality);
 				else if (name.equals(CONTACT)) StaxEch0011.contact(xml, person);
-				else if (name.equals(RELIGION)) person.religion = token(xml);
-				else if (StringUtils.equals(name, LANGUAGE_OF_CORRESPONDANCE, "languageOfCorrespondence")) person.languageOfCorrespondance = token(xml);
+				else if (name.equals(RELIGION)) enuum(xml, person, Person.PERSON.religion);
+				else if (StringUtils.equals(name, LANGUAGE_OF_CORRESPONDANCE, "languageOfCorrespondence")) enuum(xml, person, Person.PERSON.languageOfCorrespondance);
 				else if (name.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, person);
 				else if (name.equals(ANY_PERSON)) StaxEch0011.anyPerson(xml, person);
 				else if (name.equals(PLACE_OF_ORIGIN_ADDON) || name.equals(CHANGE_RESIDENCE_TYPE_ORIGIN_ADD_ON)) StaxEch0021.addPlaceOfOriginAddon(xml, person.placeOfOrigin);
@@ -431,7 +437,7 @@ public class StaxEch0020 implements StaxEchParser {
 				if (startName.endsWith("Person")) personIdentification = simplePersonEventPerson(eventName, xml);
 				else if (StringUtils.equals(startName, PLACE_OF_ORIGIN)) StaxEch0011.placeOfOrigin(xml, placeOfOrigin);
 				else if (startName.equals(NATURALIZATION_DATE)) placeOfOrigin.naturalizationDate = StaxEch.date(xml);
-				else if (startName.equals(REASON_OF_ACQUISITION)) placeOfOrigin.reasonOfAcquisition = token(xml);
+				else if (startName.equals(REASON_OF_ACQUISITION)) enuum(xml, placeOfOrigin, PlaceOfOrigin.PLACE_OF_ORIGIN.reasonOfAcquisition);
 				else if (startName.equals(EXPATRIATION_DATE)) placeOfOrigin.expatriationDate = StaxEch.date(xml);
 				else if (startName.equals(NATIONALITY)) StaxEch0011.nationality(xml, personToChange.nationality);
 				else skip(xml);
@@ -452,7 +458,7 @@ public class StaxEch0020 implements StaxEchParser {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(REPORTING_MUNICIPALITY)) personToChange.residence.reportingMunicipality = StaxEch0007.municipality(xml);
-				else if (startName.equals(TYP_OF_RESIDENCE)) personToChange.typeOfResidence = token(xml);
+				else if (startName.equals(TYP_OF_RESIDENCE)) enuum(xml, personToChange, Person.PERSON.typeOfResidence);
 				else if (startName.equals(ARRIVAL_DATE)) personToChange.arrivalDate = StaxEch.date(xml);
 				else if (startName.equals(COMES_FROM)) personToChange.comesFrom = StaxEch0011.destination(xml);
 				else if (startName.equals(DWELLING_ADDRESS)) personToChange.dwellingAddress = StaxEch0011.dwellingAddress(xml);
@@ -517,16 +523,16 @@ public class StaxEch0020 implements StaxEchParser {
 				else if (startName.equals(DATE_OF_DEATH)) personToChange.dateOfDeath = StaxEch.date(xml);
 				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, personToChange.getFather());
 				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, personToChange.getMother());
-				else if (startName.equals(MARITAL_STATUS)) personToChange.maritalStatus.maritalStatus = token(xml);
+				else if (startName.equals(MARITAL_STATUS)) enuum(xml, personToChange, Person.PERSON.maritalStatus.maritalStatus);
 				else if (startName.equals(DATE_OF_MARITAL_STATUS)) personToChange.maritalStatus.dateOfMaritalStatus = StaxEch.date(xml);
-				else if (startName.equals(PARTNER_SHIP_ABOLITION)) personToChange.cancelationReason = token(xml); // Das Feld heisst in e11 wirklich anders als in e20
+				else if (startName.equals(PARTNER_SHIP_ABOLITION)) enuum(xml, personToChange, Person.PERSON.cancelationReason); // Das Feld heisst in e11 wirklich anders als in e20
 				else if (startName.equals(NATIONALITY)) StaxEch0011.nationality(xml, personToChange.nationality);
-				else if (startName.equals(RELIGION)) personToChange.religion = token(xml);
-				else if (startName.equals(SEPARATION)) personToChange.separation.separation = token(xml);
+				else if (startName.equals(RELIGION)) enuum(xml, personToChange, Person.PERSON.religion);
+				else if (startName.equals(SEPARATION)) enuum(xml, personToChange, Person.PERSON.separation.separation);
 				else if (startName.equals(DATE_OF_SEPARATION)) personToChange.separation.dateOfSeparation = StaxEch.date(xml);
 				else if (startName.equals(MOVE_OUT_REPORTING_DESTINATION)) moveOutReportingDestination(xml, personToChange);
 				else if (startName.equals(MOVE_REPORTING_ADDRESS)) moveReportingAddress(xml, personToChange);
-				else if (startName.equals(RESIDENCE_PERMIT)) personToChange.foreign.residencePermit = token(xml);
+				else if (startName.equals(RESIDENCE_PERMIT)) enuum(xml, personToChange.foreign, Foreign.FOREIGN.residencePermit);
 				else if (startName.equals(RESIDENCE_PERMIT_TILL)) personToChange.foreign.residencePermitTill = StaxEch.date(xml);
 				else if (startName.equals(CONTACT)) StaxEch0011.contact(xml, personToChange);
 				else if (startName.equals(ORIGINAL_NAME)) personToChange.originalName = token(xml);
@@ -535,12 +541,12 @@ public class StaxEch0020 implements StaxEchParser {
 				else if (startName.equals(OTHER_NAME)) personToChange.otherName = token(xml);
 				else if (startName.equals(CALL_NAME)) personToChange.callName = token(xml);
 				else if (startName.equals(NAME_ON_PASSPORT)) personToChange.foreign.nameOnPassport = token(xml);
-				else if (StringUtils.equals(startName, LANGUAGE_OF_CORRESPONDANCE, "languageOfCorrespondence")) personToChange.languageOfCorrespondance = token(xml);
+				else if (StringUtils.equals(startName, LANGUAGE_OF_CORRESPONDANCE, "languageOfCorrespondence")) enuum(xml, personToChange, Person.PERSON.languageOfCorrespondance);
 				else if (startName.equals(PLACE_OF_BIRTH)) personToChange.placeOfBirth = StaxEch0011.birthplace(xml);
 				else if (startName.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, personToChange);				
 				else if (startName.equals(MAIN_RESIDENCE_ADDRESS)) personToChange.dwellingAddress = StaxEch0011.dwellingAddress(xml);				
-				else if (startName.equals(DATA_LOCK)) personToChange.dataLock = token(xml);
-				else if (startName.equals(PAPER_LOCK)) personToChange.paperLock = token(xml);
+				else if (startName.equals(DATA_LOCK)) enuum(xml, personToChange, Person.PERSON.dataLock);
+				else if (startName.equals(PAPER_LOCK)) enuum(xml, personToChange, Person.PERSON.paperLock);
 				else if (startName.equals(CHANGE_RESIDENCE_TYPE_REPORTING_RELATIONSHIP)) changeResidenceTypeReportingMunicipality(xml, personToChange);
 				else if (startName.equals(EXTENSION)) extension(xml, personToChange);
 				else residenceChoiceOrSkip(startName, xml, personToChange);
@@ -599,13 +605,13 @@ public class StaxEch0020 implements StaxEchParser {
 				else if (startName.equals(ALIAS_NAME)) personToChange.aliasName = token(xml);
 				else if (startName.equals(OTHER_NAME)) personToChange.otherName = token(xml);
 				else if (startName.equals(CALL_NAME)) personToChange.callName = token(xml);
-				else if (startName.equals(RELIGION)) personToChange.religion = token(xml);
-				else if (startName.equals(DATA_LOCK)) personToChange.dataLock = token(xml);
-				else if (startName.equals(PAPER_LOCK)) personToChange.paperLock = token(xml);
+				else if (startName.equals(RELIGION)) enuum(xml, personToChange, Person.PERSON.religion);
+				else if (startName.equals(DATA_LOCK)) enuum(xml, personToChange, Person.PERSON.dataLock);
+				else if (startName.equals(PAPER_LOCK)) enuum(xml, personToChange, Person.PERSON.paperLock);
 
 				else if (startName.equals(DATE_OF_DEATH)) personToChange.dateOfDeath = StaxEch.date(xml);
 
-				else if (StringUtils.equals(startName, LANGUAGE_OF_CORRESPONDANCE, "languageOfCorrespondence")) personToChange.languageOfCorrespondance = token(xml);
+				else if (StringUtils.equals(startName, LANGUAGE_OF_CORRESPONDANCE, "languageOfCorrespondence")) enuum(xml, personToChange, Person.PERSON.languageOfCorrespondance);
 
 				else if (startName.equals(NAME_ON_PASSPORT)) personToChange.foreign.nameOnPassport = token(xml);
 

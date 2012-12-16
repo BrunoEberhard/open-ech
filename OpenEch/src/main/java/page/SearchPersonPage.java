@@ -25,15 +25,15 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 	private List<Person> resultList;
 
 	public static final Object[] FIELD_NAMES = {
-		Person.MR_MRS, //
 		PERSON.personIdentification.firstName, //
 		PERSON.personIdentification.officialName, //
 		PERSON.personIdentification.dateOfBirth, //
-		Person.STREET, //
-		Person.STREET_NUMBER, //
-		Person.TOWN, //
+		PERSON.getStreet(), //
+		PERSON.getStreetNumber(), //
+		PERSON.getTown(), //
 		PERSON.personIdentification.vn, //
 	};
+
 	
 	// Damit wird die Version des Fenster overruled
 	@Deprecated

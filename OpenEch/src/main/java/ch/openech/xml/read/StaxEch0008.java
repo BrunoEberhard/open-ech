@@ -1,5 +1,6 @@
 package ch.openech.xml.read;
 
+import static ch.openech.xml.read.StaxEch.integer;
 import static ch.openech.xml.read.StaxEch.token;
 
 import javax.xml.stream.XMLEventReader;
@@ -8,7 +9,8 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.dm.common.CountryIdentification;
-import ch.openech.mj.db.model.ColumnAccess;
+import ch.openech.mj.db.model.ColumnProperties;
+import ch.openech.mj.db.model.Constants;
 
 public class StaxEch0008 {
 
@@ -24,8 +26,12 @@ public class StaxEch0008 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-
-				ColumnAccess.setValue(countryIdentification, startName, token(xml));
+				
+				if (Constants.getProperty(CountryIdentification.COUNTRY_IDENTIFICATION.countryId).getFieldName().equals(startName)) {
+					ColumnProperties.setValue(countryIdentification, startName, integer(xml));
+				} else {
+					ColumnProperties.setValue(countryIdentification, startName, token(xml));
+				}
 			} else if (event.isEndElement()) return;
 			// else skip
 		}

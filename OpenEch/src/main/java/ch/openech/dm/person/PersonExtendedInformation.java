@@ -2,8 +2,9 @@ package ch.openech.dm.person;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
+import ch.openech.dm.types.YesNo;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.StringUtils;
 
 public class PersonExtendedInformation {
@@ -12,33 +13,28 @@ public class PersonExtendedInformation {
 	
 	public PersonIdentification personIdentification;
 	
-	@Is(EchFormats.yesNo)
-	public String armedForcesService, armedForcesLiability;
+	public YesNo armedForcesService, armedForcesLiability;
 	
-	@Is(EchFormats.yesNo)
-	public String civilDefense;
+	public YesNo civilDefense;
 	
-	@Is(EchFormats.yesNo)
-	public String fireService, fireServiceLiability;
+	public YesNo fireService, fireServiceLiability;
 	
-	@Is(EchFormats.yesNo)
-	public String healthInsured;
-	@Is(EchFormats.baseName) // TODO REMOVE
+	public YesNo healthInsured;
+	@Size(EchFormats.baseName) // TODO
 	public String insuranceName;
 	public Address insuranceAddress;
 	
-	@Is(EchFormats.baseName) // TODO REMOVE
-	public String matrimonialInheritanceArrangement;
+	public YesNo matrimonialInheritanceArrangement;
 
 	public boolean isEmpty() {
-		if (!StringUtils.isEmpty(armedForcesService)) return false;
-		if (!StringUtils.isEmpty(armedForcesLiability)) return false;
-		if (!StringUtils.isEmpty(civilDefense)) return false;
-		if (!StringUtils.isEmpty(fireService)) return false;
-		if (!StringUtils.isEmpty(fireServiceLiability)) return false;
+		if (armedForcesService != null) return false;
+		if (armedForcesLiability != null) return false;
+		if (civilDefense != null) return false;
+		if (fireService != null) return false;
+		if (fireServiceLiability != null) return false;
 		if (!StringUtils.isEmpty(insuranceName)) return false;
 		if (insuranceAddress != null && !insuranceAddress.isEmpty()) return false;
-		if (!StringUtils.isEmpty(matrimonialInheritanceArrangement)) return false;
+		if (matrimonialInheritanceArrangement != null) return false;
 		return true;
 	}
 	
@@ -76,12 +72,12 @@ public class PersonExtendedInformation {
 		s.append("</HTML>");
 	}
 	
-	private void yesNoToHtml(StringBuilder s, String label, String value) {
+	private void yesNoToHtml(StringBuilder s, String label, YesNo value) {
 		s.append(label);
 		s.append(": ");
-		if ("0".equals(value)) {
+		if (YesNo.No.equals(value)) {
 			s.append("Nein");
-		} else if ("1".equals(value)) {
+		} else if (YesNo.Yes.equals(value)) {
 			s.append("Ja");
 		} else {
 			s.append("-");

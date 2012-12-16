@@ -11,6 +11,8 @@ import ch.openech.dm.common.Address;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
+import ch.openech.dm.types.MrMrs;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
@@ -19,7 +21,6 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.DateUtils;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
@@ -27,12 +28,12 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	
 	private final EchSchema echSchema;
 	
-	public ContactPersonField(Object key) {
-		this(key, null, true);
+	public ContactPersonField(PropertyInterface property) {
+		this(property, null, true);
 	}
 
-	public ContactPersonField(Object key, EchSchema echSchema, boolean editable) {
-		super(key, editable);
+	public ContactPersonField(PropertyInterface property, EchSchema echSchema, boolean editable) {
+		super(property, editable);
 		this.echSchema = echSchema;
 	}
 	
@@ -56,7 +57,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			}		
 			addGap();
 		}
-		if (!StringUtils.isBlank(contactPerson.validTill)) {
+		if (contactPerson.validTill != null) {
 			addObject("Gültig bis");
 			DateUtils.formatCH(contactPerson.validTill);
 			addGap();
@@ -105,8 +106,8 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 					if (contactPerson.address != null) {
 						contactPerson.address.lastName = person.personIdentification.officialName;
 						contactPerson.address.firstName = person.personIdentification.firstName;
-						if (person.isMale()) contactPerson.address.mrMrs = "2";
-						if (person.isFemale()) contactPerson.address.mrMrs = "1";
+						if (person.isMale()) contactPerson.address.mrMrs = MrMrs.Frau;
+						if (person.isFemale()) contactPerson.address.mrMrs = MrMrs.Herr;
 					}
 				}
 				fireObjectChange();

@@ -5,9 +5,9 @@ import java.util.List;
 
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.PageContext;
 import ch.openech.server.EchServer;
@@ -22,12 +22,13 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 	
 	@Override
 	public IForm<Person> createForm() {
-		return new PersonPanel(PersonPanelType.BASE_DELIVERY, echSchema);
+		return new PersonPanel(PersonEditMode.BASE_DELIVERY, echSchema);
 	}
 
 	@Override
 	public Person newInstance() {
 		Person person = new Person();
+		person.editMode = PersonEditMode.BASE_DELIVERY;
 		person.religion = preferences.preferencesDefaultsData.religion;
 		person.residence.reportingMunicipality = preferences.preferencesDefaultsData.residence;
 		// sonst noch was?

@@ -5,6 +5,7 @@ import static ch.openech.dm.XmlConstants.COUNTRY;
 import static ch.openech.dm.XmlConstants.ID;
 import static ch.openech.dm.XmlConstants.ISO2_ID;
 import static ch.openech.dm.XmlConstants.SHORT_NAME_DE;
+import static ch.openech.xml.read.StaxEch.integer;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -74,7 +75,7 @@ public class StaxEch0072 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (ID.equals(startName)) countryIdentification.countryId = token(xml);
+				if (ID.equals(startName)) countryIdentification.countryId = integer(xml);
 				else if (ISO2_ID.equals(startName)) countryIdentification.countryIdISO2 = token(xml);
 				else if (SHORT_NAME_DE.equals(startName)) countryIdentification.countryNameShort = token(xml);
 				else skip(xml);

@@ -7,18 +7,20 @@ import java.util.List;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.joda.time.LocalDate;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.SearchableTable;
-import ch.openech.mj.db.model.ColumnAccess;
-import ch.openech.mj.edit.value.PropertyAccessor;
+import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.PropertyInterface;
+import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class PersonTable extends SearchableTable<Person> {
 
-	private static final String[] INDEX_FIELDS = {
+	private static final Object[] INDEX_FIELDS = {
 		PERSON.personIdentification.technicalIds.localId.personId, 
 		PERSON.personIdentification.officialName, //
 		PERSON.personIdentification.firstName, //
@@ -40,7 +42,7 @@ public class PersonTable extends SearchableTable<Person> {
 	}
 
 	public Person getByVn(String vn) {
-		List<Person> persons = find(vn, new String[]{PERSON.personIdentification.vn});
+		List<Person> persons = find(vn, new String[]{Constants.getProperty(PERSON.personIdentification.vn).getFieldName()});
 		if (persons.size() < 1) {
 			return null;
 			// throw new RuntimeException("Keine Person gefunden für " + vn);
@@ -52,7 +54,7 @@ public class PersonTable extends SearchableTable<Person> {
 	}
 	
 	public Person getByLocalPersonId(String personId) {
-		List<Person> persons = find(personId, new String[]{PERSON.personIdentification.technicalIds.localId.personId});
+		List<Person> persons = find(personId, new String[]{Constants.getProperty(PERSON.personIdentification.technicalIds.localId.personId).getFieldName()});
 		if (persons.size() == 0) {
 			throw new IllegalArgumentException(personId + " not available");
 		} else if (persons.size() > 1) {
@@ -62,13 +64,13 @@ public class PersonTable extends SearchableTable<Person> {
 		}
 	}
 	
-	public Person getByName(String name, String firstName, String dateOfBirth) {
+	public Person getByName(String name, String firstName, LocalDate dateOfBirth) {
 		List<Person> persons = find(name);
 		for (int i = persons.size()-1; i>= 0; i--) {
 			Person person = persons.get(i);
 			if (!StringUtils.isBlank(firstName) && !StringUtils.equals(firstName, person.personIdentification.firstName)) {
 				persons.remove(i);
-			} else if (!StringUtils.isBlank(dateOfBirth) && !StringUtils.equals(dateOfBirth, person.personIdentification.dateOfBirth)) {
+			} else if (dateOfBirth != null && !dateOfBirth.equals(person.personIdentification.dateOfBirth)) {
 				persons.remove(i);
 			}
 		}
@@ -101,17 +103,24 @@ public class PersonTable extends SearchableTable<Person> {
 	}
 
 	@Override
-	protected Field getField(String fieldName, Person person) {
-		String string = (String)PropertyAccessor.get(person, fieldName);
-		if (string != null) {
-			Field.Index index = Field.Index.ANALYZED;
-			if (fieldName.toLowerCase().contains("date") || StringUtils.equals(fieldName, PERSON.personIdentification.technicalIds.localId.personId, PERSON.personIdentification.vn)) {
-				index = Field.Index.NOT_ANALYZED;
+	protected Field getField(PropertyInterface property, Person person) {
+		String fieldName = property.getFieldName();
+		
+		if (property.getFieldClazz() == String.class) {
+			String string = (String) property.getValue(person);
+			if (string != null) {
+				Field.Index index = Field.Index.ANALYZED;
+				return new Field(fieldName, string,	Field.Store.YES, index);
 			}
-			return new Field(fieldName, string,	Field.Store.YES, index);
-		} else {
-			return null;
+		} else if (property.getFieldClazz() == LocalDate.class) {
+			LocalDate date = (LocalDate) property.getValue(person);
+			if (date != null) {
+				Field.Index index = Field.Index.NOT_ANALYZED;
+				String string = DateUtils.formatCH(date);
+				return new Field(fieldName, string,	Field.Store.YES, index);
+			}
 		}
+		return null;
 	}
 
 	@Override
@@ -131,9 +140,9 @@ public class PersonTable extends SearchableTable<Person> {
 		}
 	}
 
-	@Override
-	protected void setField(Person result, String fieldName, String value) {
-		ColumnAccess.setValue(result, fieldName, value);
-	}
+//	@Override
+//	protected void setField(Person result, String fieldName, String value) {
+//		Properties.set(result, fieldName, value);
+//	}
 
 }

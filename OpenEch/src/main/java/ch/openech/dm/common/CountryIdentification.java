@@ -2,15 +2,20 @@ package ch.openech.dm.common;
 
 import java.io.Serializable;
 
+import ch.openech.dm.EchFormats;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
 
+@Sizes(EchFormats.class)
 public class CountryIdentification implements Comparable<CountryIdentification>, Serializable, Cloneable {
 
 	public static final CountryIdentification COUNTRY_IDENTIFICATION = Constants.of(CountryIdentification.class);
 
-	public String countryId;
+	@Size(4)
+	public Integer countryId;
 	public String countryIdISO2;
 	@Required
 	public String countryNameShort;
@@ -28,7 +33,8 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 	}
 
 	public void clear() {
-		countryId = countryIdISO2 = countryNameShort = null;
+		countryId = null;
+		countryIdISO2 = countryNameShort = null;
 	}
 
 	public void copyTo(CountryIdentification copy) {
@@ -61,9 +67,13 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((countryId == null) ? 0 : countryId.hashCode());
-		result = prime * result + ((countryIdISO2 == null) ? 0 : countryIdISO2.hashCode());
-		result = prime * result + ((countryNameShort == null) ? 0 : countryNameShort.hashCode());
+		result = prime * result
+				+ ((countryId == null) ? 0 : countryId.hashCode());
+		result = prime * result
+				+ ((countryIdISO2 == null) ? 0 : countryIdISO2.hashCode());
+		result = prime
+				* result
+				+ ((countryNameShort == null) ? 0 : countryNameShort.hashCode());
 		return result;
 	}
 

@@ -1,7 +1,16 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
-
+import static ch.openech.dm.XmlConstants.LEGAL_FORM;
+import static ch.openech.dm.XmlConstants.LOCAL_ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ADDITIONAL_NAME;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ID_CATEGORY;
+import static ch.openech.dm.XmlConstants.ORGANISATION_LEGAL_NAME;
+import static ch.openech.dm.XmlConstants.ORGANISATION_NAME;
+import static ch.openech.dm.XmlConstants.UID;
+import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID_CATEGORIE;
+import static ch.openech.dm.XmlConstants._OTHER_ORGANISATION_ID;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -12,6 +21,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.UidStructure;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0097 {
@@ -24,7 +34,7 @@ public class StaxEch0097 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				
-				if (startName.equals(UID)) organisation.uid = uidStructure(xml);
+				if (startName.equals(UID)) uidStructure(xml, organisation.uid);
 				
 				else if (startName.equals(LOCAL_ORGANISATION_ID)) namedOrganisationId(xml, organisation.technicalIds.localId);
 				else if (startName.equals("otherOrganisationId") || startName.equals(_OTHER_ORGANISATION_ID)) organisation.technicalIds.otherId.add(namedOrganisationId(xml));
@@ -58,7 +68,7 @@ public class StaxEch0097 {
 		}
 	}
 	
-	public static String uidStructure(XMLEventReader xml) throws XMLStreamException {
+	public static void uidStructure(XMLEventReader xml, UidStructure uid) throws XMLStreamException {
 		String uidOrganisationIdCategorie = null;
 		String uidOrganisationId = null;
 		
@@ -72,10 +82,8 @@ public class StaxEch0097 {
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				if (!StringUtils.isBlank(uidOrganisationIdCategorie) && !StringUtils.isBlank(uidOrganisationId)) {
-					return uidOrganisationIdCategorie + uidOrganisationId;
-				} else {
-					return null;
-				}
+					uid.value = uidOrganisationIdCategorie + uidOrganisationId;
+				} 
 			} // else skip
 		}
 	}

@@ -4,21 +4,20 @@ import java.util.List;
 
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Nationality;
-import ch.openech.mj.edit.fields.EditField;
+import ch.openech.dm.person.Person;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
 
-public class ForeignField extends ObjectFlowField<Foreign> implements Validatable, DependingOnFieldAbove<Nationality> {
+public class ForeignField extends ObjectFlowField<Foreign> implements DependingOnFieldAbove<Nationality> {
 	private final EchSchema echSchema;
 	private boolean swiss = true;
 	
-	public ForeignField(Object key, EchSchema echSchema, boolean editable) {
-		super(key, editable);
+	public ForeignField(PropertyInterface property, EchSchema echSchema, boolean editable) {
+		super(property, editable);
 		this.echSchema = echSchema;
 	}
 
@@ -42,23 +41,21 @@ public class ForeignField extends ObjectFlowField<Foreign> implements Validatabl
 	}
 
 	@Override
-	public void validate(List<ValidationMessage> resultList) {
+	public void validate(Foreign foreign, List<ValidationMessage> resultList) {
 		if (!swiss) {
-			Foreign foreign = getObject();
-			if (StringUtils.isBlank(foreign.residencePermit)) {
-				resultList.add(new ValidationMessage(getName(), "Ausländerkategorie fehlt"));
+			if (foreign.isEmpty()) {
+				resultList.add(new ValidationMessage(getProperty(), "Ausländerkategorie fehlt"));
 			}
 		}
 	}
 
 	@Override
-	public String getNameOfDependedField() {
-		return "nationality";
+	public Nationality getKeyOfDependedField() {
+		return Person.PERSON.nationality;
 	}
 
 	@Override
-	public void setDependedField(EditField<Nationality> field) {
-		Nationality nationality = field.getObject();
+	public void valueChanged(Nationality nationality) {
 		swiss = nationality.isSwiss();
 		setEnabled(!swiss);
 		fireObjectChange();

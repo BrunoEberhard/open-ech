@@ -2,25 +2,30 @@ package ch.openech.dm.common;
 
 import java.io.Serializable;
 
+import ch.openech.dm.EchFormats;
+import ch.openech.dm.code.FederalRegister;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.model.annotation.Decimal;
+import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
 
+@Sizes(EchFormats.class)
 public class MunicipalityIdentification implements Comparable<MunicipalityIdentification>, Serializable {
 
 	public static MunicipalityIdentification MUNICIPALITY_IDENTIFICATION = Constants.of(MunicipalityIdentification.class);
 
-	public String municipalityId;
+	@Decimal(4)
+	public Integer municipalityId;
 	public String municipalityName;
-	public String cantonAbbreviation;
-	@Is("municipalityId")
-	public String historyMunicipalityId;
+	public final CantonAbbreviation cantonAbbreviation = new CantonAbbreviation();
+	@Decimal(4)
+	public Integer historyMunicipalityId;
 	
 	public void clear() {
-		municipalityId = null;
+		municipalityId = 0;
 		municipalityName = null;
-		cantonAbbreviation = null;
-		historyMunicipalityId = null;
+		cantonAbbreviation.canton = null;
+		historyMunicipalityId = 0;
 	}
 	
 	public boolean isEmpty() {
@@ -28,20 +33,20 @@ public class MunicipalityIdentification implements Comparable<MunicipalityIdenti
 	}
 	
 	public boolean isFederalRegister() {
-		if (StringUtils.isBlank(historyMunicipalityId)) return false;
-		if (historyMunicipalityId.length() != 2) return false;
-		if (historyMunicipalityId.charAt(0) != '-') return false;
-		return true;
+		return historyMunicipalityId != null && historyMunicipalityId < 0;
 	}
 	
-	public String getFederalRegister() {
-		if (!isFederalRegister()) return null;
-		return historyMunicipalityId.substring(1,2);
+	public FederalRegister getFederalRegister() {
+		if (isFederalRegister()) {
+			return FederalRegister.values()[-1-historyMunicipalityId];
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
 	public String toString() {
-		return formatMunicipality(municipalityName, cantonAbbreviation);
+		return formatMunicipality(municipalityName, cantonAbbreviation.canton);
 	}
 	
 	public static String formatMunicipality(String municipalityName, String cantonAbbreviation) {
@@ -58,30 +63,35 @@ public class MunicipalityIdentification implements Comparable<MunicipalityIdenti
 		// Used in ComboBox
 		int result = municipalityName.compareTo(m.municipalityName);
 		if (result != 0) return result;
-		else return cantonAbbreviation.compareTo(m.cantonAbbreviation);
+		else return cantonAbbreviation.canton.compareTo(m.cantonAbbreviation.canton);
 	}
 
 	public void copyTo(MunicipalityIdentification municipalityIdentification) {
 		municipalityIdentification.municipalityId = this.municipalityId;
 		municipalityIdentification.municipalityName = this.municipalityName;
-		municipalityIdentification.cantonAbbreviation = this.cantonAbbreviation;
+		municipalityIdentification.cantonAbbreviation.canton = this.cantonAbbreviation.canton;
 		municipalityIdentification.historyMunicipalityId = this.historyMunicipalityId;
 	}
-	
+
 	@Override
 	public int hashCode() {
-		if (historyMunicipalityId != null) return historyMunicipalityId.hashCode();
-		
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cantonAbbreviation == null) ? 0 : cantonAbbreviation.hashCode());
-		result = prime * result + ((historyMunicipalityId == null) ? 0 : historyMunicipalityId.hashCode());
-		result = prime * result + ((municipalityId == null) ? 0 : municipalityId.hashCode());
-		result = prime * result + ((municipalityName == null) ? 0 : municipalityName.hashCode());
+		result = prime
+				* result
+				+ ((cantonAbbreviation == null) ? 0 : cantonAbbreviation
+						.hashCode());
+		result = prime
+				* result
+				+ ((historyMunicipalityId == null) ? 0 : historyMunicipalityId
+						.hashCode());
+		result = prime * result
+				+ ((municipalityId == null) ? 0 : municipalityId.hashCode());
+		result = prime
+				* result
+				+ ((municipalityName == null) ? 0 : municipalityName.hashCode());
 		return result;
 	}
-
-	// Generated with eclipse
 
 	@Override
 	public boolean equals(Object obj) {
@@ -115,5 +125,4 @@ public class MunicipalityIdentification implements Comparable<MunicipalityIdenti
 		return true;
 	}
 
-	
 }

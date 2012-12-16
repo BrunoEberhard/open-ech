@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
+import ch.openech.dm.contact.ContactEntryType;
+import ch.openech.dm.types.ContactCategory;
 import ch.openech.server.EchPersistence;
 import ch.openech.server.EchServer;
 
@@ -31,7 +33,8 @@ public class ContactPersistenceTest {
 		persistence.contact().insert(contact);
 		
 		ContactEntry entry = new ContactEntry();
-		entry.categoryCode = "2";
+		entry.typeOfContact = ContactEntryType.Phone;
+		entry.categoryCode = ContactCategory.geschaeftlich;
 
 		contact.entries.add(entry);
 		
@@ -43,7 +46,7 @@ public class ContactPersistenceTest {
 		Assert.assertNotSame(contact, readContact);
 		Assert.assertEquals(contact.stringId, readContact.stringId);
 		Assert.assertEquals(1, readContact.entries.size());
-		Assert.assertEquals(contact.entries.get(0).categoryCode, readContact.entries.get(0).categoryCode);
+		Assert.assertEquals(contact.getPhoneList().get(0).categoryCode, readContact.getPhoneList().get(0).categoryCode);
 		
 	}
 }

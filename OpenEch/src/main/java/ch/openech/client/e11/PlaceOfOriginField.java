@@ -6,25 +6,26 @@ import java.util.List;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.person.Nationality;
+import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
+import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.EditorDialogAction;
-import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
 
-public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements Validatable, DependingOnFieldAbove<Nationality>, DemoEnabled {
+public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements DependingOnFieldAbove<Nationality>, DemoEnabled {
 	public static final boolean WITHOUT_ADD_ON = false;
 	private final boolean withAddOn;
 	private boolean swiss = true;
 	
-	public PlaceOfOriginField(Object key, boolean editable) {
+	public PlaceOfOriginField(List<PlaceOfOrigin> key, boolean editable) {
 		this(key, true, editable);
 	}
 	
@@ -32,8 +33,8 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	 * Das macht auch Sinn, denn die Heimatorte kommen alle per Abstammung und
 	 * per Geburtstag zu der geborenen Person
 	 */
-	public PlaceOfOriginField(Object key, boolean withAddOn, boolean editable) {
-		super(key, editable);
+	public PlaceOfOriginField(List<PlaceOfOrigin> key, boolean withAddOn, boolean editable) {
+		super(Constants.getProperty(key), editable);
 		this.withAddOn = withAddOn;
 	}
 	
@@ -48,8 +49,8 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 			PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 			PageContext context = PageContextHelper.findContext(visual);
 			OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-			placeOfOrigin.canton = preferences.preferencesDefaultsData.cantonAbbreviation;
-			placeOfOrigin.reasonOfAcquisition = "1";
+			placeOfOrigin.cantonAbbreviation.canton = preferences.preferencesDefaultsData.cantonAbbreviation.canton;
+			placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
 			return placeOfOrigin;
 		}
 
@@ -98,26 +99,22 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	}
 	
 	@Override
-	public void validate(List<ValidationMessage> resultList) {
+	public void validate(List<PlaceOfOrigin> list, List<ValidationMessage> resultList) {
 		if (swiss) {
-			if (getObject().size() == 0) {
-				resultList.add(new ValidationMessage(getName(), "Heimtort fehlt"));
+			if (list.isEmpty()) {
+				resultList.add(new ValidationMessage(getProperty(), "Heimtort fehlt"));
 			}
 		}
 	}
 
 	@Override
-	public String getNameOfDependedField() {
-		return "nationality";
+	public Nationality getKeyOfDependedField() {
+		return Person.PERSON.nationality;
 	}
 
 	@Override
-	public void setDependedField(EditField<Nationality> field) {
-		swiss = true;
-		if (field != null) {
-			Nationality nationality = field.getObject();
-			swiss = nationality.isSwiss();
-		}
+	public void valueChanged(Nationality nationality) {
+		swiss = nationality == null || nationality.isSwiss();
 		setEnabled(swiss);
 		if (!swiss && getObject() != null) {
 			getObject().clear();

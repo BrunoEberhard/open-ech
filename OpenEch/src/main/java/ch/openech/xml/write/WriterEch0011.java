@@ -164,13 +164,13 @@ public class WriterEch0011 {
 		List<PlaceOfOrigin> origins = person.placeOfOrigin;
 		if (origins != null && !origins.isEmpty()) {
 			swiss(anyPerson, origins);
-			if (person.foreign != null && !StringUtils.isBlank(person.foreign.residencePermit)) {
+			if (person.foreign != null && !person.foreign.isEmpty()) {
 				logger.warning("Person: " +person + " has swiss and foreign. Skipping foreign");
 				return;
 			}
 		}
 		
-		if (person.foreign != null && !StringUtils.isBlank(person.foreign.residencePermit)) {
+		if (person.foreign != null && !person.foreign.isEmpty()) {
 			foreigner(anyPerson, person.foreign);
 		}
 	}
@@ -189,6 +189,9 @@ public class WriterEch0011 {
 	public void placeOfOrigin(WriterElement parent, String tagName, PlaceOfOrigin origin) throws Exception {
 		WriterElement placeOfOrigin = parent.create(URI, tagName);
 		placeOfOrigin.values(origin, ORIGIN_NAME, CANTON);
+//		placeOfOrigin.values(origin, ORIGIN_NAME);
+//		placeOfOrigin.text(CANTON, origin.canton.value);
+
 	}
 
 	private void foreigner(WriterElement anyPerson, Foreign foreignValues) throws Exception {
@@ -213,7 +216,7 @@ public class WriterEch0011 {
 		// eCH-0044:personIdentificationType
 		if (person.contactPerson.person != null) ech44.personIdentification(contactElement, person.contactPerson.person);
 		ech10.address(contactElement, CONTACT_ADDRESS, person.contactPerson.address);
-		if (withValidTill && !StringUtils.isBlank(person.contactPerson.validTill)) contactElement.text(CONTACT_VALID_TILL, person.contactPerson.validTill);
+		if (withValidTill && person.contactPerson.validTill != null) contactElement.text(CONTACT_VALID_TILL, person.contactPerson.validTill);
 	}
 
 	public void residence(WriterElement message, Person values) throws Exception {

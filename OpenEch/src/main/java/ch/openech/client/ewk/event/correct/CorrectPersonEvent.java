@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.xml.write.EchSchema;
@@ -22,7 +22,7 @@ public class CorrectPersonEvent extends PersonEventEditor<Person> {
 
 	@Override
 	public IForm<Person> createForm() {
-		return new PersonPanel(PersonPanelType.CORRECT_PERSON, echSchema);
+		return new PersonPanel(PersonEditMode.CORRECT_PERSON, echSchema);
 	}
 	
 	@Override

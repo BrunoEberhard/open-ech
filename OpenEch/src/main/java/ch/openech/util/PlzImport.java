@@ -78,6 +78,7 @@ public class PlzImport {
 				break;
 			}
 		}
+		scanner.close();
 		Collections.sort(plzList);
 		for (Plz plz : plzList) {
 			Zip zip = new Zip();

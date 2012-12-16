@@ -1,18 +1,16 @@
 package ch.openech.datagenerator;
 
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Int4;
-
 import java.util.List;
 
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0148;
@@ -45,20 +43,6 @@ public class GeneratePersonAction extends EditorDialogAction {
 		}
 
 		@Override
-		protected void validate(GeneratePersonData data, List<ValidationMessage> resultList) {
-			boolean person = !StringUtils.isBlank(data.numberOfPersons) && Integer.parseInt(data.numberOfPersons) > 0;
-			boolean organisation = !StringUtils.isBlank(data.numberOfOrganisations) && Integer.parseInt(data.numberOfOrganisations) > 0;
-			
-			if (!person && !organisation) {
-				resultList.add(new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons, "Anzahl Personen oder Unternehmen wählen"));
-			}
-			
-			if (organisation && Integer.parseInt(data.numberOfOrganisations) > 110) {
-				resultList.add(new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfOrganisations, "So viele Testdatensätze existieren nicht"));
-			}
-		}
-
-		@Override
 		protected boolean isSaveSynchron() {
 			return false;
 		}
@@ -70,10 +54,10 @@ public class GeneratePersonAction extends EditorDialogAction {
 			return true;
 		}
 
-		private boolean generatePerson(String number) {
-			if (StringUtils.isBlank(number)) return true;
+		private boolean generatePerson(Integer number) {
+			if (number == null) return true;
 			
-			count = Integer.parseInt(number);
+			count = number;
 			if (count > 0) {
 				WriterEch0020 writerEch0020 = new WriterEch0020(ewkNamespaceContext);
 				for (saveProgress = 0; saveProgress<count; saveProgress++) {
@@ -81,16 +65,16 @@ public class GeneratePersonAction extends EditorDialogAction {
 					progress(saveProgress, count);
 				}
 			} else {
-				ClientToolkit.getToolkit().showError(null, number);
+				ClientToolkit.getToolkit().showError(null, "" + number);
 				return false;
 			}
 			return true;
 		}	
 		
-		private boolean generateOrganisation(String number) {
-			if (StringUtils.isBlank(number)) return true;
+		private boolean generateOrganisation(Integer number) {
+			if (number == null) return true;
 			
-			count = Integer.parseInt(number);
+			count = number;
 			if (count > 0) {
 				WriterEch0148 writerEch0148 = new WriterEch0148(orgNamespaceContext);
 				for (saveProgress = 0; saveProgress<count; saveProgress++) {
@@ -98,7 +82,7 @@ public class GeneratePersonAction extends EditorDialogAction {
 					progress(saveProgress, count);
 				}
 			} else {
-				ClientToolkit.getToolkit().showError(null, number);
+				ClientToolkit.getToolkit().showError(null, "" + number);
 				return false;
 			}
 			return true;
@@ -106,15 +90,30 @@ public class GeneratePersonAction extends EditorDialogAction {
 		
 	}
 
-	public static class GeneratePersonData {
+	public static class GeneratePersonData implements Validation {
 		public static final GeneratePersonData GENERATE_PERSON_DATA = Constants.of(GeneratePersonData.class);
 
-		@Is(Int4)
-		public String numberOfPersons;
+		@Size(4)
+		public Integer numberOfPersons;
 
-		@Is(Int4)
-		public String numberOfOrganisations;
+		@Size(4)
+		public Integer numberOfOrganisations;
 
+		@Override
+		public void validate(List<ValidationMessage> resultList) {
+			boolean person = numberOfPersons != null && numberOfPersons > 0;
+			boolean organisation = numberOfOrganisations  != null && numberOfOrganisations > 0;
+			
+			if (!person && !organisation) {
+				resultList.add(new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons, "Anzahl Personen oder Unternehmen wählen"));
+			}
+			
+			if (organisation && numberOfOrganisations > 110) {
+				resultList.add(new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfOrganisations, "So viele Testdatensätze existieren nicht"));
+			}
+		}
+
+		
 	}
 
 }

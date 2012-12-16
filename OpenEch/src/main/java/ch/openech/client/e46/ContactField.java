@@ -4,18 +4,20 @@ import java.awt.event.ActionEvent;
 
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
+import ch.openech.dm.contact.ContactEntryType;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
 
 public class ContactField extends ObjectFlowField<Contact> {
 	
-	public ContactField(Object key) {
-		this(key, true);
+	public ContactField(PropertyInterface property) {
+		this(property, true);
 	}
 	
-	public ContactField(Object key, boolean editable) {
-		super(key, editable);
+	public ContactField(PropertyInterface property, boolean editable) {
+		super(property, editable);
 	}
 	
 	@Override
@@ -24,15 +26,15 @@ public class ContactField extends ObjectFlowField<Contact> {
 	}
 
 	public class AddContactEntryEditor extends ObjectFieldPartEditor<ContactEntry> {
-		private final String type;
+		private final ContactEntryType type;
 		private final boolean person;
 		
 		public AddContactEntryEditor(boolean person) {
-			this.type = "A";
+			this.type = ContactEntryType.Address;
 			this.person = person;
 		}
 
-		public AddContactEntryEditor(String type) {
+		public AddContactEntryEditor(ContactEntryType type) {
 			this.type = type;
 			this.person = true;
 		}
@@ -95,8 +97,8 @@ public class ContactField extends ObjectFlowField<Contact> {
 	protected void showActions() {
 		addAction(new AddContactEntryEditor(true), "AddAddressPerson");
 		addAction(new AddContactEntryEditor(false), "AddAddressOrganisation");
-		addAction(new AddContactEntryEditor("E"), "AddEmail");
-		addAction(new AddContactEntryEditor("P"), "AddPhone");
-		addAction(new AddContactEntryEditor("I"), "AddInternet");
+		addAction(new AddContactEntryEditor(ContactEntryType.Email), "AddEmail");
+		addAction(new AddContactEntryEditor(ContactEntryType.Phone), "AddPhone");
+		addAction(new AddContactEntryEditor(ContactEntryType.Internet), "AddInternet");
 	}
 }

@@ -5,23 +5,20 @@ import ch.openech.client.e44.TechnicalIdsField;
 import ch.openech.client.e97.OrganisationUidField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.Organisation.EditMode;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationPanel extends EchFormPanel<Organisation> {
 
-	public enum OrganisationPanelType {
-		DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, // CORRECT_PERSON, CORRECT_IDENTIFICATION, CORRECT_NAME
-	};
-
-	private final OrganisationPanelType type;
+	private final EditMode mode;
 	
-	public OrganisationPanel(OrganisationPanelType type, EchSchema context) {
-		super(context, OrganisationPanelType.DISPLAY != type, 4);
-		this.type = type;
+	public OrganisationPanel(EditMode mode, EchSchema context) {
+		super(context, EditMode.DISPLAY != mode, 4);
+		this.mode = mode;
 		
 		reportedOrganisation();
 		
-		if (OrganisationPanelType.FOUNDATION == type || OrganisationPanelType.DISPLAY == type) {
+		if (EditMode.FOUNDATION == mode || EditMode.DISPLAY == mode) {
 			uidregInformation();
 			commercialRegisterInformation();
 			vatRegisterInformation();
@@ -29,7 +26,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 	}
 
 	private void reportedOrganisation() {
-		boolean identificationVisible = type != OrganisationPanelType.CHANGE_RESIDENCE_TYPE;
+		boolean identificationVisible = mode != EditMode.CHANGE_RESIDENCE_TYPE;
 		if (identificationVisible) {
 			organisation();
 		}
@@ -42,7 +39,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 		line(new OrganisationUidField(ORGANISATION.uid, editable), new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
 
 		line(ORGANISATION.uidBrancheText, ORGANISATION.nogaCode);
-		if (OrganisationPanelType.DISPLAY != type) {
+		if (EditMode.DISPLAY != mode) {
 			line(ORGANISATION.foundationDate, ORGANISATION.liquidationDate);
 		} else {
 			// TODO das verteilt sich falsch
@@ -55,15 +52,10 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 		area(ORGANISATION.typeOfResidenceOrganisation, ORGANISATION.reportingMunicipality);
 		line(ORGANISATION.arrivalDate, ORGANISATION.departureDate);
 		line(ORGANISATION.comesFrom, ORGANISATION.goesTo);
-		if (OrganisationPanelType.CHANGE_RESIDENCE_TYPE != type) {
+		if (EditMode.CHANGE_RESIDENCE_TYPE != mode) {
 			area(ORGANISATION.businessAddress, ORGANISATION.contact, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
 		} else {
 			area(ORGANISATION.businessAddress, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
-		}
-		if (editable) {
-			setRequired(ORGANISATION.arrivalDate);
-			setRequired(ORGANISATION.reportingMunicipality);
-			setRequired(ORGANISATION.businessAddress);
 		}
 	}
 
@@ -79,17 +71,11 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 		addTitle("Handelsregister");
 		line(ORGANISATION.commercialRegisterNameTranslation);
 		line(ORGANISATION.commercialRegisterStatus,  ORGANISATION.commercialRegisterEntryStatus, ORGANISATION.commercialRegisterEntryDate, ORGANISATION.commercialRegisterLiquidationDate);
-		if (OrganisationPanelType.DISPLAY != type) {		
-			setRequired(ORGANISATION.commercialRegisterStatus);
-		}
 	}
 	
 	private void vatRegisterInformation() {
 		addTitle("Mehrwertsteuerregister");
 		line(ORGANISATION.vatStatus, ORGANISATION.vatEntryStatus, ORGANISATION.vatEntryDate, ORGANISATION.vatLiquidationDate);
-		if (OrganisationPanelType.DISPLAY != type) {		
-			setRequired(ORGANISATION.vatStatus);
-		}
 	}
 	
 }

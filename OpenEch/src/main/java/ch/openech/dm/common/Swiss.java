@@ -3,7 +3,7 @@ package ch.openech.dm.common;
 
 public class Swiss {
 
-	public static final String SWISS_COUNTRY_ID = "8100";
+	public static final Integer SWISS_COUNTRY_ID = 8100;
 	public static final String SWISS_COUNTRY_ISO2 = "CH";
 	public static final String SWISS_COUNTRY_NAME_SHORT = "Schweiz";
 

@@ -4,7 +4,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -13,9 +12,11 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.joda.time.LocalDateTime;
+
 import ch.openech.dm.Envelope;
+import ch.openech.dm.XmlConstants;
 import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.mj.util.DateUtils;
 
 public abstract class DeliveryWriter {
 	private static final Logger logger = Logger.getLogger(DeliveryWriter.class.getName());
@@ -54,8 +55,7 @@ public abstract class DeliveryWriter {
 			// envelope.senderId = AbstractClient.preferences().get("sedexAddress", null);
 			envelope.senderId = senderId;
 			envelope.recipientId = recipientId;
-			Date date = new Date();
-			envelope.eventDate = DateUtils.formatXsd(date);
+			envelope.eventDate = new LocalDateTime();
 			envelope.messageDate = envelope.eventDate;
 		}
 		return envelope;
@@ -125,7 +125,7 @@ public abstract class DeliveryWriter {
 	}
 	
 	protected String getRootType() {
-		return "delivery";
+		return XmlConstants.DELIVERY;
 	}
 	
 	private void writeXmlSchemaLocation() throws XMLStreamException {

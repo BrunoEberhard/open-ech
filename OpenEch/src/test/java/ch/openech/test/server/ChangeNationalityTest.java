@@ -2,9 +2,12 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.openech.dm.code.NationalityStatus;
+import ch.openech.dm.code.ResidencePermit;
 import ch.openech.dm.person.Person;
 
 public class ChangeNationalityTest extends AbstractServerTest {
@@ -24,8 +27,8 @@ public class ChangeNationalityTest extends AbstractServerTest {
 		Person person = load(id);
 		
 		Assert.assertNotNull(person);
-		Assert.assertEquals("2", person.nationality.nationalityStatus);
-		Assert.assertEquals("8236", person.nationality.nationalityCountry.countryId);	
+		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
+		Assert.assertEquals(new Integer(8236), person.nationality.nationalityCountry.countryId);	
 		Assert.assertEquals("Spanien", person.nationality.nationalityCountry.countryNameShort);	
 	}
 
@@ -34,8 +37,8 @@ public class ChangeNationalityTest extends AbstractServerTest {
 		processFile("testPerson/changeNationality/changeResidencePermitTest.xml");
 		Person person = load(id);
 		
-		Assert.assertEquals("2010-01-31", person.foreign.residencePermitTill);
-		Assert.assertEquals("01", person.foreign.residencePermit);
+		Assert.assertEquals(new LocalDate(2010, 1, 31), person.foreign.residencePermitTill);
+		Assert.assertEquals(ResidencePermit.Saisonarbeiter, person.foreign.residencePermit);
 
 		Assert.assertEquals(1, person.occupation.size());
 	}

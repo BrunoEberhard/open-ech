@@ -19,13 +19,13 @@ public class LiquidationEvent extends OrganisationEventEditor<Organisation> {
 	protected void fillForm(Form<Organisation> formPanel) {
 		formPanel.line(Organisation.ORGANISATION.liquidationDate);
 		formPanel.line(Organisation.ORGANISATION.liquidationReason);
-		formPanel.setRequired(Organisation.ORGANISATION.liquidationDate);
-		formPanel.setRequired(Organisation.ORGANISATION.liquidationReason);
 	}
 
 	@Override
 	public Organisation load() {
-		return getOrganisation();
+		Organisation organisation = getOrganisation();
+		organisation.editMode = Organisation.EditMode.LIQUIDATION;
+		return organisation;
 	}
 
 	@Override

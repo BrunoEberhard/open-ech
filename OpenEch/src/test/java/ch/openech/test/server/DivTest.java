@@ -2,10 +2,15 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.types.DataLock;
+import ch.openech.dm.person.types.PaperLock;
+import ch.openech.dm.person.types.Religion;
+import ch.openech.dm.types.TypeOfHousehold;
 
 public class DivTest extends AbstractServerTest {
 
@@ -31,67 +36,67 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals("2", person.dwellingAddress.mailAddress.houseNumber.dwellingNumber);
 		Assert.assertEquals("Gebiet", person.dwellingAddress.mailAddress.locality);
 		Assert.assertEquals("Herdern", person.dwellingAddress.mailAddress.town);
-		Assert.assertEquals("8535", person.dwellingAddress.mailAddress.zip.swissZipCode);
-		Assert.assertEquals("4837", person.dwellingAddress.mailAddress.zip.swissZipCodeId);
+		Assert.assertEquals(new Integer(8535), person.dwellingAddress.mailAddress.zip.swissZipCode);
+		Assert.assertEquals(new Integer(4837), person.dwellingAddress.mailAddress.zip.swissZipCodeId);
 		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
-		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
-		Assert.assertEquals("2010-08-30", person.dwellingAddress.movingDate);
+		Assert.assertEquals(TypeOfHousehold.Privathaushalt, person.dwellingAddress.typeOfHousehold);
+		Assert.assertEquals(new LocalDate(2010, 8, 30), person.dwellingAddress.movingDate);
 	}
 	
 	@Test
 	public void addressLock1() throws Exception {
 		Person person = load(id);
-		person.dataLock = "1";
+		person.dataLock = DataLock.Adresssperre;
 		process(writer().addressLock(person));
 		person = load(id);
-		Assert.assertEquals("1", person.dataLock);
+		Assert.assertEquals(DataLock.Adresssperre, person.dataLock);
 	}
 	
 	@Test
 	public void addressLock2() throws Exception {
 		Person person = load(id);
-		person.dataLock = "2";
+		person.dataLock = DataLock.Auskunftssperre;
 		process(writer().addressLock(person));
 		person = load(id);
-		Assert.assertEquals("2", person.dataLock);
+		Assert.assertEquals(DataLock.Auskunftssperre, person.dataLock);
 	}
 	
 	@Test
 	public void addressLock0() throws Exception {
 		Person person = load(id);
-		person.dataLock = "0";
+		person.dataLock = DataLock.ungesperrt;
 		process(writer().addressLock(person));
 		person = load(id);
-		Assert.assertEquals("0", person.dataLock);
+		Assert.assertEquals(DataLock.ungesperrt, person.dataLock);
 	}
 	
 	@Test
 	public void paperLock1() throws Exception {
 		Person person = load(id);
-		person.paperLock = "1";
+		person.paperLock = PaperLock.gesperrt;
 		process(writer().paperLock(person));
 		person = load(id);
-		Assert.assertEquals("1", person.paperLock);
+		Assert.assertEquals(PaperLock.gesperrt, person.paperLock);
 	}
 
 	@Test
 	public void paperLock0() throws Exception {
 		Person person = load(id);
-		person.paperLock = "0";
+		person.paperLock = PaperLock.ungesperrt;
 		process(writer().paperLock(person));
 		person = load(id);
-		Assert.assertEquals("0", person.paperLock);
+		Assert.assertEquals(PaperLock.ungesperrt, person.paperLock);
 	}
 
 	@Test
 	public void changeReligion() throws Exception {
 		Person person = load(id);
-		Assert.assertEquals("000", person.religion);
-		person.paperLock = "0";
-		process(writer().changeReligion(person.personIdentification, "111"));
+		Assert.assertEquals(Religion.unbekannt, person.religion);
+		person.paperLock = PaperLock.ungesperrt;
+		process(writer().changeReligion(person.personIdentification, Religion.evangelisch));
 		person = load(id);
-		Assert.assertEquals("111", person.religion);
+		Assert.assertEquals(Religion.evangelisch, person.religion);
 	}
 	
 	@Test
@@ -103,12 +108,12 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals("Bahnhofstrasse", person.contactPerson.address.street);
 		Assert.assertEquals("1000", person.contactPerson.address.houseNumber.houseNumber);
 		Assert.assertEquals("5A", person.contactPerson.address.houseNumber.dwellingNumber);
-		Assert.assertEquals("1234", person.contactPerson.address.postOfficeBoxNumber);
+		Assert.assertEquals(new Integer(1234), person.contactPerson.address.postOfficeBoxNumber);
 		Assert.assertEquals("POSTFACH", person.contactPerson.address.postOfficeBoxText);
 		Assert.assertEquals("Gebiet", person.contactPerson.address.locality);
 		Assert.assertEquals("Vessy", person.contactPerson.address.town);
-		Assert.assertEquals("1234", person.contactPerson.address.zip.swissZipCode);
-		Assert.assertEquals("452", person.contactPerson.address.zip.swissZipCodeId);
+		Assert.assertEquals(new Integer(1234), person.contactPerson.address.zip.swissZipCode);
+		Assert.assertEquals(new Integer(452), person.contactPerson.address.zip.swissZipCodeId);
 		Assert.assertEquals("CH", person.contactPerson.address.country);
 	}
 	

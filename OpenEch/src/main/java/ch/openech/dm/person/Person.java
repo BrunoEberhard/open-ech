@@ -1,22 +1,34 @@
 package ch.openech.dm.person;
 
-import static ch.openech.dm.EchFormats.baseName;
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Date;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
+import ch.openech.dm.EchFormats;
 import ch.openech.dm.Event;
-import ch.openech.dm.code.MrMrs;
+import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.contact.Contact;
+import ch.openech.dm.person.types.DataLock;
+import ch.openech.dm.person.types.PaperLock;
+import ch.openech.dm.person.types.PartnerShipAbolition;
+import ch.openech.dm.person.types.Religion;
+import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.types.Language;
+import ch.openech.dm.types.MrMrs;
+import ch.openech.dm.types.TypeOfResidence;
+import ch.openech.dm.types.YesNo;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.db.model.EmptyValidator;
+import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Reference;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.DerivedProperty;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.DateUtils;
@@ -31,13 +43,11 @@ import ch.openech.mj.util.StringUtils;
  * damit kann man sich SubSubTable ersparen.
  * 
  */
-public class Person {
+public class Person implements Validation {
 
 	public static final Person PERSON = Constants.of(Person.class);
-	public static final String MR_MRS = "mrMrs";
-	public static final String STREET = "street";
-	public static final String STREET_NUMBER = "streetNumber";
-	public static final String TOWN = "town";
+
+	public transient PersonEditMode editMode;
 
 	// Der eCH - Event, mit dem die aktuelle Version der Person erstellt oder
 	// verändert wurde
@@ -49,33 +59,29 @@ public class Person {
 	@Reference
 	public final PersonIdentification personIdentification = new PersonIdentification();
 	
-	@Is(baseName) 
+	@Size(EchFormats.baseName)
 	public String originalName, alliancePartnershipName, aliasName, otherName, callName;
 
 	public Place placeOfBirth;
-	@Is(Date) 
-	public String dateOfDeath;
+	public LocalDate dateOfDeath;
 	
 	public final MaritalStatus maritalStatus = new MaritalStatus();
 	public final Separation separation = new Separation();
-	@Is("partnerShipAbolition")
-	public String cancelationReason;
+	public PartnerShipAbolition cancelationReason;
 	public final Nationality nationality = new Nationality();
 	public final ContactPerson contactPerson = new ContactPerson();
 	
-	@Is("language")
-	public String languageOfCorrespondance = "de";
+	public Language languageOfCorrespondance = Language.de;
 	@Required
-	public String religion = "000";
+	public Religion religion = Religion.unbekannt;
 	
 	public final Foreign foreign = new Foreign();
 	
 	@Required
-	public String typeOfResidence = "1"; // residence (hasMainResidence / hasSecondaryResidence / hasOtherResidence)
+	public TypeOfResidence typeOfResidence = TypeOfResidence.hasMainResidence;
 	public final Residence residence = new Residence();
 	
-	@Is(Date) 
-	public String arrivalDate, departureDate;
+	public LocalDate arrivalDate, departureDate;
 	public Place comesFrom, goesTo;
 	public Address comesFromAddress, goesToAddress;
 	@Required
@@ -85,8 +91,8 @@ public class Person {
 	public final List<Relation> relation = new ArrayList<Relation>();
 	public final List<PlaceOfOrigin> placeOfOrigin = new ArrayList<PlaceOfOrigin>(); // Nur Swiss
 	
-	public String dataLock = "0";
-	public String paperLock = "0";
+	public DataLock dataLock = DataLock.ungesperrt;
+	public PaperLock paperLock = PaperLock.ungesperrt;
 	
 	public PersonExtendedInformation personExtendedInformation;
 
@@ -94,42 +100,37 @@ public class Person {
 	
 	//
 
-	public MrMrs getMrMrs() {
+	public MrMrs getValue() {
 		if (isMale()) return MrMrs.Herr;
 		else if (isFemale()) return MrMrs.Frau;
 		else return null;
 	}
 	
-	public String getDateOfBirth() {
-		return personIdentification.dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		personIdentification.dateOfBirth = dateOfBirth;
-	}
-
 	// Von PersonPanel gebraucht
 	
+	@DerivedProperty
 	public Relation getFather() {
-		return getRelation("4");
+		return getRelation(TypeOfRelationship.Vater);
 	}
 	
 	public void setFather(Relation relation) {
-		setRelation("4", relation);
+		setRelation(TypeOfRelationship.Vater, relation);
 	}
 
+	@DerivedProperty
 	public Relation getMother() {
-		return getRelation("3");
+		return getRelation(TypeOfRelationship.Mutter);
 	}
 	
 	public void setMother(Relation relation) {
-		setRelation("3", relation);
+		setRelation(TypeOfRelationship.Mutter, relation);
 	}
 	
-	private void setRelation(String typeOfRelationship, Relation relation) {
+	private void setRelation(TypeOfRelationship typeOfRelationship, Relation relation) {
+		// dont remove. Nötig, damit das PERSON.getMother funtktioniert
 		relation.typeOfRelationship = typeOfRelationship;
 		for (Relation r : Person.this.relation) {
-			if (StringUtils.equals(r.typeOfRelationship, relation.typeOfRelationship)) {
+			if (r.typeOfRelationship == relation.typeOfRelationship) {
 				Person.this.relation.remove(r);
 				break;
 			}
@@ -156,7 +157,7 @@ public class Person {
 	}
 	
 	public boolean isAlive() {
-		return StringUtils.isBlank(dateOfDeath);
+		return dateOfDeath == null;
 	}
 	
 	public boolean isMarried() {
@@ -168,7 +169,7 @@ public class Person {
 	}
 
 	public boolean isSeparated() {
-		return !StringUtils.isBlank(separation.separation);
+		return separation.separation != null;
 	}
 
 	public boolean hasGardianMeasure() {
@@ -191,24 +192,24 @@ public class Person {
 		return null;
 	}
 	
-	public Relation getRelation(String type) {
+	public Relation getRelation(TypeOfRelationship type) {
 		for (Relation r : relation) {
-			if (StringUtils.equals(type, r.typeOfRelationship)) return r;
+			if (type == r.typeOfRelationship) return r;
 		}
 		Relation newRelation = new Relation();
 		newRelation.typeOfRelationship = type;
-		if (newRelation.isParent()) newRelation.care = "1";
+		if (newRelation.isParent()) newRelation.care = YesNo.Yes;
 		relation.add(newRelation);
 		return newRelation;
 	}
 
 	public boolean isSwiss() {
-		if (!"2".equals(nationality.nationalityStatus)) return false;
+		if (nationality.nationalityStatus != NationalityStatus.with) return false;
 		return nationality.nationalityCountry.isSwiss();
 	}
 	
 	public boolean isMainResidence() {
-		return "1".equals(typeOfResidence);
+		return typeOfResidence == TypeOfResidence.hasMainResidence;
 	}
 	
 	public String getFatherFirstNameAtBirth() {
@@ -243,6 +244,7 @@ public class Person {
 		getMother().officialNameAtBirth = text;
 	}
 	
+	@DerivedProperty
 	public String getStreet() {
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.street;
@@ -251,6 +253,7 @@ public class Person {
 		}
 	}
 
+	@DerivedProperty
 	public String getStreetNumber() {
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.houseNumber.houseNumber;
@@ -259,6 +262,7 @@ public class Person {
 		}
 	}
 
+	@DerivedProperty
 	public String getTown() {
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.town;
@@ -271,7 +275,7 @@ public class Person {
 	
 	@Override
 	public String toString() {
-		return personIdentification.firstName + " " + personIdentification.officialName + ", " + DateUtils.formatCH(getDateOfBirth());
+		return personIdentification.firstName + " " + personIdentification.officialName + ", " + DateUtils.formatCH(personIdentification.dateOfBirth);
 	}
 	
 	public String toHtmlMultiLine() {
@@ -285,7 +289,7 @@ public class Person {
 	private void toHtmlMultiLine(StringBuilder s) {
 		append(s, "Person.officialName", personIdentification.officialName);
 		append(s, "Person.firstName", personIdentification.firstName);
-		if (DateUtils.isValueValidUS(personIdentification.dateOfBirth)) {
+		if (personIdentification.dateOfBirth != null) {
 			append(s, "Person.dateOfBirth", DateUtils.formatCH(personIdentification.dateOfBirth));
 		}
 		s.append("<BR>&nbsp;");
@@ -309,10 +313,23 @@ public class Person {
 		validateBirthAfterParents(resultList);
 		validateRelations(resultList);
 		validateDeathNotBeforeBirth(resultList);
+		
+		if (editMode != PersonEditMode.CORRECT_PERSON && editMode != PersonEditMode.BIRTH) {
+			EmptyValidator.validate(resultList, this, PERSON.arrivalDate);
+		}
+		
+		if (editMode != null && editMode.isIdentificationVisible()) {
+//			EmptyValidator.validate(this.personIdentification, resultList);
+//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.firstName);
+//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.officialName);
+//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.dateOfBirth);
+//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.sex);
+//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.vn);
+		}
 	}
 	
 	@BusinessRule("Die Geburt einer Person muss nach derjenigen seiner Eltern sein")
-	private void validateBirthAfterParents(List<ValidationMessage> resultList) {
+	public void validateBirthAfterParents(List<ValidationMessage> resultList) {
 		Relation relation = getMother();
 		if (!isBirthAfterRelation(relation)) {
 			resultList.add(new ValidationMessage(PERSON.personIdentification.dateOfBirth, "Geburtsdatum muss nach demjenigen der Mutter sein"));
@@ -322,15 +339,16 @@ public class Person {
 		if (!isBirthAfterRelation(relation)) {
 			resultList.add(new ValidationMessage(PERSON.personIdentification.dateOfBirth, "Geburtsdatum muss nach demjenigen des Vaters sein"));
 		}
-	}
+	};
 
+	
 	private boolean isBirthAfterRelation(Relation relation) {
-		if (StringUtils.isBlank(getDateOfBirth())) return true;
+		if (personIdentification.dateOfBirth == null) return true;
 		if (relation == null) return true;
 		PersonIdentification partner = relation.partner;
 		if (partner == null) return true;
-		if (StringUtils.isBlank(partner.dateOfBirth)) return true;
-		return getDateOfBirth().compareTo(partner.dateOfBirth) > 0; 
+		if (partner.dateOfBirth == null) return true;
+		return personIdentification.dateOfBirth.isAfter(partner.dateOfBirth); 
 	}
 
 	private void validateRelations(List<ValidationMessage> resultList) {
@@ -341,37 +359,36 @@ public class Person {
 	@BusinessRule("Mutter muss weiblich sein")
 	private void validateMotherIsFemale(List<ValidationMessage> resultList) {
 		Relation relation = getMother();
-		if (relation == null || relation.partner == null || StringUtils.isBlank(relation.partner.sex)) return;
+		if (relation == null || relation.partner == null || relation.partner.sex == null) return;
 		if (!relation.partner.isFemale()) {
-			resultList.add(new ValidationMessage("mother", "Mutter muss weiblich sein"));
+			resultList.add(new ValidationMessage(Person.PERSON.getMother(), "Mutter muss weiblich sein"));
 		}
 	}
 	
 	@BusinessRule("Vater muss männlich sein")
 	private void validateFatherIsMale(List<ValidationMessage> resultList) {
 		Relation relation = getFather();
-		if (relation == null || relation.partner == null || StringUtils.isBlank(relation.partner.sex)) return;
+		if (relation == null || relation.partner == null || relation.partner.sex == null) return;
 		if (!relation.partner.isMale()) {
-			resultList.add(new ValidationMessage("father", "Vater muss männlich sein"));
+			resultList.add(new ValidationMessage(Person.PERSON.getFather(), "Vater muss männlich sein"));
 		}
 	}
 	
 	@BusinessRule("Todesdatum darf nicht vor Geburtsdatum sein")
 	private void validateDeathNotBeforeBirth(List<ValidationMessage> resultList) {
-		if (StringUtils.isBlank(getDateOfBirth()) || StringUtils.isBlank(dateOfDeath)) return;
-		if (getDateOfBirth().compareTo(dateOfDeath) > 0) {
+		if (personIdentification.dateOfBirth == null || dateOfDeath == null) return;
+		if (personIdentification.dateOfBirth.isBefore(dateOfDeath)) {
 			resultList.add(new ValidationMessage(PERSON.dateOfDeath, "Todesdatum darf nicht vor Geburtsdatum sein"));
 		}
 	}
 
 	@BusinessRule("Ereignis darf nicht vor Geburt der Person stattfinden")
-	public static void validateEventNotBeforeBirth(List<ValidationMessage> validationMessages, PersonIdentification personIdentification, String date, String key) {
-		if (personIdentification != null && !StringUtils.isBlank(personIdentification.dateOfBirth) && !StringUtils.isBlank(date)) {
-			if (date.compareTo(personIdentification.dateOfBirth) < 0) {
+	public static void validateEventNotBeforeBirth(List<ValidationMessage> validationMessages, PersonIdentification personIdentification, LocalDate date, Object key) {
+		if (personIdentification != null && personIdentification.dateOfBirth != null && date != null) {
+			if (date.isBefore(personIdentification.dateOfBirth)) {
 				validationMessages.add(new ValidationMessage(key, "Datum darf nicht vor Geburt der Person sein"));
 			}
 		}
 	}
-
 	
 }

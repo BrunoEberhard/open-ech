@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.datagenerator.DataGenerator;
-import ch.openech.dm.code.EchCodes;
+import ch.openech.dm.code.FederalRegister;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
@@ -18,20 +20,20 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 	private final List<MunicipalityIdentification> municipalities;
 	private final ComboBox<MunicipalityIdentification> comboBox;
 
-	public MunicipalityField(boolean allowFederalRegister) {
-		this(null, allowFederalRegister);
+	public MunicipalityField(MunicipalityIdentification key, boolean allowFederalRegister) {
+		this(Constants.getProperty(key), allowFederalRegister);
 	}
 	
-	public MunicipalityField(Object key, boolean allowFederalRegister) {
-		super(Constants.getConstant(key), true);
+	public MunicipalityField(PropertyInterface property, boolean allowFederalRegister) {
+		super(property, true);
 		
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 		
 		municipalities = StaxEch0071.getInstance().getMunicipalityIdentifications();
 		List<MunicipalityIdentification> items = new ArrayList<MunicipalityIdentification>(municipalities.size() + 5);
 		if (allowFederalRegister) {
-			for (int i = 0; i<3; i++) {
-				items.add(new FederalRegisterMunicipality(i));
+			for (FederalRegister federalRegister : FederalRegister.values()) {
+				items.add(new FederalRegisterMunicipality(federalRegister));
         	}
 		}
 		items.addAll(municipalities);
@@ -62,27 +64,17 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 	
 	// 
 
-	@Override
-	public boolean isEmpty() {
-		return getObject().isEmpty();
-	}
-
 	private static class FederalRegisterMunicipality extends MunicipalityIdentification {
-		private final int key;
+		private final FederalRegister federalRegister;
 
-		private FederalRegisterMunicipality(int key) {
-			this.key = key;
-			this.municipalityId = "-" + key;
+		private FederalRegisterMunicipality(FederalRegister federalRegister) {
+			this.federalRegister = federalRegister;
+			this.historyMunicipalityId = - federalRegister.ordinal() - 1;
 		}
 		
 		@Override
 		public String toString() {
-			return "Bundesregister: " + EchCodes.federalRegister.getText(key);
-		}
-
-		@Override
-		public int hashCode() {
-			return key;
+			return "Bundesregister: " + EnumUtils.getText(federalRegister);
 		}
 
 		@Override
@@ -91,7 +83,7 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 				return false;
 			}
 			FederalRegisterMunicipality other = (FederalRegisterMunicipality) obj;
-			return key == other.key;
+			return federalRegister == other.federalRegister;
 		}
 	}
 

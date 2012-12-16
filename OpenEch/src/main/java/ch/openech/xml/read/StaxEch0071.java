@@ -12,6 +12,7 @@ import static ch.openech.dm.XmlConstants.MUNICIPALITY_ID;
 import static ch.openech.dm.XmlConstants.MUNICIPALITY_LONG_NAME;
 import static ch.openech.dm.XmlConstants.MUNICIPALITY_SHORT_NAME;
 import static ch.openech.dm.XmlConstants.NOMENCLATURE;
+import static ch.openech.xml.read.StaxEch.integer;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -78,14 +79,14 @@ public class StaxEch0071 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (HISTORY_MUNICIPALITY_ID.equals(startName)) municipalityIdentification.historyMunicipalityId = token(xml);
-				else if (MUNICIPALITY_ID.equals(startName)) municipalityIdentification.municipalityId = token(xml);
+				if (HISTORY_MUNICIPALITY_ID.equals(startName)) municipalityIdentification.historyMunicipalityId = integer(xml);
+				else if (MUNICIPALITY_ID.equals(startName)) municipalityIdentification.municipalityId = integer(xml);
 				else if (MUNICIPALITY_LONG_NAME.equals(startName)) municipalityIdentification.municipalityName = token(xml);
 				else if (MUNICIPALITY_SHORT_NAME.equals(startName)) {
 					String shortName = token(xml);
 					if (StringUtils.isBlank(municipalityIdentification.municipalityName)) municipalityIdentification.municipalityName = shortName;
 				}
-				else if (CANTON_ABBREVIATION.equals(startName)) municipalityIdentification.cantonAbbreviation = token(xml);
+				else if (CANTON_ABBREVIATION.equals(startName)) municipalityIdentification.cantonAbbreviation.canton = token(xml);
 				else if (MUNICIPALITY_ABOLITION_DATE.equals(startName)) {
 					String token = token(xml);
 					if (!StringUtils.isBlank(token)) {
@@ -109,7 +110,7 @@ public class StaxEch0071 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (CANTON_ABBREVIATION.equals(startName)) canton.cantonAbbreviation = token(xml);
+				if (CANTON_ABBREVIATION.equals(startName)) canton.cantonAbbreviation.canton = token(xml);
 				else if (CANTON_LONG_NAME.equals(startName)) canton.cantonLongName = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {

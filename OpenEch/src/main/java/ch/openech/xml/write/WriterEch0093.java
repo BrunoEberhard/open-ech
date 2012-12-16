@@ -1,6 +1,23 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
+import static ch.openech.dm.XmlConstants.COMES_FROM;
+import static ch.openech.dm.XmlConstants.DATE_OF_DEATH;
+import static ch.openech.dm.XmlConstants.DEATH;
+import static ch.openech.dm.XmlConstants.DEPARTURE_DATE;
+import static ch.openech.dm.XmlConstants.DESTINATION_ADDRESS;
+import static ch.openech.dm.XmlConstants.DESTINATION_MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.FEDERAL_REGISTER;
+import static ch.openech.dm.XmlConstants.GOES_TO;
+import static ch.openech.dm.XmlConstants.HAS_MAIN_RESIDENCE;
+import static ch.openech.dm.XmlConstants.MOVE_IN;
+import static ch.openech.dm.XmlConstants.MOVE_OUT;
+import static ch.openech.dm.XmlConstants.MOVE_OUT_PERSON;
+import static ch.openech.dm.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
+import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.SECONDARY_RESIDENCE;
+
+import org.joda.time.LocalDate;
 
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
@@ -88,7 +105,7 @@ public class WriterEch0093 extends DeliveryWriter {
 	}
 
 	// code 2
-	public String moveOut(Person person, MunicipalityIdentification reportingMunicipality, Place goesTo, String departureDate) throws Exception {
+	public String moveOut(Person person, MunicipalityIdentification reportingMunicipality, Place goesTo, LocalDate departureDate) throws Exception {
         WriterElement event = delivery().create(URI, MOVE_OUT);
         ech20.moveInPerson(event, URI, MOVE_OUT_PERSON, person);
         ech20.addParentNames(event, person);
@@ -103,7 +120,7 @@ public class WriterEch0093 extends DeliveryWriter {
         return result();
 	}
 	
-	private void moveOutReportingDestination(WriterElement parent, MunicipalityIdentification reportingMunicipality, Place goesTo, String departureDate) throws Exception {
+	private void moveOutReportingDestination(WriterElement parent, MunicipalityIdentification reportingMunicipality, Place goesTo, LocalDate departureDate) throws Exception {
         WriterElement element = parent.create(URI, MOVE_OUT_REPORTING_DESTINATION);
         if (reportingMunicipality.isFederalRegister()) {
         	element.text(FEDERAL_REGISTER, reportingMunicipality.getFederalRegister());
@@ -121,7 +138,7 @@ public class WriterEch0093 extends DeliveryWriter {
 	}
 
 	// code 3
-	public String death(PersonIdentification personIdentification, String date) throws Exception {
+	public String death(PersonIdentification personIdentification, LocalDate date) throws Exception {
 		WriterElement event = simplePersonEvent(DEATH, personIdentification);
 		event.text(DATE_OF_DEATH, date);
 		return result();

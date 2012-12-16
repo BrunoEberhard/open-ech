@@ -1,40 +1,39 @@
 package ch.openech.dm.person;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.dm.code.EchCodes;
-import ch.openech.dm.code.TypeOfRelationship;
+import ch.openech.dm.code.BasedOnLaw;
 import ch.openech.dm.common.Address;
+import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.types.YesNo;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.StringUtils;
 
-public class Relation {
+public class Relation implements Validatable {
 
 	public static final Relation RELATION = Constants.of(Relation.class);
 	
 	@Required
-	public String typeOfRelationship;
-	public String basedOnLaw;
-	@Is(EchFormats.yesNo)
-	public String care = "0";
+	public TypeOfRelationship typeOfRelationship;
+	public BasedOnLaw basedOnLaw;
+	public YesNo care = YesNo.No;
+	@Required
 	public PersonIdentification partner;
 	
 	public Address address;
 	
-	@Is(EchFormats.baseName)
+	@Size(EchFormats.baseName)
 	public String firstNameAtBirth, officialNameAtBirth; // only for parent
 	
 	// 
 	
-	public TypeOfRelationship lookupTypeOfRelationship() {
-		return TypeOfRelationship.lookup(typeOfRelationship);
-	}
-	
 	public void clear() {
 		typeOfRelationship = null;
 		basedOnLaw = null;
-		care = "0";
+		care = YesNo.No;
 		partner = new PersonIdentification();
 		address = null;
 		firstNameAtBirth = null;
@@ -49,20 +48,17 @@ public class Relation {
 	
 	public boolean isPartnerType() {
 		// würde die Methode isPartner() heissen würde es einen Konflikt
-		// mit dem PropertyAccessor geben, da dann die Methode als getter-Methode
+		// mit dem Property geben, da dann die Methode als getter-Methode
 		// für die Variable Partner angesehen würde.
 		// Daher heisst diese Methode als einzige isXyType() statt isXy()
-		TypeOfRelationship typeOfRelationship = lookupTypeOfRelationship();
 		return typeOfRelationship != null && typeOfRelationship.isPartner();
 	}
 	
 	public boolean isParent() {
-		TypeOfRelationship typeOfRelationship = lookupTypeOfRelationship();
 		return typeOfRelationship != null && typeOfRelationship.isParent();
 	}
 
 	public boolean isCareRelation() {
-		TypeOfRelationship typeOfRelationship = lookupTypeOfRelationship();
 		return typeOfRelationship != null && typeOfRelationship.isCare();
 	}
 
@@ -103,8 +99,8 @@ public class Relation {
 		StringBuilder s = new StringBuilder();
 		s.append("<HTML>");
 
-		if (!StringUtils.isBlank(typeOfRelationship)) {
-			String text = EchCodes.typeOfRelationship.getText(typeOfRelationship);
+		if (typeOfRelationship != null) {
+			String text = EnumUtils.getText(typeOfRelationship);
 			if (!StringUtils.isBlank(text)) {
 				if (isParent()) {
 					if ("1".equals(care)) {
@@ -114,12 +110,12 @@ public class Relation {
 					} else if (care != null) {
 						text += " (Sorgerecht: " + care + ")";
 					}
-				} else if (isCareRelation() && !StringUtils.isBlank(basedOnLaw)) {
+				} else if (isCareRelation() && basedOnLaw != null) {
 					text += " (§ " + basedOnLaw + ")";
 				}
 				StringUtils.appendLine(s, text);
 			} else {
-				StringUtils.appendLine(s, "Typ der Beziehung:", typeOfRelationship);
+				StringUtils.appendLine(s, "Typ der Beziehung:", EnumUtils.getText(typeOfRelationship));
 				appendCare(s);
 			}
 		} else {
@@ -133,11 +129,28 @@ public class Relation {
 	}
 	
 	private void appendCare(StringBuilder s) {
-		if (isParent() && !StringUtils.isBlank(care)) {
-			String text = EchCodes.yesNo.getText(care);
+		if (isParent() && care != null) {
+			String text = EnumUtils.getText(care);
 			if (!StringUtils.isBlank(text)) StringUtils.appendLine(s, "Sorgerecht:", text);
-			else StringUtils.appendLine(s, "Sorgerecht:", care);
+			else StringUtils.appendLine(s, "Sorgerecht:", EnumUtils.getText(care));
 		}
+	}
+
+	@Override
+	public String validate() {
+		if (partner == null) {
+			if (!isParent()) {
+				return "Person muss gesetzt sein";
+			} else if (address != null) {
+				return "Adresse darf nur gesetzt sein, wenn Person gesetzt ist";
+			}
+		}
+		if (!isParent()) {
+			if (!StringUtils.isBlank(firstNameAtBirth) || !StringUtils.isBlank(officialNameAtBirth)) {
+				return "\"Name:\" darf nur bei Mutter oder Vater gesetzt sein";
+			}
+		}
+		return null;
 	}
 	
 }

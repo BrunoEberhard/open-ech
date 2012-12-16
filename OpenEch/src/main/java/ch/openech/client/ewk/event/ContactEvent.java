@@ -40,7 +40,7 @@ public class ContactEvent extends PersonEventEditor<Person> {
 	@BusinessRule("Bei Änderungen an der Zustelladresse / Kontaktadresse muss die Adresse gesetzt sein")
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		if (person.contactPerson.address == null) {
-			resultList.add(new ValidationMessage("contact", "Kontaktadresse muss gesetzt sein"));
+			resultList.add(new ValidationMessage(Person.PERSON.contactPerson.address, "Kontaktadresse muss gesetzt sein"));
 		}
 	}
 

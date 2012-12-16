@@ -19,17 +19,17 @@ public class WriterEch0007 {
 
 		WriterElement writer = parent.create(URI, tagName);
 		
+		writer.text(MUNICIPALITY_ID, municipalityIdentification.municipalityId);
+		writer.text(MUNICIPALITY_NAME, municipalityIdentification.municipalityName);
+		writer.text(CANTON_ABBREVIATION, municipalityIdentification.cantonAbbreviation.canton);
 		if (HAS_TYPO) {
 			// im XML Schmema eCH-0007-3-0 heisst ein Attribut
 			// historyMunicipialityId statt
 			// historyMunicipalityId
-	    	writer.text(MUNICIPALITY_ID, municipalityIdentification.municipalityId);
-			writer.text(MUNICIPALITY_NAME, municipalityIdentification.municipalityName);
-			writer.text(CANTON_ABBREVIATION, municipalityIdentification.cantonAbbreviation);
 			writer.text(HISTORY_MUNICIPIALITY_ID, municipalityIdentification.historyMunicipalityId); // tagName!!!!!
 		} else {
 			// in Version 4.0 ist das dann korrigiert ;)
-	    	writer.values(municipalityIdentification);
+			writer.text(HISTORY_MUNICIPALITY_ID, municipalityIdentification.historyMunicipalityId); // tagName!!!!!
 		}
 	}
 	

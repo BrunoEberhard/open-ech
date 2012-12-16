@@ -6,12 +6,12 @@ public class Canton implements Comparable<Canton> {
 
 	public static final Canton CANTON = Constants.of(Canton.class);
 	
-    public String cantonAbbreviation;
+    public final CantonAbbreviation cantonAbbreviation = new CantonAbbreviation();
 	public String cantonLongName;
 	
 	@Override
 	public int compareTo(Canton c) {
 		// Used in ComboBox
-		return cantonAbbreviation.compareTo(c.cantonAbbreviation);
+		return cantonAbbreviation.canton.compareTo(c.cantonAbbreviation.canton);
 	}
 }

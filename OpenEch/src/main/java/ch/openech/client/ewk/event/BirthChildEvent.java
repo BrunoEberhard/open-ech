@@ -6,25 +6,28 @@ import java.util.List;
 
 import page.PersonViewPage;
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonEditMode;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.Religion;
+import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.types.YesNo;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.util.BusinessRule;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 // Ein etwas spezieller Event, da er nicht die momentan gewählte Person betrifft,
 // sondern als Resultat eine neue Person erstellt.
-public class BirthChildEvent extends PersonEventEditor<Person> {
+public class BirthChildEvent extends PersonEventEditor<Person>  {
 
 	public BirthChildEvent(EchSchema echSchema, OpenEchPreferences preferences) {
 		super(echSchema, preferences);
@@ -32,7 +35,7 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 
 	@Override
 	public IForm<Person> createForm() {
-		return new PersonPanel(PersonPanelType.BIRTH, echSchema);
+		return new PersonPanel(PersonEditMode.BIRTH, echSchema);
 	}
 
 	@Override
@@ -118,11 +121,11 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 		Relation relation = new Relation();
 		relation.partner = parent.personIdentification;
 		if (parent.isMale()) {
-			relation.typeOfRelationship = "4";
+			relation.typeOfRelationship = TypeOfRelationship.Vater;
 		} else if (parent.isFemale()) {
-			relation.typeOfRelationship = "3";
+			relation.typeOfRelationship = TypeOfRelationship.Mutter;
 		}
-		relation.care = "1";
+		relation.care = YesNo.Yes;
 		person.relation.add(relation);
 	}
 
@@ -150,9 +153,9 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 
 	@BusinessRule("Bei Geburt wird Religion von Vater übernommen, wenn nicht vorhanden von Mutter")
 	private static void presetReligion(Person person, Person father, Person mother) {
-		if (father != null && !StringUtils.isEmpty(father.religion)) {
+		if (father != null && father.religion != null && father.religion != Religion.unbekannt) {
 			person.religion = father.religion;
-		} else if (mother != null && !StringUtils.isEmpty(mother.religion)) {
+		} else if (mother != null && mother.religion != null) {
 			person.religion = mother.religion;
 		}
 	}
@@ -184,7 +187,7 @@ public class BirthChildEvent extends PersonEventEditor<Person> {
 			// auch gar nicht zu
 			PlaceOfOrigin newPlaceOfOrigin = new PlaceOfOrigin();
 			newPlaceOfOrigin.originName = placeOfOrigin.originName;
-			newPlaceOfOrigin.canton = placeOfOrigin.canton;
+			newPlaceOfOrigin.cantonAbbreviation.canton = placeOfOrigin.cantonAbbreviation.canton;
 			result.add(newPlaceOfOrigin);
 		}
 		return result;

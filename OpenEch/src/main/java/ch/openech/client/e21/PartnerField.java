@@ -1,6 +1,7 @@
 package ch.openech.client.e21;
 
 import ch.openech.dm.person.Relation;
+import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.xml.write.EchSchema;
@@ -9,13 +10,13 @@ import ch.openech.xml.write.EchSchema;
 public class PartnerField extends ObjectFlowField<Relation> {
 	private final EchSchema echSchema;
 	
-	public PartnerField(Object key, EchSchema echSchema) {
-		super(key);
+	public PartnerField(Relation key, EchSchema echSchema) {
+		super(Constants.getProperty(key));
 		this.echSchema = echSchema;
 	}
-	
+
 	public class PartnerEditor extends ObjectFieldEditor {
-		// TODO häh?
+		// Benötigt, damit dir richige Resource verwendet wird
 	}
 	
 	@Override
@@ -28,7 +29,16 @@ public class PartnerField extends ObjectFlowField<Relation> {
 		addAction(new PartnerEditor());
 	}
 	
-//		
+	@Override
+	public Relation getObject() {
+		Relation relation = super.getObject();
+		// TODO ist das wirklich nötig?
+		if (!relation.isCareRelation()) relation.basedOnLaw = null;
+		if (!relation.isParent()) relation.care = null;
+		return relation;
+	}
+
+	//		
 //		if (connectedNameField != null) {
 //			String name = null;
 //			if (relation.partner != null) {

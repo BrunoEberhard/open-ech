@@ -5,8 +5,10 @@ import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import ch.openech.dm.code.BasedOnLaw;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.server.ServerCallResult;
 
 public class GardianTest extends AbstractServerTest {
@@ -28,17 +30,17 @@ public class GardianTest extends AbstractServerTest {
 		Person personGardian = load(gardianId);
 
 		Relation relation = new Relation();
-		relation.typeOfRelationship = "9";
-		relation.basedOnLaw = "368";
+		relation.typeOfRelationship = TypeOfRelationship.Vormund;
+		relation.basedOnLaw = BasedOnLaw._368;
 		relation.partner = personGardian.personIdentification;
 		person.relation.add(relation);
 		process(writer().gardianMeasure(person.personIdentification, relation));
 		
 		person = load(id);
 		Assert.assertNotNull(person);
-		Relation gardian = person.getRelation("9");
+		Relation gardian = person.getRelation(TypeOfRelationship.Vormund);
 		Assert.assertTrue(personGardian.personIdentification.isEqual(gardian.partner));
-		Assert.assertEquals("368", gardian.basedOnLaw);
+		Assert.assertEquals(BasedOnLaw._368, gardian.basedOnLaw);
 	}
 
 	@Test
@@ -47,19 +49,19 @@ public class GardianTest extends AbstractServerTest {
 		Person personGardian = load(gardianId);
 
 		Relation relation = new Relation();
-		relation.typeOfRelationship = "7";
-		relation.basedOnLaw = "369";
+		relation.typeOfRelationship = TypeOfRelationship.Beistand;
+		relation.basedOnLaw = BasedOnLaw._369;
 		relation.partner = personGardian.personIdentification;
 		person.relation.add(relation);
 		process(writer().changeGardian(person.personIdentification, relation));
 
 		person = load(id);
 		Assert.assertNotNull(person);
-		Relation gardian = person.getRelation("7");
+		Relation gardian = person.getRelation(TypeOfRelationship.Beistand);
 		Assert.assertTrue(load(gardianId).personIdentification.isEqual(gardian.partner));
-		Assert.assertEquals("369", gardian.basedOnLaw);
+		Assert.assertEquals(BasedOnLaw._369, gardian.basedOnLaw);
 
-		Assert.assertTrue(person.getRelation("9").isEmpty());
+		Assert.assertTrue(person.getRelation(TypeOfRelationship.Vormund).isEmpty());
 	}
 	
 	@Test
@@ -69,8 +71,8 @@ public class GardianTest extends AbstractServerTest {
 		
 		person = load(id);
 		Assert.assertNotNull(person);
-		Assert.assertTrue(person.getRelation("7").isEmpty());
-		Assert.assertTrue(person.getRelation("9").isEmpty());
+		Assert.assertTrue(person.getRelation(TypeOfRelationship.Beistand).isEmpty());
+		Assert.assertTrue(person.getRelation(TypeOfRelationship.Vormund).isEmpty());
 	}
 	
 }

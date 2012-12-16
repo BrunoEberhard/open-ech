@@ -2,11 +2,13 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 
@@ -42,35 +44,35 @@ public class MarriageTest extends AbstractServerTest {
 		Assert.assertNotNull(person1);
 		Assert.assertTrue(person1.maritalStatus.isVerheiratet());
 		Relation relation1 = person1.getPartner();
-		Assert.assertEquals("1", relation1.typeOfRelationship);
+		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation1.typeOfRelationship);
 		Assert.assertTrue(person2.personIdentification.isEqual(relation1.partner));
 		
 		Assert.assertNotNull(person2);
 		Assert.assertTrue(person2.maritalStatus.isVerheiratet());
 		Assert.assertEquals("Ogi Villiger", person2.personIdentification.officialName);
 		Relation relation2 = person2.getPartner();
-		Assert.assertEquals("1", relation2.typeOfRelationship);
+		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation2.typeOfRelationship);
 		Assert.assertTrue(person1.personIdentification.isEqual(relation2.partner));
 	}
 	
 	@Test
 	public void divorce() throws Exception {
 		Person person = load(id1);
-		process(writer().divorce(person.personIdentification, "2009-08-07"));
+		process(writer().divorce(person.personIdentification, new LocalDate(2009, 8, 7)));
 		
 		person = load(id1);
 		Assert.assertTrue(person.maritalStatus.isGeschieden());
-		Assert.assertEquals("2009-08-07", person.maritalStatus.dateOfMaritalStatus);
+		Assert.assertEquals(new LocalDate(2009, 8, 7), person.maritalStatus.dateOfMaritalStatus);
 	}
 	
 	@Test
 	public void undoMarriage() throws Exception {
 		Person person = load(id2);
-		process(writer().undoMarriage(person.personIdentification, "2009-08-06"));
+		process(writer().undoMarriage(person.personIdentification, new LocalDate(2009, 8, 6)));
 		
 		person = load(id2);
 		Assert.assertTrue(person.maritalStatus.isUngueltigeEhe());
-		Assert.assertEquals("2009-08-06", person.maritalStatus.dateOfMaritalStatus);
+		Assert.assertEquals(new LocalDate(2009, 8, 6), person.maritalStatus.dateOfMaritalStatus);
 	}
 	
 }

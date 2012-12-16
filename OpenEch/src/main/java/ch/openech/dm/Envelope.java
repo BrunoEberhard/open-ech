@@ -1,5 +1,7 @@
 package ch.openech.dm;
 
+import org.joda.time.LocalDateTime;
+
 
 public class Envelope {
 
@@ -9,8 +11,8 @@ public class Envelope {
 	public String referenceMessageId;
 	public String senderId;
 	public String recipientId;
-	public String eventDate;
-	public String messageDate;
+	public LocalDateTime eventDate;
+	public LocalDateTime messageDate;
 	public String loopback;
 	public String authorise;
 	

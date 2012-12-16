@@ -33,7 +33,7 @@ public class ChangeOccupationEvent extends PersonEventEditor<Occupation> {
 	
 	@Override
 	public Occupation load() {
-		return new Occupation();
+		return new Occupation(echSchema);
 	}
 
 	@Override

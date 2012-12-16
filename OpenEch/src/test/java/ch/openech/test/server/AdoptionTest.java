@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.server.EchServer;
 
 public class AdoptionTest extends AbstractServerTest {
@@ -41,14 +42,14 @@ public class AdoptionTest extends AbstractServerTest {
 		Assert.assertEquals(father.personIdentification.officialName, child.personIdentification.officialName);
 
 		Assert.assertEquals("CH", child.placeOfBirth.countryIdentification.countryIdISO2);
-		Assert.assertEquals("2196", child.placeOfBirth.municipalityIdentification.municipalityId);
+		Assert.assertEquals(new Integer(2196), child.placeOfBirth.municipalityIdentification.municipalityId);
 		Assert.assertEquals("Fribourg", child.placeOfBirth.municipalityIdentification.municipalityName);
-		Assert.assertEquals("FR", child.placeOfBirth.municipalityIdentification.cantonAbbreviation);
+		Assert.assertEquals("FR", child.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton);
 		
-		Relation motherRelation = child.getRelation("3");
+		Relation motherRelation = child.getRelation(TypeOfRelationship.Mutter);
 		Assert.assertTrue(mother.personIdentification.isEqual(motherRelation.partner));
 		
-		Relation fatherRelation = child.getRelation("4");
+		Relation fatherRelation = child.getRelation(TypeOfRelationship.Vater);
 		Assert.assertTrue(father.personIdentification.isEqual(fatherRelation.partner));
 	}
 	

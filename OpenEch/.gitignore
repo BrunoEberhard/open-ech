@@ -1,2 +1,4 @@
 *.class
 /classes
+/target
+derby.log

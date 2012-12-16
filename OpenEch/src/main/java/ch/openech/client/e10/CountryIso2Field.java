@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
@@ -18,8 +19,8 @@ public class CountryIso2Field extends AbstractEditField<String> implements Chang
 	
 	private final List<String> countryNames;
 
-	public CountryIso2Field(Object key) {
-		super(key, true);
+	public CountryIso2Field(PropertyInterface property) {
+		super(property, true);
 
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 		countryNames = StaxEch0072.getInstance().getCountryIdISO2s();

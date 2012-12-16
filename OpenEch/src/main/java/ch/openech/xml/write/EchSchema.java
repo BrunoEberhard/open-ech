@@ -4,6 +4,7 @@ import static ch.openech.xml.read.StaxEch.skip;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +18,8 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.mj.db.model.Format;
-import ch.openech.mj.db.model.NumberFormat;
-import ch.openech.mj.db.model.PlainFormat;
+import ch.openech.mj.db.model.Number;
+import ch.openech.mj.model.annotation.Size;
 
 public class EchSchema {
 	private static Map<String, EchSchema> contexts = new HashMap<String, EchSchema>();
@@ -31,10 +31,15 @@ public class EchSchema {
 	private final int rootNumber;
 	private String version;
 	private String openEchNamespaceLocation;
-	private final Map<String, Format> simpleTypes = new HashMap<String, Format>();
+	private final Map<String, Annotation> simpleTypes = new HashMap<String, Annotation>();
 	private WriterEch0020 writerEch0020;
 	private WriterEch0112 writerEch0112;
 	private WriterEch0148 writerEch0148;
+
+	public EchSchema() {
+		this.rootNumber = 0;
+		this.version = null;
+	}
 	
 	private EchSchema(int rootNumber, String version) {
 		read(rootNumber, version);
@@ -55,6 +60,10 @@ public class EchSchema {
 			}
 		}
 		return contexts.get(location);
+	}
+
+	public static EchSchema getNamespaceContext(ch.openech.dm.EchSchema schema) {
+		return getNamespaceContext(schema.getSchemaNumber(), schema.getVersion() + "." + schema.getMinorVersion());
 	}
 	
 	//
@@ -228,9 +237,9 @@ public class EchSchema {
 						System.out.println("Warnung: Grösse nicht bestimmbar: " + name);
 						size = 10;
 					}
-					simpleTypes.put(name, new NumberFormat(Integer.class, size, false));
+					simpleTypes.put(name, new Number.NumberImpl(size, 0));
 				} else {
-					simpleTypes.put(name, new PlainFormat(size));
+					simpleTypes.put(name, new Size.SizeImpl(size));
 				}
 				return;
 			} // else skip
@@ -263,7 +272,7 @@ public class EchSchema {
 	
 	//
 	
-	public Map<String, Format> getSimpleTypes() {
+	public Map<String, Annotation> getSimpleTypes() {
 		return simpleTypes;
 	}
 	

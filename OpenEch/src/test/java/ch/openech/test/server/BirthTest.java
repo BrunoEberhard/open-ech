@@ -2,11 +2,14 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.server.ServerCallResult;
 
 public class BirthTest extends AbstractServerTest {
@@ -23,7 +26,7 @@ public class BirthTest extends AbstractServerTest {
 	}
 	
 	@Test
-	public void marriage() throws Exception {
+	public void birth() throws Exception {
 		Person mother = load(mother_id);
 		Person father = load(father_id);
 
@@ -35,19 +38,19 @@ public class BirthTest extends AbstractServerTest {
 		Assert.assertEquals("Hauber", child.personIdentification.officialName);
 		Assert.assertEquals("Daniela", child.personIdentification.firstName);
 		Assert.assertTrue(child.maritalStatus.isLedig());
-		Assert.assertEquals("2005-05-25", child.getDateOfBirth());
+		Assert.assertEquals(new LocalDate(2005, 5, 25), child.personIdentification.dateOfBirth);
 
-		Assert.assertEquals("GE", child.placeOfBirth.municipalityIdentification.cantonAbbreviation);
+		Assert.assertEquals("GE", child.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton);
 		Assert.assertEquals("Genève", child.placeOfBirth.municipalityIdentification.municipalityName);
-		Assert.assertEquals("6621", child.placeOfBirth.municipalityIdentification.municipalityId);
+		Assert.assertEquals(new Integer(6621), child.placeOfBirth.municipalityIdentification.municipalityId);
 
-		Assert.assertEquals("2", child.nationality.nationalityStatus);
-		Assert.assertEquals("8100", child.nationality.nationalityCountry.countryId);
+		Assert.assertEquals(NationalityStatus.with, child.nationality.nationalityStatus);
+		Assert.assertEquals(new Integer(8100), child.nationality.nationalityCountry.countryId);
 		Assert.assertEquals("Schweiz", child.nationality.nationalityCountry.countryNameShort);
 
-		Relation motherRelation = child.getRelation("3");
+		Relation motherRelation = child.getRelation(TypeOfRelationship.Mutter);
 		Assert.assertTrue(mother.personIdentification.isEqual(motherRelation.partner));
-		Relation fatherRelation = child.getRelation("4");
+		Relation fatherRelation = child.getRelation(TypeOfRelationship.Vater);
 		Assert.assertTrue(father.personIdentification.isEqual(fatherRelation.partner));
 	}
 	

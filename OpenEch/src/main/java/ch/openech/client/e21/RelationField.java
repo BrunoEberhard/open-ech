@@ -5,6 +5,7 @@ import java.util.List;
 
 import page.PersonViewPage;
 import ch.openech.dm.person.Relation;
+import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
@@ -18,8 +19,8 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 	private final boolean withNameOfParents;
 	private final EchSchema echNamespaceContext;
 	
-	public RelationField(Object key, EchSchema echNamespaceContext, boolean withNameOfParents, boolean editable) {
-		super(key, editable);
+	public RelationField(List<Relation> key, EchSchema echNamespaceContext, boolean withNameOfParents, boolean editable) {
+		super(Constants.getProperty(key), editable);
 		
 		this.withNameOfParents = withNameOfParents;
 		this.echNamespaceContext = echNamespaceContext;
@@ -33,8 +34,12 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		}
 
 		@Override
-		protected void setPart(List<Relation> object, Relation p) {
-			object.add(p);
+		protected void setPart(List<Relation> object, Relation relation) {
+			// TODO ist das nötig?
+			if (!relation.isCareRelation()) relation.basedOnLaw = null;
+			if (!relation.isParent()) relation.care = null;
+
+			object.add(relation);
 		}
 		
 		@Override

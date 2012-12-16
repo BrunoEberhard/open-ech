@@ -1,5 +1,7 @@
 package editor;
 
+import static ch.openech.dm.organisation.Organisation.ORGANISATION;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -7,10 +9,11 @@ import page.OrganisationViewPage;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel;
-import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.server.EchServer;
@@ -25,7 +28,14 @@ public class FoundationEditor extends XmlEditor<Organisation> implements XmlResu
 
 	@Override
 	public IForm<Organisation> createForm() {
-		return new OrganisationPanel(OrganisationPanelType.FOUNDATION, echSchema);
+		return new OrganisationPanel(Organisation.EditMode.FOUNDATION, echSchema);
+	}
+	
+	@Override
+	protected void validate(Organisation object, List<ValidationMessage> resultList) {
+		super.validate(object, resultList);
+		EmptyValidator.validate(resultList, object, ORGANISATION.commercialRegisterStatus);
+		EmptyValidator.validate(resultList, object, ORGANISATION.vatStatus);
 	}
 
 	@Override

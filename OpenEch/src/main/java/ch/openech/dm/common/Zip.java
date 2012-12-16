@@ -1,30 +1,37 @@
 package ch.openech.dm.common;
 
+import ch.openech.dm.EchFormats;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.util.Plz;
 
+@Sizes(EchFormats.class)
 public class Zip {
 	public static final Zip ZIP_TOWN = Constants.of(Zip.class);
 	
 	public String foreignZipCode;
-	public String swissZipCode; // 0 - 9999
-	public String swissZipCodeAddOn;
-	public String swissZipCodeId; // int
+	@Size(4)
+	public Integer swissZipCode; // 0 - 9999
+	@Size(2)
+	public Integer swissZipCodeAddOn;
+	@Size(4)
+	public Integer swissZipCodeId; // int
 
 	public void setPlz(Plz plz) {
 		foreignZipCode = null;
-		swissZipCode = Integer.toString(plz.postleitzahl);
-		swissZipCodeAddOn = Integer.toString(plz.zusatzziffern);
-		swissZipCodeId = Integer.toString(plz.onrp);
+		swissZipCode = plz.postleitzahl;
+		swissZipCodeAddOn = plz.zusatzziffern;
+		swissZipCodeId = plz.onrp;
 	}
 
 	public boolean isEmpty() {
-		return StringUtils.isBlank(swissZipCode) && StringUtils.isBlank(foreignZipCode);
+		return swissZipCode == null && foreignZipCode == null;
 	}
 	
 	public boolean isSwiss() {
-		return !StringUtils.isBlank(swissZipCodeId);
+		return swissZipCodeId != null;
 	}
 	
 	public boolean isForeign() {
@@ -37,11 +44,11 @@ public class Zip {
 	}
 	
 	public String display() {
-		if (!StringUtils.isBlank(swissZipCode)) {
-			if (!StringUtils.isBlank(swissZipCodeAddOn) && !"0".equals(swissZipCodeAddOn)) {
+		if (swissZipCode != null) {
+			if (swissZipCodeAddOn != null && swissZipCodeAddOn != 0) {
 				return swissZipCode + " " + swissZipCodeAddOn;
 			} else {
-				return swissZipCode;
+				return String.valueOf(swissZipCode);
 			}
 		 } else if (!StringUtils.isBlank(foreignZipCode)) {
 			 return foreignZipCode;

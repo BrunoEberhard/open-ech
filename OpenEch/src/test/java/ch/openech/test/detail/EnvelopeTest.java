@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
 import ch.openech.dm.Envelope;
@@ -24,8 +25,8 @@ public class EnvelopeTest  {
 		Assert.assertEquals("0", envelope.messageClass);
 		Assert.assertEquals("3-CH-6", envelope.senderId);
 		Assert.assertEquals("1-1102-1", envelope.recipientId);
-		Assert.assertEquals("2009-04-23", envelope.eventDate);
-		Assert.assertEquals("2009-04-23", envelope.messageDate);
+		Assert.assertEquals(new LocalDateTime(2009, 4, 23, 11, 11, 40), envelope.eventDate);
+		Assert.assertEquals(new LocalDateTime(2009, 4, 23, 11, 11, 40), envelope.messageDate);
 	}
 	
 }

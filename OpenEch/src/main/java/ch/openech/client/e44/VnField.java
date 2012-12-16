@@ -3,6 +3,7 @@ package ch.openech.client.e44;
 import java.util.List;
 
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -12,11 +13,11 @@ import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.toolkit.TextField.TextFieldFilter;
 import ch.openech.mj.util.StringUtils;
 
-public class VnField extends AbstractEditField<String> implements DemoEnabled, Validatable {
+public class VnField extends AbstractEditField<String> implements DemoEnabled {
 	private final TextField textField;
 
-	public VnField(String name, boolean editable) {
-		super(name, editable);
+	public VnField(String key, boolean editable) {
+		super(Constants.getProperty(key), editable);
 		if (editable) {
 			textField = ClientToolkit.getToolkit().createTextField(listener(), new VnFilter());
 		} else {
@@ -63,10 +64,10 @@ public class VnField extends AbstractEditField<String> implements DemoEnabled, V
 		}
 	}
 	
-	@Override
-	public void validate(List<ValidationMessage> list) {
+	// TOD 
+	public String validate() {
 		String value = getObject();
-		if (StringUtils.isEmpty(value)) return;
+		if (StringUtils.isEmpty(value)) return null;
 		
 		long vn = 0;
 		try {
@@ -75,8 +76,9 @@ public class VnField extends AbstractEditField<String> implements DemoEnabled, V
 			// silent
 		}
 		if (vn < 7560000000001L || vn > 7569999999999L) {
-			list.add(new ValidationMessage(getName(), "Die Eingabe muss zw 7560000000001 und 7569999999999 liegen"));
+			return "Die Eingabe muss zw 7560000000001 und 7569999999999 liegen";
 		}
+		return null;
 	}
 
 }

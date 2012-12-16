@@ -11,8 +11,7 @@ import org.apache.lucene.document.Field;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.SearchableTable;
-import ch.openech.mj.db.model.ColumnAccess;
-import ch.openech.mj.edit.value.PropertyAccessor;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.util.StringUtils;
 
 public class OrganisationTable extends SearchableTable<Organisation> {
@@ -56,8 +55,10 @@ public class OrganisationTable extends SearchableTable<Organisation> {
 	}
 	
 	@Override
-	protected Field getField(String fieldName, Organisation organisation) {
-		String string = (String)PropertyAccessor.get(organisation, fieldName);
+	protected Field getField(PropertyInterface property, Organisation organisation) {
+		String fieldName = property.getFieldName();
+
+		String string = (String) property.getValue(organisation);
 		if (string != null) {
 			Field.Index index = Field.Index.ANALYZED;
 			if (fieldName.toLowerCase().contains("date") || StringUtils.equals(fieldName, ORGANISATION.technicalIds.localId.personId)) {
@@ -86,9 +87,9 @@ public class OrganisationTable extends SearchableTable<Organisation> {
 		}
 	}
 
-	@Override
-	protected void setField(Organisation result, String fieldName, String value) {
-		ColumnAccess.setValue(result, fieldName, value);
-	}
+//	@Override
+//	protected void setField(Organisation result, String fieldName, String value) {
+//		Properties.set(result, fieldName, value);
+//	}
 
 }

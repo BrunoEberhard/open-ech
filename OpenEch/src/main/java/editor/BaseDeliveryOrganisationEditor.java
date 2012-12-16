@@ -7,7 +7,6 @@ import page.OrganisationViewPage;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel;
-import ch.openech.client.org.OrganisationPanel.OrganisationPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
@@ -25,7 +24,7 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> impl
 
 	@Override
 	public IForm<Organisation> createForm() {
-		return new OrganisationPanel(OrganisationPanelType.BASE_DELIVERY, echSchema);
+		return new OrganisationPanel(Organisation.EditMode.BASE_DELIVERY, echSchema);
 	}
 
 	@Override

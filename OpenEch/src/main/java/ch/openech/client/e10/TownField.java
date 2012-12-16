@@ -2,14 +2,13 @@ package ch.openech.client.e10;
 
 import java.util.logging.Logger;
 
+import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.Zip;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.Formats;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
@@ -25,11 +24,11 @@ public class TownField extends AbstractEditField<String> implements DemoEnabled,
 	private final TextField textFieldSwiss;
 	private final TextField textFieldZipForeign;
 	
-	public TownField(Object key) {
-		super(Constants.getConstant(key), true);
+	public TownField(PropertyInterface property) {
+		super(property, true);
 		
 		textFieldSwiss = ClientToolkit.getToolkit().createReadOnlyTextField();
-		textFieldZipForeign = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(Zip.class, Zip.ZIP_TOWN.foreignZipCode).getSize());
+		textFieldZipForeign = ClientToolkit.getToolkit().createTextField(listener(), EchFormats.foreignZipCode);
 		
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout();
 		switchLayout.show(textFieldSwiss);
@@ -71,19 +70,16 @@ public class TownField extends AbstractEditField<String> implements DemoEnabled,
 	}
 
 	@Override
-	public String getNameOfDependedField() {
-		return Constants.getConstant(Address.ADDRESS.zip);
+	public Zip getKeyOfDependedField() {
+		return Address.ADDRESS.zip;
 	}
 
 	@Override
-	public void setDependedField(EditField<Zip> field) {
-		ZipField zipfield = (ZipField) field;
-		Zip zip = zipfield.getObject();
-		
-		if (zipfield.isSwiss()) {
+	public void valueChanged(Zip zip) {		
+		if (zip.isSwiss()) {
 			switchLayout.show(textFieldSwiss);
 			if (zip.swissZipCodeId != null) {
-				Integer onrp = Integer.parseInt(zip.swissZipCodeId);
+				Integer onrp = zip.swissZipCodeId;
 				Plz plz = PlzImport.getInstance().getPlz(onrp);
 				if (plz != null) {
 					textFieldSwiss.setText(plz.ortsbezeichnung);

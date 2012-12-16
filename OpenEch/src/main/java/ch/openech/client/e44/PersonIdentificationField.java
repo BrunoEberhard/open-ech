@@ -3,9 +3,9 @@ package ch.openech.client.e44;
 import java.util.List;
 
 import page.SearchPersonPage;
-
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
@@ -13,8 +13,8 @@ import ch.openech.server.EchServer;
 
 public class PersonIdentificationField extends ObjectFlowField<PersonIdentification> {
 
-	public PersonIdentificationField(Object key) {
-		super(key);
+	public PersonIdentificationField(PropertyInterface property) {
+		super(property);
 	}
 	
 	@Override

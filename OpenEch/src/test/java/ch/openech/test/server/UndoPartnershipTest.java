@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.MaritalStatus;
+import ch.openech.dm.person.types.TypeOfRelationship;
 
 public class UndoPartnershipTest extends AbstractServerTest {
 
@@ -29,15 +31,15 @@ public class UndoPartnershipTest extends AbstractServerTest {
 		Person person2 = load(id2);
 		
 		Assert.assertNotNull(person1);
-		Assert.assertEquals("6", person1.maritalStatus.maritalStatus);
+		Assert.assertEquals(MaritalStatus.partnerschaft, person1.maritalStatus.maritalStatus);
 		Relation relation1 = person1.getPartner();
-		Assert.assertEquals("2", relation1.typeOfRelationship);
+		Assert.assertEquals(TypeOfRelationship.Partner, relation1.typeOfRelationship);
 		Assert.assertTrue(person2.personIdentification.isEqual(relation1.partner));
 		
 		Assert.assertNotNull(person2);
-		Assert.assertEquals("6", person2.maritalStatus.maritalStatus);
+		Assert.assertEquals(MaritalStatus.partnerschaft, person2.maritalStatus.maritalStatus);
 		Relation relation2 = person2.getPartner();
-		Assert.assertEquals("2", relation2.typeOfRelationship);
+		Assert.assertEquals(TypeOfRelationship.Partner, relation2.typeOfRelationship);
 		Assert.assertTrue(person1.personIdentification.isEqual(relation2.partner));
 	}
 	
@@ -50,12 +52,12 @@ public class UndoPartnershipTest extends AbstractServerTest {
 		Person person2 = load(id2);
 		
 		Assert.assertNotNull(person1);
-		Assert.assertEquals("7", person1.maritalStatus.maritalStatus);
+		Assert.assertEquals(MaritalStatus.aufgeloeste_partnerschaft, person1.maritalStatus.maritalStatus);
 		Relation relation1 = person1.getPartner();
 		Assert.assertNull(relation1);
 		
 		Assert.assertNotNull(person2);
-		Assert.assertEquals("7", person2.maritalStatus.maritalStatus);
+		Assert.assertEquals(MaritalStatus.aufgeloeste_partnerschaft, person2.maritalStatus.maritalStatus);
 		Relation relation2 = person2.getPartner();
 		Assert.assertNull(relation2);
 	}

@@ -2,13 +2,12 @@ package ch.openech.client.e10;
 
 import java.util.List;
 
+import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.Zip;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.Formats;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -19,19 +18,18 @@ import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.util.PlzImport;
 
-// TODO implement ZipTownField
 public class ZipField extends AbstractEditField<Zip> implements DependingOnFieldAbove<String>, DemoEnabled {
 	private final ComboBox<Zip> comboBoxSwiss;
 	private final TextField textFieldForeign;
 	private final SwitchLayout switchLayout;
 	
-	public ZipField(Object key) {
-		super(Constants.getConstant(key), true);
+	public ZipField(PropertyInterface property) {
+		super(property, true);
 		
 		comboBoxSwiss = ClientToolkit.getToolkit().createComboBox(listener());
 		comboBoxSwiss.setObjects(PlzImport.getInstance().getZipList());
 
-		textFieldForeign = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(Zip.class, Zip.ZIP_TOWN.foreignZipCode).getSize());
+		textFieldForeign = ClientToolkit.getToolkit().createTextField(listener(), EchFormats.foreignZipCode);
 
 		switchLayout = ClientToolkit.getToolkit().createSwitchLayout();
 		switchLayout.show(comboBoxSwiss);
@@ -75,18 +73,18 @@ public class ZipField extends AbstractEditField<Zip> implements DependingOnField
 	}
 
 	@Override
-	public String getNameOfDependedField() {
-		int pos = getName().lastIndexOf('.');
+	public String getKeyOfDependedField() {
+		String name = getProperty().getFieldName();
+		int pos = name.lastIndexOf('.');
 		if (pos > 0) {
-			return getName().substring(0, pos + 1) + Address.ADDRESS.country;
+			return name.substring(0, pos + 1) + Address.ADDRESS.country;
 		} else {
 			return Address.ADDRESS.country;
 		}
 	}
 
 	@Override
-	public void setDependedField(EditField<String> field) {
-		String coutryIso2 = field.getObject();
+	public void valueChanged(String coutryIso2) {
 		if (StringUtils.equals(coutryIso2, "CH", "LI", null)) {
 			if (switchLayout.getShownComponent() != comboBoxSwiss) {
 				comboBoxSwiss.setSelectedObject(null);

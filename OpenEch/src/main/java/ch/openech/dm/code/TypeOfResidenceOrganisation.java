@@ -1,24 +1,14 @@
 package ch.openech.dm.code;
 
-import ch.openech.mj.db.model.CodeValue;
+import ch.openech.dm.types.EchCode;
 
-public enum TypeOfResidenceOrganisation implements CodeValue {
+public enum TypeOfResidenceOrganisation implements EchCode {
 
-	Hauptsitz(1), Nebensitz(2), Anderersitz(3);
-	
-	private final String value;
-	
-	private TypeOfResidenceOrganisation(int value) {
-		this.value = Integer.toString(value);
-	}
+	Hauptsitz, Nebensitz, Anderersitz;
 	
 	@Override
-	public String getKey() {
-		return value;
-	}
-	
-	public static String getDefault() {
-		return Hauptsitz.getKey();
+	public String getValue() {
+		return String.valueOf(ordinal() + 1);
 	}
 	
 }

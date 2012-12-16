@@ -1,14 +1,15 @@
 package ch.openech.client.e101;
 
 import ch.openech.dm.person.PersonExtendedInformation;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 
 public class PersonExtendedInformationField extends ObjectFlowField<PersonExtendedInformation> {
 
-	public PersonExtendedInformationField(Object key, boolean editable) {
-		super(key, editable);
+	public PersonExtendedInformationField(PropertyInterface property, boolean editable) {
+		super(property, editable);
 	}
 	
 	@Override

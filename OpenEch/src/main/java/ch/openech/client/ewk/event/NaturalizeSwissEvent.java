@@ -7,6 +7,7 @@ import ch.openech.client.e11.OriginPanel;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
+import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -32,7 +33,7 @@ public class NaturalizeSwissEvent extends PersonEventEditor<PlaceOfOrigin> {
 	@Override
 	public PlaceOfOrigin load() {
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
-		placeOfOrigin.reasonOfAcquisition = "3"; // Auf Einbürgerung setzen
+		placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Einbuergerung;
 		return placeOfOrigin;
 	}
 
@@ -43,9 +44,10 @@ public class NaturalizeSwissEvent extends PersonEventEditor<PlaceOfOrigin> {
 
 	@Override
 	public void validate(PlaceOfOrigin object, List<ValidationMessage> resultList) {
+		super.validate(object, resultList);
 		Person.validateEventNotBeforeBirth(resultList, getPerson().personIdentification, object.naturalizationDate, PlaceOfOrigin.PLACE_OF_ORIGIN.naturalizationDate);
 		if (object.naturalizationDate == null) {
-			resultList.add(new ValidationMessage(PlaceOfOrigin.PLACE_OF_ORIGIN.naturalizationDate, "Erwerbsdatum muss gesetzt sein"));
+			resultList.add(new ValidationMessage(PlaceOfOrigin.PLACE_OF_ORIGIN.naturalizationDate, "Erwerbsdatum erforderlich"));
 		}
 	}
 

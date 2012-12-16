@@ -4,6 +4,8 @@ import static ch.openech.dm.XmlConstants.*;
 
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
@@ -15,7 +17,11 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
-import ch.openech.mj.util.StringUtils;
+import ch.openech.dm.person.types.MaritalStatus;
+import ch.openech.dm.person.types.PartnerShipAbolition;
+import ch.openech.dm.person.types.Religion;
+import ch.openech.dm.person.types.Separation;
+import ch.openech.dm.types.TypeOfResidence;
 
 public class WriterEch0020 extends DeliveryWriter {
 
@@ -195,11 +201,11 @@ public class WriterEch0020 extends DeliveryWriter {
 	private void relationship(WriterElement event, String tagName, Relation relation) throws Exception {
 		if (relation != null) {
 			WriterElement element = event.create(URI, tagName);
-			boolean gardian = StringUtils.equals(relation.typeOfRelationship, "7", "8", "9");
+			boolean gardian = relation.typeOfRelationship.isCare();
 			element.text(TYPE_OF_RELATIONSHIP, relation.typeOfRelationship);
 			if (!gardian) element.text(CARE, relation.care);
 			partner(element, relation);
-			if (!StringUtils.isEmpty(relation.basedOnLaw)) {
+			if (relation.basedOnLaw != null) {
 				element.text(BASED_ON_LAW, relation.basedOnLaw);
 			}
 			if (gardian && context.gardianMeasureRelationshipHasCare()) {
@@ -248,30 +254,30 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	// code 2
-	public String death(PersonIdentification personIdentification, String date) throws Exception {
+	public String death(PersonIdentification personIdentification, LocalDate date) throws Exception {
         WriterElement event = simplePersonEvent(DEATH, personIdentification);
         event.text(DATE_OF_DEATH, date);
         return result();
 	}
 	
 	// code 3
-	public String missing(PersonIdentification personIdentification, String date) throws Exception {
+	public String missing(PersonIdentification personIdentification, LocalDate date) throws Exception {
         WriterElement event = simplePersonEvent(MISSING, personIdentification);
         event.text(DATE_OF_DEATH, date);
         return result();
 	}
 	
 	// code 4
-	public String marriage(PersonIdentification personIdentification, Relation relation, String date) throws Exception {
+	public String marriage(PersonIdentification personIdentification, Relation relation, LocalDate date) throws Exception {
         WriterElement event = simplePersonEvent(MARRIAGE, personIdentification);
-        event.text(MARITAL_STATUS, "2");
+        event.text(MARITAL_STATUS, MaritalStatus.verheiratet);
         event.text(DATE_OF_MARITAL_STATUS, date);
         marriageRelationship(event, relation);
         return result();
 	}
 	
 	// code 6
-	public String separation(PersonIdentification personIdentification, String separation, String date) throws Exception {
+	public String separation(PersonIdentification personIdentification, Separation separation, LocalDate date) throws Exception {
         WriterElement event = simplePersonEvent(SEPARATION, personIdentification);
         event.text(SEPARATION, separation);
         event.text(DATE_OF_SEPARATION, date);
@@ -285,15 +291,15 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 
 	// code 8
-	public String divorce(PersonIdentification personIdentification, String date) throws Exception {
+	public String divorce(PersonIdentification personIdentification, LocalDate date) throws Exception {
         WriterElement event = simplePersonEvent(DIVORCE, personIdentification);
-        event.text(MARITAL_STATUS, "4");
+        event.text(MARITAL_STATUS, MaritalStatus.geschieden);
         event.text(DATE_OF_MARITAL_STATUS, date);
         return result();
 	}
 
 	// code 10
-	public String maritalStatusPartner(PersonIdentification personIdentification, String maritalStatus, String dateOfMaritalStatus, String partnerShipAbolition) throws Exception {
+	public String maritalStatusPartner(PersonIdentification personIdentification, MaritalStatus maritalStatus, LocalDate dateOfMaritalStatus, PartnerShipAbolition partnerShipAbolition) throws Exception {
         WriterElement event = simplePersonEvent(MARITAL_STATUS_PARTNER, personIdentification);
         event.text(MARITAL_STATUS, maritalStatus);
         event.text(DATE_OF_MARITAL_STATUS, dateOfMaritalStatus);
@@ -302,9 +308,9 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	// code 11
-	public String undoMarriage(PersonIdentification personIdentification, String date) throws Exception {
+	public String undoMarriage(PersonIdentification personIdentification, LocalDate date) throws Exception {
         WriterElement event = simplePersonEvent(UNDO_MARRIAGE, personIdentification);
-        event.text(MARITAL_STATUS, "5");
+        event.text(MARITAL_STATUS, MaritalStatus.ungueltig);
         event.text(DATE_OF_MARITAL_STATUS, date);
         return result();
 	}
@@ -327,7 +333,7 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	// code 14
-	public String undoCitizen(PersonIdentification personIdentification, PlaceOfOrigin placeOfOrigin, String expatriationDate) throws Exception {
+	public String undoCitizen(PersonIdentification personIdentification, PlaceOfOrigin placeOfOrigin, LocalDate expatriationDate) throws Exception {
         WriterElement event = simplePersonEvent(UNDO_CITIZEN, personIdentification);
         ech11.placeOfOrigin(event, PLACE_OF_ORIGIN, placeOfOrigin);
         event.text(EXPATRIATION_DATE, expatriationDate);
@@ -365,9 +371,9 @@ public class WriterEch0020 extends DeliveryWriter {
         for (Occupation occupation : person.occupation) ech21.occupation(event, occupation);
         for (Relation relation: person.relation) ech21.relation(event, relation);
 
-        if ("1".equals(person.typeOfResidence)) hasMainResidence(event, person);
-		else if ("2".equals(person.typeOfResidence)) hasSecondaryResidence(event, person);
-		else if ("3".equals(person.typeOfResidence)) hasOtherResidence(event, person);
+        if (person.typeOfResidence == TypeOfResidence.hasMainResidence) hasMainResidence(event, person);
+		else if (person.typeOfResidence == TypeOfResidence.hasSecondaryResidence) hasSecondaryResidence(event, person);
+		else if (person.typeOfResidence == TypeOfResidence.hasOtherResidence) hasOtherResidence(event, person);
      
         openEch.openEchPersonExtension(event, EXTENSION, person);
         return result();
@@ -431,13 +437,13 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	// code 19
-	public String moveOut(PersonIdentification personIdentification, MunicipalityIdentification reportingMunicipality, Place goesTo, String departureDate) throws Exception {
+	public String moveOut(PersonIdentification personIdentification, MunicipalityIdentification reportingMunicipality, Place goesTo, LocalDate departureDate) throws Exception {
         WriterElement event = simplePersonEvent(MOVE_OUT, personIdentification);
         moveOutReportingDestination(event, reportingMunicipality, goesTo, departureDate);
         return result();
 	}
 
-	private void moveOutReportingDestination(WriterElement parent, MunicipalityIdentification reportingMunicipality, Place goesTo, String departureDate) throws Exception {
+	private void moveOutReportingDestination(WriterElement parent, MunicipalityIdentification reportingMunicipality, Place goesTo, LocalDate departureDate) throws Exception {
         WriterElement element = parent.create(URI, MOVE_OUT_REPORTING_DESTINATION);
         if (reportingMunicipality.isFederalRegister()) {
         	element.text(FEDERAL_REGISTER, reportingMunicipality.getFederalRegister());
@@ -562,7 +568,7 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	// code 31
-	public String changeReligion(PersonIdentification personIdentification,String religion) throws Exception {
+	public String changeReligion(PersonIdentification personIdentification, Religion religion) throws Exception {
         WriterElement event = simplePersonEvent(CHANGE_RELIGION, personIdentification);
         event.text(RELIGION, religion);
         return result();
@@ -584,18 +590,18 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	// code 36
-	public String partnership(PersonIdentification personIdentification, Relation relation, String date) throws Exception {
+	public String partnership(PersonIdentification personIdentification, Relation relation, LocalDate date) throws Exception {
         WriterElement event = simplePersonEvent(PARTNERSHIP, personIdentification);
-        event.text(MARITAL_STATUS, "6");
+        event.text(MARITAL_STATUS, MaritalStatus.partnerschaft);
         event.text(DATE_OF_MARITAL_STATUS, date);
         partnershipRelationship(event, relation);
         return result();
 	}
 	
 	// code 37
-	public String undoPartnership(PersonIdentification personIdentification, String date, String partnerShipAbolition) throws Exception {
+	public String undoPartnership(PersonIdentification personIdentification, LocalDate date, PartnerShipAbolition partnerShipAbolition) throws Exception {
         WriterElement event = simplePersonEvent(UNDO_PARTNERSHIP, personIdentification);
-        event.text(MARITAL_STATUS, "7");
+        event.text(MARITAL_STATUS, MaritalStatus.aufgeloeste_partnerschaft);
         event.text(DATE_OF_MARITAL_STATUS, date);
         event.text(PARTNER_SHIP_ABOLITION, partnerShipAbolition);
         return result();
@@ -751,7 +757,7 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	// code 54
-	public String correctReligion(Person person, String religion) throws Exception {
+	public String correctReligion(Person person, Religion religion) throws Exception {
 		WriterElement event = simplePersonEvent(CORRECT_RELIGION, person);
 		event.text(RELIGION, religion);
         // TODO from

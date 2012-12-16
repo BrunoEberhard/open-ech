@@ -1,6 +1,5 @@
 package ch.openech.client.e11;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import ch.openech.dm.common.CountryIdentification;
@@ -8,9 +7,8 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.validation.Validatable;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.HorizontalLayout;
@@ -20,7 +18,7 @@ import ch.openech.mj.toolkit.TextField;
 import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
 
-public class PlaceField extends AbstractEditField<Place> implements DemoEnabled, Validatable {
+public class PlaceField extends AbstractEditField<Place> implements DemoEnabled {
 	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
 
 	private final ComboBox<CountryIdentification> comboBoxCountry;
@@ -31,8 +29,8 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled,
 	
 	private final HorizontalLayout horizontalLayout;
 
-	public PlaceField(Object key) {
-		super(key, true);
+	public PlaceField(PropertyInterface property) {
+		super(property, true);
 
 		comboBoxCountry = ClientToolkit.getToolkit().createComboBox(listener());
 		comboBoxCountry.setObjects(StaxEch0072.getInstance().getCountryIdentifications());
@@ -122,12 +120,6 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled,
 			place.foreignTown = NameGenerator.officialName() + "Town";
 		}
 		setObject(place);
-	}
-
-	@Override
-	public void validate(List<ValidationMessage> resultList) {
-		// Es ist von dem Formular abhängig, ob ein PlaceField leer sein darf. Daher wird z.B.
-		// bei BirthChildEvent validiert und nicht hier
 	}
 
 }

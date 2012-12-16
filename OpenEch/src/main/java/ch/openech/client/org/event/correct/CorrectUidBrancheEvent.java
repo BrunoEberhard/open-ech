@@ -6,7 +6,9 @@ import java.util.List;
 import ch.openech.client.org.event.OrganisationEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
@@ -20,14 +22,18 @@ public class CorrectUidBrancheEvent extends OrganisationEventEditor<Organisation
 	protected void fillForm(Form<Organisation> formPanel) {
 		formPanel.line(Organisation.ORGANISATION.uidBrancheText);
 		formPanel.line(Organisation.ORGANISATION.nogaCode);
-
-		formPanel.setRequired(Organisation.ORGANISATION.uidBrancheText);
-		formPanel.setRequired(Organisation.ORGANISATION.nogaCode);
 	}
 
 	@Override
 	public Organisation load() {
 		return getOrganisation();
+	}
+	
+	@Override
+	protected void validate(Organisation object, List<ValidationMessage> resultList) {
+		super.validate(object, resultList);
+		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.uidBrancheText);
+		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.nogaCode);
 	}
 
 	@Override

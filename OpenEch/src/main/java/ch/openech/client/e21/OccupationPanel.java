@@ -19,9 +19,6 @@ public class OccupationPanel extends EchFormPanel<Occupation> {
 		if (echSchema.occupationValidTillAvailable()) {
 			line(OCCUPATION.occupationValidTill);
 		}
-		if (echSchema.kindOfEmploymentMandatory()) {
-			setRequired(OCCUPATION.kindOfEmployment);
-		}
 	}
 
 }

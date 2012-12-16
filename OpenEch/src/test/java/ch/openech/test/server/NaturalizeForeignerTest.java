@@ -4,6 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
@@ -21,7 +22,7 @@ public class NaturalizeForeignerTest extends AbstractServerTest {
 		Person person = load(person_id);
 		
 		Assert.assertNotNull(person);
-		Assert.assertEquals("2", person.nationality.nationalityStatus);
+		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
 		Assert.assertEquals(Swiss.SWISS_COUNTRY_ID, person.nationality.nationalityCountry.countryId);	
 		Assert.assertEquals(Swiss.SWISS_COUNTRY_NAME_SHORT, person.nationality.nationalityCountry.countryNameShort);	
 
@@ -30,7 +31,7 @@ public class NaturalizeForeignerTest extends AbstractServerTest {
 		
 		Assert.assertEquals(1, person.placeOfOrigin.size());
 		Assert.assertEquals("Frauenfeld", placeOfOrigin.originName);
-		Assert.assertEquals("TG", placeOfOrigin.canton);
+		Assert.assertEquals("TG", placeOfOrigin.cantonAbbreviation.canton);
 	}
 	
 }

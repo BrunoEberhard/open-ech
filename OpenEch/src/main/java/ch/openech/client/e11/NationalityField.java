@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.person.Nationality;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
@@ -16,8 +17,8 @@ public class NationalityField extends AbstractEditField<Nationality> {
 	private final Nationality itemUnknownNationality = Nationality.newUnknown();
 	private final Nationality itemWithoutNationality = Nationality.newWithout();
 	
-	public NationalityField(Object key) {
-		super(key, true);
+	public NationalityField(PropertyInterface property) {
+		super(property, true);
 		
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 
@@ -42,16 +43,16 @@ public class NationalityField extends AbstractEditField<Nationality> {
 	
 	@Override
 	public void setObject(Nationality nationality) {
-		String status = nationality != null ? nationality.nationalityStatus : "0";
-		if ("2".equals(status)) {
-			comboBox.setSelectedObject(nationality);
-		} else if ("1".equals(status)) {
-			comboBox.setSelectedObject(itemWithoutNationality);
-		} else if ("0".equals(status)) {
-			comboBox.setSelectedObject(itemUnknownNationality);
-		} else if (status != null) {
-			comboBox.setSelectedObject(nationality);
-		}
+//		String status = nationality != null ? nationality.nationalityStatus : "0";
+//		if ("2".equals(status)) {
+//			comboBox.setSelectedObject(nationality);
+//		} else if ("1".equals(status)) {
+//			comboBox.setSelectedObject(itemWithoutNationality);
+//		} else if ("0".equals(status)) {
+//			comboBox.setSelectedObject(itemUnknownNationality);
+//		} else if (status != null) {
+//			comboBox.setSelectedObject(nationality);
+//		}
 		comboBox.setSelectedObject(nationality);
 	}
 	

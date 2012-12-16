@@ -2,13 +2,6 @@ package ch.openech.client.ewk;
 
 import static ch.openech.dm.person.Person.PERSON;
 import static ch.openech.dm.person.PersonIdentification.PERSON_IDENTIFICATION;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.util.ResourceBundle;
-
-import javax.swing.JFrame;
-
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
@@ -17,37 +10,28 @@ import ch.openech.client.e21.RelationField;
 import ch.openech.client.e44.TechnicalIdsField;
 import ch.openech.client.e44.VnField;
 import ch.openech.client.ewk.event.EchFormPanel;
-import ch.openech.dm.EchFormats;
-import ch.openech.dm.code.EchCodes;
-import ch.openech.dm.code.MaritalStatus;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonEditMode;
+import ch.openech.dm.person.types.MaritalStatus;
+import ch.openech.dm.person.types.PartnerShipAbolition;
+import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.types.Sex;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.CodeEditField;
 import ch.openech.mj.edit.fields.DateField;
-import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.FormField;
-import ch.openech.mj.edit.fields.TextFormField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
-import ch.openech.mj.resources.Resources;
-import ch.openech.mj.swing.FrameManager;
-import ch.openech.mj.swing.toolkit.SwingClientToolkit;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonPanel extends EchFormPanel<Person>  {
 
-	public enum PersonPanelType {
-		DISPLAY, BASE_DELIVERY, MOVE_IN, BIRTH, CHANGE_RESIDENCE_TYPE, CORRECT_PERSON, CORRECT_IDENTIFICATION, CORRECT_NAME
-	};
-
-	private final PersonPanelType type;
+	private final PersonEditMode mode;
 	
-	public PersonPanel(PersonPanelType type, EchSchema echSchema) {
-		super(echSchema, PersonPanelType.DISPLAY != type, 4);
-		this.type = type;
+	public PersonPanel(PersonEditMode mode, EchSchema echSchema) {
+		super(echSchema, PersonEditMode.DISPLAY != mode, 4);
+		this.mode = mode;
 		createContent();
 	}
 
@@ -57,39 +41,27 @@ public class PersonPanel extends EchFormPanel<Person>  {
 	}
 	
 	private void createContent() {
-		boolean identificationVisible = type != PersonPanelType.CHANGE_RESIDENCE_TYPE && //
-			type != PersonPanelType.CORRECT_NAME;
-		
-		if (identificationVisible) {
+		if (mode.isIdentificationVisible()) {
 			createIdentification();
 		}
 
-		if (type == PersonPanelType.BIRTH) {
+		if (mode == PersonEditMode.BIRTH) {
 			createBirth();
-		} else if (type != PersonPanelType.CORRECT_IDENTIFICATION) {
+		} else if (mode != PersonEditMode.CORRECT_IDENTIFICATION) {
 			createData();
 		}
 	}
 
 	public void createIdentification() {
-		String prefix = Constants.getConstant(PERSON.personIdentification) + ".";
-		TechnicalIdsField technicalId = new TechnicalIdsField(prefix + Constants.getConstant(PERSON_IDENTIFICATION.technicalIds), TechnicalIdsField.WITH_EU_IDS, editable);
-		VnField vn = new VnField(prefix + PERSON_IDENTIFICATION.vn, editable);
+		TechnicalIdsField technicalId = new TechnicalIdsField(PERSON.personIdentification.technicalIds, TechnicalIdsField.WITH_EU_IDS, editable);
+		VnField vn = new VnField(PERSON.personIdentification.vn, editable);
 		
-		line(prefix + PERSON_IDENTIFICATION.officialName);
-		line(prefix + PERSON_IDENTIFICATION.firstName);
-		line(prefix + PERSON_IDENTIFICATION.sex, prefix + PERSON_IDENTIFICATION.dateOfBirth, vn, technicalId);
-		
-		if (type != PersonPanelType.DISPLAY) {
-			setRequired(prefix + PERSON_IDENTIFICATION.sex);
-			setRequired(prefix + PERSON_IDENTIFICATION.vn);
-		}
+		line(PERSON.personIdentification.officialName);
+		line(PERSON.personIdentification.firstName);
+		line(PERSON.personIdentification.sex, PERSON.personIdentification.dateOfBirth, vn, technicalId);
 	}
 
 	protected void createData() {
-		boolean moveIn = type == PersonPanelType.MOVE_IN || type == PersonPanelType.CHANGE_RESIDENCE_TYPE;
-		boolean correctName = type == PersonPanelType.CORRECT_NAME;
-		boolean editable = type != PersonPanelType.DISPLAY;
 		
 		// ReportedPerson (ech0011)
 		line(PERSON.originalName, PERSON.alliancePartnershipName, PERSON.aliasName, PERSON.otherName);
@@ -105,7 +77,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		}
 
 		if (echSchema.separationTillAvailable()) {
-			if (!correctName) {
+			if (!mode.isCorrectName()) {
 				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
 						PERSON.separation.separationTill, PERSON.languageOfCorrespondance);
 			} else {
@@ -113,7 +85,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 						PERSON.separation.separationTill, PERSON.foreign.nameOnPassport);
 			}
 		} else {
-			if (!correctName) {
+			if (!mode.isCorrectName()) {
 				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
 						PERSON.languageOfCorrespondance);
 			} else {
@@ -126,75 +98,70 @@ public class PersonPanel extends EchFormPanel<Person>  {
 
 		//
 		
-		if (moveIn) {
+		if (mode.isMoveIn()) {
 			line(PERSON.placeOfBirth, PERSON.arrivalDate);
 			line(PERSON.typeOfResidence, PERSON.comesFrom);
 			area(PERSON.residence, PERSON.comesFromAddress);
-			
-			setRequired(PERSON.arrivalDate);
 		} else {
 			line(PERSON.placeOfBirth, PERSON.dateOfDeath);
 		
-			if (type != PersonPanelType.CORRECT_PERSON && type != PersonPanelType.CHANGE_RESIDENCE_TYPE) {
+			if (mode != PersonEditMode.CORRECT_PERSON && mode != PersonEditMode.CHANGE_RESIDENCE_TYPE) {
 				area(PERSON.typeOfResidence, PERSON.residence);
 			}
 
-			if (type != PersonPanelType.CORRECT_PERSON) {
+			if (mode != PersonEditMode.CORRECT_PERSON) {
 				line(PERSON.arrivalDate, PERSON.departureDate);
 				line(PERSON.comesFrom, PERSON.goesTo);
 				area(PERSON.comesFromAddress, PERSON.goesToAddress);
-
-				if (type != PersonPanelType.DISPLAY) {
-					if (editable) setRequired(PERSON.arrivalDate);
-				}
 			}
 		}		
 		
-		if (type == PersonPanelType.BASE_DELIVERY || type == PersonPanelType.DISPLAY) {
+		if (mode == PersonEditMode.BASE_DELIVERY || mode == PersonEditMode.DISPLAY) {
 			line(PERSON.dataLock, PERSON.paperLock);
 		}
 		
 		createAreas();
 	}
 	
-	private class DateOfMaritalStatusField extends DateField implements DependingOnFieldAbove<String> {
+	private class DateOfMaritalStatusField extends DateField implements DependingOnFieldAbove<MaritalStatus> {
 		
 		public DateOfMaritalStatusField() {
-			super(PERSON.maritalStatus.dateOfMaritalStatus);
+			super(Constants.getProperty(PERSON.maritalStatus.dateOfMaritalStatus));
 		}
 
 		@Override
-		public String getNameOfDependedField() {
-			return Constants.getConstant(PERSON.maritalStatus.maritalStatus);
+		public MaritalStatus getKeyOfDependedField() {
+			return PERSON.maritalStatus.maritalStatus;
 		}
 
 		@Override
-		public void setDependedField(EditField<String> dependedField) {
-			setEnabled(!StringUtils.equals(MaritalStatus.Ledig.value, dependedField.getObject()));
+		public void valueChanged(MaritalStatus maritalStatus) {
+			setEnabled(maritalStatus != MaritalStatus.ledig);
 		}
 	}
 	
-	private class CancelationReasonField extends CodeEditField implements DependingOnFieldAbove<String> {
+	private class CancelationReasonField extends CodeEditField<PartnerShipAbolition> implements DependingOnFieldAbove<MaritalStatus> {
 		
 		public CancelationReasonField() {
-			super(PERSON.cancelationReason, EchCodes.partnerShipAbolition);
+			super(Constants.getProperty(PERSON.cancelationReason));
 		}
 
 		@Override
-		public String getNameOfDependedField() {
-			return Constants.getConstant(PERSON.maritalStatus.maritalStatus);
+		public MaritalStatus getKeyOfDependedField() {
+			return PERSON.maritalStatus.maritalStatus;
 		}
 
 		@Override
-		public void setDependedField(EditField<String> dependedField) {
-			setEnabled(StringUtils.equals(dependedField.getObject(), MaritalStatus.AufgeloestePartnerschaft.value, MaritalStatus.Geschieden.value));
+		public void valueChanged(MaritalStatus maritalStatus) {	
+			setEnabled(maritalStatus == MaritalStatus.aufgeloeste_partnerschaft || maritalStatus == MaritalStatus.geschieden);
+
 		}
 	}
 	
 	private void createAreas() {
-		boolean placeOfOriginWithAdd = type != PersonPanelType.BIRTH;
+		boolean placeOfOriginWithAdd = mode != PersonEditMode.BIRTH;
 		
-		switch (type) {
+		switch (mode) {
 		case CHANGE_RESIDENCE_TYPE:
 			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
 			area(PERSON.dwellingAddress);
@@ -210,13 +177,12 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			}
 			break;
 		case BIRTH:
-			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
-			PartnerField mother = new PartnerField("mother", echSchema);
-			PartnerField father = new PartnerField("father", echSchema);
+			PartnerField mother = new PartnerField(PERSON.getMother(), echSchema);
+			PartnerField father = new PartnerField(PERSON.getFather(), echSchema);
 			// Das ist zur Zeit nicht mehr möglich, das Mutter - Feld müsste oberhalb des Namensfeld sein
 			// mother.setConnectedNameField((TextField) getField(PERSON_IDENTIFICATION.officialName));
-			area(mother);
-			area(father);
+			area(mother, father);
+			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
 			break;
 		default:
 			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign, PERSON.dwellingAddress, PERSON.contactPerson);
@@ -240,25 +206,27 @@ public class PersonPanel extends EchFormPanel<Person>  {
 
 	@Override
 	public void setObject(Person person) {
+		person.editMode = mode;
 		super.setObject(person);
 		disableDeathFieldIfAlive(person);
 		disableMoveOutFields(person);
 	}
 
 	private void disableDeathFieldIfAlive(Person person) {
-		if (type == PersonPanelType.DISPLAY) {
-			((TextFormField) getField(PERSON.dateOfDeath)).setEnabled(!StringUtils.isBlank(person.dateOfDeath));
+		if (mode == PersonEditMode.DISPLAY) {
+			((DateField) getField(PERSON.dateOfDeath)).setEnabled(person.dateOfDeath != null);
 		}
 	}
 
 	private void disableMoveOutFields(Person person) {
-		if (type == PersonPanelType.DISPLAY) {
-			((TextFormField) getField(PERSON.departureDate)).setEnabled(!StringUtils.isBlank(person.departureDate));
+		if (mode == PersonEditMode.DISPLAY) {
+			((DateField) getField(PERSON.departureDate)).setEnabled(person.departureDate != null);
 			((PlaceReadOnlyField) getField(PERSON.goesTo)).setEnabled(person.goesTo != null && !person.goesTo.isUnknown());
 			((AddressField) getField(PERSON.goesToAddress)).setEnabled(person.goesTo != null && person.goesTo.mailAddress != null && !person.goesTo.mailAddress.isEmpty());
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void fillWithDemoData() {
 		super.fillWithDemoData();
@@ -266,26 +234,25 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		boolean male = Math.random() < .5;
 		NameWithFrequency generatedName = FirstNameGenerator.getName(male);
 		((FormField<String>) getField(PERSON.personIdentification.firstName)).setObject(generatedName.name);
-		CodeEditField sexField = (CodeEditField) getField(PERSON_IDENTIFICATION.sex);
-		if (sexField != null) sexField.setObject(male ? "1" : "2");
+		CodeEditField<Sex> sexField = (CodeEditField<Sex>) getField(PERSON_IDENTIFICATION.sex);
+		if (sexField != null) sexField.setObject(male ? Sex.maennlich : Sex.weiblich);
 	}
 	
-	public static void main(String... args) {
-		FrameManager.setSystemLookAndFeel();
-		Resources.addResourceBundle(ResourceBundle.getBundle("ch.openech.resources.OpenEch"));
-		EchFormats.initialize();
-		ClientToolkit.setToolkit(new SwingClientToolkit());
-
-		PersonPanel personPanel = new PersonPanel(PersonPanelType.DISPLAY, null);
-		personPanel.setObject(new Person());
-		
-		JFrame frame = new JFrame("Test");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new BorderLayout());
-		frame.add((Component) personPanel.getComponent(), BorderLayout.CENTER);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-	}
+//	public static void main(String... args) {
+//		FrameManager.setSystemLookAndFeel();
+//		Resources.addResourceBundle(ResourceBundle.getBundle("ch.openech.resources.OpenEch"));
+//		ClientToolkit.setToolkit(new SwingClientToolkit());
+//
+//		PersonPanel personPanel = new PersonPanel(PersonEditMode.DISPLAY, null);
+//		personPanel.setObject(new Person());
+//		
+//		JFrame frame = new JFrame("Test");
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setLayout(new BorderLayout());
+//		frame.add((Component) personPanel.getComponent(), BorderLayout.CENTER);
+//		frame.pack();
+//		frame.setLocationRelativeTo(null);
+//		frame.setVisible(true);
+//	}
 
 }

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.dm.person.Occupation;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
@@ -14,8 +15,8 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 	
 	private final EchSchema echSchema;
 	
-	public OccupationField(Object key, EchSchema echSchema, boolean editable) {
-		super(key, editable);
+	public OccupationField(PropertyInterface property, EchSchema echSchema, boolean editable) {
+		super(property, editable);
 		this.echSchema = echSchema;
 	}
 
@@ -23,7 +24,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 
 		@Override
 		protected Occupation getPart(List<Occupation> object) {
-			return new Occupation();
+			return new Occupation(echSchema);
 		}
 
 		@Override

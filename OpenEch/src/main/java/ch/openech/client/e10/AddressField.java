@@ -3,6 +3,8 @@ package ch.openech.client.e10;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 
@@ -12,17 +14,25 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	private final boolean person;
 	private final boolean organisation;
 	private boolean enabled = true;
-	
-	public AddressField(Object key, boolean editable) {
-		this(key, editable, false, false, false);
+
+	public AddressField(Address key, boolean editable) {
+		this(Constants.getProperty(key), editable, false, false, false);
 	}
 
-	public AddressField(Object key, boolean swiss, boolean person, boolean organisation) {
-		this(key, true, swiss, person, organisation);
+	public AddressField(PropertyInterface property, boolean editable) {
+		this(property, editable, false, false, false);
+	}
+
+	public AddressField(Address key, boolean swiss, boolean person, boolean organisation) {
+		this(Constants.getProperty(key), swiss, person, organisation);
 	}
 	
-	public AddressField(Object key, boolean editable, boolean swiss, boolean person, boolean organisation) {
-		super(key, editable);
+	public AddressField(PropertyInterface property, boolean swiss, boolean person, boolean organisation) {
+		this(property, true, swiss, person, organisation);
+	}
+	
+	public AddressField(PropertyInterface property, boolean editable, boolean swiss, boolean person, boolean organisation) {
+		super(property, editable);
 //		this.context = context;
 		this.swiss = swiss;
 		this.person = person;

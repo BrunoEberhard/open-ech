@@ -9,13 +9,15 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.tpn.ThirdPartyMove;
-import ch.openech.mj.db.model.AccessorInterface;
-import ch.openech.mj.edit.value.PropertyAccessor;
+import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.db.model.PropertyInterface;
+import ch.openech.mj.edit.value.Properties;
 import ch.openech.mj.util.FieldUtils;
 import ch.openech.mj.util.GenericUtils;
 
@@ -44,10 +46,18 @@ public class DomainClassTest {
 	}
 
 	private void testConstructor(Class<?> clazz) {
-		try {
-			Assert.assertTrue(Modifier.isPublic(clazz.getConstructor().getModifiers()));
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(clazz.getName() + " has no public empty constructor");
+		if (Enum.class.isAssignableFrom(clazz)) {
+			try {
+				EnumUtils.createEnum((Class<Enum>) clazz, "Test");
+			} catch (Exception e) {
+				Assert.fail("Not possible to create runtime instance of enum " + clazz.getName() + ". Possibly ther is no empty constructor");
+			}
+		} else {
+			try {
+				Assert.assertTrue(Modifier.isPublic(clazz.getConstructor().getModifiers()));
+			} catch (NoSuchMethodException e) {
+				Assert.fail(clazz.getName() + " has no public empty constructor");
+			}
 		}
 	}
 	
@@ -59,7 +69,7 @@ public class DomainClassTest {
 	}
 
 	private void testField(Field field) {
-		if (FieldUtils.isPublic(field)) {
+		if (FieldUtils.isPublic(field) && !FieldUtils.isStatic(field) && !FieldUtils.isTransient(field)) {
 			testFieldType(field);
 			testNoMethodsForPublicField(field);
 		}
@@ -101,15 +111,17 @@ public class DomainClassTest {
 
 	private static boolean isAllowedPrimitive(Class<?> fieldType) {
 		if (String.class == fieldType) return true;
-		if (Integer.TYPE == fieldType) return true;
-		if (Boolean.TYPE == fieldType) return true;
+		if (Integer.class == fieldType) return true;
+		if (Boolean.class == fieldType) return true;
 		if (BigDecimal.class == fieldType) return true;
+		if (LocalDate.class == fieldType) return true;
 		return false;
 	}
 	
 	private void testNoMethodsForPublicField(Field field) {
-		AccessorInterface accessor = PropertyAccessor.getAccessor(field.getDeclaringClass(), field.getName());
+		PropertyInterface property = Properties.getProperty(field.getDeclaringClass(), field.getName());
+		Assert.assertNotNull("No property for " + field.getName(), property);
 		Assert.assertFalse("A public attribute must not have getter or setter methods: " + field.getDeclaringClass().getName() + "." + field.getName(), //
-				accessor.getClass().getSimpleName().startsWith("Method"));
+				property.getClass().getSimpleName().startsWith("Method"));
 	}
 }

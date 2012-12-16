@@ -3,6 +3,7 @@ package ch.openech.client.e11;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
@@ -11,8 +12,8 @@ import ch.openech.xml.write.EchSchema;
 public class DwellingAddressField extends ObjectFlowField<DwellingAddress> implements DemoEnabled {
 	private final EchSchema echSchema;
 	
-	public DwellingAddressField(Object key, EchSchema echSchema, boolean editable) {
-		super(key, editable);
+	public DwellingAddressField(PropertyInterface property, EchSchema echSchema, boolean editable) {
+		super(property, editable);
 		this.echSchema = echSchema;
 	}
 	
@@ -31,7 +32,7 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 	public IForm<DwellingAddress> createFormPanel() {
 		return new DwellingAddressPanel(echSchema);
 	}
-
+	
 	//
 
 	@Override
@@ -42,6 +43,12 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 			dwellingAddress.typeOfHousehold = null;
 		}
 		setObject(dwellingAddress);
+	}
+
+	@Override
+	public void setObject(DwellingAddress object) {
+		// TODO Auto-generated method stub
+		super.setObject(object);
 	}
 	
 }

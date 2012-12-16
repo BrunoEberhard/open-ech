@@ -2,6 +2,7 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,10 +22,10 @@ public class MissingTest extends AbstractServerTest {
 	@Test
 	public void missing() throws Exception {
 		Person person = load(id);
-		process(writer().missing(person.personIdentification, "2011-01-02"));
+		process(writer().missing(person.personIdentification, new LocalDate(2011, 1, 2)));
 		person = load(id);
 
-		Assert.assertEquals("2011-01-02", person.dateOfDeath);
+		Assert.assertEquals(new LocalDate(2011, 1, 2), person.dateOfDeath);
 	}
 	
 	@Test

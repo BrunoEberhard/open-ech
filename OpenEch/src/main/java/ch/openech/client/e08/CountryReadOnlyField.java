@@ -1,6 +1,7 @@
 package ch.openech.client.e08;
 
 import ch.openech.dm.common.CountryIdentification;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
@@ -11,10 +12,10 @@ import ch.openech.mj.toolkit.TextField;
  */
 public class CountryReadOnlyField implements FormField<CountryIdentification> {
 	private final TextField textCountry;
-	private final String name;
+	private final PropertyInterface property;
 	
-	public CountryReadOnlyField(String name) {
-		this.name = name;
+	public CountryReadOnlyField(PropertyInterface property) {
+		this.property = property;
 		textCountry = ClientToolkit.getToolkit().createReadOnlyTextField();
 	}
 	
@@ -29,8 +30,8 @@ public class CountryReadOnlyField implements FormField<CountryIdentification> {
 	}
 
 	@Override
-	public String getName() {
-		return name;
+	public PropertyInterface getProperty() {
+		return property;
 	}
 
 }

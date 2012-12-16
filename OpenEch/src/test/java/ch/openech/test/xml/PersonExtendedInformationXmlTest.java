@@ -2,11 +2,14 @@ package ch.openech.test.xml;
 
 import junit.framework.Assert;
 
+import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import ch.openech.dm.common.Address;
 import ch.openech.dm.person.PersonExtendedInformation;
 import ch.openech.dm.person.PersonIdentification;
+import ch.openech.dm.types.Sex;
+import ch.openech.dm.types.YesNo;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0101;
 import ch.openech.xml.write.EchSchema;
@@ -19,13 +22,13 @@ public class PersonExtendedInformationXmlTest {
 		WriterEch0101 writer = new WriterEch0101(EchSchema.getNamespaceContext(101, "1.0"));
 	
 		PersonExtendedInformation information = new PersonExtendedInformation();
-		information.armedForcesLiability = "1";
+		information.armedForcesLiability = YesNo.Yes;
 		
 		PersonIdentification personIdentification = new PersonIdentification();
 		personIdentification.firstName = "TestVorname";
 		personIdentification.officialName = "TestNachname";
-		personIdentification.sex = "1";
-		personIdentification.dateOfBirth = "2001-12-31";
+		personIdentification.sex = Sex.maennlich;
+		personIdentification.dateOfBirth = new LocalDate(2001, 12, 31);
 		information.personIdentification = personIdentification;
 		
 		Address address1 = new Address();
@@ -35,7 +38,7 @@ public class PersonExtendedInformationXmlTest {
 		address1.street = "Teststrasse";
 		address1.houseNumber.houseNumber = "42";
 		address1.town = "Jona";
-		address1.zip.swissZipCode = "8645";
+		address1.zip.swissZipCode = 8645;
 		information.insuranceAddress = address1;
 		
 		String xml = writer.informationRoot(information);

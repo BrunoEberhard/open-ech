@@ -1,23 +1,24 @@
 package ch.openech.client.ewk.event;
 
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.Boolean;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.joda.time.LocalDate;
 
 import ch.openech.client.e44.SecondPersonField;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.MaritalStatus;
+import ch.openech.dm.person.types.PartnerShipAbolition;
+import ch.openech.dm.person.types.Separation;
+import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
-import ch.openech.mj.db.model.annotation.PredefinedFormat;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.util.BusinessRule;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0093;
@@ -31,16 +32,15 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class ChangeWithSecondPersonEventData {
 		public static final ChangeWithSecondPersonEventData DATA = Constants.of(ChangeWithSecondPersonEventData.class);
-		@Required @Is(PredefinedFormat.Date)
-		public String date;
-		public String separation;
-		public String cancelationReason;
-		@Is(Boolean)
-		public String registerPartner = "0";
+		@Required
+		public LocalDate date;
+		public Separation separation;
+		public PartnerShipAbolition cancelationReason;
+		public Boolean registerPartner = Boolean.FALSE;
 		public Relation relationPartner;
 		
 		public boolean registerPartner() {
-			return "1".equals(registerPartner);
+			return Boolean.TRUE.equals(registerPartner);
 		}
 	}
 
@@ -58,7 +58,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		ChangeWithSecondPersonEventData data = new ChangeWithSecondPersonEventData();
 		if (getPerson().getPartner() != null) {
 			data.relationPartner = getPerson().getPartner();
-			data.registerPartner = "1";
+			data.registerPartner = Boolean.TRUE;
 		}
 		return data;
 	}
@@ -72,9 +72,9 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	@BusinessRule("Neues Zivilstandsereignis darf nicht vor dem gültigen sein")
 	protected void validateEventNotBeforeDateOfMaritalStatus(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
-		String date = data.date;
-		if (getPerson() != null && !StringUtils.isBlank(getPerson().maritalStatus.dateOfMaritalStatus)
-				&& !StringUtils.isBlank(date)) {
+		LocalDate date = data.date;
+		if (getPerson() != null && getPerson().maritalStatus.dateOfMaritalStatus != null
+				&& date != null) {
 			if (date.compareTo(getPerson().maritalStatus.dateOfMaritalStatus) < 0) {
 				validationMessages.add(new ValidationMessage(ChangeWithSecondPersonEventData.DATA.date,
 						"Datum darf nicht vor letztem Zivilstandsereignis sein"));
@@ -101,12 +101,10 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
-				if ("1".equals(relation.typeOfRelationship)) {
-					// Ehe
-					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, "3", data.date, null));
-				} else if ("2".equals(relation.typeOfRelationship)) {
-					// Eingetragene Partnerschaft
-					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, "7", data.date, "4"));
+				if (TypeOfRelationship.Ehepartner == relation.typeOfRelationship) {
+					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, MaritalStatus.verwitwet, data.date, null));
+				} else if (TypeOfRelationship.Partner == relation.typeOfRelationship) {
+					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, MaritalStatus.aufgeloeste_partnerschaft, data.date, PartnerShipAbolition.tod));
 				}
 			}
 			return xmls;
@@ -150,12 +148,11 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
-				if ("1".equals(relation.typeOfRelationship)) {
-					// Ehe
-					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, "3", data.date, null));
-				} else if ("2".equals(relation.typeOfRelationship)) {
+				if (relation.typeOfRelationship == TypeOfRelationship.Ehepartner) {
+					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, MaritalStatus.verwitwet, data.date, null));
+				} else if (relation.typeOfRelationship == TypeOfRelationship.Partner) {
 					// Eingetragene Partnerschaft
-					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, "7", data.date, "4"));
+					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, MaritalStatus.aufgeloeste_partnerschaft, data.date, PartnerShipAbolition.tod));
 				}
 			}
 			return xmls;

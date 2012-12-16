@@ -20,9 +20,6 @@ public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> 
 		formPanel.line(Organisation.ORGANISATION.typeOfResidenceOrganisation, Organisation.ORGANISATION.reportingMunicipality);
 		formPanel.line(Organisation.ORGANISATION.arrivalDate, Organisation.ORGANISATION.comesFrom);
 		formPanel.area(Organisation.ORGANISATION.businessAddress);
-		formPanel.setRequired(Organisation.ORGANISATION.typeOfResidenceOrganisation);
-		formPanel.setRequired(Organisation.ORGANISATION.reportingMunicipality);
-		formPanel.setRequired(Organisation.ORGANISATION.businessAddress);
 	}
 
 	@Override
@@ -32,7 +29,9 @@ public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> 
 	
 	@Override
 	public Organisation load() {
-		return getOrganisation();
+		Organisation organisation = getOrganisation();
+		organisation.editMode = Organisation.EditMode.CHANGE_REPORTING;
+		return organisation;
 	}
 
 	@Override

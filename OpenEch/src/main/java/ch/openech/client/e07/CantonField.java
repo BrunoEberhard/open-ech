@@ -1,29 +1,24 @@
 package ch.openech.client.e07;
 
-import java.util.List;
-
-import ch.openech.dm.common.Canton;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.db.model.InvalidValues;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.validation.Validatable;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
 import ch.openech.mj.toolkit.TextField.TextFieldFilter;
-import ch.openech.mj.util.StringUtils;
-import ch.openech.xml.read.StaxEch0071;
 
-public class CantonField extends AbstractEditField<String> implements DemoEnabled, Validatable {
+public class CantonField extends AbstractEditField<String> implements DemoEnabled {
 	
 	private TextField textField;
 
-	public CantonField(Object key) {
-		this(key, true);
+	public CantonField(PropertyInterface property) {
+		this(property, true);
 	}
 	
-	public CantonField(Object key, boolean editable) {
-		super(key, editable);
+	public CantonField(PropertyInterface property, boolean editable) {
+		super(property, editable);
 		
 		if (editable) {
 			textField = ClientToolkit.getToolkit().createTextField(listener(), new CantonTextFieldFilter()); // new IndicatingTextField(new LimitedDocument());
@@ -44,11 +39,16 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 	
 	@Override
 	public void setObject(String value) {
-		textField.setText(value);
+		if (InvalidValues.isInvalid(value)) {
+			textField.setText(InvalidValues.getInvalidValue(value));
+		} else {
+			textField.setText(value);
+		}
 	}
 
 	@Override
 	public void fillWithDemoData() {
+		setObject("SO");
 	}
 
 	private static class CantonTextFieldFilter implements TextFieldFilter {
@@ -65,18 +65,5 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 		}
 	}	
 
-	@Override
-	public void validate(List<ValidationMessage> list) {
-		String value = getObject();
-		if (value == null || value.length() < 2) {
-			list.add(new ValidationMessage(getName(), "Es sind mindestens 2 Buchstaben erforderlich"));
-			return;
-		}
-		List<Canton> cantons = StaxEch0071.getInstance().getCantons();
-		for (Canton canton : cantons) {
-			if (StringUtils.equals(canton.cantonAbbreviation, value)) return;
-		}
-		list.add(new ValidationMessage(getName(), "Kein gültiger Kanton"));
-	}
 
 }

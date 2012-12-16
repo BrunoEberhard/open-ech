@@ -42,10 +42,12 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.joda.time.LocalDateTime;
+
 import ch.openech.dm.Event;
+import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.toolkit.ProgressListener;
-import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchPersistence;
 
@@ -118,7 +120,7 @@ public class StaxEch0148 implements StaxEchParser {
 					e = new Event();
 					e.type = startName;
 					// e.message = xmlString;
-					e.time = DateUtils.getToday();
+					e.time = new LocalDateTime();
 					
 					if (startName.equals(ORGANISATION_BASE_DELIVERY)) baseDelivery(xml, progressListener);
 					else if (StringUtils.equals(startName, FOUNDATION, MOVE_IN)) eventAdd(xml);
@@ -220,9 +222,9 @@ public class StaxEch0148 implements StaxEchParser {
 				// TODO valid dateValidFrom
 			
 				else if (startName.endsWith("Date")) organisation.set(startName, date(xml));
-				else if (startName.equals(UIDREG_SOURCE)) organisation.uidregSourceUid = StaxEch0097.uidStructure(xml);
+				else if (startName.equals(UIDREG_SOURCE)) StaxEch0097.uidStructure(xml, organisation.uidregSourceUid);
 				else if (startName.equals(CONTACT)) organisation.contact = StaxEch0046.contact(xml);
-				else if (startName.equals(TYP_OF_RESIDENCE)) organisation.typeOfResidenceOrganisation = token(xml);
+				else if (startName.equals(TYP_OF_RESIDENCE)) StaxEch.enuum(xml, organisation, Organisation.ORGANISATION.typeOfResidenceOrganisation);
 				else if (startName.equals(REPORTING_MUNICIPALITY)) organisation.reportingMunicipality = StaxEch0007.municipality(xml);
 				else if (startName.equals(ARRIVAL_DATE)) organisation.arrivalDate = StaxEch.date(xml);
 				else if (startName.equals(COMES_FROM)) organisation.comesFrom = StaxEch0011.destination(xml);
@@ -245,9 +247,9 @@ public class StaxEch0148 implements StaxEchParser {
 		// des vorhandenen XML Elements klar, ob ein Wechsel des Typs stattfinden soll. Bei ChangeReporting muss
 		// das nicht gemacht werden, weil dort der Typ übertragen wird.
 		if (StringUtils.equals(eventName, CORRECT_REPORTING)) {
-			if (StringUtils.equals(startName, HAS_MAIN_RESIDENCE)) organisation.typeOfResidenceOrganisation = "1";
-			else if (StringUtils.equals(startName, HAS_SECONDARY_RESIDENCE)) organisation.typeOfResidenceOrganisation = "2";
-			else if (StringUtils.equals(startName, HAS_OTHER_RESIDENCE)) organisation.typeOfResidenceOrganisation = "3";
+			if (StringUtils.equals(startName, HAS_MAIN_RESIDENCE)) organisation.typeOfResidenceOrganisation = TypeOfResidenceOrganisation.Hauptsitz;
+			else if (StringUtils.equals(startName, HAS_SECONDARY_RESIDENCE)) organisation.typeOfResidenceOrganisation = TypeOfResidenceOrganisation.Nebensitz;
+			else if (StringUtils.equals(startName, HAS_OTHER_RESIDENCE)) organisation.typeOfResidenceOrganisation = TypeOfResidenceOrganisation.Anderersitz;
 		}
 	}
 

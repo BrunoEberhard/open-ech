@@ -5,7 +5,9 @@ import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
@@ -20,10 +22,15 @@ public class MoveOutEvent extends OrganisationEventEditor<Organisation> {
 		formPanel.line(Organisation.ORGANISATION.reportingMunicipality);
 		formPanel.line(Organisation.ORGANISATION.departureDate);
 		formPanel.area(Organisation.ORGANISATION.goesTo);
-		
-		formPanel.setRequired(Organisation.ORGANISATION.reportingMunicipality);
-		formPanel.setRequired(Organisation.ORGANISATION.departureDate);
-		formPanel.setRequired(Organisation.ORGANISATION.goesTo);
+	}
+
+	
+	
+	@Override
+	protected void validate(Organisation object, List<ValidationMessage> resultList) {
+		super.validate(object, resultList);
+		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.departureDate);
+		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.goesTo);
 	}
 
 	@Override

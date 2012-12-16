@@ -9,7 +9,9 @@ import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Person;
+import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -22,16 +24,19 @@ public class CorrectResidencePermitEvent extends PersonEventEditor<Foreign> {
 	@Override
 	protected void fillForm(Form<Foreign> formPanel) {
 		formPanel.line(FOREIGN.residencePermit);
-		
-		// bei Change ist diese Angabe obligatorisch, bei Correct nicht
 		formPanel.line(FOREIGN.residencePermitTill); 
-		
-		formPanel.setRequired(FOREIGN.residencePermit);
 	}
 
 	@Override
 	public Foreign load() {
 		return getPerson().foreign;
+	}
+	
+	@Override
+	protected void validate(Foreign foreign, List<ValidationMessage> resultList) {
+		super.validate(foreign, resultList);
+		// bei Change ist diese Angabe obligatorisch, bei Correct nicht
+		EmptyValidator.validate(resultList, foreign, FOREIGN.residencePermit);
 	}
 
 	@Override

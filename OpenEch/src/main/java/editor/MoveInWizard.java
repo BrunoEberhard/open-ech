@@ -10,22 +10,23 @@ import javax.swing.Action;
 import page.PersonViewPage;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.client.ewk.event.moveIn.NextPersonHelper;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.xmlpreview.XmlPreview;
-import ch.openech.dm.code.TypeOfRelationship;
-import ch.openech.dm.code.TypeOfRelationshipInverted;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonEditMode;
+import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.person.types.TypeOfRelationshipInverted;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.Wizard;
 import ch.openech.mj.edit.WizardStep;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.value.CloneHelper;
+import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -53,14 +54,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	public static class MoveInNextPerson {
 		public static final MoveInNextPerson MOVE_IN_NEXT_PERSON = Constants.of(MoveInNextPerson.class);
 		
-		public String typeOfRelationshipInverted = TypeOfRelationshipInverted.Kind.getKey();
+		@Required
+		public TypeOfRelationshipInverted typeOfRelationshipInverted = TypeOfRelationshipInverted.Kind;
+		@Required
 		public Person basePerson;
 		public Person mother, father;
 		public Person fosterMother, fosterFather;
-		
-		public TypeOfRelationshipInverted typeOfRelationshipInverted() {
-			return TypeOfRelationshipInverted.lookup(typeOfRelationshipInverted);
-		}
 	}
 		
 	public static class MoveInEditorData {
@@ -108,7 +107,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		protected IForm<Person> createForm() {
-			return new PersonPanel(PersonPanelType.MOVE_IN, echNamespaceContext);
+			return new PersonPanel(PersonEditMode.MOVE_IN, echNamespaceContext);
 		}
 
 		@Override
@@ -182,9 +181,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.fosterMother, TypeOfRelationship.Pflegemutter), //
 					new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.fosterFather, TypeOfRelationship.Pflegevater));
-
-			form.setRequired(MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted);
-			form.setRequired(MoveInNextPerson.MOVE_IN_NEXT_PERSON.basePerson);
 			
 			return form;
 		}
@@ -238,7 +234,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 	
 	private Person createNextPerson(MoveInNextPerson moveInNextPerson) {
-		TypeOfRelationshipInverted relation = moveInNextPerson.typeOfRelationshipInverted();
+		TypeOfRelationshipInverted relation = moveInNextPerson.typeOfRelationshipInverted;
 		switch (relation) {
 		case Partner:
 			return NextPersonHelper.createNextPersonPartner(moveInNextPerson.basePerson, true);
@@ -268,13 +264,17 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 
-	private class MoveInNextPersonField extends AbstractEditField<Person> implements DependingOnFieldAbove<String> {
+	private class MoveInNextPersonField extends AbstractEditField<Person> implements DependingOnFieldAbove<TypeOfRelationshipInverted> {
 
 		private final ComboBox<Person> comboBox;
 		private final TypeOfRelationship relation;
 		
 		public MoveInNextPersonField(Object key, TypeOfRelationship relation) {
-			super(key, true);
+			this(Constants.getProperty(key), relation);
+		}
+		
+		public MoveInNextPersonField(PropertyInterface property, TypeOfRelationship relation) {
+			super(property, true);
 			
 			this.relation = relation;
 			
@@ -323,12 +323,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public String getNameOfDependedField() {
+		public TypeOfRelationshipInverted getKeyOfDependedField() {
 			return MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted;
 		}
 
 		@Override
-		public void setDependedField(EditField<String> field) {
+		public void valueChanged(TypeOfRelationshipInverted typeOfRelationshipInverted) {
 			// TODO enable/disable der Felder
 		}
 		

@@ -5,10 +5,10 @@ import java.util.List;
 
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.ewk.PersonPanel.PersonPanelType;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.util.BusinessRule;
@@ -23,7 +23,7 @@ public class BirthEvent extends XmlEditor<Person> {
 
 	@Override
 	public IForm<Person> createForm() {
-		return new PersonPanel(PersonPanelType.BIRTH, echSchema);
+		return new PersonPanel(PersonEditMode.BIRTH, echSchema);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class BirthEvent extends XmlEditor<Person> {
 	@BusinessRule("Geburtsort muss bei Erfassung einer Geburt angegeben werden")
 	public void validatePlaceOfBirth(Person person, List<ValidationMessage> resultList) {
 		if (echSchema.birthPlaceMustNotBeUnknown() && (person.placeOfBirth == null || person.placeOfBirth.isUnknown())) {
-			resultList.add(new ValidationMessage("placeOfBirth", "Geburtsort fehlt"));
+			resultList.add(new ValidationMessage(Person.PERSON.placeOfBirth, "Geburtsort fehlt"));
 		}
 	}
 	
@@ -54,6 +54,8 @@ public class BirthEvent extends XmlEditor<Person> {
 	
 	private static Person calculatePresets(OpenEchPreferences preferences) {
 		Person person = new Person();
+		person.editMode = PersonEditMode.BIRTH;
+		
 		if (preferences.preferencesDefaultsData.residence != null) {
 			person.placeOfBirth = new Place();
 			person.placeOfBirth.setMunicipalityIdentification(preferences.preferencesDefaultsData.residence);

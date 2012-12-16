@@ -1,6 +1,27 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
+import static ch.openech.dm.XmlConstants.BUSINESS_ADDRESS;
+import static ch.openech.dm.XmlConstants.COMES_FROM;
+import static ch.openech.dm.XmlConstants.CONTACT;
+import static ch.openech.dm.XmlConstants.DEPARTURE_DATE;
+import static ch.openech.dm.XmlConstants.FOREIGN_HEADQUARTER;
+import static ch.openech.dm.XmlConstants.FOUNDATION;
+import static ch.openech.dm.XmlConstants.FOUNDATION_DATE;
+import static ch.openech.dm.XmlConstants.FOUNDATION_REASON;
+import static ch.openech.dm.XmlConstants.GOES_TO;
+import static ch.openech.dm.XmlConstants.HEADQUARTER_MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.LANGUAGE_OF_CORRESPONDANCE;
+import static ch.openech.dm.XmlConstants.LIQUIDATION;
+import static ch.openech.dm.XmlConstants.LIQUIDATION_DATE;
+import static ch.openech.dm.XmlConstants.LIQUIDATION_ENTRY_DATE;
+import static ch.openech.dm.XmlConstants.LIQUIDATION_REASON;
+import static ch.openech.dm.XmlConstants.NOGA_CODE;
+import static ch.openech.dm.XmlConstants.ORGANISATION;
+import static ch.openech.dm.XmlConstants.ORGANISATION_IDENTIFICATION;
+import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
+import static ch.openech.dm.XmlConstants.SWISS_HEADQUARTER;
+import static ch.openech.dm.XmlConstants.UID_BRANCHE_TEXT;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -9,7 +30,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0098 {
@@ -33,19 +56,8 @@ public class StaxEch0098 {
 	}
 
 	public static void residence(String startName, XMLEventReader xml, Organisation organisation) throws XMLStreamException {
-		if (startName.equals(HAS_MAIN_RESIDENCE)) {
-			organisation.typeOfResidenceOrganisation = "1";
-			residence(xml, organisation);
-		} else if (startName.equals(HAS_SECONDARY_RESIDENCE)) {
-			organisation.typeOfResidenceOrganisation = "2";
-			residence(xml, organisation);
-		} else if (startName.equals(HAS_OTHER_RESIDENCE)) {
-			organisation.typeOfResidenceOrganisation = "3";
-			residence(xml, organisation);
-		} else {
-			System.out.println("Skipping: " + startName);
-			skip(xml);
-		}
+		organisation.typeOfResidenceOrganisation = EnumUtils.valueOf(TypeOfResidenceOrganisation.class, startName);
+		residence(xml, organisation);
 	}
 	
 	public static void organisation(XMLEventReader xml, Organisation organisation) throws XMLStreamException {

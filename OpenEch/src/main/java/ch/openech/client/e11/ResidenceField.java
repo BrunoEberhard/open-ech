@@ -12,24 +12,23 @@ import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Residence;
+import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.Editor;
-import ch.openech.mj.edit.fields.EditField;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
-import ch.openech.mj.util.StringUtils;
 
-public class ResidenceField extends ObjectFlowField<Residence> implements Validatable, DependingOnFieldAbove<String>, DemoEnabled {
+public class ResidenceField extends ObjectFlowField<Residence> implements DependingOnFieldAbove<TypeOfResidence>, DemoEnabled {
 	private Action selectSecondary;
-	private String typeOfResidence;
+	private TypeOfResidence typeOfResidence;
 
-	public ResidenceField(Object key, boolean editable) {
-		super(key, editable);
+	public ResidenceField(PropertyInterface property, boolean editable) {
+		super(property, editable);
 	}
 	
 	// 		setTitle(main ? "Hauptwohnsitz erfassen" : "Nebenwohnsitz erfassen");
@@ -143,10 +142,10 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 	}
 
 	@Override
-	public void validate(List<ValidationMessage> resultList) {
-		boolean hasMainResidence = "1".equals(typeOfResidence);
-		boolean hasSecondResidence = "2".equals(typeOfResidence);
-		boolean hasOtherResidence = "3".equals(typeOfResidence);
+	public void validate(Residence Object, List<ValidationMessage> resultList) {
+		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
+		boolean hasSecondResidence = TypeOfResidence.hasSecondaryResidence == typeOfResidence;
+		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
 		
 		boolean mainResidenceNeeded = hasMainResidence || hasSecondResidence;
 		boolean secondResidenceNeeded = hasSecondResidence || hasOtherResidence;
@@ -156,39 +155,39 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 		
 		if (mainResidenceNeeded) {
 			if (reportingMunicipality == null || reportingMunicipality.isEmpty()) {
-				resultList.add(new ValidationMessage(getName(), "Hauptwohnsitz fehlt"));
+				resultList.add(new ValidationMessage(getProperty(), "Hauptwohnsitz erforderlich"));
 			}
 		} 
 		if (hasOtherResidence) {
 			if (reportingMunicipality != null && !reportingMunicipality.isEmpty()) {
-				resultList.add(new ValidationMessage(getName(), "Hauptwohnsitz darf nicht gesetzt sein"));
+				resultList.add(new ValidationMessage(getProperty(), "Hauptwohnsitz darf nicht gesetzt sein"));
 			}
 		}
 		
 		
 		if (secondResidenceNeeded) {
 			if (getObject().secondary == null || getObject().secondary.isEmpty()) {
-				resultList.add(new ValidationMessage(getName(), "Nebenwohnsitz fehlt"));
+				resultList.add(new ValidationMessage(getProperty(), "Nebenwohnsitz fehlt"));
 			}
 		}
 		
 		if (notMoreThanOneSecondResidence) {
 			if (getObject().secondary != null && getObject().secondary.size() > 1) {
-				resultList.add(new ValidationMessage(getName(), "Nur 1 Nebenwohnsitz möglich"));
+				resultList.add(new ValidationMessage(getProperty(), "Nur 1 Nebenwohnsitz möglich"));
 			}
 		}
 		
-		if (reportingMunicipality != null && reportingMunicipality.historyMunicipalityId != null && reportingMunicipality.historyMunicipalityId.startsWith("-")) {
+		if (reportingMunicipality != null && reportingMunicipality.isFederalRegister()) {
 			if (!hasMainResidence) {
-				resultList.add(new ValidationMessage(getName(), "Bundesregister als Hauptwohnsitz bei gewähltem Meldeverhältnis nicht möglich"));
+				resultList.add(new ValidationMessage(getProperty(), "Bundesregister als Hauptwohnsitz bei gewähltem Meldeverhältnis nicht möglich"));
 			}
 		}
 		
 		if (getObject().secondary != null) {
 			for (MunicipalityIdentification municipalityIdentification : getObject().secondary) {
-				if (municipalityIdentification.historyMunicipalityId != null && municipalityIdentification.historyMunicipalityId.startsWith("-")) {
+				if (municipalityIdentification.historyMunicipalityId != null && municipalityIdentification.isFederalRegister()) {
 					if (!hasSecondResidence) {
-						resultList.add(new ValidationMessage(getName(), "Bundesregister als Nebenwohnsitz bei gewähltem Meldeverhältnis nicht möglich"));
+						resultList.add(new ValidationMessage(getProperty(), "Bundesregister als Nebenwohnsitz bei gewähltem Meldeverhältnis nicht möglich"));
 						break;
 					}
 				}
@@ -197,18 +196,16 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Valida
 	}
 
 	@Override
-	public String getNameOfDependedField() {
+	public TypeOfResidence getKeyOfDependedField() {
 		return Person.PERSON.typeOfResidence;
 	}
 
 	@Override
-	public void setDependedField(EditField<String> field) {
-		String value = field.getObject();
+	public void valueChanged(TypeOfResidence typeOfResidence) {
+		if (this.typeOfResidence == typeOfResidence) return;
 		
-		if (StringUtils.equals(value, typeOfResidence)) return;
-		
-		this.typeOfResidence = value;
-		if ("3".equals(typeOfResidence) && getObject() != null) {
+		this.typeOfResidence = typeOfResidence;
+		if (typeOfResidence == TypeOfResidence.hasOtherResidence && getObject() != null) {
 			getObject().reportingMunicipality = null;
 		}
 		

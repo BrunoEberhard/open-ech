@@ -20,15 +20,15 @@ public class InLiquidationEvent extends OrganisationEventEditor<Organisation> {
 		formPanel.line(Organisation.ORGANISATION.liquidationEntryDate);
 		formPanel.line(Organisation.ORGANISATION.liquidationReason);
 		formPanel.area(Organisation.ORGANISATION.contact);
-		formPanel.setRequired(Organisation.ORGANISATION.liquidationEntryDate);
-		formPanel.setRequired(Organisation.ORGANISATION.liquidationReason);
 	}
 
 	@Override
 	public Organisation load() {
-		return getOrganisation();
+		Organisation organisation = getOrganisation();
+		organisation.editMode = Organisation.EditMode.IN_LIQUIDATION;
+		return organisation;
 	}
-
+	
 	@Override
 	protected List<String> getXml(Organisation organisation, Organisation changedOrganisation, WriterEch0148 writerEch0148) throws Exception {
 		return Collections.singletonList(writerEch0148.inLiquidation(changedOrganisation));

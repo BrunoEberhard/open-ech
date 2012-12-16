@@ -27,6 +27,17 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	protected final OpenEchPreferences preferences;
 	
 	private final XmlAction xmlAction;
+
+// TODO EchSchema / PageContext
+//	protected final PageContext pageContext;
+//	protected final OpenEchPreferences preferences;
+//
+//	private final XmlAction xmlAction;
+//	
+//	public XmlEditor(PageContext pageContext) {
+//		this.pageContext = pageContext;
+//		this.preferences = (OpenEchPreferences)pageContext.getApplicationContext().getPreferences();
+
 	
 	public XmlEditor(EchSchema echSchema, OpenEchPreferences preferences) {
 		this.echSchema = echSchema;
@@ -44,6 +55,10 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	public void generateSedexOutput(T object) throws Exception {
 		// to overwrite
 	}
+	
+//	public EchSchema0020 ewkSchema() {
+//		return preferences.applicationSchemaData.schema20;
+//	}
 
 	// TODO momentan hört der XML Button nicht auf die Änderungen in den Preferences
 //	@Override

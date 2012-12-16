@@ -6,6 +6,8 @@ import java.util.List;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.common.TechnicalIds;
+import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.fields.ObjectLinkField;
 import ch.openech.mj.edit.form.IForm;
@@ -17,11 +19,14 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	
 	private final boolean hasSpecialEuIds;
 
-	public TechnicalIdsField(Object key, boolean hasSpecialEuIds, boolean editable) {
-		super(key, editable);
+	public TechnicalIdsField(TechnicalIds key, boolean hasSpecialEuIds, boolean editable) {
+		this(Constants.getProperty(key), hasSpecialEuIds, editable);
+	}
+	
+	public TechnicalIdsField(PropertyInterface property, boolean hasSpecialEuIds, boolean editable) {
+		super(property, editable);
 		this.hasSpecialEuIds = hasSpecialEuIds;
 	}
-
 
 	public final class TechnicalIdRemoveAction extends ResourceAction {
 		@Override
@@ -59,8 +64,8 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	
 	private static class OtherIdField extends ObjectFlowField<List<NamedId>> {
 
-		public OtherIdField(Object key, boolean editable) {
-			super(key, editable);
+		public OtherIdField(List<NamedId> key, boolean editable) {
+			super(Constants.getProperty(key), editable);
 		}
 
 		@Override

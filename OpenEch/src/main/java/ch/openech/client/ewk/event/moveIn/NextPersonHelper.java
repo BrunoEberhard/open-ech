@@ -1,8 +1,9 @@
 package ch.openech.client.ewk.event.moveIn;
 
-import ch.openech.dm.code.TypeOfRelationship;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.types.Sex;
 import ch.openech.mj.util.BusinessRule;
 import editor.MoveInWizard.MoveInNextPerson;
 
@@ -17,12 +18,12 @@ public class NextPersonHelper {
 		if (married) {
 			nextPerson.personIdentification.officialName = partner.personIdentification.officialName;
 			boolean partnerIsMale = "1".equals(partner.personIdentification.sex);
-			nextPerson.personIdentification.sex = partnerIsMale ? "2" : "1";
-			relation.typeOfRelationship = relation2.typeOfRelationship = "1";
+			nextPerson.personIdentification.sex = partnerIsMale ? Sex.weiblich : Sex.maennlich;
+			relation.typeOfRelationship = relation2.typeOfRelationship = TypeOfRelationship.Ehepartner;
 		} else {
 			nextPerson.alliancePartnershipName = partner.alliancePartnershipName;
 			nextPerson.personIdentification.sex = partner.personIdentification.sex;
-			relation.typeOfRelationship = relation2.typeOfRelationship = "2";
+			relation.typeOfRelationship = relation2.typeOfRelationship = TypeOfRelationship.Partner;
 		}
 		nextPerson.maritalStatus.maritalStatus = partner.maritalStatus.maritalStatus;
 		nextPerson.religion = partner.religion;
@@ -73,7 +74,7 @@ public class NextPersonHelper {
 
 	public static Relation createChildRelation(TypeOfRelationship typeOfRelationship, Person person) {
 		Relation relation = new Relation();
-		relation.typeOfRelationship = typeOfRelationship.getKey();
+		relation.typeOfRelationship = typeOfRelationship;
 		relation.partner = person.personIdentification;
 		return relation;
 	}

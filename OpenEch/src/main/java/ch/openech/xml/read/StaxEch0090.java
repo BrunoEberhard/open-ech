@@ -1,7 +1,7 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
-import static ch.openech.xml.read.StaxEch.date;
+import static ch.openech.dm.XmlConstants.ENVELOPE;
+import static ch.openech.xml.read.StaxEch.dateTime;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -17,7 +17,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.dm.Envelope;
-import ch.openech.mj.db.model.ColumnAccess;
+import ch.openech.mj.db.model.ColumnProperties;
 
 public class StaxEch0090 {
 
@@ -56,9 +56,9 @@ public class StaxEch0090 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.endsWith("Date")) {
-					ColumnAccess.setValue(envelope, startName, date(xml));
+					ColumnProperties.setValue(envelope, startName, dateTime(xml));
 				} else {
-					ColumnAccess.setValue(envelope, startName, token(xml));
+					ColumnProperties.setValue(envelope, startName, token(xml));
 				}
 			} 
 		}

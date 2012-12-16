@@ -17,6 +17,7 @@ import java.util.List;
 
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.UidStructure;
 
 public class WriterEch0097 {
 
@@ -39,11 +40,11 @@ public class WriterEch0097 {
 		element.values(values, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME, LEGAL_FORM);
     }
 	
-	public void uidStructure(WriterElement parent, String tagName, String uid) throws Exception {
-		if (uid != null && uid.length() == 12) {
+	public void uidStructure(WriterElement parent, String tagName, UidStructure uid) throws Exception {
+		if (uid != null && uid.value != null && uid.value.length() == UidStructure.LENGTH) {
 			WriterElement uidStructure = parent.create(URI, tagName);
-			uidStructure.text(UID_ORGANISATION_ID_CATEGORIE, uid.substring(0, 3)); // TYPO by schema
-			uidStructure.text(UID_ORGANISATION_ID, uid.substring(3));
+			uidStructure.text(UID_ORGANISATION_ID_CATEGORIE, uid.value.substring(0, 3)); // TYPO by schema
+			uidStructure.text(UID_ORGANISATION_ID, uid.value.substring(3));
 		}
     }
 	

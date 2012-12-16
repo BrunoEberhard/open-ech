@@ -1,11 +1,11 @@
 package ch.openech.client.e97;
 
-import java.util.List;
-
+import ch.openech.dm.organisation.UidStructure;
 import ch.openech.mj.autofill.DemoEnabled;
+import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.validation.Validatable;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.MaxLengthTextFieldFilter;
@@ -18,8 +18,8 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 	private static final int[] mult = {5, 4, 3, 2, 7, 6, 5, 4};
 	private final TextField textField;
 	
-	public OrganisationUidField(Object key, boolean editable) {
-		super(key, editable);
+	public OrganisationUidField(PropertyInterface property, boolean editable) {
+		super(property, editable);
 		if (editable) {
 			textField = ClientToolkit.getToolkit().createTextField(listener(), new MaxLengthTextFieldFilter(12));
 		} else {
@@ -27,6 +27,10 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 		}
 	}
 	
+	public OrganisationUidField(UidStructure key, boolean editable) {
+		this(Constants.getProperty(key), editable);
+	}
+
 	@Override
 	public IComponent getComponent() {
 		return textField;
@@ -43,25 +47,24 @@ public class OrganisationUidField extends AbstractEditField<String> implements D
 	}
 
 	@Override
-	public void validate(List<ValidationMessage> list) {
+	public String validate() {
 		String value = getObject();
 		if (value == null || value.length() < 12) {
-			list.add(new ValidationMessage(getName(), "Es sind 3 Buchstaben und 9 Ziffern erforderlich"));
-			return;
+			return "Es sind 3 Buchstaben und 9 Ziffern erforderlich";
 		}
 		String organisationIdCategory = value.substring(0, 3);
 		if (!StringUtils.equals(organisationIdCategory, "ADM", "CHE")) {
-			list.add(new ValidationMessage(getName(), "Die ersten drei Buchstaben müssen ADM oder CHE lauten"));
+			return "Die ersten drei Buchstaben müssen ADM oder CHE lauten";
 		}
 		for (int i = 3; i<value.length(); i++) {
 			if (!Character.isDigit(value.charAt(i))) {
-				list.add(new ValidationMessage(getName(), "Die Eingabe muss ausser den ersten drei Buchstaben aus Ziffern bestehen"));
-				return;
+				return "Die Eingabe muss ausser den ersten drei Buchstaben aus Ziffern bestehen";
 			}
 		}
 		if (!checksum(value)) {
-			list.add(new ValidationMessage(getName(), "Checksumme ungültig"));
+			return "Checksumme ungültig";
 		}
+		return null;
 	};
 	
 	public static boolean checksum(String value) {

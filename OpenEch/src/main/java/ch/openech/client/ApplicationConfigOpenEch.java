@@ -110,7 +110,7 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		ApplicationSchemaData applicationData = preferences.applicationSchemaData;
 		if (applicationData.schema20 != null) {
 			if (ewkSchema == null || !applicationData.schema20.equals(ewkSchema.getVersion())) {
-				ewkSchema = EchSchema.getNamespaceContext(20, applicationData.schema20);
+				ewkSchema = EchSchema.getNamespaceContext(applicationData.schema20);
 			}
 		} else {
 			ewkSchema = null;
@@ -118,7 +118,7 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		
 		if (applicationData.schema93 != null) {
 			if (tpnNamespaceContext == null || !applicationData.schema93.equals(tpnNamespaceContext.getVersion())) {
-				tpnNamespaceContext = EchSchema.getNamespaceContext(93, applicationData.schema93);
+				tpnNamespaceContext = EchSchema.getNamespaceContext(applicationData.schema93);
 			}
 		} else {
 			tpnNamespaceContext = null;
@@ -126,7 +126,7 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 		
 		if (applicationData.schema148 != null) {
 			if (orgSchema == null || !applicationData.schema148.equals(orgSchema.getVersion())) {
-				orgSchema = EchSchema.getNamespaceContext(148, applicationData.schema148);
+				orgSchema = EchSchema.getNamespaceContext(applicationData.schema148);
 			}
 		} else {
 			orgSchema = null;

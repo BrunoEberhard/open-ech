@@ -65,7 +65,7 @@ public class MarriageTest extends AbstractPageTest {
 //		JInternalFrame dwellingAddressFrame = findFrame(getViewComponent(), "Wohnadresse");
 //		setText(dwellingAddressFrame, DwellingAddress.DWELLING_ADDRESS.householdID , "12345");
 //
-//		Component mailAddress = findComponent(getViewComponent(), "mailAddress");
+//		Component mailAddress = findComponent(getViewComponent(), MAIL_ADDRESS);
 //		clickContextMenu(mailAddress, "Adresse Editieren");
 //		JInternalFrame addressFrame = findFrame(getViewComponent(), "Adresse");
 //		setText(addressFrame, Address.ADDRESS.street , "TestStrasse");
@@ -94,7 +94,7 @@ public class MarriageTest extends AbstractPageTest {
 //		JInternalFrame dwellingAddressFrame = findFrame(getViewComponent(), "Wohnadresse");
 //		setText(dwellingAddressFrame, DwellingAddress.DWELLING_ADDRESS.householdID , "12345");
 //
-//		Component mailAddress = findComponent(getViewComponent(), "mailAddress");
+//		Component mailAddress = findComponent(getViewComponent(), MAIL_ADDRESS);
 //		clickContextMenu(mailAddress, "Adresse Editieren");
 //		JInternalFrame addressFrame = findFrame(getViewComponent(), "Adresse");
 //		setText(addressFrame, Address.ADDRESS.street , "TestStrasse");

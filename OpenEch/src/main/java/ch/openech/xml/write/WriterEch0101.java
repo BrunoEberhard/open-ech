@@ -3,6 +3,7 @@ package ch.openech.xml.write;
 import static ch.openech.dm.XmlConstants.*;
 
 import ch.openech.dm.person.PersonExtendedInformation;
+import ch.openech.dm.types.YesNo;
 import ch.openech.mj.util.StringUtils;
 
 public class WriterEch0101 extends DeliveryWriter {
@@ -70,10 +71,10 @@ public class WriterEch0101 extends DeliveryWriter {
 	
 	private void healthInsurance(WriterElement parent, PersonExtendedInformation information) throws Exception {
 		WriterElement writer = parent.create(URI, HEALTH_INSURANCE);
-		if (!StringUtils.isBlank(information.healthInsured)) {
+		if (information.healthInsured != null) {
 			writer.values(information, HEALTH_INSURED);
 		} else {
-			writer.text(HEALTH_INSURED, "1");
+			writer.text(HEALTH_INSURED, YesNo.Yes); // really yes as default?
 		}
 		insurance(writer, information);
 	}

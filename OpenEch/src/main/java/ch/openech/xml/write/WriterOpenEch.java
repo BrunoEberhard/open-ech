@@ -1,5 +1,6 @@
 package ch.openech.xml.write;
 
+import ch.openech.dm.XmlConstants;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.Person;
 
@@ -41,7 +42,7 @@ public class WriterOpenEch extends DeliveryWriter {
 		if (!context.extensionAvailable()) return;
 		
 		boolean hasExtendedInformation = person.personExtendedInformation != null;
-		boolean hasContact = person.contact != null && !person.contact.entries.isEmpty();
+		boolean hasContact = person.contact != null && !person.contact.isEmpty();
 		
 		if (hasExtendedInformation || hasContact) {
 			WriterElement element = parent.create(URI, tagName);
@@ -51,7 +52,7 @@ public class WriterOpenEch extends DeliveryWriter {
 				ech101.personExtendedInformation(element, "personExtendedInformation", person.personExtendedInformation);
 			}
 			if (hasContact) {
-				ech46.contact(element, "contact", person.contact);
+				ech46.contact(element, XmlConstants.CONTACT, person.contact);
 			}
 		}
 	}

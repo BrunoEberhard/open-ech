@@ -2,13 +2,15 @@ package ch.openech.test.xml;
 
 import junit.framework.Assert;
 
+import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Test;
 
 import ch.openech.dm.common.Address;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
-import ch.openech.mj.db.model.ColumnAccess;
-import ch.openech.mj.util.DateUtils;
+import ch.openech.dm.contact.ContactEntryType;
+import ch.openech.dm.types.ContactCategory;
+import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0046;
 import ch.openech.xml.write.EchSchema;
@@ -24,24 +26,24 @@ public class ContactXmlTest {
 		contact.stringId = "13";
 		
 		ContactEntry mail1 = new ContactEntry();
-		mail1.typeOfContact = "E";
-		mail1.dateFrom = DateUtils.parseCH("1.2.2003");
-		mail1.dateTo = DateUtils.parseCH("4.5.2006");
-		mail1.categoryCode = "2";
+		mail1.typeOfContact = ContactEntryType.Email;
+		mail1.dateFrom = ISODateTimeFormat.date().parseLocalDate("2003-02-01");
+		mail1.dateTo = ISODateTimeFormat.date().parseLocalDate("2006-05-04");
+		mail1.categoryCode = ContactCategory.geschaeftlich;
 		mail1.value = "mymail@myhost.com";
 		contact.entries.add(mail1);
 		
 		ContactEntry mail2 = new ContactEntry();
-		mail2.typeOfContact = "E";
+		mail2.typeOfContact = ContactEntryType.Email;
 		mail2.categoryOther = "OtherMail";
 		mail2.value = "otherMail@myhost.com";
 		contact.entries.add(mail2);
 
 		ContactEntry addressEntry1 = new ContactEntry();
-		addressEntry1.typeOfContact = "A";
-		addressEntry1.dateFrom = DateUtils.parseCH("1.2.2003");
-		addressEntry1.dateTo = DateUtils.parseCH("4.5.2006");
-		addressEntry1.categoryCode = "1";
+		addressEntry1.typeOfContact = ContactEntryType.Address;
+		addressEntry1.dateFrom = ISODateTimeFormat.date().parseLocalDate("2003-02-01");
+		addressEntry1.dateTo = ISODateTimeFormat.date().parseLocalDate("2006-05-04");
+		addressEntry1.categoryCode = ContactCategory.privat;
 		Address address1 = new Address();
 		address1.firstName = "Vortester";
 		address1.lastName = "Nachtestr";
@@ -50,7 +52,7 @@ public class ContactXmlTest {
 		address1.street = "Teststrasse";
 		address1.houseNumber.houseNumber = "42";
 		address1.town = "Jona";
-		address1.zip.swissZipCode = "8645";
+		address1.zip.swissZipCode = 8645;
 		addressEntry1.address = address1;
 		contact.entries.add(addressEntry1);
 		
@@ -67,8 +69,7 @@ public class ContactXmlTest {
 		Contact contactOut = new StaxEch0046().read(xml);
 		
 		Assert.assertEquals(contact.stringId, contactOut.stringId);
-		Assert.assertEquals(contact.getEmailList().size(), contactOut.getEmailList().size());
-		Assert.assertEquals(contact.getAddressList().size(), contactOut.getAddressList().size());
+		Assert.assertEquals(contact.entries.size(), contactOut.entries.size());
 		
 		ContactEntry mail1Out = contactOut.getEmailList().get(0);
 		Assert.assertEquals(mail1.dateFrom, mail1Out.dateFrom);
@@ -76,7 +77,7 @@ public class ContactXmlTest {
 		Assert.assertEquals(mail1.categoryCode, mail1Out.categoryCode);
 		Assert.assertEquals(mail1.categoryOther, mail1Out.categoryOther);
 		Assert.assertEquals(mail1.value, mail1Out.value);
-		Assert.assertTrue(ColumnAccess.equals(mail1, mail1Out));
+		Assert.assertTrue(ColumnProperties.equals(mail1, mail1Out));
 
 		ContactEntry mail2Out = contactOut.getEmailList().get(1);
 		Assert.assertEquals(mail2.dateFrom, mail2Out.dateFrom);
@@ -84,10 +85,10 @@ public class ContactXmlTest {
 		Assert.assertEquals(mail2.categoryCode, mail2Out.categoryCode);
 		Assert.assertEquals(mail2.categoryOther, mail2Out.categoryOther);
 		Assert.assertEquals(mail2.value, mail2Out.value);
-		Assert.assertTrue(ColumnAccess.equals(mail2, mail2Out));
+		Assert.assertTrue(ColumnProperties.equals(mail2, mail2Out));
 		
 		ContactEntry addressEntry1Out = contact.getAddressList().get(0);
-		Assert.assertTrue(ColumnAccess.equals(addressEntry1, addressEntry1Out));
+		Assert.assertTrue(ColumnProperties.equals(addressEntry1, addressEntry1Out));
 
 	}
 }

@@ -1,14 +1,12 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.person.PersonIdentification.PERSON_IDENTIFICATION;
-
 import java.util.List;
 
 import ch.openech.dm.XmlConstants;
 import static ch.openech.dm.XmlConstants.*;
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.person.PersonIdentification;
-import ch.openech.mj.db.model.ColumnAccess;
+import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.util.StringUtils;
 
 public class WriterEch0044 {
@@ -26,12 +24,13 @@ public class WriterEch0044 {
 	public void personIdentification(WriterElement parent, String tagName, PersonIdentification values) throws Exception {
 		WriterElement personIdentification = parent.create(URI, tagName);
 
-		personIdentification.values(values, PERSON_IDENTIFICATION.vn);
+		personIdentification.values(values, VN);
 		namedId(personIdentification, values.technicalIds.localId, XmlConstants.LOCAL_PERSON_ID);
     	NamedId(personIdentification, values.technicalIds.otherId, _OTHER_PERSON_ID); // VERSION
     	NamedId(personIdentification, values.technicalIds.euId, "EuPersonId"); // VERSION
-		personIdentification.values(values, PERSON_IDENTIFICATION.officialName, PERSON_IDENTIFICATION.firstName, PERSON_IDENTIFICATION.sex);
-    	datePartiallyKnownType(personIdentification, PERSON_IDENTIFICATION.dateOfBirth, values);
+		personIdentification.values(values, OFFICIAL_NAME, FIRST_NAME);
+		personIdentification.text(XmlConstants.SEX, values.sex);
+    	datePartiallyKnownType(personIdentification, DATE_OF_BIRTH, values);
     }
 
 	public void datePartiallyKnownType(WriterElement parent, String tagName, Object object) throws Exception {
@@ -41,7 +40,7 @@ public class WriterEch0044 {
 	// Diese Methode wird auch von e98 benutzt, der ComplexType ist dort
 	// dupliziert worden
 	public static void datePartiallyKnownType(WriterElement parent, String uri, String tagName, Object object) throws Exception {
-		Object value = ColumnAccess.getValue(object, tagName);
+		Object value = ColumnProperties.getValue(object, tagName);
 		if (value == null) return;
 		String text = value.toString();
 		if (StringUtils.isBlank(text)) return;

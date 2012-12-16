@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 
 import ch.openech.dm.person.Person;
 import ch.openech.mj.page.HistoryPage;
@@ -35,21 +36,21 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 	}
 
 	@Override
-	protected List<HistoryVersion> loadVersions() {
-		List<HistoryVersion> versions = new ArrayList<HistoryVersion>();
+	protected List<HistoryVersion<Person>> loadVersions() {
+		List<HistoryVersion<Person>> versions = new ArrayList<HistoryVersion<Person>>();
 		try {
 			Person person = EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
 			int id = EchServer.getInstance().getPersistence().person().getId(person);
 			List<Integer> times = EchServer.getInstance().getPersistence().person().readVersions(id);
 			Collections.reverse(times);
-			HistoryVersion version = new HistoryVersion();
+			HistoryVersion<Person> version = new HistoryVersion<Person>();
 			version.object = person;
 			version.time = getTime(person);
 			version.description = getDescription(person);
 			versions.add(version);
 			for (int time : times) {
 				person = EchServer.getInstance().getPersistence().person().read(id, time);
-				version = new HistoryVersion();
+				version = new HistoryVersion<Person>();
 				version.object = person;
 				version.version = "" + time;
 				version.time = getTime(person);
@@ -63,8 +64,8 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 	}
 
 	@Override
-	protected String getTime(Person object) {
-		return object.event != null ? object.event.time : "-";
+	protected LocalDateTime getTime(Person object) {
+		return object.event.time;
 	}
 
 	@Override

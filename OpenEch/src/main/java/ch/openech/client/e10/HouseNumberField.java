@@ -1,7 +1,8 @@
 package ch.openech.client.e10;
 
+import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.HouseNumber;
-import ch.openech.mj.db.model.Formats;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.HorizontalLayout;
@@ -14,11 +15,11 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	private final TextField dwellingNumberTextField;
 	private final HorizontalLayout horizontalLayout;
 	
-	public HouseNumberField(Object key) {
-		super(key, true);
+	public HouseNumberField(PropertyInterface property) {
+		super(property, true);
 		
-		houseNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(HouseNumber.class, HouseNumber.HOUSE_NUMBER.houseNumber).getSize());
-		dwellingNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), Formats.getInstance().getFormat(HouseNumber.class, HouseNumber.HOUSE_NUMBER.dwellingNumber).getSize());
+		houseNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), EchFormats.houseNumber);
+		dwellingNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), EchFormats.dwellingNumber);
 
 		horizontalLayout = ClientToolkit.getToolkit().createHorizontalLayout(houseNumberTextField, dwellingNumberTextField);
 	}

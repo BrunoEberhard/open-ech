@@ -3,8 +3,10 @@ package ch.openech.datagenerator;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 import ch.openech.client.e44.VnField;
-import ch.openech.dm.code.MaritalStatus;
+import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
@@ -14,11 +16,22 @@ import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
+import ch.openech.dm.person.types.DataLock;
+import ch.openech.dm.person.types.KindOfEmployment;
+import ch.openech.dm.person.types.MaritalStatus;
+import ch.openech.dm.person.types.PaperLock;
+import ch.openech.dm.person.types.Separation;
+import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.types.Language;
+import ch.openech.dm.types.Sex;
+import ch.openech.dm.types.TypeOfHousehold;
+import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.autofill.OrganisationNameGenerator;
+import ch.openech.mj.db.model.ColumnProperties;
+import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.fields.DateField;
-import ch.openech.mj.edit.value.PropertyAccessor;
 import ch.openech.server.EchServer;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
@@ -44,8 +57,8 @@ public class DataGenerator {
 		person.personIdentification.officialName = NameGenerator.officialName();
 		boolean male = Math.random() > .5;
 		person.personIdentification.firstName = FirstNameGenerator.getFirstName(male);
-		person.personIdentification.sex = male ? "1" : "2";
-		person.setDateOfBirth(DateField.generateRandom());
+		person.personIdentification.sex = male ? Sex.maennlich : Sex.weiblich;
+		person.personIdentification.dateOfBirth = DateField.generateRandom();
 		if (Math.random() > .9) {
 			person.dateOfDeath = DateField.generateRandom();
 		}
@@ -75,23 +88,23 @@ public class DataGenerator {
 		for (Field field : person.getClass().getFields()) {
 			String key = field.getName();
 			if (key.endsWith("Name")) {
-				PropertyAccessor.set(person, key, key.substring(0, key.length() -4) + "Test");
+				ColumnProperties.setValue(person, key, key.substring(0, key.length() -4) + "Test");
 			}
 		}
-		person.personIdentification.sex = "2";
-		person.setDateOfBirth("1999-01-02");
-		person.dateOfDeath = "2010-03-04";
+		person.personIdentification.sex = Sex.weiblich;
+		person.personIdentification.dateOfBirth = new LocalDate(1999, 1, 2);
+		person.dateOfDeath = new LocalDate(2010, 3, 4);
 		person.personIdentification.vn = VnField.generateRandom();
 		person.placeOfBirth = place();
 		
-		person.maritalStatus.maritalStatus = MaritalStatus.Ledig.value;
-		person.maritalStatus.dateOfMaritalStatus = "2004-02-03";
-		person.separation.separation = "2";
-		person.separation.dateOfSeparation = "2005-05-12";
+		person.maritalStatus.maritalStatus = MaritalStatus.ledig;
+		person.maritalStatus.dateOfMaritalStatus = new LocalDate(2004, 2, 3);
+		person.separation.separation = Separation.gerichtlich;
+		person.separation.dateOfSeparation = new LocalDate(2005, 5, 12);
 		
-		person.typeOfResidence = "1";
-		person.arrivalDate = "1999-01-02";
-		person.departureDate = "2010-03-04";
+		person.typeOfResidence = TypeOfResidence.hasMainResidence;
+		person.arrivalDate = new LocalDate(1999, 1, 2);
+		person.departureDate = new LocalDate(2010, 3, 4);
 		person.residence.reportingMunicipality = createJona();
 		
 		person.placeOfOrigin.add(placeOfOrigin());
@@ -100,29 +113,29 @@ public class DataGenerator {
 		person.comesFrom = place();
 		person.goesTo = place();
 		
-		person.dataLock = "1";
-		person.paperLock = "1";
-		person.languageOfCorrespondance = "fr";
+		person.dataLock = DataLock.Adresssperre;
+		person.paperLock = PaperLock.gesperrt;
+		person.languageOfCorrespondance = Language.fr;
 		
 		Occupation occupation = new Occupation();
-		occupation.kindOfEmployment = "1";
+		occupation.kindOfEmployment = KindOfEmployment.selbstaendig;
 		person.occupation.add(occupation);
 		
 		Relation relation = new Relation();
-		relation.typeOfRelationship = "1";
+		relation.typeOfRelationship = TypeOfRelationship.Ehepartner;
 		person.relation.add(relation);
 		
-		person.typeOfResidence = "2";
-		person.nationality.nationalityStatus = "3";
+		person.typeOfResidence = TypeOfResidence.hasSecondaryResidence;
+		person.nationality.nationalityStatus = EnumUtils.createEnum(NationalityStatus.class, "3");
 		
 		return person;
 	}
 	
 	private static MunicipalityIdentification createJona() {
 		MunicipalityIdentification reportingMunicipality = new MunicipalityIdentification();
-		reportingMunicipality.historyMunicipalityId = "14925";
-		reportingMunicipality.cantonAbbreviation = "SG";
-		reportingMunicipality.municipalityId = "3340";
+		reportingMunicipality.historyMunicipalityId = 14925;
+		reportingMunicipality.cantonAbbreviation.canton = "SG";
+		reportingMunicipality.municipalityId = 3340;
 		reportingMunicipality.municipalityName = "Rapperswil-Jona";
 		return reportingMunicipality;
 	}
@@ -143,7 +156,7 @@ public class DataGenerator {
 		
 		MunicipalityIdentification municipalityIdentification = municipalityIdentifications.get((int)(Math.random() * municipalityIdentifications.size()));
 		placeOfOrigin.originName = municipalityIdentification.municipalityName;
-		placeOfOrigin.canton = municipalityIdentification.cantonAbbreviation;
+		placeOfOrigin.cantonAbbreviation.canton = municipalityIdentification.cantonAbbreviation.canton;
 		
 		return placeOfOrigin;
 	}
@@ -159,7 +172,7 @@ public class DataGenerator {
 		DwellingAddress dwellingAddress = new DwellingAddress();
 		dwellingAddress.EGID = "" + (int)(Math.random() * 999999998 + 1);
 		dwellingAddress.EWID = "" + (int)(Math.random() * 998 + 1);
-		dwellingAddress.typeOfHousehold =  "" + (int)(Math.random() * 4);
+		dwellingAddress.typeOfHousehold =  TypeOfHousehold.values()[(int)(Math.random() * 4)];
 		dwellingAddress.mailAddress = address(true, false, false);
 		return dwellingAddress;
 	}
@@ -184,7 +197,7 @@ public class DataGenerator {
 		} else {
 			if (Math.random() < .5) {
 				address.postOfficeBoxText = "POSTFACH";
-				address.postOfficeBoxNumber = "" + (int)(1000 + Math.random() * 9000);
+				address.postOfficeBoxNumber = (int)(1000 + Math.random() * 9000);
 			}
 			address.zip.foreignZipCode = "" + ((int)(Math.random() * 90000 + 10000));
 			address.town = NameGenerator.officialName() + "Town";
@@ -201,7 +214,7 @@ public class DataGenerator {
 			organisation.organisationAdditionalName = organisation.organisationName.substring(60);
 			organisation.organisationName = organisation.organisationName.substring(0, 60);
 		}
-		organisation.uid = "ADM323423421";
+		organisation.uid.value = "ADM323423421";
 		organisation.foundationDate = DateField.generateRandom();
 		organisation.arrivalDate = DateField.generateRandom();
 		organisation.reportingMunicipality = createJona();

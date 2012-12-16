@@ -1,13 +1,19 @@
 package ch.openech.client.e44;
 
 import ch.openech.dm.person.Relation;
+import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 
 public class SecondPersonField extends ObjectFlowField<Relation> {
-	
-	public SecondPersonField(Object key) {
-		super(key);
+
+	public SecondPersonField(Relation key) {
+		this(Constants.getProperty(key));
+	}
+
+	public SecondPersonField(PropertyInterface property) {
+		super(property);
 	}
 	
 	public boolean hasPartner() {

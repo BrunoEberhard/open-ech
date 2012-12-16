@@ -6,6 +6,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
@@ -13,11 +14,11 @@ import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
 
 public class XmlTextFormField extends ObjectFlowField<List<String>> {
-	
-	public XmlTextFormField(Object key) {
-		super(key, false);
-	}
 
+	public XmlTextFormField(List<String> key) {
+		super(Constants.getProperty(key), false);
+	}
+	
 	private class XmlValidateAction extends ResourceAction {
 		public final String xml;
 		

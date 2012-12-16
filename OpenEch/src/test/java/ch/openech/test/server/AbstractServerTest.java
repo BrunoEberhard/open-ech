@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 
 import ch.openech.dm.person.Person;
 import ch.openech.mj.resources.Resources;
-import ch.openech.server.EchPersistence;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchSchema;

@@ -1,12 +1,13 @@
 package ch.openech.dm.common;
 
-import static ch.openech.mj.db.model.annotation.PredefinedFormat.String36;
-
 import java.util.UUID;
 
+import ch.openech.dm.EchFormats;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.annotation.Is;
+import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.model.annotation.Sizes;
 
+@Sizes(EchFormats.class)
 public class NamedId {
 
 	public static final NamedId NAMED_ID = Constants.of(NamedId.class);
@@ -14,7 +15,7 @@ public class NamedId {
 	
 	public String personIdCategory;
 	
-	@Is(String36)
+	@Size(36)
 	public String personId;
 	
 	public String display() {
@@ -25,7 +26,7 @@ public class NamedId {
 		s.append(personIdCategory); s.append("="); s.append(personId);
 	}
 	
-	public boolean isOpenEch() {
+	public boolean openEch() {
 		return OPEN_ECH_ID_CATEGORY.equals(personIdCategory);
 	}
 	
