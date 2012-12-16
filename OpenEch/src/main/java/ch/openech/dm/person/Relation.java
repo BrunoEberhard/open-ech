@@ -103,13 +103,11 @@ public class Relation implements Validatable {
 			String text = EnumUtils.getText(typeOfRelationship);
 			if (!StringUtils.isBlank(text)) {
 				if (isParent()) {
-					if ("1".equals(care)) {
+					if (care == YesNo.Yes) {
 						text += " (mit Sorgerecht)";
-					} else 	if ("0".equals(care)) {
+					} else 	if (care == YesNo.No) {
 						text += " (ohne Sorgerecht)";
-					} else if (care != null) {
-						text += " (Sorgerecht: " + care + ")";
-					}
+					} 
 				} else if (isCareRelation() && basedOnLaw != null) {
 					text += " (§ " + basedOnLaw + ")";
 				}
