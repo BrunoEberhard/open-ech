@@ -34,7 +34,7 @@ public class OrganisationTable extends SearchableTable<Organisation> {
 	}
 
 	public Organisation getByLocalOrganisationId(String organisationId) {
-		List<Organisation> organisations = find(organisationId, new String[]{ORGANISATION.technicalIds.localId.personId});
+		List<Organisation> organisations = find(organisationId, ORGANISATION.technicalIds.localId.personId);
 		if (organisations.size() != 1) {
 			throw new IllegalArgumentException(organisationId);
 		} else {

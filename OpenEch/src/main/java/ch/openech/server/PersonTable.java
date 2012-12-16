@@ -13,7 +13,6 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.SearchableTable;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
@@ -42,7 +41,7 @@ public class PersonTable extends SearchableTable<Person> {
 	}
 
 	public Person getByVn(String vn) {
-		List<Person> persons = find(vn, new String[]{Constants.getProperty(PERSON.personIdentification.vn).getFieldName()});
+		List<Person> persons = find(vn, PERSON.personIdentification.vn);
 		if (persons.size() < 1) {
 			return null;
 			// throw new RuntimeException("Keine Person gefunden für " + vn);
@@ -54,7 +53,7 @@ public class PersonTable extends SearchableTable<Person> {
 	}
 	
 	public Person getByLocalPersonId(String personId) {
-		List<Person> persons = find(personId, new String[]{Constants.getProperty(PERSON.personIdentification.technicalIds.localId.personId).getFieldName()});
+		List<Person> persons = find(personId, PERSON.personIdentification.technicalIds.localId.personId);
 		if (persons.size() == 0) {
 			throw new IllegalArgumentException(personId + " not available");
 		} else if (persons.size() > 1) {
