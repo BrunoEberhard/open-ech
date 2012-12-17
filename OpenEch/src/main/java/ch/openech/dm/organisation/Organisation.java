@@ -16,10 +16,10 @@ import ch.openech.dm.types.Language;
 import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EmptyValidator;
-import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.PartialDate;
 import ch.openech.mj.model.annotation.Size;
 
 public class Organisation implements Validation {
@@ -52,14 +52,13 @@ public class Organisation implements Validation {
 	@Size(6) // TODO
 	public String nogaCode; // 00 - 999999
 	
-//	@Is(DatePartially) 
-	@Required
+	@Required @PartialDate
 	public LocalDate foundationDate;
 	@Size(2) // TODO
 	public String foundationReason;
 	
 	public LocalDate liquidationEntryDate;
-	// @Is(DatePartially)
+	@PartialDate
 	public LocalDate liquidationDate;
 	@Size(2) // TODO
 	public String liquidationReason;
