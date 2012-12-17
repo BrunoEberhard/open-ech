@@ -1,7 +1,6 @@
 package ch.openech.client.e10;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -14,7 +13,6 @@ import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.read.StaxEch0072;
 
 public class CountryIso2Field extends AbstractEditField<String> implements ChangeListener {
-	private static final Logger logger = Logger.getLogger(CountryIso2Field.class.getName());
 	private final ComboBox<String> comboBox;
 	
 	private final List<String> countryNames;
