@@ -11,7 +11,7 @@ import org.joda.time.format.ISODateTimeFormat;
 import ch.openech.dm.types.EchCode;
 import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.db.model.InvalidValues;
-import ch.openech.mj.model.annotation.LimitedString;
+import ch.openech.mj.model.annotation.StringLimitation;
 import ch.openech.mj.util.FieldUtils;
 import ch.openech.mj.util.StringUtils;
 
@@ -69,7 +69,7 @@ public class WriterElement {
 		} 
 	}
 	
-	public void text(String localName, LimitedString textFilter) throws Exception {
+	public void text(String localName, StringLimitation textFilter) throws Exception {
 		Object value = FieldUtils.getValue(textFilter);
 		if (value != null) {
 			text(localName, value.toString());

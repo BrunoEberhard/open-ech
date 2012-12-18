@@ -3,10 +3,10 @@ package ch.openech.dm.person.types;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.model.annotation.Size;
-import ch.openech.mj.model.annotation.LimitedString;
+import ch.openech.mj.model.annotation.StringLimitation;
 import ch.openech.mj.util.StringUtils;
 
-public class Vn implements LimitedString, Validatable, DemoEnabled {
+public class Vn implements StringLimitation, Validatable, DemoEnabled {
 	private static final int limit = 13;
 
 	@Size(limit)

@@ -4,10 +4,10 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.model.annotation.Size;
-import ch.openech.mj.model.annotation.LimitedString;
+import ch.openech.mj.model.annotation.StringLimitation;
 import ch.openech.mj.util.StringUtils;
 
-public class UidStructure implements LimitedString, Validatable, DemoEnabled {
+public class UidStructure implements StringLimitation, Validatable, DemoEnabled {
 
 	public static final UidStructure UIDSTRUCTURE_STRUCTURE = Constants.of(UidStructure.class);
 	private static final int[] mult = {5, 4, 3, 2, 7, 6, 5, 4};
