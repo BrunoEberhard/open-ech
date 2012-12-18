@@ -48,6 +48,7 @@ public class EchFormats {
 	public static final int uidBrancheText = 500;
 	public static final int uidOrganisationIdCategorie = 3;
 	public static final int uniqueIDBusinessCase = 50;
+	public static final int vn = 13;
 
 			
 	// public static final String date = "http://www.w3.org/2001/XMLSchema:date";

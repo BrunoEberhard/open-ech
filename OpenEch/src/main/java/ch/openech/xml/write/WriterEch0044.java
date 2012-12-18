@@ -24,7 +24,7 @@ public class WriterEch0044 {
 	public void personIdentification(WriterElement parent, String tagName, PersonIdentification values) throws Exception {
 		WriterElement personIdentification = parent.create(URI, tagName);
 
-		personIdentification.values(values, VN);
+		personIdentification.text(XmlConstants.VN, values.vn);
 		namedId(personIdentification, values.technicalIds.localId, XmlConstants.LOCAL_PERSON_ID);
     	NamedId(personIdentification, values.technicalIds.otherId, _OTHER_PERSON_ID); // VERSION
     	NamedId(personIdentification, values.technicalIds.euId, "EuPersonId"); // VERSION

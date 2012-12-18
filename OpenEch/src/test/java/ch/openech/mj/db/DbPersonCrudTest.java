@@ -90,7 +90,7 @@ public class DbPersonCrudTest {
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
 		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn = "123";
+		person.personIdentification.vn.value = "123";
 		person.personIdentification.sex = Sex.maennlich;
 		
 		person.aliasName = "Biwi";
@@ -117,7 +117,7 @@ public class DbPersonCrudTest {
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
 		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn = "123";
+		person.personIdentification.vn.value = "123";
 		person.personIdentification.sex = Sex.maennlich;
 
 		Occupation occupation = new Occupation();
@@ -156,7 +156,7 @@ public class DbPersonCrudTest {
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
 		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn = "123";
+		person.personIdentification.vn.value = "123";
 		person.personIdentification.sex = Sex.maennlich;
 
 		Occupation occupation = new Occupation();
@@ -193,7 +193,7 @@ public class DbPersonCrudTest {
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
 		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn = "123";
+		person.personIdentification.vn.value = "123";
 		person.personIdentification.sex = Sex.maennlich;
 		
 		Occupation occupation = new Occupation();
@@ -234,7 +234,7 @@ public class DbPersonCrudTest {
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
 		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn = "123";
+		person.personIdentification.vn.value = "123";
 		person.personIdentification.sex = Sex.maennlich;
 
 		int id = persistence.person().insert(person);

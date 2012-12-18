@@ -2,7 +2,6 @@ package ch.openech.client.org;
 
 import static ch.openech.dm.organisation.Organisation.ORGANISATION;
 import ch.openech.client.e44.TechnicalIdsField;
-import ch.openech.client.e97.OrganisationUidField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.organisation.Organisation.EditMode;
@@ -36,7 +35,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 	public void organisation() {
 		line(ORGANISATION.organisationName);
 		line(ORGANISATION.organisationLegalName, ORGANISATION.organisationAdditionalName, ORGANISATION.legalForm, ORGANISATION.languageOfCorrespondance);
-		line(new OrganisationUidField(ORGANISATION.uid, editable), new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
+		line(ORGANISATION.uid, new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
 
 		line(ORGANISATION.uidBrancheText, ORGANISATION.nogaCode);
 		if (EditMode.DISPLAY != mode) {
@@ -64,7 +63,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 	private void uidregInformation() {
 		addTitle("UID - Register");
 		line(ORGANISATION.uidregStatusEnterpriseDetail, ORGANISATION.uidregPublicStatus, ORGANISATION.uidregOrganisationType, ORGANISATION.uidregLiquidationReason);
-		line(new OrganisationUidField(ORGANISATION.uidregSourceUid, editable));
+		line(ORGANISATION.uidregSourceUid, editable);
 	}
 
 	private void commercialRegisterInformation() {

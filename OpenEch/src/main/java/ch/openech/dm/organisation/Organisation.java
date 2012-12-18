@@ -12,6 +12,7 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.common.TechnicalIds;
 import ch.openech.dm.contact.Contact;
+import ch.openech.dm.organisation.types.UidregStatusEnterpriseDetail;
 import ch.openech.dm.types.Language;
 import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.db.model.Constants;
@@ -68,8 +69,7 @@ public class Organisation implements Validation {
 	// 108 : Informationen andere Register
 	
 	// uidregInformationType
-	@Size(2) // TODO
-	public String uidregStatusEnterpriseDetail; // 1-7
+	public UidregStatusEnterpriseDetail uidregStatusEnterpriseDetail;
 	@Size(2) // TODO
 	public String uidregPublicStatus; // 0-1
 	@Size(2) // TODO

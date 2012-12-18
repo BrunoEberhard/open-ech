@@ -90,8 +90,8 @@ public class StaxEch0020 implements StaxEchParser {
 	public Person getPerson(PersonIdentification personIdentification) {
 		if (personIdentification.getId() != null) {
 			return persistence.person().getByLocalPersonId(personIdentification.getId());
-		} else if (!StringUtils.isBlank(personIdentification.vn)) {
-			return persistence.person().getByVn(personIdentification.vn);
+		} else if (!StringUtils.isBlank(personIdentification.vn.value)) {
+			return persistence.person().getByVn(personIdentification.vn.value);
 		} else {
 			return persistence.person().getByName(personIdentification.officialName, personIdentification.firstName, personIdentification.dateOfBirth);
 		}

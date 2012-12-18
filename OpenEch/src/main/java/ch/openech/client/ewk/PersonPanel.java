@@ -8,13 +8,11 @@ import ch.openech.client.e11.PlaceReadOnlyField;
 import ch.openech.client.e21.PartnerField;
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.e44.TechnicalIdsField;
-import ch.openech.client.e44.VnField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.dm.person.types.MaritalStatus;
 import ch.openech.dm.person.types.PartnerShipAbolition;
-import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.Sex;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
@@ -54,11 +52,10 @@ public class PersonPanel extends EchFormPanel<Person>  {
 
 	public void createIdentification() {
 		TechnicalIdsField technicalId = new TechnicalIdsField(PERSON.personIdentification.technicalIds, TechnicalIdsField.WITH_EU_IDS, editable);
-		VnField vn = new VnField(PERSON.personIdentification.vn, editable);
 		
 		line(PERSON.personIdentification.officialName);
 		line(PERSON.personIdentification.firstName);
-		line(PERSON.personIdentification.sex, PERSON.personIdentification.dateOfBirth, vn, technicalId);
+		line(PERSON.personIdentification.sex, PERSON.personIdentification.dateOfBirth, PERSON.personIdentification.vn, technicalId);
 	}
 
 	protected void createData() {

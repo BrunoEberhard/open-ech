@@ -4,6 +4,7 @@ import org.joda.time.LocalDate;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.TechnicalIds;
+import ch.openech.dm.person.types.Vn;
 import ch.openech.dm.types.Sex;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.value.Required;
@@ -21,8 +22,10 @@ public class PersonIdentification {
 
 	// TODO Make Class
 	// Ist erstaunlicherweise wirklich nicht zwingend
-	@Size(13)
-	public String vn;
+	public final Vn vn = new Vn();
+	
+//	@Validation(Vn.class)
+//	public String vn;
 	
 	@Required @Size(EchFormats.baseName)
 	public String firstName, officialName;
@@ -40,7 +43,7 @@ public class PersonIdentification {
 	}
 	
 	public void clear() {
-		vn = firstName = officialName = null;
+		vn.value = firstName = officialName = null;
 		dateOfBirth = null;
 		sex = null;
 		technicalIds.clear();
@@ -80,7 +83,7 @@ public class PersonIdentification {
 	}
 
 	public boolean isEqual(PersonIdentification partner) {
-		return partner != null && StringUtils.equals(partner.vn, vn);
+		return partner != null && StringUtils.equals(partner.vn.value, vn.value);
 	}
 
 }

@@ -47,8 +47,11 @@ public class StaxEch0044 {
 				else if (StringUtils.equals(startName, OTHER_PERSON_ID, OTHER_PERSON_ID)) personIdentification.technicalIds.otherId.add(namedId(xml));
 				else if (StringUtils.equals(startName, EU_PERSON_ID, "EuPersonId")) personIdentification.technicalIds.euId.add(namedId(xml));
 				
-				else if (StringUtils.equals(startName, VN, OFFICIAL_NAME, FIRST_NAME)) {
+				else if (StringUtils.equals(startName, OFFICIAL_NAME, FIRST_NAME)) {
 					ColumnProperties.setValue(personIdentification, startName, token(xml));
+				}
+				else if (StringUtils.equals(startName, VN)) {
+					personIdentification.vn.value = token(xml);
 				}
 				else if (StringUtils.equals(startName, SEX)) {
 					StaxEch.enuum(xml,  personIdentification, PersonIdentification.PERSON_IDENTIFICATION.sex);

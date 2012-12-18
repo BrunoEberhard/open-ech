@@ -25,7 +25,7 @@ public class PersonTable extends SearchableTable<Person> {
 		PERSON.personIdentification.firstName, //
 		PERSON.personIdentification.dateOfBirth, //
 		PERSON.aliasName, //
-		PERSON.personIdentification.vn, //
+		PERSON.personIdentification.vn.value, //
 	};
 	
 	public PersonTable(DbPersistence dbPersistence) throws SQLException {
@@ -41,7 +41,7 @@ public class PersonTable extends SearchableTable<Person> {
 	}
 
 	public Person getByVn(String vn) {
-		List<Person> persons = find(vn, PERSON.personIdentification.vn);
+		List<Person> persons = find(vn, PERSON.personIdentification.vn.value);
 		if (persons.size() < 1) {
 			return null;
 			// throw new RuntimeException("Keine Person gefunden für " + vn);
@@ -89,7 +89,7 @@ public class PersonTable extends SearchableTable<Person> {
 			if (person != null) return person;
 		} 
 		if (personIdentification.vn != null) {
-			Person person = getByVn(personIdentification.vn);
+			Person person = getByVn(personIdentification.vn.value);
 			if (person != null) return person;
 		} 
 		// TODO getByIdentification für Sedex verbessern

@@ -7,7 +7,6 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;
-import ch.openech.mj.toolkit.TextField.TextFieldFilter;
 
 public class CantonField extends AbstractEditField<String> implements DemoEnabled {
 	
@@ -21,7 +20,7 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 		super(property, editable);
 		
 		if (editable) {
-			textField = ClientToolkit.getToolkit().createTextField(listener(), new CantonTextFieldFilter()); // new IndicatingTextField(new LimitedDocument());
+			textField = ClientToolkit.getToolkit().createTextField(listener(), 2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"); // new IndicatingTextField(new LimitedDocument());
 		} else {
 			textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 		}
@@ -50,20 +49,5 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 	public void fillWithDemoData() {
 		setObject("SO");
 	}
-
-	private static class CantonTextFieldFilter implements TextFieldFilter {
-		private static final String ALLOWED_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-		@Override
-		public int getLimit() {
-			return 2;
-		}
-
-		@Override
-		public String getAllowedCharacters() {
-			return ALLOWED_CHARACTERS;
-		}
-	}	
-
 
 }

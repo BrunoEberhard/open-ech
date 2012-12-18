@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import ch.openech.client.e44.VnField;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
@@ -62,7 +61,7 @@ public class DataGenerator {
 		if (Math.random() > .9) {
 			person.dateOfDeath = DateField.generateRandom();
 		}
-		person.personIdentification.vn = VnField.generateRandom();
+		person.personIdentification.vn.fillWithDemoData();
 		person.callName = "Lorem Ipsum";
 		person.placeOfBirth = place();
 		
@@ -94,7 +93,7 @@ public class DataGenerator {
 		person.personIdentification.sex = Sex.weiblich;
 		person.personIdentification.dateOfBirth = new LocalDate(1999, 1, 2);
 		person.dateOfDeath = new LocalDate(2010, 3, 4);
-		person.personIdentification.vn = VnField.generateRandom();
+		person.personIdentification.vn.fillWithDemoData();
 		person.placeOfBirth = place();
 		
 		person.maritalStatus.maritalStatus = MaritalStatus.ledig;
