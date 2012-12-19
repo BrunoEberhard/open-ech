@@ -63,7 +63,7 @@ public class OrganisationPanel extends EchFormPanel<Organisation> {
 	private void uidregInformation() {
 		addTitle("UID - Register");
 		line(ORGANISATION.uidregStatusEnterpriseDetail, ORGANISATION.uidregPublicStatus, ORGANISATION.uidregOrganisationType, ORGANISATION.uidregLiquidationReason);
-		line(ORGANISATION.uidregSourceUid, editable);
+		line(ORGANISATION.uidregSourceUid);
 	}
 
 	private void commercialRegisterInformation() {
