@@ -3,6 +3,7 @@ package ch.openech.dm.organisation;
 import java.util.List;
 
 import org.joda.time.LocalDate;
+import org.joda.time.format.ISODateTimeFormat;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.Event;
@@ -17,11 +18,13 @@ import ch.openech.dm.types.Language;
 import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EmptyValidator;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.model.annotation.PartialDate;
 import ch.openech.mj.model.annotation.Size;
+import ch.openech.xml.read.StaxEch;
 
 public class Organisation implements Validation {
 
@@ -29,7 +32,7 @@ public class Organisation implements Validation {
 	
 	public static enum EditMode { DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, IN_LIQUIDATION, LIQUIDATION, CHANGE_REPORTING }
 	
-	public EditMode editMode;
+	public transient EditMode editMode;
 	
 	// Der eCH - Event, mit dem die aktuelle Version erstellt oder verändert wurde
 	public Event event;
@@ -96,7 +99,7 @@ public class Organisation implements Validation {
 	public LocalDate vatEntryDate, vatLiquidationDate;
 	
 	// if reported (gemeldet)
-	public TypeOfResidenceOrganisation typeOfResidenceOrganisation = TypeOfResidenceOrganisation.Hauptsitz;
+	public TypeOfResidenceOrganisation typeOfResidenceOrganisation = TypeOfResidenceOrganisation.hasMainResidence;
 	// Achtung: Im Gegensatz zu einer Person kann eine Organisation nur einen primary, secondary oder other Eintrag haben
 	//          Die folgenden Felder sind dabei bei allen 3 Möglichkeiten *genau* gleich.
 	@Required
@@ -120,6 +123,13 @@ public class Organisation implements Validation {
 	}
 
 	public void set(String propertyName, Object value) {
+		PropertyInterface property = ColumnProperties.getProperties(this.getClass()).get(propertyName);
+		if (property.getFieldClazz() == LocalDate.class && value instanceof String) {
+			value = ISODateTimeFormat.date().parseLocalDate((String) value);
+		} else if (Enum.class.isAssignableFrom(property.getFieldClazz()) && value instanceof String) {
+			StaxEch.enuum((String) value, this, property);
+			return;
+		} 
 		ColumnProperties.setValue(this, propertyName, value);
 	}
 	
@@ -131,18 +141,6 @@ public class Organisation implements Validation {
 		} else {
 			return null;
 		}
-	}
-	
-	public boolean hasMainResidence() {
-		return TypeOfResidenceOrganisation.Hauptsitz == typeOfResidenceOrganisation;
-	}
-
-	public boolean hasSecondaryResidence() {
-		return TypeOfResidenceOrganisation.Nebensitz == typeOfResidenceOrganisation;
-	}
-
-	public boolean hasOtherResidence() {
-		return TypeOfResidenceOrganisation.Anderersitz == typeOfResidenceOrganisation;
 	}
 
 	@Override
@@ -163,7 +161,5 @@ public class Organisation implements Validation {
 			}
 		}
 	}
-	
-	
 
 }

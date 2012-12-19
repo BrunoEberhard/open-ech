@@ -42,6 +42,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.apache.commons.lang.enums.EnumUtils;
 import org.joda.time.LocalDateTime;
 
 import ch.openech.dm.Event;
@@ -247,9 +248,7 @@ public class StaxEch0148 implements StaxEchParser {
 		// des vorhandenen XML Elements klar, ob ein Wechsel des Typs stattfinden soll. Bei ChangeReporting muss
 		// das nicht gemacht werden, weil dort der Typ übertragen wird.
 		if (StringUtils.equals(eventName, CORRECT_REPORTING)) {
-			if (StringUtils.equals(startName, HAS_MAIN_RESIDENCE)) organisation.typeOfResidenceOrganisation = TypeOfResidenceOrganisation.Hauptsitz;
-			else if (StringUtils.equals(startName, HAS_SECONDARY_RESIDENCE)) organisation.typeOfResidenceOrganisation = TypeOfResidenceOrganisation.Nebensitz;
-			else if (StringUtils.equals(startName, HAS_OTHER_RESIDENCE)) organisation.typeOfResidenceOrganisation = TypeOfResidenceOrganisation.Anderersitz;
+			organisation.typeOfResidenceOrganisation = (TypeOfResidenceOrganisation) StaxEch.enuum(TypeOfResidenceOrganisation.class, startName);
 		}
 	}
 

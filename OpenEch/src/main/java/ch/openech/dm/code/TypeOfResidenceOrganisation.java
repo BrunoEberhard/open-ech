@@ -4,7 +4,9 @@ import ch.openech.dm.types.EchCode;
 
 public enum TypeOfResidenceOrganisation implements EchCode {
 
-	Hauptsitz, Nebensitz, Anderersitz;
+	hasMainResidence,
+	hasSecondaryResidence,
+	hasOtherResidence;
 	
 	@Override
 	public String getValue() {

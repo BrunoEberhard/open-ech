@@ -11,6 +11,7 @@ import org.apache.lucene.document.Field;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.SearchableTable;
+import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.util.StringUtils;
 
@@ -61,7 +62,7 @@ public class OrganisationTable extends SearchableTable<Organisation> {
 		String string = (String) property.getValue(organisation);
 		if (string != null) {
 			Field.Index index = Field.Index.ANALYZED;
-			if (fieldName.toLowerCase().contains("date") || StringUtils.equals(fieldName, ORGANISATION.technicalIds.localId.personId)) {
+			if (fieldName.toLowerCase().contains("date") || property == Constants.getProperty(ORGANISATION.technicalIds.localId.personId)) {
 				index = Field.Index.NOT_ANALYZED;
 			}
 			return new Field(fieldName, string,	Field.Store.YES, index);

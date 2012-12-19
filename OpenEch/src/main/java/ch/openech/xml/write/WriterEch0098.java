@@ -61,12 +61,12 @@ public class WriterEch0098 {
 	}
 
 	public void residence(WriterElement element, Organisation organisation) throws Exception {
-		if (organisation.hasMainResidence()) {
-			mainResidence(element, organisation);
-		} else if (organisation.hasSecondaryResidence()) {
-			secondaryResidence(element, organisation);
-		} else if (organisation.hasOtherResidence()) {
-			otherResidence(element, organisation);
+		switch (organisation.typeOfResidenceOrganisation) {
+		case hasMainResidence: mainResidence(element, organisation); break;
+		case hasSecondaryResidence: secondaryResidence(element, organisation); break;
+		case hasOtherResidence: otherResidence(element, organisation); break;
+		default:
+			break;
 		}
 	}
 	
