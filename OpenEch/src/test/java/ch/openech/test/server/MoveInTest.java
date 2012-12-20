@@ -11,7 +11,6 @@ import ch.openech.dm.code.FederalRegister;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.types.Sex;
-import ch.openech.dm.types.TypeOfHousehold;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
@@ -51,7 +50,7 @@ public class MoveInTest extends AbstractServerTest {
 		Assert.assertEquals(new Integer(3006), person.dwellingAddress.mailAddress.zip.swissZipCode);
 		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
-		Assert.assertEquals(TypeOfHousehold.Privathaushalt, person.dwellingAddress.typeOfHousehold);
+		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
 	}
 
 	@Test

@@ -1,15 +1,14 @@
 package ch.openech.dm.common;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import ch.openech.dm.types.TypeOfHousehold;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.Codes;
+import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
@@ -28,7 +27,8 @@ public class DwellingAddress implements Validation {
 	@Size(12) // ist nicht bekannt aus Schema
 	public String householdID; // not for organisation
 	public Address mailAddress;
-	public TypeOfHousehold typeOfHousehold; // not for organisation
+	@Code
+	public String typeOfHousehold; // not for organisation
 	public LocalDate movingDate;
 
 	public String toHtml() {
@@ -57,7 +57,7 @@ public class DwellingAddress implements Validation {
 		}
 		s.append("<BR>");
 		if (typeOfHousehold != null) {
-			s.append(EnumUtils.getText(typeOfHousehold));
+			s.append(Codes.getCode("typeOfHousehold").getText(typeOfHousehold));
 		}
 		s.append("<BR>");
 		if (movingDate != null) {
@@ -78,7 +78,7 @@ public class DwellingAddress implements Validation {
 			mailAddress.toHtml(s);
 		}
 		s.append("Haushaltsart: ");
-		if (typeOfHousehold != null) s.append(EnumUtils.getText(typeOfHousehold)); else s.append("- ");
+		if (typeOfHousehold != null) s.append(Codes.getCode("typeOfHousehold").getText(typeOfHousehold)); else s.append("- ");
 		s.append("\n");
 		if (movingDate != null) {
 			s.append("Umzugsdatum: " ); s.append(DateUtils.formatCH(movingDate));

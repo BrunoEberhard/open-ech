@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.types.Religion;
-import ch.openech.dm.types.TypeOfHousehold;
 
 public class DivTest extends AbstractServerTest {
 
@@ -38,7 +37,7 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals(new Integer(4837), person.dwellingAddress.mailAddress.zip.swissZipCodeId);
 		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
-		Assert.assertEquals(TypeOfHousehold.Privathaushalt, person.dwellingAddress.typeOfHousehold);
+		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
 		Assert.assertEquals(new LocalDate(2010, 8, 30), person.dwellingAddress.movingDate);
 	}
 	

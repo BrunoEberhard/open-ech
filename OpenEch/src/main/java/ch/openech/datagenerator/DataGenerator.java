@@ -20,7 +20,6 @@ import ch.openech.dm.person.types.Separation;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.Language;
 import ch.openech.dm.types.Sex;
-import ch.openech.dm.types.TypeOfHousehold;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameGenerator;
@@ -168,7 +167,7 @@ public class DataGenerator {
 		DwellingAddress dwellingAddress = new DwellingAddress();
 		dwellingAddress.EGID = "" + (int)(Math.random() * 999999998 + 1);
 		dwellingAddress.EWID = "" + (int)(Math.random() * 998 + 1);
-		dwellingAddress.typeOfHousehold =  TypeOfHousehold.values()[(int)(Math.random() * 4)];
+		dwellingAddress.typeOfHousehold =  "" + (int)(Math.random() * 4);
 		dwellingAddress.mailAddress = address(true, false, false);
 		return dwellingAddress;
 	}
