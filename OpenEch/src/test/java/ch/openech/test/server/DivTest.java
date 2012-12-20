@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.openech.dm.person.Person;
-import ch.openech.dm.person.types.DataLock;
-import ch.openech.dm.person.types.PaperLock;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.types.TypeOfHousehold;
 
@@ -47,53 +45,53 @@ public class DivTest extends AbstractServerTest {
 	@Test
 	public void addressLock1() throws Exception {
 		Person person = load(id);
-		person.dataLock = DataLock.Adresssperre;
+		person.dataLock = "1";
 		process(writer().addressLock(person));
 		person = load(id);
-		Assert.assertEquals(DataLock.Adresssperre, person.dataLock);
+		Assert.assertEquals("1", person.dataLock);
 	}
 	
 	@Test
 	public void addressLock2() throws Exception {
 		Person person = load(id);
-		person.dataLock = DataLock.Auskunftssperre;
+		person.dataLock = "2";
 		process(writer().addressLock(person));
 		person = load(id);
-		Assert.assertEquals(DataLock.Auskunftssperre, person.dataLock);
+		Assert.assertEquals(Integer.valueOf(2), person.dataLock);
 	}
 	
 	@Test
 	public void addressLock0() throws Exception {
 		Person person = load(id);
-		person.dataLock = DataLock.ungesperrt;
+		person.dataLock = "0";
 		process(writer().addressLock(person));
 		person = load(id);
-		Assert.assertEquals(DataLock.ungesperrt, person.dataLock);
+		Assert.assertEquals("0", person.dataLock);
 	}
 	
 	@Test
 	public void paperLock1() throws Exception {
 		Person person = load(id);
-		person.paperLock = PaperLock.gesperrt;
+		person.paperLock = "1";
 		process(writer().paperLock(person));
 		person = load(id);
-		Assert.assertEquals(PaperLock.gesperrt, person.paperLock);
+		Assert.assertEquals("1", person.paperLock);
 	}
 
 	@Test
 	public void paperLock0() throws Exception {
 		Person person = load(id);
-		person.paperLock = PaperLock.ungesperrt;
+		person.paperLock = "0";
 		process(writer().paperLock(person));
 		person = load(id);
-		Assert.assertEquals(PaperLock.ungesperrt, person.paperLock);
+		Assert.assertEquals("0", person.paperLock);
 	}
 
 	@Test
 	public void changeReligion() throws Exception {
 		Person person = load(id);
 		Assert.assertEquals(Religion.unbekannt, person.religion);
-		person.paperLock = PaperLock.ungesperrt;
+		person.paperLock = "0";
 		process(writer().changeReligion(person.personIdentification, Religion.evangelisch));
 		person = load(id);
 		Assert.assertEquals(Religion.evangelisch, person.religion);

@@ -15,10 +15,7 @@ import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
-import ch.openech.dm.person.types.DataLock;
-import ch.openech.dm.person.types.KindOfEmployment;
 import ch.openech.dm.person.types.MaritalStatus;
-import ch.openech.dm.person.types.PaperLock;
 import ch.openech.dm.person.types.Separation;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.Language;
@@ -112,12 +109,12 @@ public class DataGenerator {
 		person.comesFrom = place();
 		person.goesTo = place();
 		
-		person.dataLock = DataLock.Adresssperre;
-		person.paperLock = PaperLock.gesperrt;
+		person.dataLock = "1";
+		person.paperLock = "1";
 		person.languageOfCorrespondance = Language.fr;
 		
 		Occupation occupation = new Occupation();
-		occupation.kindOfEmployment = KindOfEmployment.selbstaendig;
+		occupation.kindOfEmployment = "1";
 		person.occupation.add(occupation);
 		
 		Relation relation = new Relation();

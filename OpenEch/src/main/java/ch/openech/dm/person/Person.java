@@ -12,8 +12,6 @@ import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.contact.Contact;
-import ch.openech.dm.person.types.DataLock;
-import ch.openech.dm.person.types.PaperLock;
 import ch.openech.dm.person.types.PartnerShipAbolition;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.person.types.TypeOfRelationship;
@@ -27,6 +25,7 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Reference;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.DerivedProperty;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.resources.Resources;
@@ -91,8 +90,10 @@ public class Person implements Validation {
 	public final List<Relation> relation = new ArrayList<Relation>();
 	public final List<PlaceOfOrigin> placeOfOrigin = new ArrayList<PlaceOfOrigin>(); // Nur Swiss
 	
-	public DataLock dataLock = DataLock.ungesperrt;
-	public PaperLock paperLock = PaperLock.ungesperrt;
+	@Code
+	public String dataLock = "0";
+	@Code
+	public String paperLock = "0";
 	
 	public PersonExtendedInformation personExtendedInformation;
 

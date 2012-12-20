@@ -10,7 +10,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.mj.db.model.EmptyValidator;
-import ch.openech.mj.edit.fields.CodeEditField;
+import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.xml.write.EchSchema;
@@ -29,7 +29,7 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 	
 	static void fillForm(EchSchema namespaceContext, Form<Relation> formPanel) {
 		// also used by ChangeGardianEvent
-		formPanel.line(new CodeEditField(RELATION.typeOfRelationship, TypeOfRelationship.CARE));
+		formPanel.line(new EnumEditField(RELATION.typeOfRelationship, TypeOfRelationship.CARE));
 
 		formPanel.line(RELATION.basedOnLaw);
 		if (namespaceContext.gardianMeasureRelationshipHasCare()) {

@@ -17,7 +17,7 @@ import ch.openech.dm.types.Sex;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.CodeEditField;
+import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
@@ -137,7 +137,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		}
 	}
 	
-	private class CancelationReasonField extends CodeEditField<PartnerShipAbolition> implements DependingOnFieldAbove<MaritalStatus> {
+	private class CancelationReasonField extends EnumEditField<PartnerShipAbolition> implements DependingOnFieldAbove<MaritalStatus> {
 		
 		public CancelationReasonField() {
 			super(Constants.getProperty(PERSON.cancelationReason));
@@ -231,7 +231,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		boolean male = Math.random() < .5;
 		NameWithFrequency generatedName = FirstNameGenerator.getName(male);
 		((FormField<String>) getField(PERSON.personIdentification.firstName)).setObject(generatedName.name);
-		CodeEditField<Sex> sexField = (CodeEditField<Sex>) getField(PERSON_IDENTIFICATION.sex);
+		EnumEditField<Sex> sexField = (EnumEditField<Sex>) getField(PERSON_IDENTIFICATION.sex);
 		if (sexField != null) sexField.setObject(male ? Sex.maennlich : Sex.weiblich);
 	}
 	

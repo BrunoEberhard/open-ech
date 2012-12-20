@@ -6,13 +6,12 @@ import org.joda.time.LocalDate;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
-import ch.openech.dm.person.types.KindOfEmployment;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EmptyValidator;
-import ch.openech.mj.db.model.EnumUtils;
-import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.Codes;
+import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.DateUtils;
@@ -28,7 +27,8 @@ public class Occupation implements Validation {
 	
 	@Size(100) // Wird tatsächlich in xsd nicht als Type definiert, daher nicht in EchFormats
 	public String jobTitle, employer;
-	public KindOfEmployment kindOfEmployment;
+	@Code
+	public String kindOfEmployment;
 	public LocalDate occupationValidTill;
 	
 	public Address placeOfWork;
@@ -53,7 +53,7 @@ public class Occupation implements Validation {
 		}
 
 		if (kindOfEmployment != null) {
-			StringUtils.appendLine(s, EnumUtils.getText(kindOfEmployment));
+			StringUtils.appendLine(s, Codes.getCode(OCCUPATION.kindOfEmployment).getText(kindOfEmployment));
 		}
 
 		if (!StringUtils.isBlank(employer)) {
@@ -86,7 +86,7 @@ public class Occupation implements Validation {
 		}
 
 		if (kindOfEmployment != null) {
-			StringUtils.appendLine(s, EnumUtils.getText(kindOfEmployment));
+			StringUtils.appendLine(s, Codes.getCode(OCCUPATION.kindOfEmployment).getText(kindOfEmployment));
 		}
 
 		if (!StringUtils.isBlank(employer)) {

@@ -1,12 +1,14 @@
 package ch.openech.server;
 
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.tpn.ThirdPartyMove;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.Table;
+import ch.openech.mj.model.Codes;
 
 public class EchPersistence extends DbPersistence {
 
@@ -17,6 +19,9 @@ public class EchPersistence extends DbPersistence {
 	private final Table<ThirdPartyMove> thirdPartyMove = null;
 
 	public EchPersistence() throws SQLException {
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.organisation.types.ech_organisation"));
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
+
 		personIdentification = addClass(PersonIdentification.class);
 		
 		person = new PersonTable(this);
