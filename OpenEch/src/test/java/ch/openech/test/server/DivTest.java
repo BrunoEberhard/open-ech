@@ -56,7 +56,7 @@ public class DivTest extends AbstractServerTest {
 		person.dataLock = "2";
 		process(writer().addressLock(person));
 		person = load(id);
-		Assert.assertEquals(Integer.valueOf(2), person.dataLock);
+		Assert.assertEquals("2", person.dataLock);
 	}
 	
 	@Test
