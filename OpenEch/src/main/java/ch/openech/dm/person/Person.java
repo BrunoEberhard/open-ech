@@ -10,6 +10,7 @@ import ch.openech.dm.Event;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
+import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.types.PartnerShipAbolition;
@@ -26,6 +27,7 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Reference;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.model.annotation.Code;
+import ch.openech.mj.model.annotation.Depends;
 import ch.openech.mj.model.annotation.DerivedProperty;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.resources.Resources;
@@ -66,6 +68,7 @@ public class Person implements Validation {
 	
 	public final MaritalStatus maritalStatus = new MaritalStatus();
 	public final Separation separation = new Separation();
+	@Depends("maritalStatus.maritalStatus")
 	public PartnerShipAbolition cancelationReason;
 	public final Nationality nationality = new Nationality();
 	public final ContactPerson contactPerson = new ContactPerson();
@@ -73,11 +76,11 @@ public class Person implements Validation {
 	public Language languageOfCorrespondance = Language.de;
 	@Required
 	public Religion religion = Religion.unbekannt;
-	
+	@Depends("nationality")
 	public final Foreign foreign = new Foreign();
 	
-	@Required
 	public TypeOfResidence typeOfResidence = TypeOfResidence.hasMainResidence;
+	@Depends("typeOfResidence") // required wird in eigener Validierung gemacht
 	public final Residence residence = new Residence();
 	
 	public LocalDate arrivalDate, departureDate;
@@ -88,7 +91,8 @@ public class Person implements Validation {
 	
 	public final List<Occupation> occupation = new ArrayList<Occupation>();
 	public final List<Relation> relation = new ArrayList<Relation>();
-	public final List<PlaceOfOrigin> placeOfOrigin = new ArrayList<PlaceOfOrigin>(); // Nur Swiss
+	@Depends("nationality") // Nur Swiss
+	public final List<PlaceOfOrigin> placeOfOrigin = new ArrayList<PlaceOfOrigin>();
 	
 	@Code
 	public String dataLock = "0";
@@ -319,16 +323,34 @@ public class Person implements Validation {
 			EmptyValidator.validate(resultList, this, PERSON.arrivalDate);
 		}
 		
-		if (editMode != null && editMode.isIdentificationVisible()) {
-//			EmptyValidator.validate(this.personIdentification, resultList);
-//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.firstName);
-//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.officialName);
-//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.dateOfBirth);
-//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.sex);
-//			EmptyValidator.validate(resultList, this, PERSON.personIdentification.vn);
+		if (editMode != PersonEditMode.BIRTH) {
+			validateForeign(resultList);
+		}
+		
+		validatePlaceOfOrigin(resultList);
+
+		String validationMessage = residence.validate(typeOfResidence);
+		if (validationMessage != null) {
+			resultList.add(new ValidationMessage(PERSON.residence, validationMessage));
 		}
 	}
 	
+	private void validateForeign(List<ValidationMessage> resultList) {
+		if (!nationality.isSwiss()) {
+			if (foreign.isEmpty()) {
+				resultList.add(new ValidationMessage(PERSON.foreign, "Ausländerkategorie erforderlich"));
+			}
+		}
+	}
+	
+	private void validatePlaceOfOrigin(List<ValidationMessage> resultList) {
+		if (nationality.isSwiss()) {
+			if (placeOfOrigin.isEmpty()) {
+				resultList.add(new ValidationMessage(PERSON.placeOfOrigin, "Heimatort erforderlich"));
+			}
+		}
+	}
+
 	@BusinessRule("Die Geburt einer Person muss nach derjenigen seiner Eltern sein")
 	public void validateBirthAfterParents(List<ValidationMessage> resultList) {
 		Relation relation = getMother();

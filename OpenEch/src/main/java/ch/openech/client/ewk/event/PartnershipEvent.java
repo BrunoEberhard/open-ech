@@ -80,17 +80,14 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	// funktionieren sollte
 	private static class NewPersonNameField extends TextEditField implements DependingOnFieldAbove<Person> {
 
-		private final Person dependingOnFieldKey;
-		
-		public NewPersonNameField(String key, Person dependingOnFieldKey) {
+		public NewPersonNameField(String key) {
 			super(Constants.getProperty(key), EchFormats.baseName);
-			this.dependingOnFieldKey = dependingOnFieldKey;
 		}
 
-		@Override
-		public Person getKeyOfDependedField() {
-			return dependingOnFieldKey;
-		}
+//		@Override
+//		public Person getClassOfField() {
+//			return dependingOnFieldKey;
+//		}
 
 		@Override
 		public void valueChanged(Person value) {

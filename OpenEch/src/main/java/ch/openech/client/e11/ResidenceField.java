@@ -10,7 +10,6 @@ import ch.openech.client.e07.MunicipalityField;
 import ch.openech.client.ewk.event.EchFormPanel;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Residence;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.autofill.DemoEnabled;
@@ -20,7 +19,6 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.resources.ResourceAction;
 
 public class ResidenceField extends ObjectFlowField<Residence> implements DependingOnFieldAbove<TypeOfResidence>, DemoEnabled {
@@ -127,8 +125,8 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Depend
 	protected void showActions() {
 		if (getObject() == null) return;
 
-		boolean hasMainResidence = "1".equals(typeOfResidence);
-		boolean hasOtherResidence = "3".equals(typeOfResidence);
+		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
+		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
 
 		if (!hasOtherResidence) {
 			addAction(new ResidenceMainEditor());
@@ -141,64 +139,11 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Depend
 		}
 	}
 
-	@Override
-	public void validate(Residence Object, List<ValidationMessage> resultList) {
-		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
-		boolean hasSecondResidence = TypeOfResidence.hasSecondaryResidence == typeOfResidence;
-		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
-		
-		boolean mainResidenceNeeded = hasMainResidence || hasSecondResidence;
-		boolean secondResidenceNeeded = hasSecondResidence || hasOtherResidence;
-		boolean notMoreThanOneSecondResidence = hasSecondResidence || hasOtherResidence;
-		
-		MunicipalityIdentification reportingMunicipality = getObject().reportingMunicipality;
-		
-		if (mainResidenceNeeded) {
-			if (reportingMunicipality == null || reportingMunicipality.isEmpty()) {
-				resultList.add(new ValidationMessage(getProperty(), "Hauptwohnsitz erforderlich"));
-			}
-		} 
-		if (hasOtherResidence) {
-			if (reportingMunicipality != null && !reportingMunicipality.isEmpty()) {
-				resultList.add(new ValidationMessage(getProperty(), "Hauptwohnsitz darf nicht gesetzt sein"));
-			}
-		}
-		
-		
-		if (secondResidenceNeeded) {
-			if (getObject().secondary == null || getObject().secondary.isEmpty()) {
-				resultList.add(new ValidationMessage(getProperty(), "Nebenwohnsitz fehlt"));
-			}
-		}
-		
-		if (notMoreThanOneSecondResidence) {
-			if (getObject().secondary != null && getObject().secondary.size() > 1) {
-				resultList.add(new ValidationMessage(getProperty(), "Nur 1 Nebenwohnsitz möglich"));
-			}
-		}
-		
-		if (reportingMunicipality != null && reportingMunicipality.isFederalRegister()) {
-			if (!hasMainResidence) {
-				resultList.add(new ValidationMessage(getProperty(), "Bundesregister als Hauptwohnsitz bei gewähltem Meldeverhältnis nicht möglich"));
-			}
-		}
-		
-		if (getObject().secondary != null) {
-			for (MunicipalityIdentification municipalityIdentification : getObject().secondary) {
-				if (municipalityIdentification.historyMunicipalityId != null && municipalityIdentification.isFederalRegister()) {
-					if (!hasSecondResidence) {
-						resultList.add(new ValidationMessage(getProperty(), "Bundesregister als Nebenwohnsitz bei gewähltem Meldeverhältnis nicht möglich"));
-						break;
-					}
-				}
-			}
-		}
-	}
 
-	@Override
-	public TypeOfResidence getKeyOfDependedField() {
-		return Person.PERSON.typeOfResidence;
-	}
+//	@Override
+//	public TypeOfResidence getClassOfField() {
+//		return Person.PERSON.typeOfResidence;
+//	}
 
 	@Override
 	public void valueChanged(TypeOfResidence typeOfResidence) {
@@ -214,9 +159,9 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Depend
 
 	@Override
 	public void fillWithDemoData() {
-		boolean hasMainResidence = "1".equals(typeOfResidence);
-		boolean hasSecondResidence = "2".equals(typeOfResidence);
-		boolean hasOtherResidence = "3".equals(typeOfResidence);
+		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
+		boolean hasSecondResidence = TypeOfResidence.hasSecondaryResidence == typeOfResidence;
+		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
 		
 		boolean mainResidenceNeeded = hasMainResidence || hasSecondResidence;
 		boolean secondResidenceNeeded = hasSecondResidence || hasOtherResidence;

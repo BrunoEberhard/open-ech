@@ -5,6 +5,7 @@ import ch.openech.dm.types.MrMrs;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Depends;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
@@ -35,6 +36,7 @@ public class Address {
 	public String postOfficeBoxText;
 	public String locality;
 	public String country = "CH";
+	@Depends("country")
 	public final Zip zip = new Zip();
 	@Required
 	public String town;

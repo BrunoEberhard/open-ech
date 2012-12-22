@@ -14,16 +14,20 @@ import ch.openech.mj.toolkit.TextField;
 // setTitle("Kontakt");
 public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
 	
-//	private final ContactEntryType type;
+	private final ContactEntryType type;
 	private AddressField addressField;
 
 	public ContactEntryPanel(ContactEntryType type, boolean person) {
 		super(2);
-//		this.type = type;
+		this.type = type;
 
-		Enum<?> code = type != ContactEntryType.Phone ? ContactEntry.CONTACT_ENTRY.categoryCode : ContactEntry.CONTACT_ENTRY.phoneCategory;
-		line(code);
-		line(new OtherCategoryField(ContactEntry.CONTACT_ENTRY.categoryOther, code));
+		if (type == ContactEntryType.Phone) {
+			line(ContactEntry.CONTACT_ENTRY.phoneCategory);
+			line(new OtherCategoryField(ContactEntry.CONTACT_ENTRY.phoneCategoryOther));
+		} else {
+			line(ContactEntry.CONTACT_ENTRY.categoryCode);
+			line(new OtherCategoryField(ContactEntry.CONTACT_ENTRY.categoryOther));
+		}
 		
 		if (type == ContactEntryType.Address) {
 			addressField = new AddressField(ContactEntry.CONTACT_ENTRY.address, false, person, !person);
@@ -44,16 +48,8 @@ public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
 	
 	private static class OtherCategoryField extends TextEditField implements DependingOnFieldAbove<Object> {
 
-		private final Enum<?> keyCategoryCode;
-		
-		public OtherCategoryField(String key, Enum<?> keyCategoryCode) {
+		public OtherCategoryField(String key) {
 			super(Constants.getProperty(key), EchFormats.freeKategoryText);
-			this.keyCategoryCode = keyCategoryCode;
-		}
-
-		@Override
-		public Object getKeyOfDependedField() {
-			return keyCategoryCode;
 		}
 
 		@Override

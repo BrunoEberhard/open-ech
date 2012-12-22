@@ -2,11 +2,14 @@ package ch.openech.dm.person;
 
 import org.joda.time.LocalDate;
 
+import ch.openech.mj.model.annotation.Depends;
+
 
 
 public class MaritalStatus {
 
 	public ch.openech.dm.person.types.MaritalStatus maritalStatus = ch.openech.dm.person.types.MaritalStatus.ledig;
+	@Depends("maritalStatus")
 	public LocalDate dateOfMaritalStatus;
 
 	public boolean isLedig() {

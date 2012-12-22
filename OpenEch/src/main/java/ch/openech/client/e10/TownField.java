@@ -3,7 +3,6 @@ package ch.openech.client.e10;
 import java.util.logging.Logger;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.dm.common.Address;
 import ch.openech.dm.common.Zip;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.autofill.NameGenerator;
@@ -67,11 +66,6 @@ public class TownField extends AbstractEditField<String> implements DemoEnabled,
 			textFieldZipForeign.setText(NameGenerator.officialName() + "Town");
 			fireChange();
 		}
-	}
-
-	@Override
-	public Zip getKeyOfDependedField() {
-		return Address.ADDRESS.zip;
 	}
 
 	@Override

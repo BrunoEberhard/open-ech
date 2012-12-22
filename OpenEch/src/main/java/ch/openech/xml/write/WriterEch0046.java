@@ -113,6 +113,9 @@ public class WriterEch0046 extends DeliveryWriter {
 		if (!StringUtils.isBlank(entry.categoryOther)) {
 			element.text("other" + firstLetterToUpper(type) + "Category", entry.categoryOther);
 		}
+		if (!StringUtils.isBlank(entry.phoneCategoryOther)) {
+			element.text("other" + firstLetterToUpper(type) + "Category", entry.phoneCategoryOther);
+		}
 		return element;
 	}
 

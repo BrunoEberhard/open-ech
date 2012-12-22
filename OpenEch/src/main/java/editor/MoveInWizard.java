@@ -27,6 +27,7 @@ import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Depends;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -56,9 +57,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		
 		@Required
 		public TypeOfRelationshipInverted typeOfRelationshipInverted = TypeOfRelationshipInverted.Kind;
-		@Required
+		@Required @Depends("typeOfRelationshipInverted")
 		public Person basePerson;
+		@Depends("typeOfRelationshipInverted")
 		public Person mother, father;
+		@Depends("typeOfRelationshipInverted")
 		public Person fosterMother, fosterFather;
 	}
 		
@@ -322,10 +325,10 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			return (Person) comboBox.getSelectedObject();
 		}
 
-		@Override
-		public TypeOfRelationshipInverted getKeyOfDependedField() {
-			return MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted;
-		}
+//		@Override
+//		public TypeOfRelationshipInverted getClassOfField() {
+//			return MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted;
+//		}
 
 		@Override
 		public void valueChanged(TypeOfRelationshipInverted typeOfRelationshipInverted) {

@@ -1,6 +1,5 @@
 package ch.openech.dm.contact;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -14,6 +13,7 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.annotation.Depends;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
@@ -27,9 +27,12 @@ public class ContactEntry implements Validation {
 	public ContactCategory categoryCode;
 	public PhoneCategory phoneCategory;
 	
-	@Size(EchFormats.freeKategoryText) // sic!
+	@Size(EchFormats.freeKategoryText) @Depends("categoryCode")
 	public String categoryOther;
-	
+
+	@Size(EchFormats.freeKategoryText) @Depends("phoneCategory")
+	public String phoneCategoryOther;
+
 	// Address only for Address Entries, value for the other types
 	public Address address;
 	@Size(100)
@@ -64,6 +67,8 @@ public class ContactEntry implements Validation {
 				if (isPhone()) s.append(EnumUtils.getText(phoneCategory));
 			} else if (!StringUtils.isBlank(categoryOther)) {
 				s.append(categoryOther);
+			} else if (!StringUtils.isBlank(phoneCategoryOther)) {
+				s.append(phoneCategoryOther);
 			} else {
 				if (isAddressEntry()) s.append("Adresse");
 				if (isPhone()) s.append("Telefon");

@@ -6,7 +6,6 @@ import java.util.List;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.person.Nationality;
-import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.mj.autofill.DemoEnabled;
@@ -15,7 +14,6 @@ import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
@@ -96,20 +94,6 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 			getObject().remove(placeOfOrigin);
 			fireObjectChange();
 		}
-	}
-	
-	@Override
-	public void validate(List<PlaceOfOrigin> list, List<ValidationMessage> resultList) {
-		if (swiss) {
-			if (list.isEmpty()) {
-				resultList.add(new ValidationMessage(getProperty(), "Heimtort fehlt"));
-			}
-		}
-	}
-
-	@Override
-	public Nationality getKeyOfDependedField() {
-		return Person.PERSON.nationality;
 	}
 
 	@Override

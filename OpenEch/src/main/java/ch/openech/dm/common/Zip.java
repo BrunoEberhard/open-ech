@@ -14,7 +14,6 @@ public class Zip {
 	public String foreignZipCode;
 	@Size(4)
 	public Integer swissZipCode; // 0 - 9999
-	@Size(2)
 	public Integer swissZipCodeAddOn;
 	@Size(4)
 	public Integer swissZipCodeId; // int

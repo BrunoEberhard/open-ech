@@ -3,7 +3,6 @@ package ch.openech.client.e10;
 import java.util.List;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.dm.common.Address;
 import ch.openech.dm.common.Zip;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.PropertyInterface;
@@ -69,17 +68,6 @@ public class ZipField extends AbstractEditField<Zip> implements DependingOnField
 		} else {
 			switchLayout.show(comboBoxSwiss);
 			comboBoxSwiss.setSelectedObject(zip);
-		}
-	}
-
-	@Override
-	public String getKeyOfDependedField() {
-		String name = getProperty().getFieldName();
-		int pos = name.lastIndexOf('.');
-		if (pos > 0) {
-			return name.substring(0, pos + 1) + Address.ADDRESS.country;
-		} else {
-			return Address.ADDRESS.country;
 		}
 	}
 

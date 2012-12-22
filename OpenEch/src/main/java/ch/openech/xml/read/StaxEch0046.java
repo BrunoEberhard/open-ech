@@ -118,7 +118,11 @@ public class StaxEch0046 {
 				if (category) {
 					boolean other = startName.startsWith("other");
 					if (other) {
-						contactEntry.categoryOther = token(xml);
+						if (phone) {
+							contactEntry.phoneCategoryOther = token(xml);
+						} else {
+							contactEntry.categoryOther = token(xml);
+						}						
 					} else {
 						if (phone) {
 							StaxEch.enuum(xml, contactEntry, ContactEntry.CONTACT_ENTRY.phoneCategory);

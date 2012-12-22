@@ -24,6 +24,7 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Depends;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
@@ -42,9 +43,13 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		public Boolean registerPartner2 = Boolean.TRUE;
 		public Person partner1, partner2;
 		public Boolean changeName1, changeName2;
-		@Size(EchFormats.baseName)
-		public String name1, name2;
+		@Size(EchFormats.baseName) @Depends("partner2")
+		public String name1;
+		@Size(EchFormats.baseName) @Depends("partner1")
+		public String name2;
+		@Depends("partner2")
 		public final List<PlaceOfOrigin> origin1 = new ArrayList<PlaceOfOrigin>();
+		@Depends("partner1")
 		public final List<PlaceOfOrigin> origin2 = new ArrayList<PlaceOfOrigin>();
 		
 		@Override
@@ -117,11 +122,11 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		PersonField partner1 = new PersonField(MARRIAGE.partner1); 
 		PersonField partner2 = new PersonField(MARRIAGE.partner2);
 	
-		NewPersonNameField name1 = new NewPersonNameField(MARRIAGE.name1, MARRIAGE.partner2);
-		NewPersonNameField name2 = new NewPersonNameField(MARRIAGE.name2, MARRIAGE.partner1);
+		NewPersonNameField name1 = new NewPersonNameField(MARRIAGE.name1);
+		NewPersonNameField name2 = new NewPersonNameField(MARRIAGE.name2);
 	
-		RemoveEntriesListField<PlaceOfOrigin> origin1 = new OriginListField(MARRIAGE.origin1, MARRIAGE.partner2);
-		RemoveEntriesListField<PlaceOfOrigin> origin2 = new OriginListField(MARRIAGE.origin2, MARRIAGE.partner1);
+		RemoveEntriesListField<PlaceOfOrigin> origin1 = new OriginListField(MARRIAGE.origin1);
+		RemoveEntriesListField<PlaceOfOrigin> origin2 = new OriginListField(MARRIAGE.origin2);
 		
 		//
 		
@@ -137,17 +142,14 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
 	private static class OriginListField extends RemoveEntriesListField<PlaceOfOrigin> implements DependingOnFieldAbove<Person> {
 
-		private final Person dependingOnFieldKey;
-		
-		public OriginListField(List<PlaceOfOrigin> key, Person dependingOnFieldKey) {
+		public OriginListField(List<PlaceOfOrigin> key) {
 			super(key);
-			this.dependingOnFieldKey = dependingOnFieldKey;
 		}
 
-		@Override
-		public Person getKeyOfDependedField() {
-			return dependingOnFieldKey;
-		}
+//		@Override
+//		public Person getClassOfField() {
+//			return dependingOnFieldKey;
+//		}
 
 		@Override
 		public void valueChanged(Person person) {
@@ -168,17 +170,14 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	
 	private static class NewPersonNameField extends TextEditField implements DependingOnFieldAbove<Person> {
 
-		private final Person dependingOnFieldKey;
-		
-		public NewPersonNameField(Object key, Person dependingOnFieldKey) {
+		public NewPersonNameField(Object key) {
 			super(Constants.getProperty(key), EchFormats.baseName);
-			this.dependingOnFieldKey = dependingOnFieldKey;
 		}
 
-		@Override
-		public Person getKeyOfDependedField() {
-			return dependingOnFieldKey;
-		}
+//		@Override
+//		public Person getClassOfField() {
+//			return dependingOnFieldKey;
+//		}
 
 		@Override
 		public void valueChanged(Person person) {

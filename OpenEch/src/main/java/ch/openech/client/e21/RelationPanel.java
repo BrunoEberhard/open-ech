@@ -35,11 +35,6 @@ public class RelationPanel extends EchFormPanel<Relation> {
 		}
 
 		@Override
-		public TypeOfRelationship getKeyOfDependedField() {
-			return RELATION.typeOfRelationship;
-		}
-
-		@Override
 		public void valueChanged(TypeOfRelationship typeOfRelationship) {
 			boolean isVormund = typeOfRelationship != null && typeOfRelationship.isCare();
 			setEnabled(isVormund);

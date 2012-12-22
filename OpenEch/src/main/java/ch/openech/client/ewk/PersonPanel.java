@@ -126,10 +126,10 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			super(Constants.getProperty(PERSON.maritalStatus.dateOfMaritalStatus));
 		}
 
-		@Override
-		public MaritalStatus getKeyOfDependedField() {
-			return PERSON.maritalStatus.maritalStatus;
-		}
+//		@Override
+//		public MaritalStatus getClassOfField() {
+//			return PERSON.maritalStatus.maritalStatus;
+//		}
 
 		@Override
 		public void valueChanged(MaritalStatus maritalStatus) {
@@ -143,10 +143,10 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			super(Constants.getProperty(PERSON.cancelationReason));
 		}
 
-		@Override
-		public MaritalStatus getKeyOfDependedField() {
-			return PERSON.maritalStatus.maritalStatus;
-		}
+//		@Override
+//		public MaritalStatus getClassOfField() {
+//			return PERSON.maritalStatus.maritalStatus;
+//		}
 
 		@Override
 		public void valueChanged(MaritalStatus maritalStatus) {	
