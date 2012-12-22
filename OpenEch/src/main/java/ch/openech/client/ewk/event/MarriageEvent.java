@@ -38,6 +38,8 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	}
 
 	public static class Marriage implements Validation {
+		public static final Marriage MARRIAGE = Constants.of(Marriage.class);
+		
 		@Required
 		public LocalDate dateOfMaritalStatus;
 		public Boolean registerPartner2 = Boolean.TRUE;
@@ -59,27 +61,27 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		}
 		
 		static void validate(List<ValidationMessage> validationMessages, Person person1, Person person2, boolean marriage) {
-			validatePartnerAlive(validationMessages, "partner1", person1);
-			validatePartnerAlive(validationMessages, "partner2", person2);
-			validatePartnerSet(validationMessages, "partner1", person1);
-			validatePartnerSet(validationMessages, "partner2", person2);
+			validatePartnerAlive(validationMessages, MARRIAGE.partner1, person1);
+			validatePartnerAlive(validationMessages, MARRIAGE.partner2, person2);
+			validatePartnerSet(validationMessages, MARRIAGE.partner1, person1);
+			validatePartnerSet(validationMessages, MARRIAGE.partner2, person2);
 			validateSex(validationMessages, person1, person2, marriage);
 		}
 		
 		private void validateNamesNotBlank(List<ValidationMessage> validationMessages) {
-			if (Boolean.TRUE.equals(changeName1)) validateNameNotBlank(validationMessages, "name1", name1);
-			if (Boolean.TRUE.equals(changeName2)) validateNameNotBlank(validationMessages, "name2", name2);
+			if (Boolean.TRUE.equals(changeName1)) validateNameNotBlank(validationMessages, MARRIAGE.name1, name1);
+			if (Boolean.TRUE.equals(changeName2)) validateNameNotBlank(validationMessages, MARRIAGE.name2, name2);
 		}
 		
 		@BusinessRule("2 Eheleute/Partner für Ehe notwendig")
-		static void validatePartnerSet(List<ValidationMessage> validationMessages, String key, Person person) {
+		static void validatePartnerSet(List<ValidationMessage> validationMessages, Person key, Person person) {
 			if (person == null) {
 				validationMessages.add(new ValidationMessage(key, "Person fehlt"));
 			}
 		}
 		
 		@BusinessRule("Ehepartner/Partner müssen leben")
-		static void validatePartnerAlive(List<ValidationMessage> validationMessages, String key, Person person) {
+		static void validatePartnerAlive(List<ValidationMessage> validationMessages, Person key, Person person) {
 			if (person == null) return;
 			if (person.dateOfDeath != null) {
 				validationMessages.add(new ValidationMessage(key, "Person darf nicht tot sein"));
@@ -92,11 +94,11 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 			if (person1.personIdentification.sex == null || person2.personIdentification.sex == null) return;
 			if (marriage) {
 				if (person1.personIdentification.sex == person2.personIdentification.sex) {
-					validationMessages.add(new ValidationMessage("partner2", "Eheleute müssen unterschiedlichen Geschlechts sein"));
+					validationMessages.add(new ValidationMessage(MARRIAGE.partner2, "Eheleute müssen unterschiedlichen Geschlechts sein"));
 				}
 			} else {
 				if (person1.personIdentification.sex != person2.personIdentification.sex) {
-					validationMessages.add(new ValidationMessage("partner2", "Partener müssen gleichen Geschlechts sein"));
+					validationMessages.add(new ValidationMessage(MARRIAGE.partner2, "Partener müssen gleichen Geschlechts sein"));
 				}
 			}
 		}

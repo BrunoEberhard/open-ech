@@ -34,6 +34,8 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 		
 	public static class Partnership implements Validation {
+		public static final Partnership PARTNERSHIP = Constants.of(Partnership.class);
+		
 		@Required
 		public LocalDate dateOfMaritalStatus;
 		public Boolean registerPartner2 = Boolean.TRUE;
@@ -49,8 +51,8 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		}
 		
 		private void validateNamesNotBlank(List<ValidationMessage> validationMessages) {
-			if (Boolean.TRUE.equals(changeName1)) MarriageEvent.Marriage.validateNameNotBlank(validationMessages, "name1", name1);
-			if (Boolean.TRUE.equals(changeName2)) MarriageEvent.Marriage.validateNameNotBlank(validationMessages, "name2", name2);
+			if (Boolean.TRUE.equals(changeName1)) MarriageEvent.Marriage.validateNameNotBlank(validationMessages, PARTNERSHIP.name1, name1);
+			if (Boolean.TRUE.equals(changeName2)) MarriageEvent.Marriage.validateNameNotBlank(validationMessages, PARTNERSHIP.name2, name2);
 		}
 
 	}
