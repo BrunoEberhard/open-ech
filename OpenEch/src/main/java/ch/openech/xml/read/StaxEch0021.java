@@ -52,7 +52,7 @@ public class StaxEch0021 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(JOB_TITLE)) occupation.jobTitle = token(xml);
-				else if (startName.equals(KIND_OF_EMPLOYMENT)) enuum(xml, occupation, Occupation.OCCUPATION.kindOfEmployment);
+				else if (startName.equals(KIND_OF_EMPLOYMENT)) occupation.kindOfEmployment = token(xml);
 				else if (startName.equals(EMPLOYER)) occupation.employer = token(xml);
 				else if (startName.equals(PLACE_OF_WORK)) occupation.placeOfWork = StaxEch0010.address(xml);
 				else if (startName.equals(PLACE_OF_EMPLOYER)) occupation.placeOfEmployer = StaxEch0010.address(xml);
