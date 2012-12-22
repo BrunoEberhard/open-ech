@@ -31,7 +31,7 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 		PERSON.getStreet(), //
 		PERSON.getStreetNumber(), //
 		PERSON.getTown(), //
-		PERSON.personIdentification.vn, //
+		PERSON.personIdentification.vn.value, //
 	};
 
 	
