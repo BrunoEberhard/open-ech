@@ -10,7 +10,7 @@ import ch.openech.xml.write.EchSchema;
 public class OccupationPanel extends EchFormPanel<Occupation> {
 	
 	public OccupationPanel(EchSchema echSchema) {
-		super(2);
+		super(echSchema, 2);
 		
 		line(OCCUPATION.kindOfEmployment);
 		line(OCCUPATION.jobTitle);
