@@ -20,7 +20,8 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 		super(echSchema, preferences);
 	}
 
-	public static class MoveEventData extends DwellingAddress {
+	public static class MoveEventData {
+		public final DwellingAddress dwellingAddress = new DwellingAddress();
 		public MunicipalityIdentification reportingMunicipality;
 	}
 
@@ -28,11 +29,11 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 	
 	@Override
 	protected void fillForm(Form<MoveEventData> formPanel) {
-		formPanel.line(MED.EGID);
-		formPanel.line(MED.EWID);
-		formPanel.line(MED.householdID);
-		formPanel.area(new AddressField(MED.mailAddress, true, false, false));
-		formPanel.line(MED.typeOfHousehold);
+		formPanel.line(MED.dwellingAddress.EGID);
+		formPanel.line(MED.dwellingAddress.EWID);
+		formPanel.line(MED.dwellingAddress.householdID);
+		formPanel.area(new AddressField(MED.dwellingAddress.mailAddress, true, false, false));
+		formPanel.line(MED.dwellingAddress.typeOfHousehold);
 		formPanel.area(new MunicipalityField(MED.reportingMunicipality, true));
 	}
 
@@ -41,20 +42,22 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 		MoveEventData data = new MoveEventData();
 		if (getPerson().dwellingAddress != null) {
 			DwellingAddress dwellingAddress = getPerson().dwellingAddress;
-			data.EGID = dwellingAddress.EGID;
-			data.EWID = dwellingAddress.EWID;
-			data.householdID = dwellingAddress.householdID;
-			data.mailAddress = dwellingAddress.mailAddress;
-			data.typeOfHousehold = dwellingAddress.typeOfHousehold;
+			data.dwellingAddress.EGID = dwellingAddress.EGID;
+			data.dwellingAddress.EWID = dwellingAddress.EWID;
+			data.dwellingAddress.householdID = dwellingAddress.householdID;
+			data.dwellingAddress.mailAddress = dwellingAddress.mailAddress;
+			data.dwellingAddress.typeOfHousehold = dwellingAddress.typeOfHousehold;
 			data.reportingMunicipality = getPerson().residence.reportingMunicipality;
+			
+			data.dwellingAddress.echSchema = echSchema;
 		}
-		data.movingDate = null;
+		data.dwellingAddress.movingDate = null;
 		return data;
 	}
 
 	@Override
-	protected List<String> getXml(Person person, MoveEventData address, WriterEch0020 writerEch0020) throws Exception {
-		return Collections.singletonList(writerEch0020.move(person.personIdentification, address.reportingMunicipality, address));
+	protected List<String> getXml(Person person, MoveEventData med, WriterEch0020 writerEch0020) throws Exception {
+		return Collections.singletonList(writerEch0020.move(person.personIdentification, med.reportingMunicipality, med.dwellingAddress));
 	}
 	
 //	@Override
