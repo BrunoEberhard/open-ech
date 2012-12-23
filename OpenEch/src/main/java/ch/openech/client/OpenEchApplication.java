@@ -1,3 +1,21 @@
+/*
+	Copyright (C) 2010, Bruno Eberhard, bruno.eberhard@pop.ch
+
+	This file is part of Open-eCH.
+
+    Open-eCH is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Open-eCH is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Open-eCH.  If not, see <http://www.gnu.org/licenses/>.
+*/
 package ch.openech.client;
 
 import java.util.ResourceBundle;
@@ -15,7 +33,7 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.client.preferences.PreferencesEditor;
 import ch.openech.datagenerator.GeneratePersonAction;
-import ch.openech.mj.application.ApplicationConfig;
+import ch.openech.mj.application.MjApplication;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.EditorPageAction;
 import ch.openech.mj.page.ActionGroup;
@@ -27,7 +45,7 @@ import editor.FoundationEditor;
 import editor.MoveInEditor;
 import editor.MoveInWizard;
 
-public class ApplicationConfigOpenEch extends ApplicationConfig {
+public class OpenEchApplication extends MjApplication {
 
 	private EchSchema ewkSchema;
 	private EchSchema orgSchema;
@@ -50,7 +68,6 @@ public class ApplicationConfigOpenEch extends ApplicationConfig {
 
 	@Override
 	public Class<?>[] getSearchClasses() {
-//		return new Class<?>[]{SearchOrganisationPage.class};
 		return new Class<?>[]{SearchPersonPage.class, SearchOrganisationPage.class};
 	}
 
