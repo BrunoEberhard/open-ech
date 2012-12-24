@@ -36,6 +36,12 @@ public class ChangeOccupationEvent extends PersonEventEditor<Occupation> {
 		return new Occupation(echSchema);
 	}
 
+	
+//	@Override
+//	public Occupation newInstance() {
+//		return new Occupation(echSchema);
+//	}
+
 	@Override
 	protected List<String> getXml(Person person, Occupation occupation, WriterEch0020 writerEch0020) throws Exception {
 		return Collections.singletonList(writerEch0020.changeOccupation(person.personIdentification, occupation));

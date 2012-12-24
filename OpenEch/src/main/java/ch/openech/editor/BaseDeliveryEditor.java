@@ -1,4 +1,4 @@
-package editor;
+package ch.openech.editor;
 
 import java.util.Collections;
 import java.util.List;

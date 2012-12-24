@@ -2,7 +2,6 @@ package ch.openech.client.org.event;
 
 import java.util.List;
 
-import page.OrganisationViewPage;
 
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
@@ -14,6 +13,7 @@ import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.util.GenericUtils;
+import ch.openech.page.OrganisationViewPage;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchSchema;

@@ -1,11 +1,10 @@
-package editor;
+package ch.openech.editor;
 
 import static ch.openech.dm.organisation.Organisation.ORGANISATION;
 
 import java.util.Collections;
 import java.util.List;
 
-import page.OrganisationViewPage;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel;
@@ -16,6 +15,7 @@ import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
+import ch.openech.page.OrganisationViewPage;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 

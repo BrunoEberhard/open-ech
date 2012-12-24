@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.Action;
 
-import page.PersonHistoryPage;
 
 import ch.openech.client.e21.CareEvent;
 import ch.openech.client.ewk.event.AddressLockEvent;
@@ -66,6 +65,7 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.SeparatorAction;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.BusinessRule;
+import ch.openech.page.PersonHistoryPage;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonEditMenu {

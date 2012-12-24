@@ -3,8 +3,6 @@ package ch.openech.client.e11;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import page.PersonViewPage;
-import page.SearchPersonPage;
 import ch.openech.client.e10.AddressPanel;
 import ch.openech.client.e44.PersonIdentificationPanel;
 import ch.openech.dm.common.Address;
@@ -21,6 +19,8 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.DateUtils;
+import ch.openech.page.PersonViewPage;
+import ch.openech.page.SearchPersonPage;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 

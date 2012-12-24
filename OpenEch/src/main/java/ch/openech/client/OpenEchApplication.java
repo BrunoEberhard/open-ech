@@ -20,8 +20,6 @@ package ch.openech.client;
 
 import java.util.ResourceBundle;
 
-import page.SearchOrganisationPage;
-import page.SearchPersonPage;
 import ch.openech.client.ewk.event.ExportAllPersonAction;
 import ch.openech.client.ewk.event.ImportAllPersonAction;
 import ch.openech.client.ewk.event.KeyDeliveryPersonAction;
@@ -33,17 +31,20 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.client.preferences.PreferencesEditor;
 import ch.openech.datagenerator.GeneratePersonAction;
+import ch.openech.editor.BaseDeliveryEditor;
+import ch.openech.editor.BaseDeliveryOrganisationEditor;
+import ch.openech.editor.FoundationEditor;
+import ch.openech.editor.MoveInEditor;
+import ch.openech.editor.MoveInWizard;
 import ch.openech.mj.application.MjApplication;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.EditorPageAction;
+import ch.openech.mj.model.Codes;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
+import ch.openech.page.SearchOrganisationPage;
+import ch.openech.page.SearchPersonPage;
 import ch.openech.xml.write.EchSchema;
-import editor.BaseDeliveryEditor;
-import editor.BaseDeliveryOrganisationEditor;
-import editor.FoundationEditor;
-import editor.MoveInEditor;
-import editor.MoveInWizard;
 
 public class OpenEchApplication extends MjApplication {
 
@@ -51,6 +52,13 @@ public class OpenEchApplication extends MjApplication {
 	private EchSchema orgSchema;
 	private EchSchema tpnNamespaceContext;
 	
+	@Override
+	public void init() {
+		super.init();
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.organisation.types.ech_organisation"));
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
+	}
+
 	@Override
 	public ResourceBundle getResourceBundle() {
 		return ResourceBundle.getBundle("ch.openech.resources.OpenEch");

@@ -1,4 +1,4 @@
-package page;
+package ch.openech.page;
 
 import static ch.openech.dm.organisation.Organisation.ORGANISATION;
 

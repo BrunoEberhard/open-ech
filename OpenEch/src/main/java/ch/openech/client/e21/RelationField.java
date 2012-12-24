@@ -3,7 +3,6 @@ package ch.openech.client.e21;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import page.PersonViewPage;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.EditorDialogAction;
@@ -13,6 +12,7 @@ import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
+import ch.openech.page.PersonViewPage;
 import ch.openech.xml.write.EchSchema;
 
 public class RelationField extends ObjectFlowField<List<Relation>> {

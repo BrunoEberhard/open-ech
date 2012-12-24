@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import page.PersonViewPage;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
@@ -21,6 +20,7 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.util.BusinessRule;
+import ch.openech.page.PersonViewPage;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;

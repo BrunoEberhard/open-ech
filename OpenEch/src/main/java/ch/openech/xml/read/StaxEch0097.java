@@ -84,6 +84,7 @@ public class StaxEch0097 {
 				if (!StringUtils.isBlank(uidOrganisationIdCategorie) && !StringUtils.isBlank(uidOrganisationId)) {
 					uid.value = uidOrganisationIdCategorie + uidOrganisationId;
 				} 
+				return;
 			} // else skip
 		}
 	}

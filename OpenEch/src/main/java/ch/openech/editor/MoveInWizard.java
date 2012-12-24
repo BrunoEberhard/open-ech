@@ -1,4 +1,4 @@
-package editor;
+package ch.openech.editor;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import page.PersonViewPage;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.event.EchFormPanel;
@@ -33,6 +32,7 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.IComponent;
+import ch.openech.page.PersonViewPage;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

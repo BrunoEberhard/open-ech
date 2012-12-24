@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.Action;
 
-import page.OrganisationHistoryPage;
 
 import ch.openech.client.org.event.ChangeLegalFormEvent;
 import ch.openech.client.org.event.ChangeOrganisationNameEvent;
@@ -34,6 +33,7 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.SeparatorAction;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.BusinessRule;
+import ch.openech.page.OrganisationHistoryPage;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationMenu {
