@@ -1,4 +1,0 @@
-User-agent: *
-Crawl-delay: 600
-Disallow: /cgi-bin/
-Disallow: /stats
