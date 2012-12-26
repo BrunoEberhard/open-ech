@@ -20,6 +20,11 @@ package ch.openech.client;
 
 import java.util.ResourceBundle;
 
+import ch.openech.client.editor.BaseDeliveryEditor;
+import ch.openech.client.editor.BaseDeliveryOrganisationEditor;
+import ch.openech.client.editor.FoundationEditor;
+import ch.openech.client.editor.MoveInEditor;
+import ch.openech.client.editor.MoveInWizard;
 import ch.openech.client.ewk.event.ExportAllPersonAction;
 import ch.openech.client.ewk.event.ImportAllPersonAction;
 import ch.openech.client.ewk.event.KeyDeliveryPersonAction;
@@ -27,23 +32,18 @@ import ch.openech.client.ewk.event.birth.BirthEvent;
 import ch.openech.client.org.ExportAllOrganisationAction;
 import ch.openech.client.org.ImportAllOrganisationAction;
 import ch.openech.client.org.KeyDeliveryOrganisationAction;
+import ch.openech.client.page.SearchOrganisationPage;
+import ch.openech.client.page.SearchPersonPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.client.preferences.PreferencesEditor;
 import ch.openech.datagenerator.GeneratePersonAction;
-import ch.openech.editor.BaseDeliveryEditor;
-import ch.openech.editor.BaseDeliveryOrganisationEditor;
-import ch.openech.editor.FoundationEditor;
-import ch.openech.editor.MoveInEditor;
-import ch.openech.editor.MoveInWizard;
 import ch.openech.mj.application.MjApplication;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.EditorPageAction;
 import ch.openech.mj.model.Codes;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
-import ch.openech.page.SearchOrganisationPage;
-import ch.openech.page.SearchPersonPage;
 import ch.openech.xml.write.EchSchema;
 
 public class OpenEchApplication extends MjApplication {

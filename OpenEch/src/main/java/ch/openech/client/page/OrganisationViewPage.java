@@ -1,4 +1,4 @@
-package ch.openech.page;
+package ch.openech.client.page;
 
 import java.sql.SQLException;
 

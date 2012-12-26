@@ -2,13 +2,13 @@ package ch.openech.client.e44;
 
 import java.util.List;
 
+import ch.openech.client.page.SearchPersonPage;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.page.SearchPersonPage;
 import ch.openech.server.EchServer;
 
 public class PersonField extends ObjectFlowField<Person> {

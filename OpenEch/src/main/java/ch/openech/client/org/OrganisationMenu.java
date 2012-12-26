@@ -24,6 +24,7 @@ import ch.openech.client.org.event.correct.CorrectLiquidationEvent;
 import ch.openech.client.org.event.correct.CorrectOrganisationNameEvent;
 import ch.openech.client.org.event.correct.CorrectReportingEvent;
 import ch.openech.client.org.event.correct.CorrectUidBrancheEvent;
+import ch.openech.client.page.OrganisationHistoryPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.EditorDialogAction;
@@ -33,7 +34,6 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.SeparatorAction;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.BusinessRule;
-import ch.openech.page.OrganisationHistoryPage;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationMenu {

@@ -56,6 +56,7 @@ import ch.openech.client.ewk.event.correct.CorrectRelationshipEvent;
 import ch.openech.client.ewk.event.correct.CorrectReligionEvent;
 import ch.openech.client.ewk.event.correct.CorrectReportingEvent;
 import ch.openech.client.ewk.event.correct.CorrectResidencePermitEvent;
+import ch.openech.client.page.PersonHistoryPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.EditorDialogAction;
@@ -65,7 +66,6 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.SeparatorAction;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.BusinessRule;
-import ch.openech.page.PersonHistoryPage;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonEditMenu {

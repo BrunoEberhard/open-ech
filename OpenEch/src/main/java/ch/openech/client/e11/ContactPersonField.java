@@ -5,6 +5,8 @@ import java.util.List;
 
 import ch.openech.client.e10.AddressPanel;
 import ch.openech.client.e44.PersonIdentificationPanel;
+import ch.openech.client.page.PersonViewPage;
+import ch.openech.client.page.SearchPersonPage;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Person;
@@ -19,8 +21,6 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.util.DateUtils;
-import ch.openech.page.PersonViewPage;
-import ch.openech.page.SearchPersonPage;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 

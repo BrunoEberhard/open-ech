@@ -1,4 +1,4 @@
-package ch.openech.editor;
+package ch.openech.client.editor;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.List;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel;
+import ch.openech.client.page.OrganisationViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
-import ch.openech.page.OrganisationViewPage;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
