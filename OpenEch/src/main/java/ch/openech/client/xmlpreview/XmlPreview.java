@@ -11,11 +11,11 @@ import ch.openech.mj.toolkit.ClientToolkit;
 public class XmlPreview {
 
 	public static void viewXml(PageContext context, List<String> xmls) {
-		if (context.getComponent() instanceof java.awt.Component) {
-			XmlSwingFrame xmlFrame = new XmlSwingFrame((java.awt.Component) context.getComponent(), xmls);
+		if (context instanceof java.awt.Component) {
+			XmlSwingFrame xmlFrame = new XmlSwingFrame((java.awt.Component) context, xmls);
 			xmlFrame.setVisible(true);
-		} else if (context.getComponent() instanceof com.vaadin.ui.Component) {
-			com.vaadin.ui.Component component = (com.vaadin.ui.Component) context.getComponent();
+		} else if (context instanceof com.vaadin.ui.Component) {
+			com.vaadin.ui.Component component = (com.vaadin.ui.Component) context;
 			XmlVaadinFrame xmlFrame = new XmlVaadinFrame(xmls);
 			component.getWindow().addWindow(xmlFrame);
 			xmlFrame.setPositionY(0);
@@ -30,7 +30,7 @@ public class XmlPreview {
 			XmlTextFormField xmlTextFormField = new XmlTextFormField(XmlPreviewValue.XML_PREVIEW_VALUE.xmls);
 			form.area(xmlTextFormField);
 			xmlTextFormField.setObject(xmls);
-			ClientToolkit.getToolkit().openDialog(context.getComponent(), form.getComponent(), "XML").openDialog();
+			ClientToolkit.getToolkit().openDialog(context, form.getComponent(), "XML").openDialog();
 		}
 	}
 	
