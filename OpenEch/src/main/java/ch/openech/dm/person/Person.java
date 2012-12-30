@@ -400,7 +400,7 @@ public class Person implements Validation {
 	@BusinessRule("Todesdatum darf nicht vor Geburtsdatum sein")
 	private void validateDeathNotBeforeBirth(List<ValidationMessage> resultList) {
 		if (personIdentification.dateOfBirth == null || dateOfDeath == null) return;
-		if (personIdentification.dateOfBirth.isBefore(dateOfDeath)) {
+		if (dateOfDeath.isBefore(personIdentification.dateOfBirth)) {
 			resultList.add(new ValidationMessage(PERSON.dateOfDeath, "Todesdatum darf nicht vor Geburtsdatum sein"));
 		}
 	}
