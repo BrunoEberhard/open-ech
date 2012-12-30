@@ -37,7 +37,22 @@ public class PersonTable extends SearchableTable<Person> {
 		if (person.getId() == null) {
 			person.personIdentification.technicalIds.localId.setOpenEch();
 		}
+		removeEmptyRelations(person);
 		return super.insert(person);
+	}
+	
+	@Override
+	public void update(Person person) throws SQLException {
+		removeEmptyRelations(person);
+		super.update(person);
+	}
+
+	private void removeEmptyRelations(Person person) {
+		for (int i = person.relation.size() - 1; i>= 0; i--) {
+			if (person.relation.get(i).isEmpty()) {
+				person.relation.remove(i);
+			}
+		}
 	}
 
 	public Person getByVn(String vn) {
