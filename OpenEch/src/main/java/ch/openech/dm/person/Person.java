@@ -10,7 +10,6 @@ import ch.openech.dm.Event;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
-import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.types.PartnerShipAbolition;
@@ -329,12 +328,11 @@ public class Person implements Validation {
 		
 		validatePlaceOfOrigin(resultList);
 
-		String validationMessage = residence.validate(typeOfResidence);
-		if (validationMessage != null) {
-			resultList.add(new ValidationMessage(PERSON.residence, validationMessage));
+		if (editMode != PersonEditMode.BIRTH) {
+			validateResidence(resultList);
 		}
 	}
-	
+
 	private void validateForeign(List<ValidationMessage> resultList) {
 		if (!nationality.isSwiss()) {
 			if (foreign.isEmpty()) {
@@ -411,6 +409,14 @@ public class Person implements Validation {
 			if (date.isBefore(personIdentification.dateOfBirth)) {
 				validationMessages.add(new ValidationMessage(key, "Datum darf nicht vor Geburt der Person sein"));
 			}
+		}
+	}
+
+	@BusinessRule("Die Anzahl von Haupt- und Nebenorten muss dem gewählten Meldeverhältnis entsprechen")
+	private void validateResidence(List<ValidationMessage> resultList) {
+		String validationMessage = residence.validate(typeOfResidence);
+		if (validationMessage != null) {
+			resultList.add(new ValidationMessage(PERSON.residence, validationMessage));
 		}
 	}
 	
