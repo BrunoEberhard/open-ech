@@ -53,7 +53,7 @@ public class Occupation implements Validation {
 		}
 
 		if (kindOfEmployment != null) {
-			StringUtils.appendLine(s, Codes.getCode(OCCUPATION.kindOfEmployment).getText(kindOfEmployment));
+			StringUtils.appendLine(s, "Erwerbsart:", Codes.getCode(OCCUPATION.kindOfEmployment).getText(kindOfEmployment));
 		}
 
 		if (!StringUtils.isBlank(employer)) {
