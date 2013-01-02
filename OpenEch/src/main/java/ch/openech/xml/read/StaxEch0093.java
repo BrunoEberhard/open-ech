@@ -141,8 +141,8 @@ public class StaxEch0093 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(MOVE_OUT_PERSON)) person = StaxEch0020.newPerson(xml);
-				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, person.getFather());
-				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.getMother());
+				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, person.nameOfParents.father);
+				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.nameOfParents.mother);
 				else if (startName.equals(RELATIONSHIP) || startName.equals(RELATIONSHIP)) StaxEch0021.relation(xml, person);
 				else if (startName.equals(MOVE_OUT_REPORTING_DESTINATION)) moveOutReportingDestination(xml, person);
 				else if (startName.equals(SECONDARY_RESIDENCE)) person.residence.secondary.add(StaxEch0007.municipality(xml));

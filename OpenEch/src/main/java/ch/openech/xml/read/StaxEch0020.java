@@ -187,8 +187,8 @@ public class StaxEch0020 implements StaxEchParser {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(BASE_DELIVERY_PERSON)) baseDeliveryPerson(xml, person);
-				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, person.getFather());
-				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.getMother());
+				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, person.nameOfParents.father);
+				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.nameOfParents.mother);
 				else if (startName.equals(_RELATIONSHIP) || startName.equals(RELATIONSHIP)) StaxEch0021.relation(xml, person);
 				else if (startName.equals(OCCUPATION)) person.occupation.add(StaxEch0021.occupation(xml));
 				else if (startName.equals(DATA_LOCK)) person.dataLock = token(xml);
@@ -309,7 +309,7 @@ public class StaxEch0020 implements StaxEchParser {
 					relation.care = YesNo.Yes;
 					person.relation.add(relation);
 				}
-				else if (startName.equals(NAME_AT_BIRTH)) StaxEch0021.nameOfParentAtBirth(xml, father ? person.getFather() : person.getMother());
+				else if (startName.equals(NAME_AT_BIRTH)) StaxEch0021.nameOfParentAtBirth(xml, father ? person.nameOfParents.father : person.nameOfParents.mother);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
@@ -343,8 +343,8 @@ public class StaxEch0020 implements StaxEchParser {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(MOVE_IN_PERSON)) person = newPerson(xml);
-				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, person.getFather());
-				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.getMother());
+				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, person.nameOfParents.father);
+				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.nameOfParents.mother);
 				else if (startName.equals(OCCUPATION)) person.occupation.add(StaxEch0021.occupation(xml));
 				else if (startName.equals(_RELATIONSHIP) || startName.equals(RELATIONSHIP)) StaxEch0021.relation(xml, person);
 				else if (startName.equals(EXTENSION)) extension(xml, person);
@@ -520,8 +520,8 @@ public class StaxEch0020 implements StaxEchParser {
 				else if (StringUtils.equals(startName, ORIGIN)) StaxEch0021.addPlaceOfOriginAddon(xml, personToChange.placeOfOrigin);
 				else if (startName.equals(EXPATRIATION_DATE)) personToChange.placeOfOrigin.get(0).expatriationDate = StaxEch.date(xml);
 				else if (startName.equals(DATE_OF_DEATH)) personToChange.dateOfDeath = StaxEch.date(xml);
-				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, personToChange.getFather());
-				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, personToChange.getMother());
+				else if (startName.equals(NAME_OF_FATHER)) StaxEch0021.nameOfParentAtBirth(xml, personToChange.nameOfParents.father);
+				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, personToChange.nameOfParents.mother);
 				else if (startName.equals(MARITAL_STATUS)) enuum(xml, personToChange, Person.PERSON.maritalStatus.maritalStatus);
 				else if (startName.equals(DATE_OF_MARITAL_STATUS)) personToChange.maritalStatus.dateOfMaritalStatus = StaxEch.date(xml);
 				else if (startName.equals(PARTNER_SHIP_ABOLITION)) enuum(xml, personToChange, Person.PERSON.cancelationReason); // Das Feld heisst in e11 wirklich anders als in e20

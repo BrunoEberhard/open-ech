@@ -11,6 +11,7 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Foreign;
+import ch.openech.dm.person.NameOfParent;
 import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
@@ -64,8 +65,8 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	public void addParentNames(WriterElement element, Person person) throws Exception {
-	   	ech21.nameOfParentAtBirth(element, NAME_OF_FATHER, person.getFatherFirstNameAtBirth(), person.getFatherOfficialNameAtBirth());
-	   	ech21.nameOfParentAtBirth(element, NAME_OF_MOTHER, person.getMotherFirstNameAtBirth(), person.getMotherOfficialNameAtBirth());
+	   	ech21.nameOfParentAtBirth(element, NAME_OF_FATHER, person.nameOfParents.father.firstName, person.nameOfParents.father.officialName);
+	   	ech21.nameOfParentAtBirth(element, NAME_OF_MOTHER, person.nameOfParents.mother.firstName, person.nameOfParents.mother.officialName);
 	}
 	
 	public void eventBaseDelivery(WriterElement baseDelivery, Person values) throws Exception {
@@ -152,14 +153,14 @@ public class WriterEch0020 extends DeliveryWriter {
         ech11.anyPerson(moveInPerson, person);
 	}
 	
-	private void birthParent(boolean father, WriterElement event, Relation parentRelation) throws Exception {
+	private void birthParent(boolean father, WriterElement event, Relation parentRelation, NameOfParent nameAtBirth) throws Exception {
 		if (!parentRelation.isEmpty()) {
 			WriterElement element = event.create(URI, father ? FATHER : MOTHER);
 			if (parentRelation != null) {
 				element.values(parentRelation, TYPE_OF_RELATIONSHIP);
 				partner(element, parentRelation);
 			}
-			ech21.nameOfParentAtBirth(element, NAME_AT_BIRTH, parentRelation.firstNameAtBirth, parentRelation.officialNameAtBirth);
+			ech21.nameOfParentAtBirth(element, NAME_AT_BIRTH, nameAtBirth.firstName, nameAtBirth.officialName);
 		}
 	}
 
@@ -248,8 +249,8 @@ public class WriterEch0020 extends DeliveryWriter {
 	public String birth(Person person) throws Exception {
         WriterElement event = delivery().create(URI, BIRTH);
         birthPerson(event, person);
-        birthParent(false, event, person.getMother());
-        birthParent(true, event, person.getFather());
+        birthParent(false, event, person.getMother(), person.nameOfParents.mother);
+        birthParent(true, event, person.getFather(), person.nameOfParents.father);
         return result();
 	}
 	
@@ -554,8 +555,8 @@ public class WriterEch0020 extends DeliveryWriter {
     	addVariousNames(person, changedPerson);
     	person.values(changedPerson, NAME_ON_PASSPORT);
         if (changeNameWithParents) {
-	    	ech21.nameOfParentAtBirth(event, NAME_OF_FATHER, changedPerson.getFatherFirstNameAtBirth(), changedPerson.getFatherOfficialNameAtBirth());
-	    	ech21.nameOfParentAtBirth(event, NAME_OF_MOTHER, changedPerson.getMotherFirstNameAtBirth(), changedPerson.getMotherOfficialNameAtBirth());
+	    	ech21.nameOfParentAtBirth(event, NAME_OF_FATHER, changedPerson.nameOfParents.father.firstName, changedPerson.nameOfParents.father.officialName);
+	    	ech21.nameOfParentAtBirth(event, NAME_OF_MOTHER, changedPerson.nameOfParents.mother.firstName, changedPerson.nameOfParents.mother.officialName);
         }
         return result();
 	}

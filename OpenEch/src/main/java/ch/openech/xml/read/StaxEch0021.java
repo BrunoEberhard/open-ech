@@ -33,6 +33,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import ch.openech.dm.person.NameOfParent;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
@@ -139,14 +140,14 @@ public class StaxEch0021 {
 		placeOfOrigins.add(placeOfOrigin);
 	}
 	
-	public static void nameOfParentAtBirth(XMLEventReader xml, Relation relation) throws XMLStreamException {
+	public static void nameOfParentAtBirth(XMLEventReader xml, NameOfParent nameAtBirth) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement element = event.asStartElement();
 				String name = element.getName().getLocalPart();
-				if (name.equals(FIRST_NAME)) relation.firstNameAtBirth = token(xml);
-				else if (name.equals(OFFICIAL_NAME)) relation.officialNameAtBirth = token(xml);
+				if (name.equals(FIRST_NAME)) nameAtBirth.firstName = token(xml);
+				else if (name.equals(OFFICIAL_NAME)) nameAtBirth.officialName = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) return;
 			// else skip

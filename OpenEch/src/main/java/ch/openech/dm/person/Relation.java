@@ -27,9 +27,6 @@ public class Relation implements Validatable {
 	
 	public Address address;
 	
-	@Size(EchFormats.baseName)
-	public String firstNameAtBirth, officialNameAtBirth; // only for parent
-	
 	// 
 	
 	public void clear() {
@@ -38,8 +35,6 @@ public class Relation implements Validatable {
 		care = YesNo.No;
 		partner = new PersonIdentification();
 		address = null;
-		firstNameAtBirth = null;
-		officialNameAtBirth = null;
 	}
 	
 	public boolean isEmpty() {
@@ -87,12 +82,6 @@ public class Relation implements Validatable {
 		if (address != null && !address.isEmpty()) {
 			s.append("Adresse:<BR>");
 			address.toHtml(s);
-			s.append("<BR>");
-		}
-		
-		if (!StringUtils.isBlank(firstNameAtBirth) || !StringUtils.isBlank(officialNameAtBirth)) {
-			s.append("Name bei Geburt:<BR>");
-			StringUtils.appendLine(s, firstNameAtBirth, officialNameAtBirth);
 			s.append("<BR>");
 		}
 	}
@@ -143,11 +132,6 @@ public class Relation implements Validatable {
 				return "Person muss gesetzt sein";
 			} else if (address != null) {
 				return "Adresse darf nur gesetzt sein, wenn Person gesetzt ist";
-			}
-		}
-		if (!isParent()) {
-			if (!StringUtils.isBlank(firstNameAtBirth) || !StringUtils.isBlank(officialNameAtBirth)) {
-				return "\"Name:\" darf nur bei Mutter oder Vater gesetzt sein";
 			}
 		}
 		return null;

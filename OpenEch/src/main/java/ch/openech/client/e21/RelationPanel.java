@@ -12,15 +12,11 @@ import ch.openech.xml.write.EchSchema;
 
 public class RelationPanel extends EchFormPanel<Relation> {
 	
-	public RelationPanel(EchSchema echSchema, boolean withNameOfParents) {
+	public RelationPanel(EchSchema echSchema) {
 		super(echSchema);
 		
 		area(RELATION.partner);
 		area(new AddressField(RELATION.address, true));
-        if (withNameOfParents) {
-			line(RELATION.officialNameAtBirth);
-			line(RELATION.firstNameAtBirth);
-        }
 
 		line(RELATION.typeOfRelationship);
 		line(new BasedOnLawField());

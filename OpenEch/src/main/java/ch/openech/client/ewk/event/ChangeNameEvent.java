@@ -25,8 +25,8 @@ public class ChangeNameEvent extends PersonEventEditor<Person> {
 		panel.line(PERSON.aliasName, PERSON.otherName);
 		panel.line(PERSON.callName, PERSON.foreign.nameOnPassport);
 	    if (echSchema.changeNameWithParents()) {
-	    	panel.line("fatherFirstNameAtBirth", "motherFirstNameAtBirth");
-	    	panel.line("fatherOfficialNameAtBirth", "motherOfficialNameAtBirth");
+	    	panel.line(PERSON.nameOfParents.father.firstName, PERSON.nameOfParents.mother.firstName);
+	    	panel.line(PERSON.nameOfParents.father.officialName, PERSON.nameOfParents.mother.officialName);
 	    }
 	}
 

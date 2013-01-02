@@ -3,6 +3,7 @@ package ch.openech.client.ewk.event.correct;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.client.e21.NameOfParentsField;
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
@@ -19,8 +20,11 @@ public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
+		formPanel.area(new RelationField(Person.PERSON.relation, echSchema, true));
 		boolean includeParents = echSchema.correctRelationshipPersonIncludesParents();
-		formPanel.area(new RelationField(Person.PERSON.relation, echSchema, includeParents, true));
+		if (includeParents) {
+			formPanel.area(new NameOfParentsField(Person.PERSON.nameOfParents, true));
+		}
 	}
 
 	@Override

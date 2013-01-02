@@ -90,6 +90,9 @@ public class Person implements Validation {
 	
 	public final List<Occupation> occupation = new ArrayList<Occupation>();
 	public final List<Relation> relation = new ArrayList<Relation>();
+	
+	public final NameOfParents nameOfParents = new NameOfParents();
+	
 	@Depends("nationality") // Nur Swiss
 	public final List<PlaceOfOrigin> placeOfOrigin = new ArrayList<PlaceOfOrigin>();
 	
@@ -214,38 +217,6 @@ public class Person implements Validation {
 	
 	public boolean isMainResidence() {
 		return typeOfResidence == TypeOfResidence.hasMainResidence;
-	}
-	
-	public String getFatherFirstNameAtBirth() {
-		return getFather().firstNameAtBirth;
-	}
-
-	public String getFatherOfficialNameAtBirth() {
-		return getFather().officialNameAtBirth;
-	}
-
-	public String getMotherFirstNameAtBirth() {
-		return getMother().firstNameAtBirth;
-	}
-
-	public String getMotherOfficialNameAtBirth() {
-		return getMother().officialNameAtBirth;
-	}
-	
-	public void setFatherFirstNameAtBirth(String text) {
-		getFather().firstNameAtBirth = text;
-	}
-
-	public void setFatherOfficialName(String text) {
-		getFather().officialNameAtBirth = text;
-	}
-
-	public void setMotherFirstNameAtBirth(String text) {
-		getMother().firstNameAtBirth = text;
-	}
-
-	public void setMotherOfficialNameAtBirth(String text) {
-		getMother().officialNameAtBirth = text;
 	}
 	
 	@DerivedProperty

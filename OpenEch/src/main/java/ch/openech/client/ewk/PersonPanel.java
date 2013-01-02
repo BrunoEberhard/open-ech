@@ -5,6 +5,7 @@ import static ch.openech.dm.person.PersonIdentification.PERSON_IDENTIFICATION;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
+import ch.openech.client.e21.NameOfParentsField;
 import ch.openech.client.e21.PartnerField;
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.e44.TechnicalIdsField;
@@ -40,6 +41,7 @@ public class PersonPanel extends EchFormPanel<Person>  {
 	
 	private void createContent() {
 		if (mode.isIdentificationVisible()) {
+			// not visible for: CHANGE_RESIDENCE_TYPE, CORRECT_NAME
 			createIdentification();
 		}
 
@@ -59,65 +61,83 @@ public class PersonPanel extends EchFormPanel<Person>  {
 	}
 
 	protected void createData() {
+		// not visible for: BIRTH, CORRECT_IDENTIFICATION
 		
-		// ReportedPerson (ech0011)
 		line(PERSON.originalName, PERSON.alliancePartnershipName, PERSON.aliasName, PERSON.otherName);
 		
 		if (editable) {
-			line(PERSON.maritalStatus.maritalStatus,
-					new DateOfMaritalStatusField(),
-					new CancelationReasonField(), PERSON.callName);
+			line(PERSON.maritalStatus.maritalStatus, new DateOfMaritalStatusField(), new CancelationReasonField(), PERSON.callName);
 		} else {
-			line(PERSON.maritalStatus.maritalStatus,
-					PERSON.maritalStatus.dateOfMaritalStatus,
-					PERSON.cancelationReason, PERSON.callName);
+			line(PERSON.maritalStatus.maritalStatus, PERSON.maritalStatus.dateOfMaritalStatus, PERSON.cancelationReason, PERSON.callName);
 		}
 
 		if (echSchema.separationTillAvailable()) {
-			if (!mode.isCorrectName()) {
-				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
-						PERSON.separation.separationTill, PERSON.languageOfCorrespondance);
-			} else {
-				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
-						PERSON.separation.separationTill, PERSON.foreign.nameOnPassport);
-			}
+			line(PERSON.separation.separation, PERSON.separation.dateOfSeparation, PERSON.separation.separationTill, PERSON.languageOfCorrespondance);
 		} else {
-			if (!mode.isCorrectName()) {
-				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
-						PERSON.languageOfCorrespondance);
-			} else {
-				line(PERSON.separation.separation, PERSON.separation.dateOfSeparation,
-						PERSON.foreign.nameOnPassport);
-			}
+			line(PERSON.separation.separation, PERSON.separation.dateOfSeparation, PERSON.languageOfCorrespondance);
 		}
 
 		line(PERSON.nationality, PERSON.religion);
-
-		//
-		
-		if (mode.isMoveIn()) {
-			line(PERSON.placeOfBirth, PERSON.arrivalDate);
-			line(PERSON.typeOfResidence, PERSON.comesFrom);
-			area(PERSON.residence, PERSON.comesFromAddress);
-		} else {
+		if (!mode.isMoveIn()) {
 			line(PERSON.placeOfBirth, PERSON.dateOfDeath);
-		
-			if (mode != PersonEditMode.CORRECT_PERSON && mode != PersonEditMode.CHANGE_RESIDENCE_TYPE) {
-				area(PERSON.typeOfResidence, PERSON.residence);
-			}
-
-			if (mode != PersonEditMode.CORRECT_PERSON) {
-				line(PERSON.arrivalDate, PERSON.departureDate);
-				line(PERSON.comesFrom, PERSON.goesTo);
-				area(PERSON.comesFromAddress, PERSON.goesToAddress);
-			}
-		}		
-		
-		if (mode == PersonEditMode.BASE_DELIVERY || mode == PersonEditMode.DISPLAY) {
-			line(PERSON.dataLock, PERSON.paperLock);
 		}
 		
-		createAreas();
+		//
+
+		RelationField relationField = new RelationField(PERSON.relation, echSchema, editable);
+		NameOfParentsField nameOfParentsField = new NameOfParentsField(Person.PERSON.nameOfParents, editable);
+
+		switch (mode) {
+		case DISPLAY:
+		case BASE_DELIVERY:
+			area(PERSON.typeOfResidence, PERSON.residence);
+			line(PERSON.arrivalDate, PERSON.departureDate);
+			line(PERSON.comesFrom, PERSON.goesTo);
+			area(PERSON.comesFromAddress, PERSON.dwellingAddress, PERSON.goesToAddress);
+			
+			if (extensionAvailable()) {
+				area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
+				area(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
+			} else {
+				area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign, PERSON.occupation);
+				area(relationField, nameOfParentsField, PERSON.contactPerson);
+			}
+			
+			line(PERSON.dataLock, PERSON.paperLock);
+			break;
+		case MOVE_IN:
+			line(PERSON.placeOfBirth, PERSON.arrivalDate);
+			line(PERSON.typeOfResidence, PERSON.comesFrom);
+			area(PERSON.residence, PERSON.dwellingAddress, PERSON.comesFromAddress);
+			
+			if (extensionAvailable()) {
+				area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
+				area(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
+			} else {
+				area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign, PERSON.occupation);
+				area(relationField, nameOfParentsField, PERSON.contactPerson);
+			}
+			break;
+		case CHANGE_RESIDENCE_TYPE:
+			line(PERSON.arrivalDate, PERSON.departureDate);
+			line(PERSON.comesFrom, PERSON.goesTo);
+			area(PERSON.comesFromAddress, PERSON.goesToAddress);
+			area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign);
+			area(PERSON.dwellingAddress, PERSON.occupation);
+			area(new RelationField(PERSON.relation, echSchema, editable), new NameOfParentsField(Person.PERSON.nameOfParents, true));
+			break;
+		case CORRECT_PERSON:
+			area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign);
+			if (extensionAvailable()) {
+				area(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contact);
+			} else {
+				area(PERSON.contactPerson);
+			}
+			break;
+		case BIRTH:
+		case CORRECT_IDENTIFICATION:
+			// both not implemented here
+		}
 	}
 	
 	private class DateOfMaritalStatusField extends DateField implements DependingOnFieldAbove<MaritalStatus> {
@@ -155,48 +175,16 @@ public class PersonPanel extends EchFormPanel<Person>  {
 		}
 	}
 	
-	private void createAreas() {
-		boolean placeOfOriginWithAdd = mode != PersonEditMode.BIRTH;
-		
-		switch (mode) {
-		case CHANGE_RESIDENCE_TYPE:
-			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
-			area(PERSON.dwellingAddress);
-			area(new RelationField(PERSON.relation, echSchema, true, editable));
-			area(PERSON.occupation);
-			break;
-		case CORRECT_PERSON:
-			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
-			if (extensionAvailable()) {
-				area(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contact);
-			} else {
-				area(PERSON.contactPerson);
-			}
-			break;
-		case BIRTH:
-			PartnerField mother = new PartnerField(PERSON.getMother(), echSchema);
-			PartnerField father = new PartnerField(PERSON.getFather(), echSchema);
-			// Das ist zur Zeit nicht mehr möglich, das Mutter - Feld müsste oberhalb des Namensfeld sein
-			// mother.setConnectedNameField((TextField) getField(PERSON_IDENTIFICATION.officialName));
-			area(mother, father);
-			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign);
-			break;
-		default:
-			area(new PlaceOfOriginField(PERSON.placeOfOrigin, placeOfOriginWithAdd, editable), PERSON.foreign, PERSON.dwellingAddress, PERSON.contactPerson);
-			RelationField relationField = new RelationField(PERSON.relation, echSchema, true, editable);
-			if (extensionAvailable()) {
-				area(PERSON.occupation, relationField, PERSON.personExtendedInformation, PERSON.contact);
-			} else {
-				area(PERSON.occupation, relationField);
-			}
-		}
-	}
-
 	protected void createBirth() {
 		line(PERSON.callName, PERSON.languageOfCorrespondance);
 		line(PERSON.nationality, PERSON.religion);
 		line(PERSON.placeOfBirth);
-		createAreas();
+		PartnerField mother = new PartnerField(PERSON.getMother(), echSchema);
+		PartnerField father = new PartnerField(PERSON.getFather(), echSchema);
+		// Das ist zur Zeit nicht mehr möglich, das Mutter - Feld müsste oberhalb des Namensfeld sein
+		// mother.setConnectedNameField((TextField) getField(PERSON_IDENTIFICATION.officialName));
+		area(mother, father);
+		area(new PlaceOfOriginField(PERSON.placeOfOrigin, false, editable), PERSON.foreign);
 	}
 
 	// getter / setter

@@ -48,6 +48,6 @@ public class PartnerField extends ObjectFlowField<Relation> {
 //		}
 	@Override
 	public IForm<Relation> createFormPanel() {
-		return new RelationPanel(echSchema, false);
+		return new RelationPanel(echSchema);
 	}
 }

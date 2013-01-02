@@ -16,13 +16,10 @@ import ch.openech.mj.resources.ResourceAction;
 import ch.openech.xml.write.EchSchema;
 
 public class RelationField extends ObjectFlowField<List<Relation>> {
-	private final boolean withNameOfParents;
 	private final EchSchema echNamespaceContext;
 	
-	public RelationField(List<Relation> key, EchSchema echNamespaceContext, boolean withNameOfParents, boolean editable) {
+	public RelationField(List<Relation> key, EchSchema echNamespaceContext, boolean editable) {
 		super(Constants.getProperty(key), editable);
-		
-		this.withNameOfParents = withNameOfParents;
 		this.echNamespaceContext = echNamespaceContext;
 	}
 
@@ -44,7 +41,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		
 		@Override
 		public IForm<Relation> createForm() {
-			return new RelationPanel(echNamespaceContext, withNameOfParents);
+			return new RelationPanel(echNamespaceContext);
 		}
 	}
 	
