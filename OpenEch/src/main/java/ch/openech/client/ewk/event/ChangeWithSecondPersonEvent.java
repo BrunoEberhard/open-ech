@@ -50,7 +50,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 	protected void fillForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 		createSpecificForm(formPanel);
 		formPanel.line(ChangeWithSecondPersonEventData.DATA.registerPartner);
-		formPanel.line(new SecondPersonField(ChangeWithSecondPersonEventData.DATA.relationPartner));
+		formPanel.area(new SecondPersonField(ChangeWithSecondPersonEventData.DATA.relationPartner));
 	}
 
 	@Override
