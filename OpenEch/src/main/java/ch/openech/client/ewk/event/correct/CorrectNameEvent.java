@@ -1,15 +1,14 @@
 package ch.openech.client.ewk.event.correct;
 
+import static ch.openech.dm.person.Person.PERSON;
+
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.mj.edit.form.IForm;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -20,13 +19,13 @@ public class CorrectNameEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public IForm<Person> createForm() {
-		return new PersonPanel(PersonEditMode.CORRECT_NAME, echSchema);
-	}
-	
-	@Override
-	protected void fillForm(Form<Person> formPanel) {
-		// not used
+	protected void fillForm(Form<Person> form) {
+		form.line(PERSON.originalName);
+		form.line(PERSON.alliancePartnershipName);
+		form.line(PERSON.aliasName);
+		form.line(PERSON.otherName);
+		form.line(PERSON.callName);
+		form.line(PERSON.foreign.nameOnPassport);
 	}
 
 	@Override
