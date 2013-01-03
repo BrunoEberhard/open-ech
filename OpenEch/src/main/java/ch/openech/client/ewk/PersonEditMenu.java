@@ -318,7 +318,7 @@ public class PersonEditMenu {
 		undoSwiss.setEnabled(isAlive && isSwiss);
 		changeCitizen.setEnabled(isAlive && isSwiss);
 		naturalizeForeigner.setEnabled(isAlive && !isSwiss);
-		changeNationality.setEnabled(isAlive);
+		changeNationality.setEnabled(isAlive && !isSwiss);
 		undoCitizen.setEnabled(isAlive && isSwiss);
 		changeReligion.setEnabled(isAlive);
 		gardianMeasure.setEnabled(isAlive && !hasGardianMeasure);
