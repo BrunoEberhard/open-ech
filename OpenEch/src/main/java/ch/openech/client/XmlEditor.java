@@ -28,17 +28,6 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	
 	private final XmlAction xmlAction;
 
-// TODO EchSchema / PageContext
-//	protected final PageContext pageContext;
-//	protected final OpenEchPreferences preferences;
-//
-//	private final XmlAction xmlAction;
-//	
-//	public XmlEditor(PageContext pageContext) {
-//		this.pageContext = pageContext;
-//		this.preferences = (OpenEchPreferences)pageContext.getApplicationContext().getPreferences();
-
-	
 	public XmlEditor(EchSchema echSchema, OpenEchPreferences preferences) {
 		this.echSchema = echSchema;
 		this.preferences = preferences;
@@ -55,18 +44,6 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	public void generateSedexOutput(T object) throws Exception {
 		// to overwrite
 	}
-	
-//	public EchSchema0020 ewkSchema() {
-//		return preferences.applicationSchemaData.schema20;
-//	}
-
-	// TODO momentan hört der XML Button nicht auf die Änderungen in den Preferences
-//	@Override
-//	public EditorPanel<T> createEditorPanel() {
-//		EditorPanel<T> panel = super.createEditorPanel();
-//		xmlAction.addEditorControlPreferenceChangeListener(panel);
-//		return panel;
-//	}
 
 	@Override
 	public Action[] getActions() {
@@ -154,23 +131,6 @@ public abstract class XmlEditor<T> extends Editor<T> {
 			}
 		}
 	}
-	
-//		private class EditorControlPreferenceChangeListener extends ComponentAdapter implements PreferenceChangeListener {
-//
-//		    @Override
-//			public void componentShown(ComponentEvent e) {
-//		    	context.getPreferences().addPreferenceChangeListener(this);
-//		    }
-//		    
-//		    @Override
-//			public void componentHidden(ComponentEvent e) {
-//		    	context.getPreferences().removePreferenceChangeListener(this);
-//		    }
-//		    
-//			@Override
-//			public void preferenceChange(PreferenceChangeEvent evt) {
-//				updateXmlButtonVisibility();
-//			}
-//		}
+
 
 }
