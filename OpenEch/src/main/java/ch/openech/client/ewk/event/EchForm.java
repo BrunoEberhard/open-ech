@@ -92,35 +92,6 @@ public class EchForm<T> extends Form<T> {
 		this.echSchema = echSchema;
 	}
 
-//	@Override
-//	public FormField<?> createStringField(String name, Format format) {
-//		if (format == EchFormats.cantonAbbreviationFormat) {
-//			return new CantonField(name);
-//		}
-//		
-//		if (echSchema != null) {
-//			if (format == EchCodes.basedOnLaw) {
-//				if (echSchema.reducedBasedOnLawCode()) {
-//					format = EchCodes.basedOnLaw3;
-//				}
-//			} 
-//			
-//			if (format == EchCodes.residencePermit) {
-//				if (echSchema.residencePermitDetailed()) {
-//					format = EchCodes.residencePermitDetailed;
-//				}
-//			}
-//		}
-//		
-//		if (Address.ADDRESS.country.equals(name)) {
-//			return new CountryIso2Field(name);
-//		} else if (Address.ADDRESS.town.equals(name)) {
-//			return new TownField(name);
-//		}
-//		
-//		return super.createStringField(name, format);
-//	}
-
 	@Override
 	public FormField<?> createField(PropertyInterface property) {
 		Class<?> type = property.getFieldClazz();
