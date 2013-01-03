@@ -9,7 +9,7 @@ import ch.openech.client.e21.NameOfParentsField;
 import ch.openech.client.e21.PartnerField;
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.e44.TechnicalIdsField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.dm.person.types.MaritalStatus;
@@ -24,7 +24,7 @@ import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.xml.write.EchSchema;
 
-public class PersonPanel extends EchFormPanel<Person>  {
+public class PersonPanel extends EchForm<Person>  {
 
 	private final PersonEditMode mode;
 	

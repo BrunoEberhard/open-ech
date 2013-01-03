@@ -3,7 +3,7 @@ package ch.openech.client.e44;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.common.TechnicalIds;
 import ch.openech.mj.db.model.Constants;
@@ -52,7 +52,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 
 	@Override
 	public IForm<TechnicalIds> createFormPanel() {
-		EchFormPanel<TechnicalIds> form = new EchFormPanel<TechnicalIds>(TechnicalIds.class);
+		EchForm<TechnicalIds> form = new EchForm<TechnicalIds>(TechnicalIds.class);
 		form.line(TechnicalIds.TECHNICAL_IDS.localId.personIdCategory);
 		form.line(TechnicalIds.TECHNICAL_IDS.localId.personId);
 		form.area(new OtherIdField(TechnicalIds.TECHNICAL_IDS.otherId, isEditable()));

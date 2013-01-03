@@ -2,13 +2,13 @@ package ch.openech.client.e11;
 
 import static ch.openech.dm.common.DwellingAddress.DWELLING_ADDRESS;
 import ch.openech.client.e10.AddressField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.mj.edit.fields.EditField;
 import ch.openech.xml.write.EchSchema;
 
 // Wohnadresse
-public class DwellingAddressPanel extends EchFormPanel<DwellingAddress> {
+public class DwellingAddressPanel extends EchForm<DwellingAddress> {
 	
 	public DwellingAddressPanel(EchSchema echSchema) {
 		super(echSchema);

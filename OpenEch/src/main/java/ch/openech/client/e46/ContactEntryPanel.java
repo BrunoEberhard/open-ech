@@ -1,7 +1,7 @@
 package ch.openech.client.e46;
 
 import ch.openech.client.e10.AddressField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.contact.ContactEntry;
@@ -12,7 +12,7 @@ import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.toolkit.TextField;
 
 // setTitle("Kontakt");
-public class ContactEntryPanel extends EchFormPanel<ContactEntry> {
+public class ContactEntryPanel extends EchForm<ContactEntry> {
 	
 	private final ContactEntryType type;
 	private AddressField addressField;

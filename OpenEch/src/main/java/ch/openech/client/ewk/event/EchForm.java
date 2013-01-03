@@ -46,48 +46,48 @@ import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.GenericUtils;
 import ch.openech.xml.write.EchSchema;
 
-public class EchFormPanel<T> extends Form<T> {
+public class EchForm<T> extends Form<T> {
 	protected final EchSchema echSchema;
 	
-	protected EchFormPanel() {
+	protected EchForm() {
 		this(1);
 	}
 	
-	public EchFormPanel(int columns) {
+	public EchForm(int columns) {
 		this((EchSchema) null, columns);
 	}
 
-	protected EchFormPanel(EchSchema echSchema) {
+	protected EchForm(EchSchema echSchema) {
 		this(echSchema, 1);
 	}
 	
-	public EchFormPanel(EchSchema echSchema, int columns) {
+	public EchForm(EchSchema echSchema, int columns) {
 		super(null, Resources.getResourceBundle(), true, columns);
 		this.echSchema = echSchema;
 	}
 
-	protected EchFormPanel(EchSchema echSchema, boolean editable, int columns) {
+	protected EchForm(EchSchema echSchema, boolean editable, int columns) {
 		super(null, Resources.getResourceBundle(), editable, columns);
 		this.echSchema = echSchema;
 	}
 	
 	//
 
-	public EchFormPanel(Class<T> objectClass) {
+	public EchForm(Class<T> objectClass) {
 		super(objectClass, Resources.getResourceBundle(), true);
 		this.echSchema = null;
 	}
 	
-	public EchFormPanel(Class<T> objectClass, int columns) {
+	public EchForm(Class<T> objectClass, int columns) {
 		this(objectClass, null, columns);
 	}
 
-	public EchFormPanel(Class<T> objectClass, EchSchema echSchema) {
+	public EchForm(Class<T> objectClass, EchSchema echSchema) {
 		super(objectClass, Resources.getResourceBundle(), true);
 		this.echSchema = echSchema;
 	}
 	
-	public EchFormPanel(Class<T> objectClass, EchSchema echSchema, int columns) {
+	public EchForm(Class<T> objectClass, EchSchema echSchema, int columns) {
 		super(objectClass, Resources.getResourceBundle(), true, columns);
 		this.echSchema = echSchema;
 	}

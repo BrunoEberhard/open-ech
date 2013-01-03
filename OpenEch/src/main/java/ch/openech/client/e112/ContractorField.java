@@ -1,7 +1,7 @@
 package ch.openech.client.e112;
 
 import ch.openech.client.e46.ContactField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.contact.Contact;
 import ch.openech.mj.db.model.PropertyInterface;
@@ -35,7 +35,7 @@ public class ContractorField extends ObjectFlowField<Contact> {
 
 	@Override
 	public IForm<Contact> createFormPanel() {
-		Form<Contact> form = new EchFormPanel<Contact>(Contact.class);
+		Form<Contact> form = new EchForm<Contact>(Contact.class);
 		form.line(Contact.CONTACT.stringId);
 		form.area(new ContactField(null));
 		return form;

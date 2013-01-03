@@ -5,7 +5,7 @@ import java.util.List;
 
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.client.page.OrganisationViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
@@ -36,7 +36,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	public IForm<T> createForm() {
 		@SuppressWarnings("unchecked")
 		Class<T> genericClass = (Class<T>) GenericUtils.getGenericClass(getClass());
-		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, echSchema, getFormColumns());
+		EchForm<T> formPanel = new EchForm<T>(genericClass, echSchema, getFormColumns());
 		fillForm(formPanel);
 		return formPanel;
 	}

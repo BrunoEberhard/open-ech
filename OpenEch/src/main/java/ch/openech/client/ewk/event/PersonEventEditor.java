@@ -28,7 +28,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 		@SuppressWarnings("unchecked")
 		Class<T> genericClass = (Class<T>) GenericUtils.getGenericClass(getClass());
 
-		EchFormPanel<T> formPanel = new EchFormPanel<T>(genericClass, echSchema, getFormColumns());
+		EchForm<T> formPanel = new EchForm<T>(genericClass, echSchema, getFormColumns());
 		fillForm(formPanel);
 		return formPanel;
 	}

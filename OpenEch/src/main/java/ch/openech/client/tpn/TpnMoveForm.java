@@ -1,10 +1,10 @@
 package ch.openech.client.tpn;
 
 import static ch.openech.dm.tpn.ThirdPartyMove.THIRD_PARTY_MOVE;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.tpn.ThirdPartyMove;
 
-public class TpnMoveForm extends EchFormPanel<ThirdPartyMove> {
+public class TpnMoveForm extends EchForm<ThirdPartyMove> {
 
 	private final MoveDirection direction;
 	

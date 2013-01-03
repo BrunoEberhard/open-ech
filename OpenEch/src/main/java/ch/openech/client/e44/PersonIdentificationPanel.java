@@ -1,10 +1,10 @@
 package ch.openech.client.e44;
 
 import static ch.openech.dm.person.PersonIdentification.PERSON_IDENTIFICATION;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.PersonIdentification;
 
-public class PersonIdentificationPanel extends EchFormPanel<PersonIdentification> {
+public class PersonIdentificationPanel extends EchForm<PersonIdentification> {
 
 	public PersonIdentificationPanel() {
 		this(false);

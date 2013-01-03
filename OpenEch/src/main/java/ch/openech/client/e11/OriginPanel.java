@@ -1,10 +1,10 @@
 package ch.openech.client.e11;
 
 import static ch.openech.dm.person.PlaceOfOrigin.PLACE_OF_ORIGIN;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.PlaceOfOrigin;
 
-public class OriginPanel extends EchFormPanel<PlaceOfOrigin> {
+public class OriginPanel extends EchForm<PlaceOfOrigin> {
 	
 	public OriginPanel(boolean withReasonAndDate, boolean withExpirationDate) {
 		super(2);

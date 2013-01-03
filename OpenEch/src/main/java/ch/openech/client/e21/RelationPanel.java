@@ -2,7 +2,7 @@ package ch.openech.client.e21;
 
 import static ch.openech.dm.person.Relation.RELATION;
 import ch.openech.client.e10.AddressField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.code.BasedOnLaw;
 import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.TypeOfRelationship;
@@ -10,7 +10,7 @@ import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.xml.write.EchSchema;
 
-public class RelationPanel extends EchFormPanel<Relation> {
+public class RelationPanel extends EchForm<Relation> {
 	
 	public RelationPanel(EchSchema echSchema) {
 		super(echSchema);

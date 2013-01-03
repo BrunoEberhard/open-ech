@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.Action;
 
 import ch.openech.client.e07.MunicipalityField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Residence;
@@ -39,7 +39,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Depend
 
 		@Override
 		public IForm<Residence> createForm() {
-			Form<Residence> form = new EchFormPanel<Residence>(Residence.class);
+			Form<Residence> form = new EchForm<Residence>(Residence.class);
 			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
 		}
@@ -61,7 +61,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Depend
 
 		@Override
 		public IForm<Residence> createForm() {
-			Form<Residence> form = new EchFormPanel<Residence>(Residence.class);
+			Form<Residence> form = new EchForm<Residence>(Residence.class);
 			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
 		}

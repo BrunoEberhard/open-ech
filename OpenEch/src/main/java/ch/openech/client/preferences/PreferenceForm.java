@@ -1,9 +1,9 @@
 package ch.openech.client.preferences;
 
 import ch.openech.client.e07.MunicipalityField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 
-public class PreferenceForm extends EchFormPanel<OpenEchPreferences> {
+public class PreferenceForm extends EchForm<OpenEchPreferences> {
 
 	public PreferenceForm() {
 		super(2);

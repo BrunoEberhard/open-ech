@@ -9,7 +9,7 @@ import javax.swing.Action;
 
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.client.ewk.event.moveIn.NextPersonHelper;
 import ch.openech.client.page.PersonViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
@@ -173,7 +173,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		protected IForm<MoveInNextPerson> createForm() {
-			EchFormPanel<MoveInNextPerson> form = new EchFormPanel<MoveInNextPerson>(MoveInNextPerson.class, 2);
+			EchForm<MoveInNextPerson> form = new EchForm<MoveInNextPerson>(MoveInNextPerson.class, 2);
 			
 			form.line(MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted);
 

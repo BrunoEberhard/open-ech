@@ -2,11 +2,11 @@ package ch.openech.client.e101;
 
 import static ch.openech.dm.person.PersonExtendedInformation.PERSON_EXTENDED_INFORMATION;
 import ch.openech.client.e10.AddressField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.PersonExtendedInformation;
 
 // Ergänzende Personendaten
-public class PersonExtendedInformationPanel extends EchFormPanel<PersonExtendedInformation> {
+public class PersonExtendedInformationPanel extends EchForm<PersonExtendedInformation> {
 
 	public PersonExtendedInformationPanel() {
 		line(PERSON_EXTENDED_INFORMATION.armedForcesService);

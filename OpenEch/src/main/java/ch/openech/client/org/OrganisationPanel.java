@@ -2,12 +2,12 @@ package ch.openech.client.org;
 
 import static ch.openech.dm.organisation.Organisation.ORGANISATION;
 import ch.openech.client.e44.TechnicalIdsField;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.organisation.Organisation.EditMode;
 import ch.openech.xml.write.EchSchema;
 
-public class OrganisationPanel extends EchFormPanel<Organisation> {
+public class OrganisationPanel extends EchForm<Organisation> {
 
 	private final EditMode mode;
 	

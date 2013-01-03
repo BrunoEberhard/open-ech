@@ -1,10 +1,10 @@
 package ch.openech.client.e10;
 
 import static ch.openech.dm.common.Address.ADDRESS;
-import ch.openech.client.ewk.event.EchFormPanel;
+import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.common.Address;
 
-public class AddressPanel extends EchFormPanel<Address> {
+public class AddressPanel extends EchForm<Address> {
 	
 	public AddressPanel(boolean swiss, boolean person, boolean organisation) {
 		super(4);
