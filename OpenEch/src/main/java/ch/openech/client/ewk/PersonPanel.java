@@ -96,10 +96,10 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			area(PERSON.comesFromAddress, PERSON.dwellingAddress, PERSON.goesToAddress);
 			
 			if (extensionAvailable()) {
-				area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
+				area(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
 				area(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
 			} else {
-				area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign, PERSON.occupation);
+				area(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
 				area(relationField, nameOfParentsField, PERSON.contactPerson);
 			}
 			
@@ -111,10 +111,10 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			area(PERSON.residence, PERSON.dwellingAddress, PERSON.comesFromAddress);
 			
 			if (extensionAvailable()) {
-				area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
+				area(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
 				area(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
 			} else {
-				area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign, PERSON.occupation);
+				area(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
 				area(relationField, nameOfParentsField, PERSON.contactPerson);
 			}
 			break;
@@ -122,12 +122,12 @@ public class PersonPanel extends EchFormPanel<Person>  {
 			line(PERSON.arrivalDate, PERSON.departureDate);
 			line(PERSON.comesFrom, PERSON.goesTo);
 			area(PERSON.comesFromAddress, PERSON.goesToAddress);
-			area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign);
+			area(PERSON.placeOfOrigin, PERSON.foreign);
 			area(PERSON.dwellingAddress, PERSON.occupation);
 			area(new RelationField(PERSON.relation, echSchema, editable), new NameOfParentsField(Person.PERSON.nameOfParents, true));
 			break;
 		case CORRECT_PERSON:
-			area(new PlaceOfOriginField(PERSON.placeOfOrigin, true, editable), PERSON.foreign);
+			area(PERSON.placeOfOrigin, PERSON.foreign);
 			if (extensionAvailable()) {
 				area(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contact);
 			} else {

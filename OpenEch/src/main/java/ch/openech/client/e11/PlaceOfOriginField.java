@@ -10,6 +10,7 @@ import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.DependingOnFieldAbove;
@@ -23,8 +24,9 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	private final boolean withAddOn;
 	private boolean swiss = true;
 	
-	public PlaceOfOriginField(List<PlaceOfOrigin> key, boolean editable) {
-		this(key, true, editable);
+	public PlaceOfOriginField(PropertyInterface property, boolean editable) {
+		super(property, editable);
+		this.withAddOn = true;
 	}
 	
 	/* Bei Geburt können keine AddOns zu den PlaceOfOrigins mitgegeben werden.

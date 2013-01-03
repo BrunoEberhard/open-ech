@@ -16,6 +16,7 @@ import ch.openech.client.e11.ForeignField;
 import ch.openech.client.e11.NationalityField;
 import ch.openech.client.e11.NationalityReadOnlyField;
 import ch.openech.client.e11.PlaceField;
+import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
 import ch.openech.client.e11.ResidenceField;
 import ch.openech.client.e21.OccupationField;
@@ -36,6 +37,7 @@ import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonExtendedInformation;
 import ch.openech.dm.person.PersonIdentification;
+import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Residence;
 import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.FormField;
@@ -158,10 +160,8 @@ public class EchFormPanel<T> extends Form<T> {
 				return new OccupationField(property, echSchema, editable);
 //				} else if (listClass == Relation.class) {
 //					return new RelationField(key, editable);
-// PlaceOfOrigin reagiert ev. auf Nationality, daher muss es von Hand alloziert werden
-//			} else if (listClass == PlaceOfOrigin.class) {
-//				return new PlaceOfOriginField(key, editable);
-//			}
+			} else if (listClass == PlaceOfOrigin.class) {
+				return new PlaceOfOriginField(property, editable);
 			}
 		}
 		

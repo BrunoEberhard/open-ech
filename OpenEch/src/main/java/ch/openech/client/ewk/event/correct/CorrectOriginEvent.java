@@ -19,7 +19,7 @@ public class CorrectOriginEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.area(new PlaceOfOriginField(Person.PERSON.placeOfOrigin, true));
+		formPanel.area(Person.PERSON.placeOfOrigin);
 	}
 
 	@Override
