@@ -56,16 +56,16 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		
 		@Override
 		public void validate(List<ValidationMessage> resultList) {
-			validate(resultList, partner1, partner2, true);
+			validate(resultList, partner1, partner2);
 			validateNamesNotBlank(resultList);
 		}
 		
-		static void validate(List<ValidationMessage> validationMessages, Person person1, Person person2, boolean marriage) {
+		private static void validate(List<ValidationMessage> validationMessages, Person person1, Person person2) {
 			validatePartnerAlive(validationMessages, MARRIAGE.partner1, person1);
 			validatePartnerAlive(validationMessages, MARRIAGE.partner2, person2);
 			validatePartnerSet(validationMessages, MARRIAGE.partner1, person1);
 			validatePartnerSet(validationMessages, MARRIAGE.partner2, person2);
-			validateSex(validationMessages, person1, person2, marriage);
+			validateSex(validationMessages, person1, person2);
 		}
 		
 		private void validateNamesNotBlank(List<ValidationMessage> validationMessages) {
@@ -73,38 +73,32 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 			if (Boolean.TRUE.equals(changeName2)) validateNameNotBlank(validationMessages, MARRIAGE.name2, name2);
 		}
 		
-		@BusinessRule("2 Eheleute/Partner für Ehe notwendig")
-		static void validatePartnerSet(List<ValidationMessage> validationMessages, Person key, Person person) {
+		@BusinessRule("2 Eheleute für Ehe notwendig")
+		private static void validatePartnerSet(List<ValidationMessage> validationMessages, Person key, Person person) {
 			if (person == null) {
 				validationMessages.add(new ValidationMessage(key, "Person fehlt"));
 			}
 		}
 		
-		@BusinessRule("Ehepartner/Partner müssen leben")
-		static void validatePartnerAlive(List<ValidationMessage> validationMessages, Person key, Person person) {
+		@BusinessRule("Ehepartner müssen leben")
+		private static void validatePartnerAlive(List<ValidationMessage> validationMessages, Person key, Person person) {
 			if (person == null) return;
 			if (person.dateOfDeath != null) {
 				validationMessages.add(new ValidationMessage(key, "Person darf nicht tot sein"));
 			}
 		}
 		
-		@BusinessRule("Eheleute müssen unterschiedlichen Geschlechts sein, Partner gleichen Geschlechts")
-		static void validateSex(List<ValidationMessage> validationMessages, Person person1, Person person2, boolean marriage) {
+		@BusinessRule("Eheleute müssen unterschiedlichen Geschlechts sein")
+		private static void validateSex(List<ValidationMessage> validationMessages, Person person1, Person person2) {
 			if (person1 == null || person2 == null) return;
 			if (person1.personIdentification.sex == null || person2.personIdentification.sex == null) return;
-			if (marriage) {
-				if (person1.personIdentification.sex == person2.personIdentification.sex) {
-					validationMessages.add(new ValidationMessage(MARRIAGE.partner2, "Eheleute müssen unterschiedlichen Geschlechts sein"));
-				}
-			} else {
-				if (person1.personIdentification.sex != person2.personIdentification.sex) {
-					validationMessages.add(new ValidationMessage(MARRIAGE.partner2, "Partener müssen gleichen Geschlechts sein"));
-				}
+			if (person1.personIdentification.sex == person2.personIdentification.sex) {
+				validationMessages.add(new ValidationMessage(MARRIAGE.partner2, "Eheleute müssen unterschiedlichen Geschlechts sein"));
 			}
 		}
 
 		@BusinessRule("Geänderter Name bei Ehe, Allianzname bei Partnerschaft darf nicht leer sein, sofern er geändert wird")
-		static void validateNameNotBlank(List<ValidationMessage> validationMessages, String key, String name) {
+		private static void validateNameNotBlank(List<ValidationMessage> validationMessages, String key, String name) {
 			if (StringUtils.isBlank(name)) {
 				validationMessages.add(new ValidationMessage(key, "Name kann nicht leer sein"));
 			}
