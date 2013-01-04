@@ -220,9 +220,13 @@ public class WriterEch0011 {
 	}
 
 	public void residence(WriterElement message, Person values) throws Exception {
-		if ("1".equals(values.typeOfResidence)) mainResidence(message, HAS_MAIN_RESIDENCE, values);
-		else if ("2".equals(values.typeOfResidence)) secondaryResidence(message, HAS_SECONDARY_RESIDENCE, values);
-		else if ("3".equals(values.typeOfResidence)) otherResidence(message, HAS_OTHER_RESIDENCE, values);
+		switch (values.typeOfResidence) {
+		case hasMainResidence: mainResidence(message, HAS_MAIN_RESIDENCE, values); break;
+		case hasSecondaryResidence: secondaryResidence(message, HAS_SECONDARY_RESIDENCE, values); break;
+		case hasOtherResidence: otherResidence(message, HAS_OTHER_RESIDENCE, values); break;
+		default:
+			break;
+		}
 	}
 
 	public void mainResidence(WriterElement parent, String tagName, Person values) throws Exception {
