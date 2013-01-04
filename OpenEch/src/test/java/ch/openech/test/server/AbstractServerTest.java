@@ -4,14 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ResourceBundle;
 
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 
+import ch.openech.client.OpenEchApplication;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.resources.Resources;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchSchema;
@@ -20,10 +19,15 @@ import ch.openech.xml.write.WriterEch0020;
 public abstract class AbstractServerTest {
 
 	private static WriterEch0020 writer;
+	private static OpenEchApplication application;
 	
 	@BeforeClass
 	public static void startup() throws Exception {
-		Resources.addResourceBundle(ResourceBundle.getBundle("ch.openech.resources.OpenEch"));
+		if (application == null) {
+			application = new OpenEchApplication();
+			application.init();
+		}
+		// DB komplett leeren vor jedem weiteren Test
 		EchServer.getInstance().getPersistence().clear();
 	}
 	
