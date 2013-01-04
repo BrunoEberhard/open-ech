@@ -16,7 +16,6 @@ import ch.openech.dm.person.types.PartnerShipAbolition;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.Language;
-import ch.openech.dm.types.MrMrs;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.dm.types.YesNo;
 import ch.openech.mj.db.model.Constants;
@@ -27,7 +26,6 @@ import ch.openech.mj.edit.value.Reference;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Depends;
-import ch.openech.mj.model.annotation.DerivedProperty;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.BusinessRule;
@@ -107,16 +105,10 @@ public class Person implements Validation {
 	
 	//
 
-	public MrMrs getValue() {
-		if (isMale()) return MrMrs.Herr;
-		else if (isFemale()) return MrMrs.Frau;
-		else return null;
-	}
-	
 	// Von PersonPanel gebraucht
 	
-	@DerivedProperty
 	public Relation getFather() {
+		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "father", Relation.class);
 		return getRelation(TypeOfRelationship.Vater);
 	}
 	
@@ -124,8 +116,8 @@ public class Person implements Validation {
 		setRelation(TypeOfRelationship.Vater, relation);
 	}
 
-	@DerivedProperty
 	public Relation getMother() {
+		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "mother", Relation.class);
 		return getRelation(TypeOfRelationship.Mutter);
 	}
 	
@@ -219,8 +211,8 @@ public class Person implements Validation {
 		return typeOfResidence == TypeOfResidence.hasMainResidence;
 	}
 	
-	@DerivedProperty
 	public String getStreet() {
+		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "street", String.class);
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.street;
 		} else {
@@ -228,8 +220,8 @@ public class Person implements Validation {
 		}
 	}
 
-	@DerivedProperty
 	public String getStreetNumber() {
+		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "streetNumber", String.class);
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.houseNumber.houseNumber;
 		} else {
@@ -237,8 +229,8 @@ public class Person implements Validation {
 		}
 	}
 
-	@DerivedProperty
 	public String getTown() {
+		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "town", String.class);
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.town;
 		} else {
