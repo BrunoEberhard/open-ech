@@ -15,6 +15,7 @@ import ch.openech.dm.person.types.PartnerShipAbolition;
 import ch.openech.dm.person.types.Separation;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
@@ -273,6 +274,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
 			super.validate(data, validationMessages);
 			validateEventNotBeforeDateOfMaritalStatus(data, validationMessages);
+			EmptyValidator.validate(validationMessages, data, ChangeWithSecondPersonEventData.DATA.cancelationReason);
 		}
 
 		@Override
