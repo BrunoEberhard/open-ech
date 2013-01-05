@@ -12,16 +12,12 @@ import ch.openech.client.e44.TechnicalIdsField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
-import ch.openech.dm.person.types.MaritalStatus;
-import ch.openech.dm.person.types.PartnerShipAbolition;
 import ch.openech.dm.types.Sex;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.mj.edit.fields.DateField;
+import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.mj.edit.fields.FormField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonPanel extends EchForm<Person>  {
@@ -64,12 +60,7 @@ public class PersonPanel extends EchForm<Person>  {
 		// not visible for: BIRTH, CORRECT_IDENTIFICATION
 		
 		line(PERSON.originalName, PERSON.alliancePartnershipName, PERSON.aliasName, PERSON.otherName);
-		
-		if (editable) {
-			line(PERSON.maritalStatus.maritalStatus, new DateOfMaritalStatusField(), new CancelationReasonField(), PERSON.callName);
-		} else {
-			line(PERSON.maritalStatus.maritalStatus, PERSON.maritalStatus.dateOfMaritalStatus, PERSON.cancelationReason, PERSON.callName);
-		}
+		line(PERSON.maritalStatus.maritalStatus, PERSON.maritalStatus.dateOfMaritalStatus, PERSON.cancelationReason, PERSON.callName);
 
 		if (echSchema.separationTillAvailable()) {
 			line(PERSON.separation.separation, PERSON.separation.dateOfSeparation, PERSON.separation.separationTill, PERSON.languageOfCorrespondance);
@@ -139,42 +130,7 @@ public class PersonPanel extends EchForm<Person>  {
 			// both not implemented here
 		}
 	}
-	
-	private class DateOfMaritalStatusField extends DateField implements DependingOnFieldAbove<MaritalStatus> {
-		
-		public DateOfMaritalStatusField() {
-			super(Constants.getProperty(PERSON.maritalStatus.dateOfMaritalStatus));
-		}
 
-//		@Override
-//		public MaritalStatus getClassOfField() {
-//			return PERSON.maritalStatus.maritalStatus;
-//		}
-
-		@Override
-		public void valueChanged(MaritalStatus maritalStatus) {
-			setEnabled(maritalStatus != MaritalStatus.ledig);
-		}
-	}
-	
-	private class CancelationReasonField extends EnumEditField<PartnerShipAbolition> implements DependingOnFieldAbove<MaritalStatus> {
-		
-		public CancelationReasonField() {
-			super(Constants.getProperty(PERSON.cancelationReason));
-		}
-
-//		@Override
-//		public MaritalStatus getClassOfField() {
-//			return PERSON.maritalStatus.maritalStatus;
-//		}
-
-		@Override
-		public void valueChanged(MaritalStatus maritalStatus) {	
-			setEnabled(maritalStatus == MaritalStatus.aufgeloeste_partnerschaft || maritalStatus == MaritalStatus.geschieden);
-
-		}
-	}
-	
 	protected void createBirth() {
 		line(PERSON.callName, PERSON.languageOfCorrespondance);
 		line(PERSON.nationality, PERSON.religion);

@@ -3,13 +3,8 @@ package ch.openech.client.e46;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.datagenerator.DataGenerator;
-import ch.openech.dm.EchFormats;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.contact.ContactEntryType;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.TextEditField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
-import ch.openech.mj.toolkit.TextField;
 
 // setTitle("Kontakt");
 public class ContactEntryPanel extends EchForm<ContactEntry> {
@@ -23,10 +18,10 @@ public class ContactEntryPanel extends EchForm<ContactEntry> {
 
 		if (type == ContactEntryType.Phone) {
 			line(ContactEntry.CONTACT_ENTRY.phoneCategory);
-			line(new OtherCategoryField(ContactEntry.CONTACT_ENTRY.phoneCategoryOther));
+			line(ContactEntry.CONTACT_ENTRY.phoneCategoryOther);
 		} else {
 			line(ContactEntry.CONTACT_ENTRY.categoryCode);
-			line(new OtherCategoryField(ContactEntry.CONTACT_ENTRY.categoryOther));
+			line(ContactEntry.CONTACT_ENTRY.categoryOther);
 		}
 		
 		if (type == ContactEntryType.Address) {
@@ -45,21 +40,5 @@ public class ContactEntryPanel extends EchForm<ContactEntry> {
 		}
 		super.fillWithDemoData();
 	}
-	
-	private static class OtherCategoryField extends TextEditField implements DependingOnFieldAbove<Object> {
 
-		public OtherCategoryField(String key) {
-			super(Constants.getProperty(key), EchFormats.freeKategoryText);
-		}
-
-		@Override
-		public void valueChanged(Object value) {
-			boolean enabled = value == null;
-			if (!enabled) {
-				setObject(null);
-			}
-			((TextField) getComponent()).setEnabled(enabled);
-		}
-		
-	}
 }

@@ -5,9 +5,7 @@ import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.code.BasedOnLaw;
 import ch.openech.dm.person.Relation;
-import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.mj.edit.fields.EnumEditField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.xml.write.EchSchema;
 
 public class RelationPanel extends EchForm<Relation> {
@@ -24,17 +22,10 @@ public class RelationPanel extends EchForm<Relation> {
 		line(RELATION.care);
 	}
 
-	private class BasedOnLawField extends EnumEditField<BasedOnLaw> implements DependingOnFieldAbove<TypeOfRelationship> {
+	private class BasedOnLawField extends EnumEditField<BasedOnLaw> {
 		
 		public BasedOnLawField() {
 			super(RELATION.basedOnLaw, echSchema == null || echSchema.reducedBasedOnLawCode() ?  BasedOnLaw.VERSION_3 :  null);
-		}
-
-		@Override
-		public void valueChanged(TypeOfRelationship typeOfRelationship) {
-			boolean isVormund = typeOfRelationship != null && typeOfRelationship.isCare();
-			setEnabled(isVormund);
-
 		}
 	}
 	

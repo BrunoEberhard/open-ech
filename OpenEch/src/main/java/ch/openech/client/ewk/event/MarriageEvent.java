@@ -1,7 +1,6 @@
 package ch.openech.client.ewk.event;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -17,14 +16,13 @@ import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.TextEditField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.annotation.Depends;
+import ch.openech.mj.model.annotation.Changes;
+import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
@@ -43,16 +41,41 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		@Required
 		public LocalDate dateOfMaritalStatus;
 		public Boolean registerPartner2 = Boolean.TRUE;
-		public Person partner1, partner2;
+		@OnChange("updatePartner1")
+		public Person partner1;
+		@OnChange("updatePartner2")
+		public Person partner2;
 		public Boolean changeName1, changeName2;
-		@Size(EchFormats.baseName) @Depends("partner2")
+		@Size(EchFormats.baseName)
 		public String name1;
-		@Size(EchFormats.baseName) @Depends("partner1")
+		@Size(EchFormats.baseName)
 		public String name2;
-		@Depends("partner2")
 		public final List<PlaceOfOrigin> origin1 = new ArrayList<PlaceOfOrigin>();
-		@Depends("partner1")
 		public final List<PlaceOfOrigin> origin2 = new ArrayList<PlaceOfOrigin>();
+		
+		@Changes({"name2", "origin2"})
+		public void updatePartner1() {
+			if (partner1 != null) {
+				name2 = partner1.personIdentification.officialName;
+				origin2.clear();
+				origin2.addAll(partner1.placeOfOrigin);
+			} else {
+				name2 = null;
+				origin2.clear();
+			}
+		}
+
+		@Changes({"name1", "origin1"})
+		public void updatePartner2() {
+			if (partner2 != null) {
+				name1 = partner2.personIdentification.officialName;
+				origin1.clear();
+				origin1.addAll(partner2.placeOfOrigin);
+			} else {
+				name1 = null;
+				origin1.clear();
+			}
+		}
 		
 		@Override
 		public void validate(List<ValidationMessage> resultList) {
@@ -118,11 +141,8 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		PersonField partner1 = new PersonField(MARRIAGE.partner1); 
 		PersonField partner2 = new PersonField(MARRIAGE.partner2);
 	
-		NewPersonNameField name1 = new NewPersonNameField(MARRIAGE.name1);
-		NewPersonNameField name2 = new NewPersonNameField(MARRIAGE.name2);
-	
-		RemoveEntriesListField<PlaceOfOrigin> origin1 = new OriginListField(MARRIAGE.origin1);
-		RemoveEntriesListField<PlaceOfOrigin> origin2 = new OriginListField(MARRIAGE.origin2);
+		RemoveEntriesListField<PlaceOfOrigin> origin1 = new RemoveEntriesListField<PlaceOfOrigin>(MARRIAGE.origin1);
+		RemoveEntriesListField<PlaceOfOrigin> origin2 = new RemoveEntriesListField<PlaceOfOrigin>(MARRIAGE.origin2);
 		
 		//
 		
@@ -131,59 +151,11 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		formPanel.area(partner1, partner2);
 	
 		formPanel.line(MARRIAGE.changeName1, MARRIAGE.changeName2);
-		formPanel.line(name1, name2);
+		formPanel.line(MARRIAGE.name1, MARRIAGE.name2);
 		
 		formPanel.area(origin1, origin2);
 	}
 
-	private static class OriginListField extends RemoveEntriesListField<PlaceOfOrigin> implements DependingOnFieldAbove<Person> {
-
-		public OriginListField(List<PlaceOfOrigin> key) {
-			super(key);
-		}
-
-//		@Override
-//		public Person getClassOfField() {
-//			return dependingOnFieldKey;
-//		}
-
-		@Override
-		public void valueChanged(Person person) {
-			List<PlaceOfOrigin> origins;
-			if (person != null) {
-				origins = person.placeOfOrigin;
-			} else {
-				origins = Collections.emptyList();
-			}
-			setValues(origins);
-			if (getObject() != null) {
-				getObject().clear();
-				getObject().addAll(origins);
-				fireObjectChange();
-			}
-		}
-	}
-	
-	private static class NewPersonNameField extends TextEditField implements DependingOnFieldAbove<Person> {
-
-		public NewPersonNameField(Object key) {
-			super(Constants.getProperty(key), EchFormats.baseName);
-		}
-
-//		@Override
-//		public Person getClassOfField() {
-//			return dependingOnFieldKey;
-//		}
-
-		@Override
-		public void valueChanged(Person person) {
-			if (person != null) {
-				setObject(person.personIdentification.officialName);
-//						name = person.alliancePartnershipName;
-			}
-		}
-	}
-	
 	@Override
 	public Marriage load() {
 		Marriage marriageActionData = new Marriage();

@@ -23,11 +23,9 @@ import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.Wizard;
 import ch.openech.mj.edit.WizardStep;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.annotation.Depends;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -57,11 +55,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		
 		@Required
 		public TypeOfRelationshipInverted typeOfRelationshipInverted = TypeOfRelationshipInverted.Kind;
-		@Required @Depends("typeOfRelationshipInverted")
+		@Required // @Depends("typeOfRelationshipInverted")
 		public Person basePerson;
-		@Depends("typeOfRelationshipInverted")
+		// @Depends("typeOfRelationshipInverted")
 		public Person mother, father;
-		@Depends("typeOfRelationshipInverted")
+		// @Depends("typeOfRelationshipInverted")
 		public Person fosterMother, fosterFather;
 	}
 		
@@ -267,7 +265,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 
-	private class MoveInNextPersonField extends AbstractEditField<Person> implements DependingOnFieldAbove<TypeOfRelationshipInverted> {
+	private class MoveInNextPersonField extends AbstractEditField<Person> {
 
 		private final ComboBox<Person> comboBox;
 		private final TypeOfRelationship relation;
@@ -323,16 +321,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		@Override
 		public Person getObject() {
 			return (Person) comboBox.getSelectedObject();
-		}
-
-//		@Override
-//		public TypeOfRelationshipInverted getClassOfField() {
-//			return MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted;
-//		}
-
-		@Override
-		public void valueChanged(TypeOfRelationshipInverted typeOfRelationshipInverted) {
-			// TODO enable/disable der Felder
 		}
 		
 	}

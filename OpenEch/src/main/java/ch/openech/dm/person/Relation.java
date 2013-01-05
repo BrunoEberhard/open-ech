@@ -1,6 +1,5 @@
 package ch.openech.dm.person;
 
-import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.BasedOnLaw;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.person.types.TypeOfRelationship;
@@ -9,8 +8,7 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.annotation.Depends;
-import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.util.StringUtils;
 
 public class Relation implements Validatable {
@@ -19,7 +17,7 @@ public class Relation implements Validatable {
 	
 	@Required
 	public TypeOfRelationship typeOfRelationship;
-	@Depends("typeOfRelationship")
+	@Enabled("isCareRelation")
 	public BasedOnLaw basedOnLaw;
 	public YesNo care = YesNo.No;
 	@Required

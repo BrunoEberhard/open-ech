@@ -16,12 +16,11 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.resources.ResourceAction;
 
-public class ResidenceField extends ObjectFlowField<Residence> implements DependingOnFieldAbove<TypeOfResidence>, DemoEnabled {
+public class ResidenceField extends ObjectFlowField<Residence> implements DemoEnabled {
 	private Action selectSecondary;
 	private TypeOfResidence typeOfResidence;
 
@@ -137,24 +136,6 @@ public class ResidenceField extends ObjectFlowField<Residence> implements Depend
 		if (!getObject().secondary.isEmpty()) {
 			addAction(new ResidenceRemoveSecondaryAction());
 		}
-	}
-
-
-//	@Override
-//	public TypeOfResidence getClassOfField() {
-//		return Person.PERSON.typeOfResidence;
-//	}
-
-	@Override
-	public void valueChanged(TypeOfResidence typeOfResidence) {
-		if (this.typeOfResidence == typeOfResidence) return;
-		
-		this.typeOfResidence = typeOfResidence;
-		if (typeOfResidence == TypeOfResidence.hasOtherResidence && getObject() != null) {
-			getObject().reportingMunicipality = null;
-		}
-		
-		fireObjectChange();
 	}
 
 	@Override

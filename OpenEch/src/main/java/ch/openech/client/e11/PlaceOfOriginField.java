@@ -5,7 +5,6 @@ import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.datagenerator.DataGenerator;
-import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.mj.autofill.DemoEnabled;
@@ -13,13 +12,12 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
 import ch.openech.mj.resources.ResourceAction;
 
-public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements DependingOnFieldAbove<Nationality>, DemoEnabled {
+public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements DemoEnabled {
 	public static final boolean WITHOUT_ADD_ON = false;
 	private final boolean withAddOn;
 	private boolean swiss = true;
@@ -99,13 +97,12 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	}
 
 	@Override
-	public void valueChanged(Nationality nationality) {
-		swiss = nationality == null || nationality.isSwiss();
-		setEnabled(swiss);
-		if (!swiss && getObject() != null) {
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+		if (!enabled && getObject() != null && getObject().size() > 0) {
 			getObject().clear();
-		}
-		fireObjectChange();
+			fireObjectChange();
+		} 
 	}
 
 	@Override
@@ -125,8 +122,6 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 
 	@Override
 	protected void show(List<PlaceOfOrigin> objects) {
-		if (!swiss) return;
-		
 		for (PlaceOfOrigin placeOfOrigin : objects) {
 			addHtml(placeOfOrigin.displayHtml());
 			if (isEditable()) {

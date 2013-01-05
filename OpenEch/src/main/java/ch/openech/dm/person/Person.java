@@ -24,23 +24,17 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Reference;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Changes;
 import ch.openech.mj.model.annotation.Code;
-import ch.openech.mj.model.annotation.Depends;
+import ch.openech.mj.model.annotation.Enabled;
+import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
-/*
- * Grundsätzlich alles Immutable, Ausnahmen:
- * - die bei der Persistence gemeldeten Entities
- * - die Listen (können nicht Immutable sein)
- * 
- * Ausserdem: Keine doppelt Verschachtelten Tabellen,
- * damit kann man sich SubSubTable ersparen.
- * 
- */
+
 public class Person implements Validation {
 
 	public static final Person PERSON = Constants.of(Person.class);
@@ -65,7 +59,7 @@ public class Person implements Validation {
 	
 	public final MaritalStatus maritalStatus = new MaritalStatus();
 	public final Separation separation = new Separation();
-	@Depends("maritalStatus.maritalStatus")
+	@Enabled("isMaritalStatusCanceled")
 	public PartnerShipAbolition cancelationReason;
 	public final Nationality nationality = new Nationality();
 	public final ContactPerson contactPerson = new ContactPerson();
@@ -73,12 +67,19 @@ public class Person implements Validation {
 	public Language languageOfCorrespondance = Language.de;
 	@Required
 	public Religion religion = Religion.unbekannt;
-	@Depends("nationality")
+	@Enabled("!isSwiss")
 	public final Foreign foreign = new Foreign();
 	
+	@OnChange("updateResidence")
 	public TypeOfResidence typeOfResidence = TypeOfResidence.hasMainResidence;
-	@Depends("typeOfResidence") // required wird in eigener Validierung gemacht
 	public final Residence residence = new Residence();
+	
+	@Changes("residence")
+	public void updateResidence() {
+		if (typeOfResidence == TypeOfResidence.hasOtherResidence) {
+			residence.reportingMunicipality = null;
+		}
+	}
 	
 	public LocalDate arrivalDate, departureDate;
 	public Place comesFrom, goesTo;
@@ -91,7 +92,7 @@ public class Person implements Validation {
 	
 	public final NameOfParents nameOfParents = new NameOfParents();
 	
-	@Depends("nationality") // Nur Swiss
+	@Enabled("isSwiss")
 	public final List<PlaceOfOrigin> placeOfOrigin = new ArrayList<PlaceOfOrigin>();
 	
 	@Code
@@ -103,9 +104,7 @@ public class Person implements Validation {
 
 	public Contact contact;
 	
-	//
-
-	// Von PersonPanel gebraucht
+	// 
 	
 	public Relation getFather() {
 		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "father", Relation.class);
@@ -126,8 +125,6 @@ public class Person implements Validation {
 	}
 	
 	private void setRelation(TypeOfRelationship typeOfRelationship, Relation relation) {
-		// dont remove. Nötig, damit das PERSON.getMother funtktioniert
-		relation.typeOfRelationship = typeOfRelationship;
 		for (Relation r : Person.this.relation) {
 			if (r.typeOfRelationship == relation.typeOfRelationship) {
 				Person.this.relation.remove(r);
@@ -205,6 +202,10 @@ public class Person implements Validation {
 	public boolean isSwiss() {
 		if (nationality.nationalityStatus != NationalityStatus.with) return false;
 		return nationality.nationalityCountry.isSwiss();
+	}
+	
+	public boolean isMaritalStatusCanceled() {	
+		return maritalStatus.isPartnerschaftAufgeloest() || maritalStatus.isGeschieden();
 	}
 	
 	public boolean isMainResidence() {

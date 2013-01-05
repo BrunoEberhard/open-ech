@@ -7,17 +7,15 @@ import ch.openech.dm.common.Zip;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.SwitchLayout;
 import ch.openech.mj.toolkit.TextField;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.util.PlzImport;
 
-public class ZipField extends AbstractEditField<Zip> implements DependingOnFieldAbove<String>, DemoEnabled {
+public class ZipField extends AbstractEditField<Zip> implements DemoEnabled {
 	private final ComboBox<Zip> comboBoxSwiss;
 	private final TextField textFieldForeign;
 	private final SwitchLayout switchLayout;
@@ -71,22 +69,22 @@ public class ZipField extends AbstractEditField<Zip> implements DependingOnField
 		}
 	}
 
-	@Override
-	public void valueChanged(String coutryIso2) {
-		if (StringUtils.equals(coutryIso2, "CH", "LI", null)) {
-			if (switchLayout.getShownComponent() != comboBoxSwiss) {
-				comboBoxSwiss.setSelectedObject(null);
-				switchLayout.show(comboBoxSwiss);
-				fireChange();
-			}
-		} else {
-			if (switchLayout.getShownComponent() != textFieldForeign) {
-				textFieldForeign.setText("");
-				switchLayout.show(textFieldForeign);
-				fireChange();
-			}
-		}
-	}
+//	@Override
+//	public void valueChanged(String coutryIso2) {
+//		if (StringUtils.equals(coutryIso2, "CH", "LI", null)) {
+//			if (switchLayout.getShownComponent() != comboBoxSwiss) {
+//				comboBoxSwiss.setSelectedObject(null);
+//				switchLayout.show(comboBoxSwiss);
+//				fireChange();
+//			}
+//		} else {
+//			if (switchLayout.getShownComponent() != textFieldForeign) {
+//				textFieldForeign.setText("");
+//				switchLayout.show(textFieldForeign);
+//				fireChange();
+//			}
+//		}
+//	}
 	
 	//
 

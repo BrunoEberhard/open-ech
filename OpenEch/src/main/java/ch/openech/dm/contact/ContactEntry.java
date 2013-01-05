@@ -13,7 +13,7 @@ import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.model.annotation.Depends;
+import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
@@ -27,10 +27,10 @@ public class ContactEntry implements Validation {
 	public ContactCategory categoryCode;
 	public PhoneCategory phoneCategory;
 	
-	@Size(EchFormats.freeKategoryText) @Depends("categoryCode")
+	@Size(EchFormats.freeKategoryText) @Enabled("isCategoryCodeEmpty")
 	public String categoryOther;
 
-	@Size(EchFormats.freeKategoryText) @Depends("phoneCategory")
+	@Size(EchFormats.freeKategoryText) @Enabled("isPhoneCategoryEmpty")
 	public String phoneCategoryOther;
 
 	// Address only for Address Entries, value for the other types
@@ -40,6 +40,14 @@ public class ContactEntry implements Validation {
 	
 	// Validity
 	public LocalDate dateFrom, dateTo;
+
+	public boolean isCategoryCodeEmpty() {
+		return categoryCode == null;
+	}
+
+	public boolean isPhoneCategoryEmpty() {
+		return phoneCategory == null;
+	}
 
 	public boolean isAddressEntry() {
 		// darf nicht isAddress heissen, weil sonst mit dem Attribut address kollidiert!

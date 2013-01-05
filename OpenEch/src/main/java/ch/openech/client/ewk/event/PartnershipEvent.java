@@ -13,8 +13,6 @@ import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.edit.fields.TextEditField;
-import ch.openech.mj.edit.form.DependingOnFieldAbove;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -117,28 +115,6 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	
 		formPanel.line(PARTNERSHIP.changeName1, PARTNERSHIP.changeName2);
 		formPanel.line(PARTNERSHIP.name1, PARTNERSHIP.name2);
-	}
-
-	// TODO da bin ich mir fachlich nicht mehr sicher, wie das mit dem Allianz-Namen
-	// funktionieren sollte
-	private static class NewPersonNameField extends TextEditField implements DependingOnFieldAbove<Person> {
-
-		public NewPersonNameField(String key) {
-			super(Constants.getProperty(key), EchFormats.baseName);
-		}
-
-//		@Override
-//		public Person getClassOfField() {
-//			return dependingOnFieldKey;
-//		}
-
-		@Override
-		public void valueChanged(Person value) {
-			Person person = (Person) value;
-			if (person != null) {
-				setObject(person.alliancePartnershipName);
-			}
-		}
 	}
 	
 	@Override

@@ -5,10 +5,13 @@ import ch.openech.dm.types.MrMrs;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.annotation.Depends;
+import ch.openech.mj.model.annotation.Changes;
+import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
+import ch.openech.util.Plz;
+import ch.openech.util.PlzImport;
 
 @Sizes(EchFormats.class)
 public class Address {
@@ -35,11 +38,38 @@ public class Address {
 	public Integer postOfficeBoxNumber;
 	public String postOfficeBoxText;
 	public String locality;
+	@OnChange("updateZip")
 	public String country = "CH";
-	@Depends("country")
+	@OnChange("updateTown")
 	public final Zip zip = new Zip();
 	@Required
 	public String town;
+	
+	@Changes({"zip", "town"})
+	public void updateZip() {
+		if (zip.isSwiss()) {
+			if (zip.swissZipCodeId != null) {
+				Integer onrp = zip.swissZipCodeId;
+				Plz plz = PlzImport.getInstance().getPlz(onrp);
+				if (plz != null) {
+					town = plz.ortsbezeichnung;
+				}
+			}
+		} 
+	}
+	
+	@Changes({"town"})
+	public void updateTown() {
+		if (zip.isSwiss()) {
+			if (zip.swissZipCodeId != null) {
+				Integer onrp = zip.swissZipCodeId;
+				Plz plz = PlzImport.getInstance().getPlz(onrp);
+				if (plz != null) {
+					town = plz.ortsbezeichnung;
+				}
+			}
+		} 
+	}
 	
 	public boolean isEmpty() {
 		return StringUtils.isBlank(town);
