@@ -87,7 +87,7 @@ public class StaxEch0101 {
 				if (startName.equals(HEALTH_INSURANCE)) healthInsurance(information, xml);
 				else if (StringUtils.equals(startName, ARMED_FORCES, FIRE_SERVICE, HEALTH_INSURANCE)) informationItem(information, xml);
 				else if (startName.equalsIgnoreCase(PERSON_IDENTIFICATION)) StaxEch0044.personIdentification(xml);
-				else ColumnProperties.setValue(information, startName, token(xml));
+				else ColumnProperties.setValue(information, startName, StaxEch.enuum(YesNo.class, token(xml)));
 			} else if (event.isEndElement()) {
 				return;
 			} // else skip
