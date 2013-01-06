@@ -67,8 +67,13 @@ public class WriterEch0010 {
 		parent.values(address, STREET, HOUSE_NUMBER, DWELLING_NUMBER);
 		parent.values(address, POST_OFFICE_BOX_NUMBER, POST_OFFICE_BOX_TEXT);
 		parent.values(address, LOCALITY, TOWN);
-		parent.values(address, SWISS_ZIP_CODE, SWISS_ZIP_CODE_ADD_ON, SWISS_ZIP_CODE_ID);
-		parent.values(address, FOREIGN_ZIP_CODE);
+		if (address.isSwiss()) {
+			parent.textIfSet(SWISS_ZIP_CODE, address.getSwissZipCode());
+			parent.textIfSet(SWISS_ZIP_CODE_ADD_ON, address.getSwissZipCodeAddOn());
+			parent.textIfSet(SWISS_ZIP_CODE_ID, address.getSwissZipCodeId());
+		} else {
+			parent.textIfSet(FOREIGN_ZIP_CODE, address.zip);
+		}
 		parent.values(address, COUNTRY);
 	}
 	
@@ -81,7 +86,9 @@ public class WriterEch0010 {
 		parent.values(address, ADDRESS_LINE1, ADDRESS_LINE2);
 		parent.values(address, STREET, HOUSE_NUMBER, DWELLING_NUMBER);
 		parent.values(address, LOCALITY, TOWN);
-		parent.values(address, SWISS_ZIP_CODE, SWISS_ZIP_CODE_ADD_ON, SWISS_ZIP_CODE_ID);
+		parent.textIfSet(SWISS_ZIP_CODE, address.getSwissZipCode());
+		parent.textIfSet(SWISS_ZIP_CODE_ADD_ON, address.getSwissZipCodeAddOn());
+		parent.textIfSet(SWISS_ZIP_CODE_ID, address.getSwissZipCodeId());
 		parent.text(COUNTRY, "CH");
 	}
 

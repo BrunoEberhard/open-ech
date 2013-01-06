@@ -8,13 +8,13 @@ import ch.openech.dm.EchSchema0148;
 import ch.openech.dm.code.ApplicationMode;
 import ch.openech.dm.common.CantonAbbreviation;
 import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.common.Zip;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.types.Language;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.annotation.Size;
 
 public class OpenEchPreferences implements Validation {
 	public static final OpenEchPreferences OPEN_ECH_PREFERENCES = Constants.of(OpenEchPreferences.class);
@@ -44,7 +44,8 @@ public class OpenEchPreferences implements Validation {
 		public static final PreferencesDefaultsData PREFERENCES_DEFAULTS_DATA = Constants.of(PreferencesDefaultsData.class);
 		
 		public final MunicipalityIdentification residence = new MunicipalityIdentification();
-		public final Zip zipTown = new Zip();
+		@Size(4)
+		public String plz;
 		public final CantonAbbreviation cantonAbbreviation = new CantonAbbreviation();
 		public Language language = Language.de;
 		public Religion religion = Religion.unbekannt;

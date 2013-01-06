@@ -1,9 +1,13 @@
 package ch.openech.dm.common;
 
+import java.util.List;
+
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.types.MrMrs;
 import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.edit.validation.Validation;
+import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.model.annotation.Changes;
 import ch.openech.mj.model.annotation.OnChange;
@@ -14,7 +18,7 @@ import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 
 @Sizes(EchFormats.class)
-public class Address {
+public class Address implements Validation {
 	
 	public static final Address ADDRESS = Constants.of(Address.class);
 
@@ -38,37 +42,63 @@ public class Address {
 	public Integer postOfficeBoxNumber;
 	public String postOfficeBoxText;
 	public String locality;
-	@OnChange("updateZip")
 	public String country = "CH";
 	@OnChange("updateTown")
-	public final Zip zip = new Zip();
+	@Size(EchFormats.foreignZipCode)
+	public String zip;
+	@Size(4)
+	public Integer swissZipCodeId;
 	@Required
 	public String town;
 	
-	@Changes({"zip", "town"})
-	public void updateZip() {
-		if (zip.isSwiss()) {
-			if (zip.swissZipCodeId != null) {
-				Integer onrp = zip.swissZipCodeId;
-				Plz plz = PlzImport.getInstance().getPlz(onrp);
-				if (plz != null) {
-					town = plz.ortsbezeichnung;
-				}
+	public String getSwissZipCode() {
+		if (isSwiss() && !StringUtils.isEmpty(zip)) {
+			int pos = zip.indexOf(" ");
+			if (pos < 0) {
+				return zip;
+			} else {
+				return zip.substring(0, pos);
 			}
-		} 
+		} else {
+			return null;
+		}
+	}
+
+	public String getSwissZipCodeAddOn() {
+		if (isSwiss() && !StringUtils.isEmpty(zip)) {
+			int pos = zip.indexOf(" ");
+			if (pos < 0 || pos == zip.length()-1) {
+				return null;
+			} else {
+				return zip.substring(pos+1);
+			}
+		} else {
+			return null;
+		}
+	}
+	
+	public String getSwissZipCodeId() {
+		if (!isSwiss()) return null;
+		String swissZipCode = getSwissZipCode();
+		String swissZipCodeAddOn = getSwissZipCodeAddOn();
+		Plz plz = PlzImport.getInstance().getPlz(swissZipCode, swissZipCodeAddOn);
+		if (plz != null) {
+			return "" + plz.onrp;
+		} else {
+			return null;
+		}
 	}
 	
 	@Changes({"town"})
 	public void updateTown() {
-		if (zip.isSwiss()) {
-			if (zip.swissZipCodeId != null) {
-				Integer onrp = zip.swissZipCodeId;
-				Plz plz = PlzImport.getInstance().getPlz(onrp);
-				if (plz != null) {
-					town = plz.ortsbezeichnung;
-				}
+		if (isSwiss()) {
+			String swissZipCode = getSwissZipCode();
+			String swissZipCodeAddOn = getSwissZipCodeAddOn();
+			Plz plz = PlzImport.getInstance().getPlz(swissZipCode, swissZipCodeAddOn);
+			if (plz != null) {
+				town = plz.ortsbezeichnung;
 			}
-		} 
+		}
 	}
 	
 	public boolean isEmpty() {
@@ -83,6 +113,10 @@ public class Address {
 	public boolean isPerson() {
 		// Bei Person muss lastName gesetzt sein
 		return !StringUtils.isBlank(lastName);
+	}
+	
+	public boolean isSwiss() {
+		return "CH".equals(country) || "LI".equals(country);
 	}
 	
 	public String toHtml() {
@@ -104,11 +138,43 @@ public class Address {
 		StringUtils.appendLine(s, street, houseNumber.concatNumbers());
 		StringUtils.appendLine(s, postOfficeBoxText, postOfficeBoxNumber != null ? postOfficeBoxNumber.toString() : null);
 		if ("CH".equals(country)) {
-			StringUtils.appendLine(s, zip.display(), town);
+			StringUtils.appendLine(s, zip, town);
 		} else {
-			StringUtils.appendLine(s, country, zip.display(), town);
+			StringUtils.appendLine(s, country, zip, town);
 		}
 		StringUtils.appendLine(s, locality);
+	}
+
+	private static final String MESSAGE = "Plz muss aus 4 Ziffern oder 4 Ziffern + 2 Zusatzziffern bestehen";
+	
+	private String validateZip() {
+		if (!isSwiss() || StringUtils.isEmpty(zip)) return null;
+		if (zip.length() == 4 || zip.length() == 7) {
+			for (int i = 0; i<4; i++) {
+				if (!Character.isDigit(zip.charAt(i))) {
+					return MESSAGE;
+				}
+			}
+			if (zip.length() == 7) {
+				if (zip.charAt(4) != ' ') return MESSAGE;
+				for (int i = 5; i<7; i++) {
+					if (!Character.isDigit(zip.charAt(i))) {
+						return MESSAGE;
+					}
+				}
+			}
+		} else {
+			return MESSAGE;
+		}
+		return null;
+	}
+
+	@Override
+	public void validate(List<ValidationMessage> validationResult) {
+		String message = validateZip();
+		if (message != null) {
+			validationResult.add(new ValidationMessage(ADDRESS.zip, message));
+		}
 	}
 
 }

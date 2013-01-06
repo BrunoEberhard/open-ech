@@ -187,14 +187,14 @@ public class DataGenerator {
 			int pos = (int) (Math.random() * plzList.size());
 			Plz plz = plzList.get(pos);
 			address.country = "CH";
-			address.zip.setPlz(plz);
+			address.zip = "" + plz.postleitzahl;
 			address.town = plz.ortsbezeichnung;
 		} else {
 			if (Math.random() < .5) {
 				address.postOfficeBoxText = "POSTFACH";
 				address.postOfficeBoxNumber = (int)(1000 + Math.random() * 9000);
 			}
-			address.zip.foreignZipCode = "" + ((int)(Math.random() * 90000 + 10000));
+			address.zip = "" + ((int)(Math.random() * 90000 + 10000));
 			address.town = NameGenerator.officialName() + "Town";
 			address.country = "DE";
 		}

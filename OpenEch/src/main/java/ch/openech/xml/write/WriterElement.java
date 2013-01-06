@@ -41,6 +41,15 @@ public class WriterElement {
 		writer.writeEndElement();
 	}
 
+	public void textIfSet(String localName, String text) throws Exception {
+		if (!StringUtils.isEmpty(text)) {
+			flush();
+			writer.writeStartElement(namespaceURI, localName);
+			writer.writeCharacters(text);
+			writer.writeEndElement();
+		}
+	}
+	
 	public void text(String localName, LocalDate localDate) throws Exception {
 		if (localDate != null) {
 			text(localName, ISODateTimeFormat.date().print(localDate));

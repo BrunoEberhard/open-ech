@@ -38,7 +38,7 @@ public class PersonExtendedInformationXmlTest {
 		address1.street = "Teststrasse";
 		address1.houseNumber.houseNumber = "42";
 		address1.town = "Jona";
-		address1.zip.swissZipCode = 8645;
+		address1.zip = "8645";
 		information.insuranceAddress = address1;
 		
 		String xml = writer.informationRoot(information);

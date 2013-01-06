@@ -8,7 +8,6 @@ import ch.openech.client.e08.CountryField;
 import ch.openech.client.e08.CountryReadOnlyField;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.e10.HouseNumberField;
-import ch.openech.client.e10.ZipField;
 import ch.openech.client.e101.PersonExtendedInformationField;
 import ch.openech.client.e11.ContactPersonField;
 import ch.openech.client.e11.DwellingAddressField;
@@ -28,7 +27,6 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.HouseNumber;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
-import ch.openech.dm.common.Zip;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Foreign;
@@ -119,8 +117,6 @@ public class EchForm<T> extends Form<T> {
 			return new ContactField(property, editable);
 		} else if (type == HouseNumber.class) {
 			return new HouseNumberField(property);
-		} else if (type == Zip.class) {
-			return new ZipField(property);
 		} else if (type == CountryIdentification.class) {
 			return editable ? new CountryField(property) : new CountryReadOnlyField(property);
 		} else if (type == MunicipalityIdentification.class) {

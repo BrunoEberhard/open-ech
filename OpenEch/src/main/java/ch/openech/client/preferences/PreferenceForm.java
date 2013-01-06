@@ -13,7 +13,7 @@ public class PreferenceForm extends EchForm<OpenEchPreferences> {
 		line(OpenEchPreferences.OPEN_ECH_PREFERENCES.applicationSchemaData.schema93,OpenEchPreferences.OPEN_ECH_PREFERENCES.applicationSchemaData.schema148);
 
 		addTitle("Voreingestellte Werte");
-		line(new MunicipalityField(OpenEchPreferences.OPEN_ECH_PREFERENCES.preferencesDefaultsData.residence, false), OpenEchPreferences.OPEN_ECH_PREFERENCES.preferencesDefaultsData.zipTown);
+		line(new MunicipalityField(OpenEchPreferences.OPEN_ECH_PREFERENCES.preferencesDefaultsData.residence, false), OpenEchPreferences.OPEN_ECH_PREFERENCES.preferencesDefaultsData.plz);
 		line(OpenEchPreferences.OPEN_ECH_PREFERENCES.preferencesDefaultsData.cantonAbbreviation.canton);
 		line(OpenEchPreferences.OPEN_ECH_PREFERENCES.preferencesDefaultsData.language, OpenEchPreferences.OPEN_ECH_PREFERENCES.preferencesDefaultsData.religion);
 

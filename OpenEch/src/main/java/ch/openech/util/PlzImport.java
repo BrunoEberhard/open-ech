@@ -10,14 +10,13 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import ch.openech.dm.common.Zip;
+import ch.openech.mj.util.StringUtils;
 
 public class PlzImport {
 	private static final Logger logger = Logger.getLogger(PlzImport.class.getName());
 	private static PlzImport instance;
 	
 	private final List<Plz> plzList = new ArrayList<Plz>(5500);
-	private final List<Zip> zipList = new ArrayList<Zip>(5500);
 	private final Map<Integer, Plz> plzByOnrp = new HashMap<Integer, Plz>(10000);
 	
 	private PlzImport() {
@@ -43,12 +42,30 @@ public class PlzImport {
 		return Collections.unmodifiableList(plzList);
 	}
 
-	public List<Zip> getZipList() {
-		return Collections.unmodifiableList(zipList);
-	}
-
 	public Plz getPlz(int onrp) {
 		return plzByOnrp.get(onrp);
+	}
+	
+	public Plz getPlz(String swissZipCode, String swissZipCodeAddOn) {
+		if (StringUtils.isEmpty(swissZipCode)) return null;
+		
+		int postleitzahl = 0;
+		int zusatzziffern = 0;
+		try {
+			postleitzahl = Integer.parseInt(swissZipCode);
+			zusatzziffern = Integer.parseInt(swissZipCodeAddOn);
+		} catch (NumberFormatException x) {
+			// do nothing
+		}
+		
+		Plz firstWithoutZusatzziffern = null;
+		for (Plz plz : plzList) {
+			if (plz.postleitzahl != postleitzahl) continue;
+			firstWithoutZusatzziffern = plz;
+			if (plz.zusatzziffern != zusatzziffern) continue;
+			return plz;
+		}
+		return firstWithoutZusatzziffern;
 	}
 	
 	private void process(InputStream inputStream) throws Exception {
@@ -80,11 +97,6 @@ public class PlzImport {
 		}
 		scanner.close();
 		Collections.sort(plzList);
-		for (Plz plz : plzList) {
-			Zip zip = new Zip();
-			zip.setPlz(plz);
-			zipList.add(zip);
-		}
 	}
 	
 	public static void main(String... args){

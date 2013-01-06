@@ -33,8 +33,8 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals("2", person.dwellingAddress.mailAddress.houseNumber.dwellingNumber);
 		Assert.assertEquals("Gebiet", person.dwellingAddress.mailAddress.locality);
 		Assert.assertEquals("Herdern", person.dwellingAddress.mailAddress.town);
-		Assert.assertEquals(new Integer(8535), person.dwellingAddress.mailAddress.zip.swissZipCode);
-		Assert.assertEquals(new Integer(4837), person.dwellingAddress.mailAddress.zip.swissZipCodeId);
+		Assert.assertEquals("8535", person.dwellingAddress.mailAddress.zip);
+		Assert.assertEquals(new Integer(4837), person.dwellingAddress.mailAddress.swissZipCodeId);
 		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
 		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
@@ -109,8 +109,8 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals("POSTFACH", person.contactPerson.address.postOfficeBoxText);
 		Assert.assertEquals("Gebiet", person.contactPerson.address.locality);
 		Assert.assertEquals("Vessy", person.contactPerson.address.town);
-		Assert.assertEquals(new Integer(1234), person.contactPerson.address.zip.swissZipCode);
-		Assert.assertEquals(new Integer(452), person.contactPerson.address.zip.swissZipCodeId);
+		Assert.assertEquals("1234", person.contactPerson.address.zip);
+		Assert.assertEquals(new Integer(452), person.contactPerson.address.swissZipCodeId);
 		Assert.assertEquals("CH", person.contactPerson.address.country);
 	}
 	
