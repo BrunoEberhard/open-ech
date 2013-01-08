@@ -5,12 +5,14 @@ import java.util.List;
 
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
+import ch.openech.client.page.PersonViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.page.Page;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
@@ -37,6 +39,13 @@ public class BirthEvent extends XmlEditor<Person> {
 		return Collections.singletonList(writerEch0020.birth(person));
 	}
 	
+	
+	@Override
+	public boolean save(Person object) throws Exception {
+		setFollowLink(Page.link(PersonViewPage.class, echSchema.getVersion(), object.getId()));
+		return super.save(object);
+	}
+
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		person.validate(resultList);
