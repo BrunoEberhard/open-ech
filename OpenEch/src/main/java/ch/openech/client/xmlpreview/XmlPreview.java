@@ -21,7 +21,7 @@ public class XmlPreview {
 			xmlFrame.setPositionY(0);
 			xmlFrame.setVisible(true);
 		} else {
-			Form<XmlPreviewValue> form = new Form<XmlPreviewValue>(XmlPreviewValue.class, null, false) {
+			Form<XmlPreviewValue> form = new Form<XmlPreviewValue>(false) {
 				@Override
 				protected int getColumnWidthPercentage() {
 					return 400;

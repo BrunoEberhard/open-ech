@@ -171,7 +171,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		protected IForm<MoveInNextPerson> createForm() {
-			EchForm<MoveInNextPerson> form = new EchForm<MoveInNextPerson>(MoveInNextPerson.class, 2);
+			EchForm<MoveInNextPerson> form = new EchForm<MoveInNextPerson>(2);
 			
 			form.line(MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted);
 

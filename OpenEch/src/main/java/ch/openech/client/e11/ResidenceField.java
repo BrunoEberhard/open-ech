@@ -38,7 +38,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements DemoEn
 
 		@Override
 		public IForm<Residence> createForm() {
-			Form<Residence> form = new EchForm<Residence>(Residence.class);
+			Form<Residence> form = new EchForm<Residence>();
 			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
 		}
@@ -60,7 +60,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements DemoEn
 
 		@Override
 		public IForm<Residence> createForm() {
-			Form<Residence> form = new EchForm<Residence>(Residence.class);
+			Form<Residence> form = new EchForm<Residence>();
 			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
 		}

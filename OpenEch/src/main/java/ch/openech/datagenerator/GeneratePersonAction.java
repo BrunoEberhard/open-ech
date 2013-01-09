@@ -36,7 +36,7 @@ public class GeneratePersonAction extends EditorDialogAction {
 
 		@Override
 		protected IForm<GeneratePersonData> createForm() {
-			Form<GeneratePersonData> form = new Form<GeneratePersonData>(GeneratePersonData.class, null, true);
+			Form<GeneratePersonData> form = new Form<GeneratePersonData>();
 			form.line(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons);
 			form.line(GeneratePersonData.GENERATE_PERSON_DATA.numberOfOrganisations);
 			return form;

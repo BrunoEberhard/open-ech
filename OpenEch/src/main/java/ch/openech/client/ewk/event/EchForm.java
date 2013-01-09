@@ -47,7 +47,7 @@ import ch.openech.xml.write.EchSchema;
 public class EchForm<T> extends Form<T> {
 	protected final EchSchema echSchema;
 	
-	protected EchForm() {
+	public EchForm() {
 		this(1);
 	}
 	
@@ -60,35 +60,16 @@ public class EchForm<T> extends Form<T> {
 	}
 	
 	public EchForm(EchSchema echSchema, int columns) {
-		super(null, Resources.getResourceBundle(), true, columns);
+		super(Resources.getResourceBundle(), true, columns);
 		this.echSchema = echSchema;
 	}
 
 	protected EchForm(EchSchema echSchema, boolean editable, int columns) {
-		super(null, Resources.getResourceBundle(), editable, columns);
+		super(Resources.getResourceBundle(), editable, columns);
 		this.echSchema = echSchema;
 	}
 	
 	//
-
-	public EchForm(Class<T> objectClass) {
-		super(objectClass, Resources.getResourceBundle(), true);
-		this.echSchema = null;
-	}
-	
-	public EchForm(Class<T> objectClass, int columns) {
-		this(objectClass, null, columns);
-	}
-
-	public EchForm(Class<T> objectClass, EchSchema echSchema) {
-		super(objectClass, Resources.getResourceBundle(), true);
-		this.echSchema = echSchema;
-	}
-	
-	public EchForm(Class<T> objectClass, EchSchema echSchema, int columns) {
-		super(objectClass, Resources.getResourceBundle(), true, columns);
-		this.echSchema = echSchema;
-	}
 
 	@Override
 	public FormField<?> createField(PropertyInterface property) {
