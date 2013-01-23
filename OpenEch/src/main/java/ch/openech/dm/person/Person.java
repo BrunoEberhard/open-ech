@@ -282,7 +282,7 @@ public class Person implements Validation {
 		validateRelations(resultList);
 		validateDeathNotBeforeBirth(resultList);
 		
-		if (editMode != PersonEditMode.CORRECT_PERSON && editMode != PersonEditMode.BIRTH) {
+		if (editMode == PersonEditMode.MOVE_IN) {
 			EmptyValidator.validate(resultList, this, PERSON.arrivalDate);
 		}
 		
