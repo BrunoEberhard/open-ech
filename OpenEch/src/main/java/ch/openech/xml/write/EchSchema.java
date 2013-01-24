@@ -18,7 +18,6 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.mj.db.model.Number;
 import ch.openech.mj.model.annotation.Size;
 
 public class EchSchema {
@@ -230,14 +229,12 @@ public class EchSchema {
 				}
 				skip(xml);
 			} else if (event.isEndElement()) {
-				// TODO log
-				// System.out.println(name + ": " + size);
 				if (intBase) {
 					if (size < 0) {
 						System.out.println("Warnung: Grösse nicht bestimmbar: " + name);
 						size = 10;
 					}
-					simpleTypes.put(name, new Number.NumberImpl(size, 0));
+					simpleTypes.put(name, new Size.SizeImpl(size));
 				} else {
 					simpleTypes.put(name, new Size.SizeImpl(size));
 				}
