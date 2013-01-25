@@ -5,9 +5,9 @@ import java.util.List;
 
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.types.TypeOfResidence;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.PropertyInterface;
 
 public class Residence {
 	public static final Residence RESIDENCE = Constants.of(Residence.class);

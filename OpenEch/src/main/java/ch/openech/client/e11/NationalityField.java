@@ -5,8 +5,8 @@ import java.util.List;
 
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.person.Nationality;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.IComponent;

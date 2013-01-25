@@ -13,7 +13,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.SearchableTable;
-import ch.openech.mj.db.model.PropertyInterface;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 

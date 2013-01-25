@@ -3,8 +3,8 @@ package ch.openech.dm.common;
 import java.util.List;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.validation.Validatable;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.read.StaxEch0071;

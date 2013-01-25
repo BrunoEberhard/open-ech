@@ -3,7 +3,7 @@ package ch.openech.dm.contact;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.model.annotation.Size;
 
 // e46

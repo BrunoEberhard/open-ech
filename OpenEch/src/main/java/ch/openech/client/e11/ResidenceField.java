@@ -13,11 +13,11 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Residence;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.resources.ResourceAction;
 
 public class ResidenceField extends ObjectFlowField<Residence> implements DemoEnabled {

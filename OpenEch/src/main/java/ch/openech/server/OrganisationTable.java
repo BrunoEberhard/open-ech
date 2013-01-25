@@ -11,8 +11,8 @@ import org.apache.lucene.document.Field;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.SearchableTable;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.PropertyInterface;
+import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.util.StringUtils;
 
 public class OrganisationTable extends SearchableTable<Organisation> {

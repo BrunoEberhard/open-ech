@@ -77,7 +77,7 @@ import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.mj.db.model.ColumnProperties;
-import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0011 {

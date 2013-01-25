@@ -1,8 +1,8 @@
 package ch.openech.client.e08;
 
 import ch.openech.dm.common.CountryIdentification;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.FormField;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.TextField;

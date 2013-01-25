@@ -1,8 +1,8 @@
 package ch.openech.dm.organisation;
 
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.validation.Validatable;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.StringLimitation;
 import ch.openech.mj.util.StringUtils;

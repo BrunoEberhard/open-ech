@@ -3,7 +3,7 @@ package ch.openech.dm.person;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.common.Swiss;
-import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.Constants;
 
 public class Nationality  {
 

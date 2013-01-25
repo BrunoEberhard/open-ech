@@ -2,7 +2,7 @@ package ch.openech.dm.person;
 
 import org.joda.time.LocalDate;
 
-import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.Constants;
 
 public class Separation {
 

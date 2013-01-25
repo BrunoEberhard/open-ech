@@ -5,9 +5,9 @@ import java.awt.event.ActionEvent;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.contact.ContactEntryType;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.resources.ResourceAction;
 
 public class ContactField extends ObjectFlowField<Contact> {

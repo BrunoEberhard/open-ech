@@ -1,10 +1,10 @@
 package ch.openech.client.e101;
 
 import ch.openech.dm.person.PersonExtendedInformation;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.PropertyInterface;
 
 public class PersonExtendedInformationField extends ObjectFlowField<PersonExtendedInformation> {
 

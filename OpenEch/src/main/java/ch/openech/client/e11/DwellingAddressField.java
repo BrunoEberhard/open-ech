@@ -3,10 +3,10 @@ package ch.openech.client.e11;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.xml.write.EchSchema;
 
 public class DwellingAddressField extends ObjectFlowField<DwellingAddress> implements DemoEnabled {

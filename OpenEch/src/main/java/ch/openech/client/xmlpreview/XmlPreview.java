@@ -3,8 +3,8 @@ package ch.openech.client.xmlpreview;
 import java.util.List;
 
 import ch.openech.client.ewk.event.XmlTextFormField;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
 

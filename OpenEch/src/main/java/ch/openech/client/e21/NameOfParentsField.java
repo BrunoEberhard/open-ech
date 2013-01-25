@@ -2,11 +2,11 @@ package ch.openech.client.e21;
 
 import ch.openech.dm.person.NameOfParent;
 import ch.openech.dm.person.NameOfParents;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.value.CloneHelper;
+import ch.openech.mj.model.Constants;
 
 public class NameOfParentsField extends ObjectFlowField<NameOfParents> {
 	

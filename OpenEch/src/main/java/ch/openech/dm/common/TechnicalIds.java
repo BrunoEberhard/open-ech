@@ -3,7 +3,7 @@ package ch.openech.dm.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.Constants;
 
 public class TechnicalIds {
 	public static final TechnicalIds TECHNICAL_IDS = Constants.of(TechnicalIds.class);

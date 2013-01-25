@@ -10,10 +10,10 @@ import ch.openech.dm.common.CantonAbbreviation;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.types.Language;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.model.annotation.Size;
 
 public class OpenEchPreferences implements Validation {

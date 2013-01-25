@@ -15,9 +15,9 @@ import org.junit.Test;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.tpn.ThirdPartyMove;
-import ch.openech.mj.db.model.EnumUtils;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.value.Properties;
+import ch.openech.mj.model.EnumUtils;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.util.FieldUtils;
 import ch.openech.mj.util.GenericUtils;
 

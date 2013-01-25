@@ -1,10 +1,10 @@
 package ch.openech.client.org;
 
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.PropertyInterface;
 
 public class HeadquarterField extends ObjectFlowField<Organisation> {
 

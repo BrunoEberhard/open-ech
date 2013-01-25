@@ -3,7 +3,7 @@ package ch.openech.dm.common;
 import java.util.UUID;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 

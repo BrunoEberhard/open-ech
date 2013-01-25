@@ -6,11 +6,11 @@ import org.joda.time.LocalDate;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.Codes;
+import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;

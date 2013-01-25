@@ -9,9 +9,9 @@ import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.EmptyValidator;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.dm.person.Occupation;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.xml.write.EchSchema;
 

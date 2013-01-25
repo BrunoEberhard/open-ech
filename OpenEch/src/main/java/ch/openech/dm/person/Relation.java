@@ -4,10 +4,10 @@ import ch.openech.dm.code.BasedOnLaw;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.YesNo;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.util.StringUtils;
 

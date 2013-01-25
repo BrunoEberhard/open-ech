@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.Codes;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;

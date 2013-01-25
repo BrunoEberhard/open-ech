@@ -1,6 +1,6 @@
 package ch.openech.dm.common;
 
-import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.Constants;
 
 public class Canton implements Comparable<Canton> {
 

@@ -9,8 +9,8 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.form.Form;
+import ch.openech.mj.model.Constants;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

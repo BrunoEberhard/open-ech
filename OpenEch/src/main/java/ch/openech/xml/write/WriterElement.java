@@ -10,7 +10,7 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import ch.openech.dm.types.EchCode;
 import ch.openech.mj.db.model.ColumnProperties;
-import ch.openech.mj.db.model.InvalidValues;
+import ch.openech.mj.model.InvalidValues;
 import ch.openech.mj.model.annotation.StringLimitation;
 import ch.openech.mj.util.FieldUtils;
 import ch.openech.mj.util.StringUtils;

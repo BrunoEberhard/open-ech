@@ -5,7 +5,7 @@ import org.joda.time.LocalDate;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.contact.Contact;
-import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.Constants;
 
 // e46
 public class ThirdPartyMove {

@@ -3,10 +3,10 @@ package ch.openech.client.e10;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.PropertyInterface;
 
 public class AddressField extends ObjectFlowField<Address> implements DemoEnabled {
 	// TODO private final PageContext context;

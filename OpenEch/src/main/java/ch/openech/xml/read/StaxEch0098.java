@@ -32,7 +32,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.db.model.EnumUtils;
+import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0098 {

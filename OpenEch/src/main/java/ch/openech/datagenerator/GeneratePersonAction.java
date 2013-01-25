@@ -2,13 +2,13 @@ package ch.openech.datagenerator;
 
 import java.util.List;
 
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.xml.write.EchSchema;

@@ -1,9 +1,9 @@
 package ch.openech.client.e11;
 
 import ch.openech.dm.person.Foreign;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.xml.write.EchSchema;
 
 public class ForeignField extends ObjectFlowField<Foreign> {

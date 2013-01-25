@@ -1,7 +1,7 @@
 package ch.openech.dm.common;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.db.model.Constants;
+import ch.openech.mj.model.Constants;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
 

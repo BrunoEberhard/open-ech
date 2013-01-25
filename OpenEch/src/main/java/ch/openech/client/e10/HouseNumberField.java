@@ -2,8 +2,8 @@ package ch.openech.client.e10;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.HouseNumber;
-import ch.openech.mj.db.model.PropertyInterface;
 import ch.openech.mj.edit.fields.AbstractEditField;
+import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.HorizontalLayout;
 import ch.openech.mj.toolkit.IComponent;

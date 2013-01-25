@@ -4,11 +4,11 @@ import java.util.List;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.types.MrMrs;
-import ch.openech.mj.db.model.Constants;
-import ch.openech.mj.db.model.EnumUtils;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
+import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.annotation.Changes;
 import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Size;

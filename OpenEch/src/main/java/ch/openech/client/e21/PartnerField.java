@@ -1,9 +1,9 @@
 package ch.openech.client.e21;
 
 import ch.openech.dm.person.Relation;
-import ch.openech.mj.db.model.Constants;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
+import ch.openech.mj.model.Constants;
 import ch.openech.xml.write.EchSchema;
 
 // Eigentlich relationField

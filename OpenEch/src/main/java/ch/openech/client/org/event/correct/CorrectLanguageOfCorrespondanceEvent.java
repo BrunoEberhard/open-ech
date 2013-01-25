@@ -6,9 +6,9 @@ import java.util.List;
 import ch.openech.client.org.event.OrganisationEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.db.model.EmptyValidator;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.EmptyValidator;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
