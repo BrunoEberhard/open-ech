@@ -12,8 +12,8 @@ import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.types.Language;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.model.Keys;
+import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 
 public class OpenEchPreferences implements Validation {

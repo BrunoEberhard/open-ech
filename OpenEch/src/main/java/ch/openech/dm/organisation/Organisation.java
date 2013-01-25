@@ -17,12 +17,12 @@ import ch.openech.dm.types.Language;
 import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.PartialDate;
+import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.xml.read.StaxEch;
 

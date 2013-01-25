@@ -1,7 +1,7 @@
 package ch.openech.dm.common;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.edit.value.Reference;
+import ch.openech.mj.model.annotation.Reference;
 import ch.openech.mj.model.annotation.Size;
 
 // Verwendung als Birthplace und als Destination

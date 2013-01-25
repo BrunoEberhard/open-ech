@@ -3,8 +3,8 @@ package ch.openech.dm.common;
 import java.io.Serializable;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.model.Keys;
+import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;

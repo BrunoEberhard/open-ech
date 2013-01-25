@@ -5,10 +5,10 @@ import ch.openech.dm.common.Address;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.YesNo;
 import ch.openech.mj.edit.validation.Validatable;
-import ch.openech.mj.edit.value.Required;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.annotation.Enabled;
+import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.util.StringUtils;
 
 public class Relation implements Validatable {
