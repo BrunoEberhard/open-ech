@@ -3,14 +3,14 @@ package ch.openech.dm.contact;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 
 // e46
 // Für Personen, aber auch für Vermieter
 public class Contact {
 
-	public static final Contact CONTACT = Constants.of(Contact.class);
+	public static final Contact CONTACT = Keys.of(Contact.class);
 	
 	@Size(9)
 	// TODO in Contact stringId eventuell durch NamedId ersetzen

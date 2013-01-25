@@ -3,13 +3,13 @@ package ch.openech.client.org;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 
 public class HeadquarterField extends ObjectFlowField<Organisation> {
 
 	public HeadquarterField(Organisation key, boolean editable) {
-		this(Constants.getProperty(key), editable);
+		this(Keys.getProperty(key), editable);
 	}
 	
 	public HeadquarterField(PropertyInterface property, boolean editable) {

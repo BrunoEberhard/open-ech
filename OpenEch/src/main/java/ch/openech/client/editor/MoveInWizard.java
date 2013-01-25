@@ -24,7 +24,7 @@ import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
@@ -51,7 +51,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	public static class MoveInNextPerson {
-		public static final MoveInNextPerson MOVE_IN_NEXT_PERSON = Constants.of(MoveInNextPerson.class);
+		public static final MoveInNextPerson MOVE_IN_NEXT_PERSON = Keys.of(MoveInNextPerson.class);
 		
 		@Required
 		public TypeOfRelationshipInverted typeOfRelationshipInverted = TypeOfRelationshipInverted.Kind;
@@ -64,7 +64,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 		
 	public static class MoveInEditorData {
-		public static final MoveInEditorData MOVE_IN_EDITOR_DATA = Constants.of(MoveInEditorData.class);
+		public static final MoveInEditorData MOVE_IN_EDITOR_DATA = Keys.of(MoveInEditorData.class);
 		
 		public final List<Person> persons = new ArrayList<Person>();
 		public final List<MoveInNextPerson> nextPersons = new ArrayList<MoveInWizard.MoveInNextPerson>();
@@ -271,7 +271,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		private final TypeOfRelationship relation;
 		
 		public MoveInNextPersonField(Object key, TypeOfRelationship relation) {
-			this(Constants.getProperty(key), relation);
+			this(Keys.getProperty(key), relation);
 		}
 		
 		public MoveInNextPersonField(PropertyInterface property, TypeOfRelationship relation) {

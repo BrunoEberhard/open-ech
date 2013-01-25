@@ -8,7 +8,7 @@ import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.xml.write.EchSchema;
@@ -91,7 +91,7 @@ public class GeneratePersonAction extends EditorDialogAction {
 	}
 
 	public static class GeneratePersonData implements Validation {
-		public static final GeneratePersonData GENERATE_PERSON_DATA = Constants.of(GeneratePersonData.class);
+		public static final GeneratePersonData GENERATE_PERSON_DATA = Keys.of(GeneratePersonData.class);
 
 		@Size(4)
 		public Integer numberOfPersons;

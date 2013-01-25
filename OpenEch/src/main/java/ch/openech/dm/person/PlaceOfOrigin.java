@@ -6,7 +6,7 @@ import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.CantonAbbreviation;
 import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
@@ -14,7 +14,7 @@ import ch.openech.mj.util.StringUtils;
 
 public class PlaceOfOrigin {
 
-	public static final PlaceOfOrigin PLACE_OF_ORIGIN = Constants.of(PlaceOfOrigin.class);
+	public static final PlaceOfOrigin PLACE_OF_ORIGIN = Keys.of(PlaceOfOrigin.class);
 	
 	// 11: placeOfOriginType
 	@Required @Size(EchFormats.municipalityName)

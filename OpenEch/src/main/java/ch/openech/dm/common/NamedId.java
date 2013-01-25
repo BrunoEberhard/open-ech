@@ -3,14 +3,14 @@ package ch.openech.dm.common;
 import java.util.UUID;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 
 @Sizes(EchFormats.class)
 public class NamedId {
 
-	public static final NamedId NAMED_ID = Constants.of(NamedId.class);
+	public static final NamedId NAMED_ID = Keys.of(NamedId.class);
 	public static final String OPEN_ECH_ID_CATEGORY = "OPENECH.LOC";
 	
 	public String personIdCategory;

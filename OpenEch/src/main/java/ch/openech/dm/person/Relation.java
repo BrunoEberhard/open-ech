@@ -6,14 +6,14 @@ import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.YesNo;
 import ch.openech.mj.edit.validation.Validatable;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.util.StringUtils;
 
 public class Relation implements Validatable {
 
-	public static final Relation RELATION = Constants.of(Relation.class);
+	public static final Relation RELATION = Keys.of(Relation.class);
 	
 	@Required
 	public TypeOfRelationship typeOfRelationship;

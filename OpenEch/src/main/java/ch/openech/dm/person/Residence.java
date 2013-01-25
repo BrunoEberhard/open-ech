@@ -6,11 +6,11 @@ import java.util.List;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 
 public class Residence {
-	public static final Residence RESIDENCE = Constants.of(Residence.class);
+	public static final Residence RESIDENCE = Keys.of(Residence.class);
 	
 	
 	public MunicipalityIdentification reportingMunicipality;

@@ -3,13 +3,13 @@ package ch.openech.dm.person;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.types.YesNo;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.StringUtils;
 
 public class PersonExtendedInformation {
 
-	public static final PersonExtendedInformation PERSON_EXTENDED_INFORMATION = Constants.of(PersonExtendedInformation.class);
+	public static final PersonExtendedInformation PERSON_EXTENDED_INFORMATION = Keys.of(PersonExtendedInformation.class);
 	
 	public PersonIdentification personIdentification;
 	

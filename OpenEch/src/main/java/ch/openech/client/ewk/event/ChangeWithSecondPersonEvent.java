@@ -17,7 +17,7 @@ import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
@@ -32,7 +32,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 	}
 
 	public static class ChangeWithSecondPersonEventData {
-		public static final ChangeWithSecondPersonEventData DATA = Constants.of(ChangeWithSecondPersonEventData.class);
+		public static final ChangeWithSecondPersonEventData DATA = Keys.of(ChangeWithSecondPersonEventData.class);
 		@Required
 		public LocalDate date;
 		public Separation separation;

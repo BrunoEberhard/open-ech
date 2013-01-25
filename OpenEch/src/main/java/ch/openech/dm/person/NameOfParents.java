@@ -1,6 +1,6 @@
 package ch.openech.dm.person;
 
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 
 /**
  * 
@@ -9,7 +9,7 @@ import ch.openech.mj.model.Constants;
  * von Vater/Mutter einzeln.
  */
 public class NameOfParents {
-	public static final NameOfParents KEYS = Constants.of(NameOfParents.class);
+	public static final NameOfParents KEYS = Keys.of(NameOfParents.class);
 
 	public final NameOfParent father = new NameOfParent();
 	public final NameOfParent mother = new NameOfParent();

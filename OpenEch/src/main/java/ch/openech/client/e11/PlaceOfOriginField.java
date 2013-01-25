@@ -11,7 +11,7 @@ import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
@@ -32,7 +32,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	 * per Geburtstag zu der geborenen Person
 	 */
 	public PlaceOfOriginField(List<PlaceOfOrigin> key, boolean withAddOn, boolean editable) {
-		super(Constants.getProperty(key), editable);
+		super(Keys.getProperty(key), editable);
 		this.withAddOn = withAddOn;
 	}
 	

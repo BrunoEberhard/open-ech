@@ -7,14 +7,14 @@ import ch.openech.dm.common.TechnicalIds;
 import ch.openech.dm.person.types.Vn;
 import ch.openech.dm.types.Sex;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class PersonIdentification {
 
-	public static final PersonIdentification PERSON_IDENTIFICATION = Constants.of(PersonIdentification.class);
+	public static final PersonIdentification PERSON_IDENTIFICATION = Keys.of(PersonIdentification.class);
 	
 	//
 	

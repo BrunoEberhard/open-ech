@@ -7,7 +7,7 @@ import ch.openech.dm.types.MrMrs;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.annotation.Changes;
 import ch.openech.mj.model.annotation.OnChange;
@@ -20,7 +20,7 @@ import ch.openech.util.PlzImport;
 @Sizes(EchFormats.class)
 public class Address implements Validation {
 	
-	public static final Address ADDRESS = Constants.of(Address.class);
+	public static final Address ADDRESS = Keys.of(Address.class);
 
 	// organisation
 	@Size(EchFormats.organisationName)

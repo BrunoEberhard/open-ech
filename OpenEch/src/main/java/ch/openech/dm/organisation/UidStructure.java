@@ -2,14 +2,14 @@ package ch.openech.dm.organisation;
 
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.validation.Validatable;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.StringLimitation;
 import ch.openech.mj.util.StringUtils;
 
 public class UidStructure implements StringLimitation, Validatable, DemoEnabled {
 
-	public static final UidStructure UIDSTRUCTURE_STRUCTURE = Constants.of(UidStructure.class);
+	public static final UidStructure UIDSTRUCTURE_STRUCTURE = Keys.of(UidStructure.class);
 	private static final int[] mult = {5, 4, 3, 2, 7, 6, 5, 4};
 
 	public static final int LENGTH = 12;

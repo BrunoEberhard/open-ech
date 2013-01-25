@@ -8,7 +8,7 @@ import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageContextHelper;
@@ -19,7 +19,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 	private final EchSchema echNamespaceContext;
 	
 	public RelationField(List<Relation> key, EchSchema echNamespaceContext, boolean editable) {
-		super(Constants.getProperty(key), editable);
+		super(Keys.getProperty(key), editable);
 		this.echNamespaceContext = echNamespaceContext;
 	}
 

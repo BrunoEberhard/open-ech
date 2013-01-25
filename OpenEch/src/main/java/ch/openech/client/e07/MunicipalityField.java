@@ -8,7 +8,7 @@ import ch.openech.dm.code.FederalRegister;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.fields.AbstractEditField;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -21,7 +21,7 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 	private final ComboBox<MunicipalityIdentification> comboBox;
 
 	public MunicipalityField(MunicipalityIdentification key, boolean allowFederalRegister) {
-		this(Constants.getProperty(key), allowFederalRegister);
+		this(Keys.getProperty(key), allowFederalRegister);
 	}
 	
 	public MunicipalityField(PropertyInterface property, boolean allowFederalRegister) {

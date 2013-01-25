@@ -5,12 +5,12 @@ import org.joda.time.LocalDate;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.contact.Contact;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 
 // e46
 public class ThirdPartyMove {
 
-	public static final ThirdPartyMove THIRD_PARTY_MOVE = Constants.of(ThirdPartyMove.class);
+	public static final ThirdPartyMove THIRD_PARTY_MOVE = Keys.of(ThirdPartyMove.class);
 	
 	public Contact contractor;
 	

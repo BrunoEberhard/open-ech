@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
@@ -12,7 +12,7 @@ import ch.openech.mj.util.StringUtils;
 @Sizes(EchFormats.class)
 public class CountryIdentification implements Comparable<CountryIdentification>, Serializable, Cloneable {
 
-	public static final CountryIdentification COUNTRY_IDENTIFICATION = Constants.of(CountryIdentification.class);
+	public static final CountryIdentification COUNTRY_IDENTIFICATION = Keys.of(CountryIdentification.class);
 
 	@Size(4)
 	public Integer countryId;

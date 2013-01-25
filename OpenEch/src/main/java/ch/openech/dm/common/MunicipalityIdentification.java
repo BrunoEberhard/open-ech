@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.FederalRegister;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Decimal;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
@@ -12,7 +12,7 @@ import ch.openech.mj.util.StringUtils;
 @Sizes(EchFormats.class)
 public class MunicipalityIdentification implements Comparable<MunicipalityIdentification>, Serializable {
 
-	public static MunicipalityIdentification MUNICIPALITY_IDENTIFICATION = Constants.of(MunicipalityIdentification.class);
+	public static MunicipalityIdentification MUNICIPALITY_IDENTIFICATION = Keys.of(MunicipalityIdentification.class);
 
 	@Decimal(4)
 	public Integer municipalityId;

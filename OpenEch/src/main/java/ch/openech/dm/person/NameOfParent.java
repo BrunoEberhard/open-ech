@@ -1,7 +1,7 @@
 package ch.openech.dm.person;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.StringUtils;
 
@@ -10,7 +10,7 @@ import ch.openech.mj.util.StringUtils;
  * Verwendet in der Person, einmal für Mutter, einmal für Vater
  */
 public class NameOfParent {
-	public static final NameOfParent KEYS = Constants.of(NameOfParent.class);
+	public static final NameOfParent KEYS = Keys.of(NameOfParent.class);
 
 	@Size(EchFormats.officialFirstName)
 	public String firstName;

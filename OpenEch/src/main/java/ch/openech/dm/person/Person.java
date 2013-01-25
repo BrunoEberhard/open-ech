@@ -22,7 +22,7 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Reference;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.annotation.Changes;
 import ch.openech.mj.model.annotation.Code;
@@ -37,7 +37,7 @@ import ch.openech.mj.util.StringUtils;
 
 public class Person implements Validation {
 
-	public static final Person PERSON = Constants.of(Person.class);
+	public static final Person PERSON = Keys.of(Person.class);
 
 	public transient PersonEditMode editMode;
 
@@ -107,7 +107,7 @@ public class Person implements Validation {
 	// 
 	
 	public Relation getFather() {
-		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "father", Relation.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "father", Relation.class);
 		return getRelation(TypeOfRelationship.Vater);
 	}
 	
@@ -116,7 +116,7 @@ public class Person implements Validation {
 	}
 
 	public Relation getMother() {
-		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "mother", Relation.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "mother", Relation.class);
 		return getRelation(TypeOfRelationship.Mutter);
 	}
 	
@@ -213,7 +213,7 @@ public class Person implements Validation {
 	}
 	
 	public String getStreet() {
-		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "street", String.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "street", String.class);
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.street;
 		} else {
@@ -222,7 +222,7 @@ public class Person implements Validation {
 	}
 
 	public String getStreetNumber() {
-		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "streetNumber", String.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "streetNumber", String.class);
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.houseNumber.houseNumber;
 		} else {
@@ -231,7 +231,7 @@ public class Person implements Validation {
 	}
 
 	public String getTown() {
-		if (Constants.isKeyObject(this)) return Constants.methodOf(this, "town", String.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "town", String.class);
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.town;
 		} else {

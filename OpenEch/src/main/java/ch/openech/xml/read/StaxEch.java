@@ -13,7 +13,7 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import ch.openech.dm.types.EchCode;
 import ch.openech.mj.db.model.ColumnProperties;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.InvalidValues;
 import ch.openech.mj.model.PropertyInterface;
@@ -104,7 +104,7 @@ public class StaxEch {
 	}
 
 	public static void enuum(XMLEventReader xml, Object object, Object key) throws XMLStreamException {
-		PropertyInterface property = Constants.getProperty(key);
+		PropertyInterface property = Keys.getProperty(key);
 		enuum(xml, object, property);
 	}
 	

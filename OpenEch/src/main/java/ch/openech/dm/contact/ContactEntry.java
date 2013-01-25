@@ -11,7 +11,7 @@ import ch.openech.dm.types.ContactCategory;
 import ch.openech.dm.types.PhoneCategory;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Size;
@@ -20,7 +20,7 @@ import ch.openech.mj.util.StringUtils;
 
 public class ContactEntry implements Validation {
 
-	public static ContactEntry CONTACT_ENTRY = Constants.of(ContactEntry.class);
+	public static ContactEntry CONTACT_ENTRY = Keys.of(ContactEntry.class);
 	
 	public ContactEntryType typeOfContact;
 	

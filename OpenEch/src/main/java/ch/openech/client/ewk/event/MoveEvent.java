@@ -10,7 +10,7 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -25,7 +25,7 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 		public MunicipalityIdentification reportingMunicipality;
 	}
 
-	private static final MoveEventData MED = Constants.of(MoveEventData.class);
+	private static final MoveEventData MED = Keys.of(MoveEventData.class);
 	
 	@Override
 	protected void fillForm(Form<MoveEventData> formPanel) {

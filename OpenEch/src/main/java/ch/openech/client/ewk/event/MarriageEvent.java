@@ -20,7 +20,7 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Changes;
 import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Size;
@@ -36,7 +36,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	}
 
 	public static class Marriage implements Validation {
-		public static final Marriage MARRIAGE = Constants.of(Marriage.class);
+		public static final Marriage MARRIAGE = Keys.of(Marriage.class);
 		
 		@Required
 		public LocalDate dateOfMaritalStatus;
@@ -129,7 +129,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
 	}
 	
-	private static final Marriage MARRIAGE = Constants.of(Marriage.class);
+	private static final Marriage MARRIAGE = Keys.of(Marriage.class);
 
 	@Override
 	protected int getFormColumns() {

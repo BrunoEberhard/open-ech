@@ -13,7 +13,7 @@ import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0093;
@@ -31,7 +31,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 		public Place goesTo;
 	}
 
-	private static final MoveOutData MOD = Constants.of(MoveOutData.class);
+	private static final MoveOutData MOD = Keys.of(MoveOutData.class);
 	
 	@Override
 	protected List<String> getXml(Person person, MoveOutData data, WriterEch0020 writerEch0020) throws Exception {

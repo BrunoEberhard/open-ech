@@ -9,7 +9,7 @@ import ch.openech.dm.common.Address;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.Codes;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Size;
@@ -21,7 +21,7 @@ import ch.openech.xml.write.EchSchema;
 @Sizes(EchFormats.class)
 public class Occupation implements Validation {
 
-	public static final Occupation OCCUPATION = Constants.of(Occupation.class);
+	public static final Occupation OCCUPATION = Keys.of(Occupation.class);
 	
 	private final transient EchSchema echSchema;
 	

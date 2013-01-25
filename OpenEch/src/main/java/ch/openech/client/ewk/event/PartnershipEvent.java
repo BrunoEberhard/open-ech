@@ -17,7 +17,7 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.StringUtils;
@@ -34,7 +34,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 		
 	public static class Partnership implements Validation {
-		public static final Partnership PARTNERSHIP = Constants.of(Partnership.class);
+		public static final Partnership PARTNERSHIP = Keys.of(Partnership.class);
 		
 		@Required
 		public LocalDate dateOfMaritalStatus;
@@ -96,7 +96,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 
 	}
 	
-	private static final Partnership PARTNERSHIP = Constants.of(Partnership.class);
+	private static final Partnership PARTNERSHIP = Keys.of(Partnership.class);
 
 	@Override
 	protected int getFormColumns() {

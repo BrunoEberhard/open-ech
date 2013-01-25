@@ -8,7 +8,7 @@ import java.util.List;
 
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.server.EchServer;
@@ -16,7 +16,7 @@ import ch.openech.server.EchServer;
 public class XmlTextFormField extends ObjectFlowField<List<String>> {
 
 	public XmlTextFormField(List<String> key) {
-		super(Constants.getProperty(key), false);
+		super(Keys.getProperty(key), false);
 	}
 	
 	private class XmlValidateAction extends ResourceAction {

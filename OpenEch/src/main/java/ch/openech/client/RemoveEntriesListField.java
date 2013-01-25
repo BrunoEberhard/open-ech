@@ -6,14 +6,14 @@ import java.util.List;
 
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.resources.ResourceAction;
 
 public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 	private List<T> values = new ArrayList<T>();
 
 	public RemoveEntriesListField(List<T> key) {
-		super(Constants.getProperty(key), true);
+		super(Keys.getProperty(key), true);
 	}
 
 	public void setValues(List<T> values) {

@@ -3,7 +3,7 @@ package ch.openech.client.e21;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.xml.write.EchSchema;
 
 // Eigentlich relationField
@@ -11,7 +11,7 @@ public class PartnerField extends ObjectFlowField<Relation> {
 	private final EchSchema echSchema;
 	
 	public PartnerField(Relation key, EchSchema echSchema) {
-		super(Constants.getProperty(key));
+		super(Keys.getProperty(key));
 		this.echSchema = echSchema;
 	}
 

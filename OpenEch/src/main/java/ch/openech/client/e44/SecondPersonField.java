@@ -3,13 +3,13 @@ package ch.openech.client.e44;
 import ch.openech.dm.person.Relation;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 
 public class SecondPersonField extends ObjectFlowField<Relation> {
 
 	public SecondPersonField(Relation key) {
-		this(Constants.getProperty(key));
+		this(Keys.getProperty(key));
 	}
 
 	public SecondPersonField(PropertyInterface property) {

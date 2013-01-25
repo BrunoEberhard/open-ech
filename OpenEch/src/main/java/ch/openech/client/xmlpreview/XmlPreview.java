@@ -4,7 +4,7 @@ import java.util.List;
 
 import ch.openech.client.ewk.event.XmlTextFormField;
 import ch.openech.mj.edit.form.Form;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
 
@@ -35,7 +35,7 @@ public class XmlPreview {
 	}
 	
 	public static class XmlPreviewValue {
-		public static final XmlPreviewValue XML_PREVIEW_VALUE = Constants.of(XmlPreviewValue.class);
+		public static final XmlPreviewValue XML_PREVIEW_VALUE = Keys.of(XmlPreviewValue.class);
 		
 		public List<String> xmls;
 	}

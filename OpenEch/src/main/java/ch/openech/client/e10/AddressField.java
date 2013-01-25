@@ -5,7 +5,7 @@ import ch.openech.dm.common.Address;
 import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 
 public class AddressField extends ObjectFlowField<Address> implements DemoEnabled {
@@ -16,7 +16,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	private boolean enabled = true;
 
 	public AddressField(Address key, boolean editable) {
-		this(Constants.getProperty(key), editable, false, false, false);
+		this(Keys.getProperty(key), editable, false, false, false);
 	}
 
 	public AddressField(PropertyInterface property, boolean editable) {
@@ -24,7 +24,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	}
 
 	public AddressField(Address key, boolean swiss, boolean person, boolean organisation) {
-		this(Constants.getProperty(key), swiss, person, organisation);
+		this(Keys.getProperty(key), swiss, person, organisation);
 	}
 	
 	public AddressField(PropertyInterface property, boolean swiss, boolean person, boolean organisation) {

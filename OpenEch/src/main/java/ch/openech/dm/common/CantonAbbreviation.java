@@ -4,7 +4,7 @@ import java.util.List;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.mj.edit.validation.Validatable;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.read.StaxEch0071;
@@ -12,7 +12,7 @@ import ch.openech.xml.read.StaxEch0071;
 
 public class CantonAbbreviation implements Validatable {
 	
-	public static final CantonAbbreviation CANTON_ABBREVIATION = Constants.of(CantonAbbreviation.class);
+	public static final CantonAbbreviation CANTON_ABBREVIATION = Keys.of(CantonAbbreviation.class);
 	
 	@Size(EchFormats.cantonAbbreviation)
     public String canton;

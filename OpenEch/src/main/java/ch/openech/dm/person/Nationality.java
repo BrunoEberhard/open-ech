@@ -3,11 +3,11 @@ package ch.openech.dm.person;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.common.Swiss;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 
 public class Nationality  {
 
-	public static final Nationality NATIONALITY = Constants.of(Nationality.class);
+	public static final Nationality NATIONALITY = Keys.of(Nationality.class);
 	
 	public NationalityStatus nationalityStatus = NationalityStatus.with;
 	public final CountryIdentification nationalityCountry = Swiss.createCountryIdentification();

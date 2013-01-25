@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.Codes;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.DateUtils;
@@ -16,7 +16,7 @@ import ch.openech.xml.write.EchSchema;
 
 public class DwellingAddress implements Validation {
 
-	public static final DwellingAddress DWELLING_ADDRESS = Constants.of(DwellingAddress.class);
+	public static final DwellingAddress DWELLING_ADDRESS = Keys.of(DwellingAddress.class);
 	
 	public transient EchSchema echSchema;
 	

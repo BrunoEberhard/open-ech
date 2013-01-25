@@ -9,7 +9,7 @@ import ch.openech.dm.common.TechnicalIds;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.fields.ObjectLinkField;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.resources.ResourceAction;
 
@@ -20,7 +20,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	private final boolean hasSpecialEuIds;
 
 	public TechnicalIdsField(TechnicalIds key, boolean hasSpecialEuIds, boolean editable) {
-		this(Constants.getProperty(key), hasSpecialEuIds, editable);
+		this(Keys.getProperty(key), hasSpecialEuIds, editable);
 	}
 	
 	public TechnicalIdsField(PropertyInterface property, boolean hasSpecialEuIds, boolean editable) {
@@ -65,7 +65,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	private static class OtherIdField extends ObjectFlowField<List<NamedId>> {
 
 		public OtherIdField(List<NamedId> key, boolean editable) {
-			super(Constants.getProperty(key), editable);
+			super(Keys.getProperty(key), editable);
 		}
 
 		@Override

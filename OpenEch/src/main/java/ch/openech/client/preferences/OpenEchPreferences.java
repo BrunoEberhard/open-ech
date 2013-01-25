@@ -13,18 +13,18 @@ import ch.openech.dm.types.Language;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
 
 public class OpenEchPreferences implements Validation {
-	public static final OpenEchPreferences OPEN_ECH_PREFERENCES = Constants.of(OpenEchPreferences.class);
+	public static final OpenEchPreferences OPEN_ECH_PREFERENCES = Keys.of(OpenEchPreferences.class);
 	
 	public final ApplicationSchemaData applicationSchemaData = new ApplicationSchemaData();
 	public final PreferencesSedexData preferencesSedexData = new PreferencesSedexData();
 	public final PreferencesDefaultsData preferencesDefaultsData = new PreferencesDefaultsData();
 	
 	public static class ApplicationSchemaData {
-		public static final ApplicationSchemaData APPLICATION_SCHEMA_DATA = Constants.of(ApplicationSchemaData.class);
+		public static final ApplicationSchemaData APPLICATION_SCHEMA_DATA = Keys.of(ApplicationSchemaData.class);
 		@Required
 		public ApplicationMode applicationMode = ApplicationMode.Entwicklermodus;
 		public EchSchema0020 schema20 = EchSchema0020._2_2;
@@ -33,7 +33,7 @@ public class OpenEchPreferences implements Validation {
 	}
 	
 	public static class PreferencesSedexData {
-		public static final PreferencesSedexData PREFERENCES_SEDEX_DATA = Constants.of(PreferencesSedexData.class);
+		public static final PreferencesSedexData PREFERENCES_SEDEX_DATA = Keys.of(PreferencesSedexData.class);
 
 		public String sedexAddress;
 		public String sedexInput;
@@ -41,7 +41,7 @@ public class OpenEchPreferences implements Validation {
 	}
 
 	public static class PreferencesDefaultsData {
-		public static final PreferencesDefaultsData PREFERENCES_DEFAULTS_DATA = Constants.of(PreferencesDefaultsData.class);
+		public static final PreferencesDefaultsData PREFERENCES_DEFAULTS_DATA = Keys.of(PreferencesDefaultsData.class);
 		
 		public final MunicipalityIdentification residence = new MunicipalityIdentification();
 		@Size(4)

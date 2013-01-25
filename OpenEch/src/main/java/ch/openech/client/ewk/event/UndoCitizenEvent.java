@@ -16,7 +16,7 @@ import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.Required;
-import ch.openech.mj.model.Constants;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
@@ -62,7 +62,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		}
 
 		public UndoCitizenField(PlaceOfOrigin key) {
-			this(Constants.getProperty(key));
+			this(Keys.getProperty(key));
 		}
 
 		@Override
@@ -86,7 +86,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 	}
 	
 	public static class UndoCitizenData implements Validation {
-		public static final UndoCitizenData UNDO_CITIZEN_DATA = Constants.of(UndoCitizenData.class);
+		public static final UndoCitizenData UNDO_CITIZEN_DATA = Keys.of(UndoCitizenData.class);
 		
 		public Person person;
 		@Required
