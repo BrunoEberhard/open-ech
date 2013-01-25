@@ -1,12 +1,8 @@
 package ch.openech.client.preferences;
 
-import java.util.List;
-
-import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.mj.application.ApplicationContext;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.ValidationMessage;
 
 public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	private final ApplicationContext applicationContext;

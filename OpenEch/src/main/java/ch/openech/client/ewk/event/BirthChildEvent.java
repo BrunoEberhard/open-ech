@@ -17,7 +17,6 @@ import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.YesNo;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.util.BusinessRule;

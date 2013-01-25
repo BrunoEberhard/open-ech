@@ -1,6 +1,16 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.ACTION;
+import static ch.openech.dm.XmlConstants.EVENT_DATE;
+import static ch.openech.dm.XmlConstants.EVENT_DATE_FROM;
+import static ch.openech.dm.XmlConstants.EVENT_DATE_TO;
+import static ch.openech.dm.XmlConstants.EXTENSION;
+import static ch.openech.dm.XmlConstants.HEADER;
+import static ch.openech.dm.XmlConstants.MESSAGE_DATE;
+import static ch.openech.dm.XmlConstants.MESSAGE_ID;
+import static ch.openech.dm.XmlConstants.MESSAGE_TYPE;
+import static ch.openech.dm.XmlConstants.RECIPIENT_ID;
+import static ch.openech.dm.XmlConstants.SENDER_ID;
 import ch.openech.dm.Envelope;
 
 

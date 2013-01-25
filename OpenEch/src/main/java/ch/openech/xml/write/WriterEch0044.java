@@ -1,9 +1,18 @@
 package ch.openech.xml.write;
 
+import static ch.openech.dm.XmlConstants.DATE_OF_BIRTH;
+import static ch.openech.dm.XmlConstants.FIRST_NAME;
+import static ch.openech.dm.XmlConstants.OFFICIAL_NAME;
+import static ch.openech.dm.XmlConstants.PERSON_ID;
+import static ch.openech.dm.XmlConstants.PERSON_ID_CATEGORY;
+import static ch.openech.dm.XmlConstants.YEAR;
+import static ch.openech.dm.XmlConstants.YEAR_MONTH;
+import static ch.openech.dm.XmlConstants.YEAR_MONTH_DAY;
+import static ch.openech.dm.XmlConstants._OTHER_PERSON_ID;
+
 import java.util.List;
 
 import ch.openech.dm.XmlConstants;
-import static ch.openech.dm.XmlConstants.*;
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.db.model.ColumnProperties;

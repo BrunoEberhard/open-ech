@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.Action;
 
-
 import ch.openech.client.org.event.ChangeLegalFormEvent;
 import ch.openech.client.org.event.ChangeOrganisationNameEvent;
 import ch.openech.client.org.event.ChangeReportingEvent;

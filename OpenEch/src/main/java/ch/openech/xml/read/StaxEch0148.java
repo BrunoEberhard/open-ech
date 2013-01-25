@@ -42,7 +42,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.apache.commons.lang.enums.EnumUtils;
 import org.joda.time.LocalDateTime;
 
 import ch.openech.dm.Event;

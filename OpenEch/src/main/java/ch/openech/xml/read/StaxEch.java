@@ -13,9 +13,9 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import ch.openech.dm.types.EchCode;
 import ch.openech.mj.db.model.ColumnProperties;
-import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.InvalidValues;
+import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 
 public class StaxEch {

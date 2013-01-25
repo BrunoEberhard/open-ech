@@ -8,7 +8,6 @@ import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.AnnotationUtil;
 
 public class AnnotationUtilTest {
 

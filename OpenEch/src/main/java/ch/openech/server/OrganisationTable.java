@@ -13,7 +13,6 @@ import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.SearchableTable;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.util.StringUtils;
 
 public class OrganisationTable extends SearchableTable<Organisation> {
 

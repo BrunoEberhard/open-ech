@@ -1,8 +1,12 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.ADDRESS_INFORMATION;
+import static ch.openech.dm.XmlConstants.FOREIGN_ZIP_CODE;
 import static ch.openech.dm.XmlConstants.ORGANISATION;
 import static ch.openech.dm.XmlConstants.PERSON;
+import static ch.openech.dm.XmlConstants.SWISS_ZIP_CODE;
+import static ch.openech.dm.XmlConstants.SWISS_ZIP_CODE_ADD_ON;
+import static ch.openech.dm.XmlConstants.SWISS_ZIP_CODE_ID;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;

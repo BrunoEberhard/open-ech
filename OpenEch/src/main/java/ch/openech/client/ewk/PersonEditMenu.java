@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.Action;
 
-
 import ch.openech.client.e21.CareEvent;
 import ch.openech.client.ewk.event.AddressLockEvent;
 import ch.openech.client.ewk.event.BirthChildEvent;

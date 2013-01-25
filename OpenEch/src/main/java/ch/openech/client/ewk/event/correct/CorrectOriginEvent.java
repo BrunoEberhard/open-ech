@@ -3,7 +3,6 @@ package ch.openech.client.ewk.event.correct;
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;

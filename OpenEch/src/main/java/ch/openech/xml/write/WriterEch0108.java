@@ -1,6 +1,23 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_ENTRY_DATE;
+import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_ENTRY_STATUS;
+import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_INFORMATION;
+import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_LIQUIDATION_DATE;
+import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_NAME_TRANSLATION;
+import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_STATUS;
+import static ch.openech.dm.XmlConstants.ORGANISATION;
+import static ch.openech.dm.XmlConstants.UIDREG_INFORMATION;
+import static ch.openech.dm.XmlConstants.UIDREG_LIQUIDATION_REASON;
+import static ch.openech.dm.XmlConstants.UIDREG_ORGANISATION_TYPE;
+import static ch.openech.dm.XmlConstants.UIDREG_PUBLIC_STATUS;
+import static ch.openech.dm.XmlConstants.UIDREG_SOURCE;
+import static ch.openech.dm.XmlConstants.UIDREG_STATUS_ENTERPRISE_DETAIL;
+import static ch.openech.dm.XmlConstants.VAT_ENTRY_DATE;
+import static ch.openech.dm.XmlConstants.VAT_ENTRY_STATUS;
+import static ch.openech.dm.XmlConstants.VAT_LIQUIDATION_DATE;
+import static ch.openech.dm.XmlConstants.VAT_REGISTER_INFORMATION;
+import static ch.openech.dm.XmlConstants.VAT_STATUS;
 import ch.openech.dm.organisation.Organisation;
 
 public class WriterEch0108 extends DeliveryWriter {

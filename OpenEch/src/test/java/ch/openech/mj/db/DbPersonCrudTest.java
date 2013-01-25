@@ -13,8 +13,6 @@ import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.types.MrMrs;
 import ch.openech.dm.types.Sex;
-import ch.openech.mj.db.ImmutableTable;
-import ch.openech.mj.db.Table;
 import ch.openech.server.EchPersistence;
 import ch.openech.server.EchServer;
 
