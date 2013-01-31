@@ -24,7 +24,7 @@ public class ExportAllPersonAction extends ResourceAction implements ExportHandl
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		source = e.getSource();
-		ClientToolkit.getToolkit().export(e.getSource(), "text", this);
+		ClientToolkit.getToolkit().export(e.getSource(), "Export", this);
 	}
 
 	@Override
