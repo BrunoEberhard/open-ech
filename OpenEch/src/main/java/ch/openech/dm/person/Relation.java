@@ -72,13 +72,11 @@ public class Relation implements Validatable {
 	
 	public void identificationToHtml(StringBuilder s) {
 		if (partner != null) {
-			s.append("Person:<BR>");
 			partner.toHtml(s);
 			s.append("&nbsp<BR>");
 		}
 		
 		if (address != null && !address.isEmpty()) {
-			s.append("Adresse:<BR>");
 			address.toHtml(s);
 			s.append("<BR>");
 		}
