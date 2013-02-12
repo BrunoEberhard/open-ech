@@ -21,6 +21,7 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Changes;
+import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
@@ -45,14 +46,23 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		public Person partner1;
 		@OnChange("updatePartner2")
 		public Person partner2;
-		public Boolean changeName1, changeName2;
-		@Size(EchFormats.baseName)
+		public Boolean changeName1 = Boolean.FALSE;
+		public Boolean changeName2 = Boolean.FALSE;
+		@Size(EchFormats.baseName) @Enabled("getChangeName1")
 		public String name1;
-		@Size(EchFormats.baseName)
+		@Size(EchFormats.baseName) @Enabled("getChangeName2")
 		public String name2;
 		public final List<PlaceOfOrigin> origin1 = new ArrayList<PlaceOfOrigin>();
 		public final List<PlaceOfOrigin> origin2 = new ArrayList<PlaceOfOrigin>();
 		
+		public Boolean getChangeName1() {
+			return changeName1;
+		}
+
+		public Boolean getChangeName2() {
+			return changeName2;
+		}
+
 		@Changes({"name2", "origin2"})
 		public void updatePartner1() {
 			if (partner1 != null) {

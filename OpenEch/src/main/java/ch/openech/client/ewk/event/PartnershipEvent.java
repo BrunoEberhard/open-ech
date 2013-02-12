@@ -17,6 +17,7 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.model.Keys;
+import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.BusinessRule;
@@ -40,10 +41,21 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		public LocalDate dateOfMaritalStatus;
 		public Boolean registerPartner2 = Boolean.TRUE;
 		public Person partner1, partner2;
-		public Boolean changeName1, changeName2;
-		@Size(EchFormats.baseName)
-		public String name1, name2;
-		
+		public Boolean changeName1 = Boolean.FALSE;
+		public Boolean changeName2 = Boolean.FALSE;
+		@Size(EchFormats.baseName) @Enabled("getChangeName1")
+		public String name1;
+		@Size(EchFormats.baseName) @Enabled("getChangeName2")
+		public String name2;
+
+		public Boolean getChangeName1() {
+			return changeName1;
+		}
+
+		public Boolean getChangeName2() {
+			return changeName2;
+		}
+
 		private void validateNamesNotBlank(List<ValidationMessage> validationMessages) {
 			if (Boolean.TRUE.equals(changeName1)) validateNameNotBlank(validationMessages, PARTNERSHIP.name1, name1);
 			if (Boolean.TRUE.equals(changeName2)) validateNameNotBlank(validationMessages, PARTNERSHIP.name2, name2);
