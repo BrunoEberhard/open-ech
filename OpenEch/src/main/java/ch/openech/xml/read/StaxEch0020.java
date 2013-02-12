@@ -1,9 +1,7 @@
 package ch.openech.xml.read;
 
 import static ch.openech.dm.XmlConstants.*;
-import static ch.openech.xml.read.StaxEch.enuum;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
@@ -30,6 +28,7 @@ import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.dm.types.YesNo;
 import ch.openech.mj.toolkit.ProgressListener;
+import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchPersistence;
 
@@ -275,7 +274,7 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	private void completePlaceOfOrigins(Person person) {
 		for (PlaceOfOrigin placeOfOrigin : person.placeOfOrigin) {
-			placeOfOrigin.naturalizationDate = person.personIdentification.dateOfBirth;
+			placeOfOrigin.naturalizationDate = DateUtils.convertToLocalDate(person.personIdentification.dateOfBirth);
 			placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
 		}
 	}

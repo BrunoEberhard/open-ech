@@ -1,7 +1,7 @@
 package ch.openech.client.ewk;
 
-import static ch.openech.dm.person.Person.PERSON;
-import static ch.openech.dm.person.PersonIdentification.PERSON_IDENTIFICATION;
+import static ch.openech.dm.person.Person.*;
+import static ch.openech.dm.person.PersonIdentification.*;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
@@ -15,7 +15,7 @@ import ch.openech.dm.person.PersonEditMode;
 import ch.openech.dm.types.Sex;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
-import ch.openech.mj.edit.fields.DateField;
+import ch.openech.mj.edit.fields.AbstractJodaField;
 import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.mj.edit.fields.FormField;
 import ch.openech.xml.write.EchSchema;
@@ -155,13 +155,13 @@ public class PersonPanel extends EchForm<Person>  {
 
 	private void disableDeathFieldIfAlive(Person person) {
 		if (mode == PersonEditMode.DISPLAY) {
-			((DateField) getField(PERSON.dateOfDeath)).setEnabled(person.dateOfDeath != null);
+			((AbstractJodaField) getField(PERSON.dateOfDeath)).setEnabled(person.dateOfDeath != null);
 		}
 	}
 
 	private void disableMoveOutFields(Person person) {
 		if (mode == PersonEditMode.DISPLAY) {
-			((DateField) getField(PERSON.departureDate)).setEnabled(person.departureDate != null);
+			((AbstractJodaField) getField(PERSON.departureDate)).setEnabled(person.departureDate != null);
 			((PlaceReadOnlyField) getField(PERSON.goesTo)).setEnabled(person.goesTo != null && !person.goesTo.isUnknown());
 			((AddressField) getField(PERSON.goesToAddress)).setEnabled(person.goesTo != null && person.goesTo.mailAddress != null && !person.goesTo.mailAddress.isEmpty());
 		}

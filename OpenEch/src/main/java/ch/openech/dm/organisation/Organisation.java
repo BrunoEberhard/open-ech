@@ -3,6 +3,7 @@ package ch.openech.dm.organisation;
 import java.util.List;
 
 import org.joda.time.LocalDate;
+import org.joda.time.ReadablePartial;
 import org.joda.time.format.ISODateTimeFormat;
 
 import ch.openech.dm.EchFormats;
@@ -21,7 +22,6 @@ import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.model.annotation.Code;
-import ch.openech.mj.model.annotation.PartialDate;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.xml.read.StaxEch;
@@ -56,14 +56,13 @@ public class Organisation implements Validation {
 	@Size(6) // TODO
 	public String nogaCode; // 00 - 999999
 	
-	@Required @PartialDate
-	public LocalDate foundationDate;
+	@Required
+	public ReadablePartial foundationDate;
 	@Code
 	public String foundationReason;
 	
 	public LocalDate liquidationEntryDate;
-	@PartialDate
-	public LocalDate liquidationDate;
+	public ReadablePartial liquidationDate;
 	@Code
 	public String liquidationReason;
 	

@@ -1,6 +1,6 @@
 package ch.openech.server;
 
-import static ch.openech.dm.person.Person.PERSON;
+import static ch.openech.dm.person.Person.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.joda.time.LocalDate;
+import org.joda.time.ReadablePartial;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
@@ -78,7 +79,7 @@ public class PersonTable extends SearchableTable<Person> {
 		}
 	}
 	
-	public Person getByName(String name, String firstName, LocalDate dateOfBirth) {
+	public Person getByName(String name, String firstName, ReadablePartial dateOfBirth) {
 		List<Person> persons = find(name);
 		for (int i = persons.size()-1; i>= 0; i--) {
 			Person person = persons.get(i);

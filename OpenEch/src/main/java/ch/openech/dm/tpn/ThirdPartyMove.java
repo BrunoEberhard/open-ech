@@ -1,6 +1,7 @@
 package ch.openech.dm.tpn;
 
 import org.joda.time.LocalDate;
+import org.joda.time.ReadablePartial;
 
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
@@ -16,8 +17,7 @@ public class ThirdPartyMove {
 	
 	// Person
 	public String officialName, callName;
-	// (partialAllowed = false)
-	public LocalDate dateOfBirth;
+	public ReadablePartial dateOfBirth;
 	public String sex;
 	public CountryIdentification nationality;
 	public LocalDate beginOfContract, endOfContract;

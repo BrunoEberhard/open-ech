@@ -1,6 +1,6 @@
 package ch.openech.dm.person;
 
-import org.joda.time.LocalDate;
+import org.joda.time.ReadablePartial;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.common.TechnicalIds;
@@ -34,8 +34,7 @@ public class PersonIdentification {
 	public Sex sex;
 	
 	@Required 
-	// @Date(partialAllowed = true)
-	public LocalDate dateOfBirth;
+	public ReadablePartial dateOfBirth;
 	
 	//
 	
@@ -71,7 +70,7 @@ public class PersonIdentification {
 	
 	public void toHtml(StringBuilder s) {
 		StringUtils.appendLine(s, firstName, officialName);
-		StringUtils.appendLine(s, DateUtils.formatCH(dateOfBirth));
+		StringUtils.appendLine(s, DateUtils.formatPartialCH(dateOfBirth));
 	}
 	
 	public boolean isMale() {

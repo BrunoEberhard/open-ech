@@ -21,11 +21,11 @@ import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.Language;
 import ch.openech.dm.types.Sex;
 import ch.openech.dm.types.TypeOfResidence;
+import ch.openech.mj.autofill.DateGenerator;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.autofill.OrganisationNameGenerator;
 import ch.openech.mj.db.model.ColumnProperties;
-import ch.openech.mj.edit.fields.DateField;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.server.EchServer;
 import ch.openech.util.Plz;
@@ -53,15 +53,15 @@ public class DataGenerator {
 		boolean male = Math.random() > .5;
 		person.personIdentification.firstName = FirstNameGenerator.getFirstName(male);
 		person.personIdentification.sex = male ? Sex.maennlich : Sex.weiblich;
-		person.personIdentification.dateOfBirth = DateField.generateRandom();
+		person.personIdentification.dateOfBirth = DateGenerator.generateRandomDate();
 		if (Math.random() > .9) {
-			person.dateOfDeath = DateField.generateRandom();
+			person.dateOfDeath = DateGenerator.generateRandomDate();
 		}
 		person.personIdentification.vn.fillWithDemoData();
 		person.callName = "Lorem Ipsum";
 		person.placeOfBirth = place();
 		
-		person.arrivalDate = DateField.generateRandom();
+		person.arrivalDate = DateGenerator.generateRandomDate();
 		person.residence.reportingMunicipality = createJona();
 		
 		person.placeOfOrigin.add(placeOfOrigin());
@@ -147,7 +147,7 @@ public class DataGenerator {
 	
 	public static PlaceOfOrigin placeOfOrigin() {
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
-		placeOfOrigin.naturalizationDate = DateField.generateRandom();
+		placeOfOrigin.naturalizationDate = DateGenerator.generateRandomDate();
 		
 		MunicipalityIdentification municipalityIdentification = municipalityIdentifications.get((int)(Math.random() * municipalityIdentifications.size()));
 		placeOfOrigin.originName = municipalityIdentification.municipalityName;
@@ -210,8 +210,8 @@ public class DataGenerator {
 			organisation.organisationName = organisation.organisationName.substring(0, 60);
 		}
 		organisation.uid.value = "ADM323423421";
-		organisation.foundationDate = DateField.generateRandom();
-		organisation.arrivalDate = DateField.generateRandom();
+		organisation.foundationDate = DateGenerator.generateRandomDate();
+		organisation.arrivalDate = DateGenerator.generateRandomDate();
 		organisation.reportingMunicipality = createJona();
 		organisation.businessAddress = dwellingAddress();
 		

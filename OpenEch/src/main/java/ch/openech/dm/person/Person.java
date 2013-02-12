@@ -84,8 +84,7 @@ public class Person implements Validation {
 	public LocalDate arrivalDate, departureDate;
 	public Place comesFrom, goesTo;
 	public Address comesFromAddress, goesToAddress;
-	@Required
-	public DwellingAddress dwellingAddress = new DwellingAddress();
+	public DwellingAddress dwellingAddress = new DwellingAddress(); // Fast immer required, aber nicht bei Birth
 	
 	public final List<Occupation> occupation = new ArrayList<Occupation>();
 	public final List<Relation> relation = new ArrayList<Relation>();
@@ -243,7 +242,7 @@ public class Person implements Validation {
 	
 	@Override
 	public String toString() {
-		return personIdentification.firstName + " " + personIdentification.officialName + ", " + DateUtils.formatCH(personIdentification.dateOfBirth);
+		return personIdentification.firstName + " " + personIdentification.officialName + ", " + DateUtils.formatPartialCH(personIdentification.dateOfBirth);
 	}
 	
 	public String toHtmlMultiLine() {
@@ -258,7 +257,7 @@ public class Person implements Validation {
 		append(s, "Person.officialName", personIdentification.officialName);
 		append(s, "Person.firstName", personIdentification.firstName);
 		if (personIdentification.dateOfBirth != null) {
-			append(s, "Person.dateOfBirth", DateUtils.formatCH(personIdentification.dateOfBirth));
+			append(s, "Person.dateOfBirth", DateUtils.formatPartial(personIdentification.dateOfBirth));
 		}
 		s.append("<BR>&nbsp;");
 	}
@@ -328,12 +327,14 @@ public class Person implements Validation {
 
 	
 	private boolean isBirthAfterRelation(Relation relation) {
-		if (personIdentification.dateOfBirth == null) return true;
+		LocalDate dateOfBirth = DateUtils.convertToLocalDate(personIdentification.dateOfBirth);
+		if (dateOfBirth == null) return true;
 		if (relation == null) return true;
 		PersonIdentification partner = relation.partner;
 		if (partner == null) return true;
 		if (partner.dateOfBirth == null) return true;
-		return personIdentification.dateOfBirth.isAfter(partner.dateOfBirth); 
+		// strange: isAfter can compare with PartialDate, but is not on PartialDate
+		return dateOfBirth.isAfter(partner.dateOfBirth); 
 	}
 
 	private void validateRelations(List<ValidationMessage> resultList) {

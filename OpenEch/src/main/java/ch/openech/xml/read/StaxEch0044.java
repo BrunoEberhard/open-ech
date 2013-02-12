@@ -1,27 +1,14 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.DATE_OF_BIRTH;
-import static ch.openech.dm.XmlConstants.EU_PERSON_ID;
-import static ch.openech.dm.XmlConstants.FIRST_NAME;
-import static ch.openech.dm.XmlConstants.LOCAL_PERSON_ID;
-import static ch.openech.dm.XmlConstants.OFFICIAL_NAME;
-import static ch.openech.dm.XmlConstants.OTHER_PERSON_ID;
-import static ch.openech.dm.XmlConstants.PERSON_ID;
-import static ch.openech.dm.XmlConstants.PERSON_ID_CATEGORY;
-import static ch.openech.dm.XmlConstants.SEX;
-import static ch.openech.dm.XmlConstants.VN;
-import static ch.openech.dm.XmlConstants.YEAR;
-import static ch.openech.dm.XmlConstants.YEAR_MONTH;
-import static ch.openech.dm.XmlConstants.YEAR_MONTH_DAY;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
+import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.joda.time.LocalDate;
+import org.joda.time.ReadablePartial;
 
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.person.PersonIdentification;
@@ -87,15 +74,15 @@ public class StaxEch0044 {
 	}
 
 	// also used by 98
-	public static LocalDate datePartiallyKnown(XMLEventReader xml) throws XMLStreamException {
-		LocalDate date = null;
+	public static ReadablePartial datePartiallyKnown(XMLEventReader xml) throws XMLStreamException {
+		ReadablePartial date = null;
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(YEAR_MONTH_DAY) || startName.equals(YEAR_MONTH) || startName.equals(YEAR)) {
-					date = StaxEch.date(xml);
+					date = StaxEch.partial(xml);
 				} else {
 					throw new IllegalArgumentException();
 				}

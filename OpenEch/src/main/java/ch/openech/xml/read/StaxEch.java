@@ -9,6 +9,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.ReadablePartial;
 import org.joda.time.format.ISODateTimeFormat;
 
 import ch.openech.dm.types.EchCode;
@@ -17,6 +18,7 @@ import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.InvalidValues;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
+import ch.openech.mj.util.DateUtils;
 
 public class StaxEch {
 	private static Logger logger = Logger.getLogger(StaxEch.class.getName());
@@ -39,6 +41,11 @@ public class StaxEch {
 			text = text.substring(0, MAX_DATE_TIME_LENGHT);
 		}
 		return ISODateTimeFormat.dateHourMinuteSecond().parseLocalDateTime(text);
+	}
+
+	public static ReadablePartial partial(XMLEventReader xml) throws XMLStreamException {
+		String text = token(xml);
+		return DateUtils.parsePartial(text);
 	}
 
 	public static void simpleValue(XMLEventReader xml, Object object, Object key) throws XMLStreamException {
