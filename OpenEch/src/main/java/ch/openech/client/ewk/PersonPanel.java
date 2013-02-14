@@ -5,6 +5,7 @@ import static ch.openech.dm.person.PersonIdentification.*;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
+import ch.openech.client.e11.ResidenceField;
 import ch.openech.client.e21.NameOfParentsField;
 import ch.openech.client.e21.PartnerField;
 import ch.openech.client.e21.RelationField;
@@ -13,6 +14,7 @@ import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.dm.types.Sex;
+import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
 import ch.openech.mj.edit.fields.AbstractJodaField;
@@ -177,6 +179,9 @@ public class PersonPanel extends EchForm<Person>  {
 		((FormField<String>) getField(PERSON.personIdentification.firstName)).setObject(generatedName.name);
 		EnumEditField<Sex> sexField = (EnumEditField<Sex>) getField(PERSON_IDENTIFICATION.sex);
 		if (sexField != null) sexField.setObject(male ? Sex.maennlich : Sex.weiblich);
+		
+		TypeOfResidence typeOfResidence = ((EnumEditField<TypeOfResidence>) getField(PERSON.typeOfResidence)).getObject();
+		((ResidenceField) getField(PERSON.residence)).fillWithDemoData(typeOfResidence);
 	}
 	
 //	public static void main(String... args) {

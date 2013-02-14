@@ -12,7 +12,6 @@ import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Residence;
 import ch.openech.dm.types.TypeOfResidence;
-import ch.openech.mj.autofill.DemoEnabled;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.Form;
@@ -20,9 +19,8 @@ import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.resources.ResourceAction;
 
-public class ResidenceField extends ObjectFlowField<Residence> implements DemoEnabled {
+public class ResidenceField extends ObjectFlowField<Residence> {
 	private Action selectSecondary;
-	private TypeOfResidence typeOfResidence;
 
 	public ResidenceField(PropertyInterface property, boolean editable) {
 		super(property, editable);
@@ -116,7 +114,7 @@ public class ResidenceField extends ObjectFlowField<Residence> implements DemoEn
 		}
 		
 		// Bei Nebenwohnsitz darf es nur einer sein, daher auch die Aktion nur bei leerer Liste anbieten
-		if (selectSecondary != null) selectSecondary.setEnabled(!"2".equals(typeOfResidence) || residence.secondary == null || residence.secondary.isEmpty());
+		// if (selectSecondary != null) selectSecondary.setEnabled(TypeOfResidence.hasOtherResidence != typeOfResidence || residence.secondary == null || residence.secondary.isEmpty());
 	}
 	
 	
@@ -124,22 +122,25 @@ public class ResidenceField extends ObjectFlowField<Residence> implements DemoEn
 	protected void showActions() {
 		if (getObject() == null) return;
 
-		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
-		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
+//		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
+//		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
+//
+//		if (!hasOtherResidence) {
+//			addAction(new ResidenceMainEditor());
+//		}
+//		if (!hasMainResidence || getObject().secondary.isEmpty()) {
+//			addAction(new ResidenceAddSecondaryEditor());
+//		}
 
-		if (!hasOtherResidence) {
-			addAction(new ResidenceMainEditor());
-		}
-		if (!hasMainResidence || getObject().secondary.isEmpty()) {
-			addAction(new ResidenceAddSecondaryEditor());
-		}
+		addAction(new ResidenceMainEditor());
+		addAction(new ResidenceAddSecondaryEditor());
+
 		if (!getObject().secondary.isEmpty()) {
 			addAction(new ResidenceRemoveSecondaryAction());
 		}
 	}
 
-	@Override
-	public void fillWithDemoData() {
+	public void fillWithDemoData(TypeOfResidence typeOfResidence) {
 		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
 		boolean hasSecondResidence = TypeOfResidence.hasSecondaryResidence == typeOfResidence;
 		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
@@ -162,6 +163,8 @@ public class ResidenceField extends ObjectFlowField<Residence> implements DemoEn
 			secondaryResidences.add(DataGenerator.place().municipalityIdentification);
 		}
 		getObject().setSecondary(secondaryResidences);
+		show(getObject());
+		fireChange();
 	}
 
 	@Override
