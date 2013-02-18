@@ -1,8 +1,6 @@
 package ch.openech.test.dm;
 
-import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import junit.framework.Assert;
 
@@ -15,8 +13,6 @@ import ch.openech.mj.model.test.ModelTest;
 
 public class DomainClassTest {
 
-	private Set<Class<?>> testedClasses = new HashSet<Class<?>>();
-	
 	@Test
 	public void testOpenEchDomainClasses() {
 		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.organisation.types.ech_organisation"));
