@@ -45,6 +45,8 @@ public class StaxEch {
 
 	public static ReadablePartial partial(XMLEventReader xml) throws XMLStreamException {
 		String text = token(xml);
+		// handle dates like 1950-08-30+01:00
+		if (text != null && text.length() > 10) text = text.substring(0, 10);
 		return DateUtils.parsePartial(text);
 	}
 
