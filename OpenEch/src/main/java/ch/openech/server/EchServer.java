@@ -3,7 +3,6 @@ package ch.openech.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -124,7 +123,7 @@ public class EchServer {
 				result.exception = x;
 				persistence.rollback();
 			} 
-		} catch (SQLException x) {
+		} catch (Exception x) {
 			if (result.exception == null) {
 				result.errorMessage = x.getLocalizedMessage();
 				result.exception = x;

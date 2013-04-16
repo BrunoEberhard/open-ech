@@ -29,12 +29,12 @@ public class PersonTable extends SearchableTable<Person> {
 		PERSON.personIdentification.vn.value, //
 	};
 	
-	public PersonTable(DbPersistence dbPersistence) throws SQLException {
+	public PersonTable(DbPersistence dbPersistence) {
 		super(dbPersistence, Person.class, INDEX_FIELDS);
 	}
 	
 	@Override
-	public int insert(Person person) throws SQLException {
+	public int insert(Person person) {
 		if (person.getId() == null) {
 			person.personIdentification.technicalIds.localId.setOpenEch();
 		}
@@ -43,7 +43,7 @@ public class PersonTable extends SearchableTable<Person> {
 	}
 	
 	@Override
-	public void update(Person person) throws SQLException {
+	public void update(Person person) {
 		removeEmptyRelations(person);
 		super.update(person);
 	}

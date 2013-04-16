@@ -5,7 +5,6 @@ import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.sql.SQLException;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -50,13 +49,9 @@ public class StaxEch0020 implements StaxEchParser {
 	// Persistence
 	
 	public void insertPerson(Person person) {
-		try {
-			person.event = e;
-			persistence.person().insert(person);
-			lastInsertedPersonId = person.getId();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+		person.event = e;
+		persistence.person().insert(person);
+		lastInsertedPersonId = person.getId();
 	}
 
 	@Override
@@ -67,13 +62,9 @@ public class StaxEch0020 implements StaxEchParser {
 	public void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
 		if (StringUtils.equals(type, XmlConstants.DIVORCE, XmlConstants.UNDO_MARRIAGE, XmlConstants.UNDO_PARTNERSHIP)) removePartner(person);
 
-		try {
-			person.event = e;
-			persistence.person().update(person);
-			persistence.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		person.event = e;
+		persistence.person().update(person);
+		persistence.commit();
 	}
 
 	//

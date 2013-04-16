@@ -1,39 +1,10 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
-import static ch.openech.dm.XmlConstants.BUSINESS_ADDRESS;
-import static ch.openech.dm.XmlConstants.COMES_FROM;
-import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_INFORMATION;
-import static ch.openech.dm.XmlConstants.CONTACT;
-import static ch.openech.dm.XmlConstants.CORRECT_LIQUIDATION;
-import static ch.openech.dm.XmlConstants.CORRECT_REPORTING;
-import static ch.openech.dm.XmlConstants.DELIVERY;
-import static ch.openech.dm.XmlConstants.DELIVERY_HEADER;
-import static ch.openech.dm.XmlConstants.FOUNDATION;
-import static ch.openech.dm.XmlConstants.HAS_MAIN_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HAS_OTHER_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HAS_SECONDARY_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HEADER;
-import static ch.openech.dm.XmlConstants.LIQUIDATION;
-import static ch.openech.dm.XmlConstants.MOVE_IN;
-import static ch.openech.dm.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
-import static ch.openech.dm.XmlConstants.MOVE_REPORTING_ADDRESS;
-import static ch.openech.dm.XmlConstants.NUMBER_OF_ORGANISATIONS;
-import static ch.openech.dm.XmlConstants.ORGANISATION_BASE_DELIVERY;
-import static ch.openech.dm.XmlConstants.ORGANISATION_IDENTIFICATION;
-import static ch.openech.dm.XmlConstants.REPORTED_ORGANISATION;
-import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.TYP_OF_RESIDENCE;
-import static ch.openech.dm.XmlConstants.UIDREG_INFORMATION;
-import static ch.openech.dm.XmlConstants.UIDREG_SOURCE;
-import static ch.openech.dm.XmlConstants.VAT_REGISTER_INFORMATION;
-import static ch.openech.xml.read.StaxEch.date;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
+import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.sql.SQLException;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -63,13 +34,9 @@ public class StaxEch0148 implements StaxEchParser {
 	}
 	
 	public void insertOrganisation(Organisation organisation) {
-		try {
-			organisation.event = e;
-			persistence.organisation().insert(organisation);
-			lastInsertedOrganisationId = organisation.getId();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+		organisation.event = e;
+		persistence.organisation().insert(organisation);
+		lastInsertedOrganisationId = organisation.getId();
 	}
 
 	@Override
@@ -165,7 +132,7 @@ public class StaxEch0148 implements StaxEchParser {
 			organisation.event = e;
 			persistence.organisation().update(organisation);
 			persistence.commit();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,6 +1,6 @@
 package ch.openech.server;
 
-import static ch.openech.dm.organisation.Organisation.ORGANISATION;
+import static ch.openech.dm.organisation.Organisation.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,7 +26,7 @@ public class OrganisationTable extends SearchableTable<Organisation> {
 	}
 	
 	@Override
-	public int insert(Organisation organisation) throws SQLException {
+	public int insert(Organisation organisation) {
 		if (organisation.getId() == null) {
 			organisation.technicalIds.localId.setOpenEch();
 		}
