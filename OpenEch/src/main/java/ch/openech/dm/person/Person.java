@@ -74,13 +74,6 @@ public class Person implements Validation {
 	public TypeOfResidence typeOfResidence = TypeOfResidence.hasMainResidence;
 	public final Residence residence = new Residence();
 	
-	@Changes("residence")
-	public void updateResidence() {
-		if (typeOfResidence == TypeOfResidence.hasOtherResidence) {
-			residence.reportingMunicipality = null;
-		}
-	}
-	
 	public LocalDate arrivalDate, departureDate;
 	public Place comesFrom, goesTo;
 	public Address comesFromAddress, goesToAddress;
@@ -102,6 +95,15 @@ public class Person implements Validation {
 	public PersonExtendedInformation personExtendedInformation;
 
 	public Contact contact;
+	
+	//	
+	
+	@Changes("residence")
+	public void updateResidence() {
+		if (typeOfResidence == TypeOfResidence.hasOtherResidence) {
+			residence.reportingMunicipality = null;
+		}
+	}
 	
 	// 
 	
