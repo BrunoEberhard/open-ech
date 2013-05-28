@@ -6,23 +6,24 @@ import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.tpn.ThirdPartyMove;
 import ch.openech.mj.db.DbPersistence;
+import ch.openech.mj.db.HistorizedTable;
 import ch.openech.mj.db.Table;
 
 public class EchPersistence extends DbPersistence {
 
-	private final Table<PersonIdentification> personIdentification;
+	private final HistorizedTable<PersonIdentification> personIdentification;
 	private final PersonTable person;
-	private final Table<Contact> contact;
+	private final HistorizedTable<Contact> contact;
 	private final OrganisationTable organisation;
 	private final Table<ThirdPartyMove> thirdPartyMove = null;
 
 	public EchPersistence() throws SQLException {
-		personIdentification = addClass(PersonIdentification.class);
+		personIdentification = addHistorizedClass(PersonIdentification.class);
 		
 		person = new PersonTable(this);
 		add(person);
 		
-		contact = addClass(Contact.class);
+		contact = addHistorizedClass(Contact.class);
 		add(contact);
 
 		organisation = new OrganisationTable(this);
@@ -32,7 +33,7 @@ public class EchPersistence extends DbPersistence {
 		connect();
 	}
 
-	public Table<PersonIdentification> personIdentification() {
+	public HistorizedTable<PersonIdentification> personIdentification() {
 		return personIdentification;
 	}
 
@@ -40,7 +41,7 @@ public class EchPersistence extends DbPersistence {
 		return person;
 	}
 
-	public Table<Contact> contact() {
+	public HistorizedTable<Contact> contact() {
 		return contact;
 	}
 

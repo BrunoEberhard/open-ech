@@ -78,13 +78,7 @@ public class OrganisationTable extends SearchableTable<Organisation> {
 	@Override
 	protected Organisation documentToObject(Document document) {
 		int id = Integer.parseInt(document.get("id"));
-		try {
-			return read(id);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		return read(id);
 	}
 
 //	@Override

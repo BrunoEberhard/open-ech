@@ -2,7 +2,6 @@ package ch.openech.server;
 
 import static ch.openech.dm.person.Person.*;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.lucene.document.Document;
@@ -119,12 +118,12 @@ public class PersonTable extends SearchableTable<Person> {
 
 	@Override
 	protected Field getField(PropertyInterface property, Person person) {
-		String fieldName = property.getFieldName();
+		String fieldName = property.getFieldPath();
 		
 		if (property.getFieldClazz() == String.class) {
 			String string = (String) property.getValue(person);
 			if (string != null) {
-				Field.Index index = Field.Index.ANALYZED;
+				Field.Index index =  Field.Index.ANALYZED;
 				return new Field(fieldName, string,	Field.Store.YES, index);
 			}
 		} else if (property.getFieldClazz() == LocalDate.class) {
@@ -146,18 +145,7 @@ public class PersonTable extends SearchableTable<Person> {
 	@Override
 	protected Person documentToObject(Document document) {
 		int id = Integer.parseInt(document.get("id"));
-		try {
-			return read(id);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		return read(id);
 	}
-
-//	@Override
-//	protected void setField(Person result, String fieldName, String value) {
-//		Properties.set(result, fieldName, value);
-//	}
 
 }

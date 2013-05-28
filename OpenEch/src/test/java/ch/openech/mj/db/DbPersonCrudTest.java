@@ -34,7 +34,7 @@ public class DbPersonCrudTest {
 		int id = addressTable.getOrCreateId(address);
 		persistence.commit();
 		
-		Address readAddress = (Address)addressTable.selectById(id);
+		Address readAddress = (Address)addressTable.read(id);
 		
 		Assert.assertEquals(address.mrMrs, readAddress.mrMrs);
 		Assert.assertEquals(address.street, readAddress.street);
@@ -64,7 +64,7 @@ public class DbPersonCrudTest {
 		
 		int id = countryTable.getOrCreateId(country);
 		
-		CountryIdentification readCountry = (CountryIdentification)countryTable.selectById(id);
+		CountryIdentification readCountry = (CountryIdentification)countryTable.read(id);
 		
 		Assert.assertEquals(country.countryId, readCountry.countryId);
 		Assert.assertEquals(country.countryIdISO2, readCountry.countryIdISO2);
