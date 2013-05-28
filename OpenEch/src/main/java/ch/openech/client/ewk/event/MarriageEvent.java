@@ -1,6 +1,7 @@
 package ch.openech.client.ewk.event;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -20,9 +21,7 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.Changes;
 import ch.openech.mj.model.annotation.Enabled;
-import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.BusinessRule;
@@ -42,9 +41,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		@Required
 		public LocalDate dateOfMaritalStatus;
 		public Boolean registerPartner2 = Boolean.TRUE;
-		@OnChange("updatePartner1")
 		public Person partner1;
-		@OnChange("updatePartner2")
 		public Person partner2;
 		public Boolean changeName1 = Boolean.FALSE;
 		public Boolean changeName2 = Boolean.FALSE;
@@ -63,30 +60,6 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 			return changeName2;
 		}
 
-		@Changes({"name2", "origin2"})
-		public void updatePartner1() {
-			if (partner1 != null) {
-				name2 = partner1.personIdentification.officialName;
-				origin2.clear();
-				origin2.addAll(partner1.placeOfOrigin);
-			} else {
-				name2 = null;
-				origin2.clear();
-			}
-		}
-
-		@Changes({"name1", "origin1"})
-		public void updatePartner2() {
-			if (partner2 != null) {
-				name1 = partner2.personIdentification.officialName;
-				origin1.clear();
-				origin1.addAll(partner2.placeOfOrigin);
-			} else {
-				name1 = null;
-				origin1.clear();
-			}
-		}
-		
 		@Override
 		public void validate(List<ValidationMessage> resultList) {
 			validate(resultList, partner1, partner2);
@@ -136,9 +109,30 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 				validationMessages.add(new ValidationMessage(key, "Name kann nicht leer sein"));
 			}
 		}
-
 	}
 	
+	public static class PartnerNameUpdater implements Form.PropertyUpdater<Person, String, Marriage> {
+		@Override
+		public String update(Person partner, Marriage marriage) {
+			if (partner != null) {
+				return partner.personIdentification.officialName;
+			} else {
+				return null;
+			}
+		}
+	}
+
+	public static class PartnerOriginUpdater implements Form.PropertyUpdater<Person, List<PlaceOfOrigin>, Marriage> {
+		@Override
+		public List<PlaceOfOrigin> update(Person partner, Marriage marriage) {
+			if (partner != null) {
+				return new ArrayList<>(partner.placeOfOrigin);
+			} else {
+				return Collections.emptyList();
+			}
+		}
+	}
+
 	private static final Marriage MARRIAGE = Keys.of(Marriage.class);
 
 	@Override
@@ -157,13 +151,16 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		//
 		
 		formPanel.line(MARRIAGE.dateOfMaritalStatus, MARRIAGE.registerPartner2);
-		
 		formPanel.area(partner1, partner2);
-	
 		formPanel.line(MARRIAGE.changeName1, MARRIAGE.changeName2);
 		formPanel.line(MARRIAGE.name1, MARRIAGE.name2);
-		
 		formPanel.area(origin1, origin2);
+		
+		formPanel.addDependecy(MARRIAGE.partner1, new PartnerNameUpdater(), MARRIAGE.name2);
+		formPanel.addDependecy(MARRIAGE.partner1, new PartnerOriginUpdater(), MARRIAGE.origin2);
+
+		formPanel.addDependecy(MARRIAGE.partner2, new PartnerNameUpdater(), MARRIAGE.name1);
+		formPanel.addDependecy(MARRIAGE.partner2, new PartnerOriginUpdater(), MARRIAGE.origin1);
 	}
 
 	@Override

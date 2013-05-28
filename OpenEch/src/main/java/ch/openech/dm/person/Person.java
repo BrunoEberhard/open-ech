@@ -22,10 +22,8 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.Changes;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Enabled;
-import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Reference;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
@@ -70,7 +68,6 @@ public class Person implements Validation {
 	@Enabled("!isSwiss")
 	public final Foreign foreign = new Foreign();
 	
-	@OnChange("updateResidence")
 	public TypeOfResidence typeOfResidence = TypeOfResidence.hasMainResidence;
 	public final Residence residence = new Residence();
 	
@@ -97,15 +94,6 @@ public class Person implements Validation {
 	public Contact contact;
 	
 	//	
-	
-	@Changes("residence")
-	public void updateResidence() {
-		if (typeOfResidence == TypeOfResidence.hasOtherResidence) {
-			residence.reportingMunicipality = null;
-		}
-	}
-	
-	// 
 	
 	public Relation getFather() {
 		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "father", Relation.class);

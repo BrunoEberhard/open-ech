@@ -8,8 +8,6 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.Changes;
-import ch.openech.mj.model.annotation.OnChange;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
@@ -43,7 +41,6 @@ public class Address implements Validation {
 	public String postOfficeBoxText;
 	public String locality;
 	public String country = "CH";
-	@OnChange("updateTown")
 	@Size(EchFormats.foreignZipCode)
 	public String zip;
 	@Size(4)
@@ -89,17 +86,6 @@ public class Address implements Validation {
 		}
 	}
 	
-	@Changes({"town"})
-	public void updateTown() {
-		if (isSwiss()) {
-			String swissZipCode = getSwissZipCode();
-			String swissZipCodeAddOn = getSwissZipCodeAddOn();
-			Plz plz = PlzImport.getInstance().getPlz(swissZipCode, swissZipCodeAddOn);
-			if (plz != null) {
-				town = plz.ortsbezeichnung;
-			}
-		}
-	}
 	
 	public boolean isEmpty() {
 		return StringUtils.isBlank(town);

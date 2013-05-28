@@ -1,8 +1,11 @@
 package ch.openech.client.e10;
 
-import static ch.openech.dm.common.Address.ADDRESS;
+import static ch.openech.dm.common.Address.*;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.common.Address;
+import ch.openech.mj.edit.form.Form;
+import ch.openech.util.Plz;
+import ch.openech.util.PlzImport;
 
 public class AddressPanel extends EchForm<Address> {
 	
@@ -32,11 +35,31 @@ public class AddressPanel extends EchForm<Address> {
 			line(new ChIso2Field(), ADDRESS.zip, ADDRESS.town);
 		}
 		line(ADDRESS.locality);
+		
+		addDependecy(ADDRESS.zip, new TownUpdater(), ADDRESS.town);
 	}
 
 	@Override
 	protected int getColumnWidthPercentage() {
 		return 70;
 	}
-	
+
+	public static class TownUpdater implements Form.PropertyUpdater<String, String, Address> {
+
+		@Override
+		public String update(String input, Address address) {
+			if (address.isSwiss()) {
+				String swissZipCode = address.getSwissZipCode();
+				String swissZipCodeAddOn = address.getSwissZipCodeAddOn();
+				Plz plz = PlzImport.getInstance().getPlz(swissZipCode, swissZipCodeAddOn);
+				if (plz != null) {
+					return plz.ortsbezeichnung;
+				}
+			}
+			// Keine Änderung, einfach gleichen Wert zurückgeben
+			return address.town;
+		}
+		
+	}
+
 }

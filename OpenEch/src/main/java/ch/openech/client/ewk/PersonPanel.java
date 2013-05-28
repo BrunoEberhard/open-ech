@@ -13,6 +13,7 @@ import ch.openech.client.e44.TechnicalIdsField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
+import ch.openech.dm.person.Residence;
 import ch.openech.dm.types.Sex;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.autofill.FirstNameGenerator;
@@ -20,6 +21,7 @@ import ch.openech.mj.autofill.NameWithFrequency;
 import ch.openech.mj.edit.fields.AbstractJodaField;
 import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.mj.edit.fields.FormField;
+import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonPanel extends EchForm<Person>  {
@@ -84,6 +86,8 @@ public class PersonPanel extends EchForm<Person>  {
 		case DISPLAY:
 		case BASE_DELIVERY:
 			area(PERSON.typeOfResidence, PERSON.residence);
+			addDependecy(PERSON.typeOfResidence, new ResidenceUpdater(), PERSON.residence);
+			
 			line(PERSON.arrivalDate, PERSON.departureDate);
 			line(PERSON.comesFrom, PERSON.goesTo);
 			area(PERSON.comesFromAddress, PERSON.dwellingAddress, PERSON.goesToAddress);
@@ -133,6 +137,16 @@ public class PersonPanel extends EchForm<Person>  {
 		}
 	}
 
+	public static class ResidenceUpdater implements Form.PropertyUpdater<TypeOfResidence, Residence, Person> {
+		@Override
+		public Residence update(TypeOfResidence typeOfResidence, Person person) {
+			if (typeOfResidence == TypeOfResidence.hasOtherResidence) {
+				person.residence.reportingMunicipality = null;
+			}
+			return person.residence;
+		}
+	}
+	
 	protected void createBirth() {
 		line(PERSON.callName, PERSON.languageOfCorrespondance);
 		line(PERSON.nationality, PERSON.religion);
