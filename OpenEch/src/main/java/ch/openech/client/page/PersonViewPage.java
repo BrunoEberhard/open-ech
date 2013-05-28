@@ -1,7 +1,5 @@
 package ch.openech.client.page;
 
-import java.sql.SQLException;
-
 import ch.openech.client.ewk.PersonEditMenu;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.dm.person.Person;
@@ -54,11 +52,8 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 		if (time == null) {
 			return actualPerson;
 		} else {
-			try {
-				return EchServer.getInstance().getPersistence().person().read(actualPerson, time);
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
+			int id = EchServer.getInstance().getPersistence().person().getId(actualPerson);
+			return EchServer.getInstance().getPersistence().person().read(id, time);
 		}
 	}
 

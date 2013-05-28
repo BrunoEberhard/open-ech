@@ -1,7 +1,9 @@
 package ch.openech.client.page;
 
-import static ch.openech.dm.organisation.Organisation.ORGANISATION;
+import static ch.openech.dm.organisation.Organisation.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import ch.openech.dm.organisation.Organisation;
@@ -11,7 +13,6 @@ import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.VisualTable;
-import ch.openech.mj.toolkit.VisualTable.ClickListener;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
@@ -48,14 +49,11 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 		return table;
 	}
 
-	private class OrganisationTableClickListener implements ClickListener {
+	private class OrganisationTableClickListener implements ActionListener {
 
 		@Override
-		public void clicked() {
-			Organisation organisation = table.getSelectedObject();
-			if (organisation != null) {
-				show(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
-			}
+		public void actionPerformed(ActionEvent e) {
+			show(OrganisationViewPage.class, echSchema.getVersion(), table.getSelectedObject().getId());
 		}
 	}
 	

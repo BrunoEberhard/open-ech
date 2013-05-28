@@ -1,6 +1,5 @@
 package ch.openech.client.page;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,28 +37,26 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 	@Override
 	protected List<HistoryVersion<Person>> loadVersions() {
 		List<HistoryVersion<Person>> versions = new ArrayList<HistoryVersion<Person>>();
-		try {
-			Person person = EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
-			int id = EchServer.getInstance().getPersistence().person().getId(person);
-			List<Integer> times = EchServer.getInstance().getPersistence().person().readVersions(id);
-			Collections.reverse(times);
-			HistoryVersion<Person> version = new HistoryVersion<Person>();
+
+		Person person = EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
+		int id = EchServer.getInstance().getPersistence().person().getId(person);
+		List<Integer> times = EchServer.getInstance().getPersistence().person().readVersions(id);
+		Collections.reverse(times);
+		HistoryVersion<Person> version = new HistoryVersion<Person>();
+		version.object = person;
+		version.time = getTime(person);
+		version.description = getDescription(person);
+		versions.add(version);
+		for (int time : times) {
+			person = EchServer.getInstance().getPersistence().person().read(id, time);
+			version = new HistoryVersion<Person>();
 			version.object = person;
+			version.version = "" + time;
 			version.time = getTime(person);
 			version.description = getDescription(person);
 			versions.add(version);
-			for (int time : times) {
-				person = EchServer.getInstance().getPersistence().person().read(id, time);
-				version = new HistoryVersion<Person>();
-				version.object = person;
-				version.version = "" + time;
-				version.time = getTime(person);
-				version.description = getDescription(person);
-				versions.add(version);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
+
 		return versions;
 	}
 

@@ -1,6 +1,5 @@
 package ch.openech.client.page;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,28 +37,26 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	@Override
 	protected List<HistoryVersion<Organisation>> loadVersions() {
 		List<HistoryVersion<Organisation>> versions = new ArrayList<HistoryVersion<Organisation>>();
-		try {
-			Organisation organisation = EchServer.getInstance().getPersistence().organisation().getByLocalOrganisationId(organisationId);
-			int id = EchServer.getInstance().getPersistence().organisation().getId(organisation);
-			List<Integer> times = EchServer.getInstance().getPersistence().organisation().readVersions(id);
-			Collections.reverse(times);
-			HistoryVersion<Organisation> version = new HistoryVersion<Organisation>();
+		
+		Organisation organisation = EchServer.getInstance().getPersistence().organisation().getByLocalOrganisationId(organisationId);
+		int id = EchServer.getInstance().getPersistence().organisation().getId(organisation);
+		List<Integer> times = EchServer.getInstance().getPersistence().organisation().readVersions(id);
+		Collections.reverse(times);
+		HistoryVersion<Organisation> version = new HistoryVersion<Organisation>();
+		version.object = organisation;
+		version.time = getTime(organisation);
+		version.description = getDescription(organisation);
+		versions.add(version);
+		for (int time : times) {
+			organisation = EchServer.getInstance().getPersistence().organisation().read(id, time);
+			version = new HistoryVersion<Organisation>();
 			version.object = organisation;
+			version.version = "" + time;
 			version.time = getTime(organisation);
 			version.description = getDescription(organisation);
 			versions.add(version);
-			for (int time : times) {
-				organisation = EchServer.getInstance().getPersistence().organisation().read(id, time);
-				version = new HistoryVersion<Organisation>();
-				version.object = organisation;
-				version.version = "" + time;
-				version.time = getTime(organisation);
-				version.description = getDescription(organisation);
-				versions.add(version);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
+
 		return versions;
 	}
 

@@ -1,7 +1,5 @@
 package ch.openech.client.page;
 
-import java.sql.SQLException;
-
 import ch.openech.client.org.OrganisationMenu;
 import ch.openech.client.org.OrganisationPanel;
 import ch.openech.dm.organisation.Organisation;
@@ -52,11 +50,8 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 		if (time == 0) {
 			return actualOrganisation;
 		} else {
-			try {
-				return EchServer.getInstance().getPersistence().organisation().read(actualOrganisation, time);
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
+			int id = EchServer.getInstance().getPersistence().organisation().getId(actualOrganisation);
+			return EchServer.getInstance().getPersistence().organisation().read(id, time);
 		}
 	}
 
