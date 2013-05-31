@@ -12,7 +12,7 @@ import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.VisualTable;
+import ch.openech.mj.toolkit.ITable;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
@@ -20,7 +20,7 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 
 	private final EchSchema echSchema;
 	private String text;
-	private VisualTable<Organisation> table;
+	private ITable<Organisation> table;
 
 	public static final Object[] FIELD_NAMES = {
 		ORGANISATION.organisationName, //
@@ -39,7 +39,7 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 		super(context);
 		this.echSchema = EchSchema.getNamespaceContext(148, version);
 		this.text = text;
-		table = ClientToolkit.getToolkit().createVisualTable(Organisation.class, FIELD_NAMES);
+		table = ClientToolkit.getToolkit().createTable(Organisation.class, FIELD_NAMES);
 		table.setClickListener(new OrganisationTableClickListener());
 		refresh();
 	}
