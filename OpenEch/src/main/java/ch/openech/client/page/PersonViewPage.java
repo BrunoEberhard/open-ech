@@ -48,7 +48,7 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 
 	@Override
 	protected Person loadObject() {
-		Person actualPerson = EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
+		Person actualPerson = EchServer.getInstance().getPersistence().personLocalPersonIdIndex().find(personId);
 		if (time == null) {
 			return actualPerson;
 		} else {

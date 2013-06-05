@@ -32,7 +32,7 @@ public abstract class AbstractServerTest {
 	}
 	
 	protected String insertPerson(String vn) throws Exception {
-		Person person = EchServer.getInstance().getPersistence().person().getByVn(vn);
+		Person person = EchServer.getInstance().getPersistence().personVnIndex().find(vn);
 		if (person != null) {
 			return person.getId();
 		} else {
@@ -74,11 +74,11 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static Person load(String personId) {
-		return EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
+		return EchServer.getInstance().getPersistence().personLocalPersonIdIndex().find(personId);
 	}
 	
 	public static Person getByVn(String vn) {
-		return EchServer.getInstance().getPersistence().person().getByVn(vn);
+		return EchServer.getInstance().getPersistence().personVnIndex().find(vn);
 	}
 	
 	public static WriterEch0020 writer() {

@@ -86,7 +86,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 		
 		Relation partnerRelation = parentPerson.getPartner();
 		if (partnerRelation != null && partnerRelation.partner != null && partnerRelation.partner.vn != null) { 
-			Person partnerOfVisiblePerson = EchServer.getInstance().getPersistence().person().getByVn(partnerRelation.partner.vn.value);
+			Person partnerOfVisiblePerson = EchServer.getInstance().getPersistence().personVnIndex().find(partnerRelation.partner.vn.value);
 			if (partnerOfVisiblePerson != null) {
 				if (partnerOfVisiblePerson.isMale())
 					father = partnerOfVisiblePerson;

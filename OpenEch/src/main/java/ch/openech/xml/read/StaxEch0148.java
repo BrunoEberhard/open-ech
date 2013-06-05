@@ -5,6 +5,7 @@ import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.List;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -35,7 +36,7 @@ public class StaxEch0148 implements StaxEchParser {
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
-		persistence.organisation().insert(organisation);
+		persistence.insert(organisation);
 		lastInsertedOrganisationId = organisation.getId();
 	}
 
@@ -141,9 +142,14 @@ public class StaxEch0148 implements StaxEchParser {
 
 	public Organisation getOrganisation(Organisation organisation) {
 		if (organisation.getId() != null) {
-			return persistence.organisation().getByLocalOrganisationId(organisation.getId());
+			return persistence.organisationLocalIdIndex().find(organisation.getId());
 		} else {
-			return persistence.organisation().getByName(organisation.organisationName);
+			List<Organisation> organisations = persistence.organisationIndex().find(organisation.organisationName);
+			if (!organisations.isEmpty()) {
+				return organisations.get(0);
+			} else {
+				return null;
+			}
 		}
 	}
 	

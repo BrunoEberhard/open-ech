@@ -72,7 +72,7 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 	
 	@Override
 	public void refresh() {
-		resultList = EchServer.getInstance().getPersistence().person().find(text);
+		resultList = EchServer.getInstance().getPersistence().personIndex().find(text);
 		table.setObjects(resultList);
 	}
 	

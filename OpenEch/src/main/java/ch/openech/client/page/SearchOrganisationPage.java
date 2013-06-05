@@ -59,7 +59,7 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 	
 	@Override
 	public void refresh() {
-		List<Organisation> resultList = EchServer.getInstance().getPersistence().organisation().find(text);
+		List<Organisation> resultList = EchServer.getInstance().getPersistence().organisationIndex().find(text);
 		table.setObjects(resultList);
 	}
 	

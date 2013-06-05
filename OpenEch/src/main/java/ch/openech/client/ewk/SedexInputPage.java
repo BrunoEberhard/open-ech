@@ -148,7 +148,7 @@ public class SedexInputPage extends Page implements RefreshablePage {
 	}
 
 	private Person searchPerson(SedexMessageInformation envelope) throws SQLException {
-		return EchServer.getInstance().getPersistence().person().getByIdentification(envelope.personIdentification);
+		return EchServer.getInstance().getPersistence().getByIdentification(envelope.personIdentification);
 	}
 	
 	@Override

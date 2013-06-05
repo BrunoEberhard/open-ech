@@ -116,7 +116,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 
 		@Override
 		protected List<Person> search(String text) {		
-			List<Person> resultList = EchServer.getInstance().getPersistence().person().find(text);
+			List<Person> resultList = EchServer.getInstance().getPersistence().personIndex().find(text);
 			return resultList;
 		}
 	};

@@ -50,7 +50,7 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	public void insertPerson(Person person) {
 		person.event = e;
-		persistence.person().insert(person);
+		persistence.insert(person);
 		lastInsertedPersonId = person.getId();
 	}
 
@@ -78,11 +78,11 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	public Person getPerson(PersonIdentification personIdentification) {
 		if (personIdentification.getId() != null) {
-			return persistence.person().getByLocalPersonId(personIdentification.getId());
+			return persistence.personLocalPersonIdIndex().find(personIdentification.getId());
 		} else if (!StringUtils.isBlank(personIdentification.vn.value)) {
-			return persistence.person().getByVn(personIdentification.vn.value);
+			return persistence.personVnIndex().find(personIdentification.vn.value);
 		} else {
-			return persistence.person().getByName(personIdentification.officialName, personIdentification.firstName, personIdentification.dateOfBirth);
+			return persistence.getByName(personIdentification.officialName, personIdentification.firstName, personIdentification.dateOfBirth);
 		}
 	}
 	

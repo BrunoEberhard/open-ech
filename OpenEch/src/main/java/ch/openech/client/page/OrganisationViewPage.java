@@ -46,7 +46,7 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 
 	@Override
 	protected Organisation loadObject() {
-		Organisation actualOrganisation = EchServer.getInstance().getPersistence().organisation().getByLocalOrganisationId(organisationId);
+		Organisation actualOrganisation = EchServer.getInstance().getPersistence().organisationLocalIdIndex().find(organisationId);
 		if (time == 0) {
 			return actualOrganisation;
 		} else {

@@ -38,7 +38,7 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 	protected List<HistoryVersion<Person>> loadVersions() {
 		List<HistoryVersion<Person>> versions = new ArrayList<HistoryVersion<Person>>();
 
-		Person person = EchServer.getInstance().getPersistence().person().getByLocalPersonId(personId);
+		Person person = EchServer.getInstance().getPersistence().personLocalPersonIdIndex().find(personId);
 		int id = EchServer.getInstance().getPersistence().person().getId(person);
 		List<Integer> times = EchServer.getInstance().getPersistence().person().readVersions(id);
 		Collections.reverse(times);

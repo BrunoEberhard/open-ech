@@ -38,7 +38,7 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	protected List<HistoryVersion<Organisation>> loadVersions() {
 		List<HistoryVersion<Organisation>> versions = new ArrayList<HistoryVersion<Organisation>>();
 		
-		Organisation organisation = EchServer.getInstance().getPersistence().organisation().getByLocalOrganisationId(organisationId);
+		Organisation organisation = EchServer.getInstance().getPersistence().organisationLocalIdIndex().find(organisationId);
 		int id = EchServer.getInstance().getPersistence().organisation().getId(organisation);
 		List<Integer> times = EchServer.getInstance().getPersistence().organisation().readVersions(id);
 		Collections.reverse(times);
