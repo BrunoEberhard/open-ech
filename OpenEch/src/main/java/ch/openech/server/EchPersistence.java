@@ -59,7 +59,6 @@ public class EchPersistence extends DbPersistence {
 		personLocalPersonIdIndex = person.createIndexUnique(PERSON.personIdentification.technicalIds.localId.personId);
 		
 		contact = addHistorizedClass(Contact.class);
-		add(contact);
 
 		organisation = addHistorizedClass(Organisation.class);
 		organisationFulltextIndex = organisation.createFulltextIndex(ORGANISATION_INDEX_KEYS);
