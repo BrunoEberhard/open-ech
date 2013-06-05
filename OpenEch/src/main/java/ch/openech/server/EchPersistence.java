@@ -171,10 +171,4 @@ public class EchPersistence extends DbPersistence {
 		return thirdPartyMove;
 	}
 
-//	personIdentification = getImmutableTable(PersonIdentification.class);
-//
-//public ImmutableTable<PersonIdentification> personIdentification() {
-//	return personIdentification;
-//}
-	
 }
