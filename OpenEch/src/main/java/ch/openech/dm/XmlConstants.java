@@ -36,6 +36,7 @@ public class XmlConstants {
 	public static String BASE_DELIVERY="baseDelivery";
 	public static String BASE_DELIVERY_PERSON="baseDeliveryPerson";
 	public static String BASED_ON_LAW="basedOnLaw";
+	public static String BASED_ON_LAW_ADD_ON="basedOnLawAddOn";
 	public static String BEGIN_OF_CONTRACT="beginOfContract";
 	public static String BIRTH="birth";
 	public static String BIRTH_PERSON="birthPerson";
