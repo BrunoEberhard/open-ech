@@ -1,6 +1,6 @@
 package ch.openech.dm;
 
-import static ch.openech.xml.read.StaxEch.skip;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -23,24 +24,26 @@ import ch.openech.xml.write.EchNamespaceUtil;
 
 public class EchSizesGenerator {
 	
+	private static final Logger logger = Logger.getLogger(EchSizesGenerator.class.getName());
+
 	private final Map<Integer, String> namespaceURIs = new HashMap<Integer, String>();
 	private final Map<Integer, String> namespaceLocations = new HashMap<Integer, String>();
 	private final Map<Integer, Integer> namespaceVersions = new HashMap<Integer, Integer>();
 	private final Map<Integer, Integer> namespaceMinorVersions = new HashMap<Integer, Integer>();
-	private final int rootNumber;
 	private String version;
 	private String openEchNamespaceLocation;
 	private static Set<String> lines = new TreeSet<>();
 	
 	private EchSizesGenerator(int rootNumber, String version) {
-		read(rootNumber, version);
-		this.rootNumber = rootNumber;
 		this.version = version;
+		read(rootNumber, version);
 	}
 	
 	//
 	
 	private void read(int rootNumber, String version) {
+		logger.fine("Read sizes from " + rootNumber +" version " + version);
+
 		int pos = version.indexOf('.');
 		String major = version.substring(0, pos);
 		String minor = version.substring(pos + 1);
@@ -50,13 +53,10 @@ public class EchSizesGenerator {
 
 		try {
 			read(rootNamespaceLocation);
-//			if (rootNumber == 20) {
-//				readOpenEch(WriterOpenEch.URI);
-//			}
 		} catch (Exception x) {
-			// TODO
 			x.printStackTrace();
 		}
+		logger.finer("Done reading sizes from " + rootNumber +" version " + version);
 	}
 	
 	public String getVersion() {
@@ -93,12 +93,9 @@ public class EchSizesGenerator {
 		process(namespaceLocation);
 	}
 	
-	private void readOpenEch(String openEchNamespaceLocation) throws XMLStreamException, IOException {
-		this.openEchNamespaceLocation = openEchNamespaceLocation;
-		process(openEchNamespaceLocation);
-	}
-	
 	private void process(String namespaceLocation) throws XMLStreamException, IOException {
+		logger.fine("Process " + namespaceLocation);
+
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = null;
 		try {
@@ -107,8 +104,12 @@ public class EchSizesGenerator {
 		} catch (Exception e) {
 			// this could happen in SBB ;)
 			InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation);
-			xml = inputFactory.createXMLEventReader(stream);
-			process(xml);
+			try {
+				xml = inputFactory.createXMLEventReader(stream);
+				process(xml);
+			} catch (Exception e2) {
+				logger.severe("Not available schema: " + namespaceLocation);
+			}
 		}
 	}
 	
@@ -130,7 +131,7 @@ public class EchSizesGenerator {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals("schema")) {
-					imports(xml);
+					schema(xml);
 				} else skip(xml);
 			} else if (event.isEndElement() || event.isEndDocument()) {
 				return;
@@ -138,7 +139,7 @@ public class EchSizesGenerator {
 		}
 	}
 	
-	private void imports(XMLEventReader xml) throws XMLStreamException, IOException {
+	private void schema(XMLEventReader xml) throws XMLStreamException, IOException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -153,7 +154,10 @@ public class EchSizesGenerator {
 						name = name.substring(0, name.length()-4);
 						simpleType(name, xml);				
 					}
-				} else skip(xml);
+				} else {
+					logger.finer("Skip : " + startName);
+					skip(xml);
+				}
 			} else if (event.isEndElement()) {
 				return;
 			} // else skip
@@ -162,19 +166,30 @@ public class EchSizesGenerator {
 	
 	private void imprt(StartElement startElement) throws XMLStreamException, IOException {
 		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
+		logger.fine("Found Import " + schemaLocation);
 		read(schemaLocation);
 	}
 	
 	private void simpleType(String name, XMLEventReader xml) throws XMLStreamException, IOException {
+		logger.fine("SimpleType " + name);
+
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals("restriction")) {
-					Attribute base = startElement.getAttributeByName(new QName("base"));
-					boolean intBase = base != null && base.getValue().contains("int");
-					restriction(name, xml, intBase);
+					Attribute baseAttribute = startElement.getAttributeByName(new QName("base"));
+					if (baseAttribute != null) {
+						String base = baseAttribute.getValue();
+						if (base.contains("int") || base.contains("Int") || base.contains("Long")) {
+							restriction(name, xml, true);
+						} else if (base.contains("token") || base.contains("string")) {
+							restriction(name, xml, false);
+						} else {
+							logger.warning("Skip restriction for " + name + " based on " + baseAttribute);
+						}
+					}
 				}
 				else skip(xml);
 			} else if (event.isEndElement()) {
@@ -184,6 +199,8 @@ public class EchSizesGenerator {
 	}
 	
 	private void restriction(String name, XMLEventReader xml, boolean intBase) throws XMLStreamException, IOException {
+		logger.fine("Restriction " + name);
+
 		int size = -1;
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -193,10 +210,10 @@ public class EchSizesGenerator {
 				if (startName.equals("maxLength")) {
 					String value = startElement.getAttributeByName(new QName("value")).getValue();
 					size = Integer.parseInt(value);
-				} 
-//				else if (startName.equals("enumeration")) {
-//					String value = startElement.getAttributeByName(new QName(VALUE)).getValue();
-//					size = Math.max(size, value.length());
+				}  else if (startName.equals("enumeration")) {
+					String value = startElement.getAttributeByName(new QName("value")).getValue();
+					size = Math.max(size, value.length());
+				}
 //				} else if (startName.equals("maxInclusive")) {
 //					String value = startElement.getAttributeByName(new QName(VALUE)).getValue();
 //					size = Math.max(size, value.length());
@@ -204,7 +221,8 @@ public class EchSizesGenerator {
 				skip(xml);
 			} else if (event.isEndElement()) {
 				if (size > 0) {
-					lines.add("public static final int " + name + " = " + size + ";");
+					String line = "public static final int " + name + " = " + size + ";";
+					lines.add(line);
 				}
 				return;
 			} // else skip
@@ -214,8 +232,9 @@ public class EchSizesGenerator {
 	public static void main(String... args) {
 		new EchSizesGenerator(108, "1.0");
 		new EchSizesGenerator(46, "2.0");
-		new EchSizesGenerator(20, "2.2");
+		new EchSizesGenerator(20, "2.3");
 		new EchSizesGenerator(21, "4.0");
+		new EchSizesGenerator(78, "3.0");
 		
 		for (String line : lines) {
 			System.out.println(line);
