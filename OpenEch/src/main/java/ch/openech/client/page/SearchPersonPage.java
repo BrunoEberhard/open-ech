@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
+import ch.openech.dm.EchSchema0020;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
@@ -34,12 +36,15 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 		PERSON.getTown(), //
 		PERSON.personIdentification.vn.value, //
 	};
-
 	
-	// Damit wird die Version des Fenster overruled
-	@Deprecated
 	public SearchPersonPage(PageContext context, String text) {
-		this(context,"2.2", text);
+		this(context, getVersionFromPreference(context), text);
+	}
+
+	private static String getVersionFromPreference(PageContext context) {
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		EchSchema0020 schema = preferences.applicationSchemaData.schema20;
+		return schema.getVersion() + "." + schema.getMinorVersion();
 	}
 	
 	public SearchPersonPage(PageContext context, String version, String text) {

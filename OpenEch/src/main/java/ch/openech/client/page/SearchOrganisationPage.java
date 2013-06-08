@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import ch.openech.client.preferences.OpenEchPreferences;
+import ch.openech.dm.EchSchema0148;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
@@ -29,10 +31,14 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 		ORGANISATION.businessAddress.mailAddress.town, //
 	};
 	
-	// Damit wird die Version des Fenster overruled
-	@Deprecated
 	public SearchOrganisationPage(PageContext context, String text) {
-		this(context,"1.0", text);
+		this(context, getVersionFromPreference(context), text);
+	}
+	
+	private static String getVersionFromPreference(PageContext context) {
+		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+		EchSchema0148 schema = preferences.applicationSchemaData.schema148;
+		return schema.getVersion() + "." + schema.getMinorVersion();
 	}
 	
 	public SearchOrganisationPage(PageContext context, String version, String text) {
