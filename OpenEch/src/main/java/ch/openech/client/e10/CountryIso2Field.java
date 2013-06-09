@@ -2,9 +2,6 @@ package ch.openech.client.e10;
 
 import java.util.List;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import ch.openech.mj.edit.fields.AbstractEditField;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -12,7 +9,7 @@ import ch.openech.mj.toolkit.ComboBox;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.read.StaxEch0072;
 
-public class CountryIso2Field extends AbstractEditField<String> implements ChangeListener {
+public class CountryIso2Field extends AbstractEditField<String> {
 	private final ComboBox<String> comboBox;
 	
 	private final List<String> countryNames;
@@ -38,11 +35,6 @@ public class CountryIso2Field extends AbstractEditField<String> implements Chang
 	@Override
 	public void setObject(String value) {
 		comboBox.setSelectedObject(value);
-	}
-
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		fireChange();
 	}
 	
 }
