@@ -14,15 +14,5 @@ public enum PartnerShipAbolition implements EchCode {
 			return String.valueOf(ordinal());
 		}
 	}
-	
-//	PartnerShipAbolition=Grund der Auflösung
-//			PartnerShipAbolition.unknownText= -
-//			PartnerShipAbolition.default=1
-//			PartnerShipAbolition.GERICHTLICH_AUFGELOEST=	Gerichtlich aufgelöste Partnerschaft
-//			PartnerShipAbolition.UNGUELTIG=					Ungültigkeitserklärung
-//			PartnerShipAbolition.VERSCHOLLEN=				Durch Verschollenerklärung aufgelöste Partnerschaft
-//			PartnerShipAbolition.TOD=						Durch Tod aufgelöste Partnerschaft
-//			PartnerShipAbolition.UNBEKANNT=					Unbekannt / Andere Gründe
-
 			
 }
