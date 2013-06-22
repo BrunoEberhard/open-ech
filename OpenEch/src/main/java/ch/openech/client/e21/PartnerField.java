@@ -38,14 +38,6 @@ public class PartnerField extends ObjectFlowField<Relation> {
 		return relation;
 	}
 
-	//		
-//		if (connectedNameField != null) {
-//			String name = null;
-//			if (relation.partner != null) {
-//				name = relation.partner.officialName;
-//			}
-//			connectedNameField.setText(name);
-//		}
 	@Override
 	public IForm<Relation> createFormPanel() {
 		return new RelationPanel(echSchema);
