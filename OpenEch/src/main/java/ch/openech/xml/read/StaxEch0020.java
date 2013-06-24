@@ -50,7 +50,11 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	public void insertPerson(Person person) {
 		person.event = e;
-		persistence.insert(person);
+		if (person.getId() == null) {
+			person.personIdentification.technicalIds.localId.setOpenEch();
+		}
+		person.removeEmptyRelations();
+		persistence.person().insert(person);
 		lastInsertedPersonId = person.getId();
 	}
 
@@ -63,6 +67,8 @@ public class StaxEch0020 implements StaxEchParser {
 		if (StringUtils.equals(type, XmlConstants.DIVORCE, XmlConstants.UNDO_MARRIAGE, XmlConstants.UNDO_PARTNERSHIP)) removePartner(person);
 
 		person.event = e;
+
+		person.removeEmptyRelations();
 		persistence.person().update(person);
 		persistence.commit();
 	}

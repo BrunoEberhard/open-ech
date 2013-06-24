@@ -36,7 +36,11 @@ public class StaxEch0148 implements StaxEchParser {
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
-		persistence.insert(organisation);
+		
+		if (organisation.getId() == null) {
+			organisation.technicalIds.localId.setOpenEch();
+		}
+		persistence.organisation().insert(organisation);
 		lastInsertedOrganisationId = organisation.getId();
 	}
 

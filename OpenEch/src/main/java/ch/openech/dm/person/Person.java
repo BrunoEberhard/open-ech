@@ -375,4 +375,14 @@ public class Person implements Validation {
 		}
 	}
 	
+	//
+	
+	public void removeEmptyRelations() {
+		for (int i = relation.size() - 1; i>= 0; i--) {
+			if (relation.get(i).isEmpty()) {
+				relation.remove(i);
+			}
+		}
+	}
+	
 }

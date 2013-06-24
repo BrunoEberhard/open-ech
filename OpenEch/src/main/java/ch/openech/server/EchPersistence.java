@@ -73,29 +73,6 @@ public class EchPersistence extends DbPersistence {
 		return personIdentification;
 	}
 
-	public int insert(Person person) {
-		if (person.getId() == null) {
-			person.personIdentification.technicalIds.localId.setOpenEch();
-		}
-		removeEmptyRelations(person);
-		return person().insert(person);
-	}
-
-	public int insert(Organisation organisation) {
-		if (organisation.getId() == null) {
-			organisation.technicalIds.localId.setOpenEch();
-		}
-		return organisation().insert(organisation);
-	}
-
-	private void removeEmptyRelations(Person person) {
-		for (int i = person.relation.size() - 1; i>= 0; i--) {
-			if (person.relation.get(i).isEmpty()) {
-				person.relation.remove(i);
-			}
-		}
-	}
-
 	public HistorizedTable<Person> person() {
 		return person;
 	}
