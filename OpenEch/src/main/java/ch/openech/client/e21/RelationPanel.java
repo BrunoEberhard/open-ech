@@ -1,6 +1,6 @@
 package ch.openech.client.e21;
 
-import static ch.openech.dm.person.Relation.RELATION;
+import static ch.openech.dm.person.Relation.*;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.code.BasedOnLaw;
@@ -9,6 +9,8 @@ import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.xml.write.EchSchema;
 
 public class RelationPanel extends EchForm<Relation> {
+	
+// Bei Birth sollte ein eigenes Panel genutzt werden
 	
 	public RelationPanel(EchSchema echSchema) {
 		super(echSchema);
