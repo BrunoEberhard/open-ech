@@ -2,7 +2,7 @@ package ch.openech.dm;
 
 public enum EchSchema0020 implements EchSchema {
 
-	_1_0, _1_1, _2_0, _2_1, _2_2;
+	_1_0, _1_1, _2_0, _2_1, _2_2, _2_3;
 	
 	private int version;
 	private int minorVersion;

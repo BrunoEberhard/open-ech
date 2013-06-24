@@ -209,6 +209,9 @@ public class WriterEch0020 extends DeliveryWriter {
 			if (relation.basedOnLaw != null) {
 				element.text(BASED_ON_LAW, relation.basedOnLaw);
 			}
+			if (context.basedOnLawAddOn()) {
+				element.textIfSet(BASED_ON_LAW_ADD_ON, relation.basedOnLawAddOn);
+			}
 			if (gardian && context.gardianMeasureRelationshipHasCare()) {
 				element.values(relation, CARE);
 			}

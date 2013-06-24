@@ -1,6 +1,6 @@
 package ch.openech.client.ewk.event;
 
-import static ch.openech.dm.person.Relation.RELATION;
+import static ch.openech.dm.person.Relation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,12 +27,21 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 		fillForm(echSchema, formPanel);
 	}
 	
-	static void fillForm(EchSchema namespaceContext, Form<Relation> formPanel) {
-		// also used by ChangeGardianEvent
-		formPanel.line(new EnumEditField(RELATION.typeOfRelationship, TypeOfRelationship.CARE));
+	/*
+	 * also used by ChangeGardianEvent
+	 */
+	static void fillForm(EchSchema echSchema, Form<Relation> formPanel) {
+		if (echSchema.typeOfRelationship10Exsists()) {
+			formPanel.line(new EnumEditField(RELATION.typeOfRelationship, TypeOfRelationship.CARE_2_3));
+		} else {
+			formPanel.line(new EnumEditField(RELATION.typeOfRelationship, TypeOfRelationship.CARE));			
+		}
 
 		formPanel.line(RELATION.basedOnLaw);
-		if (namespaceContext.gardianMeasureRelationshipHasCare()) {
+		if (echSchema.basedOnLawAddOn()) {
+			formPanel.line(RELATION.basedOnLawAddOn);
+		}
+		if (echSchema.gardianMeasureRelationshipHasCare()) {
 			formPanel.line(RELATION.care);
 		}
 		
@@ -50,7 +59,9 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 		if (echSchema.gardianMeasureRelationshipHasCare()) {
 			EmptyValidator.validate(resultList, relation, RELATION.care);
 		}
-		EmptyValidator.validate(resultList, relation, RELATION.partner);
+		if (!echSchema.gardianRelationshipOptional()) {
+			EmptyValidator.validate(resultList, relation, RELATION.partner);
+		}
 	}
 
 	@Override

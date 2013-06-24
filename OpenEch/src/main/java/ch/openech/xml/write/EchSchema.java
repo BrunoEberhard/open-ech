@@ -1,6 +1,6 @@
 package ch.openech.xml.write;
 
-import static ch.openech.xml.read.StaxEch.skip;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -355,7 +355,26 @@ public class EchSchema {
 	public boolean basedOnLawCodeRequired() {
 		return getNamespaceVersion(20) == 1 || getNamespaceVersion(20) == 2 && getNamespaceMinorVersion(20) == 0;
 	}
+
+	/* basedOnLawAddOn gibt es ab Version 2.3
+	 */
+	public boolean basedOnLawAddOn() {
+		return getNamespaceVersion(20) >= 2 && getNamespaceMinorVersion(20) >= 3;
+	}
 	
+	/* Ab 2.3 ist bei eventGardianMeasure und eventChangeGardian die
+	 * relationship optional
+	 */
+	public boolean gardianRelationshipOptional() {
+		return getNamespaceVersion(20) >= 2 && getNamespaceMinorVersion(20) >= 3;
+	}
+
+	/* Ab 2.3 gibt es einen 10. Typ von Beziehung
+	 */
+	public boolean typeOfRelationship10Exsists() {
+		return getNamespaceVersion(20) >= 2 && getNamespaceMinorVersion(20) >= 3;
+	}
+
 	/*
 	 * Beim Wechsel des Namens konnten bei den alten Versionen
 	 * auch die Namen der Eltern gewechselt werden 
@@ -371,7 +390,7 @@ public class EchSchema {
 	public boolean extensionAvailable() {
 		return getNamespaceVersion(20) > 1 || getNamespaceMinorVersion(20) > 0;
 	}
-	
+
 	/* 
 	 * separationTill in maritalData existiert erst ab der 5. Version von eCH 11
 	 */
@@ -400,4 +419,5 @@ public class EchSchema {
 	public boolean addressesAreBusiness() {
 		return rootNumber == 148;
 	}
+	
 }

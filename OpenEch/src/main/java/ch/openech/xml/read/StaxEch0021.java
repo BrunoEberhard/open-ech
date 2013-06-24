@@ -1,30 +1,7 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.ADDRESS;
-import static ch.openech.dm.XmlConstants.BASED_ON_LAW;
-import static ch.openech.dm.XmlConstants.CARE;
-import static ch.openech.dm.XmlConstants.EMPLOYER;
-import static ch.openech.dm.XmlConstants.EXPATRIATION_DATE;
-import static ch.openech.dm.XmlConstants.FIRST_NAME;
-import static ch.openech.dm.XmlConstants.JOB_TITLE;
-import static ch.openech.dm.XmlConstants.KIND_OF_EMPLOYMENT;
-import static ch.openech.dm.XmlConstants.NATURALIZATION_DATE;
-import static ch.openech.dm.XmlConstants.OCCUPATION_VALID_TILL;
-import static ch.openech.dm.XmlConstants.OFFICIAL_NAME;
-import static ch.openech.dm.XmlConstants.ORIGIN;
-import static ch.openech.dm.XmlConstants.PARTNER;
-import static ch.openech.dm.XmlConstants.PARTNERSHIP_TYPE_OF_RELATIONSHIP_TYPE;
-import static ch.openech.dm.XmlConstants.PARTNER_ID_ORGANISATION;
-import static ch.openech.dm.XmlConstants.PERSON_IDENTIFICATION;
-import static ch.openech.dm.XmlConstants.PERSON_IDENTIFICATION_PARTNER;
-import static ch.openech.dm.XmlConstants.PLACE_OF_EMPLOYER;
-import static ch.openech.dm.XmlConstants.PLACE_OF_WORK;
-import static ch.openech.dm.XmlConstants.REASON_OF_ACQUISITION;
-import static ch.openech.dm.XmlConstants.TYPE_OF_RELATIONSHIP;
-import static ch.openech.xml.read.StaxEch.date;
-import static ch.openech.xml.read.StaxEch.enuum;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
+import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.util.List;
 
@@ -97,6 +74,7 @@ public class StaxEch0021 {
 					relation = person.getRelation(typeOfRelationship);
 				}
 				else if (startName.equals(BASED_ON_LAW)) enuum(xml, relation, Relation.RELATION.basedOnLaw); 
+				else if (startName.equals(BASED_ON_LAW_ADD_ON)) relation.basedOnLawAddOn = token(xml);
 				else if (startName.equals(CARE)) enuum(xml, relation, Relation.RELATION.care);
 				else if (startName.equals(PARTNER)) relation.partner = partner(xml);
 				else if (startName.equals(ADDRESS)) relation.address = StaxEch0010.address(xml);

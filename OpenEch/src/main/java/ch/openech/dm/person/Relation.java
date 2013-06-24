@@ -9,6 +9,7 @@ import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Required;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.util.StringUtils;
 
 public class Relation implements Validatable {
@@ -17,8 +18,12 @@ public class Relation implements Validatable {
 	
 	@Required
 	public TypeOfRelationship typeOfRelationship;
+	// TODO hier sind am 2.3 mehrere Auswahlen möglich. Die Persistenzschicht
+	// sollte mit einer Liste von enums umgehen können ebenso das EditField.
 	@Enabled("isCareRelation")
 	public BasedOnLaw basedOnLaw;
+	@Size(100)
+	public String basedOnLawAddOn;
 	public YesNo care = YesNo.No;
 	@Required
 	public PersonIdentification partner;
@@ -96,7 +101,11 @@ public class Relation implements Validatable {
 						text += " (ohne Sorgerecht)";
 					} 
 				} else if (isCareRelation() && basedOnLaw != null) {
-					text += " (§ " + basedOnLaw + ")";
+					if (!StringUtils.isEmpty(basedOnLawAddOn)) {
+						text += " (§ " + basedOnLaw + "/"  + basedOnLawAddOn + ")";
+					} else {
+						text += " (§ " + basedOnLaw + ")";
+					}
 				}
 				StringUtils.appendLine(s, text);
 			} else {

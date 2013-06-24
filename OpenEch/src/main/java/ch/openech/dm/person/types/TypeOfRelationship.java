@@ -15,11 +15,13 @@ public enum TypeOfRelationship implements EchCode {
 	Pflegemutter, 
 	Beistand, 
 	Beirat, 
-	Vormund;
+	Vormund,
+	Vorsorgebeauftragter;
 	
 	public static final List<TypeOfRelationship> PARTNER = Collections.unmodifiableList(Arrays.asList(Ehepartner, Partner));
 	public static final List<TypeOfRelationship> PARENT = Collections.unmodifiableList(Arrays.asList(Mutter, Vater, Pflegevater, Pflegemutter));
 	public static final List<TypeOfRelationship> CARE = Collections.unmodifiableList(Arrays.asList(Beistand, Beirat, Vormund));
+	public static final List<TypeOfRelationship> CARE_2_3 = Collections.unmodifiableList(Arrays.asList(Beistand, Beirat, Vormund, Vorsorgebeauftragter));
 	
 	public boolean isPartner() {
 		return PARTNER.contains(this);
