@@ -19,7 +19,7 @@ public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> 
 	protected void fillForm(Form<Organisation> formPanel) {
 		formPanel.line(Organisation.ORGANISATION.typeOfResidenceOrganisation, Organisation.ORGANISATION.reportingMunicipality);
 		formPanel.line(Organisation.ORGANISATION.arrivalDate, Organisation.ORGANISATION.comesFrom);
-		formPanel.area(Organisation.ORGANISATION.businessAddress);
+		formPanel.line(Organisation.ORGANISATION.businessAddress);
 	}
 
 	@Override

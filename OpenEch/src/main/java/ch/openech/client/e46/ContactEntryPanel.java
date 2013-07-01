@@ -26,7 +26,7 @@ public class ContactEntryPanel extends EchForm<ContactEntry> {
 		
 		if (type == ContactEntryType.Address) {
 			addressField = new AddressField(ContactEntry.CONTACT_ENTRY.address, false, person, !person);
-			area(addressField);
+			line(addressField);
 		} else {
 			line(ContactEntry.CONTACT_ENTRY.value);
 		}

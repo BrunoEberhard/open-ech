@@ -21,7 +21,7 @@ public class CorrectReportingEvent extends PersonEventEditor<Person> {
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
 		formPanel.line(PERSON.typeOfResidence);
-		formPanel.area(PERSON.residence);
+		formPanel.line(PERSON.residence);
 	}
 
 	@Override

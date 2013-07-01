@@ -1,6 +1,6 @@
 package ch.openech.client.e11;
 
-import static ch.openech.dm.common.DwellingAddress.DWELLING_ADDRESS;
+import static ch.openech.dm.common.DwellingAddress.*;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.common.DwellingAddress;
@@ -18,7 +18,7 @@ public class DwellingAddressPanel extends EchForm<DwellingAddress> {
 		if (!echSchema.addressesAreBusiness()) {
 			line(DWELLING_ADDRESS.householdID);
 		}
-		area(new AddressField(DWELLING_ADDRESS.mailAddress, true, false, false));
+		line(new AddressField(DWELLING_ADDRESS.mailAddress, true, false, false));
 		if (!echSchema.addressesAreBusiness()) {
 			line(DWELLING_ADDRESS.typeOfHousehold);
 		}

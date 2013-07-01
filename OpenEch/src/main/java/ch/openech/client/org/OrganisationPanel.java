@@ -48,13 +48,13 @@ public class OrganisationPanel extends EchForm<Organisation> {
 	}
 
 	private void residence() {
-		area(ORGANISATION.typeOfResidenceOrganisation, ORGANISATION.reportingMunicipality);
+		line(ORGANISATION.typeOfResidenceOrganisation, ORGANISATION.reportingMunicipality);
 		line(ORGANISATION.arrivalDate, ORGANISATION.departureDate);
 		line(ORGANISATION.comesFrom, ORGANISATION.goesTo);
 		if (EditMode.CHANGE_RESIDENCE_TYPE != mode) {
-			area(ORGANISATION.businessAddress, ORGANISATION.contact, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
+			line(ORGANISATION.businessAddress, ORGANISATION.contact, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
 		} else {
-			area(ORGANISATION.businessAddress, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
+			line(ORGANISATION.businessAddress, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
 		}
 	}
 

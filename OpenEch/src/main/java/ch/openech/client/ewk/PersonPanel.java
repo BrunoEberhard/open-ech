@@ -90,19 +90,19 @@ public class PersonPanel extends EchForm<Person>  {
 		switch (mode) {
 		case DISPLAY:
 		case BASE_DELIVERY:
-			area(PERSON.typeOfResidence, PERSON.residence);
+			line(PERSON.typeOfResidence, PERSON.residence);
 			addDependecy(PERSON.typeOfResidence, new ResidenceUpdater(), PERSON.residence);
 			
 			line(PERSON.arrivalDate, PERSON.departureDate);
 			line(PERSON.comesFrom, PERSON.goesTo);
-			area(PERSON.comesFromAddress, PERSON.dwellingAddress, PERSON.goesToAddress);
+			line(PERSON.comesFromAddress, PERSON.dwellingAddress, PERSON.goesToAddress);
 			
 			if (extensionAvailable()) {
-				area(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
-				area(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
+				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
+				line(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
 			} else {
-				area(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
-				area(relationField, nameOfParentsField, PERSON.contactPerson);
+				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
+				line(relationField, nameOfParentsField, PERSON.contactPerson);
 			}
 			
 			line(PERSON.dataLock, PERSON.paperLock);
@@ -110,30 +110,30 @@ public class PersonPanel extends EchForm<Person>  {
 		case MOVE_IN:
 			line(PERSON.placeOfBirth, PERSON.arrivalDate);
 			line(PERSON.typeOfResidence, PERSON.comesFrom);
-			area(PERSON.residence, PERSON.dwellingAddress, PERSON.comesFromAddress);
+			line(PERSON.residence, PERSON.dwellingAddress, PERSON.comesFromAddress);
 			
 			if (extensionAvailable()) {
-				area(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
-				area(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
+				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
+				line(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
 			} else {
-				area(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
-				area(relationField, nameOfParentsField, PERSON.contactPerson);
+				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
+				line(relationField, nameOfParentsField, PERSON.contactPerson);
 			}
 			break;
 		case CHANGE_RESIDENCE_TYPE:
 			line(PERSON.arrivalDate, PERSON.departureDate);
 			line(PERSON.comesFrom, PERSON.goesTo);
-			area(PERSON.comesFromAddress, PERSON.goesToAddress);
-			area(PERSON.placeOfOrigin, PERSON.foreign);
-			area(PERSON.dwellingAddress, PERSON.occupation);
-			area(new RelationField(PERSON.relation, echSchema, editable), new NameOfParentsField(Person.PERSON.nameOfParents, true));
+			line(PERSON.comesFromAddress, PERSON.goesToAddress);
+			line(PERSON.placeOfOrigin, PERSON.foreign);
+			line(PERSON.dwellingAddress, PERSON.occupation);
+			line(new RelationField(PERSON.relation, echSchema, editable), new NameOfParentsField(Person.PERSON.nameOfParents, true));
 			break;
 		case CORRECT_PERSON:
-			area(PERSON.placeOfOrigin, PERSON.foreign);
+			line(PERSON.placeOfOrigin, PERSON.foreign);
 			if (extensionAvailable()) {
-				area(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contact);
+				line(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contact);
 			} else {
-				area(PERSON.contactPerson);
+				line(PERSON.contactPerson);
 			}
 			break;
 		case BIRTH:
@@ -158,8 +158,8 @@ public class PersonPanel extends EchForm<Person>  {
 		line(PERSON.placeOfBirth);
 		ParentField mother = new ParentField(PERSON.getMother());
 		ParentField father = new ParentField(PERSON.getFather());
-		area(mother, father);
-		area(new PlaceOfOriginField(PERSON.placeOfOrigin, false, editable), PERSON.foreign);
+		line(mother, father);
+		line(new PlaceOfOriginField(PERSON.placeOfOrigin, false, editable), PERSON.foreign);
 		
 		addDependecy(PERSON.getMother(), new OfficialNameFromMotherUpdater(), PERSON.personIdentification.officialName);
 	}
@@ -242,8 +242,8 @@ public class PersonPanel extends EchForm<Person>  {
 		@Override
 		public IForm<Relation> createFormPanel() {
 			EchForm<Relation> form = new EchForm<>();
-			form.area(RELATION.partner);
-			form.area(new AddressField(RELATION.address, true));
+			form.line(RELATION.partner);
+			form.line(new AddressField(RELATION.address, true));
 			return form;
 		}
 	}

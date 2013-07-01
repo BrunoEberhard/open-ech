@@ -24,7 +24,7 @@ public class ChangeResidencePermitEvent extends PersonEventEditor<Person> {
 	protected void fillForm(Form<Person> formPanel) {
 		formPanel.line(PERSON.foreign.residencePermit);
 		formPanel.line(PERSON.foreign.residencePermitTill);
-		formPanel.area(PERSON.occupation);
+		formPanel.line(PERSON.occupation);
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class CareEvent extends PersonEventEditor<Relation> {
 	protected void fillForm(Form<Relation> formPanel) {
 		formPanel.line(new EnumEditField(RELATION.typeOfRelationship, TypeOfRelationship.PARENT));
 		formPanel.line(RELATION.care);
-		formPanel.area(RELATION.partner);
+		formPanel.line(RELATION.partner);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class InLiquidationEvent extends OrganisationEventEditor<Organisation> {
 	protected void fillForm(Form<Organisation> formPanel) {
 		formPanel.line(Organisation.ORGANISATION.liquidationEntryDate);
 		formPanel.line(Organisation.ORGANISATION.liquidationReason);
-		formPanel.area(Organisation.ORGANISATION.contact);
+		formPanel.line(Organisation.ORGANISATION.contact);
 	}
 
 	@Override

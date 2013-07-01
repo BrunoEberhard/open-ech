@@ -18,8 +18,8 @@ public class CorrectFoundationEvent extends OrganisationEventEditor<Organisation
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.area(Organisation.ORGANISATION.foundationDate);
-		formPanel.area(Organisation.ORGANISATION.foundationReason);
+		formPanel.line(Organisation.ORGANISATION.foundationDate);
+		formPanel.line(Organisation.ORGANISATION.foundationReason);
 	}
 
 	@Override

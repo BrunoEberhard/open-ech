@@ -15,8 +15,8 @@ public class RelationPanel extends EchForm<Relation> {
 	public RelationPanel(EchSchema echSchema) {
 		super(echSchema);
 		
-		area(RELATION.partner);
-		area(new AddressField(RELATION.address, true));
+		line(RELATION.partner);
+		line(new AddressField(RELATION.address, true));
 
 		line(RELATION.typeOfRelationship);
 		line(new BasedOnLawField());

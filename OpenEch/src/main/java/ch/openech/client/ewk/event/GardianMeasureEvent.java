@@ -45,7 +45,7 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 			formPanel.line(RELATION.care);
 		}
 		
-		formPanel.area(RELATION.partner);
+		formPanel.line(RELATION.partner);
 	}
 	
 	@Override

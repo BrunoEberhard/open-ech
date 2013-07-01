@@ -26,7 +26,7 @@ public class RenewPermitEvent extends PersonEventEditor<Person> {
 			// bei Change ist diese Angabe obligatorisch, bei Correct und Renew nicht
 			formPanel.line(PERSON.foreign.residencePermitTill);
 		}
-		formPanel.area(PERSON.occupation);
+		formPanel.line(PERSON.occupation);
 	}
 
 	@Override

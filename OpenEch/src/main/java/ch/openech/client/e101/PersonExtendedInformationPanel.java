@@ -1,6 +1,6 @@
 package ch.openech.client.e101;
 
-import static ch.openech.dm.person.PersonExtendedInformation.PERSON_EXTENDED_INFORMATION;
+import static ch.openech.dm.person.PersonExtendedInformation.*;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.PersonExtendedInformation;
@@ -16,7 +16,7 @@ public class PersonExtendedInformationPanel extends EchForm<PersonExtendedInform
 		line(PERSON_EXTENDED_INFORMATION.fireServiceLiability);
 		line(PERSON_EXTENDED_INFORMATION.healthInsured);
 		line(PERSON_EXTENDED_INFORMATION.insuranceName);
-		area(new AddressField(PERSON_EXTENDED_INFORMATION.insuranceAddress, true, false, true));
+		line(new AddressField(PERSON_EXTENDED_INFORMATION.insuranceAddress, true, false, true));
 		line(PERSON_EXTENDED_INFORMATION.matrimonialInheritanceArrangement);
 	}
 

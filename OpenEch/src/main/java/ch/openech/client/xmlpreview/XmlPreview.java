@@ -28,7 +28,7 @@ public class XmlPreview {
 				}
 			};
 			XmlTextFormField xmlTextFormField = new XmlTextFormField(XmlPreviewValue.XML_PREVIEW_VALUE.xmls);
-			form.area(xmlTextFormField);
+			form.line(xmlTextFormField);
 			xmlTextFormField.setObject(xmls);
 			ClientToolkit.getToolkit().openDialog(context, form.getComponent(), "XML").openDialog();
 		}

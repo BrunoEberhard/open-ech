@@ -32,9 +32,9 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 		formPanel.line(MED.dwellingAddress.EGID);
 		formPanel.line(MED.dwellingAddress.EWID);
 		formPanel.line(MED.dwellingAddress.householdID);
-		formPanel.area(new AddressField(MED.dwellingAddress.mailAddress, true, false, false));
+		formPanel.line(new AddressField(MED.dwellingAddress.mailAddress, true, false, false));
 		formPanel.line(MED.dwellingAddress.typeOfHousehold);
-		formPanel.area(new MunicipalityField(MED.reportingMunicipality, true));
+		formPanel.line(new MunicipalityField(MED.reportingMunicipality, true));
 	}
 
 	@Override

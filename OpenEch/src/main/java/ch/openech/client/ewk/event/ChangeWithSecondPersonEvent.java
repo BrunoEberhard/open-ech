@@ -52,7 +52,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		createSpecificForm(formPanel);
 		if (getPerson().getPartner() != null) {
 			formPanel.line(ChangeWithSecondPersonEventData.DATA.registerPartner);
-			formPanel.area(new SecondPersonField(ChangeWithSecondPersonEventData.DATA.relationPartner));
+			formPanel.line(new SecondPersonField(ChangeWithSecondPersonEventData.DATA.relationPartner));
 		} else {
 			formPanel.text("(Person ohne Partner)");
 		}

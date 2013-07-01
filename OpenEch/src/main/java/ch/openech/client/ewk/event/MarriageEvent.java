@@ -151,10 +151,10 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		//
 		
 		formPanel.line(MARRIAGE.dateOfMaritalStatus, MARRIAGE.registerPartner2);
-		formPanel.area(partner1, partner2);
+		formPanel.line(partner1, partner2);
 		formPanel.line(MARRIAGE.changeName1, MARRIAGE.changeName2);
 		formPanel.line(MARRIAGE.name1, MARRIAGE.name2);
-		formPanel.area(origin1, origin2);
+		formPanel.line(origin1, origin2);
 		
 		formPanel.addDependecy(MARRIAGE.partner1, new PartnerNameUpdater(), MARRIAGE.name2);
 		formPanel.addDependecy(MARRIAGE.partner1, new PartnerOriginUpdater(), MARRIAGE.origin2);

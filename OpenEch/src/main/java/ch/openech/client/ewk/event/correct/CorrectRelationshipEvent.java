@@ -20,10 +20,10 @@ public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.area(new RelationField(Person.PERSON.relation, echSchema, true));
+		formPanel.line(new RelationField(Person.PERSON.relation, echSchema, true));
 		boolean includeParents = echSchema.correctRelationshipPersonIncludesParents();
 		if (includeParents) {
-			formPanel.area(new NameOfParentsField(Person.PERSON.nameOfParents, true));
+			formPanel.line(new NameOfParentsField(Person.PERSON.nameOfParents, true));
 		}
 	}
 

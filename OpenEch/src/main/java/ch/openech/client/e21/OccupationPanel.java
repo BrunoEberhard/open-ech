@@ -1,6 +1,6 @@
 package ch.openech.client.e21;
 
-import static ch.openech.dm.person.Occupation.OCCUPATION;
+import static ch.openech.dm.person.Occupation.*;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.Occupation;
@@ -15,7 +15,7 @@ public class OccupationPanel extends EchForm<Occupation> {
 		line(OCCUPATION.kindOfEmployment);
 		line(OCCUPATION.jobTitle);
 		line(OCCUPATION.employer);
-		area(new AddressField(OCCUPATION.placeOfWork, false, false, false), new AddressField(OCCUPATION.placeOfEmployer, false, false, false));
+		line(new AddressField(OCCUPATION.placeOfWork, false, false, false), new AddressField(OCCUPATION.placeOfEmployer, false, false, false));
 		if (echSchema.occupationValidTillAvailable()) {
 			line(OCCUPATION.occupationValidTill);
 		}

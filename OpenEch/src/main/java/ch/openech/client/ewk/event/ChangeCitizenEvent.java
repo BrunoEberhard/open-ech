@@ -17,7 +17,7 @@ public class ChangeCitizenEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.area(Person.PERSON.placeOfOrigin);
+		formPanel.line(Person.PERSON.placeOfOrigin);
 	}
 
 	@Override

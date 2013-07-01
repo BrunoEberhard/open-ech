@@ -21,7 +21,7 @@ public class MoveOutEvent extends OrganisationEventEditor<Organisation> {
 	protected void fillForm(Form<Organisation> formPanel) {
 		formPanel.line(Organisation.ORGANISATION.reportingMunicipality);
 		formPanel.line(Organisation.ORGANISATION.departureDate);
-		formPanel.area(Organisation.ORGANISATION.goesTo);
+		formPanel.line(Organisation.ORGANISATION.goesTo);
 	}
 
 	

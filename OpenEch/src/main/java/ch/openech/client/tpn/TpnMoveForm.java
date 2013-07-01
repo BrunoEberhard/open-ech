@@ -1,6 +1,6 @@
 package ch.openech.client.tpn;
 
-import static ch.openech.dm.tpn.ThirdPartyMove.THIRD_PARTY_MOVE;
+import static ch.openech.dm.tpn.ThirdPartyMove.*;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.tpn.ThirdPartyMove;
 
@@ -25,11 +25,11 @@ public class TpnMoveForm extends EchForm<ThirdPartyMove> {
 		line(THIRD_PARTY_MOVE.beginOfContract, THIRD_PARTY_MOVE.endOfContract);
 		
 		addTitle("Vermieter");
-		area(THIRD_PARTY_MOVE.contractor);
+		line(THIRD_PARTY_MOVE.contractor);
 		
 		addTitle("Gebäude");
 		line(THIRD_PARTY_MOVE.EGID);
-		area(THIRD_PARTY_MOVE.address);
+		line(THIRD_PARTY_MOVE.address);
 //		line(THIRD_PARTY_MOVE.address.addressLine1);
 //		line(THIRD_PARTY_MOVE.address.addressLine2);
 //		line(THIRD_PARTY_MOVE.address.street, THIRD_PARTY_MOVE.address.houseNumber);

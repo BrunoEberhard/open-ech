@@ -37,7 +37,7 @@ public class ContractorField extends ObjectFlowField<Contact> {
 	public IForm<Contact> createFormPanel() {
 		Form<Contact> form = new EchForm<Contact>();
 		form.line(Contact.CONTACT.stringId);
-		form.area(new ContactField(null));
+		form.line(new ContactField(null));
 		return form;
 	}
 	

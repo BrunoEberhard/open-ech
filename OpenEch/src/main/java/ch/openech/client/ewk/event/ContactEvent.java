@@ -23,7 +23,7 @@ public class ContactEvent extends PersonEventEditor<Person> {
 		if (echSchema.contactHasValidTill()) {
 			formPanel.line(Person.PERSON.contactPerson.validTill);
 		}
-		formPanel.area(Person.PERSON.contactPerson);
+		formPanel.line(Person.PERSON.contactPerson);
 	}
 
 	@Override

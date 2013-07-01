@@ -123,7 +123,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		//
 		
 		formPanel.line(PARTNERSHIP.dateOfMaritalStatus, PARTNERSHIP.registerPartner2);
-		formPanel.area(partner1, partner2);
+		formPanel.line(partner1, partner2);
 	
 		formPanel.line(PARTNERSHIP.changeName1, PARTNERSHIP.changeName2);
 		formPanel.line(PARTNERSHIP.name1, PARTNERSHIP.name2);

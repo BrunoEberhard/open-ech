@@ -55,9 +55,9 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 		EchForm<TechnicalIds> form = new EchForm<TechnicalIds>();
 		form.line(TechnicalIds.TECHNICAL_IDS.localId.personIdCategory);
 		form.line(TechnicalIds.TECHNICAL_IDS.localId.personId);
-		form.area(new OtherIdField(TechnicalIds.TECHNICAL_IDS.otherId, isEditable()));
+		form.line(new OtherIdField(TechnicalIds.TECHNICAL_IDS.otherId, isEditable()));
 		if (hasSpecialEuIds) {
-			form.area(new OtherIdField(TechnicalIds.TECHNICAL_IDS.euId, isEditable()));
+			form.line(new OtherIdField(TechnicalIds.TECHNICAL_IDS.euId, isEditable()));
 		}
 		return form;
 	}
