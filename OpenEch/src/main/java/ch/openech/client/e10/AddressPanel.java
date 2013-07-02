@@ -49,6 +49,11 @@ public class AddressPanel extends EchForm<Address> {
 		@Override
 		public String update(String input, Address address) {
 			if (address.isSwiss()) {
+				// Adresse enthält noch den alten Wert. Updater werden aufgerufen, bevor
+				// der neue Wert in das Objekt geschrieben wurde. Die folgenden getter
+				// würden ohne diese Zuweisung somit die alten Werte lieferen.
+				address.zip = input;
+				
 				String swissZipCode = address.getSwissZipCode();
 				String swissZipCodeAddOn = address.getSwissZipCodeAddOn();
 				Plz plz = PlzImport.getInstance().getPlz(swissZipCode, swissZipCodeAddOn);
