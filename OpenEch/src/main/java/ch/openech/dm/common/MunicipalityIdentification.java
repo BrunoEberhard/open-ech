@@ -5,7 +5,7 @@ import java.io.Serializable;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.code.FederalRegister;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.Decimal;
+import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
 
@@ -14,11 +14,11 @@ public class MunicipalityIdentification implements Comparable<MunicipalityIdenti
 
 	public static MunicipalityIdentification MUNICIPALITY_IDENTIFICATION = Keys.of(MunicipalityIdentification.class);
 
-	@Decimal(4)
+	@Size(4)
 	public Integer municipalityId;
 	public String municipalityName;
 	public final CantonAbbreviation cantonAbbreviation = new CantonAbbreviation();
-	@Decimal(4)
+	@Size(4)
 	public Integer historyMunicipalityId;
 	
 	public void clear() {
