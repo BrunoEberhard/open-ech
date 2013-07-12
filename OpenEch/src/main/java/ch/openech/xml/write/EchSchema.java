@@ -4,7 +4,6 @@ import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,11 +13,8 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-
-import ch.openech.mj.model.annotation.Size;
 
 public class EchSchema {
 	private static Map<String, EchSchema> contexts = new HashMap<String, EchSchema>();
@@ -30,7 +26,6 @@ public class EchSchema {
 	private final int rootNumber;
 	private String version;
 	private String openEchNamespaceLocation;
-	private final Map<String, Annotation> simpleTypes = new HashMap<String, Annotation>();
 	private WriterEch0020 writerEch0020;
 	private WriterEch0112 writerEch0112;
 	private WriterEch0148 writerEch0148;
@@ -174,12 +169,6 @@ public class EchSchema {
 				if (startName.equals("import")) {
 					imprt(startElement);
 					skip(xml);
-				} else if (startName.equals("simpleType")) {
-					String name = startElement.getAttributeByName(new QName("name")).getValue();
-					if (name.endsWith("Type")) {
-						name = name.substring(0, name.length()-4);
-						simpleType(name, xml);				
-					}
 				} else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
@@ -191,58 +180,6 @@ public class EchSchema {
 		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
 		read(schemaLocation);
 	}
-	
-	private void simpleType(String name, XMLEventReader xml) throws XMLStreamException, IOException {
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals("restriction")) {
-					Attribute base = startElement.getAttributeByName(new QName("base"));
-					boolean intBase = base != null && base.getValue().contains("int");
-					restriction(name, xml, intBase);
-				}
-				else skip(xml);
-			} else if (event.isEndElement()) {
-				return;
-			} // else skip
-		}
-	}
-	
-	private void restriction(String name, XMLEventReader xml, boolean intBase) throws XMLStreamException, IOException {
-		int size = -1;
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals("maxLength")) {
-					String value = startElement.getAttributeByName(new QName("value")).getValue();
-					size = Integer.parseInt(value);
-				} else if (startName.equals("enumeration")) {
-					String value = startElement.getAttributeByName(new QName("value")).getValue();
-					size = Math.max(size, value.length());
-				} else if (startName.equals("maxInclusive")) {
-					String value = startElement.getAttributeByName(new QName("value")).getValue();
-					size = Math.max(size, value.length());
-				}
-				skip(xml);
-			} else if (event.isEndElement()) {
-				if (intBase) {
-					if (size < 0) {
-						System.out.println("Warnung: Grösse nicht bestimmbar: " + name);
-						size = 10;
-					}
-					simpleTypes.put(name, new Size.SizeImpl(size));
-				} else {
-					simpleTypes.put(name, new Size.SizeImpl(size));
-				}
-				return;
-			} // else skip
-		}
-	}
-	
 
 	//
 	
@@ -265,12 +202,6 @@ public class EchSchema {
 			writerEch0148 = new WriterEch0148(this); // 1100 - 1400ms
 		}
 		return writerEch0148;
-	}
-	
-	//
-	
-	public Map<String, Annotation> getSimpleTypes() {
-		return simpleTypes;
 	}
 	
 	//
