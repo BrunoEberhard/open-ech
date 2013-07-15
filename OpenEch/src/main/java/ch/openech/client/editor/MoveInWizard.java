@@ -132,13 +132,18 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		public WizardStep<?> getPreviousStep() {
-			personIndex = personIndex - 1;
 			return moveInNextPersonWizardStep;
 		}
 		
 		@Override
 		protected boolean save(Person person) {
 			return true;
+		}
+
+		@Override
+		protected void cancel() {
+			personIndex = personIndex - 1;
+			super.cancel();
 		}
 
 		@Override
@@ -213,12 +218,17 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		protected boolean save(MoveInNextPerson object) {
+			personIndex = personIndex + 1;
 			return true;
 		}
 
 		@Override
+		protected void finish() {
+			super.finish();
+		}
+
+		@Override
 		public WizardStep<?> getNextStep() {
-			personIndex = personIndex + 1;
 			return moveInPersonWizardStep;
 		}
 
@@ -244,6 +254,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	@Override
 	protected boolean save(MoveInEditorData object) {
+		// Personen, die mit man previos verlassen hat werden nicht mitgespeichert,
+		// da sie eventuell ungültig sein könnten
+		for (int i = object.persons.size() - 1; i > personIndex; i--) {
+			object.persons.remove(i);
+		}
+		
 		List<String> xmlList = new ArrayList<String>();
 		for (Person person : object.persons) {
 			try {
