@@ -53,7 +53,6 @@ public class StaxEch0020 implements StaxEchParser {
 		if (person.getId() == null) {
 			person.personIdentification.technicalIds.localId.setOpenEch();
 		}
-		person.removeEmptyRelations();
 		persistence.person().insert(person);
 		lastInsertedPersonId = person.getId();
 	}
@@ -68,7 +67,6 @@ public class StaxEch0020 implements StaxEchParser {
 
 		person.event = e;
 
-		person.removeEmptyRelations();
 		persistence.person().update(person);
 		persistence.commit();
 	}
@@ -278,8 +276,8 @@ public class StaxEch0020 implements StaxEchParser {
 	
 	private void copyResidence(Person person) {
 		Relation relation = person.getMother();
-		if (relation.isEmpty()) relation = person.getFather();
-		if (relation.isEmpty()) {
+		if (relation == null) relation = person.getFather();
+		if (relation == null) {
 			// TODO was macht man hier? Einfach so entstehen ungültige Daten, da eine Person einen Meldeort haben muss
 			return;
 		}

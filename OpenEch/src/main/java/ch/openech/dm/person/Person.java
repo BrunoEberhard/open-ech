@@ -17,7 +17,6 @@ import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.Language;
 import ch.openech.dm.types.TypeOfResidence;
-import ch.openech.dm.types.YesNo;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.EmptyValidator;
@@ -181,11 +180,7 @@ public class Person implements Validation {
 		for (Relation r : relation) {
 			if (type == r.typeOfRelationship) return r;
 		}
-		Relation newRelation = new Relation();
-		newRelation.typeOfRelationship = type;
-		if (newRelation.isParent()) newRelation.care = YesNo.Yes;
-		relation.add(newRelation);
-		return newRelation;
+		return null;
 	}
 
 	public boolean isSwiss() {
@@ -305,12 +300,12 @@ public class Person implements Validation {
 	@BusinessRule("Die Geburt einer Person muss nach derjenigen seiner Eltern sein")
 	public void validateBirthAfterParents(List<ValidationMessage> resultList) {
 		Relation relation = getMother();
-		if (!isBirthAfterRelation(relation)) {
+		if (relation != null && !isBirthAfterRelation(relation)) {
 			resultList.add(new ValidationMessage(PERSON.personIdentification.dateOfBirth, "Geburtsdatum muss nach demjenigen der Mutter sein"));
 		}
 		
 		relation = getFather();
-		if (!isBirthAfterRelation(relation)) {
+		if (relation != null && !isBirthAfterRelation(relation)) {
 			resultList.add(new ValidationMessage(PERSON.personIdentification.dateOfBirth, "Geburtsdatum muss nach demjenigen des Vaters sein"));
 		}
 	};
@@ -372,16 +367,6 @@ public class Person implements Validation {
 		String validationMessage = residence.validate(typeOfResidence);
 		if (validationMessage != null) {
 			resultList.add(new ValidationMessage(PERSON.residence, validationMessage));
-		}
-	}
-	
-	//
-	
-	public void removeEmptyRelations() {
-		for (int i = relation.size() - 1; i>= 0; i--) {
-			if (relation.get(i).isEmpty()) {
-				relation.remove(i);
-			}
 		}
 	}
 	

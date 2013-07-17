@@ -154,7 +154,7 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	private void birthParent(boolean father, WriterElement event, Relation parentRelation, NameOfParent nameAtBirth) throws Exception {
-		if (!parentRelation.isEmpty()) {
+		if (parentRelation != null) {
 			WriterElement element = event.create(URI, father ? FATHER : MOTHER);
 			if (parentRelation != null) {
 				element.values(parentRelation, TYPE_OF_RELATIONSHIP);

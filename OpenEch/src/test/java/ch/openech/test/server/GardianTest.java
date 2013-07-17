@@ -61,7 +61,7 @@ public class GardianTest extends AbstractServerTest {
 		Assert.assertTrue(load(gardianId).personIdentification.isEqual(gardian.partner));
 		Assert.assertEquals(BasedOnLaw._369, gardian.basedOnLaw);
 
-		Assert.assertTrue(person.getRelation(TypeOfRelationship.Vormund).isEmpty());
+		Assert.assertNull(person.getRelation(TypeOfRelationship.Vormund));
 	}
 	
 	@Test
@@ -71,8 +71,8 @@ public class GardianTest extends AbstractServerTest {
 		
 		person = load(id);
 		Assert.assertNotNull(person);
-		Assert.assertTrue(person.getRelation(TypeOfRelationship.Beistand).isEmpty());
-		Assert.assertTrue(person.getRelation(TypeOfRelationship.Vormund).isEmpty());
+		Assert.assertNull(person.getRelation(TypeOfRelationship.Beistand));
+		Assert.assertNull(person.getRelation(TypeOfRelationship.Vormund));
 	}
 	
 }

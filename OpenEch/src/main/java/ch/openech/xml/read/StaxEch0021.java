@@ -17,6 +17,7 @@ import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.types.YesNo;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0021 {
@@ -70,8 +71,10 @@ public class StaxEch0021 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(TYPE_OF_RELATIONSHIP) || startName.equals(PARTNERSHIP_TYPE_OF_RELATIONSHIP_TYPE)) {
-					TypeOfRelationship typeOfRelationship = (TypeOfRelationship) StaxEch.enuum(TypeOfRelationship.class, token(xml));
-					relation = person.getRelation(typeOfRelationship);
+					relation = new Relation();
+					relation.typeOfRelationship = (TypeOfRelationship) StaxEch.enuum(TypeOfRelationship.class, token(xml));
+					if (relation.isParent()) relation.care = YesNo.Yes;
+					person.relation.add(relation);
 				}
 				else if (startName.equals(BASED_ON_LAW)) enuum(xml, relation, Relation.RELATION.basedOnLaw); 
 				else if (startName.equals(BASED_ON_LAW_ADD_ON)) relation.basedOnLawAddOn = token(xml);

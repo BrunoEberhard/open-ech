@@ -9,7 +9,6 @@ import org.junit.Test;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
-import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.server.ServerCallResult;
 
 public class BirthTest extends AbstractServerTest {
@@ -48,9 +47,9 @@ public class BirthTest extends AbstractServerTest {
 		Assert.assertEquals(new Integer(8100), child.nationality.nationalityCountry.countryId);
 		Assert.assertEquals("Schweiz", child.nationality.nationalityCountry.countryNameShort);
 
-		Relation motherRelation = child.getRelation(TypeOfRelationship.Mutter);
+		Relation motherRelation = child.getMother();
 		Assert.assertTrue(mother.personIdentification.isEqual(motherRelation.partner));
-		Relation fatherRelation = child.getRelation(TypeOfRelationship.Vater);
+		Relation fatherRelation = child.getFather();
 		Assert.assertTrue(father.personIdentification.isEqual(fatherRelation.partner));
 	}
 	

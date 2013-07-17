@@ -40,10 +40,6 @@ public class Relation implements Validatable {
 		address = null;
 	}
 	
-	public boolean isEmpty() {
-		return partner == null || partner.isEmpty();
-	}
-	
 	//
 	
 	public boolean isPartnerType() {
