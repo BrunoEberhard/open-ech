@@ -5,7 +5,6 @@ import java.util.List;
 import ch.openech.dm.EchSchema0020;
 import ch.openech.dm.EchSchema0093;
 import ch.openech.dm.EchSchema0148;
-import ch.openech.dm.code.ApplicationMode;
 import ch.openech.dm.common.CantonAbbreviation;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.types.Religion;
@@ -26,7 +25,6 @@ public class OpenEchPreferences implements Validation {
 	public static class ApplicationSchemaData {
 		public static final ApplicationSchemaData APPLICATION_SCHEMA_DATA = Keys.of(ApplicationSchemaData.class);
 		@Required
-		public ApplicationMode applicationMode = ApplicationMode.Entwicklermodus;
 		public EchSchema0020 schema20 = EchSchema0020._2_2;
 		public EchSchema0093 schema93 = EchSchema0093._1_0;
 		public EchSchema0148 schema148 = EchSchema0148._1_0;
@@ -49,10 +47,6 @@ public class OpenEchPreferences implements Validation {
 		public final CantonAbbreviation cantonAbbreviation = new CantonAbbreviation();
 		public Language language = Language.de;
 		public Religion religion = Religion.unbekannt;
-	}
-	
-	public boolean devMode() {
-		return ApplicationMode.Entwicklermodus == applicationSchemaData.applicationMode;
 	}
 	
 	@Override

@@ -11,6 +11,7 @@ import javax.swing.Action;
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.xmlpreview.XmlPreview;
+import ch.openech.mj.application.DevMode;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -47,7 +48,7 @@ public abstract class XmlEditor<T> extends Editor<T> {
 
 	@Override
 	public Action[] getActions() {
-		if (preferences.devMode()) {
+		if (DevMode.isActive()) {
 			return new Action[]{demoAction(), xmlAction, cancelAction(), saveAction()};
 		} else {
 			return new Action[]{cancelAction(), saveAction()};

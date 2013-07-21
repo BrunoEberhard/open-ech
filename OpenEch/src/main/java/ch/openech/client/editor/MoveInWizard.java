@@ -18,6 +18,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.person.types.TypeOfRelationshipInverted;
+import ch.openech.mj.application.DevMode;
 import ch.openech.mj.edit.Wizard;
 import ch.openech.mj.edit.WizardStep;
 import ch.openech.mj.edit.fields.AbstractEditField;
@@ -91,7 +92,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	@Override
 	public Action[] getActions() {
 		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-		if (preferences.devMode()) {
+		if (DevMode.isActive()) {
 			return new Action[]{demoAction(), new XmlAction(), cancelAction(), prevAction, nextAction, saveAction()};
 		} else {
 			return new Action[]{cancelAction(), prevAction, nextAction, saveAction()};
@@ -163,6 +164,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 				wizardData.persons.add(person);
 			}
 			return wizardData.persons.get(personIndex);
+		}
+
+		@Override
+		public void fillWithDemoData() {
+			// TODO Auto-generated method stub
+			super.fillWithDemoData();
 		}
 	}
 	

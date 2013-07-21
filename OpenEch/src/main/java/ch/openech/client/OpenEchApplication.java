@@ -40,6 +40,7 @@ import ch.openech.client.preferences.PreferencesEditor;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.datagenerator.GeneratePersonAction;
 import ch.openech.dm.EchSchema0020;
+import ch.openech.mj.application.DevMode;
 import ch.openech.mj.application.MjApplication;
 import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.EditorPageAction;
@@ -107,7 +108,7 @@ public class OpenEchApplication extends MjApplication {
 	@Override
 	public void fillActionGroup(PageContext context, ActionGroup actionGroup) {
 		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-		boolean isDevMode = preferences.devMode();
+		boolean isDevMode = DevMode.isActive();
 		
 		updateEwkNamespaceContext(context);
 		ActionGroup file = actionGroup.getOrCreateActionGroup(ActionGroup.FILE);

@@ -9,7 +9,6 @@ public class PreferenceForm extends EchForm<OpenEchPreferences> {
 		super(2);
 		
 		addTitle("Schema");
-		line(OpenEchPreferences.OPEN_ECH_PREFERENCES.applicationSchemaData.applicationMode, OpenEchPreferences.OPEN_ECH_PREFERENCES.applicationSchemaData.schema20);
 		line(OpenEchPreferences.OPEN_ECH_PREFERENCES.applicationSchemaData.schema93,OpenEchPreferences.OPEN_ECH_PREFERENCES.applicationSchemaData.schema148);
 
 		addTitle("Voreingestellte Werte");
