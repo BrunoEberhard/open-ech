@@ -95,10 +95,9 @@ public class PersonEditMenu {
 		createMenuItems();
 	}
 	
-	public void fillActionGroup(ActionGroup actionGroup) {
+	public void fillActionGroup(ActionGroup personActionGroup) {
 		if (person == null) return;
 
-		ActionGroup personActionGroup = actionGroup.getOrCreateActionGroup(ActionGroup.OBJECT);
 		personActionGroup.putValue(Action.NAME, "Person");
 		personActionGroup.putValue(Action.MNEMONIC_KEY, 'P');
 
@@ -165,7 +164,7 @@ public class PersonEditMenu {
 		
 		//
 		
-		List<Action> actions = actionGroup.getAllActions();
+		List<Action> actions = personActionGroup.getAllActions();
 		showHistory.setPerson(person);
 		for (Action action : actions) {
 			if (action instanceof PersonEditMenuAction) {

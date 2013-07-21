@@ -55,10 +55,9 @@ public class OrganisationMenu {
 		createMenuItems();
 	}
 	
-	public void fillActionGroup(ActionGroup actionGroup) {
+	public void fillActionGroup(ActionGroup organisationActionGroup) {
 		if (organisation == null) return;
 		
-		ActionGroup organisationActionGroup = actionGroup.getOrCreateActionGroup(ActionGroup.OBJECT);
 		organisationActionGroup.putValue(Action.NAME, "Organisation");
 		organisationActionGroup.putValue(Action.MNEMONIC_KEY, 'O');
 
@@ -88,7 +87,7 @@ public class OrganisationMenu {
 		
 		//
 		
-		List<Action> actions = actionGroup.getAllActions();
+		List<Action> actions = organisationActionGroup.getAllActions();
 		showHistory.setOrganisation(organisation);
 		for (Action action : actions) {
 			if (action instanceof OrganisationEditMenuAction) {
