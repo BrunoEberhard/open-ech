@@ -46,11 +46,6 @@ public class TpnMoveForm extends EchForm<ThirdPartyMove> {
 	// getter / setter
 
 	@Override
-	public void fillWithDemoData() {
-		super.fillWithDemoData();
-	}
-
-	@Override
 	protected int getColumnWidthPercentage() {
 		return 70;
 	}
