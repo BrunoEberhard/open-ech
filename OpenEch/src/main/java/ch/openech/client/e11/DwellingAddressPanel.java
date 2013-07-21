@@ -4,7 +4,6 @@ import static ch.openech.dm.common.DwellingAddress.*;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.common.DwellingAddress;
-import ch.openech.mj.edit.fields.EditField;
 import ch.openech.xml.write.EchSchema;
 
 // Wohnadresse
@@ -29,11 +28,10 @@ public class DwellingAddressPanel extends EchForm<DwellingAddress> {
 		address.echSchema = echSchema;
 		super.setObject(address);
 	}
-
+	
 	@Override
-	public void fillWithDemoData() {
-		super.fillWithDemoData();
-		((EditField<String>) getField(DWELLING_ADDRESS.householdID)).setObject("");
+	protected void fillWithDemoData(DwellingAddress dwellingAddress) {
+		super.fillWithDemoData(dwellingAddress);
+		dwellingAddress.householdID = "";
 	}
-
 }

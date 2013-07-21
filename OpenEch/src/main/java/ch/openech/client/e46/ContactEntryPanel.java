@@ -34,11 +34,11 @@ public class ContactEntryPanel extends EchForm<ContactEntry> {
 	}
 	
 	@Override
-	public void fillWithDemoData() {
-		if (addressField != null) {
-			addressField.setObject(DataGenerator.address(true, true, false));
+	protected void fillWithDemoData(ContactEntry contactEntry) {
+		super.fillWithDemoData(contactEntry);
+		if (addressField != null) {	
+			contactEntry.address = DataGenerator.address(true, true, false);
 		}
-		super.fillWithDemoData();
 	}
 
 }

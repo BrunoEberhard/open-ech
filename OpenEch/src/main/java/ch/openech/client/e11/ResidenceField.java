@@ -140,7 +140,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		}
 	}
 
-	public void fillWithDemoData(TypeOfResidence typeOfResidence) {
+	public static void fillWithMockupData(Residence residence, TypeOfResidence typeOfResidence) {
 		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
 		boolean hasSecondResidence = TypeOfResidence.hasSecondaryResidence == typeOfResidence;
 		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
@@ -150,9 +150,9 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		boolean notMoreThanOneSecondResidence = hasSecondResidence || hasOtherResidence;
 		
 		if (mainResidenceNeeded) {
-			getObject().reportingMunicipality = DataGenerator.place().municipalityIdentification;
+			residence.reportingMunicipality = DataGenerator.place().municipalityIdentification;
 		} else {
-			getObject().reportingMunicipality = null;
+			residence.reportingMunicipality = null;
 		}
 		
 		List<MunicipalityIdentification> secondaryResidences = new ArrayList<MunicipalityIdentification>();
@@ -162,9 +162,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		while (!notMoreThanOneSecondResidence && Math.random() < 0.3) {
 			secondaryResidences.add(DataGenerator.place().municipalityIdentification);
 		}
-		getObject().setSecondary(secondaryResidences);
-		show(getObject());
-		fireChange();
+		residence.setSecondary(secondaryResidences);
 	}
 
 	@Override

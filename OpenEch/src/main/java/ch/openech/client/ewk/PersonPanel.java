@@ -1,7 +1,6 @@
 package ch.openech.client.ewk;
 
 import static ch.openech.dm.person.Person.*;
-import static ch.openech.dm.person.PersonIdentification.*;
 import static ch.openech.dm.person.Relation.*;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.e11.PlaceOfOriginField;
@@ -18,10 +17,9 @@ import ch.openech.dm.person.Residence;
 import ch.openech.dm.types.Sex;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.autofill.FirstNameGenerator;
+import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.autofill.NameWithFrequency;
 import ch.openech.mj.edit.fields.AbstractJodaField;
-import ch.openech.mj.edit.fields.EnumEditField;
-import ch.openech.mj.edit.fields.FormField;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
@@ -203,21 +201,19 @@ public class PersonPanel extends EchForm<Person>  {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public void fillWithDemoData() {
-		super.fillWithDemoData();
-
+	protected void fillWithDemoData(Person person) {
+		super.fillWithDemoData(person);
+		
 		boolean male = Math.random() < .5;
 		NameWithFrequency generatedName = FirstNameGenerator.getName(male);
-		((FormField<String>) getField(PERSON.personIdentification.firstName)).setObject(generatedName.name);
-		EnumEditField<Sex> sexField = (EnumEditField<Sex>) getField(PERSON_IDENTIFICATION.sex);
-		if (sexField != null) sexField.setObject(male ? Sex.maennlich : Sex.weiblich);
+		person.personIdentification.firstName = generatedName.name;
+		person.personIdentification.sex = male ? Sex.maennlich : Sex.weiblich;
+		person.callName = "Lorem Ipsum";
+		person.personIdentification.officialName = NameGenerator.officialName();
 		
-		TypeOfResidence typeOfResidence = ((EnumEditField<TypeOfResidence>) getField(PERSON.typeOfResidence)).getObject();
-		((ResidenceField) getField(PERSON.residence)).fillWithDemoData(typeOfResidence);
+		ResidenceField.fillWithMockupData(person.residence, person.typeOfResidence);
 	}
-	
 
 	private class ParentField extends ObjectFlowField<Relation> {
 		
