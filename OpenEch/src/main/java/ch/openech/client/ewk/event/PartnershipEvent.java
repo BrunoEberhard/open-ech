@@ -6,7 +6,6 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 import ch.openech.client.e44.PersonField;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
@@ -30,8 +29,8 @@ import ch.openech.xml.write.WriterEch0020;
 // "nur" der Allianzname nicht der "richtige" Name
 public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partnership> {
 
-	public PartnershipEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public PartnershipEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 		
 	public static class Partnership implements Validation {

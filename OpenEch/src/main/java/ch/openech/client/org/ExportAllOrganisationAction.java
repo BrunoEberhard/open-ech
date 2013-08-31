@@ -1,15 +1,15 @@
 package ch.openech.client.org;
 
-import static ch.openech.dm.XmlConstants.REPORTED_ORGANISATION;
+import static ch.openech.dm.XmlConstants.*;
 
-import java.awt.event.ActionEvent;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ExportHandler;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0098;
@@ -25,9 +25,8 @@ public class ExportAllOrganisationAction extends ResourceAction implements Expor
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		source = e.getSource();
-		ClientToolkit.getToolkit().export(e.getSource(), "text", this);
+	public void action(IComponent context) {
+		ClientToolkit.getToolkit().export(context, "text", this);
 	}
 
 	@Override

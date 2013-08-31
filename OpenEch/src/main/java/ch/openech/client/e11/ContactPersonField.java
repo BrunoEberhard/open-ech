@@ -1,6 +1,5 @@
 package ch.openech.client.e11;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.client.e10.AddressPanel;
@@ -16,10 +15,9 @@ import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
-import ch.openech.mj.page.PageContextHelper;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.page.PageLink;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
@@ -45,7 +43,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			if (isEditable()) {
 				addAction(new RemovePersonContactAction());
 			} else {
-				addAction(new PersonContactViewAction(contactPerson.person));
+				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echSchema.getVersion(), contactPerson.person.getId()));
 			}
 			addGap();
 		}
@@ -70,29 +68,15 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		addAction(new EnterPersonContactEditor());
 		addGap();
 		
-        addAction(new AddAddressContactEditor(true), "AddAddressPerson");
-        addAction(new AddAddressContactEditor(false), "AddAddressOrganisation");
+        addAction(new AddAddressContactEditor(true, "AddAddressPerson"));
+        addAction(new AddAddressContactEditor(false, "AddAddressOrganisation"));
 	}
-	
-	private class PersonContactViewAction extends ResourceAction {
-		private final PersonIdentification person;
-		
-		private PersonContactViewAction(PersonIdentification person) {
-			this.person = person;
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			PageContext context = PageContextHelper.findContext(e.getSource());
-			context.show(Page.link(PersonViewPage.class, echSchema.getVersion(), person.getId()));
-		}
-	}
-	
+
 	// Person suchen
 	public class SelectPersonContactEditor extends SearchDialogAction<Person> {
 		
 		public SelectPersonContactEditor() {
-			super(SearchPersonPage.FIELD_NAMES);
+			super(getComponent(), SearchPersonPage.FIELD_NAMES);
 		}
 		
 		@Override
@@ -142,7 +126,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
     // Kontaktperson entfernen
 	private class RemovePersonContactAction extends ResourceAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			getObject().person = null;
 			fireObjectChange();
 		}
@@ -152,10 +136,11 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	public class AddAddressContactEditor extends ObjectFieldPartEditor<Address> {
 		private final boolean person;
 		
-		public AddAddressContactEditor(boolean person) {
+		public AddAddressContactEditor(boolean person, String title) {
+			super(title);
 			this.person = person;
 		}
-
+		
 		@Override
 		public IForm<Address> createForm() {
 			return new AddressPanel(false, person, !person);
@@ -175,7 +160,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
     // Kontaktadresse entfernen
 	private class RemoveAddressContactAction extends ResourceAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent pageContext) {
 			getObject().address = null;
 			fireObjectChange();
 		}

@@ -1,12 +1,12 @@
 package ch.openech.client;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 
 public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 
@@ -22,7 +22,7 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			getObject().remove(object);
 			setObject(getObject());
 		}

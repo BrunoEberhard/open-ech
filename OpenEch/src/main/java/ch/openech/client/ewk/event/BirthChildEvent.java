@@ -18,7 +18,7 @@ import ch.openech.dm.types.YesNo;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.page.Page;
+import ch.openech.mj.page.PageLink;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
@@ -27,9 +27,11 @@ import ch.openech.xml.write.WriterEch0020;
 // Ein etwas spezieller Event, da er nicht die momentan gewählte Person betrifft,
 // sondern als Resultat eine neue Person erstellt.
 public class BirthChildEvent extends PersonEventEditor<Person>  {
-
-	public BirthChildEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	private final OpenEchPreferences preferences;
+	
+	public BirthChildEvent(EchSchema ech, Person person, OpenEchPreferences preferences) {
+		super(ech, person);
+		this.preferences = preferences;
 	}
 
 	@Override
@@ -53,9 +55,12 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 	}
 	
 	@Override
-	public boolean save(Person object) throws Exception {
-		setFollowLink(Page.link(PersonViewPage.class, echSchema.getVersion(), object.getId()));
-		return super.save(object);
+	public Object save(Person object) throws Exception {
+		if (super.save(object) != null) {
+			return PageLink.link(PersonViewPage.class, echSchema.getVersion(), object.getId());
+		} else {
+			return SAVE_FAILED;
+		}
 	}
 
 	@Override

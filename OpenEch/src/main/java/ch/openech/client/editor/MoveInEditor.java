@@ -11,16 +11,18 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.value.CloneHelper;
-import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.PageLink;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 
 public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
 
-	public MoveInEditor(PageContext context, String version) {
-		super(EchSchema.getNamespaceContext(148, version), (OpenEchPreferences) context.getApplicationContext().getPreferences() );
+	private final OpenEchPreferences preferences;
+	
+	public MoveInEditor(EchSchema ech, OpenEchPreferences preferences) {
+		super(ech);
+		this.preferences = preferences;
 	}
 
 	@Override
@@ -43,13 +45,12 @@ public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<O
 	}
 	
 	@Override
-	public boolean save(Organisation organisation) {
+	public String save(Organisation organisation) {
 		String xml;
 		try {
 			xml = getXml(organisation).get(0);
 			EchServer.getInstance().processOrg(xml);
-			setFollowLink(Page.link(OrganisationViewPage.class, echSchema.getVersion(), getObject().getId()));
-			return true;
+			return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), getObject().getId());
 		} catch (Exception e) {
 			throw new RuntimeException("Organisation konnte nicht gespeichert werden", e);
 		}

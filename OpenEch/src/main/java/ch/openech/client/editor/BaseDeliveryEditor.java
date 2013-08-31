@@ -9,15 +9,16 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.page.PageContext;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 
 public class BaseDeliveryEditor extends XmlEditor<Person> {
+	private final OpenEchPreferences preferences;
 	
-	public BaseDeliveryEditor(PageContext context, String version) {
-		super(EchSchema.getNamespaceContext(20, version), (OpenEchPreferences) context.getApplicationContext().getPreferences() );
+	public BaseDeliveryEditor(EchSchema ech, OpenEchPreferences preferences) {
+		super(ech);
+		this.preferences = preferences;
 	}
 	
 	@Override
@@ -36,12 +37,12 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 	}
 
 	@Override
-	public boolean save(Person person) {
+	public Object save(Person person) {
 		String xml;
 		try {
 			xml = getXml(person).get(0);
 			EchServer.getInstance().process(xml);
-			return true;
+			return SAVE_SUCCESSFUL;
 		} catch (Exception e) {
 			throw new RuntimeException("Person konnte nicht gespeichert werden", e);
 		}

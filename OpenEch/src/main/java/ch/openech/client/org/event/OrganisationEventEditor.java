@@ -10,8 +10,8 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.page.Page;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.PageLink;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchSchema;
@@ -19,10 +19,11 @@ import ch.openech.xml.write.WriterEch0148;
 
 public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements XmlResult<T> {
 
-	private Organisation organisation;
+	private final Organisation organisation;
 	
-	protected OrganisationEventEditor(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	protected OrganisationEventEditor(EchSchema echSchema, Organisation organisation) {
+		super(echSchema);
+		this.organisation = organisation;
 	}
 
 	protected static EchSchema getNamespaceContextOrg(PageContext context) {
@@ -39,11 +40,6 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	
 	protected abstract void fillForm(Form<T> formPanel);
 
-	public void setOrganisation(Organisation organisation) {
-		this.organisation = organisation;
-		setFollowLink(Page.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId()));
-	}
-	
 	public Organisation getOrganisation() {
 		return organisation;
 	}
@@ -58,16 +54,12 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	// TODO merge with XmlEditor
 	
 	@Override
-	public boolean save(T object) {
+	public Object save(T object) {
 		List<String> xmls;
 		try {
 			xmls = getXml(object);
 			send(xmls);
-			if (object instanceof Organisation) {
-				Organisation organisation = (Organisation) object;
-				setFollowLink(Page.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId()));
-			}
-			return true;
+			return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
 		} catch (Exception e) {
 			throw new RuntimeException("Konnte XML nicht erstellen", e);
 		}

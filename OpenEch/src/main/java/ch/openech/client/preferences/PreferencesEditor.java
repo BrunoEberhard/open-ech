@@ -22,9 +22,9 @@ public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	}
 
 	@Override
-	protected boolean save(OpenEchPreferences object) {
+	protected Object save(OpenEchPreferences object) {
 		applicationContext.savePreferences(object);
-		return true;
+		return SAVE_SUCCESSFUL;
 	}
 	
 }

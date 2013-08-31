@@ -9,7 +9,8 @@ import java.util.List;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.EchSchema0148;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.page.Page;
+import ch.openech.mj.page.AbstractPage;
+import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -18,11 +19,11 @@ import ch.openech.mj.toolkit.ITable;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
-public class SearchOrganisationPage extends Page implements RefreshablePage {
+public class SearchOrganisationPage extends AbstractPage implements RefreshablePage {
 
 	private final EchSchema echSchema;
-	private String text;
-	private ITable<Organisation> table;
+	private final String text;
+	private final ITable<Organisation> table;
 
 	public static final Object[] FIELD_NAMES = {
 		ORGANISATION.organisationName, //
@@ -53,6 +54,16 @@ public class SearchOrganisationPage extends Page implements RefreshablePage {
 	@Override
 	public IComponent getComponent() {
 		return table;
+	}
+	
+	@Override
+	public String getTitle() {
+		return "Suche Organisationen mit " + text;
+	}
+
+	@Override
+	public ActionGroup getMenu() {
+		return null;
 	}
 
 	private class OrganisationTableClickListener implements ActionListener {

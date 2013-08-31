@@ -1,18 +1,15 @@
 package ch.openech.client.e21;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.client.page.PersonViewPage;
 import ch.openech.dm.person.Relation;
-import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
-import ch.openech.mj.page.PageContextHelper;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.page.PageLink;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.xml.write.EchSchema;
 
 public class RelationField extends ObjectFlowField<List<Relation>> {
@@ -53,23 +50,9 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		}
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			getObject().remove(relation);
 			fireObjectChange();
-		}
-	}
-	
-	private class RelationViewAction extends ResourceAction {
-		private final Relation relation;
-		
-		private RelationViewAction(Relation relation) {
-			this.relation = relation;
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			PageContext context = PageContextHelper.findContext(e.getSource());
-			context.show(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
 		}
 	}
 	
@@ -87,11 +70,11 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 				addAction(new RemoveRelationAction(relation));
 				addGap();
 			}
-			addAction(new EditorDialogAction(new AddRelationEditor()));
+			addAction(new AddRelationEditor());
 		} else {
 			for (Relation relation : objects) {
 				addHtml(relation.toHtml());
-				addAction(new RelationViewAction(relation));
+				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
 				addGap();
 			}
 		}

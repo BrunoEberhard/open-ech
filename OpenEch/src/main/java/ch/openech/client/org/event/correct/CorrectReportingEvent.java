@@ -14,8 +14,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectReportingEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectReportingEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public CorrectReportingEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

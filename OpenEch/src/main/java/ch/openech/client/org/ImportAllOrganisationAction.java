@@ -1,10 +1,10 @@
 package ch.openech.client.org;
 
-import java.awt.event.ActionEvent;
 import java.io.InputStream;
 
-import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0148;
 
@@ -14,10 +14,10 @@ public class ImportAllOrganisationAction extends ResourceAction {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		InputStream inputStream = ClientToolkit.getToolkit().imprt(e.getSource(), "Datei wählen");
+	public void action(IComponent context) {
+		InputStream inputStream = ClientToolkit.getToolkit().imprt(context, "Datei wählen");
 		if (inputStream != null) {
-			imprt(inputStream, e.getSource());
+			imprt(inputStream, context);
 		}
 	}
 	

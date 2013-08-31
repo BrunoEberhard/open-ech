@@ -10,7 +10,8 @@ import java.util.List;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.EchSchema0020;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.page.Page;
+import ch.openech.mj.page.AbstractPage;
+import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.toolkit.ClientToolkit;
@@ -20,11 +21,11 @@ import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 
-public class SearchPersonPage extends Page implements RefreshablePage {
+public class SearchPersonPage extends AbstractPage implements RefreshablePage {
 
 	private final EchSchema echSchema;
-	private String text;
-	private ITable<Person> table;
+	private final String text;
+	private final ITable<Person> table;
 	private List<Person> resultList;
 
 	public static final Object[] FIELD_NAMES = {
@@ -59,6 +60,16 @@ public class SearchPersonPage extends Page implements RefreshablePage {
 	@Override
 	public IComponent getComponent() {
 		return table;
+	}
+	
+	@Override
+	public String getTitle() {
+		return "Suche Personen mit " + text;
+	}
+
+	@Override
+	public ActionGroup getMenu() {
+		return null;
 	}
 
 	private class PersonTableClickListener implements ActionListener {

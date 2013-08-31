@@ -12,8 +12,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectLegalFormEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectLegalFormEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public CorrectLegalFormEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

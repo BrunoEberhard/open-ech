@@ -33,6 +33,11 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 		this.personId = personId;
 		this.echNamespaceContext = echNamespaceContext;
 	}
+	
+	@Override
+	public String getTitle() {
+		return "Verlauf Person";
+	}
 
 	@Override
 	protected List<HistoryVersion<Person>> loadVersions() {

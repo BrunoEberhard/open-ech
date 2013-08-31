@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.client.XmlEditor;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.tpn.MoveDirection;
 import ch.openech.client.tpn.TpnMoveForm;
 import ch.openech.dm.contact.Contact;
@@ -29,7 +28,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	}
 		
 	public TpnMoveEditor(PageContext context, MoveDirection direction) {
-		super(EchSchema.getNamespaceContext(112, "1.0"), (OpenEchPreferences) context.getApplicationContext().getPreferences());
+		super(EchSchema.getNamespaceContext(112, "1.0"));
 		this.direction = direction;
 	}
 	
@@ -46,7 +45,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	}
 
 	@Override
-	public boolean save(ThirdPartyMove tpm) {
+	public Object save(ThirdPartyMove tpm) {
 		String xml;
 		try {
 			WriterEch0112 writer = echSchema.getWriterEch0112();
@@ -54,10 +53,10 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 			saveContractor(tpm.contractor);
 			// MoveIn result = StaxEch0108.process(xml);
 			// new MoveInDAO(AbstractDAO.getCommonConnection()).insertMoveIn(1, 0, result);
-			return true;
+			return SAVE_SUCCESSFUL;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return SAVE_FAILED;
 		}
 	}
 

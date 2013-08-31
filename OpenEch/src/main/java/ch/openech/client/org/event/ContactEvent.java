@@ -11,8 +11,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class ContactEvent extends OrganisationEventEditor<Organisation> {
 	
-	public ContactEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public ContactEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

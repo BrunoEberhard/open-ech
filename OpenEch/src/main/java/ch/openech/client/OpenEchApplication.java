@@ -18,6 +18,7 @@
 */
 package ch.openech.client;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import ch.openech.client.editor.BaseDeliveryEditor;
@@ -38,15 +39,14 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.client.preferences.PreferencesEditor;
 import ch.openech.datagenerator.DataGenerator;
-import ch.openech.datagenerator.GeneratePersonAction;
+import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.dm.EchSchema0020;
 import ch.openech.mj.application.DevMode;
 import ch.openech.mj.application.MjApplication;
-import ch.openech.mj.edit.EditorDialogAction;
-import ch.openech.mj.edit.EditorPageAction;
 import ch.openech.mj.model.Codes;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
+import ch.openech.mj.toolkit.IAction;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
@@ -55,7 +55,7 @@ public class OpenEchApplication extends MjApplication {
 
 	private EchSchema ewkSchema;
 	private EchSchema orgSchema;
-	private EchSchema tpnNamespaceContext;
+	private EchSchema tpnSchema;
 	
 	@Override
 	public void init() {
@@ -106,54 +106,71 @@ public class OpenEchApplication extends MjApplication {
 	}
 
 	@Override
-	public void fillActionGroup(PageContext context, ActionGroup actionGroup) {
+	public List<IAction> getActionsNew(PageContext context) {
+		ActionGroup menu = new ActionGroup(null);
 		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-		boolean isDevMode = DevMode.isActive();
-		
 		updateEwkNamespaceContext(context);
-		ActionGroup file = actionGroup.getOrCreateActionGroup(ActionGroup.FILE);
-		ActionGroup niu = file.getOrCreateActionGroup(ActionGroup.NEW);
 		
 		if (ewkSchema != null) {
-			niu.add(new EditorPageAction(MoveInWizard.class, ewkSchema.getVersion()));
-			niu.add(new EditorDialogAction(new BirthEvent(ewkSchema, preferences)));
-			niu.add(new EditorPageAction(BaseDeliveryEditor.class, ewkSchema.getVersion()));
-			
-			ActionGroup export = file.getOrCreateActionGroup(ActionGroup.EXPORT);
-			export.add(new ExportAllPersonAction(ewkSchema));
-//			export.add(new ExportAllDialogAction(ewkNamespaceContext));
-			if (ewkSchema.keyDeliveryPossible()) {
-				export.add(new KeyDeliveryPersonAction(ewkSchema));
-			}
-			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
-			imprt.add(new ImportAllPersonAction());
+			menu.add(new MoveInWizard(ewkSchema, preferences));
+			menu.add(new BirthEvent(ewkSchema, preferences)); // Dialog!
+			menu.add(new BaseDeliveryEditor(ewkSchema, preferences));
 		}
-//		
 		if (orgSchema != null) {
-			niu.add(new EditorPageAction(FoundationEditor.class, orgSchema.getVersion()));
-			niu.add(new EditorPageAction(MoveInEditor.class, orgSchema.getVersion()));
-			niu.add(new EditorPageAction(BaseDeliveryOrganisationEditor.class, orgSchema.getVersion()));
-
-			ActionGroup export = file.getOrCreateActionGroup(ActionGroup.EXPORT);
-			export.add(new ExportAllOrganisationAction(orgSchema));
-			export.add(new KeyDeliveryOrganisationAction(orgSchema));
-
-			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
-			imprt.add(new ImportAllOrganisationAction());
+			menu.add(new FoundationEditor(orgSchema, preferences));
+			menu.add(new MoveInEditor(orgSchema, preferences));
+			menu.add(new BaseDeliveryOrganisationEditor(orgSchema, preferences));
 		}
-//		
-//		if (tpnNamespaceContext != null) {
-////			niu.add(new EditorDialogAction(new TpnMoveEditor(MoveDirection.IN.toString())));
-//		}
+//			if (tpnSchema != null) {
+////				actions.add(new EditorDialogAction(new TpnMoveEditor(MoveDirection.IN.toString())));
+//			}
+		
+		return menu.getItems();
+	}
 
-		if (isDevMode && (ewkSchema != null || orgSchema != null)) {
-			ActionGroup imprt = file.getOrCreateActionGroup(ActionGroup.IMPORT);
-			imprt.add(new GeneratePersonAction(ewkSchema, orgSchema));
+	@Override
+	public List<IAction> getActionsImport(PageContext context) {
+		ActionGroup menu = new ActionGroup(null);
+		updateEwkNamespaceContext(context);
+		
+		if (ewkSchema != null) {
+			menu.add(new ImportAllPersonAction());
+		}
+		if (orgSchema != null) {
+			menu.add(new ImportAllOrganisationAction());
 		}
 		
-		ActionGroup window = actionGroup.getOrCreateActionGroup(ActionGroup.WINDOW);
-		window.addSeparator();
-		window.add(new EditorDialogAction(new PreferencesEditor(context.getApplicationContext())));
+		boolean isDevMode = DevMode.isActive();
+		if (isDevMode && (ewkSchema != null || orgSchema != null)) {
+			menu.add(new GeneratePersonEditor(ewkSchema, orgSchema));
+		}
+		
+		return menu.getItems();
+	}
+
+	@Override
+	public List<IAction> getActionsExport(PageContext context) {
+		ActionGroup menu = new ActionGroup(null);
+		updateEwkNamespaceContext(context);
+		
+		if (ewkSchema != null) {
+			menu.add(new ExportAllPersonAction(ewkSchema));
+			if (ewkSchema.keyDeliveryPossible()) {
+				menu.add(new KeyDeliveryPersonAction(ewkSchema));
+			}
+		}
+		if (orgSchema != null) {
+			menu.add(new ExportAllOrganisationAction(orgSchema));
+			menu.add(new KeyDeliveryOrganisationAction(orgSchema));
+		}
+		return menu.getItems();
+	}
+
+	@Override
+	public List<IAction> getActionsWindow(PageContext context) {
+		ActionGroup menu = new ActionGroup(null);
+		menu.add(new PreferencesEditor(context.getApplicationContext()));
+		return menu.getItems();
 	}
 	
 	private void updateEwkNamespaceContext(PageContext context) {
@@ -168,11 +185,11 @@ public class OpenEchApplication extends MjApplication {
 		}
 		
 		if (applicationData.schema93 != null) {
-			if (tpnNamespaceContext == null || !applicationData.schema93.equals(tpnNamespaceContext.getVersion())) {
-				tpnNamespaceContext = EchSchema.getNamespaceContext(applicationData.schema93);
+			if (tpnSchema == null || !applicationData.schema93.equals(tpnSchema.getVersion())) {
+				tpnSchema = EchSchema.getNamespaceContext(applicationData.schema93);
 			}
 		} else {
-			tpnNamespaceContext = null;
+			tpnSchema = null;
 		}
 		
 		if (applicationData.schema148 != null) {

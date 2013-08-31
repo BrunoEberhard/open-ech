@@ -1,21 +1,17 @@
 package ch.openech.client.e11;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.page.PageContext;
-import ch.openech.mj.page.PageContextHelper;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 
 public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements DemoEnabled {
 	public static final boolean WITHOUT_ADD_ON = false;
@@ -45,9 +41,10 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		@Override
 		protected PlaceOfOrigin getPart(List<PlaceOfOrigin> object) {
 			PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
-			PageContext context = PageContextHelper.findContext(visual);
-			OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-			placeOfOrigin.cantonAbbreviation.canton = preferences.preferencesDefaultsData.cantonAbbreviation.canton;
+			// TODO Preference in PlaceOfOriginField
+//			PageContext context = PageContextHelper.findContext(visual);
+//			OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+//			placeOfOrigin.cantonAbbreviation.canton = preferences.preferencesDefaultsData.cantonAbbreviation.canton;
 			placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
 			return placeOfOrigin;
 		}
@@ -90,7 +87,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		}
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			getObject().remove(placeOfOrigin);
 			fireObjectChange();
 		}
@@ -125,13 +122,13 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		for (PlaceOfOrigin placeOfOrigin : objects) {
 			addHtml(placeOfOrigin.displayHtml());
 			if (isEditable()) {
-				addAction(new EditorDialogAction(new EditOriginEditor(placeOfOrigin)));
+				addAction(new EditOriginEditor(placeOfOrigin));
 				addAction(new RemoveOriginAction(placeOfOrigin));
 				addGap();
 			}
 		}
 		if (isEditable()) {
-			addAction(new EditorDialogAction(new AddOriginEditor()));
+			addAction(new AddOriginEditor());
 		}
 	}
 }

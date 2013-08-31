@@ -1,10 +1,7 @@
 package ch.openech.client.ewk;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.Action;
 
 import ch.openech.client.e21.CareEvent;
 import ch.openech.client.ewk.event.AddressLockEvent;
@@ -58,50 +55,93 @@ import ch.openech.client.ewk.event.correct.CorrectResidencePermitEvent;
 import ch.openech.client.page.PersonHistoryPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.EditorDialogAction;
+import ch.openech.mj.edit.Editor;
 import ch.openech.mj.page.ActionGroup;
-import ch.openech.mj.page.Page;
+import ch.openech.mj.page.EditorPageAction;
 import ch.openech.mj.page.PageContext;
-import ch.openech.mj.page.SeparatorAction;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.page.PageLink;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonEditMenu {
 
 	private final EchSchema echSchema;
-	private final PageContext context;
-	private Person person;
+	private final Person person;
 	
-	private HistoryAction showHistory;
+	private final PageLink showHistory;
 
-	private Action marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
-	private Action naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality,
-			changeResidencePermit, renewPermit, undoCitizen;
-	private Action changeOccupation;
-	private Action death, missing, undoMissing;
-	private Action care, gardianMeasure, undoGardian, changeGardian;
-	private Action move, moveOut;
-	private Action changeName, changeReligion, changeTypeOfResidence, changeRelation, contact;
-	private Action correctOrigin, correctResidencePermit;
-	private Action addressLock, paperLock;
-	private Action birthChild;
+	private final EditorPageAction marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
+	private final EditorPageAction naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality, changeResidencePermit, renewPermit, undoCitizen;
+	private final EditorPageAction changeOccupation;
+	private final EditorPageAction death, missing, undoMissing;
+	private final EditorPageAction care, gardianMeasure, undoGardian, changeGardian;
+	private final EditorPageAction move, moveOut;
+	private final EditorPageAction changeName, changeReligion, changeTypeOfResidence, changeRelation, contact;
+	private final EditorPageAction correctOrigin, correctResidencePermit;
+	private final EditorPageAction addressLock, paperLock;
+	private final EditorPageAction birthChild;
 	
-	private final List<Action> correctEditors = new ArrayList<Action>();
+	private final List<EditorPageAction> correctEditors = new ArrayList<>();
 
-	public PersonEditMenu(PageContext context, EchSchema echNamespaceContext) {
-		this.context = context;
-		this.echSchema = echNamespaceContext;
-		createMenuItems();
+	public PersonEditMenu(EchSchema ech, PageContext pageContext, Person person) {
+		this.echSchema = ech;
+		this.person = person;
+		
+		marriage = editorLink(new MarriageEvent(ech, person));
+		
+		separation = editorLink(new SeparationEvent(ech, person));
+		undoSeparation = editorLink(new UndoSeparationEvent(ech, person));
+		divorce = editorLink(new DivorceEvent(ech, person));
+		undoMarriage = editorLink(new UndoMarriageEvent(ech, person));
+		partnership = editorLink(new PartnershipEvent(ech, person));
+		undoPartnership = editorLink(new UndoPartnershipEvent(ech, person));
+
+		naturalizeSwiss = editorLink(new NaturalizeSwissEvent(ech, person));
+		naturalizeForeigner = editorLink(new NaturalizeForeignerEvent(ech, person));
+		undoSwiss = editorLink(new UndoSwissEvent(ech, person));
+		changeCitizen = editorLink(new ChangeCitizenEvent(ech, person));
+		changeNationality = editorLink(new ChangeNationalityEvent(ech, person));
+		changeResidencePermit = editorLink(new ChangeResidencePermitEvent(ech, person));
+		renewPermit = editorLink(new RenewPermitEvent(ech, person));
+		undoCitizen = editorLink(new UndoCitizenEvent(ech, person));
+
+		changeOccupation = editorLink(new ChangeOccupationEvent(ech, person));
+
+		death = editorLink(new DeathEvent(ech, person));
+		missing = editorLink(new MissingEvent(ech, person));
+		undoMissing = editorLink(new UndoMissingEvent(ech, person));
+
+		care = editorLink(new CareEvent(ech, person));
+		gardianMeasure = editorLink(new GardianMeasureEvent(ech, person));
+		undoGardian = editorLink(new UndoGardianEvent(ech, person));
+		changeGardian = editorLink(new ChangeGardianEvent(ech, person));
+
+		move = editorLink(new MoveEvent(ech, person));
+		moveOut = editorLink(new MoveOutEvent(ech, person));
+
+		changeName = editorLink(new ChangeNameEvent(ech, person));
+		changeReligion = editorLink(new ChangeReligionEvent(ech, person));
+		changeTypeOfResidence = editorLink(new ChangeTypeOfResidenceEvent(ech, person));
+		changeRelation = editorLink(new CorrectRelationshipEvent(ech, person));
+		contact = editorLink(new ContactEvent(ech, person));
+
+		correctOrigin = editorLink(new CorrectOriginEvent(ech, person));
+		correctResidencePermit = editorLink(new CorrectResidencePermitEvent(ech, person));
+
+		addressLock = editorLink(new AddressLockEvent(ech, person));
+		paperLock = editorLink(new PaperLockEvent(ech, person));
+		
+		birthChild = editorLink(new BirthChildEvent(ech, person, (OpenEchPreferences) pageContext.getApplicationContext().getPreferences()));
+
+		showHistory = new PageLink(PersonHistoryPage.class, echSchema.getVersion(), person.getId());
 	}
 	
-	public void fillActionGroup(ActionGroup personActionGroup) {
-		if (person == null) return;
+	public ActionGroup getActions() {
+		if (person == null) return null;
+		ActionGroup menu = new ActionGroup("Person");
+//		personActionGroup.putValue(Action.MNEMONIC_KEY, 'P');
 
-		personActionGroup.putValue(Action.NAME, "Person");
-		personActionGroup.putValue(Action.MNEMONIC_KEY, 'P');
-
-		ActionGroup partnershipGroup = personActionGroup.getOrCreateActionGroup("person_partnership");
+		ActionGroup partnershipGroup = menu.addGroup("person_partnership");
 		partnershipGroup.add(marriage);
 		partnershipGroup.add(separation);
 		partnershipGroup.add(undoSeparation);
@@ -111,7 +151,7 @@ public class PersonEditMenu {
 		partnershipGroup.add(partnership);
 		partnershipGroup.add(undoPartnership);
 
-		ActionGroup origin = personActionGroup.getOrCreateActionGroup("person_nationality");
+		ActionGroup origin = menu.addGroup("person_nationality");
 		origin.add(naturalizeSwiss);
 		origin.add(naturalizeForeigner);
 		origin.add(undoSwiss);
@@ -121,29 +161,29 @@ public class PersonEditMenu {
 		origin.add(renewPermit);
 		origin.add(undoCitizen);
 
-		ActionGroup occupation = personActionGroup.getOrCreateActionGroup("person_occupation");
+		ActionGroup occupation = menu.addGroup("person_occupation");
 		occupation.add(changeOccupation);
 		
-		ActionGroup moveGroup = personActionGroup.getOrCreateActionGroup("person_move");
+		ActionGroup moveGroup = menu.addGroup("person_move");
 		moveGroup.add(move);
 		moveGroup.add(moveOut);
 
-		ActionGroup deathGroup = personActionGroup.getOrCreateActionGroup("person_death");
+		ActionGroup deathGroup = menu.addGroup("person_death");
 		deathGroup.add(death);
 		deathGroup.add(missing);
 		deathGroup.add(undoMissing);
 
-		ActionGroup gardian = personActionGroup.getOrCreateActionGroup("person_care");
+		ActionGroup gardian = menu.addGroup("person_care");
 		gardian.add(care);
 		gardian.add(gardianMeasure);
 		gardian.add(undoGardian);
 		gardian.add(changeGardian);
 
-		ActionGroup lock = personActionGroup.getOrCreateActionGroup("person_lock");
+		ActionGroup lock = menu.addGroup("person_lock");
 		lock.add(addressLock);
 		lock.add(paperLock);
 
-		ActionGroup change = personActionGroup.getOrCreateActionGroup("person_change");
+		ActionGroup change = menu.addGroup("person_change");
 		change.add(changeName);
 		change.add(changeReligion);
 		change.add(changeTypeOfResidence);
@@ -151,144 +191,54 @@ public class PersonEditMenu {
 		change.add(contact);
 
 		fillCorrectionActionList();
-		ActionGroup correct = personActionGroup.getOrCreateActionGroup("correction");
-		for (Action action : correctEditors) {
+		ActionGroup correct = menu.addGroup("correction");
+		for (EditorPageAction action : correctEditors) {
 			correct.add(action);
 		}
 
-		personActionGroup.add(new SeparatorAction());
-		personActionGroup.add(birthChild); 
+		menu.addSeparator();
+		menu.add(birthChild); 
 		
-		personActionGroup.add(new SeparatorAction());
-		personActionGroup.add(showHistory); 
+		menu.addSeparator();
+		menu.add(showHistory); 
 		
-		//
-		
-		List<Action> actions = personActionGroup.getAllActions();
-		showHistory.setPerson(person);
-		for (Action action : actions) {
-			if (action instanceof PersonEditMenuAction) {
-				PersonEditMenuAction personEditMenuAction = (PersonEditMenuAction) action;
-				personEditMenuAction.setPerson(person);
-			}
-		}
+		return menu;
 	}
 
-	private class PersonEditMenuAction extends EditorDialogAction {
-		private final PersonEventEditor<?> editor;
-		
-		public PersonEditMenuAction(PersonEventEditor<?> editor) {
-			super(editor);
-			this.editor = editor;
-		}
-		
-		public void setPerson(Person person) {
-			editor.setPerson(person);
-		}
+	private EditorPageAction editorLink(PersonEventEditor<?> editor) {
+		return new EditorPageAction(editor, editor.isEnabled());
 	}
 	
-	private class HistoryAction extends ResourceAction {
-		private Person person;
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			context.show(Page.link(PersonHistoryPage.class, echSchema.getVersion(), person.getId()));
-		}
-		
-		public void setPerson(Person person) {
-			this.person = person;
-			setEnabled(person != null);
-		}
-	}	
-
-	private void createMenuItems() {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-		
-		marriage = new PersonEditMenuAction(new MarriageEvent(echSchema, preferences));
-		separation = new PersonEditMenuAction(new SeparationEvent(echSchema, preferences));
-		undoSeparation = new PersonEditMenuAction(new UndoSeparationEvent(echSchema, preferences));
-		divorce = new PersonEditMenuAction(new DivorceEvent(echSchema, preferences));
-		undoMarriage = new PersonEditMenuAction(new UndoMarriageEvent(echSchema, preferences));
-		partnership = new PersonEditMenuAction(new PartnershipEvent(echSchema, preferences));
-		undoPartnership = new PersonEditMenuAction(new UndoPartnershipEvent(echSchema, preferences));
-
-		naturalizeSwiss = new PersonEditMenuAction(new NaturalizeSwissEvent(echSchema, preferences));
-		naturalizeForeigner = new PersonEditMenuAction(new NaturalizeForeignerEvent(echSchema, preferences));
-		undoSwiss = new PersonEditMenuAction(new UndoSwissEvent(echSchema, preferences));
-		changeCitizen = new PersonEditMenuAction(new ChangeCitizenEvent(echSchema, preferences));
-		changeNationality = new PersonEditMenuAction(new ChangeNationalityEvent(echSchema, preferences));
-		changeResidencePermit = new PersonEditMenuAction(new ChangeResidencePermitEvent(echSchema, preferences));
-		renewPermit = new PersonEditMenuAction(new RenewPermitEvent(echSchema, preferences));
-		undoCitizen = new PersonEditMenuAction(new UndoCitizenEvent(echSchema, preferences));
-
-		changeOccupation = new PersonEditMenuAction(new ChangeOccupationEvent(echSchema, preferences));
-
-		death = new PersonEditMenuAction(new DeathEvent(echSchema, preferences));
-		missing = new PersonEditMenuAction(new MissingEvent(echSchema, preferences));
-		undoMissing = new PersonEditMenuAction(new UndoMissingEvent(echSchema, preferences));
-
-		care = new PersonEditMenuAction(new CareEvent(echSchema, preferences));
-		gardianMeasure = new PersonEditMenuAction(new GardianMeasureEvent(echSchema, preferences));
-		undoGardian = new PersonEditMenuAction(new UndoGardianEvent(echSchema, preferences));
-		changeGardian = new PersonEditMenuAction(new ChangeGardianEvent(echSchema, preferences));
-
-		move = new PersonEditMenuAction(new MoveEvent(echSchema, preferences));
-		moveOut = new PersonEditMenuAction(new MoveOutEvent(echSchema, preferences));
-
-		changeName = new PersonEditMenuAction(new ChangeNameEvent(echSchema, preferences));
-		changeReligion = new PersonEditMenuAction(new ChangeReligionEvent(echSchema, preferences));
-		changeTypeOfResidence = new PersonEditMenuAction(new ChangeTypeOfResidenceEvent(echSchema, preferences));
-		changeRelation = new PersonEditMenuAction(new CorrectRelationshipEvent(echSchema, preferences));
-		contact = new PersonEditMenuAction(new ContactEvent(echSchema, preferences));
-
-		correctOrigin = new PersonEditMenuAction(new CorrectOriginEvent(echSchema, preferences));
-		correctResidencePermit = new PersonEditMenuAction(new CorrectResidencePermitEvent(echSchema, preferences));
-
-		addressLock = new PersonEditMenuAction(new AddressLockEvent(echSchema, preferences));
-		paperLock = new PersonEditMenuAction(new PaperLockEvent(echSchema, preferences));
-		
-		birthChild = new PersonEditMenuAction(new BirthChildEvent(echSchema, preferences));
-
-		showHistory = new HistoryAction();
-	}
-
 	private void fillCorrectionActionList() {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-
-		addCorrectAction(new CorrectPersonEvent(echSchema, preferences));
-		addCorrectAction(new CorrectAddressEvent(echSchema, preferences));
-		addCorrectAction(new CorrectReportingEvent(echSchema, preferences));
-		addCorrectAction(new CorrectOccupationEvent(echSchema, preferences));
+		addCorrectAction(new CorrectPersonEvent(echSchema, person));
+		addCorrectAction(new CorrectAddressEvent(echSchema, person));
+		addCorrectAction(new CorrectReportingEvent(echSchema, person));
+		addCorrectAction(new CorrectOccupationEvent(echSchema, person));
 
 		if (echSchema.additionalCorrectEvents()) {
-			addCorrectAction(new CorrectIdentificationEvent(echSchema, preferences));
-			addCorrectAction(new CorrectNameEvent(echSchema, preferences));
-			addCorrectAction(new CorrectNationalityEvent(echSchema, preferences));
-			addCorrectAction(new CorrectContactEvent(echSchema, preferences));
-			addCorrectAction(new CorrectReligionEvent(echSchema, preferences));
+			addCorrectAction(new CorrectIdentificationEvent(echSchema, person));
+			addCorrectAction(new CorrectNameEvent(echSchema, person));
+			addCorrectAction(new CorrectNationalityEvent(echSchema, person));
+			addCorrectAction(new CorrectContactEvent(echSchema, person));
+			addCorrectAction(new CorrectReligionEvent(echSchema, person));
 			addCorrectAction(correctOrigin);
 			addCorrectAction(correctResidencePermit);
-			addCorrectAction(new CorrectMaritalDataEvent(echSchema, preferences));
-			addCorrectAction(new CorrectPlaceOfBirthEvent(echSchema, preferences));
-			addCorrectAction(new CorrectDateOfDeathEvent(echSchema, preferences));
-			addCorrectAction(new CorrectLanguageOfCorrespondanceEvent(echSchema, preferences));
+			addCorrectAction(new CorrectMaritalDataEvent(echSchema, person));
+			addCorrectAction(new CorrectPlaceOfBirthEvent(echSchema, person));
+			addCorrectAction(new CorrectDateOfDeathEvent(echSchema, person));
+			addCorrectAction(new CorrectLanguageOfCorrespondanceEvent(echSchema, person));
 		}
 	}
 
-	private void addCorrectAction(PersonEventEditor<?> editor) {
-		correctEditors.add(new PersonEditMenuAction(editor));
+	private void addCorrectAction(Editor<?> editor) {
+		correctEditors.add(new EditorPageAction(editor)); // always enbled
 	}
 
 	
-	private void addCorrectAction(Action action) {
+	private void addCorrectAction(EditorPageAction action) {
 		correctEditors.add(action);
 	}
 
-	public void setPerson(Person person, boolean enabled) {
-		this.person = person;
-		update(person, enabled);
-	}
-	
 	@BusinessRule("Welche Aktion in welchem Zustand von Personen ausgeführt werden darf")
 	public void update(Person person, boolean enabled) {
 		boolean isPerson = person != null && enabled;
@@ -308,7 +258,7 @@ public class PersonEditMenu {
 		undoMissing.setEnabled(isPerson && !isAlive);
 		undoPartnership.setEnabled(isAlive & hasPartner);
 		changeOccupation.setEnabled(isAlive);
-		marriage.setEnabled(isAlive && !isMarried && !hasPartner);
+				marriage.setEnabled(isAlive && !isMarried && !hasPartner);
 		undoMarriage.setEnabled(isAlive && isMarried);
 		partnership.setEnabled(isAlive && !isMarried && !hasPartner);
 		changeName.setEnabled(isPerson);
@@ -328,7 +278,7 @@ public class PersonEditMenu {
 		changeResidencePermit.setEnabled(isAlive && !isSwiss);
 		renewPermit.setEnabled(isAlive && !isSwiss);
 		changeRelation.setEnabled(isAlive);
-		for (Action action : correctEditors) {
+		for (EditorPageAction action : correctEditors) {
 			action.setEnabled(isPerson);
 		}
 		correctOrigin.setEnabled(isPerson && isSwiss);

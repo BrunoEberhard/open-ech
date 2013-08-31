@@ -15,45 +15,32 @@ import ch.openech.xml.write.EchSchema;
 
 public class PersonViewPage extends ObjectViewPage<Person> {
 
-	private final String personId;
+	private final Person person;
 	private final Integer time;
 	private final EchSchema echSchema;
 	private final PersonPanel personPanel;
 	private final PersonEditMenu menu;
 
-	public PersonViewPage(PageContext context, String[] arguments) {
-		super(context);
+	public PersonViewPage(PageContext pageContext, String[] arguments) {
+		super(pageContext);
 		this.echSchema = EchSchema.getNamespaceContext(20, arguments[0]);
-		this.personId = arguments[1];
+		this.person = EchServer.getInstance().getPersistence().personLocalPersonIdIndex().find(arguments[1]);
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : null;
 		this.personPanel = new PersonPanel(PersonEditMode.DISPLAY, echSchema);
-		this.menu = time == null ? new PersonEditMenu(context, echSchema) : null; 
-	}
-
-	@Override
-	protected void showObject(Person person) {
-		super.showObject(person);
-		if (menu != null) {
-			menu.setPerson(person, true);
-		}
-		setTitle(pageTitle(person));
+		this.menu = time == null ? new PersonEditMenu(echSchema, pageContext, person) : null; 
 	}
 	
 	@Override
-	public void fillActionGroup(ActionGroup actionGroup) {
-		if (menu != null) {
-			menu.fillActionGroup(actionGroup);
-		}
+	public String getTitle() {
+		return pageTitle(person);
 	}
 
 	@Override
-	protected Person loadObject() {
-		Person actualPerson = EchServer.getInstance().getPersistence().personLocalPersonIdIndex().find(personId);
-		if (time == null) {
-			return actualPerson;
+	public ActionGroup getMenu() {
+		if (menu != null) {
+			return menu.getActions();
 		} else {
-			int id = EchServer.getInstance().getPersistence().person().getId(actualPerson);
-			return EchServer.getInstance().getPersistence().person().read(id, time);
+			return null;
 		}
 	}
 
@@ -62,6 +49,11 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 		return personPanel;
 	}
 	
+	@Override
+	protected Person getObject() {
+		return person;
+	}
+
 	private static final int MAX_NAME_LENGTH = 10;
 	
 	private static String pageTitle(Person person) {

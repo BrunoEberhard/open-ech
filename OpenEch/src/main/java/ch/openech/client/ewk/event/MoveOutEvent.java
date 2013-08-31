@@ -7,7 +7,6 @@ import org.joda.time.LocalDate;
 
 import ch.openech.client.e07.MunicipalityField;
 import ch.openech.client.ewk.event.MoveOutEvent.MoveOutData;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
@@ -20,8 +19,8 @@ import ch.openech.xml.write.WriterEch0093;
 
 public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 
-	public MoveOutEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public MoveOutEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
 	public static class MoveOutData {

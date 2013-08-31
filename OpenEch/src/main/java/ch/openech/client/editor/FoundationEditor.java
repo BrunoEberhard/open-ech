@@ -1,6 +1,6 @@
 package ch.openech.client.editor;
 
-import static ch.openech.dm.organisation.Organisation.ORGANISATION;
+import static ch.openech.dm.organisation.Organisation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,16 +14,18 @@ import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.EmptyValidator;
-import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.PageLink;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 
 public class FoundationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
 	
-	public FoundationEditor(PageContext context, String version) {
-		super(EchSchema.getNamespaceContext(148, version), (OpenEchPreferences) context.getApplicationContext().getPreferences() );
+	private final OpenEchPreferences preferences;
+
+	public FoundationEditor(EchSchema ech, OpenEchPreferences preferences) {
+		super(ech);
+		this.preferences = preferences;
 	}
 
 	@Override
@@ -44,13 +46,12 @@ public class FoundationEditor extends XmlEditor<Organisation> implements XmlResu
 	}
 
 	@Override
-	public boolean save(Organisation organisation) {
+	public String save(Organisation organisation) {
 		String xml;
 		try {
 			xml = getXml(organisation).get(0);
 			EchServer.getInstance().processOrg(xml);
-			setFollowLink(Page.link(OrganisationViewPage.class, echSchema.getVersion(), getObject().getId()));
-			return true;
+			return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), getObject().getId());
 		} catch (Exception e) {
 			throw new RuntimeException("Organisation konnte nicht gespeichert werden", e);
 		}

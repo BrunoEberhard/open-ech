@@ -1,10 +1,7 @@
 package ch.openech.client.org;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.Action;
 
 import ch.openech.client.org.event.ChangeLegalFormEvent;
 import ch.openech.client.org.event.ChangeOrganisationNameEvent;
@@ -24,145 +21,97 @@ import ch.openech.client.org.event.correct.CorrectOrganisationNameEvent;
 import ch.openech.client.org.event.correct.CorrectReportingEvent;
 import ch.openech.client.org.event.correct.CorrectUidBrancheEvent;
 import ch.openech.client.page.OrganisationHistoryPage;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.edit.EditorDialogAction;
+import ch.openech.mj.page.EditorPageAction;
 import ch.openech.mj.page.ActionGroup;
-import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
-import ch.openech.mj.page.SeparatorAction;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.page.PageLink;
+import ch.openech.mj.toolkit.IAction;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationMenu {
 
-	private final EchSchema echSchema;
-	private final PageContext context;
-	private Organisation organisation;
+	private final EchSchema ech;
+	private final Organisation organisation;
 	
-	private HistoryAction showHistory;
+	private final PageLink showHistory;
 
-	private Action moveOut, move;
-	private Action contact, changeOrganisationName, changeLegalForm, changeReporting;
-	private Action inLiquidation, liquidation;
+	private final EditorPageAction moveOut, move;
+	private final EditorPageAction contact, changeOrganisationName, changeLegalForm, changeReporting;
+	private final EditorPageAction inLiquidation, liquidation;
 	
-	private final List<Action> correctEditors = new ArrayList<Action>();
+	private final List<EditorPageAction> correctEditors = new ArrayList<>();
 
-	public OrganisationMenu(PageContext pageContext, EchSchema echSchema) {
-		this.echSchema = echSchema;
-		this.context = pageContext;
-		createMenuItems();
+	public OrganisationMenu(EchSchema ech, Organisation organisation) {
+		this.ech = ech;
+		this.organisation = organisation;
+		
+		move = editorLink(new MoveEvent(ech, organisation));
+		moveOut = editorLink(new MoveOutEvent(ech, organisation));
+
+		contact = editorLink(new ContactEvent(ech, organisation));
+		changeOrganisationName = editorLink(new ChangeOrganisationNameEvent(ech, organisation));
+		changeLegalForm = editorLink(new ChangeLegalFormEvent(ech, organisation));
+		changeReporting = editorLink(new ChangeReportingEvent(ech, organisation));
+
+		inLiquidation = editorLink(new InLiquidationEvent(ech, organisation));
+		liquidation = editorLink(new LiquidationEvent(ech, organisation));
+		
+		showHistory = new PageLink(OrganisationHistoryPage.class, ech.getVersion(), organisation.getId());
 	}
-	
-	public void fillActionGroup(ActionGroup organisationActionGroup) {
-		if (organisation == null) return;
-		
-		organisationActionGroup.putValue(Action.NAME, "Organisation");
-		organisationActionGroup.putValue(Action.MNEMONIC_KEY, 'O');
 
-		organisationActionGroup.add(moveOut);
-		organisationActionGroup.add(move);
-		organisationActionGroup.addSeparator();
-		
-		organisationActionGroup.add(inLiquidation);
-		organisationActionGroup.add(liquidation);
-		organisationActionGroup.addSeparator();
-		
-		organisationActionGroup.add(contact);
-		organisationActionGroup.add(changeOrganisationName);
-		organisationActionGroup.add(changeLegalForm);
-		organisationActionGroup.add(changeReporting);
+	private EditorPageAction editorLink(OrganisationEventEditor<?> editor) {
+		return new EditorPageAction(editor);
+	}
 
-		organisationActionGroup.addSeparator();
+	public ch.openech.mj.page.ActionGroup getActions() {
+		if (organisation == null) return null;
+		
+		ActionGroup menu = new ActionGroup("Organisation");
+//		organisationActionGroup.putValue(Action.MNEMONIC_KEY, 'O');
+
+		menu.add(moveOut);
+		menu.add(move);
+		menu.addSeparator();
+		
+		menu.add(inLiquidation);
+		menu.add(liquidation);
+		menu.addSeparator();
+		
+		menu.add(contact);
+		menu.add(changeOrganisationName);
+		menu.add(changeLegalForm);
+		menu.add(changeReporting);
+
+		menu.addSeparator();
 
 		fillCorrectionActionList();
-		ActionGroup correct = organisationActionGroup.getOrCreateActionGroup("correction");
-		for (Action action : correctEditors) {
+		ActionGroup correct = menu.addGroup("correction");
+		for (IAction action : correctEditors) {
 			correct.add(action);
 		}
 		
-		organisationActionGroup.add(new SeparatorAction());
-		organisationActionGroup.add(showHistory); 
+		menu.addSeparator();
+		menu.add(showHistory); 
 		
-		//
-		
-		List<Action> actions = organisationActionGroup.getAllActions();
-		showHistory.setOrganisation(organisation);
-		for (Action action : actions) {
-			if (action instanceof OrganisationEditMenuAction) {
-				OrganisationEditMenuAction organisationEditMenuAction = (OrganisationEditMenuAction) action;
-				organisationEditMenuAction.setOrganisation(organisation);
-			}
-		}
-	}
-
-	private class OrganisationEditMenuAction extends EditorDialogAction {
-		private final OrganisationEventEditor<?> editor;
-		
-		public OrganisationEditMenuAction(OrganisationEventEditor<?> editor) {
-			super(editor);
-			this.editor = editor;
-		}
-		
-		public void setOrganisation(Organisation organisation) {
-			editor.setOrganisation(organisation);
-		}
-	}
-	
-	private class HistoryAction extends ResourceAction {
-		private Organisation organisation;
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			context.show(Page.link(OrganisationHistoryPage.class, echSchema.getVersion(), organisation.getId()));
-		}
-		
-		public void setOrganisation(Organisation organisation) {
-			this.organisation = organisation;
-			setEnabled(organisation != null);
-		}
-	}	
-
-	private void createMenuItems() {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-
-		move = new OrganisationEditMenuAction(new MoveEvent(echSchema, preferences));
-		moveOut = new OrganisationEditMenuAction(new MoveOutEvent(echSchema, preferences));
-
-		contact = new OrganisationEditMenuAction(new ContactEvent(echSchema, preferences));
-		changeOrganisationName = new OrganisationEditMenuAction(new ChangeOrganisationNameEvent(echSchema, preferences));
-		changeLegalForm = new OrganisationEditMenuAction(new ChangeLegalFormEvent(echSchema, preferences));
-		changeReporting = new OrganisationEditMenuAction(new ChangeReportingEvent(echSchema, preferences));
-
-		inLiquidation = new OrganisationEditMenuAction(new InLiquidationEvent(echSchema, preferences));
-		liquidation = new OrganisationEditMenuAction(new LiquidationEvent(echSchema, preferences));
-		
-		showHistory = new HistoryAction();
+		return menu;
 	}
 
 	private void fillCorrectionActionList() {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-
-		addCorrectAction(new CorrectOrganisationNameEvent(echSchema, preferences));
-		addCorrectAction(new CorrectLegalFormEvent(echSchema, preferences));
-		addCorrectAction(new CorrectUidBrancheEvent(echSchema, preferences));
-		addCorrectAction(new CorrectFoundationEvent(echSchema, preferences));
-		addCorrectAction(new CorrectLiquidationEvent(echSchema, preferences));
-		addCorrectAction(new CorrectContactEvent(echSchema, preferences));
-		addCorrectAction(new CorrectLanguageOfCorrespondanceEvent(echSchema, preferences));
-		addCorrectAction(new CorrectReportingEvent(echSchema, preferences));
+		addCorrectAction(new CorrectOrganisationNameEvent(ech, organisation));
+		addCorrectAction(new CorrectLegalFormEvent(ech, organisation));
+		addCorrectAction(new CorrectUidBrancheEvent(ech, organisation));
+		addCorrectAction(new CorrectFoundationEvent(ech, organisation));
+		addCorrectAction(new CorrectLiquidationEvent(ech, organisation));
+		addCorrectAction(new CorrectContactEvent(ech, organisation));
+		addCorrectAction(new CorrectLanguageOfCorrespondanceEvent(ech, organisation));
+		addCorrectAction(new CorrectReportingEvent(ech, organisation));
 	}
 	
 	private void addCorrectAction(OrganisationEventEditor<?> editor) {
-		correctEditors.add(new OrganisationEditMenuAction(editor));
+		correctEditors.add(editorLink(editor));
 	}
 
-	public void setOrganisation(Organisation organisation, boolean enabled) {
-		this.organisation = organisation;
-		update(organisation, enabled);
-	}
-	
 	@BusinessRule("Welche Aktion in welchem Zustand von Unternehmen ausgeführt werden darf")
 	public void update(Organisation organisation, boolean enabled) {
 //		boolean isOrganisation = organisation != null && enabled;

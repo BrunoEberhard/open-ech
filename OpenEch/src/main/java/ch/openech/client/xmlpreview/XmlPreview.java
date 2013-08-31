@@ -5,17 +5,17 @@ import java.util.List;
 import ch.openech.client.ewk.event.XmlTextFormField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.ClientToolkit;
+import ch.openech.mj.toolkit.IComponent;
 
 public class XmlPreview {
 
-	public static void viewXml(PageContext context, List<String> xmls) {
-		if (context instanceof java.awt.Component) {
-			XmlSwingFrame xmlFrame = new XmlSwingFrame((java.awt.Component) context, xmls);
+	public static void viewXml(IComponent source, List<String> xmls) {
+		if (source instanceof java.awt.Component) {
+			XmlSwingFrame xmlFrame = new XmlSwingFrame((java.awt.Component) source, xmls);
 			xmlFrame.setVisible(true);
-		} else if (context instanceof com.vaadin.ui.Component) {
-			com.vaadin.ui.Component component = (com.vaadin.ui.Component) context;
+		} else if (source instanceof com.vaadin.ui.Component) {
+			com.vaadin.ui.Component component = (com.vaadin.ui.Component) source;
 			XmlVaadinFrame xmlFrame = new XmlVaadinFrame(xmls);
 			component.getWindow().addWindow(xmlFrame);
 			xmlFrame.setPositionY(0);
@@ -30,7 +30,7 @@ public class XmlPreview {
 			XmlTextFormField xmlTextFormField = new XmlTextFormField(XmlPreviewValue.XML_PREVIEW_VALUE.xmls);
 			form.line(xmlTextFormField);
 			xmlTextFormField.setObject(xmls);
-			ClientToolkit.getToolkit().openDialog(context, form.getComponent(), "XML").openDialog();
+			ClientToolkit.getToolkit().createDialog(source, "XML", form.getComponent()).openDialog();
 		}
 	}
 	

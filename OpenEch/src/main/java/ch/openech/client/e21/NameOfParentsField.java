@@ -35,14 +35,15 @@ public class NameOfParentsField extends ObjectFlowField<NameOfParents> {
 	
 	@Override
 	protected void showActions() {
-        addAction(new NameOfParentEditor(true), "EditNameOfFather");
-        addAction(new NameOfParentEditor(false), "EditNameOfMother");
+        addAction(new NameOfParentEditor(true, "EditNameOfFather"));
+        addAction(new NameOfParentEditor(false, "EditNameOfMother"));
 	}
 
 	public class NameOfParentEditor extends ObjectFieldPartEditor<NameOfParent> {
 		private final boolean father;
 		
-		public NameOfParentEditor(boolean father) {
+		public NameOfParentEditor(boolean father, String title) {
+			super(title);
 			this.father = father;
 		}
 

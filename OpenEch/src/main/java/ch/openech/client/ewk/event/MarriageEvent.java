@@ -8,7 +8,6 @@ import org.joda.time.LocalDate;
 
 import ch.openech.client.RemoveEntriesListField;
 import ch.openech.client.e44.PersonField;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
@@ -31,10 +30,15 @@ import ch.openech.xml.write.WriterEch0020;
 
 public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
-	public MarriageEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public MarriageEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
+	@Override
+	public boolean isEnabled() {
+		return getPerson().isAlive() && !getPerson().isMarried() && !getPerson().hasPartner();
+	}
+	
 	public static class Marriage implements Validation {
 		public static final Marriage MARRIAGE = Keys.of(Marriage.class);
 		

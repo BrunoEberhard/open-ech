@@ -39,7 +39,7 @@ public class PersonIdentificationField extends ObjectFlowField<PersonIdentificat
 	public final class PersonSearchAction extends SearchDialogAction<Person> {
 		
 		public PersonSearchAction() {
-			super(SearchPersonPage.FIELD_NAMES);
+			super(getComponent(), SearchPersonPage.FIELD_NAMES);
 		}
 
 		@Override

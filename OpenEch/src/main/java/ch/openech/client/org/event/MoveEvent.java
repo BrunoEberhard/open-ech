@@ -11,8 +11,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class MoveEvent extends OrganisationEventEditor<Organisation> {
 	
-	public MoveEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public MoveEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

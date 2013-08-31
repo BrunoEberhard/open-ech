@@ -8,10 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.swing.SwingResourceAction;
 
 
-public class HelpAction extends ResourceAction {
+public class HelpAction extends SwingResourceAction {
 
 	private static JFrame helpFrame;
 

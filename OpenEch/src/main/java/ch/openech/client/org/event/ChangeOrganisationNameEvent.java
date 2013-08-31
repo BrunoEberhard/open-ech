@@ -11,8 +11,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class ChangeOrganisationNameEvent extends OrganisationEventEditor<Organisation> {
 	
-	public ChangeOrganisationNameEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public ChangeOrganisationNameEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

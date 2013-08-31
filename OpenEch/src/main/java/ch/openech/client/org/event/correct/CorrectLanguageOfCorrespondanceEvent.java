@@ -15,8 +15,8 @@ import ch.openech.xml.write.WriterEch0148;
 // Der Typo kommt vom Schema
 public class CorrectLanguageOfCorrespondanceEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectLanguageOfCorrespondanceEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public CorrectLanguageOfCorrespondanceEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

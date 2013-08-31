@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.e21.OccupationPanel;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
@@ -17,8 +16,8 @@ import ch.openech.xml.write.WriterEch0020;
 // Aber die Konvention ist, dass die Klasse gleich heisst wie die XML - Struktur
 public class ChangeOccupationEvent extends PersonEventEditor<Occupation> {
 	
-	public ChangeOccupationEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public ChangeOccupationEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 	
 	@Override

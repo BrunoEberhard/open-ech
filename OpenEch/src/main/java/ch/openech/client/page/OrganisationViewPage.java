@@ -13,39 +13,31 @@ import ch.openech.xml.write.EchSchema;
 
 public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 
-	private final String organisationId;
+	private final Organisation organisation;
 	private final int time;
 	private final EchSchema echSchema;
 	private final OrganisationPanel organisationPanel;
 	private final OrganisationMenu menu;
 
-	public OrganisationViewPage(PageContext context, String[] arguments) {
-		super(context);
+	public OrganisationViewPage(PageContext pageContext, String[] arguments) {
+		super(pageContext);
 		this.echSchema = EchSchema.getNamespaceContext(148, arguments[0]);
-		this.organisationId = arguments[1];
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
+		this.organisation = loadObject(arguments[1], time);
 		this.organisationPanel = new OrganisationPanel(Organisation.EditMode.DISPLAY, echSchema);
-		this.menu = time == 0 ? new OrganisationMenu(context, echSchema) : null;  
+		this.menu = time == 0 ? new OrganisationMenu(echSchema, organisation) : null;  
 	}
 
 	@Override
-	protected void showObject(Organisation organisation) {
-		super.showObject(organisation);
+	public ActionGroup getMenu() {
 		if (menu != null) {
-			menu.setOrganisation(organisation, true);
-		}
-		setTitle(pageTitle(organisation));
-	}
-	
-	@Override
-	public void fillActionGroup(ActionGroup actionGroup) {
-		if (menu != null) {
-			menu.fillActionGroup(actionGroup);
+			return menu.getActions();
+		} else {
+			return null;
 		}
 	}
 
-	@Override
-	protected Organisation loadObject() {
+	private static Organisation loadObject(String organisationId, int time) {
 		Organisation actualOrganisation = EchServer.getInstance().getPersistence().organisationLocalIdIndex().find(organisationId);
 		if (time == 0) {
 			return actualOrganisation;
@@ -60,9 +52,15 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 		return organisationPanel;
 	}
 	
+	@Override
+	protected Organisation getObject() {
+		return organisation;
+	}
+
 	private static final int MAX_NAME_LENGTH = 20;
 	
-	private static String pageTitle(Organisation organisation) {
+	@Override
+	public String getTitle() {
 		String title;
 		if (organisation.organisationName != null) {
 			if (organisation.organisationName.length() <= MAX_NAME_LENGTH) {

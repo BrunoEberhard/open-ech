@@ -1,14 +1,13 @@
 package ch.openech.client.e21;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.dm.person.Occupation;
-import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.xml.write.EchSchema;
 
 public class OccupationField extends ObjectFlowField<List<Occupation>> {
@@ -48,7 +47,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 		}
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			getObject().remove(occupation);
 			fireObjectChange();
 		}
@@ -70,7 +69,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 			}
 		}
 		if (isEditable()) {
-			addAction(new EditorDialogAction(new AddOccupationEditor()));
+			addAction(new AddOccupationEditor());
 		}
 	}
 

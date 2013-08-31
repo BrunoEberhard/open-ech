@@ -1,11 +1,10 @@
 package ch.openech.client.ewk.event;
 
-import static ch.openech.dm.person.Person.PERSON;
+import static ch.openech.dm.person.Person.*;
 
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchSchema;
@@ -13,8 +12,8 @@ import ch.openech.xml.write.WriterEch0020;
 
 public class ChangeReligionEvent extends PersonEventEditor<Person> {
 
-	public ChangeReligionEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public ChangeReligionEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
 	@Override

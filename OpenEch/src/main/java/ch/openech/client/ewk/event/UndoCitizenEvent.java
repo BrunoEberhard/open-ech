@@ -1,6 +1,6 @@
 package ch.openech.client.ewk.event;
 
-import static ch.openech.dm.person.PlaceOfOrigin.PLACE_OF_ORIGIN;
+import static ch.openech.dm.person.PlaceOfOrigin.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +8,6 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 import ch.openech.client.ewk.event.UndoCitizenEvent.UndoCitizenData;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.mj.edit.fields.AbstractEditField;
@@ -29,8 +28,8 @@ import ch.openech.xml.write.WriterEch0020;
 public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 	private UndoCitizenField originField;
 
-	public UndoCitizenEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public UndoCitizenEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 	
 	@Override

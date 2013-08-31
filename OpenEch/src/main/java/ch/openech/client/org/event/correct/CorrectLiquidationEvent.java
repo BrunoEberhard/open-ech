@@ -12,8 +12,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectLiquidationEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectLiquidationEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public CorrectLiquidationEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

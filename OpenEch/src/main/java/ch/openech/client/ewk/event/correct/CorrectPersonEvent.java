@@ -5,7 +5,6 @@ import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.event.PersonEventEditor;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.Form;
@@ -16,8 +15,8 @@ import ch.openech.xml.write.WriterEch0020;
 // Dimension(900, 580);
 public class CorrectPersonEvent extends PersonEventEditor<Person> {
 
-	public CorrectPersonEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public CorrectPersonEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
 	@Override

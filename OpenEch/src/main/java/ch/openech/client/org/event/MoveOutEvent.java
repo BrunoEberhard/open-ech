@@ -13,8 +13,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class MoveOutEvent extends OrganisationEventEditor<Organisation> {
 	
-	public MoveOutEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public MoveOutEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

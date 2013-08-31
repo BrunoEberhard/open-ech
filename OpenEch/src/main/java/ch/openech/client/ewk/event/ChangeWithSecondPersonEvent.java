@@ -6,7 +6,6 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 import ch.openech.client.e44.SecondPersonField;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
@@ -27,8 +26,8 @@ import ch.openech.xml.write.WriterEch0093;
 public abstract class ChangeWithSecondPersonEvent extends
 		PersonEventEditor<ChangeWithSecondPersonEvent.ChangeWithSecondPersonEventData> {
 
-	public ChangeWithSecondPersonEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public ChangeWithSecondPersonEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
 	public static class ChangeWithSecondPersonEventData {
@@ -89,8 +88,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class DeathEvent extends ChangeWithSecondPersonEvent {
 
-		public DeathEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-			super(echSchema, preferences);
+		public DeathEvent(EchSchema ech, Person person) {
+			super(ech, person);
 		}
 
 		@Override
@@ -136,8 +135,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class MissingEvent extends ChangeWithSecondPersonEvent {
 
-		public MissingEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-			super(echSchema, preferences);
+		public MissingEvent(EchSchema ech, Person person) {
+			super(ech, person);
 		}
 
 		@Override
@@ -172,8 +171,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class SeparationEvent extends ChangeWithSecondPersonEvent {
 
-		public SeparationEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-			super(echSchema, preferences);
+		public SeparationEvent(EchSchema ech, Person person) {
+			super(ech, person);
 		}
 
 		@Override
@@ -204,8 +203,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoSeparationEvent extends ChangeWithSecondPersonEvent {
 
-		public UndoSeparationEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-			super(echSchema, preferences);
+		public UndoSeparationEvent(EchSchema ech, Person person) {
+			super(ech, person);
 		}
 
 		@Override
@@ -229,8 +228,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class DivorceEvent extends ChangeWithSecondPersonEvent {
 
-		public DivorceEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-			super(echSchema, preferences);
+		public DivorceEvent(EchSchema ech, Person person) {
+			super(ech, person);
 		}
 
 		@Override
@@ -260,8 +259,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoPartnershipEvent extends ChangeWithSecondPersonEvent {
 
-		public UndoPartnershipEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-			super(echSchema, preferences);
+		public UndoPartnershipEvent(EchSchema ech, Person person) {
+			super(ech, person);
 		}
 
 		@Override
@@ -293,8 +292,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoMarriageEvent extends ChangeWithSecondPersonEvent  {
 
-		public UndoMarriageEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-			super(echSchema, preferences);
+		public UndoMarriageEvent(EchSchema ech, Person person) {
+			super(ech, person);
 		}
 
 		@Override

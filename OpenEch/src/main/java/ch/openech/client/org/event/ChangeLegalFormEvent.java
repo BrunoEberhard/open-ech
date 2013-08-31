@@ -11,8 +11,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class ChangeLegalFormEvent extends OrganisationEventEditor<Organisation> {
 
-	public ChangeLegalFormEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public ChangeLegalFormEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

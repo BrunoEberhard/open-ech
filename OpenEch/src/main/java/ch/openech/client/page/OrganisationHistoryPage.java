@@ -35,6 +35,11 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	}
 
 	@Override
+	public String getTitle() {
+		return "Verlauf Firma";
+	}
+
+	@Override
 	protected List<HistoryVersion<Organisation>> loadVersions() {
 		List<HistoryVersion<Organisation>> versions = new ArrayList<HistoryVersion<Organisation>>();
 		

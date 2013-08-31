@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.ewk.event.PersonEventEditor;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchSchema;
@@ -13,8 +12,8 @@ import ch.openech.xml.write.WriterEch0020;
 // Der Typo kommt vom Schema
 public class CorrectLanguageOfCorrespondanceEvent extends PersonEventEditor<Person> {
 	
-	public CorrectLanguageOfCorrespondanceEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public CorrectLanguageOfCorrespondanceEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
 	@Override

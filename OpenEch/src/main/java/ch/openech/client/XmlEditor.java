@@ -1,22 +1,17 @@
 package ch.openech.client;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-
 import ch.openech.client.ewk.event.PersonEventEditor;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.xmlpreview.XmlPreview;
 import ch.openech.mj.application.DevMode;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.validation.Indicator;
 import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.page.PageContext;
-import ch.openech.mj.page.PageContextHelper;
+import ch.openech.mj.toolkit.IAction;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.server.EchServer;
 import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchSchema;
@@ -25,13 +20,12 @@ import ch.openech.xml.write.EchSchema;
 public abstract class XmlEditor<T> extends Editor<T> {
 	public static final Logger logger = Logger.getLogger(PersonEventEditor.class.getName());
 	protected final EchSchema echSchema;
-	protected final OpenEchPreferences preferences;
 	
 	private final XmlAction xmlAction;
 
-	public XmlEditor(EchSchema echSchema, OpenEchPreferences preferences) {
+	public XmlEditor(EchSchema echSchema) {
+//		super(pageContext);
 		this.echSchema = echSchema;
-		this.preferences = preferences;
 		this.xmlAction = new XmlAction();
 		setIndicator(xmlAction);
 	}
@@ -47,19 +41,19 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	}
 
 	@Override
-	public Action[] getActions() {
+	public IAction[] getActions() {
 		if (DevMode.isActive()) {
-			return new Action[]{demoAction(), xmlAction, cancelAction(), saveAction()};
+			return new IAction[]{demoAction, xmlAction, cancelAction, saveAction};
 		} else {
-			return new Action[]{cancelAction(), saveAction()};
+			return new IAction[]{cancelAction, saveAction};
 		}
 	}
 
 	@Override
-	public boolean save(T object) throws Exception {
+	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
 		send(xmls);
-		return true;
+		return SAVE_SUCCESSFUL;
 	}
 
 	public static boolean send(final List<String> xmls) {
@@ -87,16 +81,14 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		return true;
 	}
 	
-	private class XmlAction extends AbstractAction implements Indicator {
-		public XmlAction() {
-			super("Vorschau XML");
-		}
+	private class XmlAction extends ResourceAction implements Indicator {
+		
+		private boolean enabled = true;
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			try {
 				List<String> xmls = getXml(getObject());
-				PageContext context = PageContextHelper.findContext(e.getSource());
 				XmlPreview.viewXml(context, xmls);
 			} catch (Exception x) {
 				throw new RuntimeException("XML Preview fehlgeschlagen", x);
@@ -105,10 +97,15 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		
 		@Override
 		public void setValidationMessages(List<ValidationMessage> validationMessages) {
-			xmlAction.setEnabled(validationMessages.isEmpty());
+			enabled = validationMessages.isEmpty();
 			updateXmlStatus();
 		}	
 		
+		@Override
+		public boolean isEnabled() {
+			return enabled;
+		}
+
 		private void updateXmlStatus() {
 			if (!isEnabled()) return;
 			try {
@@ -122,13 +119,13 @@ public abstract class XmlEditor<T> extends Editor<T> {
 						break;
 					}
 				}
-				putValue("foreground", (ok ? Color.BLACK : Color.RED));
-				putValue(AbstractAction.SHORT_DESCRIPTION, result);
+//				putValue("foreground", (ok ? Color.BLACK : Color.RED));
+//				putValue(AbstractAction.SHORT_DESCRIPTION, result);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				putValue("foreground",Color.BLUE);
-				putValue(AbstractAction.SHORT_DESCRIPTION, e1.getMessage());
+//				putValue("foreground",Color.BLUE);
+//				putValue(AbstractAction.SHORT_DESCRIPTION, e1.getMessage());
 			}
 		}
 	}

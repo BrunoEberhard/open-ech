@@ -1,11 +1,7 @@
 package ch.openech.client.editor;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
@@ -27,10 +23,10 @@ import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.model.annotation.Required;
-import ch.openech.mj.page.Page;
-import ch.openech.mj.page.PageContext;
+import ch.openech.mj.page.PageLink;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ComboBox;
+import ch.openech.mj.toolkit.IAction;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
@@ -38,15 +34,14 @@ import ch.openech.xml.write.WriterEch0020;
 
 public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
-	private final PageContext context;
 	private final EchSchema echNamespaceContext;
+	private final OpenEchPreferences preferences;
 	private final MoveInPersonWizardStep moveInPersonWizardStep;
 	private final MoveInNextPersonWizardStep moveInNextPersonWizardStep;
-	private int personIndex; // merge with currentStepIndex?
 	
-	public MoveInWizard(PageContext context, String version) {
-		this.context = context;
-		this.echNamespaceContext = EchSchema.getNamespaceContext(20, version);
+	public MoveInWizard(EchSchema ech, OpenEchPreferences preferences) {
+		this.echNamespaceContext = ech;
+		this.preferences = preferences;
 		this.moveInPersonWizardStep = new MoveInPersonWizardStep();
 		this.moveInNextPersonWizardStep = new MoveInNextPersonWizardStep();
 	}
@@ -75,7 +70,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	protected WizardStep<?> getFirstStep() {
 		return moveInPersonWizardStep;
 	}
-
+	
+	private int getPersonIndex() {
+		return getCurrentStepIndex() / 2;
+	}
+	
 	protected WriterEch0020 getWriterEch0020() {
 		return echNamespaceContext.getWriterEch0020();
 	}
@@ -90,12 +89,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	@Override
-	public Action[] getActions() {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+	public IAction[] getActions() {
 		if (DevMode.isActive()) {
-			return new Action[]{demoAction(), new XmlAction(), cancelAction(), prevAction, nextAction, saveAction()};
+			return new IAction[]{demoAction, new XmlAction(), cancelAction, prevAction, nextAction, saveAction};
 		} else {
-			return new Action[]{cancelAction(), prevAction, nextAction, saveAction()};
+			return new IAction[]{cancelAction, prevAction, nextAction, saveAction};
 		}
 	}
 
@@ -137,26 +135,20 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 		
 		@Override
-		protected boolean save(Person person) {
-			return true;
-		}
-
-		@Override
-		protected void cancel() {
-			personIndex = personIndex - 1;
-			super.cancel();
+		protected Person save(Person person) {
+			return person;
 		}
 
 		@Override
 		protected Person newInstance() {
 			MoveInEditorData wizardData = MoveInWizard.this.getObject();
+			int personIndex = getPersonIndex();
 			if (wizardData.persons.size() <= personIndex) {
 				Person person;
 				if (personIndex > 0) {
 					person = createNextPerson(wizardData.nextPersons.get(personIndex-1));
 				} else {
 					person = new Person();
-					OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
 					person.languageOfCorrespondance = preferences.preferencesDefaultsData.language;
 					person.religion = preferences.preferencesDefaultsData.religion;
 					person.residence.reportingMunicipality = CloneHelper.clone(preferences.preferencesDefaultsData.residence);
@@ -215,6 +207,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		@Override
 		protected MoveInNextPerson newInstance() {
 			MoveInEditorData wizardData = MoveInWizard.this.getObject();
+			int personIndex = getPersonIndex();
 			if (wizardData.nextPersons.size() <= personIndex) {
 				MoveInNextPerson moveInNextPerson = new MoveInNextPerson();
 				moveInNextPerson.basePerson = wizardData.persons.get(personIndex);
@@ -224,14 +217,8 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		protected boolean save(MoveInNextPerson object) {
-			personIndex = personIndex + 1;
-			return true;
-		}
-
-		@Override
-		protected void finish() {
-			super.finish();
+		protected Object save(MoveInNextPerson object) {
+			return SAVE_SUCCESSFUL;
 		}
 
 		@Override
@@ -260,10 +247,10 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	@Override
-	protected boolean save(MoveInEditorData object) {
-		// Personen, die mit man previos verlassen hat werden nicht mitgespeichert,
+	protected String save(MoveInEditorData object) {
+		// Personen, die mit man previous verlassen hat werden nicht mitgespeichert,
 		// da sie eventuell ungültig sein könnten
-		for (int i = object.persons.size() - 1; i > personIndex; i--) {
+		for (int i = object.persons.size() - 1; i > getPersonIndex(); i--) {
 			object.persons.remove(i);
 		}
 		
@@ -277,8 +264,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			}
 		}
 		XmlEditor.send(xmlList);
-		setFollowLink(Page.link(PersonViewPage.class, echNamespaceContext.getVersion(), object.persons.get(0).getId()));
-		return true;
+		return PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), object.persons.get(0).getId());
 	}
 
 
@@ -342,13 +328,9 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		
 	}
 
-	private class XmlAction extends AbstractAction {
-		public XmlAction() {
-			super("Vorschau XML");
-		}
-		
+	private class XmlAction implements IAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			try {
 				List<String> xmls = new ArrayList<String>();
 				for (Person person : getObject().persons) {
@@ -358,6 +340,26 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			} catch (Exception x) {
 				throw new RuntimeException("XML Preview fehlgeschlagen", x);
 			}
+		}
+
+		@Override
+		public String getName() {
+			return "Vorschau XML";
+		}
+
+		@Override
+		public String getDescription() {
+			return null;
+		}
+
+		@Override
+		public boolean isEnabled() {
+			return true;
+		}
+
+		@Override
+		public void setChangeListener(ActionChangeListener changeListener) {
+			// doesn't change
 		}
 	}
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import ch.openech.client.e07.MunicipalityField;
 import ch.openech.client.e10.AddressField;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Person;
@@ -16,8 +15,8 @@ import ch.openech.xml.write.WriterEch0020;
 
 public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 	
-	public MoveEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public MoveEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
 	public static class MoveEventData {

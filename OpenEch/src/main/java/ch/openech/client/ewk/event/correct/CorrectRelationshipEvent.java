@@ -6,7 +6,6 @@ import java.util.List;
 import ch.openech.client.e21.NameOfParentsField;
 import ch.openech.client.e21.RelationField;
 import ch.openech.client.ewk.event.PersonEventEditor;
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchSchema;
@@ -14,8 +13,8 @@ import ch.openech.xml.write.WriterEch0020;
 
 public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 
-	public CorrectRelationshipEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public CorrectRelationshipEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
 	@Override

@@ -3,14 +3,14 @@ package ch.openech.client.ewk.event;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.resources.ResourceAction;
 import ch.openech.mj.toolkit.ClientToolkit;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.server.EchServer;
 
 public class XmlTextFormField extends ObjectFlowField<List<String>> {
@@ -27,9 +27,9 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 		}
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			String message = EchServer.validate(xml);
-			ClientToolkit.getToolkit().showMessage(XmlTextFormField.this.getComponent(), message);
+			ClientToolkit.getToolkit().showMessage(context, message);
 		}
 	}
 
@@ -41,7 +41,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent pageContext) {
 			StringSelection stringSelection = new StringSelection(xml);
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clipboard.setContents(stringSelection, null);

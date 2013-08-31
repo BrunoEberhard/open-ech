@@ -3,7 +3,6 @@ package ch.openech.client.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -14,8 +13,8 @@ import ch.openech.xml.write.WriterEch0020;
 // Müsste wohl eigentlich ChangeContact heissen, heisst es aber im Schema nicht
 public class ContactEvent extends PersonEventEditor<Person> {
 
-	public ContactEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public ContactEvent(EchSchema ech, Person person) {
+		super(ech, person);
 	}
 
 	@Override

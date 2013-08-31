@@ -14,8 +14,8 @@ import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectUidBrancheEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectUidBrancheEvent(EchSchema echSchema, OpenEchPreferences preferences) {
-		super(echSchema, preferences);
+	public CorrectUidBrancheEvent(EchSchema ech, Organisation organisation) {
+		super(ech, organisation);
 	}
 
 	@Override

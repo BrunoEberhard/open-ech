@@ -1,6 +1,5 @@
 package ch.openech.client.e11;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,8 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 
 public class ResidenceField extends ObjectFlowField<Residence> {
 	private Action selectSecondary;
@@ -71,16 +71,16 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		}
 
 		@Override
-		public boolean save(Residence residence) {
+		public Object save(Residence residence) {
 			ResidenceField.this.getObject().secondary.add(residence.reportingMunicipality);
 			fireObjectChange();
-			return true;
+			return SAVE_SUCCESSFUL;
 		}
 	}
 
 	private final class ResidenceRemoveSecondaryAction extends ResourceAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			getObject().secondary.clear();
 			fireObjectChange();
 		}

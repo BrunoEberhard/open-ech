@@ -3,7 +3,6 @@ package ch.openech.client.e11;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.mj.autofill.DemoEnabled;
-import ch.openech.mj.edit.EditorDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
@@ -24,7 +23,7 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 	
 	@Override
 	protected void showActions() {
-		addAction(new EditorDialogAction(new ObjectFieldEditor()));
+		addAction(new ObjectFieldEditor());
 		addAction(new RemoveObjectAction());
 	}
 	

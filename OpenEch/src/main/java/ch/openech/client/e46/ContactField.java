@@ -1,14 +1,13 @@
 package ch.openech.client.e46;
 
-import java.awt.event.ActionEvent;
-
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.contact.ContactEntryType;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 
 public class ContactField extends ObjectFlowField<Contact> {
 	
@@ -29,12 +28,14 @@ public class ContactField extends ObjectFlowField<Contact> {
 		private final ContactEntryType type;
 		private final boolean person;
 		
-		public AddContactEntryEditor(boolean person) {
+		public AddContactEntryEditor(boolean person, String title) {
+			super(title);
 			this.type = ContactEntryType.Address;
 			this.person = person;
 		}
 
-		public AddContactEntryEditor(ContactEntryType type) {
+		public AddContactEntryEditor(ContactEntryType type, String title) {
+			super(title);
 			this.type = type;
 			this.person = true;
 		}
@@ -68,7 +69,7 @@ public class ContactField extends ObjectFlowField<Contact> {
 		}
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			getObject().entries.remove(contactEntry);
 			fireObjectChange();
 		}
@@ -95,10 +96,10 @@ public class ContactField extends ObjectFlowField<Contact> {
 	
 	@Override
 	protected void showActions() {
-		addAction(new AddContactEntryEditor(true), "AddAddressPerson");
-		addAction(new AddContactEntryEditor(false), "AddAddressOrganisation");
-		addAction(new AddContactEntryEditor(ContactEntryType.Email), "AddEmail");
-		addAction(new AddContactEntryEditor(ContactEntryType.Phone), "AddPhone");
-		addAction(new AddContactEntryEditor(ContactEntryType.Internet), "AddInternet");
+		addAction(new AddContactEntryEditor(true, "AddAddressPerson"));
+		addAction(new AddContactEntryEditor(false, "AddAddressOrganisation"));
+		addAction(new AddContactEntryEditor(ContactEntryType.Email, "AddEmail"));
+		addAction(new AddContactEntryEditor(ContactEntryType.Phone, "AddPhone"));
+		addAction(new AddContactEntryEditor(ContactEntryType.Internet, "AddInternet"));
 	}
 }

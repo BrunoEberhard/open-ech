@@ -1,6 +1,5 @@
 package ch.openech.client.e44;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import ch.openech.client.ewk.event.EchForm;
@@ -11,7 +10,8 @@ import ch.openech.mj.edit.fields.ObjectLinkField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.resources.ResourceAction;
+import ch.openech.mj.toolkit.IComponent;
+import ch.openech.mj.toolkit.ResourceAction;
 
 public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	public static final boolean WITH_EU_IDS = true;
@@ -30,7 +30,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 
 	public final class TechnicalIdRemoveAction extends ResourceAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(IComponent context) {
 			getObject().clear();
 			fireObjectChange();
 		}
@@ -113,7 +113,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 			}
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void action(IComponent context) {
 				OtherIdField.this.getObject().remove(id);
 				setObject(getObject());
 			}
