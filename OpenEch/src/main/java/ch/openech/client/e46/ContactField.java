@@ -28,14 +28,12 @@ public class ContactField extends ObjectFlowField<Contact> {
 		private final ContactEntryType type;
 		private final boolean person;
 		
-		public AddContactEntryEditor(boolean person, String title) {
-			super(title);
+		public AddContactEntryEditor(boolean person) {
 			this.type = ContactEntryType.Address;
 			this.person = person;
 		}
 
-		public AddContactEntryEditor(ContactEntryType type, String title) {
-			super(title);
+		public AddContactEntryEditor(ContactEntryType type) {
 			this.type = type;
 			this.person = true;
 		}
@@ -96,10 +94,10 @@ public class ContactField extends ObjectFlowField<Contact> {
 	
 	@Override
 	protected void showActions() {
-		addAction(new AddContactEntryEditor(true, "AddAddressPerson"));
-		addAction(new AddContactEntryEditor(false, "AddAddressOrganisation"));
-		addAction(new AddContactEntryEditor(ContactEntryType.Email, "AddEmail"));
-		addAction(new AddContactEntryEditor(ContactEntryType.Phone, "AddPhone"));
-		addAction(new AddContactEntryEditor(ContactEntryType.Internet, "AddInternet"));
+		addAction(new AddContactEntryEditor(true), "AddAddressPerson");
+		addAction(new AddContactEntryEditor(false), "AddAddressOrganisation");
+		addAction(new AddContactEntryEditor(ContactEntryType.Email), "AddEmail");
+		addAction(new AddContactEntryEditor(ContactEntryType.Phone), "AddPhone");
+		addAction(new AddContactEntryEditor(ContactEntryType.Internet), "AddInternet");
 	}
 }
