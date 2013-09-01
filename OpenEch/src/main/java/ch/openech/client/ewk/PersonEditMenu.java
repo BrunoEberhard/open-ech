@@ -141,7 +141,7 @@ public class PersonEditMenu {
 		ActionGroup menu = new ActionGroup("Person");
 //		personActionGroup.putValue(Action.MNEMONIC_KEY, 'P');
 
-		ActionGroup partnershipGroup = menu.addGroup("person_partnership");
+		ActionGroup partnershipGroup = menu.addGroup("ActionGroup.person_partnership");
 		partnershipGroup.add(marriage);
 		partnershipGroup.add(separation);
 		partnershipGroup.add(undoSeparation);
@@ -151,7 +151,7 @@ public class PersonEditMenu {
 		partnershipGroup.add(partnership);
 		partnershipGroup.add(undoPartnership);
 
-		ActionGroup origin = menu.addGroup("person_nationality");
+		ActionGroup origin = menu.addGroup("ActionGroup.person_nationality");
 		origin.add(naturalizeSwiss);
 		origin.add(naturalizeForeigner);
 		origin.add(undoSwiss);
@@ -161,29 +161,29 @@ public class PersonEditMenu {
 		origin.add(renewPermit);
 		origin.add(undoCitizen);
 
-		ActionGroup occupation = menu.addGroup("person_occupation");
+		ActionGroup occupation = menu.addGroup("ActionGroup.person_occupation");
 		occupation.add(changeOccupation);
 		
-		ActionGroup moveGroup = menu.addGroup("person_move");
+		ActionGroup moveGroup = menu.addGroup("ActionGroup.person_move");
 		moveGroup.add(move);
 		moveGroup.add(moveOut);
 
-		ActionGroup deathGroup = menu.addGroup("person_death");
+		ActionGroup deathGroup = menu.addGroup("ActionGroup.person_death");
 		deathGroup.add(death);
 		deathGroup.add(missing);
 		deathGroup.add(undoMissing);
 
-		ActionGroup gardian = menu.addGroup("person_care");
+		ActionGroup gardian = menu.addGroup("ActionGroup.person_care");
 		gardian.add(care);
 		gardian.add(gardianMeasure);
 		gardian.add(undoGardian);
 		gardian.add(changeGardian);
 
-		ActionGroup lock = menu.addGroup("person_lock");
+		ActionGroup lock = menu.addGroup("ActionGroup.person_lock");
 		lock.add(addressLock);
 		lock.add(paperLock);
 
-		ActionGroup change = menu.addGroup("person_change");
+		ActionGroup change = menu.addGroup("ActionGroup.person_change");
 		change.add(changeName);
 		change.add(changeReligion);
 		change.add(changeTypeOfResidence);
@@ -191,7 +191,7 @@ public class PersonEditMenu {
 		change.add(contact);
 
 		fillCorrectionActionList();
-		ActionGroup correct = menu.addGroup("correction");
+		ActionGroup correct = menu.addGroup("ActionGroup.correction");
 		for (EditorPageAction action : correctEditors) {
 			correct.add(action);
 		}
