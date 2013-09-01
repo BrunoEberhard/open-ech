@@ -134,6 +134,8 @@ public class PersonEditMenu {
 		birthChild = editorLink(new BirthChildEvent(ech, person, (OpenEchPreferences) pageContext.getApplicationContext().getPreferences()));
 
 		showHistory = new PageLink(PersonHistoryPage.class, echSchema.getVersion(), person.getId());
+		
+		update(person, true);
 	}
 	
 	public ActionGroup getActions() {
@@ -240,7 +242,7 @@ public class PersonEditMenu {
 	}
 
 	@BusinessRule("Welche Aktion in welchem Zustand von Personen ausgeführt werden darf")
-	public void update(Person person, boolean enabled) {
+	private void update(Person person, boolean enabled) {
 		boolean isPerson = person != null && enabled;
 		boolean isAlive = isPerson && person.isAlive();
 		boolean isMarried = isPerson && person.isMarried();
