@@ -119,6 +119,12 @@ public class ContactEntry implements Validation {
 
 	@Override
 	public void validate(List<ValidationMessage> validationMessages) {
+		if (dateFrom != null && dateTo != null) {
+			if (dateFrom.isAfter(dateTo)) {
+				validationMessages.add(new ValidationMessage(CONTACT_ENTRY.dateTo, "Zeitraum ungültig"));
+			}
+		}
+		
 		// Die Regex stammen aus dem eCH-0046-2-0.xsd
 		if (isAddressEntry()) {
 			if (address == null || address.isEmpty()) {
