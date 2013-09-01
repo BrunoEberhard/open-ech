@@ -16,7 +16,7 @@ import ch.openech.xml.write.EchSchema;
 public class PersonViewPage extends ObjectViewPage<Person> {
 
 	private final Person person;
-	private final Integer time;
+	private final int time;
 	private final EchSchema echSchema;
 	private final PersonPanel personPanel;
 	private final PersonEditMenu menu;
@@ -24,10 +24,10 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 	public PersonViewPage(PageContext pageContext, String[] arguments) {
 		super(pageContext);
 		this.echSchema = EchSchema.getNamespaceContext(20, arguments[0]);
-		this.person = EchServer.getInstance().getPersistence().personLocalPersonIdIndex().find(arguments[1]);
-		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : null;
+		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
+		this.person = loadObject(arguments[1], time);
 		this.personPanel = new PersonPanel(PersonEditMode.DISPLAY, echSchema);
-		this.menu = time == null ? new PersonEditMenu(echSchema, pageContext, person) : null; 
+		this.menu = time == 0 ? new PersonEditMenu(echSchema, pageContext, person) : null;  
 	}
 	
 	@Override
@@ -41,6 +41,16 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 			return menu.getActions();
 		} else {
 			return null;
+		}
+	}
+
+	private static Person loadObject(String personId, int time) {
+		Person actualPerson = EchServer.getInstance().getPersistence().personLocalPersonIdIndex().find(personId);
+		if (time == 0) {
+			return actualPerson;
+		} else {
+			int id = EchServer.getInstance().getPersistence().person().getId(actualPerson);
+			return EchServer.getInstance().getPersistence().person().read(id, time);
 		}
 	}
 

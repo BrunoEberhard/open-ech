@@ -22,8 +22,8 @@ import ch.openech.client.org.event.correct.CorrectReportingEvent;
 import ch.openech.client.org.event.correct.CorrectUidBrancheEvent;
 import ch.openech.client.page.OrganisationHistoryPage;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.page.EditorPageAction;
 import ch.openech.mj.page.ActionGroup;
+import ch.openech.mj.page.EditorPageAction;
 import ch.openech.mj.page.PageLink;
 import ch.openech.mj.toolkit.IAction;
 import ch.openech.mj.util.BusinessRule;
@@ -86,7 +86,7 @@ public class OrganisationMenu {
 		menu.addSeparator();
 
 		fillCorrectionActionList();
-		ActionGroup correct = menu.addGroup("correction");
+		ActionGroup correct = menu.addGroup("ActionGroup.correction");
 		for (IAction action : correctEditors) {
 			correct.add(action);
 		}
