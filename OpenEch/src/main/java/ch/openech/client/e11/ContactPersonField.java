@@ -68,8 +68,8 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		addAction(new EnterPersonContactEditor());
 		addGap();
 		
-        addAction(new AddAddressContactEditor(true, "AddAddressPerson"));
-        addAction(new AddAddressContactEditor(false, "AddAddressOrganisation"));
+        addAction(new AddAddressContactEditor(true), "AddAddressPerson");
+        addAction(new AddAddressContactEditor(false), "AddAddressOrganisation");
 	}
 
 	// Person suchen
@@ -136,8 +136,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	public class AddAddressContactEditor extends ObjectFieldPartEditor<Address> {
 		private final boolean person;
 		
-		public AddAddressContactEditor(boolean person, String title) {
-			super(title);
+		public AddAddressContactEditor(boolean person) {
 			this.person = person;
 		}
 		
