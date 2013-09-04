@@ -38,7 +38,7 @@ public class PlaceReadOnlyField implements FormField<Place> {
 	}
 	
 	public void setEnabled(boolean enabled) {
-		textField.setEnabled(enabled);
+		textField.setEditable(enabled);
 	}
 
 	@Override
