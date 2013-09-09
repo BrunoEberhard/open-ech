@@ -20,12 +20,7 @@ public class PersonIdentification {
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 
-	// TODO Make Class
-	// Ist erstaunlicherweise wirklich nicht zwingend
 	public final Vn vn = new Vn();
-	
-//	@Validation(Vn.class)
-//	public String vn;
 	
 	@Required @Size(EchFormats.baseName)
 	public String firstName, officialName;
