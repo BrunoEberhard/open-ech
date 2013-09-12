@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import ch.openech.dm.XmlConstants;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.db.model.ColumnProperties;
+import ch.openech.mj.model.properties.FlatProperties;
 
 public class DomainObjectHelperTest {
 
@@ -16,7 +16,7 @@ public class DomainObjectHelperTest {
 	public void access1() {
 		Person person = new Person();
 		person.originalName = "Tester";
-		Assert.assertEquals(person.originalName, ColumnProperties.getValue(person, XmlConstants.ORIGINAL_NAME));
+		Assert.assertEquals(person.originalName, FlatProperties.getValue(person, XmlConstants.ORIGINAL_NAME));
 	}
 	
 	@Test
@@ -25,7 +25,7 @@ public class DomainObjectHelperTest {
 		person.maritalStatus.maritalStatus = ch.openech.dm.person.types.MaritalStatus.ledig;
 		
 		Assert.assertEquals(person.maritalStatus.maritalStatus, //
-				ColumnProperties.getValue(person, XmlConstants.MARITAL_STATUS));
+				FlatProperties.getValue(person, XmlConstants.MARITAL_STATUS));
 	}
 
 	@Test
@@ -34,7 +34,7 @@ public class DomainObjectHelperTest {
 		testObject2.testClass1.s1 = "TestS1";
 		
 		Assert.assertEquals(testObject2.testClass1.s1, //
-				ColumnProperties.getValue(testObject2, "s1"));
+				FlatProperties.getValue(testObject2, "s1"));
 	}
 	
 	@Test
@@ -43,12 +43,12 @@ public class DomainObjectHelperTest {
 		testObject2.tc1.s1 = "TestS1";
 		
 		Assert.assertEquals(testObject2.tc1.s1, //
-				ColumnProperties.getValue(testObject2, "tc1S1"));
+				FlatProperties.getValue(testObject2, "tc1S1"));
 	}
 
 	@Test
 	public void accessKeys() {
-		Collection<String> keys = ColumnProperties.getKeys(TestClass2.class);
+		Collection<String> keys = FlatProperties.getProperties(TestClass2.class).keySet();
 		Assert.assertEquals(3, keys.size());
 		Assert.assertTrue(keys.contains("s1"));
 		Assert.assertTrue(keys.contains("s2"));

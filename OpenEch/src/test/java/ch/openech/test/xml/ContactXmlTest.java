@@ -10,7 +10,7 @@ import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.contact.ContactEntryType;
 import ch.openech.dm.types.ContactCategory;
-import ch.openech.mj.db.model.ColumnProperties;
+import ch.openech.mj.edit.value.EqualsHelper;
 import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0046;
 import ch.openech.xml.write.EchSchema;
@@ -77,7 +77,7 @@ public class ContactXmlTest {
 		Assert.assertEquals(mail1.categoryCode, mail1Out.categoryCode);
 		Assert.assertEquals(mail1.categoryOther, mail1Out.categoryOther);
 		Assert.assertEquals(mail1.value, mail1Out.value);
-		Assert.assertTrue(ColumnProperties.equals(mail1, mail1Out));
+		Assert.assertTrue(EqualsHelper.equals(mail1, mail1Out));
 
 		ContactEntry mail2Out = contactOut.getEmailList().get(1);
 		Assert.assertEquals(mail2.dateFrom, mail2Out.dateFrom);
@@ -85,10 +85,10 @@ public class ContactXmlTest {
 		Assert.assertEquals(mail2.categoryCode, mail2Out.categoryCode);
 		Assert.assertEquals(mail2.categoryOther, mail2Out.categoryOther);
 		Assert.assertEquals(mail2.value, mail2Out.value);
-		Assert.assertTrue(ColumnProperties.equals(mail2, mail2Out));
+		Assert.assertTrue(EqualsHelper.equals(mail2, mail2Out));
 		
 		ContactEntry addressEntry1Out = contact.getAddressList().get(0);
-		Assert.assertTrue(ColumnProperties.equals(addressEntry1, addressEntry1Out));
+		Assert.assertTrue(EqualsHelper.equals(addressEntry1, addressEntry1Out));
 
 	}
 }

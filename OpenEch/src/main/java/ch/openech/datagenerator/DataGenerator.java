@@ -25,8 +25,8 @@ import ch.openech.mj.autofill.DateGenerator;
 import ch.openech.mj.autofill.FirstNameGenerator;
 import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.autofill.OrganisationNameGenerator;
-import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.model.EnumUtils;
+import ch.openech.mj.model.properties.FlatProperties;
 import ch.openech.server.EchServer;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
@@ -83,7 +83,7 @@ public class DataGenerator {
 		for (Field field : person.getClass().getFields()) {
 			String key = field.getName();
 			if (key.endsWith("Name")) {
-				ColumnProperties.setValue(person, key, key.substring(0, key.length() -4) + "Test");
+				FlatProperties.set(person, key, key.substring(0, key.length() -4) + "Test");
 			}
 		}
 		person.personIdentification.sex = Sex.weiblich;

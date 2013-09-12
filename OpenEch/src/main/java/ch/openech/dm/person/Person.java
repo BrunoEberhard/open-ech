@@ -23,7 +23,6 @@ import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Enabled;
-import ch.openech.mj.model.annotation.Reference;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.resources.Resources;
@@ -45,7 +44,6 @@ public class Person implements Validation {
 	
 	//
 
-	@Reference
 	public final PersonIdentification personIdentification = new PersonIdentification();
 	
 	@Size(EchFormats.baseName)

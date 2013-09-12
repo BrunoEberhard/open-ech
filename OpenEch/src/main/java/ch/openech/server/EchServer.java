@@ -37,6 +37,7 @@ public class EchServer {
 			ech0148 = new StaxEch0148(persistence);
 			instance = this;
 		} catch (Exception x) {
+			x.printStackTrace();
 			logger.log(Level.SEVERE, "Couldnt initialize EchServer", x);
 		}
 	}

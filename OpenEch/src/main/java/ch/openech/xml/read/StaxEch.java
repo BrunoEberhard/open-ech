@@ -13,11 +13,11 @@ import org.joda.time.ReadablePartial;
 import org.joda.time.format.ISODateTimeFormat;
 
 import ch.openech.dm.types.EchCode;
-import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.InvalidValues;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
+import ch.openech.mj.model.properties.FlatProperties;
 import ch.openech.mj.util.DateUtils;
 
 public class StaxEch {
@@ -51,7 +51,7 @@ public class StaxEch {
 	}
 
 	public static void simpleValue(XMLEventReader xml, Object object, Object key) throws XMLStreamException {
-		PropertyInterface property = ColumnProperties.getProperties(object.getClass()).get(key);
+		PropertyInterface property = FlatProperties.getProperties(object.getClass()).get(key);
 		if (property == null) {
 			throw new IllegalArgumentException("Unknown field: " + key);
 		}

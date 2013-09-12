@@ -22,7 +22,6 @@ import ch.openech.mj.util.StringUtils;
 
 public class EchPersistence extends DbPersistence {
 
-	private final HistorizedTable<PersonIdentification> personIdentification;
 	private final HistorizedTable<Person> person;
 	private final FulltextIndex<Person> personFulltextIndex;
 	private final ColumnIndexUnqiue<Person> personVnIndex;
@@ -51,8 +50,6 @@ public class EchPersistence extends DbPersistence {
 	};
 	
 	public EchPersistence() throws SQLException {
-		personIdentification = addHistorizedClass(PersonIdentification.class);
-		
 		person = addHistorizedClass(Person.class);
 		personFulltextIndex = person.createFulltextIndex(PERSON_INDEX_KEYS);
 		personVnIndex = person.createIndexUnique(PERSON.personIdentification.vn.value);
@@ -67,10 +64,6 @@ public class EchPersistence extends DbPersistence {
 		// thirdPartyMove = addClass(ThirdPartyMove.class);
 		
 		connect();
-	}
-
-	public HistorizedTable<PersonIdentification> personIdentification() {
-		return personIdentification;
 	}
 
 	public HistorizedTable<Person> person() {

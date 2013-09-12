@@ -9,9 +9,9 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.format.ISODateTimeFormat;
 
 import ch.openech.dm.types.EchCode;
-import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.model.InvalidValues;
 import ch.openech.mj.model.annotation.StringLimitation;
+import ch.openech.mj.model.properties.FlatProperties;
 import ch.openech.mj.util.FieldUtils;
 import ch.openech.mj.util.StringUtils;
 
@@ -87,7 +87,7 @@ public class WriterElement {
 	
 	public void values(Object object, String... keys) throws Exception {
 		for (String key : keys) {
-			Object value = ColumnProperties.getValue(object, key);
+			Object value = FlatProperties.getValue(object, key);
 			if (value instanceof EchCode) {
 				text(key, (EchCode)value);
 			} else if (value != null) {
@@ -100,7 +100,7 @@ public class WriterElement {
 	}
 
 	public void values(Object object) throws Exception {
-		Set<String> keys = ColumnProperties.getKeys(object.getClass());
+		Set<String> keys = FlatProperties.getProperties(object.getClass()).keySet();
 		values(object, (String[])keys.toArray(new String[keys.size()]));
 	}
 	

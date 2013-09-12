@@ -15,7 +15,6 @@ import ch.openech.dm.common.Place;
 import ch.openech.dm.common.TechnicalIds;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.types.Language;
-import ch.openech.mj.db.model.ColumnProperties;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.EmptyValidator;
@@ -24,6 +23,7 @@ import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.model.properties.FlatProperties;
 import ch.openech.xml.read.StaxEch;
 
 public class Organisation implements Validation {
@@ -109,18 +109,18 @@ public class Organisation implements Validation {
 	//
 	
 	public Object get(String propertyName) {
-		return ColumnProperties.getValue(this, propertyName);
+		return FlatProperties.getValue(this, propertyName);
 	}
 
 	public void set(String propertyName, Object value) {
-		PropertyInterface property = ColumnProperties.getProperties(this.getClass()).get(propertyName);
+		PropertyInterface property = FlatProperties.getProperties(this.getClass()).get(propertyName);
 		if (property.getFieldClazz() == LocalDate.class && value instanceof String) {
 			value = ISODateTimeFormat.date().parseLocalDate((String) value);
 		} else if (Enum.class.isAssignableFrom(property.getFieldClazz()) && value instanceof String) {
 			StaxEch.enuum((String) value, this, property);
 			return;
 		} 
-		ColumnProperties.setValue(this, propertyName, value);
+		FlatProperties.set(this, propertyName, value);
 	}
 	
 	//

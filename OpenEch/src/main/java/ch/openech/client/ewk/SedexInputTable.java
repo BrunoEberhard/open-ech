@@ -17,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import ch.openech.dm.Envelope;
-import ch.openech.mj.db.model.ColumnProperties;
+import ch.openech.mj.model.properties.FlatProperties;
 import ch.openech.sedex.SedexDirectoryScanner;
 
 public class SedexInputTable extends JTable {
@@ -35,7 +35,7 @@ public class SedexInputTable extends JTable {
 		tableModel = new AbstractTableModel() {
 			@Override
 			public Object getValueAt(int row, int column) {
-				Object value = ColumnProperties.getValue(envelopes.get(row), COLUMNS[column]);
+				Object value = FlatProperties.getValue(envelopes.get(row), COLUMNS[column]);
 				return value;
 			}
 

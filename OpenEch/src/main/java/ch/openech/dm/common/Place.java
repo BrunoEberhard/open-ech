@@ -1,14 +1,13 @@
 package ch.openech.dm.common;
 
 import ch.openech.dm.EchFormats;
-import ch.openech.mj.model.annotation.Reference;
 import ch.openech.mj.model.annotation.Size;
 
 // Verwendung als Birthplace und als Destination
 public class Place {
 	
-	@Reference public final MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
-	@Reference public final CountryIdentification countryIdentification = Swiss.createCountryIdentification();
+	public final MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
+	public final CountryIdentification countryIdentification = Swiss.createCountryIdentification();
 	@Size(EchFormats.baseName)  // TODO REMOVE
 	public String foreignTown;
 	public Address mailAddress; // nur bei Verwendung als Destination

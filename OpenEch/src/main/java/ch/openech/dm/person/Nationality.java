@@ -4,7 +4,9 @@ import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.common.Swiss;
 import ch.openech.mj.model.Keys;
+import ch.openech.mj.model.annotation.Inline;
 
+@Inline
 public class Nationality  {
 
 	public static final Nationality NATIONALITY = Keys.of(Nationality.class);
