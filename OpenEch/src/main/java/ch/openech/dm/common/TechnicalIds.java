@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.Inline;
 
-@Inline
 public class TechnicalIds {
 	public static final TechnicalIds TECHNICAL_IDS = Keys.of(TechnicalIds.class);
 	

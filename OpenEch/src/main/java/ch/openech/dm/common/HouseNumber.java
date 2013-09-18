@@ -2,11 +2,9 @@ package ch.openech.dm.common;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.Inline;
 import ch.openech.mj.model.annotation.Sizes;
 import ch.openech.mj.util.StringUtils;
 
-@Inline
 @Sizes(EchFormats.class)
 public class HouseNumber {
 

@@ -3,10 +3,7 @@ package ch.openech.dm.person;
 import org.joda.time.LocalDate;
 
 import ch.openech.mj.model.annotation.Enabled;
-import ch.openech.mj.model.annotation.Inline;
 
-
-@Inline
 public class MaritalStatus {
 
 	public ch.openech.dm.person.types.MaritalStatus maritalStatus = ch.openech.dm.person.types.MaritalStatus.ledig;

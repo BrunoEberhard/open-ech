@@ -4,11 +4,9 @@ import java.util.UUID;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.Inline;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.Sizes;
 
-@Inline
 @Sizes(EchFormats.class)
 public class NamedId {
 

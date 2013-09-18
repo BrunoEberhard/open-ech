@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.joda.time.ReadablePartial;
 
+import ch.openech.dm.common.CountryIdentification;
+import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.Person;
@@ -50,6 +52,10 @@ public class EchPersistence extends DbPersistence {
 	};
 	
 	public EchPersistence() throws SQLException {
+		addImmutableClass(PersonIdentification.class);
+		addImmutableClass(MunicipalityIdentification.class);
+		addImmutableClass(CountryIdentification.class);
+		
 		person = addHistorizedClass(Person.class);
 		personFulltextIndex = person.createFulltextIndex(PERSON_INDEX_KEYS);
 		personVnIndex = person.createIndexUnique(PERSON.personIdentification.vn.value);
