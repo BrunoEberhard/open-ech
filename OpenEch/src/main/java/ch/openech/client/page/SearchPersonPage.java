@@ -2,8 +2,6 @@ package ch.openech.client.page;
 
 import static ch.openech.dm.person.Person.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +15,7 @@ import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ITable;
+import ch.openech.mj.toolkit.ITable.TableActionListener;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
@@ -72,16 +71,15 @@ public class SearchPersonPage extends AbstractPage implements RefreshablePage {
 		return null;
 	}
 
-	private class PersonTableClickListener implements ActionListener {
-
+	private class PersonTableClickListener implements TableActionListener<Person> {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void action(Person selectedObject, List<Person> selectedObjects) {
 			List<String> pageLinks = new ArrayList<String>(resultList.size());
 			for (Person person : resultList) {
 				String link = link(PersonViewPage.class, echSchema.getVersion(), person.getId());
 				pageLinks.add(link);
 			}
-			int index = resultList.indexOf(table.getSelectedObject());
+			int index = resultList.indexOf(selectedObject);
 			getPageContext().show(pageLinks, index);
 		}
 	}

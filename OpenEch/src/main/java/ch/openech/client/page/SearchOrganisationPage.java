@@ -2,8 +2,6 @@ package ch.openech.client.page;
 
 import static ch.openech.dm.organisation.Organisation.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences;
@@ -16,6 +14,7 @@ import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ITable;
+import ch.openech.mj.toolkit.ITable.TableActionListener;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
@@ -66,11 +65,10 @@ public class SearchOrganisationPage extends AbstractPage implements RefreshableP
 		return null;
 	}
 
-	private class OrganisationTableClickListener implements ActionListener {
-
+	private class OrganisationTableClickListener implements TableActionListener<Organisation> {
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			show(OrganisationViewPage.class, echSchema.getVersion(), table.getSelectedObject().getId());
+		public void action(Organisation selectedObject, List<Organisation> selectedObjects) {
+			show(OrganisationViewPage.class, echSchema.getVersion(), selectedObject.getId());
 		}
 	}
 	
