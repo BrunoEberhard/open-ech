@@ -10,7 +10,6 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
-import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0148;
@@ -54,7 +53,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 				// progress(saveProgress, count);
 			}
 		} else {
-			ClientToolkit.getToolkit().showError(null, "" + number);
+			showError("" + number);
 			return false;
 		}
 		return true;
@@ -71,7 +70,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 				// progress(saveProgress, count);
 			}
 		} else {
-			ClientToolkit.getToolkit().showError(null, "" + number);
+			showError("" + number);
 			return false;
 		}
 		return true;
