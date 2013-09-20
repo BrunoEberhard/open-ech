@@ -3,7 +3,6 @@ package ch.openech.client.org.event;
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.xml.write.EchSchema;
