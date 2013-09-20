@@ -11,6 +11,7 @@ import ch.openech.mj.util.StringUtils;
 
 @Sizes(EchFormats.class)
 public class CountryIdentification implements Comparable<CountryIdentification>, Serializable, Cloneable {
+	private static final long serialVersionUID = 1L;
 
 	public static final CountryIdentification COUNTRY_IDENTIFICATION = Keys.of(CountryIdentification.class);
 

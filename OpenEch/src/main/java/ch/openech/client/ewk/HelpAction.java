@@ -12,7 +12,8 @@ import ch.openech.mj.swing.SwingResourceAction;
 
 
 public class HelpAction extends SwingResourceAction {
-
+	private static final long serialVersionUID = 1L;
+	
 	private static JFrame helpFrame;
 
 	public void actionPerformed(ActionEvent actionEvent) {

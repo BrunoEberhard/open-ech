@@ -22,6 +22,8 @@ import javax.swing.SwingUtilities;
 
 import ch.openech.server.EchServer;
 public class XmlSwingFrame extends JDialog {
+	private static final long serialVersionUID = 1L;
+	
 	private JTabbedPane tabbedPane;
 	private String xml;
 	

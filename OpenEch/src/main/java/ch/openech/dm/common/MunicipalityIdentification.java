@@ -11,6 +11,7 @@ import ch.openech.mj.util.StringUtils;
 
 @Sizes(EchFormats.class)
 public class MunicipalityIdentification implements Comparable<MunicipalityIdentification>, Serializable {
+	private static final long serialVersionUID = 1L;
 
 	public static MunicipalityIdentification MUNICIPALITY_IDENTIFICATION = Keys.of(MunicipalityIdentification.class);
 

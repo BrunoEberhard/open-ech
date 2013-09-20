@@ -6,7 +6,8 @@ import ch.openech.mj.util.StringUtils;
 
 
 public class Plz implements Comparable<Plz>, Serializable {
-
+	private static final long serialVersionUID = 1L;
+	
 	public int onrp;
 	public int typ;
 	public int postleitzahl;

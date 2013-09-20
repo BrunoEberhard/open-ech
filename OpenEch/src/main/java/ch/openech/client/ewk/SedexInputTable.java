@@ -21,7 +21,8 @@ import ch.openech.mj.model.properties.FlatProperties;
 import ch.openech.sedex.SedexDirectoryScanner;
 
 public class SedexInputTable extends JTable {
-
+	private static final long serialVersionUID = 1L;
+	
 	private List<Envelope> envelopes = new ArrayList<Envelope>();
 	private AbstractTableModel tableModel;
 
@@ -33,6 +34,8 @@ public class SedexInputTable extends JTable {
 		super();
 
 		tableModel = new AbstractTableModel() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Object getValueAt(int row, int column) {
 				Object value = FlatProperties.getValue(envelopes.get(row), COLUMNS[column]);

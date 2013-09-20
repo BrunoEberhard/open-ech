@@ -13,6 +13,8 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 public class XmlVaadinFrame extends Window {
+	private static final long serialVersionUID = 1L;
+	
 	private TabSheet tabSheet;
 	private String xml;
 	

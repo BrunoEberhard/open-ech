@@ -65,6 +65,8 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 	// 
 
 	private static class FederalRegisterMunicipality extends MunicipalityIdentification {
+		private static final long serialVersionUID = 1L;
+		
 		private final FederalRegister federalRegister;
 
 		private FederalRegisterMunicipality(FederalRegister federalRegister) {
