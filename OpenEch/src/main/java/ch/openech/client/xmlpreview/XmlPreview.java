@@ -8,6 +8,8 @@ import ch.openech.mj.model.Keys;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 
+import com.vaadin.ui.Window;
+
 public class XmlPreview {
 
 	public static void viewXml(IComponent source, List<String> xmls) {
@@ -17,7 +19,11 @@ public class XmlPreview {
 		} else if (source instanceof com.vaadin.ui.Component) {
 			com.vaadin.ui.Component component = (com.vaadin.ui.Component) source;
 			XmlVaadinFrame xmlFrame = new XmlVaadinFrame(xmls);
-			component.getWindow().addWindow(xmlFrame);
+			Window window = component.getWindow();
+			while (window.getParent() != null) {
+				window = window.getParent();
+			}
+			window.addWindow(xmlFrame);
 			xmlFrame.setPositionY(0);
 			xmlFrame.setVisible(true);
 		} else {
