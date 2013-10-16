@@ -120,7 +120,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	@Override
 	protected void show(List<PlaceOfOrigin> objects) {
 		for (PlaceOfOrigin placeOfOrigin : objects) {
-			addHtml(placeOfOrigin.displayHtml());
+			addText(placeOfOrigin.displayHtml());
 			if (isEditable()) {
 				addAction(new EditOriginEditor(placeOfOrigin));
 				addAction(new RemoveOriginAction(placeOfOrigin));

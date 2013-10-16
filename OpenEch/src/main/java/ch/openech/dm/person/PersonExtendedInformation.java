@@ -45,7 +45,6 @@ public class PersonExtendedInformation {
 	}
 
 	public void toHtml(StringBuilder s) {
-		s.append("<HTML>");
 		yesNoToHtml(s, "Militärdienstpflicht", armedForcesService);
 		yesNoToHtml(s, "Militärersatzpflicht", armedForcesLiability);
 		s.append("<BR>");
@@ -69,7 +68,6 @@ public class PersonExtendedInformation {
 		}
 
 		yesNoToHtml(s, "Gütererbrechtliche<BR>Vereinbarung", matrimonialInheritanceArrangement);
-		s.append("</HTML>");
 	}
 	
 	private void yesNoToHtml(StringBuilder s, String label, YesNo value) {

@@ -21,10 +21,11 @@ public class ContractorField extends ObjectFlowField<Contact> {
 		if (contact.getAddressList().size() > 0) {
 			Address address = contact.getAddressList().get(0).address;
 			if (address != null) {
-				s += address.toString();
+				s += "<br>";
+				s += address.toHtml();
 			}
 		}
-		addObject(s);
+		addText(s);
 	}
 
 	@Override

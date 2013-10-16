@@ -38,7 +38,6 @@ public class DwellingAddress implements Validation {
 	}
 		
 	public void toHtml(StringBuilder s) {
-		s.append("<HTML>");
 		if (mailAddress != null) {
 			mailAddress.toHtml(s); s.append("<BR>");
 		}
@@ -63,7 +62,6 @@ public class DwellingAddress implements Validation {
 		if (movingDate != null) {
 			s.append("Umzugsdatum: " ); s.append(DateUtils.formatCH(movingDate));
 		}
-		s.append("</HTML>");
 	}
 	
 	public void displayWidth(StringBuilder s) {

@@ -84,7 +84,6 @@ public class PlaceOfOrigin {
 	}
 	
 	public String displayHtml(StringBuilder s) {
-		s.append("<HTML><BODY>");
 		if (!StringUtils.isBlank(originName)) s.append(originName);
 		if (!StringUtils.isBlank(cantonAbbreviation.canton) && !s.toString().endsWith(cantonAbbreviation.canton)) {
 			if (s.length() > 0) s.append(' ');
@@ -109,7 +108,6 @@ public class PlaceOfOrigin {
 			s.append(DateUtils.formatCH(expatriationDate));
 		}
 		
-		s.append("</BODY></HTML>");
 		return s.toString();
 	}
 	

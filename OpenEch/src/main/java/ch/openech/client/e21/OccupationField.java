@@ -62,7 +62,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 	@Override
 	protected void show(List<Occupation> object) {
 		for (Occupation occupation : object) {
-			addHtml(occupation.toHtml());
+			addText(occupation.toHtml());
 			if (isEditable()) {
 				addAction(new RemoveOccupationAction(occupation));
 				addGap();

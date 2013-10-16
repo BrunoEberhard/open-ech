@@ -61,7 +61,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	@Override
 	public void show(Address address) {
 		if (enabled) {
-			addHtml(address.toHtml());
+			addText(address.toHtml());
 		}
 	}
 

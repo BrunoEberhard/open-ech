@@ -29,7 +29,7 @@ public class PersonField extends ObjectFlowField<Person> {
 
 	@Override
 	protected void show(Person object) {
-		addHtml(object.personIdentification.toHtml());
+		addText(object.personIdentification.toHtml());
 	}
 
 	@Override

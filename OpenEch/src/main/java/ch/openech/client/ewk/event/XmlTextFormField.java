@@ -65,7 +65,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 			xml = xml.replace("\n", "<br>");
 			xml = xml.replace(" ", "&nbsp;");
 			xml = "<html><code>" + xml + "</code></html>";
-			addHtml(xml);
+			addText(xml);
 			addAction(new XmlValidateAction(original));
 			addAction(new CopyToClipboardAction(original));
 			addGap();

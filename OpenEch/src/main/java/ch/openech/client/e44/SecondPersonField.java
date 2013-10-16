@@ -29,9 +29,9 @@ public class SecondPersonField extends ObjectFlowField<Relation> {
 	@Override
 	protected void show(Relation relation) {
 		if (!hasPartner()) {
-			addObject("Kein Partner / Keine Partnerin vorhanden");
+			addText("Kein Partner / Keine Partnerin vorhanden");
 		} else {
-			addHtml(relation.partner.toHtml());
+			addText(relation.partner.toHtml());
 		}
 	}
 

@@ -107,9 +107,7 @@ public class Address implements Validation {
 	
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
-		s.append("<HTML>");
 		toHtml(s);
-		s.append("</HTML>");
 		return s.toString();
 	}
 	

@@ -66,14 +66,14 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 	protected void show(List<Relation> objects) {
 		if (isEditable()) {
 			for (Relation relation : objects) {
-				addHtml(relation.toHtml());
+				addText(relation.toHtml());
 				addAction(new RemoveRelationAction(relation));
 				addGap();
 			}
 			addAction(new AddRelationEditor());
 		} else {
 			for (Relation relation : objects) {
-				addHtml(relation.toHtml());
+				addText(relation.toHtml());
 				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
 				addGap();
 			}

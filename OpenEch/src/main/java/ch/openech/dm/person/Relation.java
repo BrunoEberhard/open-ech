@@ -65,9 +65,7 @@ public class Relation implements Validatable {
 	
 	public String identificationToHtml() {
 		StringBuilder s = new StringBuilder();
-		s.append("<HTML>");
 		identificationToHtml(s);
-		s.append("</HTML>");
 		return s.toString();
 	}
 	
@@ -85,7 +83,6 @@ public class Relation implements Validatable {
 
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
-		s.append("<HTML>");
 
 		if (typeOfRelationship != null) {
 			String text = EnumUtils.getText(typeOfRelationship);
@@ -114,7 +111,6 @@ public class Relation implements Validatable {
 
 		identificationToHtml(s);
 		
-		s.append("</HTML>");
 		return s.toString();
 	}
 	

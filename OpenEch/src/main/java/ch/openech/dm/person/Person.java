@@ -230,9 +230,7 @@ public class Person implements Validation {
 	
 	public String toHtmlMultiLine() {
 		StringBuilder s = new StringBuilder();
-		s.append("<HTML>");
 		toHtmlMultiLine(s);
-		s.append("</HTML>");
 		return s.toString();
 	}
 	

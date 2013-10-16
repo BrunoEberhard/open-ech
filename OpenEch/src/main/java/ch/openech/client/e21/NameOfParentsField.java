@@ -23,13 +23,13 @@ public class NameOfParentsField extends ObjectFlowField<NameOfParents> {
 	@Override
 	protected void show(NameOfParents object) {
 		if (!object.father.isEmpty()) {
-			addObject("Vater");
-			addHtml(object.father.display());
+			addText("Vater");
+			addText(object.father.display());
 			addGap();
 		}
 		if (!object.mother.isEmpty()) {
-			addObject("Mutter");
-			addHtml(object.mother.display());
+			addText("Mutter");
+			addText(object.mother.display());
 		}
 	}
 	

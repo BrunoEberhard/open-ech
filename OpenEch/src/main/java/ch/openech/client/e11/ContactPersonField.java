@@ -38,8 +38,8 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	@Override
 	protected void show(ContactPerson contactPerson) {
 		if (contactPerson.person != null) {
-			addObject("Kontaktperson");
-			addHtml(contactPerson.person.toHtml());
+			addText("Kontaktperson");
+			addText(contactPerson.person.toHtml());
 			if (isEditable()) {
 				addAction(new RemovePersonContactAction());
 			} else {
@@ -48,15 +48,15 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			addGap();
 		}
 		if (contactPerson.address != null) {
-			addObject("Kontaktadresse");
-			addHtml(contactPerson.address.toHtml());
+			addText("Kontaktadresse");
+			addText(contactPerson.address.toHtml());
 			if (isEditable()) {
 				addAction(new RemoveAddressContactAction());
 			}		
 			addGap();
 		}
 		if (contactPerson.validTill != null) {
-			addObject("Gültig bis");
+			addText("Gültig bis");
 			DateUtils.formatCH(contactPerson.validTill);
 			addGap();
 		}

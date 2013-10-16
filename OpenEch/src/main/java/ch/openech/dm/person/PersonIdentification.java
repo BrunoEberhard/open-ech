@@ -57,9 +57,7 @@ public class PersonIdentification {
 	
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
-		s.append("<HTML>");
 		toHtml(s);
-		s.append("</HTML>");
 		return s.toString();
 	}
 	

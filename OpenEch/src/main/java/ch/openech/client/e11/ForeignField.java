@@ -17,7 +17,7 @@ public class ForeignField extends ObjectFlowField<Foreign> {
 	@Override
 	protected void show(Foreign foreign) {
 		if (!foreign.isEmpty()) {
-			addHtml(foreign.toHtml());
+			addText(foreign.toHtml());
 		}
 	}
 

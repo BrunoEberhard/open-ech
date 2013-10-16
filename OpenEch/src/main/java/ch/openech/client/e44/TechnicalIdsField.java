@@ -77,7 +77,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 		@Override
 		protected void show(List<NamedId> object) {
 			for (NamedId id : object) {
-				addObject(id.display());
+				addText(id.display());
 				addAction(new RemoveOtherIdAction(id));
 				addGap();
 			}

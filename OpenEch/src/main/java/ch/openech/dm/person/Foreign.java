@@ -24,13 +24,12 @@ public class Foreign {
 		// der neuere "normale" Code, daher wird zum auflösen der ältere verwendet
 		String codeText = EnumUtils.getText(residencePermit);
 		
-		String s = "<HTML>";
+		String s = "";
 		if (codeText != null) {
 			s = s + codeText + "<BR>";
 		}
 		if (residencePermitTill != null) s += "Gültig bis: " + DateUtils.formatCH(residencePermitTill) + "<BR>";
 		if (!StringUtils.isBlank(nameOnPassport)) s += "Name in ausl. Pass: " + nameOnPassport;
-		s = s + "</HTML>";
 		return s;
 	}
 	

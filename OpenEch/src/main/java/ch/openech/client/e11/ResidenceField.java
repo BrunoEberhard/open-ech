@@ -108,9 +108,9 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		} 
 		
 		if (hasResidence) {
-			addObject(s);
+			addText(s.toString());
 		} else {
-			addObject("Kein Wohnsitz");
+			addText("Kein Wohnsitz");
 		}
 		
 		// Bei Nebenwohnsitz darf es nur einer sein, daher auch die Aktion nur bei leerer Liste anbieten

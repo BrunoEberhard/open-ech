@@ -84,7 +84,7 @@ public class ContactField extends ObjectFlowField<Contact> {
 	@Override
 	protected void show(Contact contact) {
 		for (ContactEntry contactEntry : contact.entries) {
-			addHtml(contactEntry.toHtml());
+			addText(contactEntry.toHtml());
 			if (isEditable()) {
 				addAction(new RemoveContactEntryAction(contactEntry));
 			}

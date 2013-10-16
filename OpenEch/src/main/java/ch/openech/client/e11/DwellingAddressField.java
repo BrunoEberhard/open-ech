@@ -18,7 +18,7 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 	
 	@Override
 	protected void show(DwellingAddress dwellingAddress) {
-		addHtml(dwellingAddress.toHtml());
+		addText(dwellingAddress.toHtml());
 	}
 	
 	@Override

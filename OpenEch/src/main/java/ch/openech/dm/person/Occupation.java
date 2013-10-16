@@ -46,7 +46,6 @@ public class Occupation implements Validation {
 
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
-		s.append("<HTML>");
 		
 		if (!StringUtils.isBlank(jobTitle)) {
 			StringUtils.appendLine(s, "Bezeichnung:", jobTitle);
@@ -74,7 +73,6 @@ public class Occupation implements Validation {
 			s.append("Gültig bis "); s.append(DateUtils.formatCH(occupationValidTill));
 		}
 		
-		s.append("&nbsp;</HTML>");
 		return s.toString();
 	}
 

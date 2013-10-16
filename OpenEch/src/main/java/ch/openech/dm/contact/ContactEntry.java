@@ -68,7 +68,6 @@ public class ContactEntry implements Validation {
 	
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
-		s.append("<HTML>");
 		if (typeOfContact != null) {
 			if (categoryCode != null) {
 				if (isAddressEntry() | isEmail() || isInternet()) s.append(EnumUtils.getText(categoryCode));
@@ -113,7 +112,6 @@ public class ContactEntry implements Validation {
 			}
 		}
 		
-		s.append("</HTML>");
 		return s.toString();
 	}
 

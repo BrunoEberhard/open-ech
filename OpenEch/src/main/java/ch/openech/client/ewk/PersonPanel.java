@@ -227,7 +227,7 @@ public class PersonPanel extends EchForm<Person>  {
 		
 		@Override
 		protected void show(Relation relation) {
-			addHtml(relation.identificationToHtml());
+			addText(relation.identificationToHtml());
 		}
 
 		@Override
