@@ -1,7 +1,5 @@
 package ch.openech.client.e44;
 
-import java.util.List;
-
 import ch.openech.client.page.SearchPersonPage;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.edit.SearchDialogAction;
@@ -9,6 +7,7 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
+import ch.openech.mj.search.FulltextIndexSearch;
 import ch.openech.server.EchServer;
 
 public class PersonField extends ObjectFlowField<Person> {
@@ -41,13 +40,7 @@ public class PersonField extends ObjectFlowField<Person> {
 	public class PersonSearchAction extends SearchDialogAction<Person> {
 		
 		public PersonSearchAction() {
-			super(getComponent(), SearchPersonPage.FIELD_NAMES);
-		}
-
-		@Override
-		protected List<Person> search(String text) {		
-			List<Person> resultList = EchServer.getInstance().getPersistence().personIndex().find(text);
-			return resultList;
+			super(getComponent(), new FulltextIndexSearch<>(Person.class, EchServer.getInstance().getPersistence().personIndex(), SearchPersonPage.FIELD_NAMES));
 		}
 
 		@Override
