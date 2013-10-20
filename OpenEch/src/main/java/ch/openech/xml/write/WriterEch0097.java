@@ -1,22 +1,11 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.LEGAL_FORM;
-import static ch.openech.dm.XmlConstants.LOCAL_ORGANISATION_ID;
-import static ch.openech.dm.XmlConstants.ORGANISATION_ADDITIONAL_NAME;
-import static ch.openech.dm.XmlConstants.ORGANISATION_ID;
-import static ch.openech.dm.XmlConstants.ORGANISATION_IDENTIFICATION;
-import static ch.openech.dm.XmlConstants.ORGANISATION_ID_CATEGORY;
-import static ch.openech.dm.XmlConstants.ORGANISATION_LEGAL_NAME;
-import static ch.openech.dm.XmlConstants.ORGANISATION_NAME;
-import static ch.openech.dm.XmlConstants.UID;
-import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID;
-import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID_CATEGORIE;
-import static ch.openech.dm.XmlConstants._OTHER_ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.*;
 
 import java.util.List;
 
 import ch.openech.dm.common.NamedId;
-import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.dm.organisation.UidStructure;
 
 public class WriterEch0097 {
@@ -26,11 +15,11 @@ public class WriterEch0097 {
 	public WriterEch0097(EchSchema context) {
 		URI = context.getNamespaceURI(97);
 	}
-	public void organisationIdentification(WriterElement parent, Organisation values) throws Exception {
+	public void organisationIdentification(WriterElement parent, OrganisationIdentification values) throws Exception {
 		organisationIdentification(parent, ORGANISATION_IDENTIFICATION, values);
 	}
 	
-	public void organisationIdentification(WriterElement parent, String tagName, Organisation values) throws Exception {
+	public void organisationIdentification(WriterElement parent, String tagName, OrganisationIdentification values) throws Exception {
 		WriterElement element = parent.create(URI, tagName);
 
 		uidStructure(element, UID, values.uid);

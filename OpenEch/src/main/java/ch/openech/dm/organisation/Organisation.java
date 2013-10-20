@@ -12,7 +12,6 @@ import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
-import ch.openech.dm.common.TechnicalIds;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.types.Language;
 import ch.openech.mj.edit.validation.Validation;
@@ -21,6 +20,7 @@ import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.model.annotation.Code;
+import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.properties.FlatProperties;
@@ -38,16 +38,7 @@ public class Organisation implements Validation {
 	public Event event;
 	
 	// 97 : Identification
-	public final UidStructure uid = new UidStructure(); 
-	
-	public final TechnicalIds technicalIds = new TechnicalIds();
-	
-	@Required @Size(EchFormats.organisationName)
-	public String organisationName; 
-	@Size(EchFormats.organisationName)
-	public String organisationLegalName, organisationAdditionalName;
-	@Code
-	public String legalForm;
+	public final OrganisationIdentification identification = new OrganisationIdentification();
 	
 	// 98 : Daten
 	
@@ -102,9 +93,16 @@ public class Organisation implements Validation {
 	public Place goesTo;
 	
 	// secondaryResidence / otherResidence
-	public Organisation headquarterOrganisation;
+	@Enabled("!isMainResidence")
+	public Headquarter headquarter;
 
 	public Contact contact;
+
+	//
+
+	public boolean isMainResidence() {
+		return typeOfResidenceOrganisation == TypeOfResidenceOrganisation.hasMainResidence;
+	}
 	
 	//
 	
@@ -126,11 +124,7 @@ public class Organisation implements Validation {
 	//
 	
 	public String getId() {
-		if (technicalIds.localId.openEch()) {
-			return technicalIds.localId.personId;
-		} else {
-			return null;
-		}
+		return identification.getId();
 	}
 
 	@Override

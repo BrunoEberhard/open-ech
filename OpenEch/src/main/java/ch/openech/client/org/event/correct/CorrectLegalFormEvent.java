@@ -17,7 +17,7 @@ public class CorrectLegalFormEvent extends OrganisationEventEditor<Organisation>
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.line(Organisation.ORGANISATION.legalForm);
+		formPanel.line(Organisation.ORGANISATION.identification.legalForm);
 	}
 
 	@Override

@@ -1,37 +1,6 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.ADDRESS;
-import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
-import static ch.openech.dm.XmlConstants.BUSINESS_ADDRESS;
-import static ch.openech.dm.XmlConstants.COMES_FROM;
-import static ch.openech.dm.XmlConstants.COUNTRY;
-import static ch.openech.dm.XmlConstants.DEPARTURE_DATE;
-import static ch.openech.dm.XmlConstants.FOREIGN_COUNTRY;
-import static ch.openech.dm.XmlConstants.FOREIGN_HEADQUARTER;
-import static ch.openech.dm.XmlConstants.FOUNDATION;
-import static ch.openech.dm.XmlConstants.FOUNDATION_DATE;
-import static ch.openech.dm.XmlConstants.FOUNDATION_REASON;
-import static ch.openech.dm.XmlConstants.GOES_TO;
-import static ch.openech.dm.XmlConstants.HAS_MAIN_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HAS_OTHER_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HAS_SECONDARY_RESIDENCE;
-import static ch.openech.dm.XmlConstants.HEADQUARTER_MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.LANGUAGE_OF_CORRESPONDANCE;
-import static ch.openech.dm.XmlConstants.LIQUIDATION;
-import static ch.openech.dm.XmlConstants.LIQUIDATION_DATE;
-import static ch.openech.dm.XmlConstants.LIQUIDATION_REASON;
-import static ch.openech.dm.XmlConstants.MAIL_ADDRESS;
-import static ch.openech.dm.XmlConstants.MOVING_DATE;
-import static ch.openech.dm.XmlConstants.NOGA_CODE;
-import static ch.openech.dm.XmlConstants.ORGANISATION;
-import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.SWISS_HEADQUARTER;
-import static ch.openech.dm.XmlConstants.SWISS_TOWN;
-import static ch.openech.dm.XmlConstants.TOWN;
-import static ch.openech.dm.XmlConstants.UID_BRANCHE_TEXT;
-import static ch.openech.dm.XmlConstants.UNKNOWN;
-import static ch.openech.dm.XmlConstants._E_G_I_D;
-import static ch.openech.dm.XmlConstants._E_W_I_D;
+import static ch.openech.dm.XmlConstants.*;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.organisation.Organisation;
@@ -84,11 +53,11 @@ public class WriterEch0098 {
 	}
 	
 	private void swissHeadquarter(WriterElement parent, Organisation values) throws Exception {
-		if (values.headquarterOrganisation != null) {
+		if (values.headquarter != null) {
 			WriterElement element = parent.create(URI, SWISS_HEADQUARTER);
-			ech97.organisationIdentification(element, values.headquarterOrganisation);
-			ech7.municipality(element, HEADQUARTER_MUNICIPALITY, values.headquarterOrganisation.reportingMunicipality);
-			dwellingAddress(element, BUSINESS_ADDRESS, values.headquarterOrganisation.businessAddress);
+			ech97.organisationIdentification(element, values.headquarter.identification);
+			ech7.municipality(element, HEADQUARTER_MUNICIPALITY, values.headquarter.reportingMunicipality);
+			dwellingAddress(element, BUSINESS_ADDRESS, values.headquarter.businessAddress);
 		}
 	}
 	
@@ -100,9 +69,9 @@ public class WriterEch0098 {
 	}
 
 	private void foreignHeadquarter(WriterElement parent, Organisation values) throws Exception {
-		if (values.headquarterOrganisation != null) {
+		if (values.headquarter != null) {
 			WriterElement element = parent.create(URI, FOREIGN_HEADQUARTER);
-			dwellingAddress(element, BUSINESS_ADDRESS, values.headquarterOrganisation.businessAddress);
+			dwellingAddress(element, BUSINESS_ADDRESS, values.headquarter.businessAddress);
 		}
 	}
 
@@ -154,7 +123,7 @@ public class WriterEch0098 {
 	public void organisation(WriterElement parent, String tagName, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, tagName);
 
-		ech97.organisationIdentification(element, values);
+		ech97.organisationIdentification(element, values.identification);
 		element.values(values, UID_BRANCHE_TEXT, NOGA_CODE);
 		foundation(element, values);
 		liquidation(element, values);

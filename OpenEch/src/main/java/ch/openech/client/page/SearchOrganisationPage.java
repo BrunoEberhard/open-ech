@@ -25,7 +25,7 @@ public class SearchOrganisationPage extends AbstractPage implements RefreshableP
 	private final ITable<Organisation> table;
 
 	public static final Object[] FIELD_NAMES = {
-		ORGANISATION.organisationName, //
+		ORGANISATION.identification.organisationName, //
 		ORGANISATION.businessAddress.mailAddress.street, //
 		ORGANISATION.businessAddress.mailAddress.houseNumber.houseNumber, //
 		ORGANISATION.businessAddress.mailAddress.town, //

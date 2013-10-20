@@ -19,6 +19,7 @@ import org.joda.time.LocalDateTime;
 import ch.openech.dm.Event;
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.mj.toolkit.ProgressListener;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.server.EchPersistence;
@@ -38,7 +39,7 @@ public class StaxEch0148 implements StaxEchParser {
 		organisation.event = e;
 		
 		if (organisation.getId() == null) {
-			organisation.technicalIds.localId.setOpenEch();
+			organisation.identification.technicalIds.localId.setOpenEch();
 		}
 		persistence.organisation().insert(organisation);
 		lastInsertedOrganisationId = organisation.getId();
@@ -144,11 +145,11 @@ public class StaxEch0148 implements StaxEchParser {
 
 	//
 
-	public Organisation getOrganisation(Organisation organisation) {
-		if (organisation.getId() != null) {
-			return persistence.organisationLocalIdIndex().find(organisation.getId());
+	public Organisation getOrganisation(OrganisationIdentification organisationIdentification) {
+		if (organisationIdentification.getId() != null) {
+			return persistence.organisationLocalIdIndex().find(organisationIdentification.getId());
 		} else {
-			List<Organisation> organisations = persistence.organisationIndex().find(organisation.organisationName);
+			List<Organisation> organisations = persistence.organisationIndex().find(organisationIdentification.organisationName);
 			if (!organisations.isEmpty()) {
 				return organisations.get(0);
 			} else {
@@ -179,7 +180,7 @@ public class StaxEch0148 implements StaxEchParser {
 	}
 
 	private void simpleOrganisationEvent(String eventName, XMLEventReader xml) throws XMLStreamException {
-		Organisation organisationIdentification = new Organisation();
+		OrganisationIdentification organisationIdentification = new OrganisationIdentification();
 		Organisation organisation = null;
 		
 		while (true) {

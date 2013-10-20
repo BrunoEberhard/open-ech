@@ -1,6 +1,6 @@
 package ch.openech.client.org;
 
-import static ch.openech.dm.organisation.Organisation.ORGANISATION;
+import static ch.openech.dm.organisation.Organisation.*;
 import ch.openech.client.e44.TechnicalIdsField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.organisation.Organisation;
@@ -33,9 +33,9 @@ public class OrganisationPanel extends EchForm<Organisation> {
 	}
 
 	public void organisation() {
-		line(ORGANISATION.organisationName);
-		line(ORGANISATION.organisationLegalName, ORGANISATION.organisationAdditionalName, ORGANISATION.legalForm, ORGANISATION.languageOfCorrespondance);
-		line(ORGANISATION.uid, new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
+		line(ORGANISATION.identification.organisationName);
+		line(ORGANISATION.identification.organisationLegalName, ORGANISATION.identification.organisationAdditionalName, ORGANISATION.identification.legalForm, ORGANISATION.languageOfCorrespondance);
+		line(ORGANISATION.identification.uid, new TechnicalIdsField(ORGANISATION.identification.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
 
 		line(ORGANISATION.uidBrancheText, ORGANISATION.nogaCode);
 		if (EditMode.DISPLAY != mode) {
@@ -52,9 +52,9 @@ public class OrganisationPanel extends EchForm<Organisation> {
 		line(ORGANISATION.arrivalDate, ORGANISATION.departureDate);
 		line(ORGANISATION.comesFrom, ORGANISATION.goesTo);
 		if (EditMode.CHANGE_RESIDENCE_TYPE != mode) {
-			line(ORGANISATION.businessAddress, ORGANISATION.contact, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
+			line(ORGANISATION.businessAddress, ORGANISATION.contact, new HeadquarterField(ORGANISATION.headquarter, echSchema, editable));
 		} else {
-			line(ORGANISATION.businessAddress, new HeadquarterField(ORGANISATION.headquarterOrganisation, editable));
+			line(ORGANISATION.businessAddress, new HeadquarterField(ORGANISATION.headquarter, echSchema, editable));
 		}
 	}
 

@@ -10,8 +10,8 @@ import org.joda.time.ReadablePartial;
 
 import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.contact.Contact;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.tpn.ThirdPartyMove;
@@ -29,8 +29,6 @@ public class EchPersistence extends DbPersistence {
 	private final ColumnIndexUnqiue<Person> personVnIndex;
 	private final ColumnIndexUnqiue<Person> personLocalPersonIdIndex;
 	
-	private final HistorizedTable<Contact> contact;
-
 	private final HistorizedTable<Organisation> organisation;
 	private final FulltextIndex<Organisation> organisationFulltextIndex;
 	private final ColumnIndexUnqiue<Organisation> organisationLocalIdIndex;
@@ -47,8 +45,8 @@ public class EchPersistence extends DbPersistence {
 	};
 
 	private static final Object[] ORGANISATION_INDEX_KEYS = {
-		ORGANISATION.technicalIds.localId.personId, 
-		ORGANISATION.organisationName, //
+		ORGANISATION.identification.technicalIds.localId.personId, 
+		ORGANISATION.identification.organisationName, //
 	};
 	
 	public EchPersistence() throws SQLException {
@@ -61,11 +59,11 @@ public class EchPersistence extends DbPersistence {
 		personVnIndex = person.createIndexUnique(PERSON.personIdentification.vn.value);
 		personLocalPersonIdIndex = person.createIndexUnique(PERSON.personIdentification.technicalIds.localId.personId);
 		
-		contact = addHistorizedClass(Contact.class);
-
+		addImmutableClass(OrganisationIdentification.class);
+		
 		organisation = addHistorizedClass(Organisation.class);
 		organisationFulltextIndex = organisation.createFulltextIndex(ORGANISATION_INDEX_KEYS);
-		organisationLocalIdIndex = organisation.createIndexUnique(ORGANISATION.technicalIds.localId.personId);
+		organisationLocalIdIndex = organisation.createIndexUnique(ORGANISATION.identification.technicalIds.localId.personId);
 
 		// thirdPartyMove = addClass(ThirdPartyMove.class);
 		
@@ -124,10 +122,6 @@ public class EchPersistence extends DbPersistence {
 		} else {
 			return null;
 		}
-	}
-
-	public HistorizedTable<Contact> contact() {
-		return contact;
 	}
 
 	public HistorizedTable<Organisation> organisation() {

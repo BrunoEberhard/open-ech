@@ -1,18 +1,7 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.LEGAL_FORM;
-import static ch.openech.dm.XmlConstants.LOCAL_ORGANISATION_ID;
-import static ch.openech.dm.XmlConstants.ORGANISATION_ADDITIONAL_NAME;
-import static ch.openech.dm.XmlConstants.ORGANISATION_ID;
-import static ch.openech.dm.XmlConstants.ORGANISATION_ID_CATEGORY;
-import static ch.openech.dm.XmlConstants.ORGANISATION_LEGAL_NAME;
-import static ch.openech.dm.XmlConstants.ORGANISATION_NAME;
-import static ch.openech.dm.XmlConstants.UID;
-import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID;
-import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID_CATEGORIE;
-import static ch.openech.dm.XmlConstants._OTHER_ORGANISATION_ID;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
+import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
@@ -20,13 +9,19 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.dm.common.NamedId;
-import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.dm.organisation.UidStructure;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0097 {
 
-	public static void organisationIdentification(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
+	public static OrganisationIdentification organisationIdentification(XMLEventReader xml) throws XMLStreamException {
+		OrganisationIdentification organisationIdentification = new OrganisationIdentification();
+		organisationIdentification(xml, organisationIdentification);
+		return organisationIdentification;
+	}
+
+	public static void organisationIdentification(XMLEventReader xml, OrganisationIdentification organisation) throws XMLStreamException {
 		 
 		while (true) {
 			XMLEvent event = xml.nextEvent();
