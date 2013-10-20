@@ -2,19 +2,21 @@ package ch.openech.test.persistence;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.contact.ContactEntryType;
 import ch.openech.dm.types.ContactCategory;
-import ch.openech.server.EchPersistence;
-import ch.openech.server.EchServer;
+import ch.openech.mj.db.DbPersistence;
+import ch.openech.mj.db.HistorizedTable;
 
 
+@Ignore
 public class ContactPersistenceTest {
 
-	private static EchPersistence persistence = EchServer.getInstance().getPersistence();
+	private static ContactPersistence persistence = new ContactPersistence();
 	
 	@Test
 	public void insertContactWithoutEntriesTest() throws Exception {
@@ -47,6 +49,18 @@ public class ContactPersistenceTest {
 		Assert.assertEquals(contact.stringId, readContact.stringId);
 		Assert.assertEquals(1, readContact.entries.size());
 		Assert.assertEquals(contact.getPhoneList().get(0).categoryCode, readContact.getPhoneList().get(0).categoryCode);
-		
+	}
+	
+	private static class ContactPersistence extends DbPersistence {
+		private final HistorizedTable<Contact> contact;
+
+		public ContactPersistence() {
+			contact = addHistorizedClass(Contact.class);
+			connect();
+		}
+
+		public HistorizedTable<Contact> contact() {
+			return contact;
+		}
 	}
 }
