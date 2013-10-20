@@ -21,10 +21,7 @@ public class DomainClassTest {
 			Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
 		}
 		
-		ModelTest test = new ModelTest();
-		test.test(Person.class);
-		test.test(Organisation.class);
-//		testDomainClass(ThirdPartyMove.class);
+		ModelTest test = new ModelTest(Person.class, Organisation.class); // ThirdPartyMove.class
 		if (!test.getProblems().isEmpty()) {
 			for (String s : test.getProblems()) {
 				System.err.println(s);
