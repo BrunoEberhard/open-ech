@@ -36,17 +36,29 @@ public class EchPersistence extends DbPersistence {
 	private final Table<ThirdPartyMove> thirdPartyMove = null;
 
 	private static final Object[] PERSON_INDEX_KEYS = {
-		PERSON.personIdentification.technicalIds.localId.personId, 
 		PERSON.personIdentification.officialName, //
 		PERSON.personIdentification.firstName, //
 		PERSON.personIdentification.dateOfBirth, //
 		PERSON.aliasName, //
 		PERSON.personIdentification.vn.value, //
 	};
+	
+	private static final Object[] PERSON_NON_INDEX_KEYS = {
+		PERSON.personIdentification.technicalIds.localId.personId, 
+		PERSON.getStreet(), //
+		PERSON.getStreetNumber(), //
+		PERSON.getTown(), //
+	};
 
 	private static final Object[] ORGANISATION_INDEX_KEYS = {
-		ORGANISATION.identification.technicalIds.localId.personId, 
 		ORGANISATION.identification.organisationName, //
+	};
+	
+	private static final Object[] ORGANISATION_NON_INDEX_KEYS = {
+		ORGANISATION.identification.technicalIds.localId.personId, 
+		ORGANISATION.businessAddress.mailAddress.street, //
+		ORGANISATION.businessAddress.mailAddress.houseNumber.houseNumber, //
+		ORGANISATION.businessAddress.mailAddress.town, //
 	};
 	
 	public EchPersistence() throws SQLException {
@@ -55,14 +67,14 @@ public class EchPersistence extends DbPersistence {
 		addImmutableClass(CountryIdentification.class);
 		
 		person = addHistorizedClass(Person.class);
-		personFulltextIndex = person.createFulltextIndex(PERSON_INDEX_KEYS);
+		personFulltextIndex = person.createFulltextIndex(PERSON_INDEX_KEYS, PERSON_NON_INDEX_KEYS);
 		personVnIndex = person.createIndexUnique(PERSON.personIdentification.vn.value);
 		personLocalPersonIdIndex = person.createIndexUnique(PERSON.personIdentification.technicalIds.localId.personId);
 		
 		addImmutableClass(OrganisationIdentification.class);
 		
 		organisation = addHistorizedClass(Organisation.class);
-		organisationFulltextIndex = organisation.createFulltextIndex(ORGANISATION_INDEX_KEYS);
+		organisationFulltextIndex = organisation.createFulltextIndex(ORGANISATION_INDEX_KEYS, ORGANISATION_NON_INDEX_KEYS);
 		organisationLocalIdIndex = organisation.createIndexUnique(ORGANISATION.identification.technicalIds.localId.personId);
 
 		// thirdPartyMove = addClass(ThirdPartyMove.class);

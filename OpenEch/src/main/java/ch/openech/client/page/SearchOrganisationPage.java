@@ -2,35 +2,36 @@ package ch.openech.client.page;
 
 import static ch.openech.dm.organisation.Organisation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.EchSchema0148;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.page.AbstractPage;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
-import ch.openech.mj.page.RefreshablePage;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.IComponent;
-import ch.openech.mj.toolkit.ITable;
-import ch.openech.mj.toolkit.ITable.TableActionListener;
+import ch.openech.mj.page.TablePage;
+import ch.openech.mj.search.FulltextIndexSearch;
+import ch.openech.mj.search.Item;
+import ch.openech.mj.search.Search;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
-public class SearchOrganisationPage extends AbstractPage implements RefreshablePage {
+public class SearchOrganisationPage extends TablePage<Organisation> {
 
 	private final EchSchema echSchema;
 	private final String text;
-	private final ITable<Organisation> table;
 
 	public static final Object[] FIELD_NAMES = {
+		ORGANISATION.identification.technicalIds.localId.personId, // TODO move to invisible
 		ORGANISATION.identification.organisationName, //
 		ORGANISATION.businessAddress.mailAddress.street, //
 		ORGANISATION.businessAddress.mailAddress.houseNumber.houseNumber, //
 		ORGANISATION.businessAddress.mailAddress.town, //
 	};
 	
+	private static Search<Organisation> search = new FulltextIndexSearch<>(Organisation.class, EchServer.getInstance().getPersistence().organisationIndex(), FIELD_NAMES);
+
 	public SearchOrganisationPage(PageContext context, String text) {
 		this(context, getVersionFromPreference(context), text);
 	}
@@ -42,19 +43,11 @@ public class SearchOrganisationPage extends AbstractPage implements RefreshableP
 	}
 	
 	public SearchOrganisationPage(PageContext context, String version, String text) {
-		super(context);
+		super(context, search, text);
 		this.echSchema = EchSchema.getNamespaceContext(148, version);
 		this.text = text;
-		table = ClientToolkit.getToolkit().createTable(Organisation.class, FIELD_NAMES);
-		table.setClickListener(new OrganisationTableClickListener());
-		refresh();
 	}
 
-	@Override
-	public IComponent getComponent() {
-		return table;
-	}
-	
 	@Override
 	public String getTitle() {
 		return "Suche Organisationen mit " + text;
@@ -65,17 +58,15 @@ public class SearchOrganisationPage extends AbstractPage implements RefreshableP
 		return null;
 	}
 
-	private class OrganisationTableClickListener implements TableActionListener<Organisation> {
-		@Override
-		public void action(Organisation selectedObject, List<Organisation> selectedObjects) {
-			show(OrganisationViewPage.class, echSchema.getVersion(), selectedObject.getId());
-		}
-	}
-	
 	@Override
-	public void refresh() {
-		List<Organisation> resultList = EchServer.getInstance().getPersistence().organisationIndex().find(text);
-		table.setObjects(resultList);
+	protected void clicked(Item item, List<Item> items) {
+		List<String> pageLinks = new ArrayList<String>(getItems().size());
+		for (Item i : getItems()) {
+			String link = link(OrganisationViewPage.class, echSchema.getVersion(), (String)i.getValue(ORGANISATION.identification.technicalIds.localId.personId));
+			pageLinks.add(link);
+		}
+		int index = getItems().indexOf(item);
+		getPageContext().show(pageLinks, index);
 	}
 	
 }
