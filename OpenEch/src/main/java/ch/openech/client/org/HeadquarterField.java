@@ -71,7 +71,7 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 	public final class SelectHeadquarterAction extends SearchDialogAction<Organisation> {
 		
 		public SelectHeadquarterAction() {
-			super(getComponent(), new FulltextIndexSearch<>(Organisation.class, EchServer.getInstance().getPersistence().organisationIndex(), SearchOrganisationPage.FIELD_NAMES));
+			super(getComponent(), new FulltextIndexSearch<>(EchServer.getInstance().getPersistence().organisationIndex()), SearchOrganisationPage.FIELD_NAMES);
 		}
 
 		@Override

@@ -40,7 +40,7 @@ public class PersonField extends ObjectFlowField<Person> {
 	public class PersonSearchAction extends SearchDialogAction<Person> {
 		
 		public PersonSearchAction() {
-			super(getComponent(), new FulltextIndexSearch<>(Person.class, EchServer.getInstance().getPersistence().personIndex(), SearchPersonPage.FIELD_NAMES));
+			super(getComponent(), new FulltextIndexSearch<>(EchServer.getInstance().getPersistence().personIndex()), SearchPersonPage.FIELD_NAMES);
 		}
 
 		@Override

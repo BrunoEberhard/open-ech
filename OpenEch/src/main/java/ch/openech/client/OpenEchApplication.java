@@ -38,18 +38,14 @@ import ch.openech.client.page.SearchPersonPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.client.preferences.PreferencesEditor;
-import ch.openech.datagenerator.DataGenerator;
 import ch.openech.datagenerator.GeneratePersonEditor;
-import ch.openech.dm.EchSchema0020;
 import ch.openech.mj.application.DevMode;
 import ch.openech.mj.application.MjApplication;
 import ch.openech.mj.model.Codes;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.IAction;
-import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
-import ch.openech.xml.write.WriterEch0020;
 
 public class OpenEchApplication extends MjApplication {
 
@@ -65,24 +61,24 @@ public class OpenEchApplication extends MjApplication {
 
 		final String demoPersons = System.getProperty("DemoPerson");
 
-		if (!StringUtils.isEmpty(demoPersons)) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						int count = Integer.parseInt(demoPersons);
-						ewkSchema = EchSchema.getNamespaceContext(EchSchema0020._2_2);
-						WriterEch0020 writerEch0020 = new WriterEch0020(ewkSchema);
-						for (int i = 0; i<count; i++) {
-							DataGenerator.generatePerson(writerEch0020);
-						}
-					} catch (Exception x) {
-						System.err.println("Could not generate DemoPerson");
-						x.printStackTrace();
-					}
-				}
-			}).start();
-		}
+//		if (!StringUtils.isEmpty(demoPersons)) {
+//			new Thread(new Runnable() {
+//				@Override
+//				public void run() {
+//					try {
+//						int count = Integer.parseInt(demoPersons);
+//						ewkSchema = EchSchema.getNamespaceContext(EchSchema0020._2_2);
+//						WriterEch0020 writerEch0020 = new WriterEch0020(ewkSchema);
+//						for (int i = 0; i<count; i++) {
+//							DataGenerator.generatePerson(writerEch0020);
+//						}
+//					} catch (Exception x) {
+//						System.err.println("Could not generate DemoPerson");
+//						x.printStackTrace();
+//					}
+//				}
+//			}).start();
+//		}
 	}
 
 	@Override

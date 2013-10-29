@@ -2,7 +2,6 @@ package ch.openech.client.page;
 
 import static ch.openech.dm.person.Person.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences;
@@ -12,8 +11,6 @@ import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.TablePage;
 import ch.openech.mj.search.FulltextIndexSearch;
-import ch.openech.mj.search.Item;
-import ch.openech.mj.search.Search;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
@@ -33,8 +30,6 @@ public class SearchPersonPage extends TablePage<Person> {
 		PERSON.personIdentification.vn.value, //
 	};
 	
-	private static Search<Person> search = new FulltextIndexSearch<>(Person.class, EchServer.getInstance().getPersistence().personIndex(), FIELD_NAMES);
-	
 	public SearchPersonPage(PageContext context, String text) {
 		this(context, getVersionFromPreference(context), text);
 	}
@@ -46,7 +41,7 @@ public class SearchPersonPage extends TablePage<Person> {
 	}
 	
 	public SearchPersonPage(PageContext context, String version, String text) {
-		super(context, search, text);
+		super(context, new FulltextIndexSearch<>(EchServer.getInstance().getPersistence().personIndex()), FIELD_NAMES, text);
 		this.echSchema = EchSchema.getNamespaceContext(20, version);
 		this.text = text;
 	}
@@ -62,14 +57,16 @@ public class SearchPersonPage extends TablePage<Person> {
 	}
 
 	@Override
-	protected void clicked(Item item, List<Item> items) {
-		List<String> pageLinks = new ArrayList<String>(getItems().size());
-		for (Item i : getItems()) {
-			String link = link(PersonViewPage.class, echSchema.getVersion(), (String)i.getValue(PERSON.personIdentification.technicalIds.localId.personId));
-			pageLinks.add(link);
-		}
-		int index = getItems().indexOf(item);
-		getPageContext().show(pageLinks, index);
+	protected void clicked(int selectedId, List<Integer> selectedIds) {
+//		List<String> pageLinks = new ArrayList<String>(getItems().size());
+//		for (Item i : getItems()) {
+//			String link = link(PersonViewPage.class, echSchema.getVersion(), (String)i.getValue(PERSON.personIdentification.technicalIds.localId.personId));
+//			pageLinks.add(link);
+//		}
+//		int index = getItems().indexOf(person);
+//		getPageContext().show(pageLinks, index);
+		Person person = EchServer.getInstance().getPersistence().person().read(selectedId);
+		show(PersonViewPage.class, echSchema.getVersion(), person.personIdentification.technicalIds.localId.personId);
 	}
 	
 }

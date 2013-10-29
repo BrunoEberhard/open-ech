@@ -75,7 +75,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	public class SelectPersonContactEditor extends SearchDialogAction<Person> {
 		
 		public SelectPersonContactEditor() {
-			super(getComponent(), new FulltextIndexSearch<>(Person.class, EchServer.getInstance().getPersistence().personIndex(), SearchPersonPage.FIELD_NAMES));
+			super(getComponent(), new FulltextIndexSearch<>(EchServer.getInstance().getPersistence().personIndex()), SearchPersonPage.FIELD_NAMES);
 		}
 		
 		@Override
