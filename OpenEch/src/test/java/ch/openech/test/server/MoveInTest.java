@@ -21,7 +21,7 @@ public class MoveInTest extends AbstractServerTest {
 	public void moveIn() throws Exception {
 		processFile("samples/eCH-0020/moveIn/data_ordipro-moveIn-21.xml");
 		
-		List<Person> persons = EchServer.getInstance().getPersistence().personIndex().find("BERNALUSKOVSKI");
+		List<Person> persons = EchServer.getInstance().getPersistence().personIndex().findObjects("BERNALUSKOVSKI");
 		Assert.assertEquals(1, persons.size());
 		Person person = persons.get(0);
 		

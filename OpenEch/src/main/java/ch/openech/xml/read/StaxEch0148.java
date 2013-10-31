@@ -149,7 +149,7 @@ public class StaxEch0148 implements StaxEchParser {
 		if (organisationIdentification.getId() != null) {
 			return persistence.organisationLocalIdIndex().find(organisationIdentification.getId());
 		} else {
-			List<Organisation> organisations = persistence.organisationIndex().find(organisationIdentification.organisationName);
+			List<Organisation> organisations = persistence.organisationIndex().findObjects(organisationIdentification.organisationName);
 			if (!organisations.isEmpty()) {
 				return organisations.get(0);
 			} else {

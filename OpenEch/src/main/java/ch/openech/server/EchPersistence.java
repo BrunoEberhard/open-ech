@@ -17,20 +17,20 @@ import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.tpn.ThirdPartyMove;
 import ch.openech.mj.db.ColumnIndexUnqiue;
 import ch.openech.mj.db.DbPersistence;
-import ch.openech.mj.db.FulltextIndex;
 import ch.openech.mj.db.HistorizedTable;
+import ch.openech.mj.db.MultiIndex;
 import ch.openech.mj.db.Table;
 import ch.openech.mj.util.StringUtils;
 
 public class EchPersistence extends DbPersistence {
 
 	private final HistorizedTable<Person> person;
-	private final FulltextIndex<Person> personFulltextIndex;
+	private final MultiIndex<Person> personFulltextIndex;
 	private final ColumnIndexUnqiue<Person> personVnIndex;
 	private final ColumnIndexUnqiue<Person> personLocalPersonIdIndex;
 	
 	private final HistorizedTable<Organisation> organisation;
-	private final FulltextIndex<Organisation> organisationFulltextIndex;
+	private final MultiIndex<Organisation> organisationFulltextIndex;
 	private final ColumnIndexUnqiue<Organisation> organisationLocalIdIndex;
 	
 	private final Table<ThirdPartyMove> thirdPartyMove = null;
@@ -72,7 +72,7 @@ public class EchPersistence extends DbPersistence {
 		return person;
 	}
 
-	public FulltextIndex<Person> personIndex() {
+	public MultiIndex<Person> personIndex() {
 		return personFulltextIndex;
 	}
 
@@ -85,7 +85,7 @@ public class EchPersistence extends DbPersistence {
 	}
 
 	public Person getByName(String name, String firstName, ReadablePartial dateOfBirth) {
-		List<Person> persons = personIndex().find(name);
+		List<Person> persons = personIndex().findObjects(name);
 		for (int i = persons.size()-1; i>= 0; i--) {
 			Person person = persons.get(i);
 			if (!StringUtils.isBlank(firstName) && !StringUtils.equals(firstName, person.personIdentification.firstName)) {
@@ -114,7 +114,7 @@ public class EchPersistence extends DbPersistence {
 			if (person != null) return person;
 		} 
 		// TODO getByIdentification für Sedex verbessern
-		List<Person> persons = personIndex().find(personIdentification.firstName + " " + personIdentification.officialName);
+		List<Person> persons = personIndex().findObjects(personIdentification.firstName + " " + personIdentification.officialName);
 		if (!persons.isEmpty()) {
 			return persons.get(0);
 		} else {
@@ -130,7 +130,7 @@ public class EchPersistence extends DbPersistence {
 		return organisationLocalIdIndex;
 	}
 
-	public FulltextIndex<Organisation> organisationIndex() {
+	public MultiIndex<Organisation> organisationIndex() {
 		return organisationFulltextIndex;
 	}
 	
