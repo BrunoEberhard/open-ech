@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
+import ch.openech.dm.common.CountryIdentification;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
@@ -31,13 +32,15 @@ import ch.openech.server.EchServer;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 import ch.openech.xml.read.StaxEch0071;
+import ch.openech.xml.read.StaxEch0072;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0148;
 
 public class DataGenerator {
 
 	private static List<MunicipalityIdentification> municipalityIdentifications = StaxEch0071.getInstance().getMunicipalityIdentifications();
-
+	private static List<CountryIdentification> countryIdentifications = StaxEch0072.getInstance().getCountryIdentifications();
+	
 	public static void generatePerson(WriterEch0020 writerEch0020) {
 		try {
 			String xml = writerEch0020.moveIn(person());
@@ -137,11 +140,12 @@ public class DataGenerator {
 	
 	public static Place place() {
 		Place place = new Place();
-//		if (Math.random() < 0.86) {
-			place.setMunicipalityIdentification(municipalityIdentifications.get((int)(Math.random() * municipalityIdentifications.size())));
-//		} else {
-//			CountryIdentificationDAO.getInstance().getCountryIdentification(id)
-//		}
+		if (Math.random() < 0.86) {
+			place.setMunicipalityIdentification(municipalityIdentification());
+		} else {
+			place.setMunicipalityIdentification(municipalityIdentification());
+			place.setCountryIdentification(countryIdentification());
+		}
 		return place;
 	}
 	
@@ -161,6 +165,13 @@ public class DataGenerator {
 		MunicipalityIdentification m = municipalityIdentifications.get((int)(Math.random() * municipalityIdentifications.size()));
 		m.copyTo(municipalityIdentification);
 		return municipalityIdentification;
+	}
+	
+	public static CountryIdentification countryIdentification() {
+		CountryIdentification countryIdentification = new CountryIdentification();
+		CountryIdentification m = countryIdentifications.get((int)(Math.random() * countryIdentifications.size()));
+		m.copyTo(countryIdentification);
+		return countryIdentification;
 	}
 	
 	public static DwellingAddress dwellingAddress() {

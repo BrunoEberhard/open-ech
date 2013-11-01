@@ -150,7 +150,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		boolean notMoreThanOneSecondResidence = hasSecondResidence || hasOtherResidence;
 		
 		if (mainResidenceNeeded) {
-			residence.reportingMunicipality = DataGenerator.place().municipalityIdentification;
+			residence.reportingMunicipality = DataGenerator.municipalityIdentification();
 		} else {
 			residence.reportingMunicipality = null;
 		}
