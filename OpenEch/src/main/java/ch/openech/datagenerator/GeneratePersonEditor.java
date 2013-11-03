@@ -45,11 +45,12 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 	private boolean generatePerson(Integer number) {
 		if (number == null) return true;
 		
-		count = number;
+		int bunch = 1;
+		count = number / bunch;
 		if (count > 0) {
 			WriterEch0020 writerEch0020 = new WriterEch0020(ewkNamespaceContext);
 			for (saveProgress = 0; saveProgress<count; saveProgress++) {
-				DataGenerator.generatePerson(writerEch0020);
+				DataGenerator.generatePerson(writerEch0020, bunch);
 				// progress(saveProgress, count);
 			}
 		} else {
@@ -80,10 +81,10 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 	public static class GeneratePersonData implements Validation {
 		public static final GeneratePersonData GENERATE_PERSON_DATA = Keys.of(GeneratePersonData.class);
 
-		@Size(4)
+		@Size(5)
 		public Integer numberOfPersons;
 
-		@Size(4)
+		@Size(5)
 		public Integer numberOfOrganisations;
 
 		@Override
