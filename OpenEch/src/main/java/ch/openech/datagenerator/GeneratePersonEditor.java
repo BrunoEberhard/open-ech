@@ -45,12 +45,11 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 	private boolean generatePerson(Integer number) {
 		if (number == null) return true;
 		
-		int bunch = 1;
-		count = number / bunch;
+		count = number;
 		if (count > 0) {
 			WriterEch0020 writerEch0020 = new WriterEch0020(ewkNamespaceContext);
 			for (saveProgress = 0; saveProgress<count; saveProgress++) {
-				DataGenerator.generatePerson(writerEch0020, bunch);
+				DataGenerator.generatePerson(writerEch0020);
 				// progress(saveProgress, count);
 			}
 		} else {
