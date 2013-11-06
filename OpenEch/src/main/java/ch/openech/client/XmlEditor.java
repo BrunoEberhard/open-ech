@@ -84,6 +84,8 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	private class XmlAction extends ResourceAction implements Indicator {
 		
 		private boolean enabled = true;
+		private ActionChangeListener changeListener;
+		private String description;
 		
 		@Override
 		public void action(IComponent context) {
@@ -99,6 +101,9 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		public void setValidationMessages(List<ValidationMessage> validationMessages) {
 			enabled = validationMessages.isEmpty();
 			updateXmlStatus();
+			if (changeListener != null) {
+				changeListener.change();
+			}
 		}	
 		
 		@Override
@@ -106,26 +111,31 @@ public abstract class XmlEditor<T> extends Editor<T> {
 			return enabled;
 		}
 
+		@Override
+		public void setChangeListener(ActionChangeListener changeListener) {
+			this.changeListener = changeListener;
+		}
+		
+		@Override
+		public String getDescription() {
+			return description;
+		}
+
 		private void updateXmlStatus() {
 			if (!isEnabled()) return;
 			try {
 				List<String> xmls = getXml(getObject());
-				boolean ok = true;
 				String result = "ok";
 				for (String string : xmls) {
 					result = EchServer.validate(string);
 					if (!"ok".equals(result)) {
-						ok = false;
 						break;
 					}
 				}
-//				putValue("foreground", (ok ? Color.BLACK : Color.RED));
-//				putValue(AbstractAction.SHORT_DESCRIPTION, result);
+				description = result;
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
-//				putValue("foreground",Color.BLUE);
-//				putValue(AbstractAction.SHORT_DESCRIPTION, e1.getMessage());
+				description = "XML Validierung mit Exception fehlgeschlagen";
 			}
 		}
 	}
