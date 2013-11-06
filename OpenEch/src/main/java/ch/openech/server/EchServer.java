@@ -55,9 +55,10 @@ public class EchServer {
 	
 	//
 	
-	public static String validate(String string)  {
-		String message = OK;
-		try {
+	private static Validator validator;
+	
+	static Validator getValidator() throws SAXException {
+		if (validator == null) {
 		    SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		    
 		    LSResourceResolver resourceResolver = new LSResourceResolver() {
@@ -75,9 +76,16 @@ public class EchServer {
 			
 		    schemaFactory.setResourceResolver(resourceResolver);
 		    Schema schema = schemaFactory.newSchema();
-		    Validator validator = schema.newValidator();
+		    validator = schema.newValidator();
 		    validator.setResourceResolver(resourceResolver);
-		    validator.validate(new StreamSource(new StringReader(string)));
+		}
+		return validator;
+	}
+	
+	public static String validate(String string)  {
+		String message = OK;
+		try {
+		    getValidator().validate(new StreamSource(new StringReader(string)));
 	    } catch (SAXParseException parseException) {
 	    	message = "XML invalid:\n";
 	    	message += parseException.getLocalizedMessage() + "\n";
