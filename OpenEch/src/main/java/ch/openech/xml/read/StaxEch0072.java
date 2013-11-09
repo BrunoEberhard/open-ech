@@ -1,13 +1,7 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.COUNTRIES;
-import static ch.openech.dm.XmlConstants.COUNTRY;
-import static ch.openech.dm.XmlConstants.ID;
-import static ch.openech.dm.XmlConstants.ISO2_ID;
-import static ch.openech.dm.XmlConstants.SHORT_NAME_DE;
-import static ch.openech.xml.read.StaxEch.integer;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
+import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -35,8 +29,7 @@ public class StaxEch0072 {
 	private final List<String> countryIdISO2sUnmodifiable;
 	
 	private StaxEch0072() {
-		String path = this.getClass().getPackage().getName().replace('.', '/');
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path + "/eCH0072.xml");
+		InputStream inputStream = this.getClass().getResourceAsStream("eCH0072.xml");
 		try {
 			process(inputStream);
 		} catch (Exception x) {

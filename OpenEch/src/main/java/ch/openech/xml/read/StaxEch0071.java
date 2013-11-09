@@ -1,20 +1,7 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.CANTON;
-import static ch.openech.dm.XmlConstants.CANTONS;
-import static ch.openech.dm.XmlConstants.CANTON_ABBREVIATION;
-import static ch.openech.dm.XmlConstants.CANTON_LONG_NAME;
-import static ch.openech.dm.XmlConstants.HISTORY_MUNICIPALITY_ID;
-import static ch.openech.dm.XmlConstants.MUNICIPALITIES;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY_ABOLITION_DATE;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY_ID;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY_LONG_NAME;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY_SHORT_NAME;
-import static ch.openech.dm.XmlConstants.NOMENCLATURE;
-import static ch.openech.xml.read.StaxEch.integer;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
+import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -41,8 +28,7 @@ public class StaxEch0071 {
 	private final List<Canton> cantonsUnmodifiable;
 	
 	private StaxEch0071() {
-		String path = this.getClass().getPackage().getName().replace('.', '/');
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path + "/eCH0071.xml");
+		InputStream inputStream = this.getClass().getResourceAsStream("eCH0071.xml");
 		try {
 			process(inputStream);
 		} catch (Exception x) {

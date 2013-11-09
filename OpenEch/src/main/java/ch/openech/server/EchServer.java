@@ -67,8 +67,8 @@ public class EchServer {
 					if (systemId == null) return null;
 					
 					int pos = systemId.lastIndexOf("/");
-					String fileName = "ch/ech/xmlns" + systemId.substring(pos);
-					InputStream stream = this.getClass().getClassLoader().getResourceAsStream(fileName);
+					String fileName = "/ch/ech/xmlns" + systemId.substring(pos);
+					InputStream stream = this.getClass().getResourceAsStream(fileName);
 					
 					return new LSInputImpl(publicId, systemId, baseURI, stream, null);
 				}

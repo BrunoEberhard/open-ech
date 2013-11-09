@@ -15,11 +15,11 @@ public class EchNamespaceUtil {
 		String fileName;
 		if (!WriterOpenEch.URI.equals(namespaceLocation)) {
 			int pos = namespaceLocation.lastIndexOf("/");
-			fileName = "ch/ech/xmlns" + namespaceLocation.substring(pos);
+			fileName = "/ch/ech/xmlns" + namespaceLocation.substring(pos);
 		} else {
-			fileName = "ch/openech/xmlns/Open-eCH-1-0.xsd";
+			fileName = "/ch/openech/xmlns/Open-eCH-1-0.xsd";
 		}
-		return EchNamespaceUtil.class.getClassLoader().getResourceAsStream(fileName);
+		return EchNamespaceUtil.class.getResourceAsStream(fileName);
 	}
 
 	// Aufgrund von Konventionen für URI und Location verwendbar

@@ -20,8 +20,7 @@ public class PlzImport {
 	private final Map<Integer, Plz> plzByOnrp = new HashMap<Integer, Plz>(10000);
 	
 	private PlzImport() {
-		String path = this.getClass().getPackage().getName().replace('.', '/');
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path + "/plz_p1.txt");
+		InputStream inputStream = this.getClass().getResourceAsStream("plz_p1.txt");
 		try {
 			process(inputStream);
 		} catch (Exception x) {
