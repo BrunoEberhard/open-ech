@@ -10,7 +10,7 @@ import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.TablePage;
-import ch.openech.mj.search.FulltextIndexSearch;
+import ch.openech.mj.search.IndexSearch;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
@@ -38,7 +38,7 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 	}
 	
 	public SearchOrganisationPage(PageContext context, String version, String text) {
-		super(context, new FulltextIndexSearch<>(EchServer.getInstance().getPersistence().organisationIndex()), FIELD_NAMES, text);
+		super(context, new IndexSearch<>(EchServer.getInstance().getPersistence().organisationIndex()), FIELD_NAMES, text);
 		this.echSchema = EchSchema.getNamespaceContext(148, version);
 		this.text = text;
 	}
