@@ -1,6 +1,6 @@
 package ch.openech.dm;
 
-import static ch.openech.xml.read.StaxEch.*;
+import static ch.openech.xml.read.StaxEch.skip;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +32,7 @@ public class EchSizesGenerator {
 	private final Map<Integer, Integer> namespaceMinorVersions = new HashMap<Integer, Integer>();
 	private String version;
 	private String openEchNamespaceLocation;
-	private static Set<String> lines = new TreeSet<>();
+	private static Set<String> lines = new TreeSet<String>();
 	
 	private EchSizesGenerator(int rootNumber, String version) {
 		this.version = version;

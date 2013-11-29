@@ -1,6 +1,6 @@
 package ch.openech.client.org;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.REPORTED_ORGANISATION;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;

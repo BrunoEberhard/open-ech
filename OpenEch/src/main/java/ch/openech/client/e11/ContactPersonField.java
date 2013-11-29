@@ -14,7 +14,7 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.page.PageLink;
-import ch.openech.mj.search.IndexSearch;
+import ch.openech.mj.search.FulltextIndexSearch;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.mj.util.DateUtils;
@@ -75,7 +75,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	public class SelectPersonContactEditor extends SearchDialogAction<Person> {
 		
 		public SelectPersonContactEditor() {
-			super(getComponent(), new IndexSearch<>(EchServer.getInstance().getPersistence().personIndex()), SearchPersonPage.FIELD_NAMES);
+			super(getComponent(), new FulltextIndexSearch<Person>(EchServer.getInstance().getPersistence().personIndex()), SearchPersonPage.FIELD_NAMES);
 		}
 		
 		@Override

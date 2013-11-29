@@ -130,7 +130,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		@Override
 		public List<PlaceOfOrigin> update(Person partner, Marriage marriage) {
 			if (partner != null) {
-				return new ArrayList<>(partner.placeOfOrigin);
+				return new ArrayList<PlaceOfOrigin>(partner.placeOfOrigin);
 			} else {
 				return Collections.emptyList();
 			}

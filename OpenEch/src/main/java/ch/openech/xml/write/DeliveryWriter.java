@@ -1,5 +1,6 @@
 package ch.openech.xml.write;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -8,11 +9,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import org.joda.time.LocalDateTime;
+import org.xmlpull.v1.XmlPullParserFactory;
+import org.xmlpull.v1.XmlSerializer;
 
 import ch.openech.dm.Envelope;
 import ch.openech.dm.XmlConstants;
@@ -24,7 +23,8 @@ public abstract class DeliveryWriter {
 	public static final String XMLSchema_URI = "http://www.w3.org/2001/XMLSchema-instance";
 
 	private Writer writer;
-	private XMLStreamWriter xmlStreamWriter;
+	//private XMLStreamWriter xmlStreamWriter;
+	XmlSerializer xmlStreamWriter;
 	private WriterElement rootElement;
 	protected final EchSchema context;
 	private String recipientId = "1-23-4";
@@ -77,10 +77,14 @@ public abstract class DeliveryWriter {
 		}
 
 		this.writer = writer;
-		XMLOutputFactory factory = XMLOutputFactory.newInstance();
-		xmlStreamWriter = new IndentingXMLStreamWriter(factory.createXMLStreamWriter(writer));
+		//XMLOutputFactory factory = XMLOutputFactory.newInstance();
+		//xmlStreamWriter = new IndentingXMLStreamWriter(factory.createXMLStreamWriter(writer));
 
-		xmlStreamWriter.writeStartDocument("UTF-8", "1.0");
+		//xmlStreamWriter.writeStartDocument("UTF-8", "1.0");
+		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+		xmlStreamWriter = factory.newSerializer();
+		xmlStreamWriter.setOutput(writer);
+		xmlStreamWriter.startDocument("UTF-8", null);
 		
 		startDocument();
 		
@@ -109,18 +113,18 @@ public abstract class DeliveryWriter {
 	
 	//
 	
-	private WriterElement startDocument() throws XMLStreamException {
+	private WriterElement startDocument() throws Exception {
 		// EchNamespaceContext namespaceContext = getNamespaceContext(getSchemaNumber());
 
 		List<Integer> namespaceNumbers = new ArrayList<Integer>(context.getNamespaceNumbers());
 		Collections.sort(namespaceNumbers);
 		
 		setPrefixs(context, namespaceNumbers);
-		xmlStreamWriter.writeStartElement(getNamespaceURI(), getRootType());
+		xmlStreamWriter.startTag(getNamespaceURI(), getRootType());
 		writeXmlSchemaLocation();
 		writeNamespaces(context, namespaceNumbers);
 		
-		rootElement = new WriterElement(xmlStreamWriter, getNamespaceURI());
+		//rootElement = new WriterElement(xmlStreamWriter, getNamespaceURI());
 		return rootElement;
 	}
 	
@@ -128,36 +132,30 @@ public abstract class DeliveryWriter {
 		return XmlConstants.DELIVERY;
 	}
 	
-	private void writeXmlSchemaLocation() throws XMLStreamException {
-		xmlStreamWriter.writeAttribute(WriterEch0020.XMLSchema_URI, "schemaLocation",
-				context.getNamespaceURI(getSchemaNumber()) + " " + 
-				context.getNamespaceLocation(getSchemaNumber()));
+	private void writeXmlSchemaLocation() throws IOException  {
+		xmlStreamWriter.attribute(WriterEch0020.XMLSchema_URI, "schemaLocation", context.getNamespaceURI(getSchemaNumber()) + " " + context.getNamespaceLocation(getSchemaNumber()));
 	}
 
-	private void setPrefixs(EchSchema namespaceContext, List<Integer> namespaceNumbers) throws XMLStreamException {
-		xmlStreamWriter.setPrefix("xsi", XMLSchema_URI);
-		for (int number : namespaceNumbers) {
-			xmlStreamWriter.setPrefix("e" + number, namespaceContext.getNamespaceURI(number));
-		}
+	private void setPrefixs(EchSchema namespaceContext, List<Integer> namespaceNumbers) {
+//		xmlStreamWriter.setPrefix("xsi", XMLSchema_URI);
+//		for (int number : namespaceNumbers) {
+//			xmlStreamWriter.setPrefix("e" + number, namespaceContext.getNamespaceURI(number));
+//		}
 	}
 	
-	private void writeNamespaces(EchSchema namespaceContext, List<Integer> namespaceNumbers) throws XMLStreamException {
-		xmlStreamWriter.writeNamespace("xsi", XMLSchema_URI);
-		for (int number : namespaceNumbers) {
-			xmlStreamWriter.writeNamespace("e" + number, namespaceContext.getNamespaceURI(number));
-		}
-		if (namespaceContext.getOpenEchNamespaceLocation() != null) {
-			xmlStreamWriter.writeNamespace("openEch", namespaceContext.getOpenEchNamespaceLocation());
-		}
+	private void writeNamespaces(EchSchema namespaceContext, List<Integer> namespaceNumbers) {
+//		xmlStreamWriter.writeNamespace("xsi", XMLSchema_URI);
+//		for (int number : namespaceNumbers) {
+//			xmlStreamWriter.writeNamespace("e" + number, namespaceContext.getNamespaceURI(number));
+//		}
+//		if (namespaceContext.getOpenEchNamespaceLocation() != null) {
+//			xmlStreamWriter.writeNamespace("openEch", namespaceContext.getOpenEchNamespaceLocation());
+//		}
 	}
 
 	public void endDocument() throws Exception {
 		rootElement.flush();
-		
-		xmlStreamWriter.writeEndElement();
-		xmlStreamWriter.writeEndDocument();
-
-		xmlStreamWriter.flush();
+		xmlStreamWriter.endDocument();
 		writer.flush();
 	}
 	

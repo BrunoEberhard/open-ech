@@ -1,6 +1,6 @@
 package ch.openech.client.org;
 
-import static ch.openech.dm.organisation.Organisation.*;
+import static ch.openech.dm.organisation.Organisation.ORGANISATION;
 import ch.openech.client.e44.TechnicalIdsField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.organisation.Organisation;

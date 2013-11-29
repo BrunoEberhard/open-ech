@@ -1,6 +1,6 @@
 package ch.openech.client.tpn;
 
-import static ch.openech.dm.tpn.ThirdPartyMove.*;
+import static ch.openech.dm.tpn.ThirdPartyMove.THIRD_PARTY_MOVE;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.tpn.ThirdPartyMove;
 

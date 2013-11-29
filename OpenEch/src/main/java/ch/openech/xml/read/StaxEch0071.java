@@ -1,23 +1,13 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
-import static ch.openech.xml.read.StaxEch.*;
-
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
-
 import ch.openech.dm.common.Canton;
 import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0071 {
 
@@ -56,116 +46,117 @@ public class StaxEch0071 {
 		return municipalitiesUnmodifiable;
 	}
 
-	private void municipality(XMLEventReader xml) throws XMLStreamException, SQLException {
+	private void municipality() throws  SQLException {
 		MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
 		
-		boolean abolition = false;
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (HISTORY_MUNICIPALITY_ID.equals(startName)) municipalityIdentification.historyMunicipalityId = integer(xml);
-				else if (MUNICIPALITY_ID.equals(startName)) municipalityIdentification.municipalityId = integer(xml);
-				else if (MUNICIPALITY_LONG_NAME.equals(startName)) municipalityIdentification.municipalityName = token(xml);
-				else if (MUNICIPALITY_SHORT_NAME.equals(startName)) {
-					String shortName = token(xml);
-					if (StringUtils.isBlank(municipalityIdentification.municipalityName)) municipalityIdentification.municipalityName = shortName;
-				}
-				else if (CANTON_ABBREVIATION.equals(startName)) municipalityIdentification.cantonAbbreviation.canton = token(xml);
-				else if (MUNICIPALITY_ABOLITION_DATE.equals(startName)) {
-					String token = token(xml);
-					if (!StringUtils.isBlank(token)) {
-						abolition = true;
-					}
-				}
-				else skip(xml);
-			} else if (event.isEndElement()) {
-				if (!abolition) {
-					municipalityIdentifications.add(municipalityIdentification);
-				}
-				break;
-			}  // else skip
-		}
+//		boolean abolition = false;
+//		while (true) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (HISTORY_MUNICIPALITY_ID.equals(startName)) municipalityIdentification.historyMunicipalityId = integer(xml);
+//				else if (MUNICIPALITY_ID.equals(startName)) municipalityIdentification.municipalityId = integer(xml);
+//				else if (MUNICIPALITY_LONG_NAME.equals(startName)) municipalityIdentification.municipalityName = token(xml);
+//				else if (MUNICIPALITY_SHORT_NAME.equals(startName)) {
+//					String shortName = token(xml);
+//					if (StringUtils.isBlank(municipalityIdentification.municipalityName)) municipalityIdentification.municipalityName = shortName;
+//				}
+//				else if (CANTON_ABBREVIATION.equals(startName)) municipalityIdentification.cantonAbbreviation.canton = token(xml);
+//				else if (MUNICIPALITY_ABOLITION_DATE.equals(startName)) {
+//					String token = token(xml);
+//					if (!StringUtils.isBlank(token)) {
+//						abolition = true;
+//					}
+//				}
+//				else skip(xml);
+//			} else if (event.isEndElement()) {
+//				if (!abolition) {
+//					municipalityIdentifications.add(municipalityIdentification);
+//				}
+//				break;
+//			}  // else skip
+//		}
 	}
 
-	private void canton(XMLEventReader xml) throws XMLStreamException, SQLException {
+	private void canton() throws SQLException {
 		Canton canton = new Canton();
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (CANTON_ABBREVIATION.equals(startName)) canton.cantonAbbreviation.canton = token(xml);
-				else if (CANTON_LONG_NAME.equals(startName)) canton.cantonLongName = token(xml);
-				else skip(xml);
-			} else if (event.isEndElement()) {
-				cantons.add(canton);
-				break;
-			}  // else skip
-		}
+//		while (true) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (CANTON_ABBREVIATION.equals(startName)) canton.cantonAbbreviation.canton = token(xml);
+//				else if (CANTON_LONG_NAME.equals(startName)) canton.cantonLongName = token(xml);
+//				else skip(xml);
+//			} else if (event.isEndElement()) {
+//				cantons.add(canton);
+//				break;
+//			}  // else skip
+//		}
 	}
 	
-	private void municipalities(XMLEventReader xml) throws XMLStreamException, SQLException {
-		while (xml.hasNext()) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(MUNICIPALITY)) {
-					municipality(xml);
-				}
-				else skip(xml);
-			}  else if (event.isEndElement()) {
-				break;
-			}
-		}
+	private void municipalities() throws  SQLException {
+//		while (xml.hasNext()) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (startName.equals(MUNICIPALITY)) {
+//					municipality(xml);
+//				}
+//				else skip(xml);
+//			}  else if (event.isEndElement()) {
+//				break;
+//			}
+//		}
 	}
 
-	private void cantons(XMLEventReader xml) throws XMLStreamException, SQLException {
-		while (xml.hasNext()) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(CANTON)) canton(xml);
-				else skip(xml);
-			}  else if (event.isEndElement()) {
-				break;
-			}
-		}
+	private void cantons() throws  SQLException {
+//		while (xml.hasNext()) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (startName.equals(CANTON)) canton(xml);
+//				else skip(xml);
+//			}  else if (event.isEndElement()) {
+//				break;
+//			}
+//		}
 	}
 	
-	private void nomenclature(XMLEventReader xml) throws XMLStreamException, SQLException {
-		while (xml.hasNext()) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(MUNICIPALITIES)) municipalities(xml);
-				else if (startName.equals(CANTONS)) cantons(xml);
-				else skip(xml);
-			}  else if (event.isEndElement()) {
-				break;
-			}
-		}
+	private void nomenclature() throws SQLException {
+//		while (xml.hasNext()) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (startName.equals(MUNICIPALITIES)) municipalities(xml);
+//				else if (startName.equals(CANTONS)) cantons(xml);
+//				else skip(xml);
+//			}  else if (event.isEndElement()) {
+//				break;
+//			}
+//		}
 	}
 	
-	private void process(InputStream inputStream) throws XMLStreamException, SQLException {
-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
-		
-		while (xml.hasNext()) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(NOMENCLATURE)) nomenclature(xml);
-				else skip(xml);
-			}  else if (event.isEndElement()) {
-				break;
-			}
-		}
+	
+	private void process(InputStream inputStream) throws SQLException {
+//		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+//		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
+//		
+//		while (xml.hasNext()) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (startName.equals(NOMENCLATURE)) nomenclature(xml);
+//				else skip(xml);
+//			}  else if (event.isEndElement()) {
+//				break;
+//			}
+//		}
 	}
 	
 }

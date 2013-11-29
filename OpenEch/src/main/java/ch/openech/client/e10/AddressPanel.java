@@ -1,6 +1,6 @@
 package ch.openech.client.e10;
 
-import static ch.openech.dm.common.Address.*;
+import static ch.openech.dm.common.Address.ADDRESS;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.common.Address;
 import ch.openech.mj.edit.form.Form;

@@ -1,6 +1,6 @@
 package ch.openech.client.ewk.event;
 
-import static ch.openech.dm.person.Person.*;
+import static ch.openech.dm.person.Person.PERSON;
 
 import java.util.Collections;
 import java.util.List;

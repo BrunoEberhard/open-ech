@@ -1,7 +1,7 @@
 package ch.openech.client.ewk;
 
-import static ch.openech.dm.person.Person.*;
-import static ch.openech.dm.person.Relation.*;
+import static ch.openech.dm.person.Person.PERSON;
+import static ch.openech.dm.person.Relation.RELATION;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.e11.PlaceOfOriginField;
 import ch.openech.client.e11.PlaceReadOnlyField;
@@ -237,7 +237,7 @@ public class PersonPanel extends EchForm<Person>  {
 		
 		@Override
 		public IForm<Relation> createFormPanel() {
-			EchForm<Relation> form = new EchForm<>();
+			EchForm<Relation> form = new EchForm<Relation>();
 			form.line(RELATION.partner);
 			form.line(new AddressField(RELATION.address, true));
 			return form;

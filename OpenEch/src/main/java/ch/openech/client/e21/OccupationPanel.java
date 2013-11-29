@@ -1,6 +1,6 @@
 package ch.openech.client.e21;
 
-import static ch.openech.dm.person.Occupation.*;
+import static ch.openech.dm.person.Occupation.OCCUPATION;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.Occupation;

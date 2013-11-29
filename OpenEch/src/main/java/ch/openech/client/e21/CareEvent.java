@@ -1,6 +1,6 @@
 package ch.openech.client.e21;
 
-import static ch.openech.dm.person.Relation.*;
+import static ch.openech.dm.person.Relation.RELATION;
 
 import java.util.Collections;
 import java.util.List;

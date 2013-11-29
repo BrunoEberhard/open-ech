@@ -1,6 +1,6 @@
 package ch.openech.client.e101;
 
-import static ch.openech.dm.person.PersonExtendedInformation.*;
+import static ch.openech.dm.person.PersonExtendedInformation.PERSON_EXTENDED_INFORMATION;
 import ch.openech.client.e10.AddressField;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.PersonExtendedInformation;

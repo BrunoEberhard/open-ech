@@ -1,6 +1,6 @@
 package ch.openech.client.editor;
 
-import static ch.openech.dm.organisation.Organisation.*;
+import static ch.openech.dm.organisation.Organisation.ORGANISATION;
 
 import java.util.Collections;
 import java.util.List;

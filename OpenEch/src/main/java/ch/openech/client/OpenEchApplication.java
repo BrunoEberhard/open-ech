@@ -60,26 +60,8 @@ public class OpenEchApplication extends MjApplication {
 		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
 
 		final String demoPersons = System.getProperty("DemoPerson");
-
-//		if (!StringUtils.isEmpty(demoPersons)) {
-//			new Thread(new Runnable() {
-//				@Override
-//				public void run() {
-//					try {
-//						int count = Integer.parseInt(demoPersons);
-//						ewkSchema = EchSchema.getNamespaceContext(EchSchema0020._2_2);
-//						WriterEch0020 writerEch0020 = new WriterEch0020(ewkSchema);
-//						for (int i = 0; i<count; i++) {
-//							DataGenerator.generatePerson(writerEch0020);
-//						}
-//					} catch (Exception x) {
-//						System.err.println("Could not generate DemoPerson");
-//						x.printStackTrace();
-//					}
-//				}
-//			}).start();
-//		}
 	}
+
 
 	@Override
 	public ResourceBundle getResourceBundle() {

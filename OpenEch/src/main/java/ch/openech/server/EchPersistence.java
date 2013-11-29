@@ -1,7 +1,7 @@
 package ch.openech.server;
 
-import static ch.openech.dm.organisation.Organisation.*;
-import static ch.openech.dm.person.Person.*;
+import static ch.openech.dm.organisation.Organisation.ORGANISATION;
+import static ch.openech.dm.person.Person.PERSON;
 
 import java.sql.SQLException;
 import java.util.List;

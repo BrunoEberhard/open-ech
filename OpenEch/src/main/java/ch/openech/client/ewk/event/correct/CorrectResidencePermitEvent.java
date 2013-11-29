@@ -1,6 +1,6 @@
 package ch.openech.client.ewk.event.correct;
 
-import static ch.openech.dm.person.Foreign.*;
+import static ch.openech.dm.person.Foreign.FOREIGN;
 
 import java.util.Collections;
 import java.util.List;

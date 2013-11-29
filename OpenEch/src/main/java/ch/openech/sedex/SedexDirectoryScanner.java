@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.stream.XMLStreamException;
-
 import ch.openech.dm.Envelope;
 import ch.openech.dm.SedexMessageInformation;
 import ch.openech.xml.read.StaxEch0090;
@@ -32,8 +30,6 @@ public class SedexDirectoryScanner {
 					// result.add(envelope);
 				}
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (XMLStreamException e) {
 				e.printStackTrace();
 			}
 		}

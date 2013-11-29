@@ -2,8 +2,6 @@ package ch.openech.xml.write;
 
 import java.util.Set;
 
-import javax.xml.stream.XMLStreamWriter;
-
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.ISODateTimeFormat;
@@ -18,35 +16,35 @@ import ch.openech.mj.util.StringUtils;
 
 public class WriterElement {
 
-	private XMLStreamWriter writer;
+	//private XMLStreamWriter writer;
 	private String namespaceURI;
 	private WriterElement child;
 	
-	public WriterElement(XMLStreamWriter writer, String namespaceURI) {
-		this.writer = writer;
+	public WriterElement(String namespaceURI) {
+		//this.writer = writer;
 		this.namespaceURI = namespaceURI;
 	}
 
 	public WriterElement create(String childNameSpaceURI, String localName) throws Exception {
 		flush();
-		writer.writeStartElement(namespaceURI, localName); // OUR namespaceURI not the child's
-		child = new WriterElement(writer, childNameSpaceURI);
-		return child;
+		//writer.writeStartElement(namespaceURI, localName); // OUR namespaceURI not the child's
+		//child = new WriterElement(writer, childNameSpaceURI);
+		return null;
 	}
 
 	public void text(String localName, String text) throws Exception {
 		flush();
-		writer.writeStartElement(namespaceURI, localName);
-		writer.writeCharacters(text);
-		writer.writeEndElement();
+		//writer.writeStartElement(namespaceURI, localName);
+		//writer.writeCharacters(text);
+		//writer.writeEndElement();
 	}
 
 	public void textIfSet(String localName, String text) throws Exception {
 		if (!StringUtils.isEmpty(text)) {
 			flush();
-			writer.writeStartElement(namespaceURI, localName);
-			writer.writeCharacters(text);
-			writer.writeEndElement();
+			//writer.writeStartElement(namespaceURI, localName);
+			//writer.writeCharacters(text);
+			//writer.writeEndElement();
 		}
 	}
 	
@@ -105,14 +103,14 @@ public class WriterElement {
 	}
 	
 	public void writeAttribute(String namespaceURI, String localName, String value) throws Exception {
-		writer.writeAttribute(namespaceURI, localName, value);
+		//writer.writeAttribute(namespaceURI, localName, value);
 		// writer.writeAttribute(localName, value);
 	}
 	
 	public void flush() throws Exception {
 		if (child != null) {
 			child.flush();
-			writer.writeEndElement();
+			//writer.writeEndElement();
 			child = null;
 		}
 	}

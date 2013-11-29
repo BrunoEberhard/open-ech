@@ -1,6 +1,6 @@
 package ch.openech.client.page;
 
-import static ch.openech.dm.person.Person.*;
+import static ch.openech.dm.person.Person.PERSON;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.TablePage;
-import ch.openech.mj.search.IndexSearch;
+import ch.openech.mj.search.FulltextIndexSearch;
 import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
@@ -41,7 +41,7 @@ public class SearchPersonPage extends TablePage<Person> {
 	}
 	
 	public SearchPersonPage(PageContext context, String version, String text) {
-		super(context, new IndexSearch<>(EchServer.getInstance().getPersistence().personIndex()), FIELD_NAMES, text);
+		super(context, new FulltextIndexSearch<Person>(EchServer.getInstance().getPersistence().personIndex()), FIELD_NAMES, text);
 		this.echSchema = EchSchema.getNamespaceContext(20, version);
 		this.text = text;
 	}

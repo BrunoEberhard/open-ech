@@ -1,6 +1,6 @@
 package ch.openech.client.ewk.event;
 
-import static ch.openech.dm.person.PlaceOfOrigin.*;
+import static ch.openech.dm.person.PlaceOfOrigin.PLACE_OF_ORIGIN;
 
 import java.util.Collections;
 import java.util.List;

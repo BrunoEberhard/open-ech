@@ -81,7 +81,7 @@ public class PersonEditMenu {
 	private final EditorPageAction addressLock, paperLock;
 	private final EditorPageAction birthChild;
 	
-	private final List<EditorPageAction> correctEditors = new ArrayList<>();
+	private final List<EditorPageAction> correctEditors = new ArrayList<EditorPageAction>();
 
 	public PersonEditMenu(EchSchema ech, PageContext pageContext, Person person) {
 		this.echSchema = ech;

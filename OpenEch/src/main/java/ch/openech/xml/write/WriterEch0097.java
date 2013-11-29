@@ -1,6 +1,17 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.dm.XmlConstants.LEGAL_FORM;
+import static ch.openech.dm.XmlConstants.LOCAL_ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ADDITIONAL_NAME;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.ORGANISATION_IDENTIFICATION;
+import static ch.openech.dm.XmlConstants.ORGANISATION_ID_CATEGORY;
+import static ch.openech.dm.XmlConstants.ORGANISATION_LEGAL_NAME;
+import static ch.openech.dm.XmlConstants.ORGANISATION_NAME;
+import static ch.openech.dm.XmlConstants.UID;
+import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID;
+import static ch.openech.dm.XmlConstants.UID_ORGANISATION_ID_CATEGORIE;
+import static ch.openech.dm.XmlConstants._OTHER_ORGANISATION_ID;
 
 import java.util.List;
 

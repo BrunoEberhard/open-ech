@@ -3,9 +3,10 @@
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
 	<classpathentry kind="src" path="src/main/xml"/>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/Minimal-J"/>
 	<classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin/6.8.13/vaadin-6.8.13.jar" sourcepath="M2_REPO/com/vaadin/vaadin/6.8.13/vaadin-6.8.13-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.8.2/junit-4.8.2.jar" sourcepath="M2_REPO/junit/junit/4.8.2/junit-4.8.2-sources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="M2_REPO/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

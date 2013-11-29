@@ -40,7 +40,7 @@ public class OrganisationMenu {
 	private final EditorPageAction contact, changeOrganisationName, changeLegalForm, changeReporting;
 	private final EditorPageAction inLiquidation, liquidation;
 	
-	private final List<EditorPageAction> correctEditors = new ArrayList<>();
+	private final List<EditorPageAction> correctEditors = new ArrayList<EditorPageAction>();
 
 	public OrganisationMenu(EchSchema ech, Organisation organisation) {
 		this.ech = ech;

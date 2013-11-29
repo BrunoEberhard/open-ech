@@ -23,6 +23,12 @@
 		</testResources>
 	</build>
 	<dependencies>
+	    <dependency>
+			<groupId>xpp3</groupId>
+			<artifactId>xpp3</artifactId>
+			<version>1.1.4c</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>Minimal-J</groupId>
 			<artifactId>Minimal-J</artifactId>
