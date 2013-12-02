@@ -1,12 +1,23 @@
 package ch.openech.xml.read;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+
+import static ch.openech.dm.XmlConstants.*;
 import ch.openech.dm.common.CountryIdentification;
+
+import static ch.openech.xml.read.StaxEch.*;
+
 
 public class StaxEch0072 {
 
@@ -51,59 +62,61 @@ public class StaxEch0072 {
 		return countryIdISO2sUnmodifiable;
 	}
 
-	private void country() throws SQLException {
-//		CountryIdentification countryIdentification = new CountryIdentification();
-//		
-//		while (true) {
-//			XMLEvent event = xml.nextEvent();
-//			if (event.isStartElement()) {
-//				StartElement startElement = event.asStartElement();
-//				String startName = startElement.getName().getLocalPart();
-//				if (ID.equals(startName)) countryIdentification.countryId = integer(xml);
-//				else if (ISO2_ID.equals(startName)) countryIdentification.countryIdISO2 = token(xml);
-//				else if (SHORT_NAME_DE.equals(startName)) countryIdentification.countryNameShort = token(xml);
-//				else skip(xml);
-//			} else if (event.isEndElement()) {
-//				countryIdentifications.add(countryIdentification);
-//				countryNames.add(countryIdentification.countryNameShort);
-//				if (countryIdentification.countryIdISO2 != null) {
-//					countryIdISO2s.add(countryIdentification.countryIdISO2);
-//				}
-//				break;
-//			}  // else skip
-//		}
-//		Collections.sort(countryIdISO2s);
+	private void country(XmlPullParser xmlParser) throws SQLException, XmlPullParserException, IOException {
+		CountryIdentification countryIdentification = new CountryIdentification();
+		while (true) {
+			int event = xmlParser.next();
+			if (isStartTag(event)) {
+				String tagName = xmlParser.getName();
+				if (ID.equals(tagName)) {
+					countryIdentification.countryId = integer(xmlParser);
+				} else if (ISO2_ID.equals(tagName)) {
+					countryIdentification.countryIdISO2 = token(xmlParser);
+				} else if (SHORT_NAME_DE.equals(tagName)) {
+					countryIdentification.countryNameShort = token(xmlParser);
+				}
+				
+				
+			} else if (isEndTag(event) && COUNTRY.equals(xmlParser.getName())) {
+				countryIdentifications.add(countryIdentification);
+				countryNames.add(countryIdentification.countryNameShort);
+				if (countryIdentification.countryIdISO2 != null) {
+					countryIdISO2s.add(countryIdentification.countryIdISO2);
+				}
+				Collections.sort(countryIdISO2s);
+				break;
+			}
+		}
 	}
 	
-	private void countries() throws  SQLException {
-//		while (xml.hasNext()) {
-//			XMLEvent event = xml.nextEvent();
-//			if (event.isStartElement()) {
-//				StartElement startElement = event.asStartElement();
-//				String startName = startElement.getName().getLocalPart();
-//				if (startName.equals(COUNTRY)) country(xml);
-//				else skip(xml);
-//			}  else if (event.isEndElement()) {
-//				break;
-//			}
-//		}
+	private void countries(XmlPullParser xmlParser) throws  SQLException, XmlPullParserException, IOException {
+		
+		int event = xmlParser.next();
+		while (!COUNTRIES.equals(xmlParser.getName())) {
+		    if (isStartTag(event)) {
+		    	if (COUNTRY.equals(xmlParser.getName())) {
+		    		country(xmlParser);
+		    	}
+		    }
+			event = xmlParser.next();
+		}
 	}
 	
-	private void process(InputStream inputStream) throws SQLException {
-//		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-//		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
-//
-//		while (xml.hasNext()) {
-//			XMLEvent event = xml.nextEvent();
-//			if (event.isStartElement()) {
-//				StartElement startElement = event.asStartElement();
-//				String startName = startElement.getName().getLocalPart();
-//				if (startName.equals(COUNTRIES))countries(xml);
-//				else skip(xml);
-//			}  else if (event.isEndElement()) {
-//				break;
-//			}
-//		}
+	private void process(InputStream inputStream) throws SQLException, XmlPullParserException, IOException {
+		
+		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+		factory.setNamespaceAware(true);
+		XmlPullParser xmlParser = factory.newPullParser();
+		xmlParser.setInput(new InputStreamReader(inputStream));
+		
+		do {
+			int event = xmlParser.next();
+		    if (isStartTag(event)) {
+		    	if (COUNTRIES.equals(xmlParser.getName())) {
+		    		countries(xmlParser);
+		    	}
+		    }
+		} while (!isEndDocument(xmlParser.getEventType()));
 	}
 	
 	

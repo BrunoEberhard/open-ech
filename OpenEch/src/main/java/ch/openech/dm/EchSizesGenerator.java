@@ -36,198 +36,198 @@ public class EchSizesGenerator {
 	
 	private EchSizesGenerator(int rootNumber, String version) {
 		this.version = version;
-		read(rootNumber, version);
+		//read(rootNumber, version);
 	}
 	
 	//
 	
-	private void read(int rootNumber, String version) {
-		logger.fine("Read sizes from " + rootNumber +" version " + version);
-
-		int pos = version.indexOf('.');
-		String major = version.substring(0, pos);
-		String minor = version.substring(pos + 1);
-		
-		String rootNamespaceURI = EchNamespaceUtil.schemaURI(rootNumber, major);
-		String rootNamespaceLocation = EchNamespaceUtil.schemaLocation(rootNamespaceURI, minor);
-
-		try {
-			read(rootNamespaceLocation);
-		} catch (Exception x) {
-			x.printStackTrace();
-		}
-		logger.finer("Done reading sizes from " + rootNumber +" version " + version);
-	}
-	
-	public String getVersion() {
-		return version;
-	}
-	
-	public String getNamespaceURI(int namespaceNumber) {
-		return namespaceURIs.get(namespaceNumber);
-	}
-	
-	public String getNamespaceLocation(int namespaceNumber) {
-		return namespaceLocations.get(namespaceNumber);
-	}
-	
-	public int getNamespaceVersion(int namespaceNumber) {
-		return namespaceVersions.get(namespaceNumber);
-	}
-	
-	public int getNamespaceMinorVersion(int namespaceNumber) {
-		return namespaceMinorVersions.get(namespaceNumber);
-	}
-	
-	public Set<Integer> getNamespaceNumbers() {
-		return namespaceURIs.keySet();
-	}
-	
-	public String getOpenEchNamespaceLocation() {
-		return openEchNamespaceLocation;
-	}
-	
-	private void read(String namespaceLocation) throws XMLStreamException, IOException {
-		if (namespaceLocations.containsValue(namespaceLocation)) return;
-		registerLocation(namespaceLocation);
-		process(namespaceLocation);
-	}
-	
-	private void process(String namespaceLocation) throws XMLStreamException, IOException {
-		logger.fine("Process " + namespaceLocation);
-
-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		XMLEventReader xml = null;
-		try {
-			xml = inputFactory.createXMLEventReader(new URL(namespaceLocation).openStream());
-			process(xml);
-		} catch (Exception e) {
-			// this could happen in SBB ;)
-			InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation);
-			try {
-				xml = inputFactory.createXMLEventReader(stream);
-				process(xml);
-			} catch (Exception e2) {
-				logger.severe("Not available schema: " + namespaceLocation);
-			}
-		}
-	}
-	
-	private void registerLocation(String namespaceLocation) {
-		int namespaceNumber = EchNamespaceUtil.extractSchemaNumber(namespaceLocation);
-		String namespaceURI = EchNamespaceUtil.schemaURI(namespaceLocation);
-		int namespaceVersion = EchNamespaceUtil.extractSchemaMajorVersion(namespaceLocation);
-		int namespaceMinorVersion = EchNamespaceUtil.extractSchemaMinorVersion(namespaceLocation);
-		namespaceURIs.put(namespaceNumber, namespaceURI);
-		namespaceLocations.put(namespaceNumber, namespaceLocation);
-		namespaceVersions.put(namespaceNumber, namespaceVersion);
-		namespaceMinorVersions.put(namespaceNumber, namespaceMinorVersion);
-	}
-	
-	private void process(XMLEventReader xml) throws XMLStreamException, IOException {
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals("schema")) {
-					schema(xml);
-				} else skip(xml);
-			} else if (event.isEndElement() || event.isEndDocument()) {
-				return;
-			} // else skip
-		}
-	}
-	
-	private void schema(XMLEventReader xml) throws XMLStreamException, IOException {
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals("import")) {
-					imprt(startElement);
-					skip(xml);
-				} else if (startName.equals("simpleType")) {
-					String name = startElement.getAttributeByName(new QName("name")).getValue();
-					if (name.endsWith("Type")) {
-						name = name.substring(0, name.length()-4);
-						simpleType(name, xml);				
-					}
-				} else {
-					logger.finer("Skip : " + startName);
-					skip(xml);
-				}
-			} else if (event.isEndElement()) {
-				return;
-			} // else skip
-		}
-	}
-	
-	private void imprt(StartElement startElement) throws XMLStreamException, IOException {
-		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
-		logger.fine("Found Import " + schemaLocation);
-		read(schemaLocation);
-	}
-	
-	private void simpleType(String name, XMLEventReader xml) throws XMLStreamException, IOException {
-		logger.fine("SimpleType " + name);
-
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals("restriction")) {
-					Attribute baseAttribute = startElement.getAttributeByName(new QName("base"));
-					if (baseAttribute != null) {
-						String base = baseAttribute.getValue();
-						if (base.contains("int") || base.contains("Int") || base.contains("Long")) {
-							restriction(name, xml, true);
-						} else if (base.contains("token") || base.contains("string")) {
-							restriction(name, xml, false);
-						} else {
-							logger.warning("Skip restriction for " + name + " based on " + baseAttribute);
-						}
-					}
-				}
-				else skip(xml);
-			} else if (event.isEndElement()) {
-				return;
-			} // else skip
-		}
-	}
-	
-	private void restriction(String name, XMLEventReader xml, boolean intBase) throws XMLStreamException, IOException {
-		logger.fine("Restriction " + name);
-
-		int size = -1;
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				if (startName.equals("maxLength")) {
-					String value = startElement.getAttributeByName(new QName("value")).getValue();
-					size = Integer.parseInt(value);
-				}  else if (startName.equals("enumeration")) {
-					String value = startElement.getAttributeByName(new QName("value")).getValue();
-					size = Math.max(size, value.length());
-				}
-//				} else if (startName.equals("maxInclusive")) {
-//					String value = startElement.getAttributeByName(new QName(VALUE)).getValue();
+//	private void read(int rootNumber, String version) {
+//		logger.fine("Read sizes from " + rootNumber +" version " + version);
+//
+//		int pos = version.indexOf('.');
+//		String major = version.substring(0, pos);
+//		String minor = version.substring(pos + 1);
+//		
+//		String rootNamespaceURI = EchNamespaceUtil.schemaURI(rootNumber, major);
+//		String rootNamespaceLocation = EchNamespaceUtil.schemaLocation(rootNamespaceURI, minor);
+//
+//		try {
+//			read(rootNamespaceLocation);
+//		} catch (Exception x) {
+//			x.printStackTrace();
+//		}
+//		logger.finer("Done reading sizes from " + rootNumber +" version " + version);
+//	}
+//	
+//	public String getVersion() {
+//		return version;
+//	}
+//	
+//	public String getNamespaceURI(int namespaceNumber) {
+//		return namespaceURIs.get(namespaceNumber);
+//	}
+//	
+//	public String getNamespaceLocation(int namespaceNumber) {
+//		return namespaceLocations.get(namespaceNumber);
+//	}
+//	
+//	public int getNamespaceVersion(int namespaceNumber) {
+//		return namespaceVersions.get(namespaceNumber);
+//	}
+//	
+//	public int getNamespaceMinorVersion(int namespaceNumber) {
+//		return namespaceMinorVersions.get(namespaceNumber);
+//	}
+//	
+//	public Set<Integer> getNamespaceNumbers() {
+//		return namespaceURIs.keySet();
+//	}
+//	
+//	public String getOpenEchNamespaceLocation() {
+//		return openEchNamespaceLocation;
+//	}
+//	
+//	private void read(String namespaceLocation) throws XMLStreamException, IOException {
+//		if (namespaceLocations.containsValue(namespaceLocation)) return;
+//		registerLocation(namespaceLocation);
+//		process(namespaceLocation);
+//	}
+//	
+//	private void process(String namespaceLocation) throws XMLStreamException, IOException {
+//		logger.fine("Process " + namespaceLocation);
+//
+//		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+//		XMLEventReader xml = null;
+//		try {
+//			xml = inputFactory.createXMLEventReader(new URL(namespaceLocation).openStream());
+//			process(xml);
+//		} catch (Exception e) {
+//			// this could happen in SBB ;)
+//			InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation);
+//			try {
+//				xml = inputFactory.createXMLEventReader(stream);
+//				process(xml);
+//			} catch (Exception e2) {
+//				logger.severe("Not available schema: " + namespaceLocation);
+//			}
+//		}
+//	}
+//	
+//	private void registerLocation(String namespaceLocation) {
+//		int namespaceNumber = EchNamespaceUtil.extractSchemaNumber(namespaceLocation);
+//		String namespaceURI = EchNamespaceUtil.schemaURI(namespaceLocation);
+//		int namespaceVersion = EchNamespaceUtil.extractSchemaMajorVersion(namespaceLocation);
+//		int namespaceMinorVersion = EchNamespaceUtil.extractSchemaMinorVersion(namespaceLocation);
+//		namespaceURIs.put(namespaceNumber, namespaceURI);
+//		namespaceLocations.put(namespaceNumber, namespaceLocation);
+//		namespaceVersions.put(namespaceNumber, namespaceVersion);
+//		namespaceMinorVersions.put(namespaceNumber, namespaceMinorVersion);
+//	}
+//	
+//	private void process(XMLEventReader xml) throws XMLStreamException, IOException {
+//		while (true) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (startName.equals("schema")) {
+//					schema(xml);
+//				} else skip(xmlPa);
+//			} else if (event.isEndElement() || event.isEndDocument()) {
+//				return;
+//			} // else skip
+//		}
+//	}
+//	
+//	private void schema(XMLEventReader xml) throws XMLStreamException, IOException {
+//		while (true) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (startName.equals("import")) {
+//					imprt(startElement);
+//					skip(xml);
+//				} else if (startName.equals("simpleType")) {
+//					String name = startElement.getAttributeByName(new QName("name")).getValue();
+//					if (name.endsWith("Type")) {
+//						name = name.substring(0, name.length()-4);
+//						simpleType(name, xml);				
+//					}
+//				} else {
+//					logger.finer("Skip : " + startName);
+//					skip(xml);
+//				}
+//			} else if (event.isEndElement()) {
+//				return;
+//			} // else skip
+//		}
+//	}
+//	
+//	private void imprt(StartElement startElement) throws XMLStreamException, IOException {
+//		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
+//		logger.fine("Found Import " + schemaLocation);
+//		read(schemaLocation);
+//	}
+//	
+//	private void simpleType(String name, XMLEventReader xml) throws XMLStreamException, IOException {
+//		logger.fine("SimpleType " + name);
+//
+//		while (true) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (startName.equals("restriction")) {
+//					Attribute baseAttribute = startElement.getAttributeByName(new QName("base"));
+//					if (baseAttribute != null) {
+//						String base = baseAttribute.getValue();
+//						if (base.contains("int") || base.contains("Int") || base.contains("Long")) {
+//							restriction(name, xml, true);
+//						} else if (base.contains("token") || base.contains("string")) {
+//							restriction(name, xml, false);
+//						} else {
+//							logger.warning("Skip restriction for " + name + " based on " + baseAttribute);
+//						}
+//					}
+//				}
+//				else skip(xml);
+//			} else if (event.isEndElement()) {
+//				return;
+//			} // else skip
+//		}
+//	}
+//	
+//	private void restriction(String name, XMLEventReader xml, boolean intBase) throws XMLStreamException, IOException {
+//		logger.fine("Restriction " + name);
+//
+//		int size = -1;
+//		while (true) {
+//			XMLEvent event = xml.nextEvent();
+//			if (event.isStartElement()) {
+//				StartElement startElement = event.asStartElement();
+//				String startName = startElement.getName().getLocalPart();
+//				if (startName.equals("maxLength")) {
+//					String value = startElement.getAttributeByName(new QName("value")).getValue();
+//					size = Integer.parseInt(value);
+//				}  else if (startName.equals("enumeration")) {
+//					String value = startElement.getAttributeByName(new QName("value")).getValue();
 //					size = Math.max(size, value.length());
 //				}
-				skip(xml);
-			} else if (event.isEndElement()) {
-				if (size > 0) {
-					String line = "public static final int " + name + " = " + size + ";";
-					lines.add(line);
-				}
-				return;
-			} // else skip
-		}
-	}
+////				} else if (startName.equals("maxInclusive")) {
+////					String value = startElement.getAttributeByName(new QName(VALUE)).getValue();
+////					size = Math.max(size, value.length());
+////				}
+//				skip(xml);
+//			} else if (event.isEndElement()) {
+//				if (size > 0) {
+//					String line = "public static final int " + name + " = " + size + ";";
+//					lines.add(line);
+//				}
+//				return;
+//			} // else skip
+//		}
+//	}
 
 	public static void main(String... args) {
 		new EchSizesGenerator(108, "1.0");

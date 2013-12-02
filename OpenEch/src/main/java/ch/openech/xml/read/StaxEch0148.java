@@ -5,8 +5,6 @@ import static ch.openech.dm.XmlConstants.CORRECT_REPORTING;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.swing.ProgressMonitor;
-
 import ch.openech.dm.Event;
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.organisation.Organisation;
@@ -97,7 +95,7 @@ public class StaxEch0148 implements StaxEchParser {
 	}
 	
 	private boolean isCanceled(ProgressListener progressListener) {
-		return (progressListener instanceof ProgressMonitor) && ((ProgressMonitor)progressListener).isCanceled();
+		return progressListener.isCanceled();
 	}
 	
 	private void baseDelivery(ProgressListener progressListener)  {

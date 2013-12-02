@@ -4,10 +4,12 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.xmlpull.v1.XmlSerializer;
+
 
 public class StaxWriterFactory {
 
-	//private XMLStreamWriter writer;
+	private XmlSerializer writer;
 	private WriterElement rootElement;
 	private List<String> prefixList = new ArrayList<String>();
 	private List<String> uriList = new ArrayList<String>();
@@ -23,7 +25,7 @@ public class StaxWriterFactory {
 		//writer.writeStartElement(childNameSpaceURI, localName); // !!
 		writeNamespaces();
 		
-		rootElement = new WriterElement(childNameSpaceURI);
+		rootElement = new WriterElement(writer, childNameSpaceURI);
 		return rootElement;
 	}
 	

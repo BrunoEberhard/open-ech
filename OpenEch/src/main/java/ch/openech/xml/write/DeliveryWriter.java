@@ -23,7 +23,6 @@ public abstract class DeliveryWriter {
 	public static final String XMLSchema_URI = "http://www.w3.org/2001/XMLSchema-instance";
 
 	private Writer writer;
-	//private XMLStreamWriter xmlStreamWriter;
 	XmlSerializer xmlStreamWriter;
 	private WriterElement rootElement;
 	protected final EchSchema context;
@@ -52,7 +51,6 @@ public abstract class DeliveryWriter {
 			envelope.messageId = UUID.randomUUID().toString();
 			envelope.messageType = Integer.toString(getSchemaNumber());
 			envelope.messageClass = "0";
-			// envelope.senderId = AbstractClient.preferences().get("sedexAddress", null);
 			envelope.senderId = senderId;
 			envelope.recipientId = recipientId;
 			envelope.eventDate = new LocalDateTime();
@@ -75,12 +73,7 @@ public abstract class DeliveryWriter {
 			writer.close();
 			writer = null;
 		}
-
 		this.writer = writer;
-		//XMLOutputFactory factory = XMLOutputFactory.newInstance();
-		//xmlStreamWriter = new IndentingXMLStreamWriter(factory.createXMLStreamWriter(writer));
-
-		//xmlStreamWriter.writeStartDocument("UTF-8", "1.0");
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 		xmlStreamWriter = factory.newSerializer();
 		xmlStreamWriter.setOutput(writer);
@@ -124,7 +117,7 @@ public abstract class DeliveryWriter {
 		writeXmlSchemaLocation();
 		writeNamespaces(context, namespaceNumbers);
 		
-		//rootElement = new WriterElement(xmlStreamWriter, getNamespaceURI());
+		rootElement = new WriterElement(xmlStreamWriter, getNamespaceURI());
 		return rootElement;
 	}
 	
@@ -136,14 +129,15 @@ public abstract class DeliveryWriter {
 		xmlStreamWriter.attribute(WriterEch0020.XMLSchema_URI, "schemaLocation", context.getNamespaceURI(getSchemaNumber()) + " " + context.getNamespaceLocation(getSchemaNumber()));
 	}
 
-	private void setPrefixs(EchSchema namespaceContext, List<Integer> namespaceNumbers) {
-//		xmlStreamWriter.setPrefix("xsi", XMLSchema_URI);
-//		for (int number : namespaceNumbers) {
-//			xmlStreamWriter.setPrefix("e" + number, namespaceContext.getNamespaceURI(number));
-//		}
+	private void setPrefixs(EchSchema namespaceContext, List<Integer> namespaceNumbers) throws IOException {
+		xmlStreamWriter.setPrefix("xsi", XMLSchema_URI);
+		for (int number : namespaceNumbers) {
+			xmlStreamWriter.setPrefix("e" + number, namespaceContext.getNamespaceURI(number));
+		}
 	}
 	
 	private void writeNamespaces(EchSchema namespaceContext, List<Integer> namespaceNumbers) {
+		
 //		xmlStreamWriter.writeNamespace("xsi", XMLSchema_URI);
 //		for (int number : namespaceNumbers) {
 //			xmlStreamWriter.writeNamespace("e" + number, namespaceContext.getNamespaceURI(number));
@@ -155,6 +149,7 @@ public abstract class DeliveryWriter {
 
 	public void endDocument() throws Exception {
 		rootElement.flush();
+		xmlStreamWriter.endTag(getNamespaceURI(), getRootType());
 		xmlStreamWriter.endDocument();
 		writer.flush();
 	}

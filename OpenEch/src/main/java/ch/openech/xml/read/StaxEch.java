@@ -1,16 +1,15 @@
 package ch.openech.xml.read;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
-
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.XMLEvent;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.ReadablePartial;
 import org.joda.time.format.ISODateTimeFormat;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import ch.openech.dm.types.EchCode;
 import ch.openech.mj.model.EnumUtils;
@@ -25,7 +24,7 @@ public class StaxEch {
 	private static final int MAX_DATE_LENGHT = "01-02-1934".length();
 	private static final int MAX_DATE_TIME_LENGHT = "01-02-1934 12:12:12".length();
 	
-	public static LocalDate date(XMLEventReader xml) throws XMLStreamException {
+	public static LocalDate date(XmlPullParser xml) throws  XmlPullParserException, IOException {
 		String text = token(xml);
 		if (text.length() > MAX_DATE_LENGHT) {
 			// Einige Schlaumeier hängen ein "+01:00" oder eine Zeitzone an
@@ -34,7 +33,7 @@ public class StaxEch {
 		return ISODateTimeFormat.date().parseLocalDate(text);
 	}
 
-	public static LocalDateTime dateTime(XMLEventReader xml) throws XMLStreamException {
+	public static LocalDateTime dateTime(XmlPullParser xml) throws XmlPullParserException, IOException {
 		String text = token(xml);
 		if (text.length() > MAX_DATE_TIME_LENGHT) {
 			// Einige Schlaumeier hängen ein "+01:00" oder eine Zeitzone an
@@ -43,14 +42,14 @@ public class StaxEch {
 		return ISODateTimeFormat.dateHourMinuteSecond().parseLocalDateTime(text);
 	}
 
-	public static ReadablePartial partial(XMLEventReader xml) throws XMLStreamException {
+	public static ReadablePartial partial(XmlPullParser xml) throws  XmlPullParserException, IOException {
 		String text = token(xml);
 		// handle dates like 1950-08-30+01:00
 		if (text != null && text.length() > 10) text = text.substring(0, 10);
 		return DateUtils.parsePartial(text);
 	}
 
-	public static void simpleValue(XMLEventReader xml, Object object, Object key) throws XMLStreamException {
+	public static void simpleValue(XmlPullParser xml, Object object, Object key) throws XmlPullParserException, IOException {
 		PropertyInterface property = FlatProperties.getProperties(object.getClass()).get(key);
 		if (property == null) {
 			throw new IllegalArgumentException("Unknown field: " + key);
@@ -73,65 +72,66 @@ public class StaxEch {
 		property.setValue(object, value);
 	}
 	
-	public static String token(XMLEventReader xml) throws XMLStreamException {
+	public static String token(XmlPullParser xmlParser) throws  XmlPullParserException, IOException {
 		String token = null;
 		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isCharacters()) {
-				token = event.asCharacters().getData().trim();
-			} else if (event.isEndElement()) {
+			int event = xmlParser.next();
+			if (isText(event)) {
+				token = xmlParser.getText();
+			} else if (isEndTag(event)) {
 				return token;
 			} // else skip
 		}
 	}
 	
-	public static int integer(XMLEventReader xml) throws XMLStreamException {
+	public static int integer(XmlPullParser xml) throws XmlPullParserException, IOException {
 		int i = 0;
 		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isCharacters()) {
-				String token = event.asCharacters().getData().trim();
+			int event = xml.next();
+			if (isText(event)) {
+				String token = xml.getText();
 				i = Integer.parseInt(token);
-			} else if (event.isEndElement()) {
+			} else if (isEndTag(event)) {
 				return i;
 			} // else skip
 		}
 	}
 	
-	public static int bulean(XMLEventReader xml) throws XMLStreamException {
+	public static int bulean(XmlPullParser xml) throws  XmlPullParserException, IOException {
 		int i = -1;
 		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isCharacters()) {
-				String token = event.asCharacters().getData().trim();
+			int event = xml.next();
+			if (isText(event)) {
+				String token = xml.getText();
 				i = Boolean.parseBoolean(token) || "1".equals(token) ? 1 : 0;
-			} else if (event.isEndElement()) {
+			} else if (isEndTag(event)) {
 				if (i == -1) throw new IllegalArgumentException();
 				return i;
 			} // else skip
 		}
 	}
 
-	public static void enuum(XMLEventReader xml, Object object, Object key) throws XMLStreamException {
+	public static void enuum(XmlPullParser xml, Object object, Object key) throws  XmlPullParserException, IOException {
 		PropertyInterface property = Keys.getProperty(key);
 		enuum(xml, object, property);
 	}
 	
-	public static void enuum(XMLEventReader xml, Object object, PropertyInterface property) throws XMLStreamException {
+	public static void enuum(XmlPullParser xml, Object object, PropertyInterface property) throws  XmlPullParserException, IOException {
 		boolean found = false;
 		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isCharacters()) {
-				String token = event.asCharacters().getData().trim();
+			int event = xml.next();
+			if (isText(event)) {
+				String token = xml.getText();
 				enuum(token, object, property);
 				found = true;
-			} else if (event.isEndElement()) {
+			} else if (isEndTag(event)) {
 				if (!found) throw new IllegalArgumentException(); else return;
 			} // else skip
 		}
 	}
 	
 	public static <T extends Enum<T>> void enuum(String value, Object object, PropertyInterface property) {
+		@SuppressWarnings("unchecked")
 		Class<T> enumClass = (Class<T>) property.getFieldClazz();
 		List<T> values = EnumUtils.valueList(enumClass);
 		for (Object enumValue : values) {
@@ -156,15 +156,33 @@ public class StaxEch {
 		return InvalidValues.createInvalidEnum(enumClass, value);
 	}
 
-	public static void skip(XMLEventReader xml) throws XMLStreamException {
+	public static void skip(XmlPullParser xmlParser) throws XmlPullParserException, IOException  {
 		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				logger.fine("Skipping XML Element: " + event.asStartElement().getName().getLocalPart());
-				skip(xml);
-			} else if (event.isEndElement()) break;
+			int event = xmlParser.next();
+			if (isStartTag(event)) {
+				logger.fine("Skipping XML Element: " + xmlParser.getName());
+				skip(xmlParser);
+			} else if (isEndTag(event)) break;
 			// else ignore
 		}
 	}
+	
+	public static boolean isText(int event) {
+		return event == XmlPullParser.TEXT;
+	}
+	
+	public static boolean isStartTag(int event) {
+		return event == XmlPullParser.START_TAG;
+	}
+	
+	public static boolean isEndTag(int event) {
+		return event == XmlPullParser.END_TAG;
+	}
+	
+	public static boolean isEndDocument(int event) {
+		return event == XmlPullParser.END_DOCUMENT;
+	}
+	
+	
 	
 }
