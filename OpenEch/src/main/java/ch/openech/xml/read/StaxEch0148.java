@@ -137,7 +137,6 @@ public class StaxEch0148 implements StaxEchParser {
 		try {
 			organisation.event = e;
 			persistence.organisation().update(organisation);
-			persistence.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

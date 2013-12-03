@@ -1,6 +1,7 @@
 package ch.openech.datagenerator;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.openech.datagenerator.GeneratePersonEditor.GeneratePersonData;
 import ch.openech.mj.edit.Editor;
@@ -20,7 +21,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 	private final EchSchema ewkNamespaceContext;
 	private final EchSchema orgNamespaceContext;
 	private int count;
-	private int saveProgress;
+//	private int saveProgress;
 	
 	public GeneratePersonEditor(EchSchema ewkNamespaceContext, EchSchema orgNamespaceContext) {
 		this.ewkNamespaceContext = ewkNamespaceContext;
@@ -47,10 +48,28 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 		
 		count = number;
 		if (count > 0) {
-			WriterEch0020 writerEch0020 = new WriterEch0020(ewkNamespaceContext);
-			for (saveProgress = 0; saveProgress<count; saveProgress++) {
-				DataGenerator.generatePerson(writerEch0020);
-				// progress(saveProgress, count);
+			final int parallel = 10;
+			final AtomicInteger success = new AtomicInteger();
+			final AtomicInteger fail = new AtomicInteger();
+			for (int i = 0; i<parallel; i++) {
+				new Thread(new Runnable() {
+					public void run() {
+						final WriterEch0020 writerEch0020 = new WriterEch0020(ewkNamespaceContext);
+						for (int saveProgress = 0; saveProgress<count / parallel; saveProgress++) {
+							try {
+								DataGenerator.generatePerson(writerEch0020);
+								int value = success.addAndGet(1);
+								if (value % 10 == 0) {
+									System.out.println(success);
+								}
+							} catch (Exception x) {
+								fail.addAndGet(1);
+								System.out.println(fail);
+							}
+							// progress(saveProgress, count);
+						}
+					}
+				}).start();
 			}
 		} else {
 			showError("" + number);
@@ -65,7 +84,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 		count = number;
 		if (count > 0) {
 			WriterEch0148 writerEch0148 = new WriterEch0148(orgNamespaceContext);
-			for (saveProgress = 0; saveProgress<count; saveProgress++) {
+			for (int saveProgress = 0; saveProgress<count; saveProgress++) {
 				DataGenerator.generateOrganisation(writerEch0148);
 				// progress(saveProgress, count);
 			}

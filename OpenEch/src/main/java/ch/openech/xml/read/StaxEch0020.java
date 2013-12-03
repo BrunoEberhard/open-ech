@@ -68,7 +68,6 @@ public class StaxEch0020 implements StaxEchParser {
 		person.event = e;
 
 		persistence.person().update(person);
-		persistence.commit();
 	}
 
 	//

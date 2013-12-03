@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.XMLConstants;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -17,6 +18,7 @@ import org.w3c.dom.ls.LSResourceResolver;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import ch.openech.mj.db.DbPersistence;
 import ch.openech.xml.read.LSInputImpl;
 import ch.openech.xml.read.StaxEch0020;
 import ch.openech.xml.read.StaxEch0148;
@@ -32,7 +34,9 @@ public class EchServer {
 	
 	private EchServer() {
 		try {
-			persistence = new EchPersistence();
+			persistence = new EchPersistence(DbPersistence.mariaDbDataSource());
+//			persistence = new EchPersistence(DbPersistence.embeddedDataSource());
+			persistence.createTables();
 			ech0020 = new StaxEch0020(persistence);
 			ech0148 = new StaxEch0148(persistence);
 			instance = this;
@@ -101,37 +105,68 @@ public class EchServer {
 	    return message;
 	}
 	
-	public synchronized ServerCallResult process(String... xmlStrings) {
+	public ServerCallResult process(String... xmlStrings) {
 		return process(ech0020, xmlStrings);
 	}
 
-	public synchronized ServerCallResult processOrg(String... xmlStrings) {
+	public ServerCallResult processOrg(String... xmlStrings) {
 		return process(ech0148, xmlStrings);
 	}
 	
-	public synchronized ServerCallResult process(StaxEchParser parser, String... xmlStrings) {
+	public ServerCallResult process(final StaxEchParser parser, final String... xmlStrings) {
 		if (xmlStrings.length > 1) {
 			logger.fine("process " + xmlStrings.length + " xmls");
 		}
 
-		ServerCallResult result = new ServerCallResult();
+		final ServerCallResult result = new ServerCallResult();
 		try {
-			try {
-				for (String xmlString : xmlStrings) {
-					logger.fine(xmlString);
-					parser.process(xmlString);
+			persistence.transaction(new Runnable() {
+				public void run() {
+					for (String xmlString : xmlStrings) {
+						logger.fine(xmlString);
+						try {
+							parser.process(xmlString);
+						} catch (XMLStreamException e) {
+							// TODO process should not throw that (but runtime)
+							e.printStackTrace();
+						}
+					}
+					String lastInsertedId = parser.getLastInsertedId();
+					if (lastInsertedId != null) {
+						result.createdPersonId = lastInsertedId;
+					}
 				}
-				persistence.commit();
-				String lastInsertedId = parser.getLastInsertedId();
-				if (lastInsertedId != null) {
-					result.createdPersonId = lastInsertedId;
-				}
-			} catch (Exception x) {
-				x.printStackTrace();
+			});
+		} catch (Exception x) {
+			if (result.exception == null) {
 				result.errorMessage = x.getLocalizedMessage();
 				result.exception = x;
-				persistence.rollback();
-			} 
+			}
+		}
+		
+		return result;
+	}
+
+	public ServerCallResult process_(final StaxEchParser parser, final String... xmlStrings) {
+		if (xmlStrings.length > 1) {
+			logger.fine("process " + xmlStrings.length + " xmls");
+		}
+
+		final ServerCallResult result = new ServerCallResult();
+		try {
+			for (String xmlString : xmlStrings) {
+				logger.fine(xmlString);
+				try {
+					parser.process(xmlString);
+				} catch (XMLStreamException e) {
+					// TODO process should not throw that (but runtime)
+					e.printStackTrace();
+				}
+			}
+			String lastInsertedId = parser.getLastInsertedId();
+			if (lastInsertedId != null) {
+				result.createdPersonId = lastInsertedId;
+			}
 		} catch (Exception x) {
 			if (result.exception == null) {
 				result.errorMessage = x.getLocalizedMessage();

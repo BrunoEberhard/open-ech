@@ -41,7 +41,6 @@ import ch.openech.client.preferences.PreferencesEditor;
 import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.mj.application.DevMode;
 import ch.openech.mj.application.MjApplication;
-import ch.openech.mj.model.Codes;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.IAction;
@@ -56,8 +55,6 @@ public class OpenEchApplication extends MjApplication {
 	@Override
 	public void init() {
 		super.init();
-		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.organisation.types.ech_organisation"));
-		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
 
 		final String demoPersons = System.getProperty("DemoPerson");
 

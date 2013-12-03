@@ -2,7 +2,6 @@ package ch.openech.test.persistence;
 
 import junit.framework.Assert;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import ch.openech.dm.contact.Contact;
@@ -13,7 +12,6 @@ import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.HistorizedTable;
 
 
-@Ignore
 public class ContactPersistenceTest {
 
 	private static ContactPersistence persistence = new ContactPersistence();
@@ -24,7 +22,6 @@ public class ContactPersistenceTest {
 		contact.stringId = "3";
 		
 		persistence.contact().insert(contact);
-		persistence.commit();
 	}
 	
 	@Test
@@ -41,7 +38,6 @@ public class ContactPersistenceTest {
 		contact.entries.add(entry);
 		
 		int id = persistence.contact().insert(contact);
-		persistence.commit();
 		
 		Contact readContact = persistence.contact().read(id); 
 		
@@ -55,8 +51,9 @@ public class ContactPersistenceTest {
 		private final HistorizedTable<Contact> contact;
 
 		public ContactPersistence() {
+			super(DbPersistence.embeddedDataSource());
 			contact = addHistorizedClass(Contact.class);
-			connect();
+			createTables();
 		}
 
 		public HistorizedTable<Contact> contact() {

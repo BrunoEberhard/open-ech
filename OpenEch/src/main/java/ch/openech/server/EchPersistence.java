@@ -3,8 +3,10 @@ package ch.openech.server;
 import static ch.openech.dm.organisation.Organisation.*;
 import static ch.openech.dm.person.Person.*;
 
-import java.sql.SQLException;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.sql.DataSource;
 
 import org.joda.time.ReadablePartial;
 
@@ -20,18 +22,19 @@ import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.HistorizedTable;
 import ch.openech.mj.db.MultiIndex;
 import ch.openech.mj.db.Table;
+import ch.openech.mj.model.Codes;
 import ch.openech.mj.util.StringUtils;
 
 public class EchPersistence extends DbPersistence {
 
-	private final HistorizedTable<Person> person;
-	private final MultiIndex<Person> personFulltextIndex;
-	private final ColumnIndexUnqiue<Person> personVnIndex;
-	private final ColumnIndexUnqiue<Person> personLocalPersonIdIndex;
+	public final HistorizedTable<Person> person;
+	public final MultiIndex<Person> personFulltextIndex;
+	public final ColumnIndexUnqiue<Person> personVnIndex;
+	public final ColumnIndexUnqiue<Person> personLocalPersonIdIndex;
 	
-	private final HistorizedTable<Organisation> organisation;
-	private final MultiIndex<Organisation> organisationFulltextIndex;
-	private final ColumnIndexUnqiue<Organisation> organisationLocalIdIndex;
+	public final HistorizedTable<Organisation> organisation;
+	public final MultiIndex<Organisation> organisationFulltextIndex;
+	public final ColumnIndexUnqiue<Organisation> organisationLocalIdIndex;
 	
 	private final Table<ThirdPartyMove> thirdPartyMove = null;
 
@@ -46,8 +49,17 @@ public class EchPersistence extends DbPersistence {
 	private static final Object[] ORGANISATION_INDEX_KEYS = {
 		ORGANISATION.identification.organisationName, //
 	};
+
+	static {
+		// the addCodes may only be executed once, even if more
+		// than one EchPersistence is created (happens in JUnit Tests)
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.organisation.types.ech_organisation"));
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
+	}
 	
-	public EchPersistence() throws SQLException {
+	public EchPersistence(DataSource dataSource) {
+		super(dataSource);
+
 		addImmutableClass(PersonIdentification.class);
 		addImmutableClass(MunicipalityIdentification.class);
 		addImmutableClass(CountryIdentification.class);
@@ -63,9 +75,7 @@ public class EchPersistence extends DbPersistence {
 		organisationFulltextIndex = organisation.createFulltextIndex(ORGANISATION_INDEX_KEYS);
 		organisationLocalIdIndex = organisation.createIndexUnique(ORGANISATION.identification.technicalIds.localId.personId);
 
-		// thirdPartyMove = addClass(ThirdPartyMove.class);
-		
-		connect();
+		// addClass(ThirdPartyMove.class);
 	}
 
 	public HistorizedTable<Person> person() {

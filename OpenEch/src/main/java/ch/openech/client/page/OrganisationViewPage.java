@@ -43,7 +43,7 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 			return actualOrganisation;
 		} else {
 			int id = EchServer.getInstance().getPersistence().organisation().getId(actualOrganisation);
-			return EchServer.getInstance().getPersistence().organisation().read(id, time);
+			return EchServer.getInstance().getPersistence().organisation.read(id, time);
 		}
 	}
 

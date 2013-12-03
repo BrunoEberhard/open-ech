@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import junit.framework.Assert;
 
 import org.joda.time.LocalDate;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ch.openech.dm.common.Address;
@@ -14,11 +15,16 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.types.MrMrs;
 import ch.openech.dm.types.Sex;
 import ch.openech.server.EchPersistence;
-import ch.openech.server.EchServer;
 
 public class DbPersonCrudTest {
 
-	private static EchPersistence persistence = EchServer.getInstance().getPersistence();
+	private static EchPersistence persistence;
+
+	@BeforeClass
+	public static void setupDb() throws SQLException {
+		persistence = new EchPersistence(DbPersistence.embeddedDataSource());
+		persistence.createTables();
+	}
 
 	@Test
 	public void testCrud() throws SQLException {
@@ -32,7 +38,6 @@ public class DbPersonCrudTest {
 		address.country = "CH";
 		
 		int id = addressTable.getOrCreateId(address);
-		persistence.commit();
 		
 		Address readAddress = (Address)addressTable.read(id);
 		
@@ -42,13 +47,11 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(address.country, readAddress.country);
 	
 		int id2 = addressTable.getOrCreateId(address);
-		persistence.commit();
 		
 		Assert.assertEquals(id, id2);
 		
 		readAddress.houseNumber.houseNumber = "11";
 		int id3 = addressTable.getOrCreateId(readAddress);
-		persistence.commit();
 
 		Assert.assertNotSame(id, id3);
 	}
