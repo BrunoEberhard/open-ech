@@ -34,9 +34,8 @@ public class EchServer {
 	
 	private EchServer() {
 		try {
-			persistence = new EchPersistence(DbPersistence.mariaDbDataSource());
+			persistence = new EchPersistence(DbPersistence.mariaDbDataSource("OpenEch", "APP", "APP"));
 //			persistence = new EchPersistence(DbPersistence.embeddedDataSource());
-			persistence.createTables();
 			ech0020 = new StaxEch0020(persistence);
 			ech0148 = new StaxEch0148(persistence);
 			instance = this;

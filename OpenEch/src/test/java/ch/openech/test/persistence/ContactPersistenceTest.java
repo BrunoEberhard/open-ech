@@ -53,7 +53,6 @@ public class ContactPersistenceTest {
 		public ContactPersistence() {
 			super(DbPersistence.embeddedDataSource());
 			contact = addHistorizedClass(Contact.class);
-			createTables();
 		}
 
 		public HistorizedTable<Contact> contact() {

@@ -21,7 +21,6 @@ public class PersonExtendedInformationPersistenceTest {
 	@BeforeClass
 	public static void setupDb() throws SQLException {
 		persistence = new EchPersistence(DbPersistence.embeddedDataSource());
-		persistence.createTables();
 	}
 	
 	@Test
