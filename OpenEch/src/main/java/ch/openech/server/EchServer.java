@@ -3,6 +3,7 @@ package ch.openech.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -119,8 +120,8 @@ public class EchServer {
 
 		final ServerCallResult result = new ServerCallResult();
 		try {
-			persistence.transaction(new Runnable() {
-				public void run() {
+			result.createdPersonId = persistence.transaction(new Callable<String>() {
+				public String call() {
 					for (String xmlString : xmlStrings) {
 						logger.fine(xmlString);
 						try {
@@ -130,42 +131,9 @@ public class EchServer {
 							e.printStackTrace();
 						}
 					}
-					String lastInsertedId = parser.getLastInsertedId();
-					if (lastInsertedId != null) {
-						result.createdPersonId = lastInsertedId;
-					}
+					return parser.getLastInsertedId();
 				}
-			});
-		} catch (Exception x) {
-			if (result.exception == null) {
-				result.errorMessage = x.getLocalizedMessage();
-				result.exception = x;
-			}
-		}
-		
-		return result;
-	}
-
-	public ServerCallResult process_(final StaxEchParser parser, final String... xmlStrings) {
-		if (xmlStrings.length > 1) {
-			logger.fine("process " + xmlStrings.length + " xmls");
-		}
-
-		final ServerCallResult result = new ServerCallResult();
-		try {
-			for (String xmlString : xmlStrings) {
-				logger.fine(xmlString);
-				try {
-					parser.process(xmlString);
-				} catch (XMLStreamException e) {
-					// TODO process should not throw that (but runtime)
-					e.printStackTrace();
-				}
-			}
-			String lastInsertedId = parser.getLastInsertedId();
-			if (lastInsertedId != null) {
-				result.createdPersonId = lastInsertedId;
-			}
+			}, "Process xmls");
 		} catch (Exception x) {
 			if (result.exception == null) {
 				result.errorMessage = x.getLocalizedMessage();
