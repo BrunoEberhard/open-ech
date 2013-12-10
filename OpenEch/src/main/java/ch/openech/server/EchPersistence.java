@@ -78,6 +78,11 @@ public class EchPersistence extends DbPersistence {
 		// addClass(ThirdPartyMove.class);
 	}
 
+	@Override
+	protected boolean createTablesOnInitialize() {
+		return true;
+	}
+
 	public HistorizedTable<Person> person() {
 		return person;
 	}

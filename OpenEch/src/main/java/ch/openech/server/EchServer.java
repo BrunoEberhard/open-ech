@@ -3,7 +3,6 @@ package ch.openech.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +19,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import ch.openech.mj.db.DbPersistence;
+import ch.openech.mj.db.Transaction;
 import ch.openech.xml.read.LSInputImpl;
 import ch.openech.xml.read.StaxEch0020;
 import ch.openech.xml.read.StaxEch0148;
@@ -120,8 +120,9 @@ public class EchServer {
 
 		final ServerCallResult result = new ServerCallResult();
 		try {
-			result.createdPersonId = persistence.transaction(new Callable<String>() {
-				public String call() {
+			result.createdPersonId = persistence.transaction(new Transaction<String>() {
+				@Override
+				public String execute() {
 					for (String xmlString : xmlStrings) {
 						logger.fine(xmlString);
 						try {
