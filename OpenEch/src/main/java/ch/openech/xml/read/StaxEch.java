@@ -145,7 +145,7 @@ public class StaxEch {
 		property.setValue(object, createdEnum);
 	}
 
-	public static <T extends Enum<T>> Enum<T> enuum(Class<T> enumClass, String value) {
+	public static <T extends Enum<T>> T enuum(Class<T> enumClass, String value) {
 		List<T> values = EnumUtils.valueList(enumClass);
 		for (T enumValue : values) {
 			EchCode echCode = (EchCode) enumValue;

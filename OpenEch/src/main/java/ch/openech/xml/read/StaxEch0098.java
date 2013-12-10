@@ -11,7 +11,6 @@ import javax.xml.stream.events.XMLEvent;
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.organisation.Headquarter;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0098 {
@@ -35,7 +34,7 @@ public class StaxEch0098 {
 	}
 
 	public static void residence(String startName, XMLEventReader xml, Organisation organisation) throws XMLStreamException {
-		organisation.typeOfResidenceOrganisation = EnumUtils.valueOf(TypeOfResidenceOrganisation.class, startName);
+		organisation.typeOfResidenceOrganisation = StaxEch.enuum(TypeOfResidenceOrganisation.class, startName);
 		residence(xml, organisation);
 	}
 	
