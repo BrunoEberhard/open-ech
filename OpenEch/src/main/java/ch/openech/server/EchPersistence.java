@@ -58,7 +58,7 @@ public class EchPersistence extends DbPersistence {
 	}
 	
 	public EchPersistence(DataSource dataSource) {
-		super(dataSource);
+		super(dataSource, CREATE_TABLES);
 
 		addImmutableClass(PersonIdentification.class);
 		addImmutableClass(MunicipalityIdentification.class);
@@ -76,11 +76,6 @@ public class EchPersistence extends DbPersistence {
 		organisationLocalIdIndex = organisation.createIndexUnique(ORGANISATION.identification.technicalIds.localId.personId);
 
 		// addClass(ThirdPartyMove.class);
-	}
-
-	@Override
-	protected boolean createTablesOnInitialize() {
-		return true;
 	}
 
 	public HistorizedTable<Person> person() {
