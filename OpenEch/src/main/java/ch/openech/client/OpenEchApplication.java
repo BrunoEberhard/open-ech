@@ -44,6 +44,7 @@ import ch.openech.mj.application.MjApplication;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.IAction;
+import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 public class OpenEchApplication extends MjApplication {
@@ -56,8 +57,12 @@ public class OpenEchApplication extends MjApplication {
 	public void init() {
 		super.init();
 
-		final String demoPersons = System.getProperty("DemoPerson");
-
+		// Ueber den Server wird auch die Persistenz geladen und
+		// damit die Codes. Daher hier die Initialisierung.
+		EchServer.getInstance();
+		
+//		final String demoPersons = System.getProperty("DemoPerson");
+//
 //		if (!StringUtils.isEmpty(demoPersons)) {
 //			new Thread(new Runnable() {
 //				@Override
