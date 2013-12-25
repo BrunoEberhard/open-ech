@@ -60,17 +60,16 @@ public class EchPersistence extends DbPersistence {
 	public EchPersistence(DataSource dataSource) {
 		super(dataSource, CREATE_TABLES);
 
-		addImmutableClass(PersonIdentification.class);
 		addImmutableClass(MunicipalityIdentification.class);
 		addImmutableClass(CountryIdentification.class);
 		
+		addIdentificationClass(PersonIdentification.class);
 		person = addHistorizedClass(Person.class);
 		personFulltextIndex = person.createFulltextIndex(PERSON_INDEX_KEYS);
 		personVnIndex = person.createIndexUnique(PERSON.personIdentification.vn.value);
 		personLocalPersonIdIndex = person.createIndexUnique(PERSON.personIdentification.technicalIds.localId.personId);
 		
-		addImmutableClass(OrganisationIdentification.class);
-		
+		addIdentificationClass(OrganisationIdentification.class);
 		organisation = addHistorizedClass(Organisation.class);
 		organisationFulltextIndex = organisation.createFulltextIndex(ORGANISATION_INDEX_KEYS);
 		organisationLocalIdIndex = organisation.createIndexUnique(ORGANISATION.identification.technicalIds.localId.personId);
