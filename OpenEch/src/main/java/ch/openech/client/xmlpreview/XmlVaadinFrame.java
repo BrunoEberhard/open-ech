@@ -3,7 +3,7 @@ package ch.openech.client.xmlpreview;
 
 import java.util.List;
 
-import ch.openech.server.EchServer;
+import ch.openech.dm.EchSchemaValidation;
 
 import com.vaadin.terminal.gwt.client.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
@@ -65,7 +65,7 @@ public class XmlVaadinFrame extends Window {
 		layout.addComponent(xmlLabel);
 		layout.setExpandRatio(xmlLabel, 1);
 	        
-		String message = EchServer.validate(xml);
+		String message = EchSchemaValidation.validate(xml);
 		Label messageLabel = new Label(message);
 		messageLabel.setContentMode(Label.CONTENT_DEFAULT);
 		layout.addComponent(messageLabel);

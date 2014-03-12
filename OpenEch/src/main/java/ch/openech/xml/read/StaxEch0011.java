@@ -93,7 +93,7 @@ public class StaxEch0011 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(COUNTRY)) StaxEch0008.country(xml, place.countryIdentification);
+				if (startName.equals(COUNTRY)) place.countryIdentification = StaxEch0008.country(xml);
 				else if (startName.equals(FOREIGN_BIRTH_TOWN) || startName.equals(TOWN)) place.foreignTown = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
@@ -197,7 +197,7 @@ public class StaxEch0011 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(NATIONALITY_STATUS)) enuum(xml, nationality, Nationality.NATIONALITY.nationalityStatus);
-				else if (startName.equals(COUNTRY)) StaxEch0008.country(xml, nationality.nationalityCountry);
+				else if (startName.equals(COUNTRY)) StaxEch0008.country(xml).copyTo(nationality.nationalityCountry);
 				else skip(xml);
 			} else if (event.isEndElement()) return;
 			// else skip

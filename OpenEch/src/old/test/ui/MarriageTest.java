@@ -51,9 +51,9 @@ public class MarriageTest extends AbstractPageTest {
 //		EditorPage editorPage = (EditorPage) view.getVisiblePage();
 //		FormComponent formComponent = (FormComponent) editorPage.getPanel();
 //		
-//		setText(PERSON_IDENTIFICATION.officialName , DATA1_OFFICIAL_NAME);
-//		setText(PERSON_IDENTIFICATION.firstName , DATA1_FIRST_NAME);
-//		setText(PERSON_IDENTIFICATION.dateOfBirth , DATA1_DATE_OF_BIRTH);
+//		setText(PERSON_IDENTIFICATION.id.officialName , DATA1_OFFICIAL_NAME);
+//		setText(PERSON_IDENTIFICATION.id.firstName , DATA1_FIRST_NAME);
+//		setText(PERSON_IDENTIFICATIONid.dateOfBirth , DATA1_DATE_OF_BIRTH);
 //		setText(PERSON.arrivalDate , DATA1_DATE_OF_ARRIVAL);
 //		
 //		doClickButton("Heimatort hinzufügen");
@@ -79,11 +79,11 @@ public class MarriageTest extends AbstractPageTest {
 //		EditorPage editorPage = (EditorPage) view.getVisiblePage();
 //		FormComponent formComponent = (FormComponent) editorPage.getPanel();
 //
-//		setText(PERSON_IDENTIFICATION.officialName , DATA2_OFFICIAL_NAME);
-//		setText(PERSON_IDENTIFICATION.firstName , DATA2_FIRST_NAME);
-//		setText(PERSON_IDENTIFICATION.dateOfBirth , DATA2_DATE_OF_BIRTH);
+//		setText(PERSON_IDENTIFICATION.id.officialName , DATA2_OFFICIAL_NAME);
+//		setText(PERSON_IDENTIFICATION.id.firstName , DATA2_FIRST_NAME);
+//		setText(PERSON_IDENTIFICATIONid.dateOfBirth , DATA2_DATE_OF_BIRTH);
 //		setText(PERSON.arrivalDate , DATA2_DATE_OF_ARRIVAL);
-//		setCombo(formComponent, PERSON_IDENTIFICATION.sex, 1);
+//		setCombo(formComponent, PERSON_IDENTIFICATION.id.sex, 1);
 //		
 //		doClickButton("Heimatort hinzufügen");
 //		setText(PLACE_OF_ORIGIN.originName , "Amden");

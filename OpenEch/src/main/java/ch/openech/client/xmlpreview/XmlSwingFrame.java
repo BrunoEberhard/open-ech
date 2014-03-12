@@ -20,7 +20,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import ch.openech.server.EchServer;
+import ch.openech.dm.EchSchemaValidation;
 public class XmlSwingFrame extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
@@ -66,7 +66,7 @@ public class XmlSwingFrame extends JDialog {
 				xml = textArea.getText();
 			}
 			
-			String message = EchServer.validate(xml);
+			String message = EchSchemaValidation.validate(xml);
 			JOptionPane.showMessageDialog(XmlSwingFrame.this, message);
 		}
 	}
@@ -77,7 +77,7 @@ public class XmlSwingFrame extends JDialog {
 	
 	private void showSingleXML(String xml) {
 		add(createArea(xml), BorderLayout.CENTER);
-		String message = EchServer.validate(xml);
+		String message = EchSchemaValidation.validate(xml);
 		add(createValidationArea(message), BorderLayout.SOUTH);
 	}
 

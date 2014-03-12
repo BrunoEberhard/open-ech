@@ -9,25 +9,22 @@ import ch.openech.dm.code.BasedOnLaw;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.TypeOfRelationship;
-import ch.openech.server.ServerCallResult;
 
 public class GardianTest extends AbstractServerTest {
 
-	private static String id, gardianId;
+	private static Person p, gardianP;
 	
 	@BeforeClass
 	public static void createPerson() throws Exception {
-		ServerCallResult result = processFile("testPerson/gardian/person.xml");
-		id = result.createdPersonId;
+		p = processFile("testPerson/gardian/person.xml");
 		
-		result = processFile("testPerson/gardian/personGardian.xml");
-		gardianId = result.createdPersonId;
+		gardianP = processFile("testPerson/gardian/personGardian.xml");
 	}
 	
 	@Test
 	public void gardianMeasure() throws Exception {
-		Person person = load(id);
-		Person personGardian = load(gardianId);
+		Person person = reload(p);
+		Person personGardian = reload(gardianP);
 
 		Relation relation = new Relation();
 		relation.typeOfRelationship = TypeOfRelationship.Vormund;
@@ -36,7 +33,7 @@ public class GardianTest extends AbstractServerTest {
 		person.relation.add(relation);
 		process(writer().gardianMeasure(person.personIdentification, relation));
 		
-		person = load(id);
+		person = reload(p);
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Vormund);
 		Assert.assertTrue(personGardian.personIdentification.isEqual(gardian.partner));
@@ -45,8 +42,8 @@ public class GardianTest extends AbstractServerTest {
 
 	@Test
 	public void changeGardian() throws Exception {
-		Person person = load(id);
-		Person personGardian = load(gardianId);
+		Person person = reload(p);
+		Person personGardian = reload(gardianP);
 
 		Relation relation = new Relation();
 		relation.typeOfRelationship = TypeOfRelationship.Beistand;
@@ -55,10 +52,10 @@ public class GardianTest extends AbstractServerTest {
 		person.relation.add(relation);
 		process(writer().changeGardian(person.personIdentification, relation));
 
-		person = load(id);
+		person = reload(p);
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Beistand);
-		Assert.assertTrue(load(gardianId).personIdentification.isEqual(gardian.partner));
+		Assert.assertTrue(reload(gardianP).personIdentification.isEqual(gardian.partner));
 		Assert.assertEquals(BasedOnLaw._369, gardian.basedOnLaw);
 
 		Assert.assertNull(person.getRelation(TypeOfRelationship.Vormund));
@@ -66,10 +63,10 @@ public class GardianTest extends AbstractServerTest {
 	
 	@Test
 	public void undoGardian() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		process(writer().undoGardian(person.personIdentification));
 		
-		person = load(id);
+		person = reload(p);
 		Assert.assertNotNull(person);
 		Assert.assertNull(person.getRelation(TypeOfRelationship.Beistand));
 		Assert.assertNull(person.getRelation(TypeOfRelationship.Vormund));

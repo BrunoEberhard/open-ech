@@ -5,7 +5,6 @@ import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.util.List;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -16,38 +15,36 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.joda.time.LocalDateTime;
 
+import ch.openech.business.EchPersistence;
 import ch.openech.dm.Event;
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.organisation.OrganisationIdentification;
+import ch.openech.mj.server.DbService;
 import ch.openech.mj.toolkit.ProgressListener;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.server.EchPersistence;
 
-public class StaxEch0148 implements StaxEchParser {
+public class StaxEch0148 implements StaxEchParser<Organisation> {
 
-	private final EchPersistence persistence;
+	private final DbService dbService;
 	
 	private Event e;
-	private String lastInsertedOrganisationId;
+	private Organisation lastInserted;
 	
-	public StaxEch0148(EchPersistence persistence) {
-		this.persistence = persistence;
+	public StaxEch0148(DbService dbService) {
+		this.dbService = dbService;
 	}
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
 		
-		if (organisation.getId() == null) {
-			organisation.identification.technicalIds.localId.setOpenEch();
-		}
-		persistence.organisation().insert(organisation);
-		lastInsertedOrganisationId = organisation.getId();
+		dbService.insert(organisation);
+		lastInserted = organisation;
 	}
 
 	@Override
-	public String getLastInsertedId() {
-		return lastInsertedOrganisationId;
+	public Organisation getLastInserted() {
+		return lastInserted;
 	}
 
 	@Override
@@ -136,27 +133,12 @@ public class StaxEch0148 implements StaxEchParser {
 	public void simpleOrganisationEvent(String type, Organisation organisation) {
 		try {
 			organisation.event = e;
-			persistence.organisation().update(organisation);
+			dbService.update(organisation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//
-
-	public Organisation getOrganisation(OrganisationIdentification organisationIdentification) {
-		if (organisationIdentification.getId() != null) {
-			return persistence.organisationLocalIdIndex().find(organisationIdentification.getId());
-		} else {
-			List<Organisation> organisations = persistence.organisationIndex().findObjects(organisationIdentification.organisationName);
-			if (!organisations.isEmpty()) {
-				return organisations.get(0);
-			} else {
-				return null;
-			}
-		}
-	}
-	
 	//
 
 	public void eventAdd(XMLEventReader xml) throws XMLStreamException {
@@ -189,7 +171,7 @@ public class StaxEch0148 implements StaxEchParser {
 				String startName = startElement.getName().getLocalPart();
 				if (StringUtils.equals(startName, ORGANISATION_IDENTIFICATION)) {
 					StaxEch0097.organisationIdentification(xml, organisationIdentification);
-					organisation = getOrganisation(organisationIdentification);
+					organisation = EchPersistence.getByIdentification(dbService, organisationIdentification);
 					if (StringUtils.equals(eventName, CORRECT_LIQUIDATION)) {
 						organisation.liquidationEntryDate = null;
 						organisation.liquidationDate = null;

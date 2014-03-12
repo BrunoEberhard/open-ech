@@ -1,6 +1,6 @@
 package ch.openech.client.e44;
 
-import static ch.openech.dm.person.PersonIdentification.PERSON_IDENTIFICATION;
+import static ch.openech.dm.person.PersonIdentification.*;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.dm.person.PersonIdentification;
 

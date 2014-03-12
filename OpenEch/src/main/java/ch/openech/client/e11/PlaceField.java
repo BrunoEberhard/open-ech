@@ -88,20 +88,16 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 	@Override
 	public Place getObject() {
 		Place place = new Place();
-		if (comboBoxCountry.getSelectedObject() != null) {
-			((CountryIdentification) comboBoxCountry.getSelectedObject()).copyTo(place.countryIdentification);
-		} else {
-			place.countryIdentification.clear();
-		}
+		place.countryIdentification = (CountryIdentification) comboBoxCountry.getSelectedObject();
 		if (switchLayoutMunicipality.getShownComponent() == comboBoxMunicipality) {
 			if (comboBoxMunicipality.getSelectedObject() != null) {
-				((MunicipalityIdentification) comboBoxMunicipality.getSelectedObject()).copyTo(place.municipalityIdentification);
+				place.municipalityIdentification = (MunicipalityIdentification) comboBoxMunicipality.getSelectedObject();
 			} else {
-				place.municipalityIdentification.clear();
+				place.municipalityIdentification = null;
 			}
 			place.foreignTown = null;
 		} else {
-			place.municipalityIdentification.clear();
+			place.municipalityIdentification = null;
 			place.foreignTown = textForeignTown.getText();
 		}
 		
@@ -113,10 +109,10 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 		Place place = new Place();
 		if (Math.random() < 0.8) {
 			int index = (int)(Math.random() * (double)StaxEch0071.getInstance().getMunicipalityIdentifications().size());
-			place.setMunicipalityIdentification(StaxEch0071.getInstance().getMunicipalityIdentifications().get(index));
+			place.municipalityIdentification = StaxEch0071.getInstance().getMunicipalityIdentifications().get(index);
 		} else {
 			int index = (int)(Math.random() * (double)StaxEch0072.getInstance().getCountryIdentifications().size());
-			place.setCountryIdentification(StaxEch0072.getInstance().getCountryIdentifications().get(index));
+			place.countryIdentification = StaxEch0072.getInstance().getCountryIdentifications().get(index);
 			place.foreignTown = NameGenerator.officialName() + "Town";
 		}
 		setObject(place);

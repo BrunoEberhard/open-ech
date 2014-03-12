@@ -10,8 +10,6 @@ import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.page.PageLink;
-import ch.openech.mj.search.IndexSearch;
-import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 public class HeadquarterField extends ObjectFlowField<Headquarter> {
@@ -71,7 +69,7 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 	public final class SelectHeadquarterAction extends SearchDialogAction<Organisation> {
 		
 		public SelectHeadquarterAction() {
-			super(getComponent(), new IndexSearch<>(EchServer.getInstance().getPersistence().organisationIndex()), SearchOrganisationPage.FIELD_NAMES);
+			super(getComponent(), Organisation.BY_FULLTEXT, SearchOrganisationPage.FIELD_NAMES);
 		}
 
 		@Override

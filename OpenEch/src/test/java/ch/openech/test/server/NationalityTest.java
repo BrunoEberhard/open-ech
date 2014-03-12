@@ -8,18 +8,16 @@ import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.server.ServerCallResult;
 
 public class NationalityTest extends AbstractServerTest {
 
 	@Test
 	public void naturalizeForeigner() throws Exception {
-		ServerCallResult result = processFile("testPerson/naturalizeForeigner/person.xml");
-		String person_id = result.createdPersonId;
+		Person p = processFile("testPerson/naturalizeForeigner/person.xml");
 
-		result = processFile("samples/eCH-0020/InfostarSamples/Buergerrecht - Nationalité/eventNaturalizeForeigner/data_53745100000000023.xml");
+		processFile("samples/eCH-0020/InfostarSamples/Buergerrecht - Nationalité/eventNaturalizeForeigner/data_53745100000000023.xml");
 		
-		Person person = load(person_id);
+		Person person = reload(p);
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);

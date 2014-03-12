@@ -7,8 +7,6 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.search.IndexSearch;
-import ch.openech.server.EchServer;
 
 public class PersonField extends ObjectFlowField<Person> {
 
@@ -40,7 +38,7 @@ public class PersonField extends ObjectFlowField<Person> {
 	public class PersonSearchAction extends SearchDialogAction<Person> {
 		
 		public PersonSearchAction() {
-			super(getComponent(), new IndexSearch<>(EchServer.getInstance().getPersistence().personIndex()), SearchPersonPage.FIELD_NAMES);
+			super(getComponent(), Person.BY_FULLTEXT, SearchPersonPage.FIELD_NAMES);
 		}
 
 		@Override

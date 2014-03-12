@@ -18,9 +18,11 @@ import ch.openech.dm.types.YesNo;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.PageLink;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.mj.util.BusinessRule;
-import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -91,8 +93,9 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 		
 		Relation partnerRelation = parentPerson.getPartner();
 		if (partnerRelation != null && partnerRelation.partner != null && partnerRelation.partner.vn != null) { 
-			Person partnerOfVisiblePerson = EchServer.getInstance().getPersistence().personVnIndex().find(partnerRelation.partner.vn.value);
-			if (partnerOfVisiblePerson != null) {
+			List<Person> partnerOfVisiblePersons = Services.get(DbService.class).search(Person.BY_VN, partnerRelation.partner.vn.value);
+			if (partnerOfVisiblePersons.size() == 1) {
+				Person partnerOfVisiblePerson = partnerOfVisiblePersons.get(0);
 				if (partnerOfVisiblePerson.isMale())
 					father = partnerOfVisiblePerson;
 				else
@@ -116,7 +119,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 
 		if (preferences.preferencesDefaultsData.residence != null) {
 			person.placeOfBirth = new Place();
-			person.placeOfBirth.setMunicipalityIdentification(preferences.preferencesDefaultsData.residence);
+			person.placeOfBirth.municipalityIdentification = CloneHelper.clone(preferences.preferencesDefaultsData.residence);
 		}
 		return person;
 	}

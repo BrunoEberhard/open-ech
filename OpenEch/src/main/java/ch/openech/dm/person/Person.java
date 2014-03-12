@@ -2,6 +2,7 @@ package ch.openech.dm.person;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.joda.time.LocalDate;
 
@@ -19,8 +20,10 @@ import ch.openech.dm.types.Language;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.Codes;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
+import ch.openech.mj.model.Search;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Required;
@@ -28,12 +31,26 @@ import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.mj.util.DateUtils;
+import ch.openech.mj.util.IdUtils;
 import ch.openech.mj.util.StringUtils;
 
 
 public class Person implements Validation {
 
 	public static final Person PERSON = Keys.of(Person.class);
+	
+	public static final Search<Person> BY_FULLTEXT = new Search<>(
+		PERSON.personIdentification.officialName, //
+		PERSON.personIdentification.firstName, //
+		PERSON.personIdentification.dateOfBirth, //
+		PERSON.aliasName, //
+		PERSON.personIdentification.vn.value //
+	);
+	public static final Search<Person> BY_VN = new Search<>(PERSON.personIdentification.vn.value);
+
+	static {
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
+	}
 
 	public transient PersonEditMode editMode;
 
@@ -44,6 +61,9 @@ public class Person implements Validation {
 	
 	//
 
+	public long id;
+	public int version;
+	
 	public final PersonIdentification personIdentification = new PersonIdentification();
 	
 	@Size(EchFormats.baseName)
@@ -121,10 +141,6 @@ public class Person implements Validation {
 	}
 	
 	//
-	
-	public String getId() {
-		return personIdentification.getId();
-	}
 	
 	public boolean isPersisent() {
 		return personIdentification != null;
@@ -235,10 +251,10 @@ public class Person implements Validation {
 	}
 	
 	private void toHtmlMultiLine(StringBuilder s) {
-		append(s, "Person.officialName", personIdentification.officialName);
-		append(s, "Person.firstName", personIdentification.firstName);
+		append(s, "Person.id.officialName", personIdentification.officialName);
+		append(s, "Person.id.firstName", personIdentification.firstName);
 		if (personIdentification.dateOfBirth != null) {
-			append(s, "Person.dateOfBirth", DateUtils.formatPartial(personIdentification.dateOfBirth));
+			append(s, "Person.id.dateOfBirth", DateUtils.formatPartial(personIdentification.dateOfBirth));
 		}
 		s.append("<BR>&nbsp;");
 	}
@@ -364,6 +380,10 @@ public class Person implements Validation {
 		if (validationMessage != null) {
 			resultList.add(new ValidationMessage(PERSON.residence, validationMessage));
 		}
+	}
+
+	public String getId() {
+		return IdUtils.getIdString(this);
 	}
 	
 }

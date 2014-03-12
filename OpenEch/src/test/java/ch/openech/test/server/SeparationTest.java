@@ -8,27 +8,24 @@ import org.junit.Test;
 
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.types.Separation;
-import ch.openech.server.EchServer;
-import ch.openech.server.ServerCallResult;
 
 public class SeparationTest extends AbstractServerTest {
 
-	private String id;
+	private Person p;
 	
 	@Before
 	public void createPerson() throws Exception {
-		EchServer.getInstance().getPersistence().clear();
+		clear();
 		
-		ServerCallResult result = processFile("testPerson/separation/person.xml");
-		id = result.createdPersonId;
+		p = processFile("testPerson/separation/person.xml");
 	}
 	
 	@Test
 	public void separation() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		process(writer().separation(person.personIdentification, Separation.freiwillig, ISODateTimeFormat.date().parseLocalDate("2010-09-03")));
 		
-		person = load(id);
+		person = reload(p);
 		Assert.assertNotNull(person);
 		Assert.assertEquals(ISODateTimeFormat.date().parseLocalDate("2010-09-03"), person.separation.dateOfSeparation);
 		Assert.assertEquals(Separation.freiwillig, person.separation.separation);
@@ -36,10 +33,10 @@ public class SeparationTest extends AbstractServerTest {
 	
 	@Test
 	public void undoSeparation() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		process(writer().undoSeparation(person.personIdentification));
 
-		person = load(id);
+		person = reload(p);
 		Assert.assertNull(person.separation.dateOfSeparation);
 	}
 	

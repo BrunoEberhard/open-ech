@@ -12,8 +12,8 @@ import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.types.Sex;
 import ch.openech.dm.types.TypeOfResidence;
-import ch.openech.server.EchServer;
-import ch.openech.server.ServerCallResult;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 
 public class MoveInTest extends AbstractServerTest {
 
@@ -21,7 +21,7 @@ public class MoveInTest extends AbstractServerTest {
 	public void moveIn() throws Exception {
 		processFile("samples/eCH-0020/moveIn/data_ordipro-moveIn-21.xml");
 		
-		List<Person> persons = EchServer.getInstance().getPersistence().personIndex().findObjects("BERNALUSKOVSKI");
+		List<Person> persons = Services.get(DbService.class).search(Person.BY_FULLTEXT, "BERNALUSKOVSKI");
 		Assert.assertEquals(1, persons.size());
 		Person person = persons.get(0);
 		
@@ -55,21 +55,13 @@ public class MoveInTest extends AbstractServerTest {
 
 	@Test
 	public void moveIn_secondaryResidence() throws Exception {
-		ServerCallResult result = processFile("testPerson/moveIn/personSecondaryResidence.xml");
-		String id = result.createdPersonId;
-		
-		Person person = load(id);
-		
+		Person person = processFile("testPerson/moveIn/personSecondaryResidence.xml");
 		Assert.assertEquals(TypeOfResidence.hasSecondaryResidence, person.typeOfResidence);
 	}
 
 	@Test
 	public void moveIn_otherResidence() throws Exception {
-		ServerCallResult result = processFile("testPerson/moveIn/personOtherResidence.xml");
-		String id = result.createdPersonId;
-		
-		Person person = load(id);
-		
+		Person person = processFile("testPerson/moveIn/personOtherResidence.xml");
 		Assert.assertEquals(TypeOfResidence.hasOtherResidence, person.typeOfResidence);
 	}
 

@@ -13,11 +13,10 @@ public class TechnicalIds {
 	public final List<NamedId> euId = new ArrayList<NamedId>();
 
 	public TechnicalIds() {
-		localId.setOpenEch();
 	}
 	
 	public void clear() {
-		localId.setOpenEch();
+		localId.clear();
 		otherId.clear();
 		euId.clear();
 	}

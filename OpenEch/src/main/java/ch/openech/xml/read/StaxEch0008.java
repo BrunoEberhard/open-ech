@@ -13,14 +13,15 @@ public class StaxEch0008 {
 	 * Die Landinformation besteht nur aus drei einfachen Werten,
 	 * die über das generische simpleValue eingelesen werden können. 
 	 */
-	public static void country(XMLEventReader xml, CountryIdentification countryIdentification) throws XMLStreamException {
+	public static CountryIdentification country(XMLEventReader xml) throws XMLStreamException {
+		CountryIdentification countryIdentification = new CountryIdentification();
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				StaxEch.simpleValue(xml, countryIdentification, startName);
-			} else if (event.isEndElement()) return;
+			} else if (event.isEndElement()) return countryIdentification;
 			// else skip
 		}
 	}

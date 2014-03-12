@@ -3,6 +3,7 @@ package ch.openech.client.page;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.LocalDateTime;
 
@@ -11,14 +12,15 @@ import ch.openech.mj.page.HistoryPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.resources.Resources;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonHistoryPage extends HistoryPage<Person> implements RefreshablePage {
 
 	private final EchSchema echNamespaceContext;
-	private final String personId;
+	private final long personId;
 
 	public PersonHistoryPage(PageContext context, String[] arguments) {
 		this(context, arguments[0], arguments[1]);
@@ -30,7 +32,7 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 	
 	public PersonHistoryPage(PageContext context, EchSchema echNamespaceContext, String personId) {
 		super(context);
-		this.personId = personId;
+		this.personId = Long.valueOf(personId);
 		this.echNamespaceContext = echNamespaceContext;
 	}
 	
@@ -41,19 +43,20 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 
 	@Override
 	protected List<HistoryVersion<Person>> loadVersions() {
-		List<HistoryVersion<Person>> versions = new ArrayList<HistoryVersion<Person>>();
-
-		int id = EchServer.getInstance().getPersistence().personLocalPersonIdIndex().findId(personId);
-		Person person = EchServer.getInstance().getPersistence().person().read(id);
-		List<Integer> times = EchServer.getInstance().getPersistence().person().readVersions(id);
+		Person person = Services.get(DbService.class).read(Person.class, personId);
+		Map<Integer, Person> persons = Services.get(DbService.class).loadHistory(person);
+		List<Integer> times = new ArrayList<>(persons.keySet());
+		Collections.sort(times);
 		Collections.reverse(times);
+
+		List<HistoryVersion<Person>> versions = new ArrayList<>();
 		HistoryVersion<Person> version = new HistoryVersion<Person>();
 		version.object = person;
 		version.time = getTime(person);
 		version.description = getDescription(person);
 		versions.add(version);
 		for (int time : times) {
-			person = EchServer.getInstance().getPersistence().person().read(id, time);
+			person = persons.get(times);
 			version = new HistoryVersion<Person>();
 			version.object = person;
 			version.version = "" + time;

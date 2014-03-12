@@ -9,19 +9,20 @@ import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.contact.ContactEntryType;
 import ch.openech.dm.types.ContactCategory;
 import ch.openech.mj.db.DbPersistence;
-import ch.openech.mj.db.HistorizedTable;
+import ch.openech.mj.db.Table;
 
 
 public class ContactPersistenceTest {
 
-	private static ContactPersistence persistence = new ContactPersistence();
+	private static DbPersistence persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Contact.class);
+	private static Table<Contact> table = (Table<Contact>) persistence.getTable(Contact.class);
 	
 	@Test
 	public void insertContactWithoutEntriesTest() throws Exception {
 		Contact contact = new Contact();
 		contact.stringId = "3";
 		
-		persistence.contact().insert(contact);
+		table.insert(contact);
 	}
 	
 	@Test
@@ -29,7 +30,7 @@ public class ContactPersistenceTest {
 		Contact contact = new Contact();
 		contact.stringId = "3";
 		
-		persistence.contact().insert(contact);
+		table.insert(contact);
 		
 		ContactEntry entry = new ContactEntry();
 		entry.typeOfContact = ContactEntryType.Phone;
@@ -37,9 +38,9 @@ public class ContactPersistenceTest {
 
 		contact.entries.add(entry);
 		
-		int id = persistence.contact().insert(contact);
+		long id = table.insert(contact);
 		
-		Contact readContact = persistence.contact().read(id); 
+		Contact readContact = table.read(id); 
 		
 		Assert.assertNotSame(contact, readContact);
 		Assert.assertEquals(contact.stringId, readContact.stringId);
@@ -47,16 +48,4 @@ public class ContactPersistenceTest {
 		Assert.assertEquals(contact.getPhoneList().get(0).categoryCode, readContact.getPhoneList().get(0).categoryCode);
 	}
 	
-	private static class ContactPersistence extends DbPersistence {
-		private final HistorizedTable<Contact> contact;
-
-		public ContactPersistence() {
-			super(DbPersistence.embeddedDataSource());
-			contact = addHistorizedClass(Contact.class);
-		}
-
-		public HistorizedTable<Contact> contact() {
-			return contact;
-		}
-	}
 }

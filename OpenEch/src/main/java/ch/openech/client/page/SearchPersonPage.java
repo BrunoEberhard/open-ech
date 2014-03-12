@@ -2,6 +2,7 @@ package ch.openech.client.page;
 
 import static ch.openech.dm.person.Person.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.openech.client.preferences.OpenEchPreferences;
@@ -10,8 +11,9 @@ import ch.openech.dm.person.Person;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.TablePage;
-import ch.openech.mj.search.IndexSearch;
-import ch.openech.server.EchServer;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
+import ch.openech.mj.util.IdUtils;
 import ch.openech.xml.write.EchSchema;
 
 
@@ -24,7 +26,7 @@ public class SearchPersonPage extends TablePage<Person> {
 		PERSON.personIdentification.firstName, //
 		PERSON.personIdentification.officialName, //
 		PERSON.personIdentification.dateOfBirth, //
-		PERSON.getStreet(), //
+		PERSON.getStreet(), // PERSON::getStreet()
 		PERSON.getStreetNumber(), //
 		PERSON.getTown(), //
 		PERSON.personIdentification.vn.value, //
@@ -41,7 +43,7 @@ public class SearchPersonPage extends TablePage<Person> {
 	}
 	
 	public SearchPersonPage(PageContext context, String version, String text) {
-		super(context, new IndexSearch<>(EchServer.getInstance().getPersistence().personIndex()), FIELD_NAMES, text);
+		super(context, FIELD_NAMES, text);
 		this.echSchema = EchSchema.getNamespaceContext(20, version);
 		this.text = text;
 	}
@@ -57,16 +59,24 @@ public class SearchPersonPage extends TablePage<Person> {
 	}
 
 	@Override
-	protected void clicked(int selectedId, List<Integer> selectedIds) {
-//		List<String> pageLinks = new ArrayList<String>(getItems().size());
-//		for (Item i : getItems()) {
-//			String link = link(PersonViewPage.class, echSchema.getVersion(), (String)i.getValue(PERSON.personIdentification.technicalIds.localId.personId));
-//			pageLinks.add(link);
-//		}
-//		int index = getItems().indexOf(person);
-//		getPageContext().show(pageLinks, index);
-		Person person = EchServer.getInstance().getPersistence().person().read(selectedId);
-		show(PersonViewPage.class, echSchema.getVersion(), person.personIdentification.technicalIds.localId.personId);
+	protected void clicked(Person person, List<Person> selectedObjects) {
+		List<String> pageLinks = new ArrayList<String>(selectedObjects.size());
+		int index = 0;
+		int count = 0;
+		for (Person p : selectedObjects) {
+			String link = link(PersonViewPage.class, echSchema.getVersion(), IdUtils.getIdString(p));
+			pageLinks.add(link);
+			if (p == person) {
+				index = count;
+			}
+			count++;
+		}
+		getPageContext().show(pageLinks, index);
 	}
-	
+
+	@Override
+	protected List<Person> load(String query) {
+		return Services.get(DbService.class).search(Person.BY_FULLTEXT, query);
+	}
+
 }

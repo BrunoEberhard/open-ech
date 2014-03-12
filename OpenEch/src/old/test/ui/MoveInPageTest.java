@@ -25,17 +25,17 @@ public class MoveInPageTest extends AbstractPageTest {
 //
 //	@Test
 //	public void checkOfficialName() throws InterruptedException, InvocationTargetException {
-//		Assert.assertEquals(DATA_OFFICIAL_NAME, getText(PERSON_IDENTIFICATION.officialName));
+//		Assert.assertEquals(DATA_OFFICIAL_NAME, getText(PERSON_IDENTIFICATION.id.officialName));
 //	}
 //
 //	@Test
 //	public void checkFirstName() throws InterruptedException, InvocationTargetException {
-//		Assert.assertEquals(DATA_FIRST_NAME, getText(PERSON_IDENTIFICATION.firstName));
+//		Assert.assertEquals(DATA_FIRST_NAME, getText(PERSON_IDENTIFICATION.id.firstName));
 //	}
 //
 //	@Test
 //	public void checkDateOfBirth() throws InterruptedException, InvocationTargetException {
-//		Assert.assertEquals(DATA_DATE_OF_BIRTH, getText(PERSON_IDENTIFICATION.dateOfBirth));
+//		Assert.assertEquals(DATA_DATE_OF_BIRTH, getText(PERSON_IDENTIFICATIONid.dateOfBirth));
 //	}
 //
 //	@Test
@@ -52,9 +52,9 @@ public class MoveInPageTest extends AbstractPageTest {
 //		NavigationFrame view = getView();
 //		MoveInEditor moveInPage = (MoveInEditor) view.getVisiblePage();
 //
-//		setText(moveInPage, PERSON_IDENTIFICATION.officialName, DATA_OFFICIAL_NAME);
-//		setText(moveInPage, PERSON_IDENTIFICATION.firstName, DATA_FIRST_NAME);
-//		setText(moveInPage, PERSON_IDENTIFICATION.dateOfBirth, DATA_DATE_OF_BIRTH);
+//		setText(moveInPage, PERSON_IDENTIFICATION.id.officialName, DATA_OFFICIAL_NAME);
+//		setText(moveInPage, PERSON_IDENTIFICATION.id.firstName, DATA_FIRST_NAME);
+//		setText(moveInPage, PERSON_IDENTIFICATIONid.dateOfBirth, DATA_DATE_OF_BIRTH);
 //		setText(moveInPage, PERSON.arrivalDate, DATA_ARRIVAL_DATE);
 //		
 //		doClickButton("Heimatort hinzufügen");

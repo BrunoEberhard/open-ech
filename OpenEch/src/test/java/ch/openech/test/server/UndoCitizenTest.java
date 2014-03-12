@@ -13,22 +13,22 @@ import ch.openech.mj.util.StringUtils;
 public class UndoCitizenTest extends AbstractServerTest {
 
 	private static final String vn = "7561829871378";
-	private String id;
+	private Person p;
 	
 	@Before
 	public void createPerson() throws Exception {
-		id = insertPerson(vn);
+		p = insertPerson(vn);
 	}
 
 	@Test
 	public void naturalizeSwiss() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		
 		int placeOfOriginCountBefore = person.placeOfOrigin.size();
 		
 		processFile("samples/eCH-0020/InfostarSamples/Buergerrecht - Nationalité/eventUndoCitizen/data_53722700000000543.xml");
 		
-		person = load(id);
+		person = reload(p);
 
 		Assert.assertEquals(placeOfOriginCountBefore, person.placeOfOrigin.size());
 

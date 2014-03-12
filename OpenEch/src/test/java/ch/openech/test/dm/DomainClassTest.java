@@ -15,9 +15,12 @@ public class DomainClassTest {
 
 	@Test
 	public void testOpenEchDomainClasses() {
-		boolean codesAvailable = Codes.getCode("commercialRegisterStatus") != null;
-		if (!codesAvailable) {
+		boolean orgCodesAvailable = Codes.getCode("commercialRegisterStatus") != null;
+		if (!orgCodesAvailable) {
 			Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.organisation.types.ech_organisation"));
+		}
+		boolean personCodesAvailable = Codes.getCode("basedOnLaw") != null;
+		if (!personCodesAvailable) {
 			Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
 		}
 		

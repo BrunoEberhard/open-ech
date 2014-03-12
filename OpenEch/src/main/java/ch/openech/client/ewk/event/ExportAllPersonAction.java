@@ -4,11 +4,12 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import ch.openech.dm.person.Person;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ExportHandler;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
-import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
@@ -40,7 +41,7 @@ public class ExportAllPersonAction extends ResourceAction implements ExportHandl
 			@Override
 			public void run() {
 				try {
-					int maxId = EchServer.getInstance().getPersistence().person().getMaxId();
+					int maxId = (int) Services.get(DbService.class).getMaxId(Person.class);
 					
 					OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
 					
@@ -49,8 +50,9 @@ public class ExportAllPersonAction extends ResourceAction implements ExportHandl
 					WriterElement baseDelivery = createBaseDelivery(writer, delivery, maxId);
 
 //					boolean canceled = false;
-					for (int id = 1; id<=maxId; id++) {
-						Person person = EchServer.getInstance().getPersistence().person().read(id);
+					for (long id = 1; id<=maxId; id++) {
+						Person person = Services.get(DbService.class).read(Person.class, id);
+
 						if (person != null) {
 							writePerson(writer, baseDelivery, person);
 						} else {

@@ -3,9 +3,9 @@ package ch.openech.client.editor;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.client.ewk.event.EchForm;
+import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.ewk.event.moveIn.NextPersonHelper;
 import ch.openech.client.page.PersonViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
@@ -263,8 +263,8 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 				e.printStackTrace();
 			}
 		}
-		XmlEditor.send(xmlList);
-		return PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), object.persons.get(0).getId());
+		Person person = PersonEventEditor.send(xmlList);
+		return PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), person.getId());
 	}
 
 

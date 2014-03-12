@@ -3,6 +3,7 @@ package ch.openech.client.page;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.LocalDateTime;
 
@@ -11,14 +12,15 @@ import ch.openech.mj.page.HistoryPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.resources.Resources;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationHistoryPage extends HistoryPage<Organisation> implements RefreshablePage {
 
 	private final EchSchema echNamespaceContext;
-	private final String organisationId;
+	private final long organisationId;
 
 	public OrganisationHistoryPage(PageContext context, String[] arguments) {
 		this(context, arguments[0], arguments[1]);
@@ -30,7 +32,7 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	
 	public OrganisationHistoryPage(PageContext context, EchSchema echNamespaceContext, String organisationId) {
 		super(context);
-		this.organisationId = organisationId;
+		this.organisationId = Long.valueOf(organisationId);
 		this.echNamespaceContext = echNamespaceContext;
 	}
 
@@ -41,19 +43,20 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 
 	@Override
 	protected List<HistoryVersion<Organisation>> loadVersions() {
-		List<HistoryVersion<Organisation>> versions = new ArrayList<HistoryVersion<Organisation>>();
-		
-		int id = EchServer.getInstance().getPersistence().organisationLocalIdIndex().findId(organisationId);
-		Organisation organisation = EchServer.getInstance().getPersistence().organisation().read(id);
-		List<Integer> times = EchServer.getInstance().getPersistence().organisation().readVersions(id);
+		Organisation organisation = Services.get(DbService.class).read(Organisation.class, organisationId);
+		Map<Integer, Organisation> organisations = Services.get(DbService.class).loadHistory(organisation);
+		List<Integer> times = new ArrayList<>(organisations.keySet());
+		Collections.sort(times);
 		Collections.reverse(times);
+
+		List<HistoryVersion<Organisation>> versions = new ArrayList<>();
 		HistoryVersion<Organisation> version = new HistoryVersion<Organisation>();
 		version.object = organisation;
 		version.time = getTime(organisation);
 		version.description = getDescription(organisation);
 		versions.add(version);
 		for (int time : times) {
-			organisation = EchServer.getInstance().getPersistence().organisation().read(id, time);
+			organisation = organisations.get(times);
 			version = new HistoryVersion<Organisation>();
 			version.object = organisation;
 			version.version = "" + time;

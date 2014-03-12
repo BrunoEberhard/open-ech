@@ -15,6 +15,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.joda.time.LocalDateTime;
 
+import ch.openech.business.EchPersistence;
 import ch.openech.dm.Event;
 import ch.openech.dm.XmlConstants;
 import ch.openech.dm.common.MunicipalityIdentification;
@@ -26,40 +27,37 @@ import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.dm.types.YesNo;
+import ch.openech.mj.server.DbService;
 import ch.openech.mj.toolkit.ProgressListener;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
-import ch.openech.server.EchPersistence;
 
-public class StaxEch0020 implements StaxEchParser {
+public class StaxEch0020 implements StaxEchParser<Person> {
 
-	private final EchPersistence persistence;
+	private final DbService dbService;
 	
 	// hack: Globale Variable als 2. Rückgabewert von simplePersonEventPerson and simplePersonEvent
 	// Dies ist notwendige, weil changeNamePersonType einerseits die Identifikation der zu ändernden
 	// Person enthält, andererseits aber schon einen Teil (!) der neuen Werte.
 	private Person personToChange = null;
 	private Event e;
-	private String lastInsertedPersonId;
+	private Person lastInserted;
 	
-	public StaxEch0020(EchPersistence persistence) {
-		this.persistence = persistence;
+	public StaxEch0020(DbService dbService) {
+		this.dbService = dbService;
 	}
 	
 	// Persistence
 	
 	public void insertPerson(Person person) {
 		person.event = e;
-		if (person.getId() == null) {
-			person.personIdentification.technicalIds.localId.setOpenEch();
-		}
-		persistence.person().insert(person);
-		lastInsertedPersonId = person.getId();
+		dbService.insert(person);
+		lastInserted = person;
 	}
 
 	@Override
-	public String getLastInsertedId() {
-		return lastInsertedPersonId;
+	public Person getLastInserted() {
+		return lastInserted;
 	}
 
 	public void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
@@ -67,7 +65,11 @@ public class StaxEch0020 implements StaxEchParser {
 
 		person.event = e;
 
-		persistence.person().update(person);
+		if (person.personIdentification.technicalIds.localId.personId != null) {
+			System.out.println("Person hat id noch immer gesetzt. Das sollte nicht sein");
+			person.personIdentification.technicalIds.localId.clear();
+		}
+		dbService.update(person);
 	}
 
 	//
@@ -80,13 +82,7 @@ public class StaxEch0020 implements StaxEchParser {
 	}
 	
 	public Person getPerson(PersonIdentification personIdentification) {
-		if (personIdentification.getId() != null) {
-			return persistence.personLocalPersonIdIndex().find(personIdentification.getId());
-		} else if (!StringUtils.isBlank(personIdentification.vn.value)) {
-			return persistence.personVnIndex().find(personIdentification.vn.value);
-		} else {
-			return persistence.getByName(personIdentification.officialName, personIdentification.firstName, personIdentification.dateOfBirth);
-		}
+		return EchPersistence.getByIdentification(dbService, personIdentification);
 	}
 	
 	//
@@ -585,10 +581,9 @@ public class StaxEch0020 implements StaxEchParser {
 						}
 					}
 				} else if (startName.equals(PERSON_IDENTIFICATION_AFTER)) {
-					// die lokale Id darf von aussen nicht verändert werden.
-					String savedLocalId = personToChange.getId();
 					StaxEch0044.personIdentification(xml, personToChange.personIdentification);
-					personToChange.personIdentification.technicalIds.localId.personId = savedLocalId;
+					// die lokale Id darf von aussen nicht verändert werden, da sie von der Applikation verwendet wird
+					personToChange.personIdentification.technicalIds.localId.clear();
 				}
 				else if (startName.equals(OFFICIAL_NAME)) personToChange.personIdentification.officialName = token(xml);
 				else if (startName.equals(FIRST_NAME)) personToChange.personIdentification.firstName = token(xml);

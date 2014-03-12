@@ -39,12 +39,17 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.client.preferences.PreferencesEditor;
 import ch.openech.datagenerator.GeneratePersonEditor;
+import ch.openech.dm.common.CountryIdentification;
+import ch.openech.dm.common.MunicipalityIdentification;
+import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.OrganisationIdentification;
+import ch.openech.dm.person.Person;
+import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.application.DevMode;
 import ch.openech.mj.application.MjApplication;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.toolkit.IAction;
-import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 
 public class OpenEchApplication extends MjApplication {
@@ -57,10 +62,6 @@ public class OpenEchApplication extends MjApplication {
 	public void init() {
 		super.init();
 
-		// Ueber den Server wird auch die Persistenz geladen und
-		// damit die Codes. Daher hier die Initialisierung.
-		EchServer.getInstance();
-		
 //		final String demoPersons = System.getProperty("DemoPerson");
 //
 //		if (!StringUtils.isEmpty(demoPersons)) {
@@ -198,4 +199,13 @@ public class OpenEchApplication extends MjApplication {
 			orgSchema = null;
 		}
 	}
+
+	@Override
+	public Class<?>[] getEntityClasses() {
+		return new Class<?>[]{MunicipalityIdentification.class, CountryIdentification.class, //
+				PersonIdentification.class, Person.class, //
+				OrganisationIdentification.class, Organisation.class
+		};
+	}
+	
 }

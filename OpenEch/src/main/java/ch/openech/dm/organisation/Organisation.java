@@ -1,6 +1,7 @@
 package ch.openech.dm.organisation;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.joda.time.LocalDate;
 import org.joda.time.ReadablePartial;
@@ -16,9 +17,11 @@ import ch.openech.dm.contact.Contact;
 import ch.openech.dm.types.Language;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.model.Codes;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
+import ch.openech.mj.model.Search;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Required;
@@ -29,13 +32,21 @@ import ch.openech.xml.read.StaxEch;
 public class Organisation implements Validation {
 
 	public static final Organisation ORGANISATION = Keys.of(Organisation.class);
-	
+	public static final Search<Organisation> BY_FULLTEXT = new Search<>(ORGANISATION.identification.organisationName);
+
 	public static enum EditMode { DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, IN_LIQUIDATION, LIQUIDATION, CHANGE_REPORTING }
 	
+	static {
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.organisation.types.ech_organisation"));
+	}
+
 	public transient EditMode editMode;
 	
 	// Der eCH - Event, mit dem die aktuelle Version erstellt oder verändert wurde
 	public Event event;
+	
+	public long id;
+	public int version;
 	
 	// 97 : Identification
 	public final OrganisationIdentification identification = new OrganisationIdentification();
@@ -123,10 +134,6 @@ public class Organisation implements Validation {
 	
 	//
 	
-	public String getId() {
-		return identification.getId();
-	}
-
 	@Override
 	public void validate(List<ValidationMessage> resultList) {
 		if (editMode == EditMode.IN_LIQUIDATION || editMode == EditMode.LIQUIDATION) {
@@ -146,4 +153,8 @@ public class Organisation implements Validation {
 		}
 	}
 
+	public String getId() {
+		return String.valueOf(id);
+	}
+	
 }

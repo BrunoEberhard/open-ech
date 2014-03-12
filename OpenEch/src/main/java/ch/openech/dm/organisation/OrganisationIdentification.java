@@ -26,14 +26,6 @@ public final UidStructure uid = new UidStructure();
 	public String legalForm;
 	
 	
-	public String getId() {
-		if (technicalIds.localId.openEch()) {
-			return technicalIds.localId.personId;
-		} else {
-			return null;
-		}
-	}
-	
 	public void set(String propertyName, Object value) {
 		PropertyInterface property = FlatProperties.getProperties(this.getClass()).get(propertyName);
 		if (property.getFieldClazz() == LocalDate.class && value instanceof String) {

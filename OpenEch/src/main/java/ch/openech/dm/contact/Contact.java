@@ -12,6 +12,8 @@ public class Contact {
 
 	public static final Contact CONTACT = Keys.of(Contact.class);
 	
+	public int id;
+	
 	@Size(9)
 	// TODO in Contact stringId eventuell durch NamedId ersetzen
 	public String stringId;

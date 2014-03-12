@@ -1,7 +1,5 @@
 package ch.openech.dm.common;
 
-import java.util.UUID;
-
 import ch.openech.dm.EchFormats;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
@@ -30,9 +28,9 @@ public class NamedId {
 		return OPEN_ECH_ID_CATEGORY.equals(personIdCategory);
 	}
 	
-	public void setOpenEch() {
-		personIdCategory = OPEN_ECH_ID_CATEGORY;
-		personId = UUID.randomUUID().toString().replace("-", "").substring(0, 20);
+	public void clear() {
+		personIdCategory = null;
+		personId = null;
 	}
 	
 }

@@ -8,7 +8,8 @@ import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.ObjectViewPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.Resources;
-import ch.openech.server.EchServer;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationViewPage extends ObjectViewPage<Organisation> {
@@ -38,12 +39,12 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 	}
 
 	private static Organisation loadObject(String organisationId, int time) {
-		Organisation actualOrganisation = EchServer.getInstance().getPersistence().organisationLocalIdIndex().find(organisationId);
+		long id = Long.valueOf(organisationId);
 		if (time == 0) {
-			return actualOrganisation;
+			return Services.get(DbService.class).read(Organisation.class, id);
 		} else {
-			int id = EchServer.getInstance().getPersistence().organisation().getId(actualOrganisation);
-			return EchServer.getInstance().getPersistence().organisation.read(id, time);
+			Organisation organisation = Services.get(DbService.class).read(Organisation.class, id);
+			return Services.get(DbService.class).loadHistory(organisation, time);
 		}
 	}
 

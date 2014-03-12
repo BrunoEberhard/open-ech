@@ -6,39 +6,24 @@ import ch.openech.mj.model.annotation.Size;
 // Verwendung als Birthplace und als Destination
 public class Place {
 	
-	public final MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
-	public final CountryIdentification countryIdentification = Swiss.createCountryIdentification();
+	public MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
+	public CountryIdentification countryIdentification = Swiss.createCountryIdentification();
 	@Size(EchFormats.baseName)  // TODO REMOVE
 	public String foreignTown;
 	public Address mailAddress; // nur bei Verwendung als Destination
 	
 	//
 
-	public void clear() {
-		municipalityIdentification.clear();
-		countryIdentification.clear();
-		foreignTown = null;
-		mailAddress = null;
-	}	
-	
-	public void setCountryIdentification(CountryIdentification countryIdentification) {
-		countryIdentification.copyTo(this.countryIdentification);
-	}
-
-	public void setMunicipalityIdentification(MunicipalityIdentification municipalityIdentification) {
-		municipalityIdentification.copyTo(this.municipalityIdentification);
-	}
-
 	public boolean isSwiss() {
-		return countryIdentification.isSwiss();
+		return countryIdentification != null && countryIdentification.isSwiss();
 	}
 
 	public boolean isForeign() {
-		return !countryIdentification.isEmpty() && !countryIdentification.isSwiss();
+		return countryIdentification != null && !countryIdentification.isEmpty() && !countryIdentification.isSwiss();
 	}
 
 	public boolean isUnknown() {
-		return !(isSwiss() && !municipalityIdentification.isEmpty() || isForeign());
+		return !(isSwiss() && municipalityIdentification != null || isForeign());
 	}
 
 }

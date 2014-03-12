@@ -12,18 +12,18 @@ import ch.openech.dm.person.types.Religion;
 public class DivTest extends AbstractServerTest {
 
 	private static final String vn = "7561829871378";
-	private String id;
+	private Person p;
 	
 	@Before
 	public void createPerson() throws Exception {
-		id = insertPerson(vn);
+		p = insertPerson(vn);
 	}
 
 	@Test
 	public void move() throws Exception {
 		processFile("testPerson/div/moveTest.xml");
 		
-		Person person = load(id);
+		Person person = reload(p);
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals("Zeile 1", person.dwellingAddress.mailAddress.addressLine1);
@@ -43,63 +43,63 @@ public class DivTest extends AbstractServerTest {
 	
 	@Test
 	public void addressLock1() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		person.dataLock = "1";
 		process(writer().addressLock(person));
-		person = load(id);
+		person = reload(p);
 		Assert.assertEquals("1", person.dataLock);
 	}
 	
 	@Test
 	public void addressLock2() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		person.dataLock = "2";
 		process(writer().addressLock(person));
-		person = load(id);
+		person = reload(p);
 		Assert.assertEquals("2", person.dataLock);
 	}
 	
 	@Test
 	public void addressLock0() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		person.dataLock = "0";
 		process(writer().addressLock(person));
-		person = load(id);
+		person = reload(p);
 		Assert.assertEquals("0", person.dataLock);
 	}
 	
 	@Test
 	public void paperLock1() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		person.paperLock = "1";
 		process(writer().paperLock(person));
-		person = load(id);
+		person = reload(p);
 		Assert.assertEquals("1", person.paperLock);
 	}
 
 	@Test
 	public void paperLock0() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		person.paperLock = "0";
 		process(writer().paperLock(person));
-		person = load(id);
+		person = reload(p);
 		Assert.assertEquals("0", person.paperLock);
 	}
 
 	@Test
 	public void changeReligion() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		Assert.assertEquals(Religion.unbekannt, person.religion);
 		person.paperLock = "0";
 		process(writer().changeReligion(person.personIdentification, Religion.evangelisch));
-		person = load(id);
+		person = reload(p);
 		Assert.assertEquals(Religion.evangelisch, person.religion);
 	}
 	
 	@Test
 	public void contact() throws Exception {
 		processFile("testPerson/div/contactTest.xml");
-		Person person = load(id);
+		Person person = reload(p);
 		Assert.assertEquals("Zeile 1", person.contactPerson.address.addressLine1);
 		Assert.assertEquals("Zeile 2", person.contactPerson.address.addressLine2);
 		Assert.assertEquals("Bahnhofstrasse", person.contactPerson.address.street);

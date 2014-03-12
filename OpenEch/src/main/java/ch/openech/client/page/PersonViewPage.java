@@ -10,7 +10,8 @@ import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.ObjectViewPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.Resources;
-import ch.openech.server.EchServer;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonViewPage extends ObjectViewPage<Person> {
@@ -45,12 +46,12 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 	}
 
 	private static Person loadObject(String personId, int time) {
-		Person actualPerson = EchServer.getInstance().getPersistence().personLocalPersonIdIndex().find(personId);
+		long id = Long.valueOf(personId);
 		if (time == 0) {
-			return actualPerson;
+			return Services.get(DbService.class).read(Person.class, id);
 		} else {
-			int id = EchServer.getInstance().getPersistence().person().getId(actualPerson);
-			return EchServer.getInstance().getPersistence().person().read(id, time);
+			Person person = Services.get(DbService.class).read(Person.class, id);
+			return Services.get(DbService.class).loadHistory(person, time);
 		}
 	}
 

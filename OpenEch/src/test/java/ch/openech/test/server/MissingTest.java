@@ -7,32 +7,30 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ch.openech.dm.person.Person;
-import ch.openech.server.ServerCallResult;
 
 public class MissingTest extends AbstractServerTest {
 
-	private static String id;
+	private static Person p;
 	
 	@BeforeClass
 	public static void createPerson() throws Exception {
-		ServerCallResult result = processFile("testPerson/missing/person.xml");
-		id = result.createdPersonId;
+		p = processFile("testPerson/missing/person.xml");
 	}
 	
 	@Test
 	public void missing() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		process(writer().missing(person.personIdentification, new LocalDate(2011, 1, 2)));
-		person = load(id);
+		person = reload(p);
 
 		Assert.assertEquals(new LocalDate(2011, 1, 2), person.dateOfDeath);
 	}
 	
 	@Test
 	public void undoMissing()  throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		process(writer().undoMissing(person.personIdentification));
-		person = load(id);
+		person = reload(p);
 
 		Assert.assertNull(person.dateOfDeath);
 	}

@@ -5,13 +5,13 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
+import ch.openech.dm.EchSchemaValidation;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
-import ch.openech.server.EchServer;
 
 public class XmlTextFormField extends ObjectFlowField<List<String>> {
 
@@ -28,7 +28,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 		
 		@Override
 		public void action(IComponent context) {
-			String message = EchServer.validate(xml);
+			String message = EchSchemaValidation.validate(xml);
 			ClientToolkit.getToolkit().showMessage(context, message);
 		}
 	}

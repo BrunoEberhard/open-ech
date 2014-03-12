@@ -10,29 +10,26 @@ import ch.openech.dm.code.ResidencePermit;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.server.EchServer;
-import ch.openech.server.ServerCallResult;
 
 public class NaturalizeSwissTest extends AbstractServerTest {
 
-	private String id;
+	private Person p;
 	
 	@Before
 	public void createPerson() throws Exception {
-		EchServer.getInstance().getPersistence().clear();
+		clear();
 		
-		ServerCallResult result = processFile("testPerson/naturalizeSwiss/person.xml");
-		id = result.createdPersonId;
+		p = processFile("testPerson/naturalizeSwiss/person.xml");
 	}
 	
 	@Test
 	public void naturalizeSwiss() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		int placeOfOriginCountBefore = person.placeOfOrigin.size();
 		
 		processFile("samples/eCH-0020/InfostarSamples/Buergerrecht - Nationalité/eventNaturalizeSwiss/data_53741400000000113.xml");
 		
-		person = load(id);
+		person = reload(p);
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
@@ -47,7 +44,7 @@ public class NaturalizeSwissTest extends AbstractServerTest {
 
 	@Test
 	public void undoSwiss() throws Exception {
-		Person person = load(id);
+		Person person = reload(p);
 		person.nationality.nationalityCountry.countryId = 8345;
 		person.nationality.nationalityCountry.countryIdISO2 = "SN";
 		person.nationality.nationalityCountry.countryNameShort = "Senegal";
@@ -55,7 +52,7 @@ public class NaturalizeSwissTest extends AbstractServerTest {
 		
 		process(writer().undoSwiss(person));
 
-		person = load(id);
+		person = reload(p);
 		Assert.assertNotNull(person);
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
 		Assert.assertEquals(Integer.valueOf(8345), person.nationality.nationalityCountry.countryId);	

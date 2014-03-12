@@ -10,19 +10,19 @@ import org.junit.Test;
 
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
+import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.types.MrMrs;
 import ch.openech.dm.types.Sex;
-import ch.openech.server.EchPersistence;
 
 public class DbPersonCrudTest {
 
-	private static EchPersistence persistence;
+	private static DbPersistence persistence;
 
 	@BeforeClass
 	public static void setupDb() throws SQLException {
-		persistence = new EchPersistence(DbPersistence.embeddedDataSource());
+		persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Person.class, MunicipalityIdentification.class, CountryIdentification.class);
 	}
 
 	@Test
@@ -36,7 +36,7 @@ public class DbPersonCrudTest {
 		address.town = "Jona";
 		address.country = "CH";
 		
-		int id = addressTable.getOrCreateId(address);
+		long id = addressTable.getOrCreateId(address);
 		
 		Address readAddress = (Address)addressTable.read(id);
 		
@@ -45,12 +45,12 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(address.houseNumber.houseNumber, readAddress.houseNumber.houseNumber);
 		Assert.assertEquals(address.country, readAddress.country);
 	
-		int id2 = addressTable.getOrCreateId(address);
+		long id2 = addressTable.getOrCreateId(address);
 		
 		Assert.assertEquals(id, id2);
 		
 		readAddress.houseNumber.houseNumber = "11";
-		int id3 = addressTable.getOrCreateId(readAddress);
+		long id3 = addressTable.getOrCreateId(readAddress);
 
 		Assert.assertNotSame(id, id3);
 	}
@@ -64,7 +64,7 @@ public class DbPersonCrudTest {
 		country.countryIdISO2 = "DE";
 		country.countryNameShort = "Deutschland";
 		
-		int id = countryTable.getOrCreateId(country);
+		long id = countryTable.getOrCreateId(country);
 		
 		CountryIdentification readCountry = (CountryIdentification)countryTable.read(id);
 		
@@ -72,19 +72,19 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(country.countryIdISO2, readCountry.countryIdISO2);
 		Assert.assertEquals(country.countryNameShort, readCountry.countryNameShort);
 	
-		int id2 = countryTable.getOrCreateId(country);
+		long id2 = countryTable.getOrCreateId(country);
 		
 		Assert.assertEquals(id, id2);
 		
 		readCountry.countryIdISO2 = "GE";
-		int id3 = countryTable.getOrCreateId(readCountry);
+		long id3 = countryTable.getOrCreateId(readCountry);
 
 		Assert.assertNotSame(id, id3);
 	}
 	
 	@Test
 	public void testCrudPerson() throws SQLException {
-		Table<Person> personTable = persistence.person();
+		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
 		
 		Person person = new Person();
 		person.personIdentification.officialName = "Eberhard";
@@ -95,7 +95,7 @@ public class DbPersonCrudTest {
 		
 		person.aliasName = "Biwi";
 		
-		int id = personTable.insert(person);
+		long id = personTable.insert(person);
 		
 		Person readPerson = (Person)personTable.read(id);
 		
@@ -113,6 +113,8 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testInsertPerson2() throws SQLException {
+		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+
 		Person person = new Person();
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
@@ -135,9 +137,9 @@ public class DbPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		int id = persistence.person().insert(person);
+		long id = personTable.insert(person);
 		
-		Person readPerson = persistence.person().read(id);
+		Person readPerson = personTable.read(id);
 		
 		Assert.assertEquals(2, readPerson.occupation.size());
 		
@@ -152,6 +154,8 @@ public class DbPersonCrudTest {
 
 	@Test
 	public void testUpdatePerson() throws SQLException {
+		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+
 		Person person = new Person();
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
@@ -174,14 +178,14 @@ public class DbPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		int id = persistence.person().insert(person);
+		long id = personTable.insert(person);
 		
-		Person readPerson = persistence.person().read(id);
+		Person readPerson = personTable.read(id);
 		readPerson.aliasName = "biwi";
 		readPerson.occupation.remove(1);
-		persistence.person().update(readPerson);
+		personTable.update(readPerson);
 
-		Person readPerson2 = persistence.person().read(id);
+		Person readPerson2 = personTable.read(id);
 		Assert.assertEquals("biwi", readPerson2.aliasName);
 		Assert.assertEquals(1, readPerson2.occupation.size());
 	}
@@ -189,6 +193,8 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testUpdateSubTable() throws SQLException {
+		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+
 		Person person = new Person();
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
@@ -211,15 +217,15 @@ public class DbPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		int id = persistence.person().insert(person);
+		long id = personTable.insert(person);
 		
-		Person readPerson = persistence.person().read(id);
+		Person readPerson = personTable.read(id);
 		Occupation readOccupation2 = readPerson.occupation.get(1);
 		readOccupation2.placeOfEmployer.addressLine1 = "Ne andere Line";
 		
-		persistence.person().update(readPerson);
+		personTable.update(readPerson);
 
-		Person readPerson2 = persistence.person().read(id);
+		Person readPerson2 = personTable.read(id);
 		Assert.assertEquals(readOccupation2.placeOfEmployer.addressLine1, readPerson2.occupation.get(1).placeOfEmployer.addressLine1);
 	
 //		List<Integer> versions = persistence.person().readVersions(id);
@@ -230,6 +236,8 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testChangePersonIdentification() throws SQLException {
+		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+
 		Person person = new Person();
 		person.personIdentification.officialName = "Eberhard";
 		person.personIdentification.firstName = "Bruno";
@@ -237,18 +245,18 @@ public class DbPersonCrudTest {
 		person.personIdentification.vn.value = "123";
 		person.personIdentification.sex = Sex.maennlich;
 
-		int id = persistence.person().insert(person);
+		long id = personTable.insert(person);
 		
-		Person readPerson = persistence.person().read(id);
+		Person readPerson = personTable.read(id);
 		readPerson.personIdentification.officialName = "Äberhard";
-		persistence.person().update(readPerson);
+		personTable.update(readPerson);
 		
-		Person readPerson2 = persistence.person().read(id);
+		Person readPerson2 = personTable.read(id);
 		Assert.assertEquals(readPerson.personIdentification.officialName, readPerson2.personIdentification.officialName);
 		readPerson2.personIdentification.officialName = "Eberhardt";
-		persistence.person().update(readPerson2);
+		personTable.update(readPerson2);
 		
-		Person readPerson3 = persistence.person().read(id);
+		Person readPerson3 = personTable.read(id);
 		Assert.assertEquals(readPerson2.personIdentification.officialName, readPerson3.personIdentification.officialName);
 	}
 	

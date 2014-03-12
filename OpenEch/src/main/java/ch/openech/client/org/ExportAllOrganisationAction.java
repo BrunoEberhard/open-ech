@@ -6,11 +6,12 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.ExportHandler;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
-import ch.openech.server.EchServer;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0098;
 import ch.openech.xml.write.WriterEch0148;
@@ -43,7 +44,7 @@ public class ExportAllOrganisationAction extends ResourceAction implements Expor
 			@Override
 			public void run() {
 				try {
-					int maxId = EchServer.getInstance().getPersistence().organisation().getMaxId();
+					long maxId = Services.get(DbService.class).getMaxId(Organisation.class);
 					
 					OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
 					
@@ -54,8 +55,8 @@ public class ExportAllOrganisationAction extends ResourceAction implements Expor
 
 //					boolean canceled = false;
 					int numberOfOrganisations = 0;
-					for (int id = 1; id<=maxId; id++) {
-						Organisation organisation = EchServer.getInstance().getPersistence().organisation().read(id);
+					for (long id = 1; id<=maxId; id++) {
+						Organisation organisation = Services.get(DbService.class).read(Organisation.class, id);
 						if (organisation != null) {
 							writeOrganisation(writer98, baseDelivery, organisation);
 							numberOfOrganisations++;

@@ -7,23 +7,19 @@ import org.junit.Test;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.TypeOfRelationship;
-import ch.openech.server.ServerCallResult;
 
 public class PartnershipTest extends AbstractServerTest {
 
 	@Test
 	public void partnership() throws Exception {
-		ServerCallResult result = processFile("testPerson/partnership/person1.xml");
-		String id1 = result.createdPersonId;
-
-		result = processFile("testPerson/partnership/person2.xml");
-		String id2 = result.createdPersonId;
+		Person p1 = processFile("testPerson/partnership/person1.xml");
+		Person p2 = processFile("testPerson/partnership/person2.xml");
 
 		processFile("samples/eCH-0020/InfostarSamples/Eintragung Partnerschaft - Enregistrement du partenariat/data_53740300000000023.xml");
 		processFile("samples/eCH-0020/InfostarSamples/Eintragung Partnerschaft - Enregistrement du partenariat/data_53740300000000033.xml");
 		
-		Person person1 = load(id1);
-		Person person2 = load(id2);
+		Person person1 = reload(p1);
+		Person person2 = reload(p2);
 		
 		Assert.assertNotNull(person1);
 		Assert.assertTrue(person1.maritalStatus.isPartnerschaft());

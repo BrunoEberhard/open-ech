@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
+import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.page.PersonViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
@@ -12,6 +13,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
+import ch.openech.mj.edit.value.CloneHelper;
 import ch.openech.mj.page.PageLink;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
@@ -42,14 +44,11 @@ public class BirthEvent extends XmlEditor<Person> {
 		return Collections.singletonList(writerEch0020.birth(person));
 	}
 	
-	
 	@Override
 	public Object save(Person object) throws Exception {
-		if (super.save(object) != null) {
-			return PageLink.link(PersonViewPage.class, echSchema.getVersion(), object.getId());
-		} else {
-			return SAVE_FAILED;
-		}
+		List<String> xmls = getXml(object);
+		Person person = PersonEventEditor.send(xmls);
+		return PageLink.link(PersonViewPage.class, echSchema.getVersion(), person.getId());
 	}
 
 	@Override
@@ -73,7 +72,7 @@ public class BirthEvent extends XmlEditor<Person> {
 		
 		if (preferences.preferencesDefaultsData.residence != null) {
 			person.placeOfBirth = new Place();
-			person.placeOfBirth.setMunicipalityIdentification(preferences.preferencesDefaultsData.residence);
+			person.placeOfBirth.municipalityIdentification = CloneHelper.clone(preferences.preferencesDefaultsData.residence);
 		}
 		return person;
 	}

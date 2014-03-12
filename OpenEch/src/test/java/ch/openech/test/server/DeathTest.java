@@ -10,21 +10,20 @@ import ch.openech.dm.person.Person;
 
 public class DeathTest extends AbstractServerTest {
 
-	private String id1, id2, id3;
+	private Person p1, p2, p3;
 	
 	@Before
 	public void createPerson() throws Exception {
-		id1 = insertPerson("7561829871378");
-		id2 = insertPerson("7566223399589");
-		id3 = insertPerson("7566223399590");
+		p1 = insertPerson("7561829871378");
+		p2 = insertPerson("7566223399589");
+		p3 = insertPerson("7566223399590");
 	}
 	
 	@Test
 	public void death_1() throws Exception {
 		processFile("samples/eCH-0020/InfostarSamples/Tod - Décès/data_53765200000000023.xml");
 		
-//		Person person1 = getByVn("7561829871378");
-		Person person1 = load(id1);
+		Person person1 = reload(p1);
 		
 		Assert.assertNotNull(person1);
 		Assert.assertEquals(new LocalDate(2008, 11, 15), person1.dateOfDeath);
@@ -34,7 +33,7 @@ public class DeathTest extends AbstractServerTest {
 	public void death_2() throws Exception {
 		processFile("samples/eCH-0020/InfostarSamples/Tod - Décès/data_53765200000000033.xml");
 		
-		Person person2 = load(id2);
+		Person person2 = reload(p2);
 		
 		Assert.assertNotNull(person2);
 		Assert.assertEquals(new LocalDate(2008, 11, 15), person2.maritalStatus.dateOfMaritalStatus);
@@ -43,11 +42,11 @@ public class DeathTest extends AbstractServerTest {
 
 	@Test
 	public void death_3() throws Exception {
-		Person person = load(id3);
+		Person person = reload(p3);
 		person.dateOfDeath = new LocalDate(2010, 9, 8);
 		
 		process(writer().correctDateOfDeath(person));
-		person = load(id3);
+		person = reload(person);
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals(new LocalDate(2010, 9, 8), person.dateOfDeath);

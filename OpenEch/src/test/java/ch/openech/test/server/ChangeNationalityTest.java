@@ -13,18 +13,17 @@ import ch.openech.dm.person.Person;
 public class ChangeNationalityTest extends AbstractServerTest {
 
 	private static final String vn = "7563806343847";
-	private String id;
+	private Person person;
 	
 	@Before
 	public void createPerson() throws Exception {
-		id = insertPerson(vn);
+		person = insertPerson(vn);
 	}
 
 	@Test
 	public void changeNationality() throws Exception {
 		processFile("samples/eCH-0020/InfostarSamples/Buergerrecht - Nationalité/eventChangeNationality/data_53868900000000023.xml");
-		
-		Person person = load(id);
+		person = reload(person);
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
@@ -35,7 +34,7 @@ public class ChangeNationalityTest extends AbstractServerTest {
 	@Test
 	public void changeResidencePermit() throws Exception {
 		processFile("testPerson/changeNationality/changeResidencePermitTest.xml");
-		Person person = load(id);
+		person = reload(person);
 		
 		Assert.assertEquals(new LocalDate(2010, 1, 31), person.foreign.residencePermitTill);
 		Assert.assertEquals(ResidencePermit.Saisonarbeiter, person.foreign.residencePermit);

@@ -5,12 +5,12 @@ import junit.framework.Assert;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
+import ch.openech.dm.EchSchemaValidation;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.person.PersonExtendedInformation;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.types.Sex;
 import ch.openech.dm.types.YesNo;
-import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0101;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0101;
@@ -43,8 +43,8 @@ public class PersonExtendedInformationXmlTest {
 		
 		String xml = writer.informationRoot(information);
 		
-		String validationMessage = EchServer.validate(xml);
-		boolean valid = EchServer.OK.equals(validationMessage);
+		String validationMessage = EchSchemaValidation.validate(xml);
+		boolean valid = EchSchemaValidation.OK.equals(validationMessage);
 		if (!valid) {
 			System.out.println(xml);
 			System.out.println(validationMessage);

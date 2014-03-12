@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
+import ch.openech.business.EchService;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
@@ -28,7 +29,7 @@ import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.autofill.OrganisationNameGenerator;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.properties.FlatProperties;
-import ch.openech.server.EchServer;
+import ch.openech.mj.server.Services;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 import ch.openech.xml.read.StaxEch0071;
@@ -44,7 +45,7 @@ public class DataGenerator {
 	public static void generatePerson(WriterEch0020 writerEch0020) {
 		try {
 			String xml = writerEch0020.moveIn(person());
-			EchServer.getInstance().process(xml);
+			Services.get(EchService.class).process(xml);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -141,10 +142,10 @@ public class DataGenerator {
 	public static Place place() {
 		Place place = new Place();
 		if (Math.random() < 0.86) {
-			place.setMunicipalityIdentification(municipalityIdentification());
+			place.municipalityIdentification = municipalityIdentification();
 		} else {
-			place.setMunicipalityIdentification(municipalityIdentification());
-			place.setCountryIdentification(countryIdentification());
+			place.municipalityIdentification = municipalityIdentification();
+			place.countryIdentification = countryIdentification();
 		}
 		return place;
 	}
@@ -236,7 +237,7 @@ public class DataGenerator {
 	public static void generateOrganisation(WriterEch0148 writerEch0148) {
 		try {
 			String xml = writerEch0148.moveIn(organisation());
-			EchServer.getInstance().processOrg(xml);
+			Services.get(EchService.class).processOrg(xml);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

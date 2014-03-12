@@ -3,6 +3,7 @@ package ch.openech.client.editor;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.business.EchService;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel;
@@ -11,7 +12,8 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.PageLink;
-import ch.openech.server.EchServer;
+import ch.openech.mj.server.Services;
+import ch.openech.mj.util.LoggingRuntimeException;
 import ch.openech.xml.write.EchSchema;
 
 
@@ -32,22 +34,21 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> impl
 	public Organisation newInstance() {
 		return MoveInEditor.newInstance(preferences);
 	}
-
+	
 	@Override
 	public String save(Organisation organisation) {
-		String xml;
-		try {
-			xml = getXml(organisation).get(0);
-			EchServer.getInstance().processOrg(xml);
-			return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), getObject().getId());
-		} catch (Exception e) {
-			throw new RuntimeException("Organisation konnte nicht gespeichert werden", e);
-		}
+		String xml = getXml(organisation).get(0);
+		organisation = Services.get(EchService.class).processOrg(xml);
+		return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
 	}
 	
 	@Override
-	public List<String> getXml(Organisation organisation) throws Exception {
-		return Collections.singletonList(echSchema.getWriterEch0148().organisationBaseDelivery(Collections.singletonList(organisation)));
+	public List<String> getXml(Organisation organisation) {
+		try {
+			return Collections.singletonList(echSchema.getWriterEch0148().organisationBaseDelivery(Collections.singletonList(organisation)));
+		} catch (Exception e) {
+			throw new LoggingRuntimeException(e, logger, "XML generation failed");
+		}
 	}
 
 }

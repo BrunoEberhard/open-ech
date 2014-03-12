@@ -14,12 +14,12 @@ public class UndoPartnershipTest extends AbstractServerTest {
 
 	private static final String vn1 = "7561169906723";
 	private static final String vn2 = "7569990431117";
-	private String id1, id2;
+	private Person p1, p2;
 	
 	@Before
 	public void createPerson() throws Exception {
-		id1 = insertPerson(vn1);
-		id2 = insertPerson(vn2);
+		p1 = insertPerson(vn1);
+		p2 = insertPerson(vn2);
 	}
 	
 	@Test
@@ -27,8 +27,8 @@ public class UndoPartnershipTest extends AbstractServerTest {
 		processFile("testPerson/undoPartnership/partnershipTest1.xml");
 		processFile("testPerson/undoPartnership/partnershipTest2.xml");
 		
-		Person person1 = load(id1);
-		Person person2 = load(id2);
+		Person person1 = reload(p1);
+		Person person2 = reload(p2);
 		
 		Assert.assertNotNull(person1);
 		Assert.assertEquals(MaritalStatus.partnerschaft, person1.maritalStatus.maritalStatus);
@@ -48,8 +48,8 @@ public class UndoPartnershipTest extends AbstractServerTest {
 		processFile("samples/eCH-0020/InfostarSamples/Auflösung Partnerschaft - Dissolution du partenariat/data_53756300000000023.xml");
 		processFile("samples/eCH-0020/InfostarSamples/Auflösung Partnerschaft - Dissolution du partenariat/data_53756300000000033.xml");
 		
-		Person person1 = load(id1);
-		Person person2 = load(id2);
+		Person person1 = reload(p1);
+		Person person2 = reload(p2);
 		
 		Assert.assertNotNull(person1);
 		Assert.assertEquals(MaritalStatus.aufgeloeste_partnerschaft, person1.maritalStatus.maritalStatus);

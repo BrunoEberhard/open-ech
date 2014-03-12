@@ -2,10 +2,11 @@ package ch.openech.client.ewk.event;
 
 import java.io.InputStream;
 
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
-import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0020;
 
 public class ImportAllPersonAction extends ResourceAction {
@@ -28,7 +29,7 @@ public class ImportAllPersonAction extends ResourceAction {
 					while (inputStream.available() == 0) {
 						Thread.sleep(1000);
 					}
-					StaxEch0020 ech0020 = new StaxEch0020(EchServer.getInstance().getPersistence());
+					StaxEch0020 ech0020 = new StaxEch0020(Services.get(DbService.class));
 
 //					progressMonitor.invokeSetNote("Importiere Personen");
 					ech0020.process(inputStream, "ImportDatei", null);

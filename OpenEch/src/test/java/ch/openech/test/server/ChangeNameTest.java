@@ -10,21 +10,20 @@ import ch.openech.dm.person.Person;
 public class ChangeNameTest extends AbstractServerTest {
 
 	private static final String vn = "7561234567890";
-	private String id;
+	private Person person;
 	
 	@Before
 	public void createPerson() throws Exception {
-		id = insertPerson(vn);
+		person = insertPerson(vn);
 	}
 	
 	@Test
 	public void changeName() throws Exception {
-		Person person = load(id);
 		Assert.assertNotNull(person);
 
 		processFile("samples/eCH-0020/changeName/data_ordipro-changeName-40.xml");
 		
-		person = load(id);
+		person = reload(person);
 		Assert.assertNotNull(person);
 		
 		Assert.assertEquals("MUSTER", person.personIdentification.officialName);

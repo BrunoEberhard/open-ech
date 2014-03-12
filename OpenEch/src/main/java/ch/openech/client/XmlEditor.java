@@ -3,8 +3,8 @@ package ch.openech.client;
 import java.util.List;
 import java.util.logging.Logger;
 
-import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.client.xmlpreview.XmlPreview;
+import ch.openech.dm.EchSchemaValidation;
 import ch.openech.mj.application.DevMode;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.validation.Indicator;
@@ -12,13 +12,11 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.toolkit.IAction;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
-import ch.openech.server.EchServer;
-import ch.openech.server.ServerCallResult;
 import ch.openech.xml.write.EchSchema;
 
 
 public abstract class XmlEditor<T> extends Editor<T> {
-	public static final Logger logger = Logger.getLogger(PersonEventEditor.class.getName());
+	public static final Logger logger = Logger.getLogger(XmlEditor.class.getName());
 	protected final EchSchema echSchema;
 	
 	private final XmlAction xmlAction;
@@ -49,38 +47,6 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		}
 	}
 
-	@Override
-	public Object save(T object) throws Exception {
-		List<String> xmls = getXml(object);
-		send(xmls);
-		return SAVE_SUCCESSFUL;
-	}
-
-	public static boolean send(final List<String> xmls) {
-		for (String xml : xmls) {
-			if (!send(xml)) {
-				return false;
-			}
-		}
-		// TODO
-//		if (SedexOutputGenerator.sedexOutputDirectoryAvailable()) {
-//			try {
-//				generateSedexOutput();
-//			} catch (Exception e) {
-//				throw new RuntimeException("Fehler bei Sedex Meldung erstellen", e);
-//			}
-//		}
-		return true;
-	}
-	
-	public static boolean send(final String xml) {
-		ServerCallResult result = EchServer.getInstance().process(xml);
-		if (result.exception != null) {
-			throw new RuntimeException("Speichern Fehlgeschlagen: " + result.exception.getMessage(), result.exception);
-		}
-		return true;
-	}
-	
 	private class XmlAction extends ResourceAction implements Indicator {
 		
 		private boolean enabled = true;
@@ -127,8 +93,8 @@ public abstract class XmlEditor<T> extends Editor<T> {
 				List<String> xmls = getXml(getObject());
 				String result = "ok";
 				for (String string : xmls) {
-					result = EchServer.validate(string);
-					if (!"ok".equals(result)) {
+					result = EchSchemaValidation.validate(string);
+					if (!EchSchemaValidation.OK.equals(result)) {
 						break;
 					}
 				}

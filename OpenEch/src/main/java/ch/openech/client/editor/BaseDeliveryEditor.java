@@ -3,13 +3,17 @@ package ch.openech.client.editor;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.business.EchService;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.PersonPanel;
+import ch.openech.client.page.PersonViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
 import ch.openech.mj.edit.form.IForm;
-import ch.openech.server.EchServer;
+import ch.openech.mj.page.PageLink;
+import ch.openech.mj.server.Services;
+import ch.openech.mj.util.LoggingRuntimeException;
 import ch.openech.xml.write.EchSchema;
 
 
@@ -36,21 +40,20 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 		return person;
 	}
 
-	@Override
-	public Object save(Person person) {
-		String xml;
-		try {
-			xml = getXml(person).get(0);
-			EchServer.getInstance().process(xml);
-			return SAVE_SUCCESSFUL;
-		} catch (Exception e) {
-			throw new RuntimeException("Person konnte nicht gespeichert werden", e);
-		}
+    @Override
+    public Object save(Person person) {
+		String xml = getXml(person).get(0);
+		person = Services.get(EchService.class).process(xml);
+		return PageLink.link(PersonViewPage.class, echSchema.getVersion(), person.getId());
 	}
 	
 	@Override
-	public List<String> getXml(Person person) throws Exception {
-		return Collections.singletonList(echSchema.getWriterEch0020().person(person));
+	public List<String> getXml(Person person) {
+		try {
+			return Collections.singletonList(echSchema.getWriterEch0020().person(person));
+		} catch (Exception e) {
+			throw new LoggingRuntimeException(e, logger, "XML generation failed");
+		}
 	}
-
+	
 }

@@ -36,13 +36,6 @@ public class PersonIdentification {
 	public PersonIdentification() {
 	}
 	
-	public void clear() {
-		vn.value = firstName = officialName = null;
-		dateOfBirth = null;
-		sex = null;
-		technicalIds.clear();
-	}
-	
 	public boolean isEmpty() {
 		return StringUtils.isBlank(firstName) && StringUtils.isBlank(officialName);
 	}

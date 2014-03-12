@@ -9,29 +9,24 @@ import org.junit.Test;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.Relation;
-import ch.openech.server.ServerCallResult;
 
 public class BirthTest extends AbstractServerTest {
 
 	private static final String VN_FATHER = "7561829871378";
 	private static final String VN_MOTHER = "7566223399589";
 
-	private String mother_id, father_id;
+	private Person mother, father;
 	
 	@Before
 	public void createPerson() throws Exception {
-		mother_id = insertPerson(VN_MOTHER);
-		father_id = insertPerson(VN_FATHER);
+		mother = insertPerson(VN_MOTHER);
+		father = insertPerson(VN_FATHER);
 	}
 	
 	@Test
 	public void birth() throws Exception {
-		Person mother = load(mother_id);
-		Person father = load(father_id);
 
-		ServerCallResult result = processFile("samples/eCH-0020/InfostarSamples/Geburt - Naissance/data_53765000000000033.xml");
-		String child_id = result.createdPersonId;
-		Person child = load(child_id);
+		Person child = processFile("samples/eCH-0020/InfostarSamples/Geburt - Naissance/data_53765000000000033.xml");
 		
 		Assert.assertNotNull(child);
 		Assert.assertEquals("Hauber", child.personIdentification.officialName);

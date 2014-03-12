@@ -2,10 +2,11 @@ package ch.openech.client.org;
 
 import java.io.InputStream;
 
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
-import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0148;
 
 public class ImportAllOrganisationAction extends ResourceAction {
@@ -31,7 +32,7 @@ public class ImportAllOrganisationAction extends ResourceAction {
 					while (inputStream.available() == 0) {
 						Thread.sleep(1000);
 					}
-					StaxEch0148 ech0148 = new StaxEch0148(EchServer.getInstance().getPersistence());
+					StaxEch0148 ech0148 = new StaxEch0148(Services.get(DbService.class));
 
 //					progressMonitor.invokeSetNote("Importiere Organisationen");
 					ech0148.process(inputStream, "ImportDatei", null);

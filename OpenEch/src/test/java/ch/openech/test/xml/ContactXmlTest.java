@@ -5,13 +5,13 @@ import junit.framework.Assert;
 import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Test;
 
+import ch.openech.dm.EchSchemaValidation;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.contact.ContactEntryType;
 import ch.openech.dm.types.ContactCategory;
 import ch.openech.mj.edit.value.EqualsHelper;
-import ch.openech.server.EchServer;
 import ch.openech.xml.read.StaxEch0046;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0046;
@@ -58,8 +58,8 @@ public class ContactXmlTest {
 		
 		String xml = writer.contactRoot(contact);
 		
-		String validationMessage = EchServer.validate(xml);
-		boolean valid = EchServer.OK.equals(validationMessage);
+		String validationMessage = EchSchemaValidation.validate(xml);
+		boolean valid = EchSchemaValidation.OK.equals(validationMessage);
 		if (!valid) {
 			System.out.println(xml);
 			System.out.println(validationMessage);

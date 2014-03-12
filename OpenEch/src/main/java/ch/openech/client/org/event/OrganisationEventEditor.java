@@ -2,18 +2,19 @@ package ch.openech.client.org.event;
 
 import java.util.List;
 
+import ch.openech.business.EchService;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.ewk.event.EchForm;
 import ch.openech.client.page.OrganisationViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
+import ch.openech.dm.common.NamedId;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageLink;
-import ch.openech.server.EchServer;
-import ch.openech.server.ServerCallResult;
+import ch.openech.mj.server.Services;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
@@ -24,6 +25,8 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	protected OrganisationEventEditor(EchSchema echSchema, Organisation organisation) {
 		super(echSchema);
 		this.organisation = organisation;
+		this.organisation.identification.technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
+		this.organisation.identification.technicalIds.localId.personId = String.valueOf(organisation.id);
 	}
 
 	protected static EchSchema getNamespaceContextOrg(PageContext context) {
@@ -51,43 +54,23 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	
 	protected abstract List<String> getXml(Organisation organisation, T object, WriterEch0148 writerEch0148) throws Exception;
 
-	// TODO merge with XmlEditor
-	
 	@Override
-	public Object save(T object) {
-		List<String> xmls;
-		try {
-			xmls = getXml(object);
-			send(xmls);
-			return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
-		} catch (Exception e) {
-			throw new RuntimeException("Konnte XML nicht erstellen", e);
-		}
+	public Object save(T object) throws Exception {
+		List<String> xmls = getXml(object);
+		Organisation organisation = send(xmls);
+		return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
 	}
-
-	public static boolean send(final List<String> xmls) {
+	
+	public static Organisation send(final List<String> xmls) {
+		Organisation firstOrganisation = null;
 		for (String xml : xmls) {
-			if (!send(xml)) {
-				return false;
+			if (firstOrganisation == null) {
+				firstOrganisation = Services.get(EchService.class).processOrg(xml);
+			} else {
+				Services.get(EchService.class).processOrg(xml);
 			}
 		}
-		// TODO
-//		if (SedexOutputGenerator.sedexOutputDirectoryAvailable()) {
-//			try {
-//				generateSedexOutput();
-//			} catch (Exception e) {
-//				throw new RuntimeException("Fehler bei Sedex Meldung erstellen", e);
-//			}
-//		}
-		return true;
-	}
-	
-	public static boolean send(final String xml) {
-		ServerCallResult result = EchServer.getInstance().processOrg(xml);
-		if (result.exception != null) {
-			throw new RuntimeException("Speichern Fehlgeschlagen: " + result.exception.getMessage(), result.exception);
-		}
-		return true;
+		return firstOrganisation;
 	}
 	
 }
