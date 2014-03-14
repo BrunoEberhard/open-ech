@@ -29,7 +29,7 @@ public class StaxEch0148 implements StaxEchParser<Organisation> {
 	private final DbService dbService;
 	
 	private Event e;
-	private Organisation lastInserted;
+	private Organisation lastChanged;
 	
 	public StaxEch0148(DbService dbService) {
 		this.dbService = dbService;
@@ -39,12 +39,12 @@ public class StaxEch0148 implements StaxEchParser<Organisation> {
 		organisation.event = e;
 		
 		dbService.insert(organisation);
-		lastInserted = organisation;
+		lastChanged = organisation;
 	}
 
 	@Override
-	public Organisation getLastInserted() {
-		return lastInserted;
+	public Organisation getLastChanged() {
+		return lastChanged;
 	}
 
 	@Override
@@ -134,6 +134,7 @@ public class StaxEch0148 implements StaxEchParser<Organisation> {
 		try {
 			organisation.event = e;
 			dbService.update(organisation);
+			lastChanged = organisation;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

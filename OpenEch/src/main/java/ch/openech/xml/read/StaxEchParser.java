@@ -6,5 +6,5 @@ public interface StaxEchParser<T> {
 
 	public void process(String xml) throws XMLStreamException;
 	
-	public T getLastInserted();
+	public T getLastChanged();
 }

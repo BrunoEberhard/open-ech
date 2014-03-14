@@ -61,7 +61,7 @@ public class EchServiceImpl implements EchService {
 							e.printStackTrace();
 						}
 					}
-					return parser.getLastInserted();
+					return parser.getLastChanged();
 				}
 			}, "Process xmls");
 		} catch (Exception x) {

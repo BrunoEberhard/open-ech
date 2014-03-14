@@ -41,7 +41,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	// Person enthält, andererseits aber schon einen Teil (!) der neuen Werte.
 	private Person personToChange = null;
 	private Event e;
-	private Person lastInserted;
+	private Person lastChanged;
 	
 	public StaxEch0020(DbService dbService) {
 		this.dbService = dbService;
@@ -52,12 +52,12 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	public void insertPerson(Person person) {
 		person.event = e;
 		dbService.insert(person);
-		lastInserted = person;
+		lastChanged = person;
 	}
 
 	@Override
-	public Person getLastInserted() {
-		return lastInserted;
+	public Person getLastChanged() {
+		return lastChanged;
 	}
 
 	public void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
@@ -70,6 +70,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 			person.personIdentification.technicalIds.localId.clear();
 		}
 		dbService.update(person);
+		lastChanged = dbService.read(Person.class, person.id);
 	}
 
 	//
