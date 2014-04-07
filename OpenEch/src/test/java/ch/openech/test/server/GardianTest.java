@@ -29,14 +29,14 @@ public class GardianTest extends AbstractServerTest {
 		Relation relation = new Relation();
 		relation.typeOfRelationship = TypeOfRelationship.Vormund;
 		relation.basedOnLaw = BasedOnLaw._368;
-		relation.partner = personGardian.personIdentification;
+		relation.partner = personGardian.personIdentification();
 		person.relation.add(relation);
-		process(writer().gardianMeasure(person.personIdentification, relation));
+		process(writer().gardianMeasure(person.personIdentification(), relation));
 		
 		person = reload(p);
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Vormund);
-		Assert.assertTrue(personGardian.personIdentification.isEqual(gardian.partner));
+		Assert.assertEquals(personGardian.id, gardian.partner.id);
 		Assert.assertEquals(BasedOnLaw._368, gardian.basedOnLaw);
 	}
 
@@ -48,14 +48,14 @@ public class GardianTest extends AbstractServerTest {
 		Relation relation = new Relation();
 		relation.typeOfRelationship = TypeOfRelationship.Beistand;
 		relation.basedOnLaw = BasedOnLaw._369;
-		relation.partner = personGardian.personIdentification;
+		relation.partner = personGardian.personIdentification();
 		person.relation.add(relation);
-		process(writer().changeGardian(person.personIdentification, relation));
+		process(writer().changeGardian(person.personIdentification(), relation));
 
 		person = reload(p);
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Beistand);
-		Assert.assertTrue(reload(gardianP).personIdentification.isEqual(gardian.partner));
+		Assert.assertEquals(reload(gardianP).id, gardian.partner.id);
 		Assert.assertEquals(BasedOnLaw._369, gardian.basedOnLaw);
 
 		Assert.assertNull(person.getRelation(TypeOfRelationship.Vormund));
@@ -64,7 +64,7 @@ public class GardianTest extends AbstractServerTest {
 	@Test
 	public void undoGardian() throws Exception {
 		Person person = reload(p);
-		process(writer().undoGardian(person.personIdentification));
+		process(writer().undoGardian(person.personIdentification()));
 		
 		person = reload(p);
 		Assert.assertNotNull(person);

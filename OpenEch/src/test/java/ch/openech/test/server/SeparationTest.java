@@ -23,7 +23,7 @@ public class SeparationTest extends AbstractServerTest {
 	@Test
 	public void separation() throws Exception {
 		Person person = reload(p);
-		process(writer().separation(person.personIdentification, Separation.freiwillig, ISODateTimeFormat.date().parseLocalDate("2010-09-03")));
+		process(writer().separation(person.personIdentification(), Separation.freiwillig, ISODateTimeFormat.date().parseLocalDate("2010-09-03")));
 		
 		person = reload(p);
 		Assert.assertNotNull(person);
@@ -34,7 +34,7 @@ public class SeparationTest extends AbstractServerTest {
 	@Test
 	public void undoSeparation() throws Exception {
 		Person person = reload(p);
-		process(writer().undoSeparation(person.personIdentification));
+		process(writer().undoSeparation(person.personIdentification()));
 
 		person = reload(p);
 		Assert.assertNull(person.separation.dateOfSeparation);

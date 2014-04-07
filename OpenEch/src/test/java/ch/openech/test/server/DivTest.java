@@ -91,7 +91,7 @@ public class DivTest extends AbstractServerTest {
 		Person person = reload(p);
 		Assert.assertEquals(Religion.unbekannt, person.religion);
 		person.paperLock = "0";
-		process(writer().changeReligion(person.personIdentification, Religion.evangelisch));
+		process(writer().changeReligion(person.personIdentification(), Religion.evangelisch));
 		person = reload(p);
 		Assert.assertEquals(Religion.evangelisch, person.religion);
 	}

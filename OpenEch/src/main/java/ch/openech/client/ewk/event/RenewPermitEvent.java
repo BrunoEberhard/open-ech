@@ -38,7 +38,7 @@ public class RenewPermitEvent extends PersonEventEditor<Person> {
 		if (!echSchema.renewPermitHasTill()) {
 			data.foreign.residencePermitTill = null;
 		}
-		return Collections.singletonList(writerEch0020.renewPermit(person.personIdentification, data));
+		return Collections.singletonList(writerEch0020.renewPermit(person.personIdentification(), data));
 	}
 	
 	@Override

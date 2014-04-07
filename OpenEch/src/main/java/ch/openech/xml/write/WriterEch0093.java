@@ -82,7 +82,7 @@ public class WriterEch0093 extends DeliveryWriter {
 
 	// code 1
 	public String moveIn(Person person) throws Exception {
-		WriterElement event = simplePersonEvent(MOVE_IN, person.personIdentification);
+		WriterElement event = simplePersonEvent(MOVE_IN, person.personIdentification());
 		reportingMunicipality(event, HAS_MAIN_RESIDENCE, person.residence.reportingMunicipality, person);
 		return result();
 	}

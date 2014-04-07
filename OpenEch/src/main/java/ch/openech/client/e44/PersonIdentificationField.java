@@ -41,7 +41,7 @@ public class PersonIdentificationField extends ObjectFlowField<PersonIdentificat
 
 		@Override
 		protected void save(Person object) {
-			setObject(object.personIdentification);
+			setObject(object.personIdentification());
 		}
 	}
 	

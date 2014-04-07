@@ -22,9 +22,9 @@ public class EchPersistence {
 		List<Person> persons = person.search(Person.BY_FULLTEXT, name);
 		for (int i = persons.size()-1; i>= 0; i--) {
 			Person p = persons.get(i);
-			if (!StringUtils.isBlank(firstName) && !StringUtils.equals(firstName, p.personIdentification.firstName)) {
+			if (!StringUtils.isBlank(firstName) && !StringUtils.equals(firstName, p.firstName)) {
 				persons.remove(i);
-			} else if (dateOfBirth != null && !dateOfBirth.equals(p.personIdentification.dateOfBirth)) {
+			} else if (dateOfBirth != null && !dateOfBirth.equals(p.dateOfBirth)) {
 				persons.remove(i);
 			}
 		}
@@ -49,8 +49,8 @@ public class EchPersistence {
 		} 
 		List<Person> persons = dbService.search(Person.BY_FULLTEXT, personIdentification.officialName);
 		for (Person p : persons) {
-			if (StringUtils.equals(p.personIdentification.firstName, personIdentification.firstName)) {
-				if (StringUtils.equals(p.personIdentification.officialName, personIdentification.officialName)) {
+			if (StringUtils.equals(p.firstName, personIdentification.firstName)) {
+				if (StringUtils.equals(p.officialName, personIdentification.officialName)) {
 					return p;
 				}
 			}

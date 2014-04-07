@@ -16,7 +16,7 @@ public class NaturalizeForeignerEvent extends NaturalizeSwissEvent {
 
 	@Override
 	protected List<String> getXml(Person person, PlaceOfOrigin placeOfOrigin, WriterEch0020 writerEch0020) throws Exception {
-		return Collections.singletonList(writerEch0020.naturalizeForeigner(person.personIdentification, placeOfOrigin));
+		return Collections.singletonList(writerEch0020.naturalizeForeigner(person.personIdentification(), placeOfOrigin));
 	}
 	
 }

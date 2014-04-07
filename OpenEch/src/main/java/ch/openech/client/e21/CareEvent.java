@@ -7,9 +7,9 @@ import java.util.List;
 
 import ch.openech.client.ewk.event.PersonEventEditor;
 import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.types.Sex;
 import ch.openech.mj.edit.fields.EnumEditField;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -26,7 +26,7 @@ public class CareEvent extends PersonEventEditor<Relation> {
 
 	@Override
 	protected List<String> getXml(Person person, Relation relation, WriterEch0020 writerEch0020) throws Exception {
-		return Collections.singletonList(writerEch0020.care(person.personIdentification, relation));
+		return Collections.singletonList(writerEch0020.care(person.personIdentification(), relation));
 	}
 
 	@Override
@@ -46,12 +46,13 @@ public class CareEvent extends PersonEventEditor<Relation> {
 
 	@BusinessRule("Bei Änderung Sorgerecht müssen Eltern das richtige Geschlecht haben")
 	private void validateSex(Relation relation, List<ValidationMessage> resultList) {
-		PersonIdentification person = relation.partner;
-		if (person != null) {
+		if (relation.partner == null) return;
+		Sex sexOfPartner = (Sex) relation.partner.sex;
+		if (sexOfPartner != null) {
 			TypeOfRelationship code = relation.typeOfRelationship;
-			if ((code == TypeOfRelationship.Mutter || code == TypeOfRelationship.Pflegemutter) && !person.isFemale()) {
+			if ((code == TypeOfRelationship.Mutter || code == TypeOfRelationship.Pflegemutter) && sexOfPartner != Sex.weiblich) {
 				resultList.add(new ValidationMessage(Relation.RELATION.partner, "Mutter muss weiblich sein."));
-			} else if ((code == TypeOfRelationship.Vater || code == TypeOfRelationship.Pflegevater) && !person.isMale()) {
+			} else if ((code == TypeOfRelationship.Vater || code == TypeOfRelationship.Pflegevater) && sexOfPartner != Sex.maennlich) {
 				resultList.add(new ValidationMessage(Relation.RELATION.partner, "Vater muss männlich sein."));
 			}
 		}

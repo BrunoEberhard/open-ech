@@ -2,8 +2,6 @@ package ch.openech.business;
 
 import java.util.logging.Logger;
 
-import javax.xml.stream.XMLStreamException;
-
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.Person;
 import ch.openech.mj.db.Transaction;
@@ -56,7 +54,7 @@ public class EchServiceImpl implements EchService {
 						logger.fine(xmlString);
 						try {
 							parser.process(xmlString);
-						} catch (XMLStreamException e) {
+						} catch (Exception e) {
 							// TODO process should not throw that (but runtime)
 							e.printStackTrace();
 						}

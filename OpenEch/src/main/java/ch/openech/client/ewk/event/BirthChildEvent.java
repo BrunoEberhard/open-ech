@@ -126,7 +126,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 
 	private static void addRelation(Person person, Person parent) {
 		Relation relation = new Relation();
-		relation.partner = parent.personIdentification;
+		relation.partner = parent.personIdentification();
 		if (parent.isMale()) {
 			relation.typeOfRelationship = TypeOfRelationship.Vater;
 		} else if (parent.isFemale()) {
@@ -139,9 +139,9 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 	@BusinessRule("Bei Geburt wird offizieller Name von Vater übernommen, wenn nicht vorhanden von Mutter")
 	private static void presetOfficialName(Person person, Person father, Person mother) {
 		if (father != null) {
-			person.personIdentification.officialName = father.personIdentification.officialName;
+			person.officialName = father.officialName;
 		} else if (mother != null) {
-			person.personIdentification.officialName = mother.personIdentification.officialName;
+			person.officialName = mother.officialName;
 		}
 	}
 

@@ -92,8 +92,8 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		@BusinessRule("Partner müssen gleichen Geschlechts sein")
 		private static void validateSex(List<ValidationMessage> validationMessages, Person person1, Person person2) {
 			if (person1 == null || person2 == null) return;
-			if (person1.personIdentification.sex == null || person2.personIdentification.sex == null) return;
-			if (person1.personIdentification.sex != person2.personIdentification.sex) {
+			if (person1.sex == null || person2.sex == null) return;
+			if (person1.sex != person2.sex) {
 				validationMessages.add(new ValidationMessage(PartnershipEvent.Partnership.PARTNERSHIP.partner2, "Partner müssen gleichen Geschlechts sein"));
 			}
 		}
@@ -138,15 +138,15 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	@Override
 	protected List<String> getXml(Person person, Partnership data, WriterEch0020 writerEch0020) throws Exception {
 		List<String> xmls = new ArrayList<String>();
-		xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification, data.partner2.personIdentification));
+		xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification(), data.partner2.personIdentification()));
 		if (Boolean.TRUE.equals(data.registerPartner2)) {
-			xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification, data.partner1.personIdentification));
+			xmls.add(partnership(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification(), data.partner1.personIdentification()));
 		}
 		
 		if (Boolean.TRUE.equals(data.changeName1)) {
 			xmls.add(changeName(writerEch0020, person, data.name1));
 		}
-		if (Boolean.TRUE.equals(data.changeName2) && data.partner2.isPersisent()) {
+		if (Boolean.TRUE.equals(data.changeName2) && data.partner2.id != 0) {
 			xmls.add(changeName(writerEch0020, data.partner2, data.name2));
 		}
 
@@ -163,7 +163,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	private String changeName(WriterEch0020 writerEch0020, Person person, String officialName) throws Exception {
 		Person personToChange = CloneHelper.clone(person);
 		personToChange.alliancePartnershipName = officialName; // !!
-		return writerEch0020.changeName(person.personIdentification, personToChange);
+		return writerEch0020.changeName(person.personIdentification(), personToChange);
 	}
 	
 }

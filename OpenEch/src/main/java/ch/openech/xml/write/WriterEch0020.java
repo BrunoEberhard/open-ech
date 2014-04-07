@@ -105,7 +105,7 @@ public class WriterEch0020 extends DeliveryWriter {
 	}
 	
 	private WriterElement simplePersonEvent(String eventName, Person person) throws Exception {
-		return simplePersonEvent(delivery(), eventName, person.personIdentification);
+		return simplePersonEvent(delivery(), eventName, person.personIdentification());
 	}
 	
 	private WriterElement simplePersonEvent(WriterElement delivery, String eventName, PersonIdentification personIdentification) throws Exception {
@@ -140,7 +140,7 @@ public class WriterEch0020 extends DeliveryWriter {
 	
 	private void birthPerson(WriterElement event, Person person) throws Exception {
 		WriterElement moveInPerson = event.create(URI, BIRTH_PERSON);
-		ech44.personIdentification(moveInPerson, person.personIdentification);
+		ech44.personIdentification(moveInPerson, person.personIdentification());
 		
         moveInPerson.values(person, CALL_NAME);
         if (context.birthPlaceMustNotBeUnknown()) {
@@ -390,7 +390,7 @@ public class WriterEch0020 extends DeliveryWriter {
 	public void moveInPerson(WriterElement event, String uri, String tagName, Person person) throws Exception {
 		// wird auch von e93 verwendet
 		WriterElement moveInPerson = event.create(uri, tagName);
-		ech44.personIdentification(moveInPerson, PERSON_IDENTIFICATION, person.personIdentification);
+		ech44.personIdentification(moveInPerson, PERSON_IDENTIFICATION, person.personIdentification());
 		
 		// Das entspricht fast den coredata in ech11, aber nicht ganz
 		addVariousNames(moveInPerson, person);
@@ -554,7 +554,7 @@ public class WriterEch0020 extends DeliveryWriter {
 		WriterElement event = delivery().create(URI, CHANGE_NAME);
 		WriterElement person = event.create(URI, CHANGE_NAME_PERSON);
 		ech44.personIdentification(person, PERSON_IDENTIFICATION, personIdentification);
-        person.values(changedPerson.personIdentification, OFFICIAL_NAME, FIRST_NAME);
+        person.values(changedPerson, OFFICIAL_NAME, FIRST_NAME);
     	addVariousNames(person, changedPerson);
     	person.values(changedPerson, NAME_ON_PASSPORT);
         if (changeNameWithParents) {
@@ -637,7 +637,7 @@ public class WriterEch0020 extends DeliveryWriter {
 		// Version müsste wohl correctPersonPerson heissen, so ists etwas komisch, da damit 2 verschachtelte WriterElement gleich heissen
 		WriterElement correctPerson = event.create(URI, CORRECT_PERSON);
 		ech44.personIdentification(correctPerson, PERSON_IDENTIFICATION_BEFORE, personIdentification);
-		ech44.personIdentification(correctPerson, PERSON_IDENTIFICATION_AFTER, person.personIdentification);
+		ech44.personIdentification(correctPerson, PERSON_IDENTIFICATION_AFTER, person.personIdentification());
 		
 		addVariousNames(correctPerson, person);
         ech11.placeOfBirth(correctPerson, person);
@@ -734,7 +734,7 @@ public class WriterEch0020 extends DeliveryWriter {
 	private void correctIdentificationPerson(WriterElement event, PersonIdentification personIdentification, Person person) throws Exception {
 		WriterElement correctIdentificationPerson = event.create(URI, CORRECT_IDENTIFICATION_PERSON);
 		ech44.personIdentification(correctIdentificationPerson, PERSON_IDENTIFICATION_BEFORE, personIdentification);
-		ech44.personIdentification(correctIdentificationPerson, PERSON_IDENTIFICATION_AFTER, person.personIdentification);
+		ech44.personIdentification(correctIdentificationPerson, PERSON_IDENTIFICATION_AFTER, person.personIdentification());
 	}
 	
 	// code 51

@@ -13,7 +13,6 @@ import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Swiss;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.types.Language;
@@ -39,15 +38,15 @@ public class CorrectTest extends AbstractServerTest {
 	
 	@Test
 	public void correctIdentification() throws Exception {
-		PersonIdentification personIdentification = reload(p).personIdentification;
 		Person person = reload(p);
-		person.personIdentification.officialName = "TestCorrect2";
+		Person changedPerson = reload(p);
+		changedPerson.officialName = "TestCorrect2";
 		
-		process(writer().correctIdentification(personIdentification, person));
+		process(writer().correctIdentification(person.personIdentification(), changedPerson));
 		
-		person = reload(p);
+		changedPerson = reload(p);
 		
-		Assert.assertEquals("TestCorrect2", person.personIdentification.officialName);
+		Assert.assertEquals("TestCorrect2", changedPerson.officialName);
 	}
 	
 	@Test
@@ -114,15 +113,15 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctContact_Person() throws Exception {
 		Person person = reload(p);
 		Person person2 = reload(foreignP);
-		person.contactPerson.person = person2.personIdentification;
+		person.contactPerson.person = person2.personIdentification();
 		person.contactPerson.address = person2.dwellingAddress.mailAddress;
-		person.contactPerson.address.lastName = person2.personIdentification.officialName;
+		person.contactPerson.address.lastName = person2.officialName;
 		
 		process(writer().correctContact(person));
 		
 		person = reload(p);
 		Assert.assertNotNull(person.contactPerson);
-		Assert.assertTrue(person2.personIdentification.isEqual(person.contactPerson.person));
+		Assert.assertEquals(person2.id, person.contactPerson.person.id);
 	}
 
 	

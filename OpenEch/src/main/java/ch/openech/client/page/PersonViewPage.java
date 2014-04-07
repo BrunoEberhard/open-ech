@@ -4,7 +4,6 @@ import ch.openech.client.ewk.PersonEditMenu;
 import ch.openech.client.ewk.PersonPanel;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
-import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.ObjectViewPage;
@@ -68,20 +67,19 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 	private static final int MAX_NAME_LENGTH = 10;
 	
 	private static String pageTitle(Person person) {
-		PersonIdentification identification = person.personIdentification;
 		String title;
-		if (identification.officialName != null) {
-			if (identification.officialName.length() <= MAX_NAME_LENGTH) {
-				title = identification.officialName;
+		if (person.officialName != null) {
+			if (person.officialName.length() <= MAX_NAME_LENGTH) {
+				title = person.officialName;
 			} else {
-				title = identification.officialName.substring(0, MAX_NAME_LENGTH-1) + "..";
+				title = person.officialName.substring(0, MAX_NAME_LENGTH-1) + "..";
 			}
-			if (identification.firstName != null) {
+			if (person.firstName != null) {
 				title = title + ", ";
-				if (identification.firstName.length() <= MAX_NAME_LENGTH) {
-					title = title + identification.firstName;
+				if (person.firstName.length() <= MAX_NAME_LENGTH) {
+					title = title + person.firstName;
 				} else {
-					title = title + identification.firstName.substring(0, MAX_NAME_LENGTH-1) + "..";
+					title = title + person.firstName.substring(0, MAX_NAME_LENGTH-1) + "..";
 				}
 			}
 		} else {

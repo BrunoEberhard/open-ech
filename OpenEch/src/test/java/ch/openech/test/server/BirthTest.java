@@ -29,10 +29,10 @@ public class BirthTest extends AbstractServerTest {
 		Person child = processFile("samples/eCH-0020/InfostarSamples/Geburt - Naissance/data_53765000000000033.xml");
 		
 		Assert.assertNotNull(child);
-		Assert.assertEquals("Hauber", child.personIdentification.officialName);
-		Assert.assertEquals("Daniela", child.personIdentification.firstName);
+		Assert.assertEquals("Hauber", child.officialName);
+		Assert.assertEquals("Daniela", child.firstName);
 		Assert.assertTrue(child.maritalStatus.isLedig());
-		Assert.assertEquals(new LocalDate(2005, 5, 25), child.personIdentification.dateOfBirth);
+		Assert.assertEquals(new LocalDate(2005, 5, 25), child.dateOfBirth);
 
 		Assert.assertEquals("GE", child.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton);
 		Assert.assertEquals("Genève", child.placeOfBirth.municipalityIdentification.municipalityName);
@@ -43,9 +43,9 @@ public class BirthTest extends AbstractServerTest {
 		Assert.assertEquals("Schweiz", child.nationality.nationalityCountry.countryNameShort);
 
 		Relation motherRelation = child.getMother();
-		Assert.assertTrue(mother.personIdentification.isEqual(motherRelation.partner));
+		Assert.assertEquals(mother.id, motherRelation.partner.id);
 		Relation fatherRelation = child.getFather();
-		Assert.assertTrue(father.personIdentification.isEqual(fatherRelation.partner));
+		Assert.assertEquals(father.id, fatherRelation.partner.id);
 	}
 	
 	

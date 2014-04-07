@@ -65,7 +65,7 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 
 	@Override
 	protected List<String> getXml(Person person, Relation relation, WriterEch0020 writerEch0020) throws Exception {
-        return Collections.singletonList(writerEch0020.gardianMeasure(person.personIdentification, relation));
+        return Collections.singletonList(writerEch0020.gardianMeasure(person.personIdentification(), relation));
 	}
 	
 }

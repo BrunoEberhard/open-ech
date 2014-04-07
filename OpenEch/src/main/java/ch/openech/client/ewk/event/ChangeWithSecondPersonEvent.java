@@ -101,7 +101,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		protected List<String> getXml(Person person, ChangeWithSecondPersonEventData data, WriterEch0020 writerEch0020)
 				throws Exception {
 			List<String> xmls = new ArrayList<String>();
-			xmls.add(writerEch0020.death(person.personIdentification, data.date));
+			xmls.add(writerEch0020.death(person.personIdentification(), data.date));
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
@@ -120,7 +120,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 				for (MunicipalityIdentification secondaryResidence : getPerson().residence.secondary) {
 					WriterEch0093 sedexWriter = new WriterEch0093(echSchema);
 					sedexWriter.setRecepientMunicipality(secondaryResidence);
-					String sedexOutput = sedexWriter.death(getPerson().personIdentification, object.date);
+					String sedexOutput = sedexWriter.death(getPerson().personIdentification(), object.date);
 					SedexOutputGenerator.generateSedex(sedexOutput, sedexWriter.getEnvelope());
 				}
 			}
@@ -129,7 +129,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
 			super.validate(data, validationMessages);
-			Person.validateEventNotBeforeBirth(validationMessages, getPerson().personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
+			Person.validateEventNotBeforeBirth(validationMessages, getPerson(), data.date, ChangeWithSecondPersonEventData.DATA.date);
 		}
 	}
 
@@ -148,7 +148,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		protected List<String> getXml(Person person, ChangeWithSecondPersonEventData data, WriterEch0020 writerEch0020)
 				throws Exception {
 			List<String> xmls = new ArrayList<String>();
-			xmls.add(writerEch0020.missing(person.personIdentification, data.date));
+			xmls.add(writerEch0020.missing(person.personIdentification(), data.date));
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
@@ -165,7 +165,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
 			super.validate(data, validationMessages);
-			Person.validateEventNotBeforeBirth(validationMessages, getPerson().personIdentification, data.date, ChangeWithSecondPersonEventData.DATA.date);
+			Person.validateEventNotBeforeBirth(validationMessages, getPerson(), data.date, ChangeWithSecondPersonEventData.DATA.date);
 		}
 	}
 
@@ -191,7 +191,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		protected List<String> getXml(Person person, ChangeWithSecondPersonEventData data, WriterEch0020 writerEch0020)
 				throws Exception {
 			List<String> xmls = new ArrayList<String>();
-			xmls.add(writerEch0020.separation(person.personIdentification, data.separation, data.date));
+			xmls.add(writerEch0020.separation(person.personIdentification(), data.separation, data.date));
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
@@ -216,7 +216,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		protected List<String> getXml(Person person, ChangeWithSecondPersonEventData data, WriterEch0020 writerEch0020)
 				throws Exception {
 			List<String> xmls = new ArrayList<String>();
-			xmls.add(writerEch0020.undoSeparation(person.personIdentification));
+			xmls.add(writerEch0020.undoSeparation(person.personIdentification()));
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
@@ -247,7 +247,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		protected List<String> getXml(Person person, ChangeWithSecondPersonEventData data, WriterEch0020 writerEch0020)
 				throws Exception {
 			List<String> xmls = new ArrayList<String>();
-			xmls.add(writerEch0020.divorce(person.personIdentification, data.date));
+			xmls.add(writerEch0020.divorce(person.personIdentification(), data.date));
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
@@ -280,7 +280,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		protected List<String> getXml(Person person, ChangeWithSecondPersonEventData data, WriterEch0020 writerEch0020)
 				throws Exception {
 			List<String> xmls = new ArrayList<String>();
-			xmls.add(writerEch0020.undoPartnership(person.personIdentification, data.date, data.cancelationReason));
+			xmls.add(writerEch0020.undoPartnership(person.personIdentification(), data.date, data.cancelationReason));
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
@@ -311,7 +311,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		protected List<String> getXml(Person person, ChangeWithSecondPersonEventData data, WriterEch0020 writerEch0020)
 				throws Exception {
 			List<String> xmls = new ArrayList<String>();
-			xmls.add(writerEch0020.undoMarriage(person.personIdentification, data.date));
+			xmls.add(writerEch0020.undoMarriage(person.personIdentification(), data.date));
 
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();

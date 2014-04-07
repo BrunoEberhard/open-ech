@@ -31,7 +31,7 @@ public class ChangeGardianEvent extends PersonEventEditor<Relation> {
 
 	@Override
 	protected List<String> getXml(Person person, Relation relation, WriterEch0020 writerEch0020) throws Exception {
-        return Collections.singletonList(writerEch0020.changeGardian(person.personIdentification, relation));
+        return Collections.singletonList(writerEch0020.changeGardian(person.personIdentification(), relation));
 	}
 
 	@Override

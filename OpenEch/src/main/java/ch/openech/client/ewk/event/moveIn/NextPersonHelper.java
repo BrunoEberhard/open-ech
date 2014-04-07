@@ -16,13 +16,13 @@ public class NextPersonHelper {
 		Relation relation2 = new Relation();
 	
 		if (married) {
-			nextPerson.personIdentification.officialName = partner.personIdentification.officialName;
-			boolean partnerIsMale = "1".equals(partner.personIdentification.sex);
-			nextPerson.personIdentification.sex = partnerIsMale ? Sex.weiblich : Sex.maennlich;
+			nextPerson.officialName = partner.officialName;
+			boolean partnerIsMale = partner.isMale();
+			nextPerson.sex = partnerIsMale ? Sex.weiblich : Sex.maennlich;
 			relation.typeOfRelationship = relation2.typeOfRelationship = TypeOfRelationship.Ehepartner;
 		} else {
 			nextPerson.alliancePartnershipName = partner.alliancePartnershipName;
-			nextPerson.personIdentification.sex = partner.personIdentification.sex;
+			nextPerson.sex = partner.sex;
 			relation.typeOfRelationship = relation2.typeOfRelationship = TypeOfRelationship.Partner;
 		}
 		nextPerson.maritalStatus.maritalStatus = partner.maritalStatus.maritalStatus;
@@ -34,10 +34,10 @@ public class NextPersonHelper {
 		nextPerson.comesFrom = partner.comesFrom;
 		nextPerson.dwellingAddress = partner.dwellingAddress;
 	
-		relation.partner = nextPerson.personIdentification;
+		relation.partner = nextPerson.personIdentification();
 		partner.relation.add(relation);
 	
-		relation2.partner = partner.personIdentification;
+		relation2.partner = partner.personIdentification();
 		nextPerson.relation.add(relation2);
 		return nextPerson;
 	}
@@ -47,7 +47,7 @@ public class NextPersonHelper {
 		Person child = new Person();
 		Person basePerson = moveInNextPerson.basePerson;
 
-		child.personIdentification.officialName = basePerson.personIdentification.officialName;
+		child.officialName = basePerson.officialName;
 		child.religion = basePerson.religion;
 		child.typeOfResidence = basePerson.typeOfResidence;
 		child.residence.reportingMunicipality = basePerson.residence.reportingMunicipality;
@@ -75,7 +75,7 @@ public class NextPersonHelper {
 	public static Relation createChildRelation(TypeOfRelationship typeOfRelationship, Person person) {
 		Relation relation = new Relation();
 		relation.typeOfRelationship = typeOfRelationship;
-		relation.partner = person.personIdentification;
+		relation.partner = person.personIdentification();
 		return relation;
 	}
 	

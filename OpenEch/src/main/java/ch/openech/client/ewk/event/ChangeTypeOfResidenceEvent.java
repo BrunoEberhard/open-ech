@@ -36,7 +36,7 @@ public class ChangeTypeOfResidenceEvent extends PersonEventEditor<Person> {
 	
 	@Override
 	protected List<String> getXml(Person person, Person changedPerson, WriterEch0020 writerEch0020) throws Exception {
-		return Collections.singletonList(writerEch0020.changeResidenceType(person.personIdentification, changedPerson));
+		return Collections.singletonList(writerEch0020.changeResidenceType(person.personIdentification(), changedPerson));
 	}
 
 	@Override

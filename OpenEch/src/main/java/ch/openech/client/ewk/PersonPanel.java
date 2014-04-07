@@ -56,11 +56,11 @@ public class PersonPanel extends EchForm<Person>  {
 	}
 
 	public void createIdentification() {
-		TechnicalIdsField technicalId = new TechnicalIdsField(PERSON.personIdentification.technicalIds, TechnicalIdsField.WITH_EU_IDS, editable);
+		TechnicalIdsField technicalId = new TechnicalIdsField(PERSON.technicalIds, TechnicalIdsField.WITH_EU_IDS, editable);
 		
-		line(PERSON.personIdentification.officialName);
-		line(PERSON.personIdentification.firstName);
-		line(PERSON.personIdentification.sex, PERSON.personIdentification.dateOfBirth, PERSON.personIdentification.vn, technicalId);
+		line(PERSON.officialName);
+		line(PERSON.firstName);
+		line(PERSON.sex, PERSON.dateOfBirth, PERSON.vn, technicalId);
 	}
 
 	protected void createData() {
@@ -159,16 +159,16 @@ public class PersonPanel extends EchForm<Person>  {
 		line(mother, father);
 		line(new PlaceOfOriginField(PERSON.placeOfOrigin, false, editable), PERSON.foreign);
 		
-		addDependecy(PERSON.getMother(), new OfficialNameFromMotherUpdater(), PERSON.personIdentification.officialName);
+		addDependecy(PERSON.getMother(), new OfficialNameFromMotherUpdater(), PERSON.officialName);
 	}
 
 	private class OfficialNameFromMotherUpdater implements Form.PropertyUpdater<Relation, String, Person> {
 		@Override
 		public String update(Relation input, Person person) {
-			String actualValue = person.personIdentification.officialName;
+			String actualValue = person.officialName;
 			if (input != null && StringUtils.isEmpty(actualValue)) {
 				if (input.partner != null) {
-					return input.partner.officialName;
+					return (String) input.partner.officialName;
 				} else if (input.address != null) {
 					return input.address.lastName;
 				}
@@ -207,10 +207,10 @@ public class PersonPanel extends EchForm<Person>  {
 		
 		boolean male = Math.random() < .5;
 		NameWithFrequency generatedName = FirstNameGenerator.getName(male);
-		person.personIdentification.firstName = generatedName.name;
-		person.personIdentification.sex = male ? Sex.maennlich : Sex.weiblich;
+		person.firstName = generatedName.name;
+		person.sex = male ? Sex.maennlich : Sex.weiblich;
 		person.callName = "Lorem Ipsum";
-		person.personIdentification.officialName = NameGenerator.officialName();
+		person.officialName = NameGenerator.officialName();
 		
 		ResidenceField.fillWithMockupData(person.residence, person.typeOfResidence);
 	}

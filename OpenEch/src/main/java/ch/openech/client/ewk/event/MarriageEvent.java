@@ -101,8 +101,8 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		@BusinessRule("Eheleute müssen unterschiedlichen Geschlechts sein")
 		private static void validateSex(List<ValidationMessage> validationMessages, Person person1, Person person2) {
 			if (person1 == null || person2 == null) return;
-			if (person1.personIdentification.sex == null || person2.personIdentification.sex == null) return;
-			if (person1.personIdentification.sex == person2.personIdentification.sex) {
+			if (person1.sex == null || person2.sex == null) return;
+			if (person1.sex == person2.sex) {
 				validationMessages.add(new ValidationMessage(MARRIAGE.partner2, "Eheleute müssen unterschiedlichen Geschlechts sein"));
 			}
 		}
@@ -119,7 +119,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		@Override
 		public String update(Person partner, Marriage marriage) {
 			if (partner != null) {
-				return partner.personIdentification.officialName;
+				return partner.officialName;
 			} else {
 				return null;
 			}
@@ -181,9 +181,9 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
 		// Die Reihenfolge der Events ist wichtig, da nach einer Namensänderung
 		// die ursprüngliche Bezeichnung des Partners schon nicht mehr die aktuelle ist
-		xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification, data.partner2.personIdentification));
+		xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification(), data.partner2.personIdentification()));
 		if (Boolean.TRUE.equals(data.registerPartner2)) {
-			xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification, data.partner1.personIdentification));
+			xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification(), data.partner1.personIdentification()));
 		}
 
 		// Die Einbürgerungen müssen vor dem Namenswechsel erfolgen, sonst passen
@@ -195,7 +195,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		if (Boolean.TRUE.equals(data.changeName1)) {
 			xmls.add(changeName(writerEch0020, person, data.name1));
 		}
-		if (Boolean.TRUE.equals(data.changeName2) && data.partner2.isPersisent()) {
+		if (Boolean.TRUE.equals(data.changeName2) && data.partner2.id != 0) {
 			xmls.add(changeName(writerEch0020, data.partner2, data.name2));
 		}
 
@@ -211,8 +211,8 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	
 	private String changeName(WriterEch0020 writerEch0020, Person person, String officialName) throws Exception {
 		Person personToChange = CloneHelper.clone(person);
-		personToChange.personIdentification.officialName = officialName;
-		return writerEch0020.changeName(person.personIdentification, personToChange);
+		personToChange.officialName = officialName;
+		return writerEch0020.changeName(person.personIdentification(), personToChange);
 	}
 
 	private void naturalizeSwiss(WriterEch0020 writerEch0020, Person person, List<PlaceOfOrigin> list, LocalDate naturalizationDate, List<String> xmls) throws Exception {
@@ -222,7 +222,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 			origin.cantonAbbreviation.canton = existingOrigin.cantonAbbreviation.canton;
 			origin.reasonOfAcquisition = ReasonOfAcquisition.Heirat;
 			origin.naturalizationDate = naturalizationDate;
-			xmls.add(writerEch0020.naturalizeSwiss(person.personIdentification, origin));
+			xmls.add(writerEch0020.naturalizeSwiss(person.personIdentification(), origin));
 		}
 	}
 

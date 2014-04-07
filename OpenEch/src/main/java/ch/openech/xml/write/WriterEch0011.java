@@ -100,7 +100,7 @@ public class WriterEch0011 {
 	public void person(WriterElement parent, Person person) throws Exception {
 		WriterElement element = parent.create(URI, PERSON);
 		
-		ech44.personIdentification(element, person.personIdentification);
+		ech44.personIdentification(element, person.personIdentification());
         coreData(element, person);
 	}
     

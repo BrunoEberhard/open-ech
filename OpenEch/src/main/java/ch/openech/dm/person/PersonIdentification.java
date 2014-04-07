@@ -9,14 +9,18 @@ import ch.openech.dm.types.Sex;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.model.annotation.ViewOf;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
+@ViewOf(Person.class)
 public class PersonIdentification {
 
 	public static final PersonIdentification PERSON_IDENTIFICATION = Keys.of(PersonIdentification.class);
 	
 	//
+	
+	public long id;
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 
@@ -69,6 +73,10 @@ public class PersonIdentification {
 
 	public boolean isEqual(PersonIdentification partner) {
 		return partner != null && StringUtils.equals(partner.vn.value, vn.value);
+	}
+
+	public String idAsString() {
+		return "" + id;
 	}
 
 }

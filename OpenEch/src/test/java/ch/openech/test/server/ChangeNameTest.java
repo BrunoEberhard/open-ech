@@ -26,8 +26,8 @@ public class ChangeNameTest extends AbstractServerTest {
 		person = reload(person);
 		Assert.assertNotNull(person);
 		
-		Assert.assertEquals("MUSTER", person.personIdentification.officialName);
-		Assert.assertEquals("Hanspeter", person.personIdentification.firstName);
+		Assert.assertEquals("MUSTER", person.officialName);
+		Assert.assertEquals("Hanspeter", person.firstName);
 
 //	   Dieses AdHoc umstellen klappt noch nicht ganz
 //		ApplicationController.preferences().put("xmlVersion", "1.1");

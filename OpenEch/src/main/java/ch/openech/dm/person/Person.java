@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.joda.time.LocalDate;
+import org.joda.time.ReadablePartial;
 
 import ch.openech.dm.EchFormats;
 import ch.openech.dm.Event;
@@ -12,11 +13,14 @@ import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.Place;
+import ch.openech.dm.common.TechnicalIds;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.person.types.PartnerShipAbolition;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.person.types.TypeOfRelationship;
+import ch.openech.dm.person.types.Vn;
 import ch.openech.dm.types.Language;
+import ch.openech.dm.types.Sex;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -24,6 +28,7 @@ import ch.openech.mj.model.Codes;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.Search;
+import ch.openech.mj.model.ViewUtil;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Required;
@@ -40,13 +45,13 @@ public class Person implements Validation {
 	public static final Person PERSON = Keys.of(Person.class);
 	
 	public static final Search<Person> BY_FULLTEXT = new Search<>(
-		PERSON.personIdentification.officialName, //
-		PERSON.personIdentification.firstName, //
-		PERSON.personIdentification.dateOfBirth, //
+		PERSON.officialName, //
+		PERSON.firstName, //
+		PERSON.dateOfBirth, //
 		PERSON.aliasName, //
-		PERSON.personIdentification.vn.value //
+		PERSON.vn.value //
 	);
-	public static final Search<Person> BY_VN = new Search<>(PERSON.personIdentification.vn.value);
+	public static final Search<Person> BY_VN = new Search<>(PERSON.vn.value);
 
 	static {
 		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
@@ -64,20 +69,34 @@ public class Person implements Validation {
 	public long id;
 	public int version;
 	
-	public final PersonIdentification personIdentification = new PersonIdentification();
+//	// final bedeutet nicht die Benutzung von Immutables.
+//	public final PersonIdentification personIdentification = new PersonIdentification(); // many:1 -> final and PersonIdentification as Immutable
 	
+	@Required @Size(EchFormats.baseName)
+	public String firstName, officialName;
+	
+	@Required 
+	public Sex sex;
+	
+	@Required 
+	public ReadablePartial dateOfBirth;
+
+	public final TechnicalIds technicalIds = new TechnicalIds();
+
+	public final Vn vn = new Vn();
+
 	@Size(EchFormats.baseName)
 	public String originalName, alliancePartnershipName, aliasName, otherName, callName;
 
-	public Place placeOfBirth;
+	public Place placeOfBirth; // 1:0-1 -> not final and Place inline as immutable
 	public LocalDate dateOfDeath;
 	
-	public final MaritalStatus maritalStatus = new MaritalStatus();
+	public final MaritalStatus maritalStatus = new MaritalStatus(); // 1:1 -> final and MaritalStatus inline
 	public final Separation separation = new Separation();
 	@Enabled("isMaritalStatusCanceled")
 	public PartnerShipAbolition cancelationReason;
 	public final Nationality nationality = new Nationality();
-	public final ContactPerson contactPerson = new ContactPerson();
+	public ContactPerson contactPerson = new ContactPerson();
 	
 	public Language languageOfCorrespondance = Language.de;
 	@Required
@@ -142,16 +161,16 @@ public class Person implements Validation {
 	
 	//
 	
-	public boolean isPersisent() {
-		return personIdentification != null;
-	}
+//	public boolean isPersisent() {
+//		return personIdentification != null;
+//	}
 	
 	public boolean isMale() {
-		return personIdentification.isMale();
+		return sex == Sex.maennlich;
 	}
 
 	public boolean isFemale() {
-		return personIdentification.isFemale();
+		return sex == Sex.weiblich;
 	}
 	
 	public boolean isAlive() {
@@ -241,7 +260,7 @@ public class Person implements Validation {
 	
 	@Override
 	public String toString() {
-		return personIdentification.firstName + " " + personIdentification.officialName + ", " + DateUtils.formatPartialCH(personIdentification.dateOfBirth);
+		return firstName + " " + officialName + ", " + DateUtils.formatPartialCH(dateOfBirth);
 	}
 	
 	public String toHtmlMultiLine() {
@@ -251,10 +270,10 @@ public class Person implements Validation {
 	}
 	
 	private void toHtmlMultiLine(StringBuilder s) {
-		append(s, "Person.id.officialName", personIdentification.officialName);
-		append(s, "Person.id.firstName", personIdentification.firstName);
-		if (personIdentification.dateOfBirth != null) {
-			append(s, "Person.id.dateOfBirth", DateUtils.formatPartial(personIdentification.dateOfBirth));
+		append(s, "Person.id.officialName", officialName);
+		append(s, "Person.id.firstName", firstName);
+		if (dateOfBirth != null) {
+			append(s, "Person.id.dateOfBirth", DateUtils.formatPartial(dateOfBirth));
 		}
 		s.append("<BR>&nbsp;");
 	}
@@ -313,25 +332,24 @@ public class Person implements Validation {
 	public void validateBirthAfterParents(List<ValidationMessage> resultList) {
 		Relation relation = getMother();
 		if (relation != null && !isBirthAfterRelation(relation)) {
-			resultList.add(new ValidationMessage(PERSON.personIdentification.dateOfBirth, "Geburtsdatum muss nach demjenigen der Mutter sein"));
+			resultList.add(new ValidationMessage(PERSON.dateOfBirth, "Geburtsdatum muss nach demjenigen der Mutter sein"));
 		}
 		
 		relation = getFather();
 		if (relation != null && !isBirthAfterRelation(relation)) {
-			resultList.add(new ValidationMessage(PERSON.personIdentification.dateOfBirth, "Geburtsdatum muss nach demjenigen des Vaters sein"));
+			resultList.add(new ValidationMessage(PERSON.dateOfBirth, "Geburtsdatum muss nach demjenigen des Vaters sein"));
 		}
 	};
 
 	
 	private boolean isBirthAfterRelation(Relation relation) {
-		LocalDate dateOfBirth = DateUtils.convertToLocalDate(personIdentification.dateOfBirth);
-		if (dateOfBirth == null) return true;
+		LocalDate localDateOfBirth = DateUtils.convertToLocalDate(dateOfBirth);
+		if (localDateOfBirth == null) return true;
 		if (relation == null) return true;
-		PersonIdentification partner = relation.partner;
-		if (partner == null) return true;
-		if (partner.dateOfBirth == null) return true;
+		if (relation.partner == null) return true;
+		if (relation.partner.dateOfBirth == null) return true;
 		// strange: isAfter can compare with PartialDate, but is not on PartialDate
-		return dateOfBirth.isAfter(partner.dateOfBirth); 
+		return localDateOfBirth.isAfter((ReadablePartial) relation.partner.dateOfBirth); 
 	}
 
 	private void validateRelations(List<ValidationMessage> resultList) {
@@ -343,7 +361,7 @@ public class Person implements Validation {
 	private void validateMotherIsFemale(List<ValidationMessage> resultList) {
 		Relation relation = getMother();
 		if (relation == null || relation.partner == null || relation.partner.sex == null) return;
-		if (!relation.partner.isFemale()) {
+		if (relation.partner.sex != Sex.weiblich) {
 			resultList.add(new ValidationMessage(Person.PERSON.getMother(), "Mutter muss weiblich sein"));
 		}
 	}
@@ -352,23 +370,23 @@ public class Person implements Validation {
 	private void validateFatherIsMale(List<ValidationMessage> resultList) {
 		Relation relation = getFather();
 		if (relation == null || relation.partner == null || relation.partner.sex == null) return;
-		if (!relation.partner.isMale()) {
+		if (relation.partner.sex != Sex.maennlich) {
 			resultList.add(new ValidationMessage(Person.PERSON.getFather(), "Vater muss männlich sein"));
 		}
 	}
 	
 	@BusinessRule("Todesdatum darf nicht vor Geburtsdatum sein")
 	private void validateDeathNotBeforeBirth(List<ValidationMessage> resultList) {
-		if (personIdentification.dateOfBirth == null || dateOfDeath == null) return;
-		if (dateOfDeath.isBefore(personIdentification.dateOfBirth)) {
+		if (dateOfBirth == null || dateOfDeath == null) return;
+		if (dateOfDeath.isBefore(dateOfBirth)) {
 			resultList.add(new ValidationMessage(PERSON.dateOfDeath, "Todesdatum darf nicht vor Geburtsdatum sein"));
 		}
 	}
 
 	@BusinessRule("Ereignis darf nicht vor Geburt der Person stattfinden")
-	public static void validateEventNotBeforeBirth(List<ValidationMessage> validationMessages, PersonIdentification personIdentification, LocalDate date, Object key) {
-		if (personIdentification != null && personIdentification.dateOfBirth != null && date != null) {
-			if (date.isBefore(personIdentification.dateOfBirth)) {
+	public static void validateEventNotBeforeBirth(List<ValidationMessage> validationMessages, Person person, LocalDate date, Object key) {
+		if (person != null && person.dateOfBirth != null && date != null) {
+			if (date.isBefore(person.dateOfBirth)) {
 				validationMessages.add(new ValidationMessage(key, "Datum darf nicht vor Geburt der Person sein"));
 			}
 		}
@@ -385,5 +403,22 @@ public class Person implements Validation {
 	public String getId() {
 		return IdUtils.getIdString(this);
 	}
+
+	public String toHtml() {
+		StringBuilder s = new StringBuilder();
+		toHtml(s);
+		return s.toString();
+	}
 	
+	public void toHtml(StringBuilder s) {
+		StringUtils.appendLine(s, firstName, officialName);
+		StringUtils.appendLine(s, DateUtils.formatPartialCH(dateOfBirth));
+	}
+	
+	public PersonIdentification personIdentification() {
+		PersonIdentification personIdentification = new PersonIdentification();
+		ViewUtil.view(this, personIdentification);
+		return personIdentification;
+	}
+
 }

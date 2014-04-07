@@ -41,20 +41,20 @@ public class MarriageTest extends AbstractServerTest {
 		Assert.assertTrue(person1.maritalStatus.isVerheiratet());
 		Relation relation1 = person1.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation1.typeOfRelationship);
-		Assert.assertTrue(person2.personIdentification.isEqual(relation1.partner));
+		Assert.assertEquals(person2.id, relation1.partner.id);
 		
 		Assert.assertNotNull(person2);
 		Assert.assertTrue(person2.maritalStatus.isVerheiratet());
-		Assert.assertEquals("Ogi Villiger", person2.personIdentification.officialName);
+		Assert.assertEquals("Ogi Villiger", person2.officialName);
 		Relation relation2 = person2.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation2.typeOfRelationship);
-		Assert.assertTrue(person1.personIdentification.isEqual(relation2.partner));
+		Assert.assertEquals(person1.id, relation2.partner.id);
 	}
 	
 	@Test
 	public void divorce() throws Exception {
 		Person person = reload(p1);
-		process(writer().divorce(person.personIdentification, new LocalDate(2009, 8, 7)));
+		process(writer().divorce(person.personIdentification(), new LocalDate(2009, 8, 7)));
 		
 		person = reload(p1);
 		Assert.assertTrue(person.maritalStatus.isGeschieden());
@@ -64,7 +64,7 @@ public class MarriageTest extends AbstractServerTest {
 	@Test
 	public void undoMarriage() throws Exception {
 		Person person = reload(p2);
-		process(writer().undoMarriage(person.personIdentification, new LocalDate(2009, 8, 6)));
+		process(writer().undoMarriage(person.personIdentification(), new LocalDate(2009, 8, 6)));
 		
 		person = reload(p2);
 		Assert.assertTrue(person.maritalStatus.isUngueltigeEhe());

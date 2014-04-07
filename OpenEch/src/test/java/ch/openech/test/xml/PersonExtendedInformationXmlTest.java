@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import ch.openech.dm.EchSchemaValidation;
 import ch.openech.dm.common.Address;
+import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonExtendedInformation;
-import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.types.Sex;
 import ch.openech.dm.types.YesNo;
 import ch.openech.xml.read.StaxEch0101;
@@ -24,12 +24,12 @@ public class PersonExtendedInformationXmlTest {
 		PersonExtendedInformation information = new PersonExtendedInformation();
 		information.armedForcesLiability = YesNo.Yes;
 		
-		PersonIdentification personIdentification = new PersonIdentification();
-		personIdentification.firstName = "TestVorname";
-		personIdentification.officialName = "TestNachname";
-		personIdentification.sex = Sex.maennlich;
-		personIdentification.dateOfBirth = new LocalDate(2001, 12, 31);
-		information.personIdentification = personIdentification;
+		Person person = new Person();
+		person.firstName = "TestVorname";
+		person.officialName = "TestNachname";
+		person.sex = Sex.maennlich;
+		person.dateOfBirth = new LocalDate(2001, 12, 31);
+		information.personIdentification = person.personIdentification();
 		
 		Address address1 = new Address();
 		address1.organisationName = "CSS ;)";

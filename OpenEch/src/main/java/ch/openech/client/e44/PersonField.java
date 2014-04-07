@@ -26,7 +26,7 @@ public class PersonField extends ObjectFlowField<Person> {
 
 	@Override
 	protected void show(Person object) {
-		addText(object.personIdentification.toHtml());
+		addText(object.toHtml());
 	}
 
 	@Override

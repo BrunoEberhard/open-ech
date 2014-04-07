@@ -34,7 +34,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 	
 	@Override
 	protected List<String> getXml(Person person, MoveOutData data, WriterEch0020 writerEch0020) throws Exception {
-		return Collections.singletonList(writerEch0020.moveOut(person.personIdentification, data.reportingMunicipality, data.goesTo, data.departureDate));
+		return Collections.singletonList(writerEch0020.moveOut(person.personIdentification(), data.reportingMunicipality, data.goesTo, data.departureDate));
 	}
 
 	@Override

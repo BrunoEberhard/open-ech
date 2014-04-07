@@ -5,6 +5,8 @@ import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.lang.reflect.Field;
+import java.util.List;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -30,6 +32,7 @@ import ch.openech.dm.types.YesNo;
 import ch.openech.mj.server.DbService;
 import ch.openech.mj.toolkit.ProgressListener;
 import ch.openech.mj.util.DateUtils;
+import ch.openech.mj.util.FieldUtils;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0020 implements StaxEchParser<Person> {
@@ -51,6 +54,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	
 	public void insertPerson(Person person) {
 		person.event = e;
+		updatePersonIdentifications(person);
 		dbService.insert(person);
 		lastChanged = person;
 	}
@@ -60,21 +64,53 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 		return lastChanged;
 	}
 
-	public void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
+	private void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
 		if (StringUtils.equals(type, XmlConstants.DIVORCE, XmlConstants.UNDO_MARRIAGE, XmlConstants.UNDO_PARTNERSHIP)) removePartner(person);
 
 		person.event = e;
 
-		if (person.personIdentification.technicalIds.localId.personId != null) {
+		if (person.technicalIds.localId.personId != null) {
 			System.out.println("Person hat id noch immer gesetzt. Das sollte nicht sein");
-			person.personIdentification.technicalIds.localId.clear();
+			person.technicalIds.localId.clear();
 		}
+		updatePersonIdentifications(person);
 		dbService.update(person);
 		lastChanged = dbService.read(Person.class, person.id);
 	}
 
 	//
 	
+	private void updatePersonIdentifications(Object object) {
+		if (object == null) return;
+		
+		if (object instanceof List<?>) {
+			List<?> list = (List<?>) object;
+			for (Object o : list) {
+				updatePersonIdentifications(o);
+			}
+		} else {
+			try {
+				for (Field field : object.getClass().getDeclaredFields()) {
+					if (FieldUtils.isPublic(field) && !FieldUtils.isStatic(field) && !FieldUtils.isTransient(field) && !field.getName().equals("id") && !field.getName().equals("version")) {
+						if (FieldUtils.isAllowedPrimitive(field.getType())) continue;
+						Object value = field.get(object);
+						if (value instanceof PersonIdentification) {
+							PersonIdentification personIdentification = (PersonIdentification) value;
+							if (personIdentification.id == 0) {
+								personIdentification = getPerson(personIdentification).personIdentification();
+								field.set(object, personIdentification);
+							}
+						} else {
+							updatePersonIdentifications(value);
+						}
+					}
+				}
+			} catch (Exception x) {
+				x.printStackTrace();
+			}
+		}
+	}
+
 	private void removePartner(Person changedPerson) {
 		for (int i = changedPerson.relation.size()-1; i>= 0; i--) {
 			Relation relation = changedPerson.relation.get(i);
@@ -265,7 +301,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	
 	private void completePlaceOfOrigins(Person person) {
 		for (PlaceOfOrigin placeOfOrigin : person.placeOfOrigin) {
-			placeOfOrigin.naturalizationDate = DateUtils.convertToLocalDate(person.personIdentification.dateOfBirth);
+			placeOfOrigin.naturalizationDate = DateUtils.convertToLocalDate(person.dateOfBirth);
 			placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
 		}
 	}
@@ -285,7 +321,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	}
 	
 	// entspricht birthMother + birthFather
-	public static void birthParent(boolean father, XMLEventReader xml, Person person) throws XMLStreamException {
+	public void birthParent(boolean father, XMLEventReader xml, Person person) throws XMLStreamException {
 		Relation relation = new Relation();
 		
 		while (true) {
@@ -307,7 +343,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 		}
 	}
 	
-	public static void birthPartner(XMLEventReader xml, Relation relation) throws XMLStreamException {
+	public void birthPartner(XMLEventReader xml, Relation relation) throws XMLStreamException {
 		
 		while (true) {
 			XMLEvent event = xml.nextEvent();
@@ -393,7 +429,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 			if (event.isStartElement()) {
 				StartElement element = event.asStartElement();
 				String name = element.getName().getLocalPart();
-				if (name.equals(PERSON_IDENTIFICATION)) StaxEch0044.personIdentification(xml, person.personIdentification);
+				if (name.equals(PERSON_IDENTIFICATION)) StaxEch0044.personIdentification(xml, person);
 				else if (name.equals(ORIGINAL_NAME)) person.originalName = token(xml);
 				else if (name.equals(ALLIANCE_PARTNERSHIP_NAME)) person.alliancePartnershipName = token(xml);
 				else if (name.equals(ALIAS_NAME)) person.aliasName = token(xml);
@@ -582,12 +618,12 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 						}
 					}
 				} else if (startName.equals(PERSON_IDENTIFICATION_AFTER)) {
-					StaxEch0044.personIdentification(xml, personToChange.personIdentification);
+					StaxEch0044.personIdentification(xml, personToChange);
 					// die lokale Id darf von aussen nicht verändert werden, da sie von der Applikation verwendet wird
-					personToChange.personIdentification.technicalIds.localId.clear();
+					personToChange.technicalIds.localId.clear();
 				}
-				else if (startName.equals(OFFICIAL_NAME)) personToChange.personIdentification.officialName = token(xml);
-				else if (startName.equals(FIRST_NAME)) personToChange.personIdentification.firstName = token(xml);
+				else if (startName.equals(OFFICIAL_NAME)) personToChange.officialName = token(xml);
+				else if (startName.equals(FIRST_NAME)) personToChange.firstName = token(xml);
 				else if (startName.equals(ORIGINAL_NAME)) personToChange.originalName = token(xml);
 				else if (startName.equals(ALLIANCE_PARTNERSHIP_NAME)) personToChange.alliancePartnershipName = token(xml);
 				else if (startName.equals(ALIAS_NAME)) personToChange.aliasName = token(xml);

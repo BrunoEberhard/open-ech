@@ -26,7 +26,7 @@ public class ChangeNationalityEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected List<String> getXml(Person person, Person changedPerson, WriterEch0020 writerEch0020) throws Exception {
-		return Collections.singletonList(writerEch0020.changeNationality(person.personIdentification, changedPerson.nationality));
+		return Collections.singletonList(writerEch0020.changeNationality(person.personIdentification(), changedPerson.nationality));
 	}
 
 }

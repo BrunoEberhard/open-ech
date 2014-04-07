@@ -49,7 +49,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 
 	@Override
 	protected List<String> getXml(Person person, UndoCitizenData data, WriterEch0020 writerEch0020) throws Exception {
-        return Collections.singletonList(writerEch0020.undoCitizen(person.personIdentification, data.placeOfOrigin, data.expatriationDate));
+        return Collections.singletonList(writerEch0020.undoCitizen(person.personIdentification(), data.placeOfOrigin, data.expatriationDate));
 	}
 	
 	private class UndoCitizenField extends AbstractEditField<PlaceOfOrigin> {
@@ -95,7 +95,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		
 		@Override
 		public void validate(List<ValidationMessage> resultList) {
-			Person.validateEventNotBeforeBirth(resultList, person.personIdentification, expatriationDate, PLACE_OF_ORIGIN.expatriationDate);
+			Person.validateEventNotBeforeBirth(resultList, person, expatriationDate, PLACE_OF_ORIGIN.expatriationDate);
 			validateExpatriationNotBeforeNaturalization(placeOfOrigin, resultList);
 		}
 		

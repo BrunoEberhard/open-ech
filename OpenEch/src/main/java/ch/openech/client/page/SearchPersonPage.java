@@ -23,13 +23,13 @@ public class SearchPersonPage extends TablePage<Person> {
 	private final String text;
 
 	public static final Object[] FIELD_NAMES = {
-		PERSON.personIdentification.firstName, //
-		PERSON.personIdentification.officialName, //
-		PERSON.personIdentification.dateOfBirth, //
+		PERSON.firstName, //
+		PERSON.officialName, //
+		PERSON.dateOfBirth, //
 		PERSON.getStreet(), // PERSON::getStreet()
 		PERSON.getStreetNumber(), //
 		PERSON.getTown(), //
-		PERSON.personIdentification.vn.value, //
+		PERSON.vn.value, //
 	};
 	
 	public SearchPersonPage(PageContext context, String text) {

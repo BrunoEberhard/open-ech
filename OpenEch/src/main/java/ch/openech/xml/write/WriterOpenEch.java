@@ -48,7 +48,7 @@ public class WriterOpenEch extends DeliveryWriter {
 			WriterElement element = parent.create(URI, tagName);
 			
 			if (hasExtendedInformation) {
-				person.personExtendedInformation.personIdentification = person.personIdentification; // hack
+				person.personExtendedInformation.personIdentification = person.personIdentification(); // hack
 				ech101.personExtendedInformation(element, "personExtendedInformation", person.personExtendedInformation);
 			}
 			if (hasContact) {

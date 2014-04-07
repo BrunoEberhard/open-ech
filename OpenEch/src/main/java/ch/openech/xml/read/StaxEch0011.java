@@ -28,7 +28,7 @@ public class StaxEch0011 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(PERSON_IDENTIFICATION)) StaxEch0044.personIdentification(xml, person.personIdentification);
+				if (startName.equals(PERSON_IDENTIFICATION)) StaxEch0044.personIdentification(xml, person);
 				else if (startName.equals(COREDATA)) coredata(xml, person);
 				else skip(xml);
 			} else if (event.isEndElement()) return;
@@ -165,7 +165,7 @@ public class StaxEch0011 {
 				String name = element.getName().getLocalPart();
 				if (StringUtils.equals(name, ORIGINAL_NAME, ALLIANCE_PARTNERSHIP_NAME,ALIAS_NAME, OTHER_NAME, CALL_NAME)) FlatProperties.set(person, name, token(xml));
 				else if (name.equals(PLACE_OF_BIRTH)) person.placeOfBirth = birthplace(xml);
-				else if (name.equals(DATE_OF_DEATH)) person.personIdentification.dateOfBirth = date(xml);
+				else if (name.equals(DATE_OF_DEATH)) person.dateOfBirth = date(xml);
 				else if (name.equals(MARITAL_DATA)) maritalData(xml, person);
 				else if (name.equals(NATIONALITY)) nationality(xml, person.nationality);
 				else if (name.equals(CONTACT)) contact(xml, person);

@@ -53,15 +53,15 @@ public class DataGenerator {
 	
 	public static Person person() {
 		Person person = new Person();
-		person.personIdentification.officialName = NameGenerator.officialName();
+		person.officialName = NameGenerator.officialName();
 		boolean male = Math.random() > .5;
-		person.personIdentification.firstName = FirstNameGenerator.getFirstName(male);
-		person.personIdentification.sex = male ? Sex.maennlich : Sex.weiblich;
-		person.personIdentification.dateOfBirth = DateGenerator.generateRandomDate();
+		person.firstName = FirstNameGenerator.getFirstName(male);
+		person.sex = male ? Sex.maennlich : Sex.weiblich;
+		person.dateOfBirth = DateGenerator.generateRandomDate();
 		if (Math.random() > .9) {
 			person.dateOfDeath = DateGenerator.generateRandomDate();
 		}
-		person.personIdentification.vn.fillWithDemoData();
+		person.vn.fillWithDemoData();
 		person.callName = "Lorem Ipsum";
 		person.placeOfBirth = place();
 		
@@ -90,10 +90,10 @@ public class DataGenerator {
 				FlatProperties.set(person, key, key.substring(0, key.length() -4) + "Test");
 			}
 		}
-		person.personIdentification.sex = Sex.weiblich;
-		person.personIdentification.dateOfBirth = new LocalDate(1999, 1, 2);
+		person.sex = Sex.weiblich;
+		person.dateOfBirth = new LocalDate(1999, 1, 2);
 		person.dateOfDeath = new LocalDate(2010, 3, 4);
-		person.personIdentification.vn.fillWithDemoData();
+		person.vn.fillWithDemoData();
 		person.placeOfBirth = place();
 		
 		person.maritalStatus.maritalStatus = MaritalStatus.ledig;

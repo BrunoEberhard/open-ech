@@ -19,6 +19,6 @@ public class KeyDeliveryPersonAction extends ExportAllPersonAction {
 
 	@Override
 	protected void writePerson(WriterEch0020 writer, WriterElement baseDelivery, Person person) throws Exception {
-		writer.eventKeyDelivery(baseDelivery, person.personIdentification);
+		writer.eventKeyDelivery(baseDelivery, person.personIdentification());
 	}
 }

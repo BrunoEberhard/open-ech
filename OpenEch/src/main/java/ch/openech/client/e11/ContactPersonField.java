@@ -40,7 +40,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			if (isEditable()) {
 				addAction(new RemovePersonContactAction());
 			} else {
-				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echSchema.getVersion(), contactPerson.person.getId()));
+				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echSchema.getVersion(), contactPerson.person.idAsString()));
 			}
 			addGap();
 		}
@@ -81,12 +81,12 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			if (person != null) {
 				ContactPerson contactPerson = ContactPersonField.this.getObject();
 				
-				contactPerson.person = person.personIdentification;
+				contactPerson.person = person.personIdentification();
 				if (person.dwellingAddress != null) {
 					contactPerson.address = person.dwellingAddress.mailAddress;
 					if (contactPerson.address != null) {
-						contactPerson.address.lastName = person.personIdentification.officialName;
-						contactPerson.address.firstName = person.personIdentification.firstName;
+						contactPerson.address.lastName = person.officialName;
+						contactPerson.address.firstName = person.firstName;
 						if (person.isMale()) contactPerson.address.mrMrs = MrMrs.Frau;
 						if (person.isFemale()) contactPerson.address.mrMrs = MrMrs.Herr;
 					}

@@ -56,7 +56,7 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 
 	@Override
 	protected List<String> getXml(Person person, MoveEventData med, WriterEch0020 writerEch0020) throws Exception {
-		return Collections.singletonList(writerEch0020.move(person.personIdentification, med.reportingMunicipality, med.dwellingAddress));
+		return Collections.singletonList(writerEch0020.move(person.personIdentification(), med.reportingMunicipality, med.dwellingAddress));
 	}
 	
 //	@Override

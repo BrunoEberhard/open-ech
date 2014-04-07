@@ -33,7 +33,7 @@ public class AdoptionTest extends AbstractServerTest {
 		child = reload(child);
 		
 		Assert.assertNotNull(child);
-		Assert.assertEquals(father.personIdentification.officialName, child.personIdentification.officialName);
+		Assert.assertEquals(father.officialName, child.officialName);
 
 		Assert.assertEquals("CH", child.placeOfBirth.countryIdentification.countryIdISO2);
 		Assert.assertEquals(new Integer(2196), child.placeOfBirth.municipalityIdentification.municipalityId);
@@ -41,11 +41,10 @@ public class AdoptionTest extends AbstractServerTest {
 		Assert.assertEquals("FR", child.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton);
 		
 		Relation motherRelation = child.getMother();
-		Assert.assertTrue(mother.personIdentification.isEqual(motherRelation.partner));
+		Assert.assertEquals(mother.id, motherRelation.partner.id);
 		
 		Relation fatherRelation = child.getFather();
-		Assert.assertTrue(father.personIdentification.isEqual(fatherRelation.partner));
+		Assert.assertEquals(father.id, fatherRelation.partner.id);
 	}
-	
 	
 }

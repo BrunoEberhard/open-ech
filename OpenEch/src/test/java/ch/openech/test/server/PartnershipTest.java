@@ -25,13 +25,13 @@ public class PartnershipTest extends AbstractServerTest {
 		Assert.assertTrue(person1.maritalStatus.isPartnerschaft());
 		Relation relation1 = person1.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Partner, relation1.typeOfRelationship);
-		Assert.assertTrue(person2.personIdentification.isEqual(relation1.partner));
+		Assert.assertEquals(person2.id, relation1.partner.id);
 		
 		Assert.assertNotNull(person2);
 		Assert.assertTrue(person2.maritalStatus.isPartnerschaft());
 		Relation relation2 = person2.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Partner, relation2.typeOfRelationship);
-		Assert.assertTrue(person1.personIdentification.isEqual(relation2.partner));
+		Assert.assertEquals(person1.id, relation2.partner.id);
 	}
 	
 	

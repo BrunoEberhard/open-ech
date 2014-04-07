@@ -74,7 +74,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		} else {
 			for (Relation relation : objects) {
 				addText(relation.toHtml());
-				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.getId()));
+				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.idAsString()));
 				addGap();
 			}
 		}

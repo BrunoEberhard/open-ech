@@ -87,11 +87,11 @@ public class DbPersonCrudTest {
 		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
 		
 		Person person = new Person();
-		person.personIdentification.officialName = "Eberhard";
-		person.personIdentification.firstName = "Bruno";
-		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn.value = "123";
-		person.personIdentification.sex = Sex.maennlich;
+		person.officialName = "Eberhard";
+		person.firstName = "Bruno";
+		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.vn.value = "123";
+		person.sex = Sex.maennlich;
 		
 		person.aliasName = "Biwi";
 		
@@ -99,7 +99,7 @@ public class DbPersonCrudTest {
 		
 		Person readPerson = (Person)personTable.read(id);
 		
-		Assert.assertEquals(person.personIdentification.officialName, readPerson.personIdentification.officialName);
+		Assert.assertEquals(person.officialName, readPerson.officialName);
 		Assert.assertEquals(person.aliasName, readPerson.aliasName);
 		
 		readPerson.aliasName = "Biwidus";
@@ -116,11 +116,11 @@ public class DbPersonCrudTest {
 		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
 
 		Person person = new Person();
-		person.personIdentification.officialName = "Eberhard";
-		person.personIdentification.firstName = "Bruno";
-		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn.value = "123";
-		person.personIdentification.sex = Sex.maennlich;
+		person.officialName = "Eberhard";
+		person.firstName = "Bruno";
+		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.vn.value = "123";
+		person.sex = Sex.maennlich;
 
 		Occupation occupation = new Occupation();
 		occupation.jobTitle = "Gango";
@@ -157,11 +157,11 @@ public class DbPersonCrudTest {
 		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
 
 		Person person = new Person();
-		person.personIdentification.officialName = "Eberhard";
-		person.personIdentification.firstName = "Bruno";
-		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn.value = "123";
-		person.personIdentification.sex = Sex.maennlich;
+		person.officialName = "Eberhard";
+		person.firstName = "Bruno";
+		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.vn.value = "123";
+		person.sex = Sex.maennlich;
 
 		Occupation occupation = new Occupation();
 		occupation.jobTitle = "Gango";
@@ -196,11 +196,11 @@ public class DbPersonCrudTest {
 		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
 
 		Person person = new Person();
-		person.personIdentification.officialName = "Eberhard";
-		person.personIdentification.firstName = "Bruno";
-		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn.value = "123";
-		person.personIdentification.sex = Sex.maennlich;
+		person.officialName = "Eberhard";
+		person.firstName = "Bruno";
+		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.vn.value = "123";
+		person.sex = Sex.maennlich;
 		
 		Occupation occupation = new Occupation();
 		occupation.jobTitle = "Gango";
@@ -239,25 +239,25 @@ public class DbPersonCrudTest {
 		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
 
 		Person person = new Person();
-		person.personIdentification.officialName = "Eberhard";
-		person.personIdentification.firstName = "Bruno";
-		person.personIdentification.dateOfBirth = new LocalDate(1974, 8, 2);
-		person.personIdentification.vn.value = "123";
-		person.personIdentification.sex = Sex.maennlich;
+		person.officialName = "Eberhard";
+		person.firstName = "Bruno";
+		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.vn.value = "123";
+		person.sex = Sex.maennlich;
 
 		long id = personTable.insert(person);
 		
 		Person readPerson = personTable.read(id);
-		readPerson.personIdentification.officialName = "Äberhard";
+		readPerson.officialName = "Äberhard";
 		personTable.update(readPerson);
 		
 		Person readPerson2 = personTable.read(id);
-		Assert.assertEquals(readPerson.personIdentification.officialName, readPerson2.personIdentification.officialName);
-		readPerson2.personIdentification.officialName = "Eberhardt";
+		Assert.assertEquals(readPerson.officialName, readPerson2.officialName);
+		readPerson2.officialName = "Eberhardt";
 		personTable.update(readPerson2);
 		
 		Person readPerson3 = personTable.read(id);
-		Assert.assertEquals(readPerson2.personIdentification.officialName, readPerson3.personIdentification.officialName);
+		Assert.assertEquals(readPerson2.officialName, readPerson3.officialName);
 	}
 	
 }

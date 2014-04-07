@@ -26,10 +26,10 @@ public class MoveInTest extends AbstractServerTest {
 		Person person = persons.get(0);
 		
 		Assert.assertNotNull(person);
-		Assert.assertEquals("BERNALUSKOVSKI", person.personIdentification.officialName);
-		Assert.assertEquals("Emilie", person.personIdentification.firstName);
-		Assert.assertEquals(Sex.weiblich, person.personIdentification.sex);
-		Assert.assertEquals(new LocalDate(1949, 11, 29), person.personIdentification.dateOfBirth);
+		Assert.assertEquals("BERNALUSKOVSKI", person.officialName);
+		Assert.assertEquals("Emilie", person.firstName);
+		Assert.assertEquals(Sex.weiblich, person.sex);
+		Assert.assertEquals(new LocalDate(1949, 11, 29), person.dateOfBirth);
 		
 		Assert.assertEquals("CZ", person.placeOfBirth.countryIdentification.countryIdISO2);
 		Assert.assertEquals("Tschechische Republik", person.placeOfBirth.countryIdentification.countryNameShort);

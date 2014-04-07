@@ -2,6 +2,8 @@ package ch.openech.mj.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -21,6 +23,12 @@ public class SerializationTest {
 		object1.i = 23;
 		object1.date = new LocalDate();
 		object1.l = 456;
+		SerializationTestClass2 objectInList = new SerializationTestClass2();
+		objectInList.s = "Marco";
+		object1.list.add(objectInList);
+		objectInList = new SerializationTestClass2();
+		objectInList.s = "Bruno";
+		object1.list.add(objectInList);
 		object1.b = Boolean.TRUE;
 		object1.b2 = false;
 		SerializationTestClass1 object2 = serialize(SerializationTestClass1.class, object1);
@@ -79,9 +87,15 @@ public class SerializationTest {
 		public Boolean b;
 		public boolean b2;
 		public LocalDate date;
+		public final List<SerializationTestClass2> list = new ArrayList<>();
 		public String s;
 		public Integer i;
 		public long l;
 	}
+	
+	public static class SerializationTestClass2 {
+		public String s;
+	}
+
 }
 

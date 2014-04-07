@@ -16,7 +16,7 @@ public class UndoGardianEvent extends PersonEventEditor<Object> {
 
 	@Override
 	protected List<String> getXml(Person person, Object object, WriterEch0020 writerEch0020) throws Exception {
-        return Collections.singletonList(writerEch0020.undoGardian(person.personIdentification));
+        return Collections.singletonList(writerEch0020.undoGardian(person.personIdentification()));
 	}
 
 	@Override

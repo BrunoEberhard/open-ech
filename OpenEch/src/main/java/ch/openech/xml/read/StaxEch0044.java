@@ -11,6 +11,7 @@ import javax.xml.stream.events.XMLEvent;
 import org.joda.time.ReadablePartial;
 
 import ch.openech.dm.common.NamedId;
+import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.model.properties.FlatProperties;
 import ch.openech.mj.util.StringUtils;
@@ -48,11 +49,44 @@ public class StaxEch0044 {
 				}
 				else skip(xml);
 			} else if (event.isEndElement()) {
+				if (personIdentification.technicalIds.localId.openEch()) {
+					personIdentification.id = Long.valueOf(personIdentification.technicalIds.localId.personId);
+				}
 				return;
 			} // else skip
 		}
 	}
-	
+
+	public static void personIdentification(XMLEventReader xml, Person person) throws XMLStreamException {
+		while (true) {
+			XMLEvent event = xml.nextEvent();
+			if (event.isStartElement()) {
+				StartElement startElement = event.asStartElement();
+				String startName = startElement.getName().getLocalPart();
+				
+				if (startName.equals(LOCAL_PERSON_ID)) namedId(xml, person.technicalIds.localId);
+				else if (StringUtils.equals(startName, OTHER_PERSON_ID, OTHER_PERSON_ID)) person.technicalIds.otherId.add(namedId(xml));
+				else if (StringUtils.equals(startName, EU_PERSON_ID, "EuPersonId")) person.technicalIds.euId.add(namedId(xml));
+				
+				else if (StringUtils.equals(startName, OFFICIAL_NAME, FIRST_NAME)) {
+					FlatProperties.set(person, startName, token(xml));
+				}
+				else if (StringUtils.equals(startName, VN)) {
+					person.vn.value = token(xml);
+				}
+				else if (StringUtils.equals(startName, SEX)) {
+					StaxEch.enuum(xml,  person, Person.PERSON.sex);
+				}
+				else if (startName.equals(DATE_OF_BIRTH)) {
+					FlatProperties.set(person, startName, datePartiallyKnown(xml));
+				}
+				else skip(xml);
+			} else if (event.isEndElement()) {
+				return;
+			} // else skip
+		}
+	}
+
 	public static NamedId namedId(XMLEventReader xml) throws XMLStreamException {
 		NamedId namedId = new NamedId();
 		namedId(xml, namedId);

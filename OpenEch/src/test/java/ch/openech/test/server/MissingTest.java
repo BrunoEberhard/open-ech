@@ -20,7 +20,7 @@ public class MissingTest extends AbstractServerTest {
 	@Test
 	public void missing() throws Exception {
 		Person person = reload(p);
-		process(writer().missing(person.personIdentification, new LocalDate(2011, 1, 2)));
+		process(writer().missing(person.personIdentification(), new LocalDate(2011, 1, 2)));
 		person = reload(p);
 
 		Assert.assertEquals(new LocalDate(2011, 1, 2), person.dateOfDeath);
@@ -29,7 +29,7 @@ public class MissingTest extends AbstractServerTest {
 	@Test
 	public void undoMissing()  throws Exception {
 		Person person = reload(p);
-		process(writer().undoMissing(person.personIdentification));
+		process(writer().undoMissing(person.personIdentification()));
 		person = reload(p);
 
 		Assert.assertNull(person.dateOfDeath);

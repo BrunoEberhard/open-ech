@@ -18,8 +18,8 @@ public class ChangeNameEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> panel) {
-		panel.line(PERSON.personIdentification.officialName);
-		panel.line(PERSON.personIdentification.firstName);
+		panel.line(PERSON.officialName);
+		panel.line(PERSON.firstName);
 		panel.line(PERSON.originalName, PERSON.alliancePartnershipName);
 		panel.line(PERSON.aliasName, PERSON.otherName);
 		panel.line(PERSON.callName, PERSON.foreign.nameOnPassport);
@@ -41,7 +41,7 @@ public class ChangeNameEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected List<String> getXml(Person person, Person changedPerson, WriterEch0020 writerEch0020) throws Exception {
-        return Collections.singletonList(writerEch0020.changeName(person.personIdentification, changedPerson));
+        return Collections.singletonList(writerEch0020.changeName(person.personIdentification(), changedPerson));
 	}
 
 }

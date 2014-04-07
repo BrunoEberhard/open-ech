@@ -22,8 +22,8 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 	protected PersonEventEditor(EchSchema ech, Person person) {
 		super(ech);
 		this.person = person;
-		this.person.personIdentification.technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
-		this.person.personIdentification.technicalIds.localId.personId = String.valueOf(person.id);
+		this.person.personIdentification().technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
+		this.person.personIdentification().technicalIds.localId.personId = String.valueOf(person.id);
 	}
 	
 	@Override

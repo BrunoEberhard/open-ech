@@ -25,8 +25,8 @@ public class CorrectRelationTest extends AbstractServerTest {
 		child = reload(child);
 		mother = reload(mother);
 
-		Assert.assertTrue(mother.personIdentification.isEqual(child.getMother().partner));
-		Assert.assertEquals("Bernacchi", child.personIdentification.officialName);
+		Assert.assertEquals(mother.id, child.getMother().partner.id);
+		Assert.assertEquals("Bernacchi", child.officialName);
 	}
 	
 }
