@@ -1,9 +1,7 @@
 package ch.openech.client.page;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.joda.time.LocalDateTime;
 
@@ -44,10 +42,9 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	@Override
 	protected List<HistoryVersion<Organisation>> loadVersions() {
 		Organisation organisation = Services.get(DbService.class).read(Organisation.class, organisationId);
-		Map<Integer, Organisation> organisations = Services.get(DbService.class).loadHistory(organisation);
-		List<Integer> times = new ArrayList<>(organisations.keySet());
-		Collections.sort(times);
-		Collections.reverse(times);
+		List<Organisation> organisations = Services.get(DbService.class).loadHistory(organisation);
+//		Collections.sort(times);
+//		Collections.reverse(times);
 
 		List<HistoryVersion<Organisation>> versions = new ArrayList<>();
 		HistoryVersion<Organisation> version = new HistoryVersion<Organisation>();
@@ -55,13 +52,12 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 		version.time = getTime(organisation);
 		version.description = getDescription(organisation);
 		versions.add(version);
-		for (int time : times) {
-			organisation = organisations.get(times);
+		for (Organisation p : organisations) {
 			version = new HistoryVersion<Organisation>();
-			version.object = organisation;
-			version.version = "" + time;
-			version.time = getTime(organisation);
-			version.description = getDescription(organisation);
+			version.object = p;
+			version.version = "" + p.version;
+			version.time = getTime(p);
+			version.description = getDescription(p);
 			versions.add(version);
 		}
 

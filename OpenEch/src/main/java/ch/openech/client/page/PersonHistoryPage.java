@@ -1,9 +1,7 @@
 package ch.openech.client.page;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.joda.time.LocalDateTime;
 
@@ -44,10 +42,9 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 	@Override
 	protected List<HistoryVersion<Person>> loadVersions() {
 		Person person = Services.get(DbService.class).read(Person.class, personId);
-		Map<Integer, Person> persons = Services.get(DbService.class).loadHistory(person);
-		List<Integer> times = new ArrayList<>(persons.keySet());
-		Collections.sort(times);
-		Collections.reverse(times);
+		List<Person> persons = Services.get(DbService.class).loadHistory(person);
+//		Collections.sort(times);
+//		Collections.reverse(times);
 
 		List<HistoryVersion<Person>> versions = new ArrayList<>();
 		HistoryVersion<Person> version = new HistoryVersion<Person>();
@@ -55,13 +52,12 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 		version.time = getTime(person);
 		version.description = getDescription(person);
 		versions.add(version);
-		for (int time : times) {
-			person = persons.get(times);
+		for (Person p : persons) {
 			version = new HistoryVersion<Person>();
-			version.object = person;
-			version.version = "" + time;
-			version.time = getTime(person);
-			version.description = getDescription(person);
+			version.object = p;
+			version.version = "" + p.version;
+			version.time = getTime(p);
+			version.description = getDescription(p);
 			versions.add(version);
 		}
 
