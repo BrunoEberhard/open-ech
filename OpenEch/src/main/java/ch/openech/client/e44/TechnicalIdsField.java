@@ -46,7 +46,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 				return technicalIds.localId.personId.substring(0, maxLength-1) + "...";
 			}
 		} else {
-			return "Bearbeiten";
+			return "-";
 		}
 	}
 
