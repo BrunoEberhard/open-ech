@@ -39,12 +39,8 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.client.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.client.preferences.PreferencesEditor;
 import ch.openech.datagenerator.GeneratePersonEditor;
-import ch.openech.dm.common.CountryIdentification;
-import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.organisation.Organisation;
-import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
 import ch.openech.mj.application.DevMode;
 import ch.openech.mj.application.MjApplication;
 import ch.openech.mj.page.ActionGroup;
@@ -202,10 +198,7 @@ public class OpenEchApplication extends MjApplication {
 
 	@Override
 	public Class<?>[] getEntityClasses() {
-		return new Class<?>[]{MunicipalityIdentification.class, CountryIdentification.class, //
-				PersonIdentification.class, Person.class, //
-				OrganisationIdentification.class, Organisation.class
-		};
+		return new Class<?>[]{Person.class, Organisation.class};
 	}
 	
 }
