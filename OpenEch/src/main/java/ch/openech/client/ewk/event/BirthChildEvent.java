@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.openech.client.ewk.PersonPanel;
-import ch.openech.client.page.PersonViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
@@ -19,7 +18,6 @@ import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
-import ch.openech.mj.page.PageLink;
 import ch.openech.mj.server.DbService;
 import ch.openech.mj.server.Services;
 import ch.openech.mj.util.BusinessRule;
@@ -56,15 +54,6 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 		return Collections.singletonList(writerEch0020.birth(changedPerson));
 	}
 	
-	@Override
-	public Object save(Person object) throws Exception {
-		if (super.save(object) != null) {
-			return PageLink.link(PersonViewPage.class, echSchema.getVersion(), object.getId());
-		} else {
-			return SAVE_FAILED;
-		}
-	}
-
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		person.validate(resultList);
