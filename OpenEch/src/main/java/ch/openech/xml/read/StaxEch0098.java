@@ -47,7 +47,7 @@ public class StaxEch0098 {
 				if (startName.equals(ORGANISATION_IDENTIFICATION)) StaxEch0097.organisationIdentification(xml, organisation.identification);
 				else if (StringUtils.equals(startName, FOUNDATION, LIQUIDATION)) foundationOrLiquidation(xml, organisation);
 				else if (StringUtils.equals(startName, UID_BRANCHE_TEXT, NOGA_CODE, LANGUAGE_OF_CORRESPONDANCE)) organisation.set(startName, token(xml));
-				else if (StringUtils.equals(startName, CONTACT)) organisation.contact = StaxEch0046.contact(xml);
+				else if (StringUtils.equals(startName, CONTACT)) StaxEch0046.contact(xml, organisation.contacts);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;

@@ -97,7 +97,7 @@ public class PersonPanel extends EchForm<Person>  {
 			
 			if (extensionAvailable()) {
 				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
-				line(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
+				line(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contacts);
 			} else {
 				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
 				line(relationField, nameOfParentsField, PERSON.contactPerson);
@@ -112,7 +112,7 @@ public class PersonPanel extends EchForm<Person>  {
 			
 			if (extensionAvailable()) {
 				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
-				line(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contact);
+				line(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contacts);
 			} else {
 				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
 				line(relationField, nameOfParentsField, PERSON.contactPerson);
@@ -129,7 +129,7 @@ public class PersonPanel extends EchForm<Person>  {
 		case CORRECT_PERSON:
 			line(PERSON.placeOfOrigin, PERSON.foreign);
 			if (extensionAvailable()) {
-				line(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contact);
+				line(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contacts);
 			} else {
 				line(PERSON.contactPerson);
 			}

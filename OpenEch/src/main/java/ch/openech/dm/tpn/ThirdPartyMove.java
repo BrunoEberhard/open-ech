@@ -1,11 +1,14 @@
 package ch.openech.dm.tpn;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.joda.time.ReadablePartial;
 
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
-import ch.openech.dm.contact.Contact;
+import ch.openech.dm.contact.ContactEntry;
 import ch.openech.mj.model.Keys;
 
 // e46
@@ -13,7 +16,7 @@ public class ThirdPartyMove {
 
 	public static final ThirdPartyMove THIRD_PARTY_MOVE = Keys.of(ThirdPartyMove.class);
 	
-	public Contact contractor;
+	public final List<ContactEntry> contractor = new ArrayList<ContactEntry>();
 	
 	// Person
 	public String officialName, callName;

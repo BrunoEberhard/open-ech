@@ -1,6 +1,7 @@
 package ch.openech.client.e46;
 
-import ch.openech.dm.contact.Contact;
+import java.util.List;
+
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.contact.ContactEntryType;
 import ch.openech.mj.edit.fields.ObjectFlowField;
@@ -9,7 +10,7 @@ import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
 
-public class ContactField extends ObjectFlowField<Contact> {
+public class ContactField extends ObjectFlowField<List<ContactEntry>> {
 	
 	public ContactField(PropertyInterface property) {
 		this(property, true);
@@ -19,11 +20,6 @@ public class ContactField extends ObjectFlowField<Contact> {
 		super(property, editable);
 	}
 	
-	@Override
-	public void setObject(Contact object) {
-		super.setObject(object != null ? object : new Contact());
-	}
-
 	public class AddContactEntryEditor extends ObjectFieldPartEditor<ContactEntry> {
 		private final ContactEntryType type;
 		private final boolean person;
@@ -44,7 +40,7 @@ public class ContactField extends ObjectFlowField<Contact> {
 		}
 
 		@Override
-		protected ContactEntry getPart(Contact contact) {
+		protected ContactEntry getPart(List<ContactEntry> contacts) {
 			ContactEntry contactEntry = new ContactEntry();
 			contactEntry.typeOfContact = type;
 			if ("I".equals(type)) {
@@ -54,8 +50,8 @@ public class ContactField extends ObjectFlowField<Contact> {
 		}
 
 		@Override
-		protected void setPart(Contact contact, ContactEntry p) {
-			contact.entries.add(p);
+		protected void setPart(List<ContactEntry> contacts, ContactEntry p) {
+			contacts.add(p);
 		}
     };
 
@@ -68,7 +64,7 @@ public class ContactField extends ObjectFlowField<Contact> {
 		
 		@Override
 		public void action(IComponent context) {
-			getObject().entries.remove(contactEntry);
+			getObject().remove(contactEntry);
 			fireObjectChange();
 		}
     };
@@ -76,14 +72,14 @@ public class ContactField extends ObjectFlowField<Contact> {
 	//
 	
 	@Override
-	public IForm<Contact> createFormPanel() {
+	public IForm<List<ContactEntry>> createFormPanel() {
 		// unused
 		return null;
 	}
 
 	@Override
-	protected void show(Contact contact) {
-		for (ContactEntry contactEntry : contact.entries) {
+	protected void show(List<ContactEntry> contacts) {
+		for (ContactEntry contactEntry : contacts) {
 			addText(contactEntry.toHtml());
 			if (isEditable()) {
 				addAction(new RemoveContactEntryAction(contactEntry));

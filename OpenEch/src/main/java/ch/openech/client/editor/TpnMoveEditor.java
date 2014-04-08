@@ -11,6 +11,7 @@ import ch.openech.client.XmlEditor;
 import ch.openech.client.tpn.MoveDirection;
 import ch.openech.client.tpn.TpnMoveForm;
 import ch.openech.dm.contact.Contact;
+import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.tpn.ThirdPartyMove;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.PageContext;
@@ -89,7 +90,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 		return null;
 	}
 	
-	private void saveContractor(Contact contractor) throws Exception {
+	private void saveContractor(List<ContactEntry> contractor) throws Exception {
 		File file = getDefaultContractorFileName();
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -114,7 +115,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	@Override
 	protected ThirdPartyMove newInstance() {
 		ThirdPartyMove thirdPartyMove = new ThirdPartyMove();
-		thirdPartyMove.contractor = loadLastContractor();
+		thirdPartyMove.contractor.addAll(loadLastContractor().entries);
 
 //		private void setPresets() {
 //			for (String key : getStringKeys()) {

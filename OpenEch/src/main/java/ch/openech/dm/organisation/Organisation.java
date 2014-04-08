@@ -1,5 +1,6 @@
 package ch.openech.dm.organisation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,7 +14,7 @@ import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
-import ch.openech.dm.contact.Contact;
+import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.types.Language;
 import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
@@ -107,7 +108,7 @@ public class Organisation implements Validation {
 	@Enabled("!isMainResidence")
 	public Headquarter headquarter;
 
-	public Contact contact;
+	public final List<ContactEntry> contacts = new ArrayList<ContactEntry>();
 
 	//
 

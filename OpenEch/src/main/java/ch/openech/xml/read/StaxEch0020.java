@@ -252,7 +252,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (CONTACT.equals(startName)) personToChange.contact = StaxEch0046.contact(xml);
+				if (CONTACT.equals(startName)) StaxEch0046.contact(xml, personToChange.contacts);
 				else if ("personExtendedInformation".equals(startName)) personToChange.personExtendedInformation = StaxEch0101.information(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {

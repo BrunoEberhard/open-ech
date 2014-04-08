@@ -130,7 +130,7 @@ public class WriterEch0148 extends DeliveryWriter {
 	// Code 7
 	public String contact(Organisation organisation) throws Exception {
 		WriterElement event = simpleOrganisationEvent(CONTACT, organisation);
-		ech46.contact(event, organisation.contact);
+		ech46.contact(event, organisation.contacts);
 		// TODO validFrom, validTill
 		return result();
 	}
@@ -167,7 +167,7 @@ public class WriterEch0148 extends DeliveryWriter {
 	public String inLiquidation(Organisation organisation) throws Exception {
 		WriterElement event = simpleOrganisationEvent(INLIQUIDATION, organisation);
 		event.values(organisation, LIQUIDATION_ENTRY_DATE, LIQUIDATION_REASON);
-		ech46.contact(event, organisation.contact);
+		ech46.contact(event, organisation.contacts);
 		return result();
 	}
 	
@@ -175,7 +175,7 @@ public class WriterEch0148 extends DeliveryWriter {
 	public String liquidation(Organisation organisation) throws Exception {
 		WriterElement event = simpleOrganisationEvent(LIQUIDATION, organisation);
 		event.values(organisation, LIQUIDATION_DATE, LIQUIDATION_REASON);
-		ech46.contact(event, organisation.contact);
+		ech46.contact(event, organisation.contacts);
 		return result();
 	}
 	
@@ -214,14 +214,14 @@ public class WriterEch0148 extends DeliveryWriter {
 		WriterElement event = simpleOrganisationEvent(CORRECT_LIQUIDATION, organisation);
         event.values(organisation, LIQUIDATION_ENTRY_DATE);
         ech98.liquidation(event, organisation);
-		ech46.contact(event, organisation.contact);
+		ech46.contact(event, organisation.contacts);
 		return result();
 	}
 	
 	// Code 19
 	public String correctContact(Organisation organisation) throws Exception {
 		WriterElement event = simpleOrganisationEvent(CORRECT_CONTACT, organisation);
-		ech46.contact(event, organisation.contact);
+		ech46.contact(event, organisation.contacts);
 		return result();
 	}
 

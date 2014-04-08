@@ -1,19 +1,9 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.ADDRESS;
-import static ch.openech.dm.XmlConstants.CONTACT;
-import static ch.openech.dm.XmlConstants.CONTACT_ROOT;
-import static ch.openech.dm.XmlConstants.DATE_FROM;
-import static ch.openech.dm.XmlConstants.DATE_TO;
-import static ch.openech.dm.XmlConstants.EMAIL;
-import static ch.openech.dm.XmlConstants.EMAIL_ADDRESS;
-import static ch.openech.dm.XmlConstants.INTERNET;
-import static ch.openech.dm.XmlConstants.INTERNET_ADDRESS;
-import static ch.openech.dm.XmlConstants.LOCAL_I_D;
-import static ch.openech.dm.XmlConstants.PHONE;
-import static ch.openech.dm.XmlConstants.PHONE_NUMBER;
-import static ch.openech.dm.XmlConstants.POSTAL_ADDRESS;
-import static ch.openech.dm.XmlConstants.VALIDITY;
+import static ch.openech.dm.XmlConstants.*;
+
+import java.util.List;
+
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.contact.Contact;
 import ch.openech.dm.contact.ContactEntry;
@@ -57,6 +47,12 @@ public class WriterEch0046 extends DeliveryWriter {
 		contact(parent, CONTACT, contact);
 	}
 	
+	public void contact(WriterElement element, List<ContactEntry> contacts) throws Exception {
+		Contact contact = new Contact();
+		contact.entries.addAll(contacts);
+		contact(element, CONTACT, contact);
+	}
+	
 	public void contact(WriterElement parent, String tagName, Contact contact) throws Exception {
 		if (contact == null) return;
 		
@@ -69,6 +65,7 @@ public class WriterEch0046 extends DeliveryWriter {
 	}
 	
 	private void localID(WriterElement parent, String id) throws Exception {
+		if (id == null) return;
 		NamedId namedPersonId = new NamedId();
 		namedPersonId.personIdCategory = "CH.OPENECH";
 		namedPersonId.personId = id;
@@ -127,4 +124,5 @@ public class WriterEch0046 extends DeliveryWriter {
 		WriterElement element = parent.create(URI, VALIDITY);
 		element.values(entry, DATE_FROM, DATE_TO);
 	}
+
 }

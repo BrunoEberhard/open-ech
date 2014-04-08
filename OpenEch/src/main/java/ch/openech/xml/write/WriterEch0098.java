@@ -127,7 +127,7 @@ public class WriterEch0098 {
 		element.values(values, UID_BRANCHE_TEXT, NOGA_CODE);
 		foundation(element, values);
 		liquidation(element, values);
-		ech46.contact(element, values.contact);
+		ech46.contact(element, values.contacts);
 		element.values(values, LANGUAGE_OF_CORRESPONDANCE);
 	}
 	

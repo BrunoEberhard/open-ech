@@ -27,7 +27,7 @@ import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.HouseNumber;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
-import ch.openech.dm.contact.Contact;
+import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Nationality;
@@ -94,8 +94,6 @@ public class EchForm<T> extends Form<T> {
 			return new DwellingAddressField(property, echSchema, editable);
 		} else if (type == PersonExtendedInformation.class) {
 			return new PersonExtendedInformationField(property, editable);
-		} else if (type == Contact.class) {
-			return new ContactField(property, editable);
 		} else if (type == HouseNumber.class) {
 			return new HouseNumberField(property);
 		} else if (type == CountryIdentification.class) {
@@ -106,10 +104,10 @@ public class EchForm<T> extends Form<T> {
 			Class<?> listClass = GenericUtils.getGenericClass(property.getType());
 			if (listClass == Occupation.class) {
 				return new OccupationField(property, echSchema, editable);
-//				} else if (listClass == Relation.class) {
-//					return new RelationField(key, editable);
 			} else if (listClass == PlaceOfOrigin.class) {
 				return new PlaceOfOriginField(property, editable);
+			} else if (listClass == ContactEntry.class) {
+				return new ContactField(property, editable);
 			}
 		}
 		

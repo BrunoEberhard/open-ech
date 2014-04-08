@@ -1,23 +1,11 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.ADDRESS;
-import static ch.openech.dm.XmlConstants.CONTACT;
-import static ch.openech.dm.XmlConstants.CONTACT_ROOT;
-import static ch.openech.dm.XmlConstants.DATE_FROM;
-import static ch.openech.dm.XmlConstants.DATE_TO;
-import static ch.openech.dm.XmlConstants.EMAIL;
-import static ch.openech.dm.XmlConstants.INTERNET;
-import static ch.openech.dm.XmlConstants.LOCAL_I_D;
-import static ch.openech.dm.XmlConstants.PHONE;
-import static ch.openech.dm.XmlConstants.PHONE_NUMBER;
-import static ch.openech.dm.XmlConstants.POSTAL_ADDRESS;
-import static ch.openech.dm.XmlConstants.VALIDITY;
-import static ch.openech.xml.read.StaxEch.date;
-import static ch.openech.xml.read.StaxEch.skip;
-import static ch.openech.xml.read.StaxEch.token;
+import static ch.openech.dm.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.List;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -73,6 +61,12 @@ public class StaxEch0046 {
 				return contact;
 			} // else skip
 		}
+	}
+	
+	public static void contact(XMLEventReader xml, List<ContactEntry> contacts) throws XMLStreamException {
+		Contact contact = contact(xml);
+		contacts.clear();
+		contacts.addAll(contact.entries);
 	}
 	
 	public static Contact contact(XMLEventReader xml) throws XMLStreamException {
@@ -163,6 +157,5 @@ public class StaxEch0046 {
 			} // else skip
 		}
 	}
-	
 		
 }

@@ -14,7 +14,7 @@ import ch.openech.dm.common.Address;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.common.TechnicalIds;
-import ch.openech.dm.contact.Contact;
+import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.person.types.PartnerShipAbolition;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.person.types.TypeOfRelationship;
@@ -124,7 +124,7 @@ public class Person implements Validation {
 	
 	public PersonExtendedInformation personExtendedInformation;
 
-	public Contact contact;
+	public final List<ContactEntry> contacts = new ArrayList<ContactEntry>();
 	
 	//	
 	

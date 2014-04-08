@@ -52,7 +52,7 @@ public class OrganisationPanel extends EchForm<Organisation> {
 		line(ORGANISATION.arrivalDate, ORGANISATION.departureDate);
 		line(ORGANISATION.comesFrom, ORGANISATION.goesTo);
 		if (EditMode.CHANGE_RESIDENCE_TYPE != mode) {
-			line(ORGANISATION.businessAddress, ORGANISATION.contact, new HeadquarterField(ORGANISATION.headquarter, echSchema, editable));
+			line(ORGANISATION.businessAddress, ORGANISATION.contacts, new HeadquarterField(ORGANISATION.headquarter, echSchema, editable));
 		} else {
 			line(ORGANISATION.businessAddress, new HeadquarterField(ORGANISATION.headquarter, echSchema, editable));
 		}

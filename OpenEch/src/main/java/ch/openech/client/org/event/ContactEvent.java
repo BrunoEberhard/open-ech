@@ -16,7 +16,7 @@ public class ContactEvent extends OrganisationEventEditor<Organisation> {
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.line(Organisation.ORGANISATION.contact);
+		formPanel.line(Organisation.ORGANISATION.contacts);
 	}
 
 	@Override

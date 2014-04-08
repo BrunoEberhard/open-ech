@@ -183,7 +183,7 @@ public class StaxEch0148 implements StaxEchParser<Organisation> {
 			
 				else if (startName.endsWith("Date")) organisation.set(startName, date(xml));
 				else if (startName.equals(UIDREG_SOURCE)) StaxEch0097.uidStructure(xml, organisation.uidregSourceUid);
-				else if (startName.equals(CONTACT)) organisation.contact = StaxEch0046.contact(xml);
+				else if (startName.equals(CONTACT)) StaxEch0046.contact(xml, organisation.contacts);
 				else if (startName.equals(TYP_OF_RESIDENCE)) StaxEch.enuum(xml, organisation, Organisation.ORGANISATION.typeOfResidenceOrganisation);
 				else if (startName.equals(REPORTING_MUNICIPALITY)) organisation.reportingMunicipality = StaxEch0007.municipality(xml);
 				else if (startName.equals(ARRIVAL_DATE)) organisation.arrivalDate = StaxEch.date(xml);
