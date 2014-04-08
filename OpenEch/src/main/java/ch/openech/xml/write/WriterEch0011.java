@@ -12,7 +12,6 @@ import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Foreign;
 import ch.openech.dm.person.Nationality;
 import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.mj.util.StringUtils;
 
