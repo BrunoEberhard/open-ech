@@ -69,9 +69,6 @@ public class Person implements Validation {
 	public long id;
 	public int version;
 	
-//	// final bedeutet nicht die Benutzung von Immutables.
-//	public final PersonIdentification personIdentification = new PersonIdentification(); // many:1 -> final and PersonIdentification as Immutable
-	
 	@Required @Size(EchFormats.baseName)
 	public String firstName, officialName;
 	
