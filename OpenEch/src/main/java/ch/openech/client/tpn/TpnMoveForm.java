@@ -30,20 +30,11 @@ public class TpnMoveForm extends EchForm<ThirdPartyMove> {
 		addTitle("Gebäude");
 		line(THIRD_PARTY_MOVE.EGID);
 		line(THIRD_PARTY_MOVE.address);
-//		line(THIRD_PARTY_MOVE.address.addressLine1);
-//		line(THIRD_PARTY_MOVE.address.addressLine2);
-//		line(THIRD_PARTY_MOVE.address.street, THIRD_PARTY_MOVE.address.houseNumber);
-//		line(THIRD_PARTY_MOVE.address.country, THIRD_PARTY_MOVE.address.zip, THIRD_PARTY_MOVE.address.town);
-//		line(THIRD_PARTY_MOVE.address.locality);
 		
 		addTitle("Wohnung");
 		line(THIRD_PARTY_MOVE.EWID);
 		line(THIRD_PARTY_MOVE.administrativeDwellingId, THIRD_PARTY_MOVE.floor, THIRD_PARTY_MOVE.positionOnFloor, THIRD_PARTY_MOVE.roomCount);
-
-		// add(createTabs(), SimpleFormLayout.Constraint.ALL);
 	}
-
-	// getter / setter
 
 	@Override
 	protected int getColumnWidthPercentage() {
