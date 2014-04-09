@@ -9,5 +9,8 @@ public interface EchService {
 
 	public Organisation processOrg(String... xmlStrings);
 
+	boolean generateDemoPersons(String version, int number);
+
+	boolean generateDemoOrganisations(String version, int number);
 
 }

@@ -1,8 +1,8 @@
 package ch.openech.datagenerator;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import ch.openech.business.EchService;
 import ch.openech.datagenerator.GeneratePersonEditor.GeneratePersonData;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.Form;
@@ -11,21 +11,18 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
+import ch.openech.mj.server.Services;
 import ch.openech.xml.write.EchSchema;
-import ch.openech.xml.write.WriterEch0020;
-import ch.openech.xml.write.WriterEch0148;
 
 
 public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 
-	private final EchSchema ewkNamespaceContext;
-	private final EchSchema orgNamespaceContext;
-	private int count;
-//	private int saveProgress;
+	private final String ewkVersion;
+	private final String orgVersion;
 	
 	public GeneratePersonEditor(EchSchema ewkNamespaceContext, EchSchema orgNamespaceContext) {
-		this.ewkNamespaceContext = ewkNamespaceContext;
-		this.orgNamespaceContext = orgNamespaceContext;
+		this.ewkVersion = ewkNamespaceContext.getVersion();
+		this.orgVersion = orgNamespaceContext.getVersion();
 	}
 
 	@Override
@@ -38,63 +35,14 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 
 	@Override
 	protected Object save(GeneratePersonData data) throws Exception {
-		if (!generatePerson(data.numberOfPersons)) return false;
-		if (!generateOrganisation(data.numberOfOrganisations)) return false;
+		if (data.numberOfPersons != null && data.numberOfPersons > 0) {
+			Services.get(EchService.class).generateDemoPersons(ewkVersion, data.numberOfPersons);
+		}
+		if (data.numberOfOrganisations != null && data.numberOfOrganisations > 0) {
+			Services.get(EchService.class).generateDemoOrganisations(orgVersion, data.numberOfOrganisations);
+		}
 		return data;
 	}
-
-	private boolean generatePerson(Integer number) {
-		if (number == null) return true;
-		
-		count = number;
-		if (count > 0) {
-			final int parallel = 10;
-			final AtomicInteger success = new AtomicInteger();
-			final AtomicInteger fail = new AtomicInteger();
-			for (int i = 0; i<parallel; i++) {
-				new Thread(new Runnable() {
-					public void run() {
-						final WriterEch0020 writerEch0020 = new WriterEch0020(ewkNamespaceContext);
-						for (int saveProgress = 0; saveProgress<count / parallel; saveProgress++) {
-							try {
-								DataGenerator.generatePerson(writerEch0020);
-								int value = success.addAndGet(1);
-								if (value % 10 == 0) {
-									System.out.println(success);
-								}
-							} catch (Exception x) {
-								fail.addAndGet(1);
-								System.out.println(fail);
-							}
-							// progress(saveProgress, count);
-						}
-					}
-				}).start();
-			}
-		} else {
-			showError("" + number);
-			return false;
-		}
-		return true;
-	}	
-	
-	private boolean generateOrganisation(Integer number) {
-		if (number == null) return true;
-		
-		count = number;
-		if (count > 0) {
-			WriterEch0148 writerEch0148 = new WriterEch0148(orgNamespaceContext);
-			for (int saveProgress = 0; saveProgress<count; saveProgress++) {
-				DataGenerator.generateOrganisation(writerEch0148);
-				// progress(saveProgress, count);
-			}
-		} else {
-			showError("" + number);
-			return false;
-		}
-		return true;
-	}	
-		
 
 	public static class GeneratePersonData implements Validation {
 		public static final GeneratePersonData GENERATE_PERSON_DATA = Keys.of(GeneratePersonData.class);
