@@ -5,8 +5,10 @@ import static ch.openech.dm.XmlConstants.*;
 import java.util.List;
 
 import ch.openech.dm.common.NamedId;
+import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.dm.organisation.UidStructure;
+import ch.openech.mj.model.ViewUtil;
 
 public class WriterEch0097 {
 
@@ -15,6 +17,12 @@ public class WriterEch0097 {
 	public WriterEch0097(EchSchema context) {
 		URI = context.getNamespaceURI(97);
 	}
+
+	public void organisationIdentification(WriterElement parent, Organisation values) throws Exception {
+		OrganisationIdentification organisationIdentification = ViewUtil.view(values, new OrganisationIdentification());
+		organisationIdentification(parent, organisationIdentification);
+	}
+
 	public void organisationIdentification(WriterElement parent, OrganisationIdentification values) throws Exception {
 		organisationIdentification(parent, ORGANISATION_IDENTIFICATION, values);
 	}

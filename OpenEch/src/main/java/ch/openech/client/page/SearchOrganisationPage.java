@@ -21,8 +21,8 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 	private final String text;
 
 	public static final Object[] FIELD_NAMES = {
-		ORGANISATION.identification.technicalIds.localId.personId, // TODO move to invisible
-		ORGANISATION.identification.organisationName, //
+		ORGANISATION.technicalIds.localId.personId, // TODO move to invisible
+		ORGANISATION.organisationName, //
 		ORGANISATION.businessAddress.mailAddress.street, //
 		ORGANISATION.businessAddress.mailAddress.houseNumber.houseNumber, //
 		ORGANISATION.businessAddress.mailAddress.town, //
@@ -60,7 +60,7 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 		int index = 0;
 		int count = 0;
 		for (Organisation o : selectedObjects) {
-			String link = link(OrganisationViewPage.class, echSchema.getVersion(), o.identification.technicalIds.localId.personId);
+			String link = link(OrganisationViewPage.class, echSchema.getVersion(), o.technicalIds.localId.personId);
 			pageLinks.add(link);
 			if (o == organisation) {
 				index = count;

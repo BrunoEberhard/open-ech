@@ -63,11 +63,11 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 	@Override
 	public String getTitle() {
 		String title;
-		if (organisation.identification.organisationName != null) {
-			if (organisation.identification.organisationName.length() <= MAX_NAME_LENGTH) {
-				title = organisation.identification.organisationName;
+		if (organisation.organisationName != null) {
+			if (organisation.organisationName.length() <= MAX_NAME_LENGTH) {
+				title = organisation.organisationName;
 			} else {
-				title = organisation.identification.organisationName.substring(0, MAX_NAME_LENGTH-1) + "..";
+				title = organisation.organisationName.substring(0, MAX_NAME_LENGTH-1) + "..";
 			}
 		} else {
 			title = Resources.getString("Organisation");

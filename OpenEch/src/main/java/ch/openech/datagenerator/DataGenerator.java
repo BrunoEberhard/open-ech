@@ -216,12 +216,12 @@ public class DataGenerator {
 	
 	public static Organisation organisation() {
 		Organisation organisation = new Organisation();
-		organisation.identification.organisationName = OrganisationNameGenerator.getName();
-		if (organisation.identification.organisationName.length() > 60) {
-			organisation.identification.organisationAdditionalName = organisation.identification.organisationName.substring(60);
-			organisation.identification.organisationName = organisation.identification.organisationName.substring(0, 60);
+		organisation.organisationName = OrganisationNameGenerator.getName();
+		if (organisation.organisationName.length() > 60) {
+			organisation.organisationAdditionalName = organisation.organisationName.substring(60);
+			organisation.organisationName = organisation.organisationName.substring(0, 60);
 		}
-		organisation.identification.uid.value = "ADM323423421";
+		organisation.uid.value = "ADM323423421";
 		organisation.foundationDate = DateGenerator.generateRandomDate();
 		organisation.arrivalDate = DateGenerator.generateRandomDate();
 		organisation.reportingMunicipality = createJona();

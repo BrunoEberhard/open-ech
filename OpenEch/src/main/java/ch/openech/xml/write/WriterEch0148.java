@@ -76,7 +76,7 @@ public class WriterEch0148 extends DeliveryWriter {
 	
 	private WriterElement simpleOrganisationEvent(WriterElement delivery, String eventName, Organisation organisation) throws Exception {
 		WriterElement event = delivery.create(URI, eventName);
-		ech97.organisationIdentification(event, organisation.identification);
+		ech97.organisationIdentification(event, organisation);
         return event;
 	}
 	

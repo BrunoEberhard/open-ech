@@ -24,7 +24,7 @@ public class KeyDeliveryOrganisationAction extends ExportAllOrganisationAction {
 
 	@Override
 	protected void writeOrganisation(WriterEch0098 writer, WriterElement baseDelivery, Organisation organisation) throws Exception {
-		ech97.organisationIdentification(baseDelivery, organisation.identification);
+		ech97.organisationIdentification(baseDelivery, organisation);
 	}
 	
 	@Override

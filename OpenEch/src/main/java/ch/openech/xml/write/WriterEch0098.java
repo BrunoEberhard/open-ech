@@ -123,7 +123,7 @@ public class WriterEch0098 {
 	public void organisation(WriterElement parent, String tagName, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, tagName);
 
-		ech97.organisationIdentification(element, values.identification);
+		ech97.organisationIdentification(element, values);
 		element.values(values, UID_BRANCHE_TEXT, NOGA_CODE);
 		foundation(element, values);
 		liquidation(element, values);

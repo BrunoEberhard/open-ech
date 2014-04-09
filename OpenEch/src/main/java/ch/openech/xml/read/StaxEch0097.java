@@ -9,37 +9,18 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import ch.openech.dm.common.NamedId;
+import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.dm.organisation.UidStructure;
+import ch.openech.mj.model.ViewUtil;
 import ch.openech.mj.util.StringUtils;
 
 public class StaxEch0097 {
 
 	public static OrganisationIdentification organisationIdentification(XMLEventReader xml) throws XMLStreamException {
-		OrganisationIdentification organisationIdentification = new OrganisationIdentification();
-		organisationIdentification(xml, organisationIdentification);
-		return organisationIdentification;
-	}
-
-	public static void organisationIdentification(XMLEventReader xml, OrganisationIdentification organisation) throws XMLStreamException {
-		 
-		while (true) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				
-				if (startName.equals(UID)) uidStructure(xml, organisation.uid);
-				
-				else if (startName.equals(LOCAL_ORGANISATION_ID)) namedOrganisationId(xml, organisation.technicalIds.localId);
-				else if (startName.equals("otherOrganisationId") || startName.equals(_OTHER_ORGANISATION_ID)) organisation.technicalIds.otherId.add(namedOrganisationId(xml));
-				
-				else if (StringUtils.equals(startName, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME, LEGAL_FORM)) organisation.set(startName, token(xml));
-				else skip(xml);
-			} else if (event.isEndElement()) {
-				return;
-			} // else skip
-		}
+		Organisation organisation = new Organisation();
+		organisationIdentification(xml, organisation);
+		return ViewUtil.view(organisation, new OrganisationIdentification());
 	}
 	
 	public static NamedId namedOrganisationId(XMLEventReader xml) throws XMLStreamException {
@@ -79,6 +60,26 @@ public class StaxEch0097 {
 				if (!StringUtils.isBlank(uidOrganisationIdCategorie) && !StringUtils.isBlank(uidOrganisationId)) {
 					uid.value = uidOrganisationIdCategorie + uidOrganisationId;
 				} 
+				return;
+			} // else skip
+		}
+	}
+
+	public static void organisationIdentification(XMLEventReader xml, Organisation organisation) throws XMLStreamException {
+		while (true) {
+			XMLEvent event = xml.nextEvent();
+			if (event.isStartElement()) {
+				StartElement startElement = event.asStartElement();
+				String startName = startElement.getName().getLocalPart();
+				
+				if (startName.equals(UID)) uidStructure(xml, organisation.uid);
+				
+				else if (startName.equals(LOCAL_ORGANISATION_ID)) namedOrganisationId(xml, organisation.technicalIds.localId);
+				else if (startName.equals("otherOrganisationId") || startName.equals(_OTHER_ORGANISATION_ID)) organisation.technicalIds.otherId.add(namedOrganisationId(xml));
+				
+				else if (StringUtils.equals(startName, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME, LEGAL_FORM)) organisation.set(startName, token(xml));
+				else skip(xml);
+			} else if (event.isEndElement()) {
 				return;
 			} // else skip
 		}

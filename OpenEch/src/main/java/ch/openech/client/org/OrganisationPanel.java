@@ -33,9 +33,9 @@ public class OrganisationPanel extends EchForm<Organisation> {
 	}
 
 	public void organisation() {
-		line(ORGANISATION.identification.organisationName);
-		line(ORGANISATION.identification.organisationLegalName, ORGANISATION.identification.organisationAdditionalName, ORGANISATION.identification.legalForm, ORGANISATION.languageOfCorrespondance);
-		line(ORGANISATION.identification.uid, new TechnicalIdsField(ORGANISATION.identification.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
+		line(ORGANISATION.organisationName);
+		line(ORGANISATION.organisationLegalName, ORGANISATION.organisationAdditionalName, ORGANISATION.legalForm, ORGANISATION.languageOfCorrespondance);
+		line(ORGANISATION.uid, new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
 
 		line(ORGANISATION.uidBrancheText, ORGANISATION.nogaCode);
 		if (EditMode.DISPLAY != mode) {

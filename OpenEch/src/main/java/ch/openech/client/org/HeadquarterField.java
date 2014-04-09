@@ -4,11 +4,13 @@ import ch.openech.client.page.OrganisationViewPage;
 import ch.openech.client.page.SearchOrganisationPage;
 import ch.openech.dm.organisation.Headquarter;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
+import ch.openech.mj.model.ViewUtil;
 import ch.openech.mj.page.PageLink;
 import ch.openech.xml.write.EchSchema;
 
@@ -77,7 +79,7 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 			if (getObject() == null) {
 				setObject(new Headquarter());
 			}
-			getObject().identification = organisation.identification;
+			getObject().identification = ViewUtil.view(organisation, new OrganisationIdentification());
 			fireObjectChange();
 		}
 	}

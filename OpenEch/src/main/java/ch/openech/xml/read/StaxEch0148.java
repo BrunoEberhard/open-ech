@@ -162,7 +162,6 @@ public class StaxEch0148 implements StaxEchParser<Organisation> {
 	}
 
 	private void simpleOrganisationEvent(String eventName, XMLEventReader xml) throws XMLStreamException {
-		OrganisationIdentification organisationIdentification = new OrganisationIdentification();
 		Organisation organisation = null;
 		
 		while (true) {
@@ -171,7 +170,7 @@ public class StaxEch0148 implements StaxEchParser<Organisation> {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (StringUtils.equals(startName, ORGANISATION_IDENTIFICATION)) {
-					StaxEch0097.organisationIdentification(xml, organisationIdentification);
+					OrganisationIdentification organisationIdentification = StaxEch0097.organisationIdentification(xml);
 					organisation = EchPersistence.getByIdentification(dbService, organisationIdentification);
 					if (StringUtils.equals(eventName, CORRECT_LIQUIDATION)) {
 						organisation.liquidationEntryDate = null;

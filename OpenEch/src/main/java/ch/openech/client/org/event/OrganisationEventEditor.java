@@ -25,8 +25,8 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	protected OrganisationEventEditor(EchSchema echSchema, Organisation organisation) {
 		super(echSchema);
 		this.organisation = organisation;
-		this.organisation.identification.technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
-		this.organisation.identification.technicalIds.localId.personId = String.valueOf(organisation.id);
+		this.organisation.technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
+		this.organisation.technicalIds.localId.personId = String.valueOf(organisation.id);
 	}
 
 	protected static EchSchema getNamespaceContextOrg(PageContext context) {

@@ -14,6 +14,7 @@ import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.common.DwellingAddress;
 import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.common.Place;
+import ch.openech.dm.common.TechnicalIds;
 import ch.openech.dm.contact.ContactEntry;
 import ch.openech.dm.types.Language;
 import ch.openech.mj.edit.validation.Validation;
@@ -33,7 +34,7 @@ import ch.openech.xml.read.StaxEch;
 public class Organisation implements Validation {
 
 	public static final Organisation ORGANISATION = Keys.of(Organisation.class);
-	public static final Search<Organisation> BY_FULLTEXT = new Search<>(ORGANISATION.identification.organisationName);
+	public static final Search<Organisation> BY_FULLTEXT = new Search<>(ORGANISATION.organisationName);
 
 	public static enum EditMode { DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, IN_LIQUIDATION, LIQUIDATION, CHANGE_REPORTING }
 	
@@ -50,7 +51,16 @@ public class Organisation implements Validation {
 	public int version;
 	
 	// 97 : Identification
-	public final OrganisationIdentification identification = new OrganisationIdentification();
+	public final UidStructure uid = new UidStructure(); 
+	
+	public final TechnicalIds technicalIds = new TechnicalIds();
+	
+	@Required @Size(EchFormats.organisationName)
+	public String organisationName; 
+	@Size(EchFormats.organisationName)
+	public String organisationLegalName, organisationAdditionalName;
+	@Code
+	public String legalForm;
 	
 	// 98 : Daten
 	
