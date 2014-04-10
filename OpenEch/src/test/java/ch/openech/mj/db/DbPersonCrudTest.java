@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
-import ch.openech.dm.common.MunicipalityIdentification;
 import ch.openech.dm.person.Occupation;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.types.MrMrs;
@@ -22,7 +21,7 @@ public class DbPersonCrudTest {
 
 	@BeforeClass
 	public static void setupDb() throws SQLException {
-		persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Person.class, MunicipalityIdentification.class, CountryIdentification.class);
+		persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Person.class);
 	}
 
 	@Test
