@@ -129,33 +129,34 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
 		
-		process(xml, xmlString, null);
+		process(xml, null);
 		xml.close();
 	}
 
-	public void process(InputStream inputStream, String eventString, ProgressListener progressListener) throws XMLStreamException {
+	public void process(InputStream inputStream, ProgressListener progressListener) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 		
-		process(xml, eventString, progressListener);
+		process(xml, progressListener);
 		xml.close();
 	}
 
-	private void process(XMLEventReader xml, String xmlString, ProgressListener progressListener) throws XMLStreamException {
+	private void process(XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
+//		while (xml.peek() != null) {
 		while (xml.hasNext() && !isCanceled(progressListener)) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(DELIVERY)) {
-					delivery(xmlString, xml, progressListener);
+					delivery(xml, progressListener);
 				}
 				else skip(xml);
 			} 
 		}
 	}
 	
-	private void delivery(String xmlString, XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
+	private void delivery(XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
 		while (!isCanceled(progressListener)) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
