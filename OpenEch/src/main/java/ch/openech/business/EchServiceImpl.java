@@ -1,5 +1,10 @@
 package ch.openech.business;
 
+import static ch.openech.dm.XmlConstants.*;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
@@ -15,7 +20,10 @@ import ch.openech.xml.read.StaxEch0148;
 import ch.openech.xml.read.StaxEchParser;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
+import ch.openech.xml.write.WriterEch0097;
+import ch.openech.xml.write.WriterEch0098;
 import ch.openech.xml.write.WriterEch0148;
+import ch.openech.xml.write.WriterElement;
 
 public class EchServiceImpl implements EchService {
 	public static final Logger logger = Logger.getLogger(EchServiceImpl.class.getName());
@@ -112,5 +120,124 @@ public class EchServiceImpl implements EchService {
 		}
 		return true;
 	}	
+	
+	@Override
+	public String imprt(final InputStream inputStream) {
 		
+		try {
+			StaxEch0020 ech0020 = new StaxEch0020(Services.get(DbService.class));
+			ech0020.process(inputStream, null);
+			return "Import erfolgreich abgeschlossen";
+		} catch (Exception x) {
+			x.printStackTrace();
+			return "Import fehlgeschlagen\n\n" + x.getMessage();
+		}
+	}
+	
+	@Override
+	public void export(String ewkVersion, final OutputStream outputStream) {
+		export(ewkVersion, outputStream, true);
+	}
+
+	@Override
+	public void exportKeys(String ewkVersion, final OutputStream outputStream) {
+		export(ewkVersion, outputStream, false);
+	}
+
+	private void export(String ewkVersion, final OutputStream outputStream, boolean complete) {
+		try {
+			int maxId = (int) Services.get(DbService.class).getMaxId(Person.class);
+			
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
+			
+			EchSchema schema = EchSchema.getNamespaceContext(20, ewkVersion);
+			WriterEch0020 writer = new WriterEch0020(schema);
+			WriterElement delivery = writer.delivery(outputStreamWriter);
+			WriterElement baseDelivery = complete ? writer.baseDelivery(delivery, maxId) : writer.keyDelivery(delivery, maxId);
+
+			for (long id = 1; id<=maxId; id++) {
+				Person person = Services.get(DbService.class).read(Person.class, id);
+
+				if (person != null) {
+					if (complete) {
+						writer.eventBaseDelivery(baseDelivery, person);
+					} else {
+						writer.eventKeyDelivery(baseDelivery, person.personIdentification());
+					}
+				} else {
+					// Person was deleted
+				}
+			}
+
+			writer.endDocument();
+			outputStreamWriter.close();
+			outputStream.close();
+		} catch (Exception x) {
+			x.printStackTrace();
+			// ClientToolkit.getToolkit().showError(parent, "Export fehlgeschlagen\n\n" + x.getMessage());
+		}
+	}
+
+	@Override
+	public String importOrg(final InputStream inputStream) {
+		
+		try {
+			StaxEch0148 ech0148 = new StaxEch0148(Services.get(DbService.class));
+			ech0148.process(inputStream, "ImportDatei", null);
+			return "Import erfolgreich abgeschlossen";
+		} catch (Exception x) {
+			x.printStackTrace();
+			return "Import fehlgeschlagen\n\n" + x.getMessage();
+		}
+	}
+	
+	@Override
+	public void exportOrg(String orgVersion, final OutputStream outputStream) {
+		exportOrg(orgVersion, outputStream, true);
+	}
+
+	@Override
+	public void exportOrgKeys(String orgVersion, final OutputStream outputStream) {
+		exportOrg(orgVersion, outputStream, false);
+	}
+
+	private void exportOrg(String orgVersion, final OutputStream outputStream, boolean complete) {
+		try {
+			long maxId = Services.get(DbService.class).getMaxId(Organisation.class);
+			
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
+			
+			EchSchema schema = EchSchema.getNamespaceContext(148, orgVersion);
+			WriterEch0148 writer148 = new WriterEch0148(schema);
+			WriterEch0098 writer98 = new WriterEch0098(schema);
+			WriterEch0097 writer97 = new WriterEch0097(schema);
+			WriterElement delivery = writer148.delivery(outputStreamWriter);
+			WriterElement baseDelivery = complete ? writer148.organisationBaseDelivery(delivery) : writer148.keyExchange(delivery);
+
+			int numberOfOrganisations = 0;
+			for (long id = 1; id<=maxId; id++) {
+				Organisation organisation = Services.get(DbService.class).read(Organisation.class, id);
+				if (organisation != null) {
+					if (complete) {
+						writer98.reportedOrganisationType(baseDelivery, REPORTED_ORGANISATION, organisation);
+					} else {
+						writer97.organisationIdentification(baseDelivery, organisation);
+					}
+				} else {
+					// Organisation was deleted
+				}
+			}
+			if (complete) {
+				writer148.numberOfOrganisations(baseDelivery, numberOfOrganisations);
+			}
+			writer148.result();
+			
+			outputStreamWriter.close();
+			outputStream.close();
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+	}
+
+	
 }

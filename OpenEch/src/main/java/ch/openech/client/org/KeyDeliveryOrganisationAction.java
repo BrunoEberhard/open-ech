@@ -1,34 +1,18 @@
 package ch.openech.client.org;
 
-import ch.openech.dm.organisation.Organisation;
-import ch.openech.xml.write.EchSchema;
-import ch.openech.xml.write.WriterEch0097;
-import ch.openech.xml.write.WriterEch0098;
-import ch.openech.xml.write.WriterEch0148;
-import ch.openech.xml.write.WriterElement;
+import java.io.OutputStream;
+
+import ch.openech.business.EchService;
+import ch.openech.mj.server.Services;
 
 public class KeyDeliveryOrganisationAction extends ExportAllOrganisationAction {
 	
-	private final WriterEch0097 ech97;
-	
-	public KeyDeliveryOrganisationAction(EchSchema echNamespaceContext) {
-		super(echNamespaceContext);
-		ech97 = new WriterEch0097(echNamespaceContext);
-	}
-
-	@Override
-	protected WriterElement createBaseDelivery(WriterEch0148 writer, WriterElement delivery)
-			throws Exception {
-		return writer.keyExchange(delivery);
-	}
-
-	@Override
-	protected void writeOrganisation(WriterEch0098 writer, WriterElement baseDelivery, Organisation organisation) throws Exception {
-		ech97.organisationIdentification(baseDelivery, organisation);
+	public KeyDeliveryOrganisationAction(String orgVersion) {
+		super(orgVersion);
 	}
 	
-	@Override
-	protected void writeNumberOfOrganisations(WriterEch0148 writer, WriterElement baseDelivery, int numberOfOrganisations) throws Exception {
-		// do nothing
+	protected void export(OutputStream outputStream) {
+		Services.get(EchService.class).exportOrgKeys(orgVersion, outputStream);
 	}
+	
 }

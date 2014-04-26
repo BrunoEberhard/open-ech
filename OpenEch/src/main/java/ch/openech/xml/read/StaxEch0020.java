@@ -142,7 +142,6 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	}
 
 	private void process(XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
-//		while (xml.peek() != null) {
 		while (xml.hasNext() && !isCanceled(progressListener)) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -150,6 +149,7 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(DELIVERY)) {
 					delivery(xml, progressListener);
+					return; // das eigentliche Problem ist, dass xml.hasNext das Ende des Streams nicht erkennt...
 				}
 				else skip(xml);
 			} 

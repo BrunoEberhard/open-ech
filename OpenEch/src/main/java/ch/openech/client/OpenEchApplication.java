@@ -149,14 +149,14 @@ public class OpenEchApplication extends MjApplication {
 		updateEwkNamespaceContext(context);
 		
 		if (ewkSchema != null) {
-			menu.add(new ExportAllPersonAction(ewkSchema));
+			menu.add(new ExportAllPersonAction(ewkSchema.getVersion()));
 			if (ewkSchema.keyDeliveryPossible()) {
-				menu.add(new KeyDeliveryPersonAction(ewkSchema));
+				menu.add(new KeyDeliveryPersonAction(ewkSchema.getVersion()));
 			}
 		}
 		if (orgSchema != null) {
-			menu.add(new ExportAllOrganisationAction(orgSchema));
-			menu.add(new KeyDeliveryOrganisationAction(orgSchema));
+			menu.add(new ExportAllOrganisationAction(orgSchema.getVersion()));
+			menu.add(new KeyDeliveryOrganisationAction(orgSchema.getVersion()));
 		}
 		return menu.getItems();
 	}
