@@ -162,7 +162,7 @@ public class OpenEchApplication extends MjApplication {
 	}
 
 	@Override
-	public List<IAction> getActionsWindow(PageContext context) {
+	public List<IAction> getActionsView(PageContext context) {
 		ActionGroup menu = new ActionGroup(null);
 		menu.add(new PreferencesEditor(context.getApplicationContext()));
 		return menu.getItems();
