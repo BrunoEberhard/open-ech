@@ -208,7 +208,9 @@ public class PersonEditMenu {
 	}
 
 	private EditorPageAction editorLink(PersonEventEditor<?> editor) {
-		return new EditorPageAction(editor, editor.isEnabled());
+		EditorPageAction action = new EditorPageAction(editor);
+		action.setEnabled(editor.isEnabled());
+		return action;
 	}
 	
 	private void fillCorrectionActionList() {
