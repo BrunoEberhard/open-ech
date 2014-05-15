@@ -13,8 +13,7 @@ import ch.openech.mj.model.annotation.ViewOf;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.StringUtils;
 
-@ViewOf(Person.class)
-public class PersonIdentification {
+public class PersonIdentification implements ViewOf<Person> {
 
 	public static final PersonIdentification PERSON_IDENTIFICATION = Keys.of(PersonIdentification.class);
 	
@@ -50,6 +49,10 @@ public class PersonIdentification {
 		} else {
 			return null;
 		}
+	}
+	
+	public String display() {
+		return toHtml();
 	}
 	
 	public String toHtml() {

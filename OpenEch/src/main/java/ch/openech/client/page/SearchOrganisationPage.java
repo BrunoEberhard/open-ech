@@ -72,7 +72,7 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 
 	@Override
 	protected List<Organisation> load(String query) {
-		return Services.get(DbService.class).search(Organisation.BY_FULLTEXT, query);
+		return Services.get(DbService.class).search(Organisation.class, query, 100);
 	}
 	
 }

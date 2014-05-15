@@ -40,7 +40,7 @@ public abstract class AbstractServerTest {
 	}
 
 	protected Person insertPerson(String vn) throws Exception {
-		List<Person> persons = Services.get(DbService.class).search(Person.BY_VN, vn);
+		List<Person> persons = Services.get(DbService.class).search(Person.class, Person.SEARCH_BY_VN, vn, 2);
 		if (persons.size() == 1) {
 			return persons.get(0);
 		} else if (persons.isEmpty()){

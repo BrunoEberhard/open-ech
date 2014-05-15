@@ -9,6 +9,7 @@ import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.Place;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonEditMode;
+import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.person.PlaceOfOrigin;
 import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.Religion;
@@ -82,9 +83,9 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 		
 		Relation partnerRelation = parentPerson.getPartner();
 		if (partnerRelation != null && partnerRelation.partner != null && partnerRelation.partner.vn != null) { 
-			List<Person> partnerOfVisiblePersons = Services.get(DbService.class).search(Person.BY_VN, partnerRelation.partner.vn.value);
+			List<PersonIdentification> partnerOfVisiblePersons = Services.get(DbService.class).search(PersonIdentification.class, Person.SEARCH_BY_VN, partnerRelation.partner.vn.value, 2);
 			if (partnerOfVisiblePersons.size() == 1) {
-				Person partnerOfVisiblePerson = partnerOfVisiblePersons.get(0);
+				Person partnerOfVisiblePerson = Services.get(DbService.class).read(Person.class, partnerOfVisiblePersons.get(0).id);
 				if (partnerOfVisiblePerson.isMale())
 					father = partnerOfVisiblePerson;
 				else

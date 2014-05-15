@@ -27,11 +27,11 @@ import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.Codes;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.Search;
 import ch.openech.mj.model.ViewUtil;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Required;
+import ch.openech.mj.model.annotation.Searched;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.resources.Resources;
 import ch.openech.mj.util.BusinessRule;
@@ -43,16 +43,8 @@ import ch.openech.mj.util.StringUtils;
 public class Person implements Validation {
 
 	public static final Person PERSON = Keys.of(Person.class);
+	public static final Object[] SEARCH_BY_VN = new Object[]{PERSON.vn.value};
 	
-	public static final Search<Person> BY_FULLTEXT = new Search<>(
-		PERSON.officialName, //
-		PERSON.firstName, //
-		PERSON.dateOfBirth, //
-		PERSON.aliasName, //
-		PERSON.vn.value //
-	);
-	public static final Search<Person> BY_VN = new Search<>(PERSON.vn.value);
-
 	static {
 		Codes.addCodes(ResourceBundle.getBundle("ch.openech.dm.person.types.ech_person"));
 	}
@@ -69,20 +61,20 @@ public class Person implements Validation {
 	public long id;
 	public int version;
 	
-	@Required @Size(EchFormats.baseName)
+	@Required @Size(EchFormats.baseName) @Searched
 	public String firstName, officialName;
 	
 	@Required 
 	public Sex sex;
 	
-	@Required 
+	@Required @Searched
 	public ReadablePartial dateOfBirth;
 
 	public final TechnicalIds technicalIds = new TechnicalIds();
 
 	public final Vn vn = new Vn();
 
-	@Size(EchFormats.baseName)
+	@Size(EchFormats.baseName) @Searched
 	public String originalName, alliancePartnershipName, aliasName, otherName, callName;
 
 	public Place placeOfBirth; // 1:0-1 -> not final and Place inline as immutable

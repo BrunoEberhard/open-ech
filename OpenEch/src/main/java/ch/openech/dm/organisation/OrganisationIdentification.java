@@ -7,9 +7,10 @@ import ch.openech.mj.model.annotation.Required;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.annotation.ViewOf;
 
-@ViewOf(Organisation.class)
-public class OrganisationIdentification {
+public class OrganisationIdentification implements ViewOf<Organisation> {
 
+	public long id;
+	
 	public final UidStructure uid = new UidStructure(); 
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
@@ -20,4 +21,9 @@ public class OrganisationIdentification {
 	public String organisationLegalName, organisationAdditionalName;
 	@Code
 	public String legalForm;
+	
+	@Override
+	public String display() {
+		return organisationName;
+	}
 }

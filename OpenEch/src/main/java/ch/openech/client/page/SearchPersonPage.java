@@ -76,7 +76,7 @@ public class SearchPersonPage extends TablePage<Person> {
 
 	@Override
 	protected List<Person> load(String query) {
-		return Services.get(DbService.class).search(Person.BY_FULLTEXT, query);
+		return Services.get(DbService.class).search(Person.class, query, 100);
 	}
 
 }

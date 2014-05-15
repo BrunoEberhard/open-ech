@@ -23,10 +23,10 @@ import ch.openech.mj.model.Codes;
 import ch.openech.mj.model.EmptyValidator;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.model.Search;
 import ch.openech.mj.model.annotation.Code;
 import ch.openech.mj.model.annotation.Enabled;
 import ch.openech.mj.model.annotation.Required;
+import ch.openech.mj.model.annotation.Searched;
 import ch.openech.mj.model.annotation.Size;
 import ch.openech.mj.model.properties.FlatProperties;
 import ch.openech.xml.read.StaxEch;
@@ -34,7 +34,6 @@ import ch.openech.xml.read.StaxEch;
 public class Organisation implements Validation {
 
 	public static final Organisation ORGANISATION = Keys.of(Organisation.class);
-	public static final Search<Organisation> BY_FULLTEXT = new Search<>(ORGANISATION.organisationName);
 
 	public static enum EditMode { DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, IN_LIQUIDATION, LIQUIDATION, CHANGE_REPORTING }
 	
@@ -55,7 +54,7 @@ public class Organisation implements Validation {
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 	
-	@Required @Size(EchFormats.organisationName)
+	@Required @Size(EchFormats.organisationName) @Searched
 	public String organisationName; 
 	@Size(EchFormats.organisationName)
 	public String organisationLegalName, organisationAdditionalName;

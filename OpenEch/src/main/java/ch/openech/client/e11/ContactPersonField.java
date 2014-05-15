@@ -1,5 +1,7 @@
 package ch.openech.client.e11;
 
+import java.util.List;
+
 import ch.openech.client.e10.AddressPanel;
 import ch.openech.client.e44.PersonIdentificationPanel;
 import ch.openech.client.page.PersonViewPage;
@@ -14,6 +16,8 @@ import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.page.PageLink;
+import ch.openech.mj.server.DbService;
+import ch.openech.mj.server.Services;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.mj.util.DateUtils;
@@ -73,7 +77,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	public class SelectPersonContactEditor extends SearchDialogAction<Person> {
 		
 		public SelectPersonContactEditor() {
-			super(getComponent(), Person.BY_FULLTEXT, SearchPersonPage.FIELD_NAMES);
+			super(getComponent(), SearchPersonPage.FIELD_NAMES);
 		}
 		
 		@Override
@@ -93,6 +97,11 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 				}
 				fireObjectChange();
 			}
+		}
+		
+		@Override
+		public List<Person> search(String query) {
+			return Services.get(DbService.class).search(Person.class, query, 100);
 		}
 
 	};
