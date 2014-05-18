@@ -2,8 +2,8 @@ package ch.openech.client.ewk.event;
 
 import java.io.OutputStream;
 
-import ch.openech.business.EchService;
-import ch.openech.mj.server.Services;
+import ch.openech.business.PersonExportStreamProducer;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
@@ -24,6 +24,6 @@ public class ExportAllPersonAction extends ResourceAction {
 	}
 
 	protected void export(OutputStream outputStream) {
-		Services.get(EchService.class).export(ewkVersion, outputStream);
+		Backend.getInstance().execute(new PersonExportStreamProducer(ewkVersion, true), outputStream);
 	}
 }

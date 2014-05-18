@@ -11,13 +11,12 @@ import ch.openech.dm.person.ContactPerson;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.types.MrMrs;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.page.PageLink;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
 import ch.openech.mj.util.DateUtils;
@@ -101,7 +100,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		
 		@Override
 		public List<Person> search(String query) {
-			return Services.get(DbService.class).search(Person.class, query, 100);
+			return Backend.getInstance().search(Person.class, query, 100);
 		}
 
 	};

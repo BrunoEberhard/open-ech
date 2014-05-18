@@ -15,12 +15,11 @@ import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.Religion;
 import ch.openech.dm.person.types.TypeOfRelationship;
 import ch.openech.dm.types.YesNo;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.edit.value.CloneHelper;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
 import ch.openech.mj.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
@@ -83,9 +82,9 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 		
 		Relation partnerRelation = parentPerson.getPartner();
 		if (partnerRelation != null && partnerRelation.partner != null && partnerRelation.partner.vn != null) { 
-			List<PersonIdentification> partnerOfVisiblePersons = Services.get(DbService.class).search(PersonIdentification.class, Person.SEARCH_BY_VN, partnerRelation.partner.vn.value, 2);
+			List<PersonIdentification> partnerOfVisiblePersons = Backend.getInstance().search(PersonIdentification.class, Person.SEARCH_BY_VN, partnerRelation.partner.vn.value, 2);
 			if (partnerOfVisiblePersons.size() == 1) {
-				Person partnerOfVisiblePerson = Services.get(DbService.class).read(Person.class, partnerOfVisiblePersons.get(0).id);
+				Person partnerOfVisiblePerson = Backend.getInstance().read(Person.class, partnerOfVisiblePersons.get(0).id);
 				if (partnerOfVisiblePerson.isMale())
 					father = partnerOfVisiblePerson;
 				else

@@ -8,11 +8,10 @@ import java.util.List;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.EchSchema0020;
 import ch.openech.dm.person.Person;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.TablePage;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
 import ch.openech.mj.util.IdUtils;
 import ch.openech.xml.write.EchSchema;
 
@@ -76,7 +75,7 @@ public class SearchPersonPage extends TablePage<Person> {
 
 	@Override
 	protected List<Person> load(String query) {
-		return Services.get(DbService.class).search(Person.class, query, 100);
+		return Backend.getInstance().search(Person.class, query, 100);
 	}
 
 }

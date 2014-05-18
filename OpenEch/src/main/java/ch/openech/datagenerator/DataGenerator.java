@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import ch.openech.business.EchService;
 import ch.openech.dm.code.NationalityStatus;
 import ch.openech.dm.common.Address;
 import ch.openech.dm.common.CountryIdentification;
@@ -29,27 +28,15 @@ import ch.openech.mj.autofill.NameGenerator;
 import ch.openech.mj.autofill.OrganisationNameGenerator;
 import ch.openech.mj.model.EnumUtils;
 import ch.openech.mj.model.properties.FlatProperties;
-import ch.openech.mj.server.Services;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
-import ch.openech.xml.write.WriterEch0020;
-import ch.openech.xml.write.WriterEch0148;
 
 public class DataGenerator {
 
 	private static List<MunicipalityIdentification> municipalityIdentifications = StaxEch0071.getInstance().getMunicipalityIdentifications();
 	private static List<CountryIdentification> countryIdentifications = StaxEch0072.getInstance().getCountryIdentifications();
-	
-	public static void generatePerson(WriterEch0020 writerEch0020) {
-		try {
-			String xml = writerEch0020.moveIn(person());
-			Services.get(EchService.class).process(xml);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public static Person person() {
 		Person person = new Person();
@@ -232,15 +219,6 @@ public class DataGenerator {
 		}
 
 		return organisation;
-	}
-	
-	public static void generateOrganisation(WriterEch0148 writerEch0148) {
-		try {
-			String xml = writerEch0148.moveIn(organisation());
-			Services.get(EchService.class).processOrg(xml);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 }

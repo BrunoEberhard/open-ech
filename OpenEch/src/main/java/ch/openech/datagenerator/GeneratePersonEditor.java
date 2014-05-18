@@ -2,8 +2,9 @@ package ch.openech.datagenerator;
 
 import java.util.List;
 
-import ch.openech.business.EchService;
+import ch.openech.business.GenerateDemoDataTransaction;
 import ch.openech.datagenerator.GeneratePersonEditor.GeneratePersonData;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.edit.Editor;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
@@ -11,18 +12,17 @@ import ch.openech.mj.edit.validation.Validation;
 import ch.openech.mj.edit.validation.ValidationMessage;
 import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.annotation.Size;
-import ch.openech.mj.server.Services;
 import ch.openech.xml.write.EchSchema;
 
 
 public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 
-	private final String ewkVersion;
-	private final String orgVersion;
+//	private final String ewkVersion;
+//	private final String orgVersion;
 	
 	public GeneratePersonEditor(EchSchema ewkNamespaceContext, EchSchema orgNamespaceContext) {
-		this.ewkVersion = ewkNamespaceContext.getVersion();
-		this.orgVersion = orgNamespaceContext.getVersion();
+//		this.ewkVersion = ewkNamespaceContext.getVersion();
+//		this.orgVersion = orgNamespaceContext.getVersion();
 	}
 
 	@Override
@@ -35,12 +35,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 
 	@Override
 	protected Object save(GeneratePersonData data) throws Exception {
-		if (data.numberOfPersons != null && data.numberOfPersons > 0) {
-			Services.get(EchService.class).generateDemoPersons(ewkVersion, data.numberOfPersons);
-		}
-		if (data.numberOfOrganisations != null && data.numberOfOrganisations > 0) {
-			Services.get(EchService.class).generateDemoOrganisations(orgVersion, data.numberOfOrganisations);
-		}
+		Backend.getInstance().execute(new GenerateDemoDataTransaction(data.numberOfPersons != null ? data.numberOfPersons : 0, data.numberOfOrganisations != null ? data.numberOfOrganisations : 0));
 		return data;
 	}
 

@@ -2,8 +2,8 @@ package ch.openech.client.org;
 
 import java.io.OutputStream;
 
-import ch.openech.business.EchService;
-import ch.openech.mj.server.Services;
+import ch.openech.business.OrganisationExportStreamProducer;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.toolkit.ClientToolkit;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.mj.toolkit.ResourceAction;
@@ -23,7 +23,7 @@ public class ExportAllOrganisationAction extends ResourceAction {
 	}
 
 	protected void export(OutputStream outputStream) {
-		Services.get(EchService.class).exportOrg(orgVersion, outputStream);
+		Backend.getInstance().execute(new OrganisationExportStreamProducer(orgVersion, true), outputStream);
 	}
 
 }

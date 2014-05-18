@@ -6,12 +6,11 @@ import java.util.List;
 import org.joda.time.LocalDateTime;
 
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.page.HistoryPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.resources.Resources;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
 
@@ -41,8 +40,8 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 
 	@Override
 	protected List<HistoryVersion<Organisation>> loadVersions() {
-		Organisation organisation = Services.get(DbService.class).read(Organisation.class, organisationId);
-		List<Organisation> organisations = Services.get(DbService.class).loadHistory(organisation);
+		Organisation organisation = Backend.getInstance().read(Organisation.class, organisationId);
+		List<Organisation> organisations = Backend.getInstance().loadHistory(organisation);
 //		Collections.sort(times);
 //		Collections.reverse(times);
 

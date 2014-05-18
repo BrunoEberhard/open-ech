@@ -9,9 +9,9 @@ import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.organisation.OrganisationIdentification;
 import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.db.DbPersistence;
 import ch.openech.mj.db.Table;
-import ch.openech.mj.server.DbService;
 import ch.openech.mj.util.StringUtils;
 
 public class EchPersistence {
@@ -38,32 +38,32 @@ public class EchPersistence {
 		}
 	}
 	
-	public static Person getByIdentification(DbService service, PersonIdentification personIdentification) {
+	public static Person getByIdentification(Backend backend, PersonIdentification personIdentification) {
 		if (NamedId.OPEN_ECH_ID_CATEGORY.equals(personIdentification.technicalIds.localId.personIdCategory)) {
 			long id = Long.valueOf(personIdentification.technicalIds.localId.personId);
-			return service.read(Person.class, id);
+			return backend.read(Person.class, id);
 		}
 		if (personIdentification.vn != null) {
-			List<Person> persons = service.search(Person.class, Person.SEARCH_BY_VN, personIdentification.vn.value, 1);
+			List<Person> persons = backend.search(Person.class, Person.SEARCH_BY_VN, personIdentification.vn.value, 1);
 			if (!persons.isEmpty()) return persons.get(0);
 		} 
-		List<PersonIdentification> persons = service.search(PersonIdentification.class, personIdentification.officialName, 500); // null: default search
+		List<PersonIdentification> persons = backend.search(PersonIdentification.class, personIdentification.officialName, 500); // null: default search
 		for (PersonIdentification p : persons) {
 			if (StringUtils.equals(p.firstName, personIdentification.firstName)) {
 				if (StringUtils.equals(p.officialName, personIdentification.officialName)) {
-					return service.read(Person.class, p.id);
+					return backend.read(Person.class, p.id);
 				}
 			}
 		}
 		return null;
 	}
 	
-	public static Organisation getByIdentification(DbService service, OrganisationIdentification organisationIdentification) {
+	public static Organisation getByIdentification(Backend backend, OrganisationIdentification organisationIdentification) {
 		if (NamedId.OPEN_ECH_ID_CATEGORY.equals(organisationIdentification.technicalIds.localId.personIdCategory)) {
 			long id = Long.valueOf(organisationIdentification.technicalIds.localId.personId);
-			return service.read(Organisation.class, id);
+			return backend.read(Organisation.class, id);
 		}
-		List<Organisation> organisations = service.search(Organisation.class, organisationIdentification.organisationName, 2);
+		List<Organisation> organisations = backend.search(Organisation.class, organisationIdentification.organisationName, 2);
 		if (!organisations.isEmpty()) {
 			return organisations.get(0);
 		} else {

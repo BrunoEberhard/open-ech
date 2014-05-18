@@ -13,8 +13,7 @@ import ch.openech.dm.person.Person;
 import ch.openech.dm.person.PersonIdentification;
 import ch.openech.dm.types.Sex;
 import ch.openech.dm.types.TypeOfResidence;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
+import ch.openech.mj.backend.Backend;
 
 public class MoveInTest extends AbstractServerTest {
 
@@ -22,9 +21,9 @@ public class MoveInTest extends AbstractServerTest {
 	public void moveIn() throws Exception {
 		processFile("samples/eCH-0020/moveIn/data_ordipro-moveIn-21.xml");
 		
-		List<PersonIdentification> identifications = Services.get(DbService.class).search(PersonIdentification.class, "BERNALUSKOVSKI", 2);
+		List<PersonIdentification> identifications = Backend.getInstance().search(PersonIdentification.class, "BERNALUSKOVSKI", 2);
 		Assert.assertEquals(1, identifications.size());
-		Person person = Services.get(DbService.class).read(Person.class, identifications.get(0).id);
+		Person person = Backend.getInstance().read(Person.class, identifications.get(0).id);
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals("BERNALUSKOVSKI", person.officialName);

@@ -6,12 +6,11 @@ import java.util.List;
 import org.joda.time.LocalDateTime;
 
 import ch.openech.dm.person.Person;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.page.HistoryPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
 import ch.openech.mj.resources.Resources;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
 import ch.openech.mj.util.StringUtils;
 import ch.openech.xml.write.EchSchema;
 
@@ -41,8 +40,8 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 
 	@Override
 	protected List<HistoryVersion<Person>> loadVersions() {
-		Person person = Services.get(DbService.class).read(Person.class, personId);
-		List<Person> persons = Services.get(DbService.class).loadHistory(person);
+		Person person = Backend.getInstance().read(Person.class, personId);
+		List<Person> persons = Backend.getInstance().loadHistory(person);
 //		Collections.sort(times);
 //		Collections.reverse(times);
 

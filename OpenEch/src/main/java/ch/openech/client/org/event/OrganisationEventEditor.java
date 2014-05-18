@@ -2,7 +2,7 @@ package ch.openech.client.org.event;
 
 import java.util.List;
 
-import ch.openech.business.EchService;
+import ch.openech.business.OrganisationTransaction;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.ewk.event.EchForm;
@@ -10,11 +10,12 @@ import ch.openech.client.page.OrganisationViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.common.NamedId;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.edit.form.Form;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.PageLink;
-import ch.openech.mj.server.Services;
+import ch.openech.mj.util.SerializationContainer;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
@@ -65,9 +66,9 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 		Organisation firstOrganisation = null;
 		for (String xml : xmls) {
 			if (firstOrganisation == null) {
-				firstOrganisation = Services.get(EchService.class).processOrg(xml);
+				firstOrganisation = (Organisation) SerializationContainer.unwrap(Backend.getInstance().execute(new OrganisationTransaction(xml)));
 			} else {
-				Services.get(EchService.class).processOrg(xml);
+				Backend.getInstance().execute(new OrganisationTransaction(xml));
 			}
 		}
 		return firstOrganisation;

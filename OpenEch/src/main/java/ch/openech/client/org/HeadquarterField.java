@@ -7,6 +7,7 @@ import ch.openech.client.page.SearchOrganisationPage;
 import ch.openech.dm.organisation.Headquarter;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.organisation.OrganisationIdentification;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.edit.SearchDialogAction;
 import ch.openech.mj.edit.fields.ObjectFlowField;
 import ch.openech.mj.edit.form.IForm;
@@ -14,8 +15,6 @@ import ch.openech.mj.model.Keys;
 import ch.openech.mj.model.PropertyInterface;
 import ch.openech.mj.model.ViewUtil;
 import ch.openech.mj.page.PageLink;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
 import ch.openech.xml.write.EchSchema;
 
 public class HeadquarterField extends ObjectFlowField<Headquarter> {
@@ -89,7 +88,7 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 
 		@Override
 		public List<Organisation> search(String query) {
-			return Services.get(DbService.class).search(Organisation.class, query, 100);
+			return Backend.getInstance().search(Organisation.class, query, 100);
 		}
 	}
 

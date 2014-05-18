@@ -10,13 +10,13 @@ import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 
-import ch.openech.business.EchService;
+import ch.openech.business.PersonTransaction;
 import ch.openech.client.OpenEchApplication;
 import ch.openech.dm.EchSchemaValidation;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.person.Person;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
+import ch.openech.mj.backend.Backend;
+import ch.openech.mj.util.SerializationContainer;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -35,12 +35,12 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static void clear() {
-		Services.get(DbService.class).deleteAll(Person.class);
-		Services.get(DbService.class).deleteAll(Organisation.class);
+		Backend.getInstance().deleteAll(Person.class);
+		Backend.getInstance().deleteAll(Organisation.class);
 	}
 
 	protected Person insertPerson(String vn) throws Exception {
-		List<Person> persons = Services.get(DbService.class).search(Person.class, Person.SEARCH_BY_VN, vn, 2);
+		List<Person> persons = Backend.getInstance().search(Person.class, Person.SEARCH_BY_VN, vn, 2);
 		if (persons.size() == 1) {
 			return persons.get(0);
 		} else if (persons.isEmpty()){
@@ -54,7 +54,7 @@ public abstract class AbstractServerTest {
 	public static Person processFile(String relativFileName) throws IOException {
 		InputStream inputStream = AbstractServerTest.class.getResourceAsStream(relativFileName);
 		String xml = convertStreamToString(inputStream);
-		return Services.get(EchService.class).process(xml);
+		return (Person) SerializationContainer.unwrap(Backend.getInstance().execute(new PersonTransaction(xml)));
 	}
 	
 	public static Person process(String string) throws IOException {
@@ -64,7 +64,7 @@ public abstract class AbstractServerTest {
 			System.out.println(string);
 			Assert.fail(validationMessage);
 		}
-		return Services.get(EchService.class).process(string);
+		return (Person) SerializationContainer.unwrap(Backend.getInstance().execute(new PersonTransaction(string)));
 	}
 	
 	public static String convertStreamToString(InputStream is) throws IOException {
@@ -83,7 +83,7 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static Person reload(Person person) {
-		return Services.get(DbService.class).read(Person.class, person.id);
+		return Backend.getInstance().read(Person.class, person.id);
 	}
 	
 	public static WriterEch0020 writer() {

@@ -20,65 +20,65 @@ import ch.openech.dm.Event;
 import ch.openech.dm.code.TypeOfResidenceOrganisation;
 import ch.openech.dm.organisation.Organisation;
 import ch.openech.dm.organisation.OrganisationIdentification;
-import ch.openech.mj.server.DbService;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.toolkit.ProgressListener;
+import ch.openech.mj.util.IdUtils;
 import ch.openech.mj.util.StringUtils;
 
-public class StaxEch0148 implements StaxEchParser<Organisation> {
-
-	private final DbService dbService;
+public class StaxEch0148 {
+	private final Backend backend;
 	
 	private Event e;
 	private Organisation lastChanged;
 	
-	public StaxEch0148(DbService dbService) {
-		this.dbService = dbService;
+	public StaxEch0148(Backend backend) {
+		this.backend = backend;
 	}
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
 		
-		dbService.insert(organisation);
+		backend.insert(organisation);
+		long id = backend.insert(organisation);
+		IdUtils.setId(organisation, id);
 		lastChanged = organisation;
 	}
-
-	@Override
+	
 	public Organisation getLastChanged() {
 		return lastChanged;
 	}
 
-	@Override
 	public void process(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));
 		
-		process(xml, xmlString, null);
+		process(xml, null);
 		xml.close();
 	}
 
-	public void process(InputStream inputStream, String eventString, ProgressListener progressListener) throws XMLStreamException {
+	public void process(InputStream inputStream, ProgressListener progressListener) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 		
-		process(xml, eventString, progressListener);
+		process(xml, progressListener);
 		xml.close();
 	}
 
-	private void process(XMLEventReader xml, String xmlString, ProgressListener progressListener) throws XMLStreamException {
+	private void process(XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
 		while (xml.hasNext() && !isCanceled(progressListener)) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(DELIVERY)) {
-					delivery(xmlString, xml, progressListener);
+					delivery(xml, progressListener);
 				}
 				else skip(xml);
 			} 
 		}
 	}
 	
-	private void delivery(String xmlString, XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
+	private void delivery(XMLEventReader xml, ProgressListener progressListener) throws XMLStreamException {
 		while (!isCanceled(progressListener)) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -133,7 +133,7 @@ public class StaxEch0148 implements StaxEchParser<Organisation> {
 	public void simpleOrganisationEvent(String type, Organisation organisation) {
 		try {
 			organisation.event = e;
-			dbService.update(organisation);
+			backend.update(organisation);
 			lastChanged = organisation;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -171,7 +171,7 @@ public class StaxEch0148 implements StaxEchParser<Organisation> {
 				String startName = startElement.getName().getLocalPart();
 				if (StringUtils.equals(startName, ORGANISATION_IDENTIFICATION)) {
 					OrganisationIdentification organisationIdentification = StaxEch0097.organisationIdentification(xml);
-					organisation = EchPersistence.getByIdentification(dbService, organisationIdentification);
+					organisation = EchPersistence.getByIdentification(backend, organisationIdentification);
 					if (StringUtils.equals(eventName, CORRECT_LIQUIDATION)) {
 						organisation.liquidationEntryDate = null;
 						organisation.liquidationDate = null;

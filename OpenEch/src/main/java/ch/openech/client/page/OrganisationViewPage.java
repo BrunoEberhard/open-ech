@@ -3,13 +3,12 @@ package ch.openech.client.page;
 import ch.openech.client.org.OrganisationMenu;
 import ch.openech.client.org.OrganisationPanel;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.ObjectViewPage;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.resources.Resources;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationViewPage extends ObjectViewPage<Organisation> {
@@ -41,10 +40,9 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 	private static Organisation loadObject(String organisationId, int time) {
 		long id = Long.valueOf(organisationId);
 		if (time == 0) {
-			return Services.get(DbService.class).read(Organisation.class, id);
+			return Backend.getInstance().read(Organisation.class, id);
 		} else {
-			Organisation organisation = Services.get(DbService.class).read(Organisation.class, id);
-			return Services.get(DbService.class).loadHistory(organisation, time);
+			return Backend.getInstance().read(Organisation.class, id, time);
 		}
 	}
 

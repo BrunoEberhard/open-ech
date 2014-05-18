@@ -14,12 +14,11 @@ import javax.swing.JScrollPane;
 import ch.openech.business.EchPersistence;
 import ch.openech.dm.SedexMessageInformation;
 import ch.openech.dm.person.Person;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.page.AbstractPage;
 import ch.openech.mj.page.ActionGroup;
 import ch.openech.mj.page.PageContext;
 import ch.openech.mj.page.RefreshablePage;
-import ch.openech.mj.server.DbService;
-import ch.openech.mj.server.Services;
 import ch.openech.mj.toolkit.IComponent;
 import ch.openech.xml.write.EchSchema;
 
@@ -161,7 +160,7 @@ public class SedexInputPage extends AbstractPage implements RefreshablePage {
 	}
 
 	private Person searchPerson(SedexMessageInformation envelope) throws SQLException {
-		return EchPersistence.getByIdentification(Services.get(DbService.class), envelope.personIdentification);
+		return EchPersistence.getByIdentification(Backend.getInstance(), envelope.personIdentification);
 	}
 	
 	@Override

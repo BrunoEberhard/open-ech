@@ -29,15 +29,15 @@ import ch.openech.dm.person.Relation;
 import ch.openech.dm.person.types.ReasonOfAcquisition;
 import ch.openech.dm.types.TypeOfResidence;
 import ch.openech.dm.types.YesNo;
-import ch.openech.mj.server.DbService;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.toolkit.ProgressListener;
 import ch.openech.mj.util.DateUtils;
 import ch.openech.mj.util.FieldUtils;
+import ch.openech.mj.util.IdUtils;
 import ch.openech.mj.util.StringUtils;
 
-public class StaxEch0020 implements StaxEchParser<Person> {
-
-	private final DbService dbService;
+public class StaxEch0020 {
+	private final Backend backend;
 	
 	// hack: Globale Variable als 2. Rückgabewert von simplePersonEventPerson and simplePersonEvent
 	// Dies ist notwendige, weil changeNamePersonType einerseits die Identifikation der zu ändernden
@@ -46,8 +46,8 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	private Event e;
 	private Person lastChanged;
 	
-	public StaxEch0020(DbService dbService) {
-		this.dbService = dbService;
+	public StaxEch0020(Backend backend) {
+		this.backend = backend;
 	}
 	
 	// Persistence
@@ -55,15 +55,15 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	public void insertPerson(Person person) {
 		person.event = e;
 		updatePersonIdentifications(person);
-		dbService.insert(person);
+		long id = backend.insert(person);
+		IdUtils.setId(person, id);
 		lastChanged = person;
 	}
 
-	@Override
 	public Person getLastChanged() {
 		return lastChanged;
 	}
-
+	
 	private void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
 		if (StringUtils.equals(type, XmlConstants.DIVORCE, XmlConstants.UNDO_MARRIAGE, XmlConstants.UNDO_PARTNERSHIP)) removePartner(person);
 
@@ -74,8 +74,8 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 			person.technicalIds.localId.clear();
 		}
 		updatePersonIdentifications(person);
-		dbService.update(person);
-		lastChanged = dbService.read(Person.class, person.id);
+		backend.update(person);
+		lastChanged = backend.read(Person.class, person.id);
 	}
 
 	//
@@ -119,12 +119,11 @@ public class StaxEch0020 implements StaxEchParser<Person> {
 	}
 	
 	public Person getPerson(PersonIdentification personIdentification) {
-		return EchPersistence.getByIdentification(dbService, personIdentification);
+		return EchPersistence.getByIdentification(backend, personIdentification);
 	}
 	
 	//
 	
-	@Override
 	public void process(String xmlString) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(new StringReader(xmlString));

@@ -3,17 +3,18 @@ package ch.openech.client.editor;
 import java.util.Collections;
 import java.util.List;
 
-import ch.openech.business.EchService;
+import ch.openech.business.OrganisationTransaction;
 import ch.openech.client.XmlEditor;
 import ch.openech.client.ewk.XmlResult;
 import ch.openech.client.org.OrganisationPanel;
 import ch.openech.client.page.OrganisationViewPage;
 import ch.openech.client.preferences.OpenEchPreferences;
 import ch.openech.dm.organisation.Organisation;
+import ch.openech.mj.backend.Backend;
 import ch.openech.mj.edit.form.IForm;
 import ch.openech.mj.page.PageLink;
-import ch.openech.mj.server.Services;
 import ch.openech.mj.util.LoggingRuntimeException;
+import ch.openech.mj.util.SerializationContainer;
 import ch.openech.xml.write.EchSchema;
 
 
@@ -38,7 +39,7 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> impl
 	@Override
 	public String save(Organisation organisation) {
 		String xml = getXml(organisation).get(0);
-		organisation = Services.get(EchService.class).processOrg(xml);
+		organisation = (Organisation) SerializationContainer.unwrap(Backend.getInstance().execute(new OrganisationTransaction(xml)));
 		return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
 	}
 	

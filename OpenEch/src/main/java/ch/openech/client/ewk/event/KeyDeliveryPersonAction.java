@@ -2,8 +2,8 @@ package ch.openech.client.ewk.event;
 
 import java.io.OutputStream;
 
-import ch.openech.business.EchService;
-import ch.openech.mj.server.Services;
+import ch.openech.business.PersonExportStreamProducer;
+import ch.openech.mj.backend.Backend;
 
 public class KeyDeliveryPersonAction extends ExportAllPersonAction {
 	
@@ -13,7 +13,7 @@ public class KeyDeliveryPersonAction extends ExportAllPersonAction {
 	
 	@Override
 	protected void export(OutputStream outputStream) {
-		Services.get(EchService.class).exportKeys(ewkVersion, outputStream);
+		Backend.getInstance().execute(new PersonExportStreamProducer(ewkVersion, false), outputStream);
 	}
 
 }
