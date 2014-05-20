@@ -20,15 +20,15 @@ import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.Event;
-import  ch.openech.model.code.TypeOfResidenceOrganisation;
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.common.TechnicalIds;
-import  ch.openech.model.contact.ContactEntry;
-import  ch.openech.model.types.Language;
+import ch.openech.model.EchFormats;
+import ch.openech.model.Event;
+import ch.openech.model.code.TypeOfResidenceOrganisation;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
+import ch.openech.model.common.TechnicalIds;
+import ch.openech.model.contact.ContactEntry;
+import ch.openech.model.types.Language;
 import ch.openech.xml.read.StaxEch;
 
 public class Organisation implements Validation {
@@ -38,7 +38,7 @@ public class Organisation implements Validation {
 	public static enum EditMode { DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, IN_LIQUIDATION, LIQUIDATION, CHANGE_REPORTING }
 	
 	static {
-		Codes.addCodes(ResourceBundle.getBundle(" ch.openech.model.organisation.types.ech_organisation"));
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.model.organisation.types.ech_organisation"));
 	}
 
 	public transient EditMode editMode;

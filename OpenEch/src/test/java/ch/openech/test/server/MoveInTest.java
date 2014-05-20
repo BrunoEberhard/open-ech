@@ -7,13 +7,14 @@ import junit.framework.Assert;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
+import org.minimalj.transaction.criteria.Criteria;
 
-import  ch.openech.model.code.FederalRegister;
-import  ch.openech.model.code.NationalityStatus;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.types.Sex;
-import  ch.openech.model.types.TypeOfResidence;
+import ch.openech.model.code.FederalRegister;
+import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.types.Sex;
+import ch.openech.model.types.TypeOfResidence;
 
 public class MoveInTest extends AbstractServerTest {
 
@@ -21,7 +22,7 @@ public class MoveInTest extends AbstractServerTest {
 	public void moveIn() throws Exception {
 		processFile("samples/eCH-0020/moveIn/data_ordipro-moveIn-21.xml");
 		
-		List<PersonIdentification> identifications = Backend.getInstance().search(PersonIdentification.class, "BERNALUSKOVSKI", 2);
+		List<PersonIdentification> identifications = Backend.getInstance().read(PersonIdentification.class, Criteria.search("BERNALUSKOVSKI"), 2);
 		Assert.assertEquals(1, identifications.size());
 		Person person = Backend.getInstance().read(Person.class, identifications.get(0).id);
 		

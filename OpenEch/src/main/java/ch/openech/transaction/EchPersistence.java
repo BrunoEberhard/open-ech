@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.joda.time.ReadablePartial;
 import org.minimalj.backend.Backend;
+import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.common.NamedId;
@@ -15,7 +16,7 @@ import ch.openech.model.person.PersonIdentification;
 public class EchPersistence {
 
 	public static Person getByName(Backend backend, String name, String firstName, ReadablePartial dateOfBirth) {
-		List<Person> persons = backend.search(Person.class, name, 2); // null: default search
+		List<Person> persons = backend.read(Person.class, Criteria.search(name), 2); // null: default search
 		for (int i = persons.size()-1; i>= 0; i--) {
 			Person p = persons.get(i);
 			if (!StringUtils.isBlank(firstName) && !StringUtils.equals(firstName, p.firstName)) {
@@ -40,10 +41,10 @@ public class EchPersistence {
 			return backend.read(Person.class, id);
 		}
 		if (personIdentification.vn != null) {
-			List<Person> persons = backend.search(Person.class, Person.SEARCH_BY_VN, personIdentification.vn.value, 1);
+			List<Person> persons = backend.read(Person.class, Criteria.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
 			if (!persons.isEmpty()) return persons.get(0);
 		} 
-		List<PersonIdentification> persons = backend.search(PersonIdentification.class, personIdentification.officialName, 500); // null: default search
+		List<PersonIdentification> persons = backend.read(PersonIdentification.class, Criteria.search(personIdentification.officialName), 500);
 		for (PersonIdentification p : persons) {
 			if (StringUtils.equals(p.firstName, personIdentification.firstName)) {
 				if (StringUtils.equals(p.officialName, personIdentification.officialName)) {
@@ -59,7 +60,7 @@ public class EchPersistence {
 			long id = Long.valueOf(organisationIdentification.technicalIds.localId.personId);
 			return backend.read(Organisation.class, id);
 		}
-		List<Organisation> organisations = backend.search(Organisation.class, organisationIdentification.organisationName, 2);
+		List<Organisation> organisations = backend.read(Organisation.class, Criteria.search(organisationIdentification.organisationName), 2);
 		if (!organisations.isEmpty()) {
 			return organisations.get(0);
 		} else {

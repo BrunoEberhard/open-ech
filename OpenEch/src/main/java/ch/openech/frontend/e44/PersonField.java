@@ -8,9 +8,10 @@ import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.IForm;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
+import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.frontend.page.SearchPersonPage;
-import  ch.openech.model.person.Person;
+import ch.openech.model.person.Person;
 
 public class PersonField extends ObjectFlowField<Person> {
 
@@ -51,8 +52,8 @@ public class PersonField extends ObjectFlowField<Person> {
 		}
 
 		@Override
-		public List<Person> search(String query) {
-			return Backend.getInstance().search(Person.class, query, 100);
+		public List<Person> search(String searchText) {
+			return Backend.getInstance().read(Person.class, Criteria.search(searchText), 100);
 		}
 
 	}

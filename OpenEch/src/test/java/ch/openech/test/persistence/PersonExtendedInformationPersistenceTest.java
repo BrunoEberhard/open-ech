@@ -10,9 +10,9 @@ import org.minimalj.backend.db.DbPersistence;
 import org.minimalj.backend.db.Table;
 
 import ch.openech.datagenerator.DataGenerator;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonExtendedInformation;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonExtendedInformation;
+import ch.openech.model.types.YesNo;
 
 public class PersonExtendedInformationPersistenceTest {
 
@@ -29,9 +29,9 @@ public class PersonExtendedInformationPersistenceTest {
 		person.personExtendedInformation = new PersonExtendedInformation();
 		person.personExtendedInformation.armedForcesLiability = YesNo.Yes;
 		
-		long id = ((Table<Person>) persistence.getTable(Person.class)).insert(person);
+		long id = persistence.getTable(Person.class).insert(person);
 		
-		Person readPerson = ((Table<Person>) persistence.getTable(Person.class)).read(id);
+		Person readPerson = ((Table<Person>) persistence.table(Person.class)).read(id);
 		Assert.assertEquals(YesNo.Yes, readPerson.personExtendedInformation.armedForcesLiability);
 	}
 
@@ -41,15 +41,15 @@ public class PersonExtendedInformationPersistenceTest {
 		person.personExtendedInformation = new PersonExtendedInformation();
 		person.personExtendedInformation.armedForcesLiability = YesNo.Yes;
 		
-		long id = ((Table<Person>) persistence.getTable(Person.class)).insert(person);
+		long id = persistence.getTable(Person.class).insert(person);
 		
-		Person readPerson = ((Table<Person>) persistence.getTable(Person.class)).read(id);
+		Person readPerson = ((Table<Person>) persistence.table(Person.class)).read(id);
 		Assert.assertEquals(YesNo.Yes, readPerson.personExtendedInformation.armedForcesLiability);
 		
 		readPerson.personExtendedInformation.armedForcesService = YesNo.No;
-		((Table<Person>) persistence.getTable(Person.class)).update(readPerson);
+		((Table<Person>) persistence.table(Person.class)).update(readPerson);
 		
-		Person readPerson2 = ((Table<Person>) persistence.getTable(Person.class)).read(id);
+		Person readPerson2 = ((Table<Person>) persistence.table(Person.class)).read(id);
 				
 		Assert.assertEquals(YesNo.No, readPerson2.personExtendedInformation.armedForcesService);
 	}

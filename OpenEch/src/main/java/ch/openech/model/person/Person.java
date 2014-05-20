@@ -23,21 +23,21 @@ import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.Event;
-import  ch.openech.model.code.NationalityStatus;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.common.TechnicalIds;
-import  ch.openech.model.contact.ContactEntry;
-import  ch.openech.model.person.types.PartnerShipAbolition;
-import  ch.openech.model.person.types.Religion;
-import  ch.openech.model.person.types.TypeOfRelationship;
-import  ch.openech.model.person.types.Vn;
-import  ch.openech.model.types.Language;
-import  ch.openech.model.types.Sex;
-import  ch.openech.model.types.TypeOfResidence;
+import ch.openech.model.EchFormats;
+import ch.openech.model.Event;
+import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.common.Address;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.Place;
+import ch.openech.model.common.TechnicalIds;
+import ch.openech.model.contact.ContactEntry;
+import ch.openech.model.person.types.PartnerShipAbolition;
+import ch.openech.model.person.types.Religion;
+import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.model.person.types.Vn;
+import ch.openech.model.types.Language;
+import ch.openech.model.types.Sex;
+import ch.openech.model.types.TypeOfResidence;
 
 
 public class Person implements Validation {
@@ -46,7 +46,7 @@ public class Person implements Validation {
 	public static final Object[] SEARCH_BY_VN = new Object[]{PERSON.vn.value};
 	
 	static {
-		Codes.addCodes(ResourceBundle.getBundle(" ch.openech.model.person.types.ech_person"));
+		Codes.addCodes(ResourceBundle.getBundle("ch.openech.model.person.types.ech_person"));
 	}
 
 	public transient PersonEditMode editMode;

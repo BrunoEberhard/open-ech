@@ -8,20 +8,21 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.edit.form.IForm;
 import org.minimalj.model.validation.ValidationMessage;
+import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.preferences.OpenEchPreferences;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonEditMode;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.Relation;
-import  ch.openech.model.person.types.Religion;
-import  ch.openech.model.person.types.TypeOfRelationship;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.common.Place;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonEditMode;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.types.Religion;
+import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.model.types.YesNo;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -83,7 +84,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 		
 		Relation partnerRelation = parentPerson.getPartner();
 		if (partnerRelation != null && partnerRelation.partner != null && partnerRelation.partner.vn != null) { 
-			List<PersonIdentification> partnerOfVisiblePersons = Backend.getInstance().search(PersonIdentification.class, Person.SEARCH_BY_VN, partnerRelation.partner.vn.value, 2);
+			List<PersonIdentification> partnerOfVisiblePersons = Backend.getInstance().read(PersonIdentification.class, Criteria.search(partnerRelation.partner.vn.value, Person.SEARCH_BY_VN), 2);
 			if (partnerOfVisiblePersons.size() == 1) {
 				Person partnerOfVisiblePerson = Backend.getInstance().read(Person.class, partnerOfVisiblePersons.get(0).id);
 				if (partnerOfVisiblePerson.isMale())

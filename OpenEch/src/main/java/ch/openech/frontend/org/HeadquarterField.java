@@ -10,12 +10,13 @@ import org.minimalj.frontend.page.PageLink;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.ViewUtil;
+import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.frontend.page.OrganisationViewPage;
 import ch.openech.frontend.page.SearchOrganisationPage;
-import  ch.openech.model.organisation.Headquarter;
-import  ch.openech.model.organisation.Organisation;
-import  ch.openech.model.organisation.OrganisationIdentification;
+import ch.openech.model.organisation.Headquarter;
+import ch.openech.model.organisation.Organisation;
+import ch.openech.model.organisation.OrganisationIdentification;
 import ch.openech.xml.write.EchSchema;
 
 public class HeadquarterField extends ObjectFlowField<Headquarter> {
@@ -88,8 +89,8 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 		}
 
 		@Override
-		public List<Organisation> search(String query) {
-			return Backend.getInstance().search(Organisation.class, query, 100);
+		public List<Organisation> search(String searchText) {
+			return Backend.getInstance().read(Organisation.class, Criteria.search(searchText), 100);
 		}
 	}
 

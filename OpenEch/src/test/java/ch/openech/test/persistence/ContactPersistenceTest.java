@@ -15,7 +15,7 @@ import  ch.openech.model.types.ContactCategory;
 public class ContactPersistenceTest {
 
 	private static DbPersistence persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Contact.class);
-	private static Table<Contact> table = (Table<Contact>) persistence.getTable(Contact.class);
+	private static Table<Contact> table = (Table<Contact>) persistence.table(Contact.class);
 	
 	@Test
 	public void insertContactWithoutEntriesTest() throws Exception {

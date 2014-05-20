@@ -11,12 +11,12 @@ import org.minimalj.backend.db.DbPersistence;
 import org.minimalj.backend.db.ImmutableTable;
 import org.minimalj.backend.db.Table;
 
-import  ch.openech.model.common.Address;
-import  ch.openech.model.common.CountryIdentification;
-import  ch.openech.model.person.Occupation;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.types.MrMrs;
-import  ch.openech.model.types.Sex;
+import ch.openech.model.common.Address;
+import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.person.Occupation;
+import ch.openech.model.person.Person;
+import ch.openech.model.types.MrMrs;
+import ch.openech.model.types.Sex;
 
 public class DbPersonCrudTest {
 
@@ -86,7 +86,7 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testCrudPerson() throws SQLException {
-		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+		Table<Person> personTable = persistence.getTable(Person.class);
 		
 		Person person = new Person();
 		person.officialName = "Eberhard";
@@ -115,7 +115,7 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testInsertPerson2() throws SQLException {
-		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+		Table<Person> personTable = (Table<Person>) persistence.table(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";
@@ -156,7 +156,7 @@ public class DbPersonCrudTest {
 
 	@Test
 	public void testUpdatePerson() throws SQLException {
-		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+		Table<Person> personTable = persistence.getTable(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";
@@ -195,7 +195,7 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testUpdateSubTable() throws SQLException {
-		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+		Table<Person> personTable = persistence.getTable(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";
@@ -238,7 +238,7 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testChangePersonIdentification() throws SQLException {
-		Table<Person> personTable = (Table<Person>) persistence.getTable(Person.class);
+		Table<Person> personTable = persistence.getTable(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";

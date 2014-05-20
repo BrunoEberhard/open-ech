@@ -1,6 +1,6 @@
 package ch.openech.frontend.page;
 
-import static  ch.openech.model.organisation.Organisation.*;
+import static ch.openech.model.organisation.Organisation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,11 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.TablePage;
+import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.frontend.preferences.OpenEchPreferences;
-import  ch.openech.model.EchSchema0148;
-import  ch.openech.model.organisation.Organisation;
+import ch.openech.model.EchSchema0148;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 
 public class SearchOrganisationPage extends TablePage<Organisation> {
@@ -71,8 +72,8 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 	}
 
 	@Override
-	protected List<Organisation> load(String query) {
-		return Backend.getInstance().search(Organisation.class, query, 100);
+	protected List<Organisation> load(String searchText) {
+		return Backend.getInstance().read(Organisation.class, Criteria.search(searchText), 100);
 	}
 	
 }

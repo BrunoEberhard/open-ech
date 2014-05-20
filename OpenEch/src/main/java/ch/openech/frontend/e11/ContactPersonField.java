@@ -10,17 +10,18 @@ import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.PropertyInterface;
+import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.DateUtils;
 
 import ch.openech.frontend.e10.AddressPanel;
 import ch.openech.frontend.e44.PersonIdentificationPanel;
 import ch.openech.frontend.page.PersonViewPage;
 import ch.openech.frontend.page.SearchPersonPage;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.person.ContactPerson;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.types.MrMrs;
+import ch.openech.model.common.Address;
+import ch.openech.model.person.ContactPerson;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.types.MrMrs;
 import ch.openech.xml.write.EchSchema;
 
 public class ContactPersonField extends ObjectFlowField<ContactPerson> {
@@ -100,8 +101,8 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		}
 		
 		@Override
-		public List<Person> search(String query) {
-			return Backend.getInstance().search(Person.class, query, 100);
+		public List<Person> search(String searchText) {
+			return Backend.getInstance().read(Person.class, Criteria.search(searchText), 100);
 		}
 
 	};
