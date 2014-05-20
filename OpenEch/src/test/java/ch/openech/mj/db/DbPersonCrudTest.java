@@ -115,7 +115,7 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testInsertPerson2() throws SQLException {
-		Table<Person> personTable = (Table<Person>) persistence.table(Person.class);
+		Table<Person> personTable = persistence.getTable(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";

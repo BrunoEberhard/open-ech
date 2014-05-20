@@ -6,16 +6,16 @@ import org.junit.Test;
 import org.minimalj.backend.db.DbPersistence;
 import org.minimalj.backend.db.Table;
 
-import  ch.openech.model.contact.Contact;
-import  ch.openech.model.contact.ContactEntry;
-import  ch.openech.model.contact.ContactEntryType;
-import  ch.openech.model.types.ContactCategory;
+import ch.openech.model.contact.Contact;
+import ch.openech.model.contact.ContactEntry;
+import ch.openech.model.contact.ContactEntryType;
+import ch.openech.model.types.ContactCategory;
 
 
 public class ContactPersistenceTest {
 
 	private static DbPersistence persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Contact.class);
-	private static Table<Contact> table = (Table<Contact>) persistence.table(Contact.class);
+	private static Table<Contact> table = persistence.getTable(Contact.class);
 	
 	@Test
 	public void insertContactWithoutEntriesTest() throws Exception {

@@ -7,7 +7,6 @@ import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.minimalj.backend.db.DbPersistence;
-import org.minimalj.backend.db.Table;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.person.Person;
@@ -31,7 +30,7 @@ public class PersonExtendedInformationPersistenceTest {
 		
 		long id = persistence.getTable(Person.class).insert(person);
 		
-		Person readPerson = ((Table<Person>) persistence.table(Person.class)).read(id);
+		Person readPerson = persistence.getTable(Person.class).read(id);
 		Assert.assertEquals(YesNo.Yes, readPerson.personExtendedInformation.armedForcesLiability);
 	}
 
@@ -43,13 +42,13 @@ public class PersonExtendedInformationPersistenceTest {
 		
 		long id = persistence.getTable(Person.class).insert(person);
 		
-		Person readPerson = ((Table<Person>) persistence.table(Person.class)).read(id);
+		Person readPerson = persistence.getTable(Person.class).read(id);
 		Assert.assertEquals(YesNo.Yes, readPerson.personExtendedInformation.armedForcesLiability);
 		
 		readPerson.personExtendedInformation.armedForcesService = YesNo.No;
-		((Table<Person>) persistence.table(Person.class)).update(readPerson);
+		persistence.getTable(Person.class).update(readPerson);
 		
-		Person readPerson2 = ((Table<Person>) persistence.table(Person.class)).read(id);
+		Person readPerson2 = persistence.getTable(Person.class).read(id);
 				
 		Assert.assertEquals(YesNo.No, readPerson2.personExtendedInformation.armedForcesService);
 	}
