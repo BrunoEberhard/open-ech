@@ -1,10 +1,10 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.CANTON_ABBREVIATION;
-import static ch.openech.dm.XmlConstants.HISTORY_MUNICIPALITY_ID;
-import static ch.openech.dm.XmlConstants.HISTORY_MUNICIPIALITY_ID;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY_ID;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY_NAME;
+import static  ch.openech.model.XmlConstants.CANTON_ABBREVIATION;
+import static  ch.openech.model.XmlConstants.HISTORY_MUNICIPALITY_ID;
+import static  ch.openech.model.XmlConstants.HISTORY_MUNICIPIALITY_ID;
+import static  ch.openech.model.XmlConstants.MUNICIPALITY_ID;
+import static  ch.openech.model.XmlConstants.MUNICIPALITY_NAME;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
 
@@ -13,7 +13,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.common.MunicipalityIdentification;
+import  ch.openech.model.common.MunicipalityIdentification;
 
 public class StaxEch0007 {
 

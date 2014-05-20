@@ -1,13 +1,14 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
-import ch.openech.dm.common.NamedId;
-import ch.openech.dm.contact.Contact;
-import ch.openech.dm.contact.ContactEntry;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.common.NamedId;
+import  ch.openech.model.contact.Contact;
+import  ch.openech.model.contact.ContactEntry;
 
 public class WriterEch0046 extends DeliveryWriter {
 

@@ -3,13 +3,13 @@ package ch.openech.test.persistence;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.minimalj.backend.db.DbPersistence;
+import org.minimalj.backend.db.Table;
 
-import ch.openech.dm.contact.Contact;
-import ch.openech.dm.contact.ContactEntry;
-import ch.openech.dm.contact.ContactEntryType;
-import ch.openech.dm.types.ContactCategory;
-import ch.openech.mj.db.DbPersistence;
-import ch.openech.mj.db.Table;
+import  ch.openech.model.contact.Contact;
+import  ch.openech.model.contact.ContactEntry;
+import  ch.openech.model.contact.ContactEntryType;
+import  ch.openech.model.types.ContactCategory;
 
 
 public class ContactPersistenceTest {

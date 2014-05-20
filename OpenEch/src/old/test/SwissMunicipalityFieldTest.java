@@ -16,8 +16,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.openech.client.e07.SwissMunicipalityField;
-import ch.openech.dm.common.MunicipalityIdentification;
+import ch.openech.frontend.e07.SwissMunicipalityField;
+import  ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.mj.swing.ActionMatcher;
 import ch.openech.mj.swing.toolkit.SwingClientToolkit;
 import ch.openech.mj.toolkit.ClientToolkit;

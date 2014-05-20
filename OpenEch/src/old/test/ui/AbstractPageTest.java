@@ -3,8 +3,8 @@ package ch.openech.test.ui;
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.Before;
 
-import ch.openech.client.ewk.OpenEchApplication;
-import ch.openech.dm.person.Person;
+import ch.openech.frontend.ewk.OpenEchApplication;
+import  ch.openech.model.person.Person;
 import ch.openech.mj.application.ObjectViewPage;
 import ch.openech.mj.page.Page;
 import ch.openech.mj.swing.FrameManager;

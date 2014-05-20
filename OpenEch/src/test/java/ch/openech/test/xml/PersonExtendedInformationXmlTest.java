@@ -5,12 +5,12 @@ import junit.framework.Assert;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
-import ch.openech.dm.EchSchemaValidation;
-import ch.openech.dm.common.Address;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonExtendedInformation;
-import ch.openech.dm.types.Sex;
-import ch.openech.dm.types.YesNo;
+import  ch.openech.model.EchSchemaValidation;
+import  ch.openech.model.common.Address;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PersonExtendedInformation;
+import  ch.openech.model.types.Sex;
+import  ch.openech.model.types.YesNo;
 import ch.openech.xml.read.StaxEch0101;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0101;

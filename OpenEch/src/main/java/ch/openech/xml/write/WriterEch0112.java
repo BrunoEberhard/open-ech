@@ -1,29 +1,29 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.ADDRESS_INFO;
-import static ch.openech.dm.XmlConstants.ADMINISTRATIVE_DWELLING_ID;
-import static ch.openech.dm.XmlConstants.BEGIN_OF_CONTRACT;
-import static ch.openech.dm.XmlConstants.BUILDING;
-import static ch.openech.dm.XmlConstants.CALL_NAME;
-import static ch.openech.dm.XmlConstants.COMES_FROM;
-import static ch.openech.dm.XmlConstants.CONTRACT;
-import static ch.openech.dm.XmlConstants.CONTRACTOR;
-import static ch.openech.dm.XmlConstants.DATE_OF_BIRTH;
-import static ch.openech.dm.XmlConstants.DWELLING;
-import static ch.openech.dm.XmlConstants.END_OF_CONTRACT;
-import static ch.openech.dm.XmlConstants.FLOOR;
-import static ch.openech.dm.XmlConstants.GOES_TO;
-import static ch.openech.dm.XmlConstants.MOVE_IN;
-import static ch.openech.dm.XmlConstants.MOVE_OUT;
-import static ch.openech.dm.XmlConstants.NATIONALITY;
-import static ch.openech.dm.XmlConstants.OFFICIAL_NAME;
-import static ch.openech.dm.XmlConstants.PERSON;
-import static ch.openech.dm.XmlConstants.POSITION_ON_FLOOR;
-import static ch.openech.dm.XmlConstants.ROOM_COUNT;
-import static ch.openech.dm.XmlConstants.SEX;
-import static ch.openech.dm.XmlConstants._E_G_I_D;
-import static ch.openech.dm.XmlConstants._E_W_I_D;
-import ch.openech.dm.tpn.ThirdPartyMove;
+import static  ch.openech.model.XmlConstants.ADDRESS_INFO;
+import static  ch.openech.model.XmlConstants.ADMINISTRATIVE_DWELLING_ID;
+import static  ch.openech.model.XmlConstants.BEGIN_OF_CONTRACT;
+import static  ch.openech.model.XmlConstants.BUILDING;
+import static  ch.openech.model.XmlConstants.CALL_NAME;
+import static  ch.openech.model.XmlConstants.COMES_FROM;
+import static  ch.openech.model.XmlConstants.CONTRACT;
+import static  ch.openech.model.XmlConstants.CONTRACTOR;
+import static  ch.openech.model.XmlConstants.DATE_OF_BIRTH;
+import static  ch.openech.model.XmlConstants.DWELLING;
+import static  ch.openech.model.XmlConstants.END_OF_CONTRACT;
+import static  ch.openech.model.XmlConstants.FLOOR;
+import static  ch.openech.model.XmlConstants.GOES_TO;
+import static  ch.openech.model.XmlConstants.MOVE_IN;
+import static  ch.openech.model.XmlConstants.MOVE_OUT;
+import static  ch.openech.model.XmlConstants.NATIONALITY;
+import static  ch.openech.model.XmlConstants.OFFICIAL_NAME;
+import static  ch.openech.model.XmlConstants.PERSON;
+import static  ch.openech.model.XmlConstants.POSITION_ON_FLOOR;
+import static  ch.openech.model.XmlConstants.ROOM_COUNT;
+import static  ch.openech.model.XmlConstants.SEX;
+import static  ch.openech.model.XmlConstants._E_G_I_D;
+import static  ch.openech.model.XmlConstants._E_W_I_D;
+import  ch.openech.model.tpn.ThirdPartyMove;
 
 public class WriterEch0112 extends DeliveryWriter {
 

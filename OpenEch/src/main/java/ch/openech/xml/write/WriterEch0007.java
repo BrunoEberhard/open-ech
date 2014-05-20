@@ -1,11 +1,11 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.CANTON_ABBREVIATION;
-import static ch.openech.dm.XmlConstants.HISTORY_MUNICIPALITY_ID;
-import static ch.openech.dm.XmlConstants.HISTORY_MUNICIPIALITY_ID;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY_ID;
-import static ch.openech.dm.XmlConstants.MUNICIPALITY_NAME;
-import ch.openech.dm.common.MunicipalityIdentification;
+import static  ch.openech.model.XmlConstants.CANTON_ABBREVIATION;
+import static  ch.openech.model.XmlConstants.HISTORY_MUNICIPALITY_ID;
+import static  ch.openech.model.XmlConstants.HISTORY_MUNICIPIALITY_ID;
+import static  ch.openech.model.XmlConstants.MUNICIPALITY_ID;
+import static  ch.openech.model.XmlConstants.MUNICIPALITY_NAME;
+import  ch.openech.model.common.MunicipalityIdentification;
 
 public class WriterEch0007 {
 

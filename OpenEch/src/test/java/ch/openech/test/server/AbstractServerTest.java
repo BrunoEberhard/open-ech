@@ -9,14 +9,14 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
+import org.minimalj.backend.Backend;
+import org.minimalj.util.SerializationContainer;
 
-import ch.openech.business.PersonTransaction;
-import ch.openech.client.OpenEchApplication;
-import ch.openech.dm.EchSchemaValidation;
-import ch.openech.dm.organisation.Organisation;
-import ch.openech.dm.person.Person;
-import ch.openech.mj.backend.Backend;
-import ch.openech.mj.util.SerializationContainer;
+import ch.openech.OpenEchApplication;
+import  ch.openech.model.EchSchemaValidation;
+import  ch.openech.model.organisation.Organisation;
+import  ch.openech.model.person.Person;
+import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

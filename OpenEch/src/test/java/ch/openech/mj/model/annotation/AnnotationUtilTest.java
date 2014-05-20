@@ -3,11 +3,12 @@ package ch.openech.mj.model.annotation;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.minimalj.model.Keys;
+import org.minimalj.model.annotation.AnnotationUtil;
 
-import ch.openech.dm.EchFormats;
-import ch.openech.dm.common.Address;
-import ch.openech.dm.person.Person;
-import ch.openech.mj.model.Keys;
+import  ch.openech.model.EchFormats;
+import  ch.openech.model.common.Address;
+import  ch.openech.model.person.Person;
 
 public class AnnotationUtilTest {
 

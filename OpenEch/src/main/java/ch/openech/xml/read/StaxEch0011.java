@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
@@ -8,17 +8,18 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.code.FederalRegister;
-import ch.openech.dm.common.DwellingAddress;
-import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.common.Place;
-import ch.openech.dm.person.Foreign;
-import ch.openech.dm.person.Nationality;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.mj.model.EnumUtils;
-import ch.openech.mj.model.properties.FlatProperties;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.model.EnumUtils;
+import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.code.FederalRegister;
+import  ch.openech.model.common.DwellingAddress;
+import  ch.openech.model.common.MunicipalityIdentification;
+import  ch.openech.model.common.Place;
+import  ch.openech.model.person.Foreign;
+import  ch.openech.model.person.Nationality;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PlaceOfOrigin;
 
 public class StaxEch0011 {
 

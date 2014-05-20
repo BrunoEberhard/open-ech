@@ -5,10 +5,10 @@ import java.util.Collection;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.minimalj.model.properties.FlatProperties;
 
-import ch.openech.dm.XmlConstants;
-import ch.openech.dm.person.Person;
-import ch.openech.mj.model.properties.FlatProperties;
+import  ch.openech.model.XmlConstants;
+import  ch.openech.model.person.Person;
 
 public class DomainObjectHelperTest {
 
@@ -22,7 +22,7 @@ public class DomainObjectHelperTest {
 	@Test
 	public void access2() {
 		Person person = new Person();
-		person.maritalStatus.maritalStatus = ch.openech.dm.person.types.MaritalStatus.ledig;
+		person.maritalStatus.maritalStatus =  ch.openech.model.person.types.MaritalStatus.ledig;
 		
 		Assert.assertEquals(person.maritalStatus.maritalStatus, //
 				FlatProperties.getValue(person, XmlConstants.MARITAL_STATUS));

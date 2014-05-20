@@ -1,9 +1,9 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
-import ch.openech.dm.common.DwellingAddress;
-import ch.openech.dm.common.Place;
-import ch.openech.dm.organisation.Organisation;
+import static  ch.openech.model.XmlConstants.*;
+import  ch.openech.model.common.DwellingAddress;
+import  ch.openech.model.common.Place;
+import  ch.openech.model.organisation.Organisation;
 
 public class WriterEch0098 {
 

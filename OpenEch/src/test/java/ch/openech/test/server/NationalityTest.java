@@ -4,10 +4,10 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import ch.openech.dm.code.NationalityStatus;
-import ch.openech.dm.common.Swiss;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PlaceOfOrigin;
+import  ch.openech.model.code.NationalityStatus;
+import  ch.openech.model.common.Swiss;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PlaceOfOrigin;
 
 public class NationalityTest extends AbstractServerTest {
 

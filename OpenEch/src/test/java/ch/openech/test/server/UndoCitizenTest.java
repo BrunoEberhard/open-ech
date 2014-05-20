@@ -5,10 +5,10 @@ import junit.framework.Assert;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.minimalj.util.StringUtils;
 
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.mj.util.StringUtils;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PlaceOfOrigin;
 
 public class UndoCitizenTest extends AbstractServerTest {
 

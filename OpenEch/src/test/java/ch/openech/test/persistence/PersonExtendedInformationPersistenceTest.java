@@ -6,13 +6,13 @@ import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.minimalj.backend.db.DbPersistence;
+import org.minimalj.backend.db.Table;
 
 import ch.openech.datagenerator.DataGenerator;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonExtendedInformation;
-import ch.openech.dm.types.YesNo;
-import ch.openech.mj.db.DbPersistence;
-import ch.openech.mj.db.Table;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PersonExtendedInformation;
+import  ch.openech.model.types.YesNo;
 
 public class PersonExtendedInformationPersistenceTest {
 

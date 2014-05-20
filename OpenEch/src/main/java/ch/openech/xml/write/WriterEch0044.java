@@ -1,14 +1,15 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
-import ch.openech.dm.XmlConstants;
-import ch.openech.dm.common.NamedId;
-import ch.openech.dm.person.PersonIdentification;
-import ch.openech.mj.model.properties.FlatProperties;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.XmlConstants;
+import  ch.openech.model.common.NamedId;
+import  ch.openech.model.person.PersonIdentification;
 
 public class WriterEch0044 {
 

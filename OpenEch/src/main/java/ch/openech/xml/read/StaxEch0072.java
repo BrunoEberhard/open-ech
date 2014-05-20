@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
@@ -15,7 +15,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.common.CountryIdentification;
+import  ch.openech.model.common.CountryIdentification;
 
 public class StaxEch0072 {
 

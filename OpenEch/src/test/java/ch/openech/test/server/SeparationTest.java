@@ -6,8 +6,8 @@ import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.types.Separation;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.types.Separation;
 
 public class SeparationTest extends AbstractServerTest {
 

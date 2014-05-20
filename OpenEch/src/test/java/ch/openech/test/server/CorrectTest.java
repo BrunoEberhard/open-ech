@@ -6,16 +6,16 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.openech.dm.code.NationalityStatus;
-import ch.openech.dm.code.ResidencePermit;
-import ch.openech.dm.common.Address;
-import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.common.Swiss;
-import ch.openech.dm.person.Foreign;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.dm.person.types.Religion;
-import ch.openech.dm.types.Language;
+import  ch.openech.model.code.NationalityStatus;
+import  ch.openech.model.code.ResidencePermit;
+import  ch.openech.model.common.Address;
+import  ch.openech.model.common.MunicipalityIdentification;
+import  ch.openech.model.common.Swiss;
+import  ch.openech.model.person.Foreign;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PlaceOfOrigin;
+import  ch.openech.model.person.types.Religion;
+import  ch.openech.model.types.Language;
 
 /*
  * Diese Sammlung von Tests betrifft die bei Schema - Version 2.2. neu
@@ -179,7 +179,7 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctMaritalData2() throws Exception {
 		Person person = reload(p);
-		person.maritalStatus.maritalStatus = ch.openech.dm.person.types.MaritalStatus.verheiratet;
+		person.maritalStatus.maritalStatus =  ch.openech.model.person.types.MaritalStatus.verheiratet;
 		
 		process(writer().correctMaritalData(person));
 		
@@ -190,7 +190,7 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctMaritalData1() throws Exception {
 		Person person = reload(p);
-		person.maritalStatus.maritalStatus = ch.openech.dm.person.types.MaritalStatus.ledig;
+		person.maritalStatus.maritalStatus =  ch.openech.model.person.types.MaritalStatus.ledig;
 		
 		process(writer().correctMaritalData(person));
 		

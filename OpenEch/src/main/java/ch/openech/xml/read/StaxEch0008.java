@@ -5,7 +5,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.common.CountryIdentification;
+import  ch.openech.model.common.CountryIdentification;
 
 public class StaxEch0008 {
 

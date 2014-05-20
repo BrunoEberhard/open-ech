@@ -1,6 +1,6 @@
 package ch.openech.xml.write;
 
-import ch.openech.dm.common.CountryIdentification;
+import  ch.openech.model.common.CountryIdentification;
 
 public class WriterEch0008 {
 

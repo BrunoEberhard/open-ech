@@ -5,10 +5,10 @@ import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ch.openech.dm.code.BasedOnLaw;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.Relation;
-import ch.openech.dm.person.types.TypeOfRelationship;
+import  ch.openech.model.code.BasedOnLaw;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.Relation;
+import  ch.openech.model.person.types.TypeOfRelationship;
 
 public class GardianTest extends AbstractServerTest {
 

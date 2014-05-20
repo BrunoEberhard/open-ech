@@ -2,7 +2,7 @@ package ch.openech.util;
 
 import java.io.Serializable;
 
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
 
 
 public class Plz implements Comparable<Plz>, Serializable {

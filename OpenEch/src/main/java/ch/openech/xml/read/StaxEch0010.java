@@ -1,19 +1,19 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.ADDRESS_INFORMATION;
-import static ch.openech.dm.XmlConstants.FOREIGN_ZIP_CODE;
-import static ch.openech.dm.XmlConstants.ORGANISATION;
-import static ch.openech.dm.XmlConstants.PERSON;
-import static ch.openech.dm.XmlConstants.SWISS_ZIP_CODE;
-import static ch.openech.dm.XmlConstants.SWISS_ZIP_CODE_ADD_ON;
-import static ch.openech.dm.XmlConstants.SWISS_ZIP_CODE_ID;
+import static  ch.openech.model.XmlConstants.ADDRESS_INFORMATION;
+import static  ch.openech.model.XmlConstants.FOREIGN_ZIP_CODE;
+import static  ch.openech.model.XmlConstants.ORGANISATION;
+import static  ch.openech.model.XmlConstants.PERSON;
+import static  ch.openech.model.XmlConstants.SWISS_ZIP_CODE;
+import static  ch.openech.model.XmlConstants.SWISS_ZIP_CODE_ADD_ON;
+import static  ch.openech.model.XmlConstants.SWISS_ZIP_CODE_ID;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.common.Address;
+import  ch.openech.model.common.Address;
 
 public class StaxEch0010 {
 

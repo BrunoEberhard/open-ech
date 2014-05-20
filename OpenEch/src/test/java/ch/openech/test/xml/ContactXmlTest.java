@@ -4,14 +4,14 @@ import junit.framework.Assert;
 
 import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Test;
+import org.minimalj.util.EqualsHelper;
 
-import ch.openech.dm.EchSchemaValidation;
-import ch.openech.dm.common.Address;
-import ch.openech.dm.contact.Contact;
-import ch.openech.dm.contact.ContactEntry;
-import ch.openech.dm.contact.ContactEntryType;
-import ch.openech.dm.types.ContactCategory;
-import ch.openech.mj.edit.value.EqualsHelper;
+import  ch.openech.model.EchSchemaValidation;
+import  ch.openech.model.common.Address;
+import  ch.openech.model.contact.Contact;
+import  ch.openech.model.contact.ContactEntry;
+import  ch.openech.model.contact.ContactEntryType;
+import  ch.openech.model.types.ContactCategory;
 import ch.openech.xml.read.StaxEch0046;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0046;

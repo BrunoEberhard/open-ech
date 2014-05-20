@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
@@ -13,9 +13,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.contact.Contact;
-import ch.openech.dm.contact.ContactEntry;
-import ch.openech.dm.contact.ContactEntryType;
+import  ch.openech.model.contact.Contact;
+import  ch.openech.model.contact.ContactEntry;
+import  ch.openech.model.contact.ContactEntryType;
 
 public class StaxEch0046 {
 

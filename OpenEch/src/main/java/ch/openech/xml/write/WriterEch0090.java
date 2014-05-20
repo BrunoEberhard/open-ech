@@ -3,8 +3,8 @@ package ch.openech.xml.write;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import ch.openech.dm.Envelope;
-import ch.openech.dm.XmlConstants;
+import  ch.openech.model.Envelope;
+import  ch.openech.model.XmlConstants;
 
 public class WriterEch0090 {
 

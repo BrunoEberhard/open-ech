@@ -11,14 +11,14 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.ReadablePartial;
 import org.joda.time.format.ISODateTimeFormat;
+import org.minimalj.model.EnumUtils;
+import org.minimalj.model.InvalidValues;
+import org.minimalj.model.Keys;
+import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.util.DateUtils;
 
-import ch.openech.dm.types.EchCode;
-import ch.openech.mj.model.EnumUtils;
-import ch.openech.mj.model.InvalidValues;
-import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.PropertyInterface;
-import ch.openech.mj.model.properties.FlatProperties;
-import ch.openech.mj.util.DateUtils;
+import ch.openech.model.types.EchCode;
 
 public class StaxEch {
 	private static Logger logger = Logger.getLogger(StaxEch.class.getName());
@@ -132,6 +132,7 @@ public class StaxEch {
 	}
 	
 	public static <T extends Enum<T>> void enuum(String value, Object object, PropertyInterface property) {
+		@SuppressWarnings("unchecked")
 		Class<T> enumClass = (Class<T>) property.getFieldClazz();
 		List<T> values = EnumUtils.valueList(enumClass);
 		for (Object enumValue : values) {

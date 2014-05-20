@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
@@ -14,16 +14,16 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import org.joda.time.LocalDateTime;
+import org.minimalj.backend.Backend;
+import org.minimalj.frontend.toolkit.ProgressListener;
+import org.minimalj.util.IdUtils;
+import org.minimalj.util.StringUtils;
 
-import ch.openech.business.EchPersistence;
-import ch.openech.dm.Event;
-import ch.openech.dm.code.TypeOfResidenceOrganisation;
-import ch.openech.dm.organisation.Organisation;
-import ch.openech.dm.organisation.OrganisationIdentification;
-import ch.openech.mj.backend.Backend;
-import ch.openech.mj.toolkit.ProgressListener;
-import ch.openech.mj.util.IdUtils;
-import ch.openech.mj.util.StringUtils;
+import  ch.openech.model.Event;
+import  ch.openech.model.code.TypeOfResidenceOrganisation;
+import  ch.openech.model.organisation.Organisation;
+import  ch.openech.model.organisation.OrganisationIdentification;
+import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0148 {
 	private final Backend backend;

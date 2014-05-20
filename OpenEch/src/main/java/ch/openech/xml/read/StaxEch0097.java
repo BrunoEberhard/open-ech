@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
@@ -8,12 +8,13 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.common.NamedId;
-import ch.openech.dm.organisation.Organisation;
-import ch.openech.dm.organisation.OrganisationIdentification;
-import ch.openech.dm.organisation.UidStructure;
-import ch.openech.mj.model.ViewUtil;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.model.ViewUtil;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.common.NamedId;
+import  ch.openech.model.organisation.Organisation;
+import  ch.openech.model.organisation.OrganisationIdentification;
+import  ch.openech.model.organisation.UidStructure;
 
 public class StaxEch0097 {
 

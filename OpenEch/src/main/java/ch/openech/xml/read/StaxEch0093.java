@@ -1,29 +1,29 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.ARRIVAL_DATE;
-import static ch.openech.dm.XmlConstants.COMES_FROM;
-import static ch.openech.dm.XmlConstants.DATE_OF_DEATH;
-import static ch.openech.dm.XmlConstants.DEATH;
-import static ch.openech.dm.XmlConstants.DEATH_PERSON;
-import static ch.openech.dm.XmlConstants.DELIVERY;
-import static ch.openech.dm.XmlConstants.DELIVERY_HEADER;
-import static ch.openech.dm.XmlConstants.DEPARTURE_DATE;
-import static ch.openech.dm.XmlConstants.DESTINATION_ADDRESS;
-import static ch.openech.dm.XmlConstants.DESTINATION_MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.DWELLING_ADDRESS;
-import static ch.openech.dm.XmlConstants.GOES_TO;
-import static ch.openech.dm.XmlConstants.HAS_MAIN_RESIDENCE;
-import static ch.openech.dm.XmlConstants.MOVE_IN;
-import static ch.openech.dm.XmlConstants.MOVE_IN_PERSON;
-import static ch.openech.dm.XmlConstants.MOVE_OUT;
-import static ch.openech.dm.XmlConstants.MOVE_OUT_PERSON;
-import static ch.openech.dm.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
-import static ch.openech.dm.XmlConstants.NAME_OF_FATHER;
-import static ch.openech.dm.XmlConstants.NAME_OF_MOTHER;
-import static ch.openech.dm.XmlConstants.OCCUPATION;
-import static ch.openech.dm.XmlConstants.RELATIONSHIP;
-import static ch.openech.dm.XmlConstants.REPORTING_MUNICIPALITY;
-import static ch.openech.dm.XmlConstants.SECONDARY_RESIDENCE;
+import static  ch.openech.model.XmlConstants.ARRIVAL_DATE;
+import static  ch.openech.model.XmlConstants.COMES_FROM;
+import static  ch.openech.model.XmlConstants.DATE_OF_DEATH;
+import static  ch.openech.model.XmlConstants.DEATH;
+import static  ch.openech.model.XmlConstants.DEATH_PERSON;
+import static  ch.openech.model.XmlConstants.DELIVERY;
+import static  ch.openech.model.XmlConstants.DELIVERY_HEADER;
+import static  ch.openech.model.XmlConstants.DEPARTURE_DATE;
+import static  ch.openech.model.XmlConstants.DESTINATION_ADDRESS;
+import static  ch.openech.model.XmlConstants.DESTINATION_MUNICIPALITY;
+import static  ch.openech.model.XmlConstants.DWELLING_ADDRESS;
+import static  ch.openech.model.XmlConstants.GOES_TO;
+import static  ch.openech.model.XmlConstants.HAS_MAIN_RESIDENCE;
+import static  ch.openech.model.XmlConstants.MOVE_IN;
+import static  ch.openech.model.XmlConstants.MOVE_IN_PERSON;
+import static  ch.openech.model.XmlConstants.MOVE_OUT;
+import static  ch.openech.model.XmlConstants.MOVE_OUT_PERSON;
+import static  ch.openech.model.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
+import static  ch.openech.model.XmlConstants.NAME_OF_FATHER;
+import static  ch.openech.model.XmlConstants.NAME_OF_MOTHER;
+import static  ch.openech.model.XmlConstants.OCCUPATION;
+import static  ch.openech.model.XmlConstants.RELATIONSHIP;
+import static  ch.openech.model.XmlConstants.REPORTING_MUNICIPALITY;
+import static  ch.openech.model.XmlConstants.SECONDARY_RESIDENCE;
 import static ch.openech.xml.read.StaxEch.date;
 import static ch.openech.xml.read.StaxEch.skip;
 
@@ -36,9 +36,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.common.DwellingAddress;
-import ch.openech.dm.common.Place;
-import ch.openech.dm.person.Person;
+import  ch.openech.model.common.DwellingAddress;
+import  ch.openech.model.common.Place;
+import  ch.openech.model.person.Person;
 
 public class StaxEch0093 {
 

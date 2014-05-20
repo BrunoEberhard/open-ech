@@ -2,16 +2,17 @@ package ch.openech.datagenerator;
 
 import java.util.List;
 
-import ch.openech.business.GenerateDemoDataTransaction;
+import org.minimalj.backend.Backend;
+import org.minimalj.frontend.edit.Editor;
+import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.model.Keys;
+import org.minimalj.model.annotation.Size;
+import org.minimalj.model.validation.Validation;
+import org.minimalj.model.validation.ValidationMessage;
+
 import ch.openech.datagenerator.GeneratePersonEditor.GeneratePersonData;
-import ch.openech.mj.backend.Backend;
-import ch.openech.mj.edit.Editor;
-import ch.openech.mj.edit.form.Form;
-import ch.openech.mj.edit.form.IForm;
-import ch.openech.mj.edit.validation.Validation;
-import ch.openech.mj.edit.validation.ValidationMessage;
-import ch.openech.mj.model.Keys;
-import ch.openech.mj.model.annotation.Size;
+import ch.openech.transaction.GenerateDemoDataTransaction;
 import ch.openech.xml.write.EchSchema;
 
 

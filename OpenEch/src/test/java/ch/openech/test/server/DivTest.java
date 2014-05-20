@@ -6,8 +6,8 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.types.Religion;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.types.Religion;
 
 public class DivTest extends AbstractServerTest {
 

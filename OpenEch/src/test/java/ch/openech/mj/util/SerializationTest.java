@@ -9,10 +9,12 @@ import junit.framework.Assert;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
+import org.minimalj.util.EqualsHelper;
+import org.minimalj.util.SerializationInputStream;
+import org.minimalj.util.SerializationOutputStream;
 
 import ch.openech.datagenerator.DataGenerator;
-import ch.openech.dm.person.Person;
-import ch.openech.mj.edit.value.EqualsHelper;
+import  ch.openech.model.person.Person;
 
 public class SerializationTest {
 

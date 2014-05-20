@@ -1,19 +1,20 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-import ch.openech.dm.common.CountryIdentification;
-import ch.openech.dm.common.DwellingAddress;
-import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.common.Place;
-import ch.openech.dm.person.Foreign;
-import ch.openech.dm.person.Nationality;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.common.CountryIdentification;
+import  ch.openech.model.common.DwellingAddress;
+import  ch.openech.model.common.MunicipalityIdentification;
+import  ch.openech.model.common.Place;
+import  ch.openech.model.person.Foreign;
+import  ch.openech.model.person.Nationality;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PlaceOfOrigin;
 
 public class WriterEch0011 {
 	private static final Logger logger = Logger.getLogger(WriterEch0011.class.getName());

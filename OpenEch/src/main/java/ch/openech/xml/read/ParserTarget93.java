@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import ch.openech.dm.person.Person;
+import  ch.openech.model.person.Person;
 
 public interface ParserTarget93 {
 

@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
@@ -8,10 +8,11 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.code.TypeOfResidenceOrganisation;
-import ch.openech.dm.organisation.Headquarter;
-import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.code.TypeOfResidenceOrganisation;
+import  ch.openech.model.organisation.Headquarter;
+import  ch.openech.model.organisation.Organisation;
 
 public class StaxEch0098 {
 

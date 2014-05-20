@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
@@ -16,25 +16,25 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import org.joda.time.LocalDateTime;
+import org.minimalj.backend.Backend;
+import org.minimalj.frontend.toolkit.ProgressListener;
+import org.minimalj.util.DateUtils;
+import org.minimalj.util.FieldUtils;
+import org.minimalj.util.IdUtils;
+import org.minimalj.util.StringUtils;
 
-import ch.openech.business.EchPersistence;
-import ch.openech.dm.Event;
-import ch.openech.dm.XmlConstants;
-import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.person.Foreign;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
-import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.dm.person.Relation;
-import ch.openech.dm.person.types.ReasonOfAcquisition;
-import ch.openech.dm.types.TypeOfResidence;
-import ch.openech.dm.types.YesNo;
-import ch.openech.mj.backend.Backend;
-import ch.openech.mj.toolkit.ProgressListener;
-import ch.openech.mj.util.DateUtils;
-import ch.openech.mj.util.FieldUtils;
-import ch.openech.mj.util.IdUtils;
-import ch.openech.mj.util.StringUtils;
+import  ch.openech.model.Event;
+import  ch.openech.model.XmlConstants;
+import  ch.openech.model.common.MunicipalityIdentification;
+import  ch.openech.model.person.Foreign;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PersonIdentification;
+import  ch.openech.model.person.PlaceOfOrigin;
+import  ch.openech.model.person.Relation;
+import  ch.openech.model.person.types.ReasonOfAcquisition;
+import  ch.openech.model.types.TypeOfResidence;
+import  ch.openech.model.types.YesNo;
+import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0020 {
 	private final Backend backend;

@@ -1,11 +1,11 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.COMMERCIAL_REGISTER_INFORMATION;
-import static ch.openech.dm.XmlConstants.ORGANISATION;
-import static ch.openech.dm.XmlConstants.ORGANISATION_ROOT;
-import static ch.openech.dm.XmlConstants.UIDREG_INFORMATION;
-import static ch.openech.dm.XmlConstants.UIDREG_SOURCE;
-import static ch.openech.dm.XmlConstants.VAT_REGISTER_INFORMATION;
+import static  ch.openech.model.XmlConstants.COMMERCIAL_REGISTER_INFORMATION;
+import static  ch.openech.model.XmlConstants.ORGANISATION;
+import static  ch.openech.model.XmlConstants.ORGANISATION_ROOT;
+import static  ch.openech.model.XmlConstants.UIDREG_INFORMATION;
+import static  ch.openech.model.XmlConstants.UIDREG_SOURCE;
+import static  ch.openech.model.XmlConstants.VAT_REGISTER_INFORMATION;
 import static ch.openech.xml.read.StaxEch.date;
 import static ch.openech.xml.read.StaxEch.skip;
 import static ch.openech.xml.read.StaxEch.token;
@@ -18,8 +18,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.organisation.Organisation;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.organisation.Organisation;
 
 public class StaxEch0108 {
 

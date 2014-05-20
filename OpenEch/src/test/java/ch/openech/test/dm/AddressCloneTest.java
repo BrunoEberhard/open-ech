@@ -3,9 +3,9 @@ package ch.openech.test.dm;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.minimalj.util.CloneHelper;
 
-import ch.openech.dm.common.Address;
-import ch.openech.mj.edit.value.CloneHelper;
+import  ch.openech.model.common.Address;
 
 public class AddressCloneTest {
 

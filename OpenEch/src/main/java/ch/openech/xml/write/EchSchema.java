@@ -56,7 +56,7 @@ public class EchSchema {
 		return contexts.get(location);
 	}
 
-	public static EchSchema getNamespaceContext(ch.openech.dm.EchSchema schema) {
+	public static EchSchema getNamespaceContext( ch.openech.model.EchSchema schema) {
 		return getNamespaceContext(schema.getSchemaNumber(), schema.getVersion() + "." + schema.getMinorVersion());
 	}
 	

@@ -1,23 +1,25 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.ARMED_FORCES;
-import static ch.openech.dm.XmlConstants.ARMED_FORCES_LIABILITY;
-import static ch.openech.dm.XmlConstants.ARMED_FORCES_SERVICE;
-import static ch.openech.dm.XmlConstants.CIVIL_DEFENSE;
-import static ch.openech.dm.XmlConstants.FIRE_SERVICE;
-import static ch.openech.dm.XmlConstants.FIRE_SERVICE_LIABILITY;
-import static ch.openech.dm.XmlConstants.HEALTH_INSURANCE;
-import static ch.openech.dm.XmlConstants.HEALTH_INSURED;
-import static ch.openech.dm.XmlConstants.INSURANCE;
-import static ch.openech.dm.XmlConstants.INSURANCE_ADDRESS;
-import static ch.openech.dm.XmlConstants.INSURANCE_NAME;
-import static ch.openech.dm.XmlConstants.MATRIMONIAL_INHERITANCE_ARRANGEMENT;
-import static ch.openech.dm.XmlConstants.PERSONIDENTIFICATION;
-import static ch.openech.dm.XmlConstants.PERSON_ADDON;
-import static ch.openech.dm.XmlConstants.PERSON_EXTENDED_INFORMATION_ROOT;
-import ch.openech.dm.person.PersonExtendedInformation;
-import ch.openech.dm.types.YesNo;
-import ch.openech.mj.util.StringUtils;
+import static  ch.openech.model.XmlConstants.ARMED_FORCES;
+import static  ch.openech.model.XmlConstants.ARMED_FORCES_LIABILITY;
+import static  ch.openech.model.XmlConstants.ARMED_FORCES_SERVICE;
+import static  ch.openech.model.XmlConstants.CIVIL_DEFENSE;
+import static  ch.openech.model.XmlConstants.FIRE_SERVICE;
+import static  ch.openech.model.XmlConstants.FIRE_SERVICE_LIABILITY;
+import static  ch.openech.model.XmlConstants.HEALTH_INSURANCE;
+import static  ch.openech.model.XmlConstants.HEALTH_INSURED;
+import static  ch.openech.model.XmlConstants.INSURANCE;
+import static  ch.openech.model.XmlConstants.INSURANCE_ADDRESS;
+import static  ch.openech.model.XmlConstants.INSURANCE_NAME;
+import static  ch.openech.model.XmlConstants.MATRIMONIAL_INHERITANCE_ARRANGEMENT;
+import static  ch.openech.model.XmlConstants.PERSONIDENTIFICATION;
+import static  ch.openech.model.XmlConstants.PERSON_ADDON;
+import static  ch.openech.model.XmlConstants.PERSON_EXTENDED_INFORMATION_ROOT;
+
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.person.PersonExtendedInformation;
+import  ch.openech.model.types.YesNo;
 
 public class WriterEch0101 extends DeliveryWriter {
 

@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
 
 public class PlzImport {
 	private static final Logger logger = Logger.getLogger(PlzImport.class.getName());

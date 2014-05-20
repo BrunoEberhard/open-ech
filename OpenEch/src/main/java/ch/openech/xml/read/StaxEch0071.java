@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
@@ -15,9 +15,10 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.common.Canton;
-import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.common.Canton;
+import  ch.openech.model.common.MunicipalityIdentification;
 
 public class StaxEch0071 {
 

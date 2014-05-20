@@ -7,13 +7,13 @@ import javax.xml.stream.XMLStreamWriter;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.ISODateTimeFormat;
+import org.minimalj.model.InvalidValues;
+import org.minimalj.model.annotation.StringLimitation;
+import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.util.FieldUtils;
+import org.minimalj.util.StringUtils;
 
-import ch.openech.dm.types.EchCode;
-import ch.openech.mj.model.InvalidValues;
-import ch.openech.mj.model.annotation.StringLimitation;
-import ch.openech.mj.model.properties.FlatProperties;
-import ch.openech.mj.util.FieldUtils;
-import ch.openech.mj.util.StringUtils;
+import  ch.openech.model.types.EchCode;
 
 
 public class WriterElement {

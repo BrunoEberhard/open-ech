@@ -7,13 +7,16 @@ import junit.framework.Assert;
 import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.minimalj.backend.db.DbPersistence;
+import org.minimalj.backend.db.ImmutableTable;
+import org.minimalj.backend.db.Table;
 
-import ch.openech.dm.common.Address;
-import ch.openech.dm.common.CountryIdentification;
-import ch.openech.dm.person.Occupation;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.types.MrMrs;
-import ch.openech.dm.types.Sex;
+import  ch.openech.model.common.Address;
+import  ch.openech.model.common.CountryIdentification;
+import  ch.openech.model.person.Occupation;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.types.MrMrs;
+import  ch.openech.model.types.Sex;
 
 public class DbPersonCrudTest {
 

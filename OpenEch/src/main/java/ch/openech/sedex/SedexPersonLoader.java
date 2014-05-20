@@ -3,8 +3,8 @@ package ch.openech.sedex;
 import java.io.File;
 import java.io.FileInputStream;
 
-import ch.openech.dm.Envelope;
-import ch.openech.dm.person.Person;
+import  ch.openech.model.Envelope;
+import  ch.openech.model.person.Person;
 import ch.openech.xml.read.ParserTarget93;
 import ch.openech.xml.read.StaxEch0093;
 

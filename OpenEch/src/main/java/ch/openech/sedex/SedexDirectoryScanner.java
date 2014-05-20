@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
 
-import ch.openech.dm.Envelope;
-import ch.openech.dm.SedexMessageInformation;
+import  ch.openech.model.Envelope;
+import  ch.openech.model.SedexMessageInformation;
 import ch.openech.xml.read.StaxEch0090;
 
 public class SedexDirectoryScanner {

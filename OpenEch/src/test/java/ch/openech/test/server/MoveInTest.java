@@ -6,14 +6,14 @@ import junit.framework.Assert;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
+import org.minimalj.backend.Backend;
 
-import ch.openech.dm.code.FederalRegister;
-import ch.openech.dm.code.NationalityStatus;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
-import ch.openech.dm.types.Sex;
-import ch.openech.dm.types.TypeOfResidence;
-import ch.openech.mj.backend.Backend;
+import  ch.openech.model.code.FederalRegister;
+import  ch.openech.model.code.NationalityStatus;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PersonIdentification;
+import  ch.openech.model.types.Sex;
+import  ch.openech.model.types.TypeOfResidence;
 
 public class MoveInTest extends AbstractServerTest {
 

@@ -1,10 +1,10 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
-import ch.openech.dm.organisation.Organisation;
+import  ch.openech.model.organisation.Organisation;
 
 public class WriterEch0148 extends DeliveryWriter {
 

@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
@@ -9,12 +9,12 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import org.joda.time.ReadablePartial;
+import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.util.StringUtils;
 
-import ch.openech.dm.common.NamedId;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
-import ch.openech.mj.model.properties.FlatProperties;
-import ch.openech.mj.util.StringUtils;
+import  ch.openech.model.common.NamedId;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PersonIdentification;
 
 public class StaxEch0044 {
 

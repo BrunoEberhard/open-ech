@@ -6,9 +6,9 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.Relation;
-import ch.openech.dm.person.types.TypeOfRelationship;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.Relation;
+import  ch.openech.model.person.types.TypeOfRelationship;
 
 public class MarriageTest extends AbstractServerTest {
 

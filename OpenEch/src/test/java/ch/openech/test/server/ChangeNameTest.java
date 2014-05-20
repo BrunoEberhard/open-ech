@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.openech.dm.person.Person;
+import  ch.openech.model.person.Person;
 
 public class ChangeNameTest extends AbstractServerTest {
 

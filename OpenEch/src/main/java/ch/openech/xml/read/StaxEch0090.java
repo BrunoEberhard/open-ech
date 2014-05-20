@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.File;
@@ -14,8 +14,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.Envelope;
-import ch.openech.mj.model.properties.FlatProperties;
+import org.minimalj.model.properties.FlatProperties;
+
+import  ch.openech.model.Envelope;
 
 public class StaxEch0090 {
 

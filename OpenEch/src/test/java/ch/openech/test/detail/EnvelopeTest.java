@@ -7,7 +7,7 @@ import junit.framework.Assert;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import ch.openech.dm.Envelope;
+import  ch.openech.model.Envelope;
 import ch.openech.test.server.AbstractServerTest;
 import ch.openech.xml.read.StaxEch0090;
 

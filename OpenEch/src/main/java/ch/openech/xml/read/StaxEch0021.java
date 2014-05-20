@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.util.List;
@@ -10,15 +10,16 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import ch.openech.dm.person.NameOfParent;
-import ch.openech.dm.person.Occupation;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
-import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.dm.person.Relation;
-import ch.openech.dm.person.types.TypeOfRelationship;
-import ch.openech.dm.types.YesNo;
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
+
+import  ch.openech.model.person.NameOfParent;
+import  ch.openech.model.person.Occupation;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PersonIdentification;
+import  ch.openech.model.person.PlaceOfOrigin;
+import  ch.openech.model.person.Relation;
+import  ch.openech.model.person.types.TypeOfRelationship;
+import  ch.openech.model.types.YesNo;
 
 public class StaxEch0021 {
 

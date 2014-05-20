@@ -14,9 +14,9 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.joda.time.LocalDateTime;
 
-import ch.openech.dm.Envelope;
-import ch.openech.dm.XmlConstants;
-import ch.openech.dm.common.MunicipalityIdentification;
+import  ch.openech.model.Envelope;
+import  ch.openech.model.XmlConstants;
+import  ch.openech.model.common.MunicipalityIdentification;
 
 public abstract class DeliveryWriter {
 	private static final Logger logger = Logger.getLogger(DeliveryWriter.class.getName());

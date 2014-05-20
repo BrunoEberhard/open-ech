@@ -1,28 +1,28 @@
 package ch.openech.xml.write;
 
-import static ch.openech.dm.XmlConstants.*;
+import static  ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import ch.openech.dm.common.DwellingAddress;
-import ch.openech.dm.common.MunicipalityIdentification;
-import ch.openech.dm.common.Place;
-import ch.openech.dm.common.Swiss;
-import ch.openech.dm.person.Foreign;
-import ch.openech.dm.person.NameOfParent;
-import ch.openech.dm.person.Nationality;
-import ch.openech.dm.person.Occupation;
-import ch.openech.dm.person.Person;
-import ch.openech.dm.person.PersonIdentification;
-import ch.openech.dm.person.PlaceOfOrigin;
-import ch.openech.dm.person.Relation;
-import ch.openech.dm.person.types.MaritalStatus;
-import ch.openech.dm.person.types.PartnerShipAbolition;
-import ch.openech.dm.person.types.Religion;
-import ch.openech.dm.person.types.Separation;
-import ch.openech.dm.types.TypeOfResidence;
+import  ch.openech.model.common.DwellingAddress;
+import  ch.openech.model.common.MunicipalityIdentification;
+import  ch.openech.model.common.Place;
+import  ch.openech.model.common.Swiss;
+import  ch.openech.model.person.Foreign;
+import  ch.openech.model.person.NameOfParent;
+import  ch.openech.model.person.Nationality;
+import  ch.openech.model.person.Occupation;
+import  ch.openech.model.person.Person;
+import  ch.openech.model.person.PersonIdentification;
+import  ch.openech.model.person.PlaceOfOrigin;
+import  ch.openech.model.person.Relation;
+import  ch.openech.model.person.types.MaritalStatus;
+import  ch.openech.model.person.types.PartnerShipAbolition;
+import  ch.openech.model.person.types.Religion;
+import  ch.openech.model.person.types.Separation;
+import  ch.openech.model.types.TypeOfResidence;
 
 public class WriterEch0020 extends DeliveryWriter {
 
