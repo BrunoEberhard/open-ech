@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.StreamProducer;
 
-import  ch.openech.model.person.Person;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
@@ -26,7 +26,7 @@ public class PersonExportStreamProducer implements StreamProducer<Integer> {
 	public Integer consume(Backend backend, OutputStream stream) {
 		int count = 0;
 		try {
-			int maxId = (Integer) backend.executeStatement("MaxPerson");
+			int maxId = backend.executeStatement(Integer.class, "MaxPerson");
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream, "UTF-8");
 			

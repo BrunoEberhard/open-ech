@@ -262,4 +262,25 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(readPerson2.officialName, readPerson3.officialName);
 	}
 	
+	@Test
+	public void testMaxPerson() throws SQLException {
+		int startMaxId = persistence.execute(Integer.class, "select max(id) from Person");
+		Table<Person> personTable = persistence.getTable(Person.class);
+		
+		Person person = new Person();
+		person.officialName = "Eberhard";
+		person.firstName = "Bruno";
+		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.vn.value = "123";
+		person.sex = Sex.maennlich;
+		
+		person.aliasName = "Biwi";
+		
+		personTable.insert(person);
+		
+		int afterInsertMaxId = persistence.execute(Integer.class, "select max(id) from Person");
+		Assert.assertEquals(startMaxId + 1, afterInsertMaxId);
+	}
+	
+	
 }

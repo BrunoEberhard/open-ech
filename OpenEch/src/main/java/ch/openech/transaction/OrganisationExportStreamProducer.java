@@ -1,6 +1,6 @@
 package ch.openech.transaction;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.StreamProducer;
 
-import  ch.openech.model.organisation.Organisation;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0097;
 import ch.openech.xml.write.WriterEch0098;
@@ -30,7 +30,7 @@ public class OrganisationExportStreamProducer implements StreamProducer<Integer>
 	public Integer consume(Backend backend, OutputStream stream) {
 		int numberOfOrganisations = 0;
 		try {
-			int maxId = (Integer) backend.executeStatement("MaxOrganisation");
+			int maxId = backend.executeStatement(Integer.class, "MaxOrganisation");
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream, "UTF-8");
 			
