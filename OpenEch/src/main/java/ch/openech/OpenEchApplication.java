@@ -27,6 +27,7 @@ import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.toolkit.IAction;
 
+import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.frontend.editor.BaseDeliveryEditor;
 import ch.openech.frontend.editor.BaseDeliveryOrganisationEditor;
 import ch.openech.frontend.editor.FoundationEditor;
@@ -44,9 +45,8 @@ import ch.openech.frontend.page.SearchPersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.frontend.preferences.PreferencesEditor;
-import ch.openech.datagenerator.GeneratePersonEditor;
-import  ch.openech.model.organisation.Organisation;
-import  ch.openech.model.person.Person;
+import ch.openech.model.organisation.Organisation;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 
 public class OpenEchApplication extends MjApplication {
@@ -55,10 +55,7 @@ public class OpenEchApplication extends MjApplication {
 	private EchSchema orgSchema;
 	private EchSchema tpnSchema;
 	
-	@Override
-	public void init() {
-		super.init();
-
+	public OpenEchApplication() {
 //		final String demoPersons = System.getProperty("DemoPerson");
 //
 //		if (!StringUtils.isEmpty(demoPersons)) {
