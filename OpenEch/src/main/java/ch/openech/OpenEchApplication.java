@@ -84,11 +84,6 @@ public class OpenEchApplication extends MjApplication {
 	}
 
 	@Override
-	public String getWindowTitle(PageContext pageContext) {
-		return "Open eCH";
-	}
-
-	@Override
 	public Class<?> getPreferencesClass() {
 		return OpenEchPreferences.class;
 	}
