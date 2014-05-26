@@ -11,7 +11,7 @@ public class OrganisationImportStreamConsumer implements StreamConsumer<Integer>
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Integer comsume(Backend backend, InputStream stream) {
+	public Integer consume(Backend backend, InputStream stream) {
 		try {
 			StaxEch0148 stax = new StaxEch0148(backend);
 			stax.process(stream, null);

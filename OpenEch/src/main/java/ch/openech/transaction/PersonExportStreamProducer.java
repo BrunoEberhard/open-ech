@@ -23,7 +23,7 @@ public class PersonExportStreamProducer implements StreamProducer<Integer> {
 	}
 	
 	@Override
-	public Integer consume(Backend backend, OutputStream stream) {
+	public Integer produce(Backend backend, OutputStream stream) {
 		int count = 0;
 		try {
 			int maxId = backend.executeStatement(Integer.class, "MaxPerson");

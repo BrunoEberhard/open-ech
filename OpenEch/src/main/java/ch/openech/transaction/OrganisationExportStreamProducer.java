@@ -27,7 +27,7 @@ public class OrganisationExportStreamProducer implements StreamProducer<Integer>
 	}
 	
 	@Override
-	public Integer consume(Backend backend, OutputStream stream) {
+	public Integer produce(Backend backend, OutputStream stream) {
 		int numberOfOrganisations = 0;
 		try {
 			int maxId = backend.executeStatement(Integer.class, "MaxOrganisation");
