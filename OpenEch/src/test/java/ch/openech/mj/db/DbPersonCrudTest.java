@@ -229,11 +229,6 @@ public class DbPersonCrudTest {
 
 		Person readPerson2 = personTable.read(id);
 		Assert.assertEquals(readOccupation2.placeOfEmployer.addressLine1, readPerson2.occupation.get(1).placeOfEmployer.addressLine1);
-	
-//		List<Integer> versions = persistence.person().readVersions(id);
-//		for (Integer i : versions) {
-//			System.out.println(i);
-//		}
 	}
 	
 	@Test
