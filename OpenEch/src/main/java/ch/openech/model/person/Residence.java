@@ -7,8 +7,8 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.validation.ValidationMessage;
 
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.types.TypeOfResidence;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.types.TypeOfResidence;
 
 public class Residence {
 	public static final Residence RESIDENCE = Keys.of(Residence.class);
@@ -21,8 +21,6 @@ public class Residence {
 		if (secondary2 != secondary) {
 			secondary.clear();
 			secondary.addAll(secondary2);
-		} else {
-			System.out.println("AHA!");
 		}
 	}
 
