@@ -3,60 +3,21 @@
 <xs:schema 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 	xmlns:eCH-0101="http://www.ech.ch/xmlns/eCH-0101/1" 
-	xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/3" 
-	xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044/1" 
 	xmlns:eCH-0046="http://www.ech.ch/xmlns/eCH-0046/1" 
 	targetNamespace="http://www.open-ech.ch/xmlns/open-eCH/1"
  	elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
  	
 	<xs:annotation>
-		<xs:documentation>Ausgabedatum: 04.02.2011</xs:documentation>
+		<xs:documentation>Ausgabedatum: 27.05.2014</xs:documentation>
 	</xs:annotation>
 	
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0010/3" schemaLocation="http://www.ech.ch/xmlns/eCH-0010/3/eCH-0010-3-1.xsd"/>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0044/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0044/1/eCH-0044-1-1.xsd"/>
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0046/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0046/1/eCH-0046-1-0.xsd"/>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0101/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0101/1/eCH-0101-1-0.xsd"/>
-	
-	<xs:complexType name="personSearchResultType">
-		<xs:sequence>
-			<xs:element name="personSearchResultEntry" minOccurs="0" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:extension base="eCH-0044:namedPersonIdType" />
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	
+		
 	<xs:complexType name="openEchPersonExtensionType">
 		<xs:sequence>
 			<xs:element name="personExtendedInformation" type="eCH-0101:personExtendedInformationType" minOccurs="0"/>
 			<xs:element name="contact" type="eCH-0046:contactType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	
-	<!-- 
-	
-	<xs:element name="requestRoot">
-		<xs:complexType>
-			<xs:choice minOccurs="0">
-				<xs:element name="personSearch" type="personSearchType"/>
-				<xs:element name="organisationSearch" type="organisationSearchType"/>
-			</xs:choice>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="responseRoot">
-		<xs:complexType>
-			<xs:choice minOccurs="0">
-				<xs:element name="personSearchResult" type="personSearchResultType"/>
-				<xs:element name="organisationSearchRsult" type="organisationSearchResultType"/>
-			</xs:choice>
-		</xs:complexType>
-	</xs:element>
-	
-	 -->
-	
+		
 </xs:schema>
