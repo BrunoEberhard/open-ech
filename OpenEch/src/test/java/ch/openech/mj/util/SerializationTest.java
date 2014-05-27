@@ -14,7 +14,7 @@ import org.minimalj.util.SerializationInputStream;
 import org.minimalj.util.SerializationOutputStream;
 
 import ch.openech.datagenerator.DataGenerator;
-import  ch.openech.model.person.Person;
+import ch.openech.model.person.Person;
 
 public class SerializationTest {
 
@@ -57,11 +57,6 @@ public class SerializationTest {
 			sos.write(object);
 			s.flush();
 			byte[] bytes = s.toByteArray();
-			
-//			for (int i = 0; i<bytes.length && i<100 ; i++) {
-//				System.out.println(bytes[i] + " - " + ((char)bytes[i]));
-//			}
-			
 			try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
 				SerializationInputStream sis = new SerializationInputStream(in);
 				return (T) sis.read(clazz);
