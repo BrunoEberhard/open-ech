@@ -18,10 +18,10 @@ import org.junit.Test;
 
 import ch.openech.frontend.e07.SwissMunicipalityField;
 import  ch.openech.model.common.MunicipalityIdentification;
-import ch.openech.mj.swing.ActionMatcher;
-import ch.openech.mj.swing.toolkit.SwingClientToolkit;
-import ch.openech.mj.toolkit.ClientToolkit;
-import ch.openech.mj.toolkit.SwitchLayout;
+import org.minimalj.swing.ActionMatcher;
+import org.minimalj.swing.toolkit.SwingClientToolkit;
+import org.minimalj.toolkit.ClientToolkit;
+import org.minimalj.toolkit.SwitchLayout;
 
 // Sollte unabhängig von Toolkit getestet werden
 @Deprecated

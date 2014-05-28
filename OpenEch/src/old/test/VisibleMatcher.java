@@ -1,4 +1,4 @@
-package ch.openech.mj.swing;
+package org.minimalj.swing;
 
 import java.awt.Component;
 

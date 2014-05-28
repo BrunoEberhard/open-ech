@@ -1,4 +1,4 @@
-package ch.openech.mj.swing;
+package org.minimalj.swing;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -6,7 +6,7 @@ import javax.swing.JMenuItem;
 
 import org.fest.swing.core.GenericTypeMatcher;
 
-import ch.openech.mj.util.StringUtils;
+import org.minimalj.util.StringUtils;
 
 public class ActionMatcher extends GenericTypeMatcher<JMenuItem> {
 	private final String actionName;

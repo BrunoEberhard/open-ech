@@ -1,4 +1,4 @@
-package ch.openech.mj.swing;
+package org.minimalj.swing;
 
 import junit.framework.Assert;
 
@@ -6,11 +6,11 @@ import org.fest.swing.fixture.FrameFixture;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ch.openech.mj.swing.FrameManager;
-import ch.openech.mj.swing.SwingFrame;
-import ch.openech.mj.swing.SwingStandaloneClient;
-import ch.openech.mj.swing.SwingFrame.CloseTabAction;
-import ch.openech.mj.swing.SwingFrame.NewTabAction;
+import org.minimalj.swing.FrameManager;
+import org.minimalj.swing.SwingFrame;
+import org.minimalj.swing.SwingStandaloneClient;
+import org.minimalj.swing.SwingFrame.CloseTabAction;
+import org.minimalj.swing.SwingFrame.NewTabAction;
 
 public class NavigationFrameTest {
 

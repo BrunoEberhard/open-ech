@@ -5,11 +5,11 @@ import org.junit.Before;
 
 import ch.openech.frontend.ewk.OpenEchApplication;
 import  ch.openech.model.person.Person;
-import ch.openech.mj.application.ObjectViewPage;
-import ch.openech.mj.page.Page;
-import ch.openech.mj.swing.FrameManager;
-import ch.openech.mj.swing.SwingApplication;
-import ch.openech.mj.swing.SwingFrame;
+import org.minimalj.application.ObjectViewPage;
+import org.minimalj.page.Page;
+import org.minimalj.swing.FrameManager;
+import org.minimalj.swing.SwingApplication;
+import org.minimalj.swing.SwingFrame;
 
 public class AbstractPageTest {
 
