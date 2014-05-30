@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.joda.time.LocalDate;
-import org.joda.time.ReadablePartial;
 import org.minimalj.model.Codes;
 import org.minimalj.model.EmptyValidator;
 import org.minimalj.model.Keys;
@@ -18,15 +16,16 @@ import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
-import org.minimalj.util.DateUtils;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
+import org.threeten.bp.LocalDate;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.Event;
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Address;
+import ch.openech.model.common.DatePartiallyKnown;
 import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.Place;
 import ch.openech.model.common.TechnicalIds;
@@ -68,7 +67,7 @@ public class Person implements Validation {
 	public Sex sex;
 	
 	@Required @Searched
-	public ReadablePartial dateOfBirth;
+	public final DatePartiallyKnown dateOfBirth = new DatePartiallyKnown();
 
 	public final TechnicalIds technicalIds = new TechnicalIds();
 
@@ -249,7 +248,7 @@ public class Person implements Validation {
 	
 	@Override
 	public String toString() {
-		return firstName + " " + officialName + ", " + DateUtils.formatPartialCH(dateOfBirth);
+		return firstName + " " + officialName + ", " + dateOfBirth.value;
 	}
 	
 	public String toHtmlMultiLine() {
@@ -262,7 +261,7 @@ public class Person implements Validation {
 		append(s, "Person.id.officialName", officialName);
 		append(s, "Person.id.firstName", firstName);
 		if (dateOfBirth != null) {
-			append(s, "Person.id.dateOfBirth", DateUtils.formatPartial(dateOfBirth));
+			append(s, "Person.id.dateOfBirth", dateOfBirth.value);
 		}
 		s.append("<BR>&nbsp;");
 	}
@@ -332,13 +331,14 @@ public class Person implements Validation {
 
 	
 	private boolean isBirthAfterRelation(Relation relation) {
-		LocalDate localDateOfBirth = DateUtils.convertToLocalDate(dateOfBirth);
+		LocalDate localDateOfBirth = dateOfBirth.toLocalDate();
 		if (localDateOfBirth == null) return true;
 		if (relation == null) return true;
 		if (relation.partner == null) return true;
-		if (relation.partner.dateOfBirth == null) return true;
+		LocalDate localDateOfBirthPartner = relation.partner.dateOfBirth.toLocalDate();
+		if (localDateOfBirthPartner == null) return true;
 		// strange: isAfter can compare with PartialDate, but is not on PartialDate
-		return localDateOfBirth.isAfter((ReadablePartial) relation.partner.dateOfBirth); 
+		return localDateOfBirth.isAfter(localDateOfBirthPartner); 
 	}
 
 	private void validateRelations(List<ValidationMessage> resultList) {
@@ -366,17 +366,21 @@ public class Person implements Validation {
 	
 	@BusinessRule("Todesdatum darf nicht vor Geburtsdatum sein")
 	private void validateDeathNotBeforeBirth(List<ValidationMessage> resultList) {
-		if (dateOfBirth == null || dateOfDeath == null) return;
-		if (dateOfDeath.isBefore(dateOfBirth)) {
+		LocalDate localDateOfBirth = dateOfBirth.toLocalDate();
+		if (localDateOfBirth == null || dateOfDeath == null) return;
+		if (dateOfDeath.isBefore(localDateOfBirth)) {
 			resultList.add(new ValidationMessage(PERSON.dateOfDeath, "Todesdatum darf nicht vor Geburtsdatum sein"));
 		}
 	}
 
 	@BusinessRule("Ereignis darf nicht vor Geburt der Person stattfinden")
 	public static void validateEventNotBeforeBirth(List<ValidationMessage> validationMessages, Person person, LocalDate date, Object key) {
-		if (person != null && person.dateOfBirth != null && date != null) {
-			if (date.isBefore(person.dateOfBirth)) {
-				validationMessages.add(new ValidationMessage(key, "Datum darf nicht vor Geburt der Person sein"));
+		if (person != null) {
+			LocalDate localDateOfBirth = person.dateOfBirth.toLocalDate();
+			if (localDateOfBirth != null && date != null) {
+				if (date.isBefore(localDateOfBirth)) {
+					validationMessages.add(new ValidationMessage(key, "Datum darf nicht vor Geburt der Person sein"));
+				}
 			}
 		}
 	}
@@ -401,7 +405,7 @@ public class Person implements Validation {
 	
 	public void toHtml(StringBuilder s) {
 		StringUtils.appendLine(s, firstName, officialName);
-		StringUtils.appendLine(s, DateUtils.formatPartialCH(dateOfBirth));
+		StringUtils.appendLine(s, dateOfBirth.value);
 	}
 	
 	public PersonIdentification personIdentification() {

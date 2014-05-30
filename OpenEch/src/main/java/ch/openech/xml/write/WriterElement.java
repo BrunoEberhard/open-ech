@@ -4,16 +4,14 @@ import java.util.Set;
 
 import javax.xml.stream.XMLStreamWriter;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.ISODateTimeFormat;
 import org.minimalj.model.InvalidValues;
-import org.minimalj.model.annotation.StringLimitation;
 import org.minimalj.model.properties.FlatProperties;
-import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
-import  ch.openech.model.types.EchCode;
+import ch.openech.model.types.EchCode;
 
 
 public class WriterElement {
@@ -52,13 +50,13 @@ public class WriterElement {
 	
 	public void text(String localName, LocalDate localDate) throws Exception {
 		if (localDate != null) {
-			text(localName, ISODateTimeFormat.date().print(localDate));
+			text(localName, DateTimeFormatter.ISO_DATE.format(localDate));
 		}
 	}
 
 	public void text(String localName, LocalDateTime localDateTime) throws Exception {
 		if (localDateTime != null) {
-			text(localName, ISODateTimeFormat.date().print(localDateTime));
+			text(localName, DateTimeFormatter.ISO_DATE_TIME.format(localDateTime));
 		}
 	}
 
@@ -75,13 +73,6 @@ public class WriterElement {
 	public void text(String localName, Integer integer) throws Exception {
 		if (integer != null) {
 			text(localName, String.valueOf(integer));
-		} 
-	}
-	
-	public void text(String localName, StringLimitation textFilter) throws Exception {
-		Object value = FieldUtils.getValue(textFilter);
-		if (value != null) {
-			text(localName, value.toString());
 		} 
 	}
 	

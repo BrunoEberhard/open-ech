@@ -4,7 +4,7 @@ import static  ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 
 import  ch.openech.model.common.DwellingAddress;
 import  ch.openech.model.common.MunicipalityIdentification;

@@ -9,6 +9,7 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
+import org.minimalj.application.MjApplication;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.SerializationContainer;
@@ -30,7 +31,7 @@ public abstract class AbstractServerTest {
 	public static void startup() throws Exception {
 		if (!started) {
 			started = true;
-			new OpenEchApplication();
+			MjApplication.setApplication(new OpenEchApplication());
 		}
 		clear();
 	}

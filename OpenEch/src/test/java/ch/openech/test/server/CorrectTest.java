@@ -2,7 +2,7 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -141,13 +141,13 @@ public class CorrectTest extends AbstractServerTest {
 		PlaceOfOrigin origin1 = new PlaceOfOrigin();
 		origin1.cantonAbbreviation.canton = "TG";
 		origin1.originName = "Heimat 1";
-		origin1.naturalizationDate = new LocalDate(1974, 2, 28);
-		origin1.expatriationDate = new LocalDate(2007, 10, 11);
+		origin1.naturalizationDate = LocalDate.of(1974, 2, 28);
+		origin1.expatriationDate = LocalDate.of(2007, 10, 11);
 		
 		PlaceOfOrigin origin2 = new PlaceOfOrigin();
 		origin2.cantonAbbreviation.canton = "TI";
 		origin2.originName = "Heimat 2";
-		origin2.naturalizationDate = new LocalDate(2007, 10, 11);
+		origin2.naturalizationDate = LocalDate.of(2007, 10, 11);
 
 		person.placeOfOrigin.clear();
 		person.placeOfOrigin.add(origin1);
@@ -167,13 +167,13 @@ public class CorrectTest extends AbstractServerTest {
 		Person person = reload(foreignP);
 		Foreign foreign = new Foreign();
 		foreign.residencePermit = ResidencePermit.Aufenthalter_nach_eu_efta_abkommen;
-		foreign.residencePermitTill = new LocalDate(2020, 10, 11);
+		foreign.residencePermitTill = LocalDate.of(2020, 10, 11);
 
 		process(writer().correctResidencePermit(person, foreign));
 		
 		person = reload(foreignP);
 		Assert.assertEquals(ResidencePermit.Aufenthalter_nach_eu_efta_abkommen, person.foreign.residencePermit);
-		Assert.assertEquals(new LocalDate(2020, 10, 11), person.foreign.residencePermitTill);	
+		Assert.assertEquals(LocalDate.of(2020, 10, 11), person.foreign.residencePermitTill);	
 	}
 	
 	@Test
@@ -238,12 +238,12 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctDateOfDeath() throws Exception {
 		Person person = reload(p);
-		person.dateOfDeath = new LocalDate(2012, 12, 31);
+		person.dateOfDeath = LocalDate.of(2012, 12, 31);
 		
 		process(writer().correctDateOfDeath(person));
 		
 		person = reload(p);
-		Assert.assertEquals(new LocalDate(2012, 12, 31), person.dateOfDeath);
+		Assert.assertEquals(LocalDate.of(2012, 12, 31), person.dateOfDeath);
 	}
 	
 	@Test

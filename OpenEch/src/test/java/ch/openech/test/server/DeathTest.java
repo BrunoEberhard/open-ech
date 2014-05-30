@@ -2,7 +2,7 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class DeathTest extends AbstractServerTest {
 		Person person1 = reload(p1);
 		
 		Assert.assertNotNull(person1);
-		Assert.assertEquals(new LocalDate(2008, 11, 15), person1.dateOfDeath);
+		Assert.assertEquals(LocalDate.of(2008, 11, 15), person1.dateOfDeath);
 	}
 	
 	@Test
@@ -36,20 +36,20 @@ public class DeathTest extends AbstractServerTest {
 		Person person2 = reload(p2);
 		
 		Assert.assertNotNull(person2);
-		Assert.assertEquals(new LocalDate(2008, 11, 15), person2.maritalStatus.dateOfMaritalStatus);
+		Assert.assertEquals(LocalDate.of(2008, 11, 15), person2.maritalStatus.dateOfMaritalStatus);
 		Assert.assertTrue(person2.maritalStatus.isVerwitwet());
 	}
 
 	@Test
 	public void death_3() throws Exception {
 		Person person = reload(p3);
-		person.dateOfDeath = new LocalDate(2010, 9, 8);
+		person.dateOfDeath = LocalDate.of(2010, 9, 8);
 		
 		process(writer().correctDateOfDeath(person));
 		person = reload(person);
 		
 		Assert.assertNotNull(person);
-		Assert.assertEquals(new LocalDate(2010, 9, 8), person.dateOfDeath);
+		Assert.assertEquals(LocalDate.of(2010, 9, 8), person.dateOfDeath);
 	}
 	
 }

@@ -5,7 +5,7 @@ import static  ch.openech.model.person.PlaceOfOrigin.*;
 import java.util.Collections;
 import java.util.List;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;

@@ -2,13 +2,13 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.code.NationalityStatus;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.Relation;
+import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.Relation;
 
 public class BirthTest extends AbstractServerTest {
 
@@ -32,7 +32,7 @@ public class BirthTest extends AbstractServerTest {
 		Assert.assertEquals("Hauber", child.officialName);
 		Assert.assertEquals("Daniela", child.firstName);
 		Assert.assertTrue(child.maritalStatus.isLedig());
-		Assert.assertEquals(new LocalDate(2005, 5, 25), child.dateOfBirth);
+		Assert.assertEquals(LocalDate.of(2005, 5, 25), child.dateOfBirth.toLocalDate());
 
 		Assert.assertEquals("GE", child.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton);
 		Assert.assertEquals("Genève", child.placeOfBirth.municipalityIdentification.municipalityName);

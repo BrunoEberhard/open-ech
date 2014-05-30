@@ -6,7 +6,7 @@ import static  ch.openech.model.person.Relation.*;
 import org.minimalj.autofill.FirstNameGenerator;
 import org.minimalj.autofill.NameGenerator;
 import org.minimalj.autofill.NameWithFrequency;
-import org.minimalj.frontend.edit.fields.AbstractJodaField;
+import org.minimalj.frontend.edit.fields.TextFormatField;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.edit.form.IForm;
@@ -191,13 +191,13 @@ public class PersonPanel extends EchForm<Person>  {
 
 	private void disableDeathFieldIfAlive(Person person) {
 		if (mode == PersonEditMode.DISPLAY) {
-			((AbstractJodaField<?>) getField(PERSON.dateOfDeath)).setEnabled(person.dateOfDeath != null);
+			((TextFormatField<?>) getField(PERSON.dateOfDeath)).setEnabled(person.dateOfDeath != null);
 		}
 	}
 
 	private void disableMoveOutFields(Person person) {
 		if (mode == PersonEditMode.DISPLAY) {
-			((AbstractJodaField<?>) getField(PERSON.departureDate)).setEnabled(person.departureDate != null);
+			((TextFormatField<?>) getField(PERSON.departureDate)).setEnabled(person.departureDate != null);
 			((PlaceReadOnlyField) getField(PERSON.goesTo)).setEnabled(person.goesTo != null && !person.goesTo.isUnknown());
 			((AddressField) getField(PERSON.goesToAddress)).setEnabled(person.goesTo != null && person.goesTo.mailAddress != null && !person.goesTo.mailAddress.isEmpty());
 		}

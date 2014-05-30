@@ -2,16 +2,16 @@ package ch.openech.test.xml;
 
 import junit.framework.Assert;
 
-import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Test;
 import org.minimalj.util.EqualsHelper;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.EchSchemaValidation;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.contact.Contact;
-import  ch.openech.model.contact.ContactEntry;
-import  ch.openech.model.contact.ContactEntryType;
-import  ch.openech.model.types.ContactCategory;
+import ch.openech.model.EchSchemaValidation;
+import ch.openech.model.common.Address;
+import ch.openech.model.contact.Contact;
+import ch.openech.model.contact.ContactEntry;
+import ch.openech.model.contact.ContactEntryType;
+import ch.openech.model.types.ContactCategory;
 import ch.openech.xml.read.StaxEch0046;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0046;
@@ -27,8 +27,8 @@ public class ContactXmlTest {
 		
 		ContactEntry mail1 = new ContactEntry();
 		mail1.typeOfContact = ContactEntryType.Email;
-		mail1.dateFrom = ISODateTimeFormat.date().parseLocalDate("2003-02-01");
-		mail1.dateTo = ISODateTimeFormat.date().parseLocalDate("2006-05-04");
+		mail1.dateFrom = LocalDate.of(2003, 2, 1);
+		mail1.dateTo = LocalDate.of(2006, 5, 4);
 		mail1.categoryCode = ContactCategory.geschaeftlich;
 		mail1.value = "mymail@myhost.com";
 		contact.entries.add(mail1);
@@ -41,8 +41,8 @@ public class ContactXmlTest {
 
 		ContactEntry addressEntry1 = new ContactEntry();
 		addressEntry1.typeOfContact = ContactEntryType.Address;
-		addressEntry1.dateFrom = ISODateTimeFormat.date().parseLocalDate("2003-02-01");
-		addressEntry1.dateTo = ISODateTimeFormat.date().parseLocalDate("2006-05-04");
+		addressEntry1.dateFrom = LocalDate.of(2003, 2, 1);
+		addressEntry1.dateTo = LocalDate.of(2006, 5, 4);
 		addressEntry1.categoryCode = ContactCategory.privat;
 		Address address1 = new Address();
 		address1.firstName = "Vortester";

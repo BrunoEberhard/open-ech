@@ -3,31 +3,31 @@ package ch.openech.datagenerator;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.minimalj.autofill.DateGenerator;
 import org.minimalj.autofill.FirstNameGenerator;
 import org.minimalj.autofill.NameGenerator;
 import org.minimalj.autofill.OrganisationNameGenerator;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.code.NationalityStatus;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.common.CountryIdentification;
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.organisation.Organisation;
-import  ch.openech.model.person.Occupation;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.Relation;
-import  ch.openech.model.person.types.MaritalStatus;
-import  ch.openech.model.person.types.Separation;
-import  ch.openech.model.person.types.TypeOfRelationship;
-import  ch.openech.model.types.Language;
-import  ch.openech.model.types.Sex;
-import  ch.openech.model.types.TypeOfResidence;
+import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.common.Address;
+import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
+import ch.openech.model.organisation.Organisation;
+import ch.openech.model.person.Occupation;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.types.MaritalStatus;
+import ch.openech.model.person.types.Separation;
+import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.model.types.Language;
+import ch.openech.model.types.Sex;
+import ch.openech.model.types.TypeOfResidence;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 import ch.openech.xml.read.StaxEch0071;
@@ -44,7 +44,7 @@ public class DataGenerator {
 		boolean male = Math.random() > .5;
 		person.firstName = FirstNameGenerator.getFirstName(male);
 		person.sex = male ? Sex.maennlich : Sex.weiblich;
-		person.dateOfBirth = DateGenerator.generateRandomDate();
+		person.dateOfBirth.value = DateGenerator.generateRandomDatePartiallyKnown();
 		if (Math.random() > .9) {
 			person.dateOfDeath = DateGenerator.generateRandomDate();
 		}
@@ -78,19 +78,19 @@ public class DataGenerator {
 			}
 		}
 		person.sex = Sex.weiblich;
-		person.dateOfBirth = new LocalDate(1999, 1, 2);
-		person.dateOfDeath = new LocalDate(2010, 3, 4);
+		person.dateOfBirth.value = "1999-01-02";
+		person.dateOfDeath = LocalDate.of(2010, 3, 4);
 		person.vn.fillWithDemoData();
 		person.placeOfBirth = place();
 		
 		person.maritalStatus.maritalStatus = MaritalStatus.ledig;
-		person.maritalStatus.dateOfMaritalStatus = new LocalDate(2004, 2, 3);
+		person.maritalStatus.dateOfMaritalStatus = LocalDate.of(2004, 2, 3);
 		person.separation.separation = Separation.gerichtlich;
-		person.separation.dateOfSeparation = new LocalDate(2005, 5, 12);
+		person.separation.dateOfSeparation = LocalDate.of(2005, 5, 12);
 		
 		person.typeOfResidence = TypeOfResidence.hasMainResidence;
-		person.arrivalDate = new LocalDate(1999, 1, 2);
-		person.departureDate = new LocalDate(2010, 3, 4);
+		person.arrivalDate = LocalDate.of(1999, 1, 2);
+		person.departureDate = LocalDate.of(2010, 3, 4);
 		person.residence.reportingMunicipality = createJona();
 		
 		person.placeOfOrigin.add(placeOfOrigin());
@@ -209,7 +209,7 @@ public class DataGenerator {
 			organisation.organisationName = organisation.organisationName.substring(0, 60);
 		}
 		organisation.uid.value = "ADM323423421";
-		organisation.foundationDate = DateGenerator.generateRandomDate();
+		organisation.foundationDate.value = DateGenerator.generateRandomDatePartiallyKnown();
 		organisation.arrivalDate = DateGenerator.generateRandomDate();
 		organisation.reportingMunicipality = createJona();
 		organisation.businessAddress = dwellingAddress();

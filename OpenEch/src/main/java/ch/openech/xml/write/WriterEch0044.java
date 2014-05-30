@@ -1,15 +1,15 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
-import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.XmlConstants;
-import  ch.openech.model.common.NamedId;
-import  ch.openech.model.person.PersonIdentification;
+import ch.openech.model.XmlConstants;
+import ch.openech.model.common.DatePartiallyKnown;
+import ch.openech.model.common.NamedId;
+import ch.openech.model.person.PersonIdentification;
 
 public class WriterEch0044 {
 
@@ -26,23 +26,23 @@ public class WriterEch0044 {
 	public void personIdentification(WriterElement parent, String tagName, PersonIdentification values) throws Exception {
 		WriterElement personIdentification = parent.create(URI, tagName);
 
-		personIdentification.text(XmlConstants.VN, values.vn);
+		personIdentification.text(XmlConstants.VN, values.vn.value);
 		namedId(personIdentification, values.technicalIds.localId, XmlConstants.LOCAL_PERSON_ID);
     	NamedId(personIdentification, values.technicalIds.otherId, _OTHER_PERSON_ID); // VERSION
     	NamedId(personIdentification, values.technicalIds.euId, "EuPersonId"); // VERSION
 		personIdentification.values(values, OFFICIAL_NAME, FIRST_NAME);
 		personIdentification.text(XmlConstants.SEX, values.sex);
-    	datePartiallyKnownType(personIdentification, DATE_OF_BIRTH, values);
+    	datePartiallyKnownType(personIdentification, DATE_OF_BIRTH, values.dateOfBirth);
     }
 
-	public void datePartiallyKnownType(WriterElement parent, String tagName, Object object) throws Exception {
+	public void datePartiallyKnownType(WriterElement parent, String tagName, DatePartiallyKnown object) throws Exception {
 		datePartiallyKnownType(parent, URI, tagName, object);
 	}
 
 	// Diese Methode wird auch von e98 benutzt, der ComplexType ist dort
 	// dupliziert worden
-	public static void datePartiallyKnownType(WriterElement parent, String uri, String tagName, Object object) throws Exception {
-		Object value = FlatProperties.getValue(object, tagName);
+	public static void datePartiallyKnownType(WriterElement parent, String uri, String tagName, DatePartiallyKnown object) throws Exception {
+		Object value = object.value;
 		if (value == null) return;
 		String text = value.toString();
 		if (StringUtils.isBlank(text)) return;

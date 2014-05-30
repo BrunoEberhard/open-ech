@@ -7,11 +7,13 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.minimalj.util.EqualsHelper;
 import org.minimalj.util.SerializationInputStream;
 import org.minimalj.util.SerializationOutputStream;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.LocalTime;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.person.Person;
@@ -23,7 +25,9 @@ public class SerializationTest {
 		SerializationTestClass1 object1 = new SerializationTestClass1();
 		object1.s = "Hello";
 		object1.i = 23;
-		object1.date = new LocalDate();
+		object1.date = LocalDate.now();
+		object1.dateTime = LocalDateTime.now();
+		object1.time = LocalTime.now();
 		object1.l = 456;
 		SerializationTestClass2 objectInList = new SerializationTestClass2();
 		objectInList.s = "Marco";
@@ -84,6 +88,8 @@ public class SerializationTest {
 		public Boolean b;
 		public boolean b2;
 		public LocalDate date;
+		public LocalTime time;
+		public LocalDateTime dateTime;
 		public final List<SerializationTestClass2> list = new ArrayList<>();
 		public String s;
 		public Integer i;

@@ -3,7 +3,7 @@ package ch.openech.frontend.ewk.event;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Enabled;

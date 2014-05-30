@@ -2,12 +2,12 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Before;
 import org.junit.Test;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.types.Separation;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.types.Separation;
 
 public class SeparationTest extends AbstractServerTest {
 
@@ -23,11 +23,11 @@ public class SeparationTest extends AbstractServerTest {
 	@Test
 	public void separation() throws Exception {
 		Person person = reload(p);
-		process(writer().separation(person.personIdentification(), Separation.freiwillig, ISODateTimeFormat.date().parseLocalDate("2010-09-03")));
+		process(writer().separation(person.personIdentification(), Separation.freiwillig, LocalDate.of(2010, 9, 3)));
 		
 		person = reload(p);
 		Assert.assertNotNull(person);
-		Assert.assertEquals(ISODateTimeFormat.date().parseLocalDate("2010-09-03"), person.separation.dateOfSeparation);
+		Assert.assertEquals(LocalDate.of(2010, 9, 3), person.separation.dateOfSeparation);
 		Assert.assertEquals(Separation.freiwillig, person.separation.separation);
 	}
 	

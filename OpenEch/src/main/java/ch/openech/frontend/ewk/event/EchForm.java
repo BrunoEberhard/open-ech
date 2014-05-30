@@ -26,23 +26,28 @@ import ch.openech.frontend.e11.PlaceReadOnlyField;
 import ch.openech.frontend.e11.ResidenceField;
 import ch.openech.frontend.e21.OccupationField;
 import ch.openech.frontend.e44.PersonIdentificationField;
+import ch.openech.frontend.e44.VnField;
 import ch.openech.frontend.e46.ContactField;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.common.CountryIdentification;
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.HouseNumber;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.contact.ContactEntry;
-import  ch.openech.model.person.ContactPerson;
-import  ch.openech.model.person.Foreign;
-import  ch.openech.model.person.Nationality;
-import  ch.openech.model.person.Occupation;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonExtendedInformation;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.Residence;
+import ch.openech.frontend.e97.UidStructureField;
+import ch.openech.model.common.Address;
+import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.DatePartiallyKnown;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.HouseNumber;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
+import ch.openech.model.contact.ContactEntry;
+import ch.openech.model.organisation.UidStructure;
+import ch.openech.model.person.ContactPerson;
+import ch.openech.model.person.Foreign;
+import ch.openech.model.person.Nationality;
+import ch.openech.model.person.Occupation;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonExtendedInformation;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Residence;
+import ch.openech.model.person.types.Vn;
 import ch.openech.xml.write.EchSchema;
 
 public class EchForm<T> extends Form<T> {
@@ -75,7 +80,9 @@ public class EchForm<T> extends Form<T> {
 	@Override
 	public FormField<?> createField(PropertyInterface property) {
 		Class<?> type = property.getFieldClazz();
-		if (type == PersonIdentification.class) {
+		if (type == DatePartiallyKnown.class) {
+			return new DatePartiallyKnownField(property, editable);
+		} else if (type == PersonIdentification.class) {
 			return new PersonIdentificationField(property);
 		} else if (type == Person.class) {
 			return new ch.openech.frontend.e44.PersonField(property);
@@ -101,6 +108,10 @@ public class EchForm<T> extends Form<T> {
 			return editable ? new CountryField(property) : new CountryReadOnlyField(property);
 		} else if (type == MunicipalityIdentification.class) {
 			return editable ? new MunicipalityField(property, false) : new MunicipalityReadOnlyField(property);
+		} else if (type == Vn.class) {
+			return new VnField(property, editable);			
+		} else if (type == UidStructure.class) {
+			return new UidStructureField(property, editable);				
 		} else if (type == List.class) {
 			Class<?> listClass = GenericUtils.getGenericClass(property.getType());
 			if (listClass == Occupation.class) {

@@ -3,7 +3,7 @@ package  ch.openech.model.contact;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Enabled;

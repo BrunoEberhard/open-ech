@@ -3,13 +3,13 @@ package  ch.openech.model.tpn;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
-import org.joda.time.ReadablePartial;
 import org.minimalj.model.Keys;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.common.Address;
-import  ch.openech.model.common.CountryIdentification;
-import  ch.openech.model.contact.ContactEntry;
+import ch.openech.model.common.Address;
+import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.DatePartiallyKnown;
+import ch.openech.model.contact.ContactEntry;
 
 // e46
 public class ThirdPartyMove {
@@ -20,7 +20,7 @@ public class ThirdPartyMove {
 	
 	// Person
 	public String officialName, callName;
-	public ReadablePartial dateOfBirth;
+	public DatePartiallyKnown dateOfBirth = new DatePartiallyKnown();
 	public String sex;
 	public CountryIdentification nationality;
 	public LocalDate beginOfContract, endOfContract;

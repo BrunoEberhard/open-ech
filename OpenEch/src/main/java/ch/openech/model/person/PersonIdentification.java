@@ -1,17 +1,16 @@
 package  ch.openech.model.person;
 
-import org.joda.time.ReadablePartial;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.ViewOf;
-import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.common.TechnicalIds;
-import  ch.openech.model.person.types.Vn;
-import  ch.openech.model.types.Sex;
+import ch.openech.model.EchFormats;
+import ch.openech.model.common.DatePartiallyKnown;
+import ch.openech.model.common.TechnicalIds;
+import ch.openech.model.person.types.Vn;
+import ch.openech.model.types.Sex;
 
 public class PersonIdentification implements ViewOf<Person> {
 
@@ -32,7 +31,7 @@ public class PersonIdentification implements ViewOf<Person> {
 	public Sex sex;
 	
 	@Required 
-	public ReadablePartial dateOfBirth;
+	public final DatePartiallyKnown dateOfBirth = new DatePartiallyKnown();
 	
 	//
 	
@@ -63,7 +62,7 @@ public class PersonIdentification implements ViewOf<Person> {
 	
 	public void toHtml(StringBuilder s) {
 		StringUtils.appendLine(s, firstName, officialName);
-		StringUtils.appendLine(s, DateUtils.formatPartialCH(dateOfBirth));
+		StringUtils.appendLine(s, dateOfBirth.value);
 	}
 	
 	public boolean isMale() {

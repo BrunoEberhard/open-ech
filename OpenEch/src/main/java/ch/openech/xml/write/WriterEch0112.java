@@ -1,29 +1,7 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.ADDRESS_INFO;
-import static  ch.openech.model.XmlConstants.ADMINISTRATIVE_DWELLING_ID;
-import static  ch.openech.model.XmlConstants.BEGIN_OF_CONTRACT;
-import static  ch.openech.model.XmlConstants.BUILDING;
-import static  ch.openech.model.XmlConstants.CALL_NAME;
-import static  ch.openech.model.XmlConstants.COMES_FROM;
-import static  ch.openech.model.XmlConstants.CONTRACT;
-import static  ch.openech.model.XmlConstants.CONTRACTOR;
-import static  ch.openech.model.XmlConstants.DATE_OF_BIRTH;
-import static  ch.openech.model.XmlConstants.DWELLING;
-import static  ch.openech.model.XmlConstants.END_OF_CONTRACT;
-import static  ch.openech.model.XmlConstants.FLOOR;
-import static  ch.openech.model.XmlConstants.GOES_TO;
-import static  ch.openech.model.XmlConstants.MOVE_IN;
-import static  ch.openech.model.XmlConstants.MOVE_OUT;
-import static  ch.openech.model.XmlConstants.NATIONALITY;
-import static  ch.openech.model.XmlConstants.OFFICIAL_NAME;
-import static  ch.openech.model.XmlConstants.PERSON;
-import static  ch.openech.model.XmlConstants.POSITION_ON_FLOOR;
-import static  ch.openech.model.XmlConstants.ROOM_COUNT;
-import static  ch.openech.model.XmlConstants.SEX;
-import static  ch.openech.model.XmlConstants._E_G_I_D;
-import static  ch.openech.model.XmlConstants._E_W_I_D;
-import  ch.openech.model.tpn.ThirdPartyMove;
+import static ch.openech.model.XmlConstants.*;
+import ch.openech.model.tpn.ThirdPartyMove;
 
 public class WriterEch0112 extends DeliveryWriter {
 
@@ -69,7 +47,7 @@ public class WriterEch0112 extends DeliveryWriter {
 	private void person(WriterElement parent, ThirdPartyMove contract) throws Exception {
 		WriterElement element = parent.create(URI, PERSON);
 		element.values(contract, OFFICIAL_NAME, CALL_NAME);
-		ech44.datePartiallyKnownType(element,  DATE_OF_BIRTH, contract);
+		ech44.datePartiallyKnownType(element, DATE_OF_BIRTH, contract.dateOfBirth);
 		element.values(contract, SEX);
 		ech8.country(element, NATIONALITY, contract.nationality);
 	}

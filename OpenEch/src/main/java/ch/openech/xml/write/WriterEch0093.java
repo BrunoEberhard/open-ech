@@ -17,7 +17,7 @@ import static  ch.openech.model.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
 import static  ch.openech.model.XmlConstants.REPORTING_MUNICIPALITY;
 import static  ch.openech.model.XmlConstants.SECONDARY_RESIDENCE;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 
 import  ch.openech.model.common.MunicipalityIdentification;
 import  ch.openech.model.common.Place;

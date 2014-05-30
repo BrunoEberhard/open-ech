@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
@@ -15,25 +15,24 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.joda.time.LocalDateTime;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
-import org.minimalj.util.DateUtils;
 import org.minimalj.util.FieldUtils;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
+import org.threeten.bp.LocalDateTime;
 
-import  ch.openech.model.Event;
-import  ch.openech.model.XmlConstants;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.person.Foreign;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.Relation;
-import  ch.openech.model.person.types.ReasonOfAcquisition;
-import  ch.openech.model.types.TypeOfResidence;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.Event;
+import ch.openech.model.XmlConstants;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.person.Foreign;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.types.ReasonOfAcquisition;
+import ch.openech.model.types.TypeOfResidence;
+import ch.openech.model.types.YesNo;
 import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0020 {
@@ -167,7 +166,7 @@ public class StaxEch0020 {
 					e = new Event();
 					e.type = startName;
 					// e.message = xmlString;
-					e.time = new LocalDateTime();
+					e.time = LocalDateTime.now();
 					
 					if (startName.equals(BASE_DELIVERY)) baseDelivery(xml, progressListener);
 					else if (startName.equals(BIRTH)) eventBirth(xml);
@@ -301,7 +300,7 @@ public class StaxEch0020 {
 	
 	private void completePlaceOfOrigins(Person person) {
 		for (PlaceOfOrigin placeOfOrigin : person.placeOfOrigin) {
-			placeOfOrigin.naturalizationDate = DateUtils.convertToLocalDate(person.dateOfBirth);
+			placeOfOrigin.naturalizationDate = person.dateOfBirth.toLocalDate();
 			placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
 		}
 	}

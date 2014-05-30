@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.minimalj.backend.db.DbPersistence;
@@ -91,7 +90,7 @@ public class DbPersonCrudTest {
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
-		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.dateOfBirth.value = "1974-08-02";
 		person.vn.value = "123";
 		person.sex = Sex.maennlich;
 		
@@ -120,7 +119,7 @@ public class DbPersonCrudTest {
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
-		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.dateOfBirth.value = "1974-08-02";
 		person.vn.value = "123";
 		person.sex = Sex.maennlich;
 
@@ -161,7 +160,7 @@ public class DbPersonCrudTest {
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
-		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.dateOfBirth.value = "1974-08-02";
 		person.vn.value = "123";
 		person.sex = Sex.maennlich;
 
@@ -200,7 +199,7 @@ public class DbPersonCrudTest {
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
-		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.dateOfBirth.value = "1974-08-02";
 		person.vn.value = "123";
 		person.sex = Sex.maennlich;
 		
@@ -238,7 +237,7 @@ public class DbPersonCrudTest {
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
-		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.dateOfBirth.value = "1974-08-02";
 		person.vn.value = "123";
 		person.sex = Sex.maennlich;
 
@@ -265,7 +264,7 @@ public class DbPersonCrudTest {
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
-		person.dateOfBirth = new LocalDate(1974, 8, 2);
+		person.dateOfBirth.value = "1974-08-02";
 		person.vn.value = "123";
 		person.sex = Sex.maennlich;
 		

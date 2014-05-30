@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
@@ -12,14 +12,14 @@ import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.code.FederalRegister;
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.person.Foreign;
-import  ch.openech.model.person.Nationality;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.code.FederalRegister;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
+import ch.openech.model.person.Foreign;
+import ch.openech.model.person.Nationality;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PlaceOfOrigin;
 
 public class StaxEch0011 {
 
@@ -166,7 +166,7 @@ public class StaxEch0011 {
 				String name = element.getName().getLocalPart();
 				if (StringUtils.equals(name, ORIGINAL_NAME, ALLIANCE_PARTNERSHIP_NAME,ALIAS_NAME, OTHER_NAME, CALL_NAME)) FlatProperties.set(person, name, token(xml));
 				else if (name.equals(PLACE_OF_BIRTH)) person.placeOfBirth = birthplace(xml);
-				else if (name.equals(DATE_OF_DEATH)) person.dateOfBirth = date(xml);
+				else if (name.equals(DATE_OF_BIRTH)) person.dateOfBirth.value = StaxEch0044.datePartiallyKnown(xml);
 				else if (name.equals(MARITAL_DATA)) maritalData(xml, person);
 				else if (name.equals(NATIONALITY)) nationality(xml, person.nationality);
 				else if (name.equals(CONTACT)) contact(xml, person);

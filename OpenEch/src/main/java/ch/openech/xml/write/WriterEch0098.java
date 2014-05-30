@@ -1,9 +1,10 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.*;
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.organisation.Organisation;
+import static ch.openech.model.XmlConstants.*;
+import ch.openech.model.common.DatePartiallyKnown;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.Place;
+import ch.openech.model.organisation.Organisation;
 
 public class WriterEch0098 {
 
@@ -133,17 +134,17 @@ public class WriterEch0098 {
 	
 	public void foundation(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, FOUNDATION);
-		datePartiallyKnownType(element, FOUNDATION_DATE, values);
+		datePartiallyKnownType(element, FOUNDATION_DATE, values.foundationDate);
 		element.values(values, FOUNDATION_REASON);
     }
 
 	public void liquidation(WriterElement parent, Organisation values) throws Exception {
 		WriterElement element = parent.create(URI, LIQUIDATION);
-		datePartiallyKnownType(element, LIQUIDATION_DATE, values);
+		datePartiallyKnownType(element, LIQUIDATION_DATE, values.liquidationDate);
 		element.values(values, LIQUIDATION_REASON);
     }
 
-	public void datePartiallyKnownType(WriterElement parent, String tagName, Object object) throws Exception {
+	public void datePartiallyKnownType(WriterElement parent, String tagName, DatePartiallyKnown object) throws Exception {
 		WriterEch0044.datePartiallyKnownType(parent, URI, tagName, object);
 	}
 	

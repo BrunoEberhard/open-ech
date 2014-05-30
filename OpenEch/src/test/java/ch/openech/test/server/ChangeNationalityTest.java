@@ -2,7 +2,7 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +36,7 @@ public class ChangeNationalityTest extends AbstractServerTest {
 		processFile("testPerson/changeNationality/changeResidencePermitTest.xml");
 		person = reload(person);
 		
-		Assert.assertEquals(new LocalDate(2010, 1, 31), person.foreign.residencePermitTill);
+		Assert.assertEquals(LocalDate.of(2010, 1, 31), person.foreign.residencePermitTill);
 		Assert.assertEquals(ResidencePermit.Saisonarbeiter, person.foreign.residencePermit);
 
 		Assert.assertEquals(1, person.occupation.size());

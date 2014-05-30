@@ -2,7 +2,7 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +38,7 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
 		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
-		Assert.assertEquals(new LocalDate(2010, 8, 30), person.dwellingAddress.movingDate);
+		Assert.assertEquals(LocalDate.of(2010, 8, 30), person.dwellingAddress.movingDate);
 	}
 	
 	@Test

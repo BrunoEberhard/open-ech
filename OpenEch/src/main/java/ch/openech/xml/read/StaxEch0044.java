@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
@@ -8,13 +8,12 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.joda.time.ReadablePartial;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.common.NamedId;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonIdentification;
+import ch.openech.model.common.NamedId;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
 
 public class StaxEch0044 {
 
@@ -45,7 +44,7 @@ public class StaxEch0044 {
 					StaxEch.enuum(xml,  personIdentification, PersonIdentification.PERSON_IDENTIFICATION.sex);
 				}
 				else if (startName.equals(DATE_OF_BIRTH)) {
-					FlatProperties.set(personIdentification, startName, datePartiallyKnown(xml));
+					personIdentification.dateOfBirth.value = datePartiallyKnown(xml);
 				}
 				else skip(xml);
 			} else if (event.isEndElement()) {
@@ -78,7 +77,7 @@ public class StaxEch0044 {
 					StaxEch.enuum(xml,  person, Person.PERSON.sex);
 				}
 				else if (startName.equals(DATE_OF_BIRTH)) {
-					FlatProperties.set(person, startName, datePartiallyKnown(xml));
+					person.dateOfBirth.value = datePartiallyKnown(xml);
 				}
 				else skip(xml);
 			} else if (event.isEndElement()) {
@@ -108,8 +107,8 @@ public class StaxEch0044 {
 	}
 
 	// also used by 98
-	public static ReadablePartial datePartiallyKnown(XMLEventReader xml) throws XMLStreamException {
-		ReadablePartial date = null;
+	public static String datePartiallyKnown(XMLEventReader xml) throws XMLStreamException {
+		String date = null;
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {

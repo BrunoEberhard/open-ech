@@ -2,7 +2,7 @@ package  ch.openech.model.common;
 
 import java.util.List;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.minimalj.model.Codes;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Code;

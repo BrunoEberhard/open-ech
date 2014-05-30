@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.joda.time.LocalDate;
-import org.joda.time.ReadablePartial;
-import org.joda.time.format.ISODateTimeFormat;
 import org.minimalj.model.Codes;
 import org.minimalj.model.EmptyValidator;
 import org.minimalj.model.Keys;
@@ -19,10 +16,13 @@ import org.minimalj.model.annotation.Size;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.Event;
 import ch.openech.model.code.TypeOfResidenceOrganisation;
+import ch.openech.model.common.DatePartiallyKnown;
 import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
@@ -69,12 +69,12 @@ public class Organisation implements Validation {
 	public String nogaCode; // 00 - 999999
 	
 	@Required
-	public ReadablePartial foundationDate;
+	public final DatePartiallyKnown foundationDate = new DatePartiallyKnown();
 	@Code
 	public String foundationReason;
 	
 	public LocalDate liquidationEntryDate;
-	public ReadablePartial liquidationDate;
+	public final DatePartiallyKnown liquidationDate = new DatePartiallyKnown();
 	@Code
 	public String liquidationReason;
 	
@@ -134,7 +134,7 @@ public class Organisation implements Validation {
 	public void set(String propertyName, Object value) {
 		PropertyInterface property = FlatProperties.getProperties(this.getClass()).get(propertyName);
 		if (property.getFieldClazz() == LocalDate.class && value instanceof String) {
-			value = ISODateTimeFormat.date().parseLocalDate((String) value);
+			value = (LocalDate) DateTimeFormatter.ISO_DATE.parse((String) value);
 		} else if (Enum.class.isAssignableFrom(property.getFieldClazz()) && value instanceof String) {
 			StaxEch.enuum((String) value, this, property);
 			return;

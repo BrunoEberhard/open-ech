@@ -2,15 +2,14 @@ package ch.openech.test.xml;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
 import org.junit.Test;
 
-import  ch.openech.model.EchSchemaValidation;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonExtendedInformation;
-import  ch.openech.model.types.Sex;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.EchSchemaValidation;
+import ch.openech.model.common.Address;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonExtendedInformation;
+import ch.openech.model.types.Sex;
+import ch.openech.model.types.YesNo;
 import ch.openech.xml.read.StaxEch0101;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0101;
@@ -28,7 +27,7 @@ public class PersonExtendedInformationXmlTest {
 		person.firstName = "TestVorname";
 		person.officialName = "TestNachname";
 		person.sex = Sex.maennlich;
-		person.dateOfBirth = new LocalDate(2001, 12, 31);
+		person.dateOfBirth.value = "2001-12-31";
 		information.personIdentification = person.personIdentification();
 		
 		Address address1 = new Address();

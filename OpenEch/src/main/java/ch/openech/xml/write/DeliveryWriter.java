@@ -12,11 +12,11 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import org.joda.time.LocalDateTime;
+import org.threeten.bp.LocalDateTime;
 
-import  ch.openech.model.Envelope;
-import  ch.openech.model.XmlConstants;
-import  ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.Envelope;
+import ch.openech.model.XmlConstants;
+import ch.openech.model.common.MunicipalityIdentification;
 
 public abstract class DeliveryWriter {
 	private static final Logger logger = Logger.getLogger(DeliveryWriter.class.getName());
@@ -55,7 +55,7 @@ public abstract class DeliveryWriter {
 			// envelope.senderId = AbstractClient.preferences().get("sedexAddress", null);
 			envelope.senderId = senderId;
 			envelope.recipientId = recipientId;
-			envelope.eventDate = new LocalDateTime();
+			envelope.eventDate = LocalDateTime.now();
 			envelope.messageDate = envelope.eventDate;
 		}
 		return envelope;

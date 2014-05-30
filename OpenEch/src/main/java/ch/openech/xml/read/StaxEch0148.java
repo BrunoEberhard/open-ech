@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
@@ -13,16 +13,16 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.joda.time.LocalDateTime;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
+import org.threeten.bp.LocalDateTime;
 
-import  ch.openech.model.Event;
-import  ch.openech.model.code.TypeOfResidenceOrganisation;
-import  ch.openech.model.organisation.Organisation;
-import  ch.openech.model.organisation.OrganisationIdentification;
+import ch.openech.model.Event;
+import ch.openech.model.code.TypeOfResidenceOrganisation;
+import ch.openech.model.organisation.Organisation;
+import ch.openech.model.organisation.OrganisationIdentification;
 import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0148 {
@@ -90,7 +90,7 @@ public class StaxEch0148 {
 					e = new Event();
 					e.type = startName;
 					// e.message = xmlString;
-					e.time = new LocalDateTime();
+					e.time = LocalDateTime.now();
 					
 					if (startName.equals(ORGANISATION_BASE_DELIVERY)) baseDelivery(xml, progressListener);
 					else if (StringUtils.equals(startName, FOUNDATION, MOVE_IN)) eventAdd(xml);
@@ -174,7 +174,7 @@ public class StaxEch0148 {
 					organisation = EchPersistence.getByIdentification(backend, organisationIdentification);
 					if (StringUtils.equals(eventName, CORRECT_LIQUIDATION)) {
 						organisation.liquidationEntryDate = null;
-						organisation.liquidationDate = null;
+						organisation.liquidationDate.value = null;
 						organisation.liquidationReason = null;
 					}
 				}

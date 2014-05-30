@@ -4,10 +4,10 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria;
+import org.threeten.bp.LocalDate;
 
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.code.NationalityStatus;
@@ -30,7 +30,7 @@ public class MoveInTest extends AbstractServerTest {
 		Assert.assertEquals("BERNALUSKOVSKI", person.officialName);
 		Assert.assertEquals("Emilie", person.firstName);
 		Assert.assertEquals(Sex.weiblich, person.sex);
-		Assert.assertEquals(new LocalDate(1949, 11, 29), person.dateOfBirth);
+		Assert.assertEquals(LocalDate.of(1949, 11, 29), person.dateOfBirth.toLocalDate());
 		
 		Assert.assertEquals("CZ", person.placeOfBirth.countryIdentification.countryIdISO2);
 		Assert.assertEquals("Tschechische Republik", person.placeOfBirth.countryIdentification.countryNameShort);
@@ -44,7 +44,7 @@ public class MoveInTest extends AbstractServerTest {
 		// Assert.assertEquals("11", person.foreign.residencePermit);
 		
 		Assert.assertEquals(FederalRegister.Ordipro, person.residence.reportingMunicipality.getFederalRegister());
-		Assert.assertEquals(new LocalDate(2009, 4, 23), person.arrivalDate);
+		Assert.assertEquals(LocalDate.of(2009, 4, 23), person.arrivalDate);
 		Assert.assertEquals("unknown", person.comesFrom.countryIdentification.countryNameShort);
 		Assert.assertEquals("Muristrasse 53", person.dwellingAddress.mailAddress.street);
 		Assert.assertEquals("Bern", person.dwellingAddress.mailAddress.town);

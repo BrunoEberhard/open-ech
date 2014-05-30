@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
@@ -10,9 +10,9 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.code.TypeOfResidenceOrganisation;
-import  ch.openech.model.organisation.Headquarter;
-import  ch.openech.model.organisation.Organisation;
+import ch.openech.model.code.TypeOfResidenceOrganisation;
+import ch.openech.model.organisation.Headquarter;
+import ch.openech.model.organisation.Organisation;
 
 public class StaxEch0098 {
 
@@ -63,7 +63,9 @@ public class StaxEch0098 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (StringUtils.equals(startName,  FOUNDATION_REASON,  LIQUIDATION_REASON)) organisation.set(startName, token(xml));
-				else if (StringUtils.equals(startName, FOUNDATION_DATE,  LIQUIDATION_DATE, LIQUIDATION_ENTRY_DATE)) organisation.set(startName, StaxEch0044.datePartiallyKnown(xml));
+				else if (StringUtils.equals(startName, FOUNDATION_DATE)) organisation.foundationDate.value = StaxEch0044.datePartiallyKnown(xml);
+				else if (StringUtils.equals(startName, LIQUIDATION_DATE)) organisation.liquidationDate.value = StaxEch0044.datePartiallyKnown(xml);
+				else if (StringUtils.equals(startName, LIQUIDATION_ENTRY_DATE)) organisation.liquidationEntryDate = StaxEch.date(xml); // not sure...
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;

@@ -2,7 +2,7 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,21 +54,21 @@ public class MarriageTest extends AbstractServerTest {
 	@Test
 	public void divorce() throws Exception {
 		Person person = reload(p1);
-		process(writer().divorce(person.personIdentification(), new LocalDate(2009, 8, 7)));
+		process(writer().divorce(person.personIdentification(), LocalDate.of(2009, 8, 7)));
 		
 		person = reload(p1);
 		Assert.assertTrue(person.maritalStatus.isGeschieden());
-		Assert.assertEquals(new LocalDate(2009, 8, 7), person.maritalStatus.dateOfMaritalStatus);
+		Assert.assertEquals(LocalDate.of(2009, 8, 7), person.maritalStatus.dateOfMaritalStatus);
 	}
 	
 	@Test
 	public void undoMarriage() throws Exception {
 		Person person = reload(p2);
-		process(writer().undoMarriage(person.personIdentification(), new LocalDate(2009, 8, 6)));
+		process(writer().undoMarriage(person.personIdentification(), LocalDate.of(2009, 8, 6)));
 		
 		person = reload(p2);
 		Assert.assertTrue(person.maritalStatus.isUngueltigeEhe());
-		Assert.assertEquals(new LocalDate(2009, 8, 6), person.maritalStatus.dateOfMaritalStatus);
+		Assert.assertEquals(LocalDate.of(2009, 8, 6), person.maritalStatus.dateOfMaritalStatus);
 	}
 	
 }

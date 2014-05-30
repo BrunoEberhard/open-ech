@@ -7,16 +7,14 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.ReadablePartial;
-import org.joda.time.format.ISODateTimeFormat;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.InvalidValues;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.properties.FlatProperties;
-import org.minimalj.util.DateUtils;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import ch.openech.model.types.EchCode;
 
@@ -31,7 +29,7 @@ public class StaxEch {
 			// Einige Schlaumeier hängen ein "+01:00" oder eine Zeitzone an
 			text = text.substring(0, MAX_DATE_LENGHT);
 		}
-		return ISODateTimeFormat.date().parseLocalDate(text);
+		return LocalDate.from(DateTimeFormatter.ISO_DATE.parse(text));
 	}
 
 	public static LocalDateTime dateTime(XMLEventReader xml) throws XMLStreamException {
@@ -40,14 +38,14 @@ public class StaxEch {
 			// Einige Schlaumeier hängen ein "+01:00" oder eine Zeitzone an
 			text = text.substring(0, MAX_DATE_TIME_LENGHT);
 		}
-		return ISODateTimeFormat.dateHourMinuteSecond().parseLocalDateTime(text);
+		return LocalDateTime.from(DateTimeFormatter.ISO_DATE_TIME.parse(text));
 	}
 
-	public static ReadablePartial partial(XMLEventReader xml) throws XMLStreamException {
+	public static String partial(XMLEventReader xml) throws XMLStreamException {
 		String text = token(xml);
 		// handle dates like 1950-08-30+01:00
 		if (text != null && text.length() > 10) text = text.substring(0, 10);
-		return DateUtils.parsePartial(text);
+		return text;
 	}
 
 	public static void simpleValue(XMLEventReader xml, Object object, Object key) throws XMLStreamException {

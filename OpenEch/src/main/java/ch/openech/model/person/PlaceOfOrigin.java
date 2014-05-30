@@ -1,6 +1,6 @@
 package  ch.openech.model.person;
 
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;

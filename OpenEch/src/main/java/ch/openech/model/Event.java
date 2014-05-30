@@ -1,6 +1,6 @@
 package  ch.openech.model;
 
-import org.joda.time.LocalDateTime;
+import org.threeten.bp.LocalDateTime;
 import org.minimalj.model.annotation.Size;
 
 public class Event {

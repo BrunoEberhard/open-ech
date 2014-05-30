@@ -4,10 +4,10 @@ import java.io.InputStream;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
+import org.threeten.bp.LocalDateTime;
 
-import  ch.openech.model.Envelope;
+import ch.openech.model.Envelope;
 import ch.openech.test.server.AbstractServerTest;
 import ch.openech.xml.read.StaxEch0090;
 
@@ -25,8 +25,8 @@ public class EnvelopeTest  {
 		Assert.assertEquals("0", envelope.messageClass);
 		Assert.assertEquals("3-CH-6", envelope.senderId);
 		Assert.assertEquals("1-1102-1", envelope.recipientId);
-		Assert.assertEquals(new LocalDateTime(2009, 4, 23, 11, 11, 40), envelope.eventDate);
-		Assert.assertEquals(new LocalDateTime(2009, 4, 23, 11, 11, 40), envelope.messageDate);
+		Assert.assertEquals(LocalDateTime.of(2009, 4, 23, 11, 11, 40), envelope.eventDate);
+		Assert.assertEquals(LocalDateTime.of(2009, 4, 23, 11, 11, 40), envelope.messageDate);
 	}
 	
 }
