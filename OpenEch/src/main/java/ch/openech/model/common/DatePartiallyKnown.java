@@ -9,7 +9,7 @@ import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeParseException;
 
-public class DatePartiallyKnown implements Validatable {
+public class DatePartiallyKnown implements Validatable, Comparable<DatePartiallyKnown> {
 
 	@Size(10)
 	public String value;
@@ -38,5 +38,15 @@ public class DatePartiallyKnown implements Validatable {
 	
 	public String toString() {
 		return DateUtils.format(value);
+	}
+
+	@Override
+	public int compareTo(DatePartiallyKnown o) {
+		if (value == null) {
+			return o.value != null ? -1 : 0;
+		} else {
+			if (o.value == null) return 1;
+			return value.compareTo(o.value);
+		}
 	}
 }
