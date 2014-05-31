@@ -1,5 +1,6 @@
 package  ch.openech.model.person.types;
 
+import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validatable;
@@ -31,6 +32,16 @@ public class Vn implements Validatable, DemoEnabled {
 			return "Checksumme falsch";
 		}
 		return null;
+	}
+	
+	public String getFormattedValue() {
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "formattedValue", String.class);
+		
+		if (value != null && value.length() == 13) {
+			 return value.substring(0,3) + "." + value.substring(3,7) + "." + value.substring(7,11) + "." + value.substring(11,13);
+		} else {
+			return value;
+		}
 	}
 
 	@Override

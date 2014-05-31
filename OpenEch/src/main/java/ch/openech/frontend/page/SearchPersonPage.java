@@ -27,10 +27,10 @@ public class SearchPersonPage extends TablePage<Person> {
 		PERSON.firstName, //
 		PERSON.officialName, //
 		PERSON.dateOfBirth, //
-		PERSON.getStreet(), // PERSON::getStreet()
+		PERSON.getStreet(), // PERSON::getStreet()S
 		PERSON.getStreetNumber(), //
 		PERSON.getTown(), //
-		PERSON.vn.value, //
+		PERSON.vn.getFormattedValue(), //
 	};
 	
 	public SearchPersonPage(PageContext context, String text) {

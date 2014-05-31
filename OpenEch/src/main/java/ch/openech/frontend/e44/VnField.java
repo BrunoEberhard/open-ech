@@ -41,11 +41,7 @@ public class VnField extends TextFormatField<Vn> {
 	@Override
 	public void setObject(Vn vn) {
 		if (vn != null) {
-			if (vn.value != null && vn.value.length() == 13) {
-				textField.setText(vn.value.substring(0,3) + "." + vn.value.substring(3,7) + "." + vn.value.substring(7,11) + "." + vn.value.substring(11,13));
-			} else {
-				textField.setText(vn.value);
-			}
+			textField.setText(vn.getFormattedValue());
 		} else {
 			textField.setText(null);
 		}
