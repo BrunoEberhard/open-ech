@@ -89,7 +89,7 @@ public class OpenEchApplication extends MjApplication {
 	}
 
 	@Override
-	public Class<?>[] getSearchClasses() {
+	public Class<?>[] getSearchClasses(PageContext context) {
 		return new Class<?>[]{SearchPersonPage.class, SearchOrganisationPage.class};
 	}
 
