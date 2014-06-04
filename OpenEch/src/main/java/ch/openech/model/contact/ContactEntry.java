@@ -87,16 +87,16 @@ public class ContactEntry implements Validation {
 		s.append("<SMALL>");
 		if (dateFrom != null && dateTo != null) {
 			s.append("Gültig ");
-			s.append(DateUtils.formatCH(dateFrom)); 
+			s.append(DateUtils.format(dateFrom)); 
 			s.append(" - ");
-			s.append(DateUtils.formatCH(dateTo)); 
+			s.append(DateUtils.format(dateTo)); 
 			s.append("<BR>");
 		} else if (dateFrom != null) {
 			s.append("Gültig ab ");
-			s.append(DateUtils.formatCH(dateFrom)); 
+			s.append(DateUtils.format(dateFrom)); 
 			s.append("<BR>");
 		} else if (dateTo != null) {
-			s.append("Gültig bis "); s.append(DateUtils.formatCH(dateTo));
+			s.append("Gültig bis "); s.append(DateUtils.format(dateTo));
 			s.append("<BR>");
 		}
 		s.append("</SMALL>");

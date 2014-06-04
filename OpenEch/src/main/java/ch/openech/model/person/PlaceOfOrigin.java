@@ -66,13 +66,13 @@ public class PlaceOfOrigin {
 		boolean naturalizationDateAvailable = naturalizationDate != null;
 		if (naturalizationDateAvailable) {
 			s.append("\n"); s.append("Erwerbsdatum: ");
-			s.append(DateUtils.formatCH(naturalizationDate));
+			s.append(DateUtils.format(naturalizationDate));
 		}
 
 		boolean expatriationDateAvailable = expatriationDate != null;
 		if (expatriationDateAvailable) {
 			s.append("\n"); s.append("Entlassungsdatum: ");
-			s.append(DateUtils.formatCH(expatriationDate));
+			s.append(DateUtils.format(expatriationDate));
 		}
 		
 		return s.toString();
@@ -99,13 +99,13 @@ public class PlaceOfOrigin {
 		boolean naturalizationDateAvailable = naturalizationDate != null;
 		if (naturalizationDateAvailable) {
 			s.append("<BR>"); s.append("Erwerbsdatum: ");
-			s.append(DateUtils.formatCH(naturalizationDate));
+			s.append(DateUtils.format(naturalizationDate));
 		}
 
 		boolean expatriationDateAvailable = expatriationDate != null;
 		if (expatriationDateAvailable) {
 			s.append("<BR>"); s.append("Entlassungsdatum: ");
-			s.append(DateUtils.formatCH(expatriationDate));
+			s.append(DateUtils.format(expatriationDate));
 		}
 		
 		return s.toString();
@@ -127,13 +127,13 @@ public class PlaceOfOrigin {
 		boolean naturalizationDateAvailable = naturalizationDate != null;
 		if (naturalizationDateAvailable) {
 			s.append(", "); s.append("Erwerbsdatum: ");
-			s.append(DateUtils.formatCH(naturalizationDate));
+			s.append(DateUtils.format(naturalizationDate));
 		}
 
 		boolean expatriationDateAvailable = expatriationDate != null;
 		if (expatriationDateAvailable) {
 			s.append(", "); s.append("Entlassungsdatum: ");
-			s.append(DateUtils.formatCH(expatriationDate));
+			s.append(DateUtils.format(expatriationDate));
 		}
 	}
 	

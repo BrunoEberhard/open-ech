@@ -28,7 +28,7 @@ public class Foreign {
 		if (codeText != null) {
 			s = s + codeText + "<BR>";
 		}
-		if (residencePermitTill != null) s += "Gültig bis: " + DateUtils.formatCH(residencePermitTill) + "<BR>";
+		if (residencePermitTill != null) s += "Gültig bis: " + DateUtils.format(residencePermitTill) + "<BR>";
 		if (!StringUtils.isBlank(nameOnPassport)) s += "Name in ausl. Pass: " + nameOnPassport;
 		return s;
 	}

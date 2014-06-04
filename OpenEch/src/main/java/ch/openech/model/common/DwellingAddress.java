@@ -60,7 +60,7 @@ public class DwellingAddress implements Validation {
 		}
 		s.append("<BR>");
 		if (movingDate != null) {
-			s.append("Umzugsdatum: " ); s.append(DateUtils.formatCH(movingDate));
+			s.append("Umzugsdatum: " ); s.append(DateUtils.format(movingDate));
 		}
 	}
 	
@@ -79,7 +79,7 @@ public class DwellingAddress implements Validation {
 		if (typeOfHousehold != null) s.append(Codes.getCode("typeOfHousehold").getText(typeOfHousehold)); else s.append("- ");
 		s.append("\n");
 		if (movingDate != null) {
-			s.append("Umzugsdatum: " ); s.append(DateUtils.formatCH(movingDate));
+			s.append("Umzugsdatum: " ); s.append(DateUtils.format(movingDate));
 		}
 	}
 	

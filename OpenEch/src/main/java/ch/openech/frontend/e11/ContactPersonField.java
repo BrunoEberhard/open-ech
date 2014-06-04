@@ -59,7 +59,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		}
 		if (contactPerson.validTill != null) {
 			addText("Gültig bis");
-			DateUtils.formatCH(contactPerson.validTill);
+			DateUtils.format(contactPerson.validTill);
 			addGap();
 		}
 	}
