@@ -3,15 +3,15 @@ package ch.openech.frontend.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.threeten.bp.LocalDateTime;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
 import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.RefreshablePage;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
+import org.threeten.bp.LocalDateTime;
 
-import  ch.openech.model.organisation.Organisation;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationHistoryPage extends HistoryPage<Organisation> implements RefreshablePage {
@@ -71,7 +71,7 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	@Override
 	protected String getDescription(Organisation object) {
 		if (object.event != null) {
-			String resourceName = StringUtils.upperFirstChar(object.event.type) + "Event.text";
+			String resourceName = StringUtils.upperFirstChar(object.event.type) + "Event";
 			return Resources.getString(resourceName);
 		} else {
 			return "-";
