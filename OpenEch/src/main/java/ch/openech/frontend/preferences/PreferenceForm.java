@@ -19,16 +19,5 @@ public class PreferenceForm extends EchForm<OpenEchPreferences> {
 
 		text("<b>Hinweis:</b> Die Einstellungen werden erst bei neu geöffneten Ansichten aktiv");
 	}
-
-//	private FormVisual<OpenEchPreferences.PreferencesSedexData> createSedexConfigurationTab() {
-//		AbstractFormVisual<OpenEchPreferences.PreferencesSedexData> panelSedexPreferences = new EchFormPanel<OpenEchPreferences.PreferencesSedexData>(OpenEchPreferences.PreferencesSedexData.class);
-//		
-//		panelSedexPreferences.line(PREFERENCES_SEDEX_DATA.sedexAddress);
-//// TODO Vaadin Directory Field
-////		panelSedexPreferences.line(new SwingDirectoryField(PREFERENCES_SEDEX_DATA.sedexInput));
-////		panelSedexPreferences.line(new SwingDirectoryField(PREFERENCES_SEDEX_DATA.sedexOutput));
-//
-//		return panelSedexPreferences;
-//	}
 	
 }
