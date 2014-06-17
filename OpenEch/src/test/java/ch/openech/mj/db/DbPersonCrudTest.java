@@ -37,7 +37,7 @@ public class DbPersonCrudTest {
 		address.town = "Jona";
 		address.country = "CH";
 		
-		long id = addressTable.getOrCreateId(address);
+		long id = addressTable.getId(address);
 		
 		Address readAddress = (Address)addressTable.read(id);
 		
@@ -46,12 +46,12 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(address.houseNumber.houseNumber, readAddress.houseNumber.houseNumber);
 		Assert.assertEquals(address.country, readAddress.country);
 	
-		long id2 = addressTable.getOrCreateId(address);
+		long id2 = addressTable.getId(address);
 		
 		Assert.assertEquals(id, id2);
 		
 		readAddress.houseNumber.houseNumber = "11";
-		long id3 = addressTable.getOrCreateId(readAddress);
+		long id3 = addressTable.getId(readAddress);
 
 		Assert.assertNotSame(id, id3);
 	}
@@ -65,7 +65,7 @@ public class DbPersonCrudTest {
 		country.countryIdISO2 = "DE";
 		country.countryNameShort = "Deutschland";
 		
-		long id = countryTable.getOrCreateId(country);
+		long id = countryTable.getId(country);
 		
 		CountryIdentification readCountry = (CountryIdentification)countryTable.read(id);
 		
@@ -73,12 +73,12 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(country.countryIdISO2, readCountry.countryIdISO2);
 		Assert.assertEquals(country.countryNameShort, readCountry.countryNameShort);
 	
-		long id2 = countryTable.getOrCreateId(country);
+		long id2 = countryTable.getId(country);
 		
 		Assert.assertEquals(id, id2);
 		
 		readCountry.countryIdISO2 = "GE";
-		long id3 = countryTable.getOrCreateId(readCountry);
+		long id3 = countryTable.getId(readCountry);
 
 		Assert.assertNotSame(id, id3);
 	}
