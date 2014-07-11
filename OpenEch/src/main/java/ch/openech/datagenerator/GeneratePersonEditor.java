@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;
@@ -27,7 +27,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 	}
 
 	@Override
-	protected IForm<GeneratePersonData> createForm() {
+	protected Form<GeneratePersonData> createForm() {
 		Form<GeneratePersonData> form = new Form<GeneratePersonData>();
 		form.line(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons);
 		form.line(GeneratePersonData.GENERATE_PERSON_DATA.numberOfOrganisations);

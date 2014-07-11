@@ -1,7 +1,7 @@
 package ch.openech.frontend.e11;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.PropertyInterface;
 
 import  ch.openech.model.person.Foreign;
@@ -28,7 +28,7 @@ public class ForeignField extends ObjectFlowField<Foreign> {
 	}
 	
 	@Override
-	public IForm<Foreign> createFormPanel() {
+	public Form<Foreign> createFormPanel() {
 		return new ForeignPanel(echSchema);
 	}
 

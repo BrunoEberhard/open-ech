@@ -1,7 +1,7 @@
 package ch.openech.frontend.e10;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.util.DemoEnabled;
@@ -41,7 +41,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	
 	}
 
-	public IForm<Address> createEditFrame() {
+	public Form<Address> createEditFrame() {
 		return new AddressPanel(swiss, person, organisation);
 	}
 	
@@ -55,7 +55,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	}
 
 	@Override
-	public IForm<Address> createFormPanel() {
+	public Form<Address> createFormPanel() {
 		return new AddressPanel(swiss, person, organisation);
 	}
 

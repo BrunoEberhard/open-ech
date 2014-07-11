@@ -1,7 +1,7 @@
 package ch.openech.frontend.page;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectViewPage;
 import org.minimalj.frontend.page.PageContext;
@@ -48,7 +48,7 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 	}
 
 	@Override
-	public IForm<Organisation> createForm() {
+	public Form<Organisation> createForm() {
 		return organisationPanel;
 	}
 	

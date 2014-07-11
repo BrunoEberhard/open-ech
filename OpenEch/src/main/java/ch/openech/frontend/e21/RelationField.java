@@ -3,7 +3,7 @@ package ch.openech.frontend.e21;
 import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
@@ -38,7 +38,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		}
 		
 		@Override
-		public IForm<Relation> createForm() {
+		public Form<Relation> createForm() {
 			return new RelationPanel(echNamespaceContext);
 		}
 	}
@@ -58,7 +58,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 	}
 	
 	@Override
-	public IForm<List<Relation>> createFormPanel() {
+	public Form<List<Relation>> createFormPanel() {
 		// not used
 		return null;
 	}

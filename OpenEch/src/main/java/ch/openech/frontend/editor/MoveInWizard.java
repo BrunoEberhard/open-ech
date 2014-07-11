@@ -7,7 +7,7 @@ import org.minimalj.application.DevMode;
 import org.minimalj.frontend.edit.Wizard;
 import org.minimalj.frontend.edit.WizardStep;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ComboBox;
@@ -101,7 +101,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	private class MoveInPersonWizardStep extends WizardStep<Person> {
 
 		@Override
-		protected IForm<Person> createForm() {
+		protected Form<Person> createForm() {
 			return new PersonPanel(PersonEditMode.MOVE_IN, echNamespaceContext);
 		}
 
@@ -169,7 +169,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	private class MoveInNextPersonWizardStep extends WizardStep<MoveInNextPerson> {
 
 		@Override
-		protected IForm<MoveInNextPerson> createForm() {
+		protected Form<MoveInNextPerson> createForm() {
 			EchForm<MoveInNextPerson> form = new EchForm<MoveInNextPerson>(2);
 			
 			form.line(MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted);

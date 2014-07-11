@@ -3,7 +3,7 @@ package ch.openech.frontend.e21;
 import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.PropertyInterface;
@@ -35,7 +35,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 		}
 		
 		@Override
-		public IForm<Occupation> createForm() {
+		public Form<Occupation> createForm() {
 			return new OccupationPanel(echSchema);
 		}
 	}
@@ -55,7 +55,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 	}
 	
 	@Override
-	public IForm<List<Occupation>> createFormPanel() {
+	public Form<List<Occupation>> createFormPanel() {
 		// not used
 		return null;
 	}

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.e11.OriginPanel;
@@ -21,7 +21,7 @@ public class NaturalizeSwissEvent extends PersonEventEditor<PlaceOfOrigin> {
 	}
 
 	@Override
-	public IForm<PlaceOfOrigin> createForm() {
+	public Form<PlaceOfOrigin> createForm() {
 		return new OriginPanel(true, false); // true -> withReasonAndDate, false -> no expirationDate
 	}
 

@@ -3,7 +3,7 @@ package ch.openech.frontend;
 import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
@@ -36,7 +36,7 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 //	}
 
 	@Override
-	protected IForm<List<T>> createFormPanel() {
+	protected Form<List<T>> createFormPanel() {
 		// not used
 		return null;
 	}

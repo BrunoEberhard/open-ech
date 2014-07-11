@@ -3,7 +3,7 @@ package ch.openech.frontend.e11;
 import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
@@ -35,7 +35,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	
 	public class AddOriginEditor extends ObjectFieldPartEditor<PlaceOfOrigin> {
 		@Override
-		public IForm<PlaceOfOrigin> createForm() {
+		public Form<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
 		}
 
@@ -64,7 +64,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		}
 
 		@Override
-		public IForm<PlaceOfOrigin> createForm() {
+		public Form<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
 		}
 
@@ -113,7 +113,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	}
 
 	@Override
-	public IForm<List<PlaceOfOrigin>> createFormPanel() {
+	public Form<List<PlaceOfOrigin>> createFormPanel() {
 		// unused
 		return null;
 	}

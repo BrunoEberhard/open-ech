@@ -2,7 +2,7 @@ package ch.openech.frontend.e101;
 
 import org.minimalj.backend.db.EmptyObjects;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.PropertyInterface;
 
 import  ch.openech.model.person.PersonExtendedInformation;
@@ -27,7 +27,7 @@ public class PersonExtendedInformationField extends ObjectFlowField<PersonExtend
 	}
 	
 	@Override
-	public IForm<PersonExtendedInformation> createFormPanel() {
+	public Form<PersonExtendedInformation> createFormPanel() {
 		return new PersonExtendedInformationPanel();
 	}
 

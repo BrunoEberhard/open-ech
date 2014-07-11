@@ -2,7 +2,7 @@ package ch.openech.frontend.preferences;
 
 import org.minimalj.application.ApplicationContext;
 import org.minimalj.frontend.edit.Editor;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 
 public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	private final ApplicationContext applicationContext;
@@ -12,7 +12,7 @@ public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	}
 
 	@Override
-	protected IForm<OpenEchPreferences> createForm() {
+	protected Form<OpenEchPreferences> createForm() {
 		return new PreferenceForm();
 	}
 	

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 
 import ch.openech.frontend.org.OrganisationPanel;
 import ch.openech.frontend.org.event.OrganisationEventEditor;
@@ -19,7 +19,7 @@ public class CorrectReportingEvent extends OrganisationEventEditor<Organisation>
 	}
 
 	@Override
-	public IForm<Organisation> createForm() {
+	public Form<Organisation> createForm() {
 		return new OrganisationPanel(Organisation.EditMode.CHANGE_RESIDENCE_TYPE, echSchema);
 	}
 

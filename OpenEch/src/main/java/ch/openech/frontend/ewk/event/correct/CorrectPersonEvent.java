@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 
 import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
@@ -21,7 +21,7 @@ public class CorrectPersonEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public IForm<Person> createForm() {
+	public Form<Person> createForm() {
 		return new PersonPanel(PersonEditMode.CORRECT_PERSON, echSchema);
 	}
 	

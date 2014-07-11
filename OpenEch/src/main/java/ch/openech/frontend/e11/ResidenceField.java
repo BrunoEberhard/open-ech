@@ -8,7 +8,7 @@ import javax.swing.Action;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.PropertyInterface;
@@ -36,7 +36,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 	public final class ResidenceMainEditor extends ObjectFieldPartEditor<Residence> {
 
 		@Override
-		public IForm<Residence> createForm() {
+		public Form<Residence> createForm() {
 			Form<Residence> form = new EchForm<Residence>();
 			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
@@ -58,7 +58,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 	public final class ResidenceAddSecondaryEditor extends Editor<Residence> {
 
 		@Override
-		public IForm<Residence> createForm() {
+		public Form<Residence> createForm() {
 			Form<Residence> form = new EchForm<Residence>();
 			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
 			return form;
@@ -167,7 +167,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 	}
 
 	@Override
-	public IForm<Residence> createFormPanel() {
+	public Form<Residence> createFormPanel() {
 		// not used
 		return null;
 	}

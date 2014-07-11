@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.ewk.PersonPanel;
@@ -21,7 +21,7 @@ public class ChangeTypeOfResidenceEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public IForm<Person> createForm() {
+	public Form<Person> createForm() {
 		return new PersonPanel(PersonEditMode.CHANGE_RESIDENCE_TYPE, echSchema);
 	}
 	

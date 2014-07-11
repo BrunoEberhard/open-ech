@@ -1,7 +1,7 @@
 package ch.openech.frontend.e11;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.util.DemoEnabled;
 
@@ -29,7 +29,7 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 	}
 	
 	@Override
-	public IForm<DwellingAddress> createFormPanel() {
+	public Form<DwellingAddress> createFormPanel() {
 		return new DwellingAddressPanel(echSchema);
 	}
 	

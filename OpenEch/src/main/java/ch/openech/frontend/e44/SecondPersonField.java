@@ -1,7 +1,7 @@
 package ch.openech.frontend.e44;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 
@@ -23,7 +23,7 @@ public class SecondPersonField extends ObjectFlowField<Relation> {
 	}
 
 	@Override
-	protected IForm<Relation> createFormPanel() {
+	protected Form<Relation> createFormPanel() {
 		return null;
 	}
 

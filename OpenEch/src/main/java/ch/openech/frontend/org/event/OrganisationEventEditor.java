@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.util.SerializationContainer;
@@ -37,7 +37,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	}
 
 	@Override
-	public IForm<T> createForm() {
+	public Form<T> createForm() {
 		EchForm<T> formPanel = new EchForm<T>(echSchema, getFormColumns());
 		fillForm(formPanel);
 		return formPanel;

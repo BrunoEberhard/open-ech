@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.LoggingRuntimeException;
@@ -30,7 +30,7 @@ public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<O
 	}
 
 	@Override
-	public IForm<Organisation> createForm() {
+	public Form<Organisation> createForm() {
 		return new OrganisationPanel(Organisation.EditMode.MOVE_IN, echSchema);
 	}
 

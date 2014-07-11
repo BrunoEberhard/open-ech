@@ -7,7 +7,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageContext;
 
 import ch.openech.frontend.XmlEditor;
@@ -109,7 +109,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	}
 
 	@Override
-	protected IForm<ThirdPartyMove> createForm() {
+	protected Form<ThirdPartyMove> createForm() {
 		return new TpnMoveForm(direction);
 	}
 

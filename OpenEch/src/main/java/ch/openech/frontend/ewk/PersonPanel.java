@@ -9,7 +9,7 @@ import org.minimalj.autofill.NameWithFrequency;
 import org.minimalj.frontend.edit.fields.TextFormatField;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.util.StringUtils;
 
@@ -238,7 +238,7 @@ public class PersonPanel extends EchForm<Person>  {
 		}
 		
 		@Override
-		public IForm<Relation> createFormPanel() {
+		public Form<Relation> createFormPanel() {
 			EchForm<Relation> form = new EchForm<>();
 			form.line(RELATION.partner);
 			form.line(new AddressField(RELATION.address, true));

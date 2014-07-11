@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 
 import ch.openech.frontend.e21.OccupationPanel;
 import  ch.openech.model.person.Occupation;
@@ -22,7 +22,7 @@ public class ChangeOccupationEvent extends PersonEventEditor<Occupation> {
 	}
 	
 	@Override
-	public IForm<Occupation> createForm() {
+	public Form<Occupation> createForm() {
 		return new OccupationPanel(echSchema);
 	}
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.SearchDialogAction;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
@@ -38,7 +38,7 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 	}
 
 	@Override
-	protected IForm<Headquarter> createFormPanel() {
+	protected Form<Headquarter> createFormPanel() {
 		return null;
 	}
 

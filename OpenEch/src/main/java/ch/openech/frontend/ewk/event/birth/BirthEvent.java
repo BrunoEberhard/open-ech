@@ -3,7 +3,7 @@ package ch.openech.frontend.ewk.event.birth;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
@@ -30,7 +30,7 @@ public class BirthEvent extends XmlEditor<Person> {
 	}
 
 	@Override
-	public IForm<Person> createForm() {
+	public Form<Person> createForm() {
 		return new PersonPanel(PersonEditMode.BIRTH, echSchema);
 	}
 

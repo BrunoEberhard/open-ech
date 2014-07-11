@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.SearchDialogAction;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
@@ -110,7 +110,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
     // Identifikationen der Kontaktpersonen frei erfassen
 	public class EnterPersonContactEditor extends ObjectFieldPartEditor<PersonIdentification> {
 		@Override
-		public IForm<PersonIdentification> createForm() {
+		public Form<PersonIdentification> createForm() {
 			return new PersonIdentificationPanel();
 		}
 
@@ -143,7 +143,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		}
 		
 		@Override
-		public IForm<Address> createForm() {
+		public Form<Address> createForm() {
 			return new AddressPanel(false, person, !person);
 		}
 
@@ -179,7 +179,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 //	}
 
 	@Override
-	public IForm<ContactPerson> createFormPanel() {
+	public Form<ContactPerson> createFormPanel() {
 		// not used
 		return null;
 	}

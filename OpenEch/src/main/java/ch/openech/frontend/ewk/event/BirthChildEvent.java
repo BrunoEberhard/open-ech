@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.BusinessRule;
@@ -37,7 +37,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 	}
 
 	@Override
-	public IForm<Person> createForm() {
+	public Form<Person> createForm() {
 		return new PersonPanel(PersonEditMode.BIRTH, echSchema);
 	}
 

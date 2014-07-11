@@ -2,7 +2,7 @@ package ch.openech.frontend.e21;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.util.CloneHelper;
 
@@ -16,7 +16,7 @@ public class NameOfParentsField extends ObjectFlowField<NameOfParents> {
 	}
 
 	@Override
-	protected IForm<NameOfParents> createFormPanel() {
+	protected Form<NameOfParents> createFormPanel() {
 		// not used
 		return null;
 	}
@@ -48,7 +48,7 @@ public class NameOfParentsField extends ObjectFlowField<NameOfParents> {
 		}
 
 		@Override
-		public IForm<NameOfParent> createForm() {
+		public Form<NameOfParent> createForm() {
 			Form<NameOfParent> form = new Form<NameOfParent>();
 			form.line(NameOfParent.KEYS.firstName);
 			form.line(NameOfParent.KEYS.officialName);

@@ -6,7 +6,7 @@ import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
@@ -50,7 +50,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 	}
 
 	@Override
-	protected IForm<List<String>> createFormPanel() {
+	protected Form<List<String>> createFormPanel() {
 		// not udes
 		return null;
 	}

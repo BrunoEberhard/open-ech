@@ -3,7 +3,7 @@ package ch.openech.frontend.e46;
 import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.PropertyInterface;
@@ -36,7 +36,7 @@ public class ContactField extends ObjectFlowField<List<ContactEntry>> {
 		}
 		
 		@Override
-		public IForm<ContactEntry> createForm() {
+		public Form<ContactEntry> createForm() {
 			return new ContactEntryPanel(type, person);
 		}
 
@@ -73,7 +73,7 @@ public class ContactField extends ObjectFlowField<List<ContactEntry>> {
 	//
 	
 	@Override
-	public IForm<List<ContactEntry>> createFormPanel() {
+	public Form<List<ContactEntry>> createFormPanel() {
 		// unused
 		return null;
 	}

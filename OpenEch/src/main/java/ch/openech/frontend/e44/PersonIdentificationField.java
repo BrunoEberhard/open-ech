@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.SearchDialogAction;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
 
@@ -20,7 +20,7 @@ public class PersonIdentificationField extends ObjectFlowField<PersonIdentificat
 	}
 	
 	@Override
-	public IForm<PersonIdentification> createFormPanel() {
+	public Form<PersonIdentification> createFormPanel() {
 		return new PersonIdentificationPanel();
 	}
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.fields.ObjectLinkField;
-import org.minimalj.frontend.edit.form.IForm;
+import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
@@ -52,7 +52,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	}
 
 	@Override
-	public IForm<TechnicalIds> createFormPanel() {
+	public Form<TechnicalIds> createFormPanel() {
 		EchForm<TechnicalIds> form = new EchForm<TechnicalIds>();
 		form.line(TechnicalIds.TECHNICAL_IDS.localId.personIdCategory);
 		form.line(TechnicalIds.TECHNICAL_IDS.localId.personId);
@@ -70,7 +70,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 		}
 
 		@Override
-		protected IForm<List<NamedId>> createFormPanel() {
+		protected Form<List<NamedId>> createFormPanel() {
 			// not used
 			return null;
 		}
@@ -91,7 +91,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 
 		private class AddOtherIdAction extends ObjectFieldPartEditor<NamedId> {
 			@Override
-			public IForm<NamedId> createForm() {
+			public Form<NamedId> createForm() {
 				return new NamedIdPanel();
 			}
 
