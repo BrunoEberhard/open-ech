@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.model.Keys;
 
 import ch.openech.frontend.ewk.event.XmlTextFormField;
@@ -13,12 +13,12 @@ import com.vaadin.ui.Window;
 
 public class XmlPreview {
 
-	public static void viewXml(IComponent source, List<String> xmls) {
-		if (source instanceof java.awt.Component) {
-			XmlSwingFrame xmlFrame = new XmlSwingFrame((java.awt.Component) source, xmls);
+	public static void viewXml(IContext context, List<String> xmls) {
+		if (context instanceof java.awt.Component) {
+			XmlSwingFrame xmlFrame = new XmlSwingFrame((java.awt.Component) context, xmls);
 			xmlFrame.setVisible(true);
-		} else if (source instanceof com.vaadin.ui.Component) {
-			com.vaadin.ui.Component component = (com.vaadin.ui.Component) source;
+		} else if (context instanceof com.vaadin.ui.Component) {
+			com.vaadin.ui.Component component = (com.vaadin.ui.Component) context;
 			XmlVaadinFrame xmlFrame = new XmlVaadinFrame(xmls);
 			Window window = component.getWindow();
 			while (window.getParent() != null) {
@@ -37,7 +37,7 @@ public class XmlPreview {
 			XmlTextFormField xmlTextFormField = new XmlTextFormField(XmlPreviewValue.XML_PREVIEW_VALUE.xmls);
 			form.line(xmlTextFormField);
 			xmlTextFormField.setObject(xmls);
-			ClientToolkit.getToolkit().createDialog(source, "XML", form.getComponent()).openDialog();
+			ClientToolkit.getToolkit().createDialog(context, "XML", form.getContent()).openDialog();
 		}
 	}
 	

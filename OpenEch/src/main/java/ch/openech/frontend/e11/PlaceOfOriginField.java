@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
@@ -88,7 +88,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		}
 		
 		@Override
-		public void action(IComponent context) {
+		public void action(IContext context) {
 			getObject().remove(placeOfOrigin);
 			fireObjectChange();
 		}

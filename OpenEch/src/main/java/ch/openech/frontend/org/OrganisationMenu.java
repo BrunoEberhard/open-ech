@@ -3,8 +3,8 @@ package ch.openech.frontend.org;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.minimalj.frontend.edit.EditorAction;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.EditorPageAction;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.IAction;
 import org.minimalj.util.BusinessRule;
@@ -27,7 +27,7 @@ import ch.openech.frontend.org.event.correct.CorrectOrganisationNameEvent;
 import ch.openech.frontend.org.event.correct.CorrectReportingEvent;
 import ch.openech.frontend.org.event.correct.CorrectUidBrancheEvent;
 import ch.openech.frontend.page.OrganisationHistoryPage;
-import  ch.openech.model.organisation.Organisation;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationMenu {
@@ -37,11 +37,11 @@ public class OrganisationMenu {
 	
 	private final PageLink showHistory;
 
-	private final EditorPageAction moveOut, move;
-	private final EditorPageAction contact, changeOrganisationName, changeLegalForm, changeReporting;
-	private final EditorPageAction inLiquidation, liquidation;
+	private final EditorAction moveOut, move;
+	private final EditorAction contact, changeOrganisationName, changeLegalForm, changeReporting;
+	private final EditorAction inLiquidation, liquidation;
 	
-	private final List<EditorPageAction> correctEditors = new ArrayList<>();
+	private final List<EditorAction> correctEditors = new ArrayList<>();
 
 	public OrganisationMenu(EchSchema ech, Organisation organisation) {
 		this.ech = ech;
@@ -61,8 +61,8 @@ public class OrganisationMenu {
 		showHistory = new PageLink(OrganisationHistoryPage.class, ech.getVersion(), organisation.getId());
 	}
 
-	private EditorPageAction editorLink(OrganisationEventEditor<?> editor) {
-		return new EditorPageAction(editor);
+	private EditorAction editorLink(OrganisationEventEditor<?> editor) {
+		return new EditorAction(editor);
 	}
 
 	public org.minimalj.frontend.page.ActionGroup getActions() {

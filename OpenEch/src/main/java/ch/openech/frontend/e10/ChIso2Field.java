@@ -2,7 +2,7 @@ package ch.openech.frontend.e10;
 
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
 
 import  ch.openech.model.common.Address;

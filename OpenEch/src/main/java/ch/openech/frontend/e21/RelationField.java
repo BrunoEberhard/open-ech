@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 
@@ -51,7 +51,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		}
 		
 		@Override
-		public void action(IComponent context) {
+		public void action(IContext context) {
 			getObject().remove(relation);
 			fireObjectChange();
 		}

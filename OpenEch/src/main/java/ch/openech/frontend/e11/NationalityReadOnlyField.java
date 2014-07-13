@@ -2,7 +2,7 @@ package ch.openech.frontend.e11;
 
 import org.minimalj.frontend.edit.fields.FormField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.PropertyInterface;
 

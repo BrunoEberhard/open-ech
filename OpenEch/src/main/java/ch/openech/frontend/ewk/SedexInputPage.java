@@ -16,10 +16,10 @@ import org.minimalj.frontend.page.AbstractPage;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.RefreshablePage;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IContent;
 
-import  ch.openech.model.SedexMessageInformation;
-import  ch.openech.model.person.Person;
+import ch.openech.model.SedexMessageInformation;
+import ch.openech.model.person.Person;
 import ch.openech.transaction.EchPersistence;
 import ch.openech.xml.write.EchSchema;
 
@@ -39,7 +39,7 @@ public class SedexInputPage extends AbstractPage implements RefreshablePage {
 	}
 
 	@Override
-	public IComponent getComponent() {
+	public IContent getContent() {
 		if (panel == null) {
 			createPanel();
 		}

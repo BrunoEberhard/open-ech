@@ -9,7 +9,7 @@ import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.PropertyInterface;
 
@@ -81,7 +81,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 
 	private final class ResidenceRemoveSecondaryAction extends ResourceAction {
 		@Override
-		public void action(IComponent context) {
+		public void action(IContext context) {
 			getObject().secondary.clear();
 			fireObjectChange();
 		}

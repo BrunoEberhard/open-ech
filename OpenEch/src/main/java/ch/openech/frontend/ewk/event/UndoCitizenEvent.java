@@ -10,7 +10,7 @@ import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ComboBox;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.annotation.Required;

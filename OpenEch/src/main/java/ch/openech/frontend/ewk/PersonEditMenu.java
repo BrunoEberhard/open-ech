@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.frontend.edit.Editor;
+import org.minimalj.frontend.edit.EditorAction;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.EditorPageAction;
 import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.util.BusinessRule;
@@ -61,7 +61,7 @@ import ch.openech.frontend.ewk.event.correct.CorrectReportingEvent;
 import ch.openech.frontend.ewk.event.correct.CorrectResidencePermitEvent;
 import ch.openech.frontend.page.PersonHistoryPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
-import  ch.openech.model.person.Person;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonEditMenu {
@@ -71,18 +71,18 @@ public class PersonEditMenu {
 	
 	private final PageLink showHistory;
 
-	private final EditorPageAction marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
-	private final EditorPageAction naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality, changeResidencePermit, renewPermit, undoCitizen;
-	private final EditorPageAction changeOccupation;
-	private final EditorPageAction death, missing, undoMissing;
-	private final EditorPageAction care, gardianMeasure, undoGardian, changeGardian;
-	private final EditorPageAction move, moveOut;
-	private final EditorPageAction changeName, changeReligion, changeTypeOfResidence, changeRelation, contact;
-	private final EditorPageAction correctOrigin, correctResidencePermit;
-	private final EditorPageAction addressLock, paperLock;
-	private final EditorPageAction birthChild;
+	private final EditorAction marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
+	private final EditorAction naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality, changeResidencePermit, renewPermit, undoCitizen;
+	private final EditorAction changeOccupation;
+	private final EditorAction death, missing, undoMissing;
+	private final EditorAction care, gardianMeasure, undoGardian, changeGardian;
+	private final EditorAction move, moveOut;
+	private final EditorAction changeName, changeReligion, changeTypeOfResidence, changeRelation, contact;
+	private final EditorAction correctOrigin, correctResidencePermit;
+	private final EditorAction addressLock, paperLock;
+	private final EditorAction birthChild;
 	
-	private final List<EditorPageAction> correctEditors = new ArrayList<>();
+	private final List<EditorAction> correctEditors = new ArrayList<>();
 
 	public PersonEditMenu(EchSchema ech, PageContext pageContext, Person person) {
 		this.echSchema = ech;
@@ -195,7 +195,7 @@ public class PersonEditMenu {
 
 		fillCorrectionActionList();
 		ActionGroup correct = menu.addGroup("ActionGroup.correction");
-		for (EditorPageAction action : correctEditors) {
+		for (EditorAction action : correctEditors) {
 			correct.add(action);
 		}
 
@@ -208,8 +208,8 @@ public class PersonEditMenu {
 		return menu;
 	}
 
-	private EditorPageAction editorLink(PersonEventEditor<?> editor) {
-		EditorPageAction action = new EditorPageAction(editor);
+	private EditorAction editorLink(PersonEventEditor<?> editor) {
+		EditorAction action = new EditorAction(editor);
 		action.setEnabled(editor.isEnabled());
 		return action;
 	}
@@ -236,11 +236,11 @@ public class PersonEditMenu {
 	}
 
 	private void addCorrectAction(Editor<?> editor) {
-		correctEditors.add(new EditorPageAction(editor)); // always enbled
+		correctEditors.add(new EditorAction(editor)); // always enbled
 	}
 
 	
-	private void addCorrectAction(EditorPageAction action) {
+	private void addCorrectAction(EditorAction action) {
 		correctEditors.add(action);
 	}
 
@@ -283,7 +283,7 @@ public class PersonEditMenu {
 		changeResidencePermit.setEnabled(isAlive && !isSwiss);
 		renewPermit.setEnabled(isAlive && !isSwiss);
 		changeRelation.setEnabled(isAlive);
-		for (EditorPageAction action : correctEditors) {
+		for (EditorAction action : correctEditors) {
 			action.setEnabled(isPerson);
 		}
 		correctOrigin.setEnabled(isPerson && isSwiss);

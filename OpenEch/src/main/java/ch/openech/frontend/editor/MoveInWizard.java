@@ -10,9 +10,10 @@ import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.ClientToolkit;
+import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.IAction;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.annotation.Required;
@@ -331,7 +332,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	private class XmlAction implements IAction {
 		@Override
-		public void action(IComponent context) {
+		public void action(IContext context) {
 			try {
 				List<String> xmls = new ArrayList<String>();
 				for (Person person : getObject().persons) {

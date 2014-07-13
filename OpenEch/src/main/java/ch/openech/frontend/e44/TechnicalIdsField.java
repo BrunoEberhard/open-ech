@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.fields.ObjectLinkField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
@@ -31,7 +31,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 
 	public final class TechnicalIdRemoveAction extends ResourceAction {
 		@Override
-		public void action(IComponent context) {
+		public void action(IContext context) {
 			getObject().clear();
 			fireObjectChange();
 		}
@@ -114,7 +114,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 			}
 
 			@Override
-			public void action(IComponent context) {
+			public void action(IContext context) {
 				OtherIdField.this.getObject().remove(id);
 				setObject(getObject());
 			}

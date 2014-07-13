@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ComboBox;
-import org.minimalj.frontend.toolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.model.PropertyInterface;
 
 import ch.openech.xml.read.StaxEch0072;

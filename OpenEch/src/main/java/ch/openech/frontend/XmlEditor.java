@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 import org.minimalj.application.DevMode;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.Indicator;
+import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.IAction;
-import org.minimalj.frontend.toolkit.IComponent;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.validation.ValidationMessage;
 
@@ -55,7 +55,7 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		private String description;
 		
 		@Override
-		public void action(IComponent context) {
+		public void action(IContext context) {
 			try {
 				List<String> xmls = getXml(getObject());
 				XmlPreview.viewXml(context, xmls);

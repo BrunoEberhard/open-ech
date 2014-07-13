@@ -7,15 +7,15 @@ import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.HorizontalLayout;
-import org.minimalj.frontend.toolkit.IComponent;
-import org.minimalj.frontend.toolkit.SwitchLayout;
+import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.SwitchComponent;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.util.DemoEnabled;
 
-import  ch.openech.model.common.CountryIdentification;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
+import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
 import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
 
@@ -24,7 +24,7 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 
 	private final ComboBox<CountryIdentification> comboBoxCountry;
 
-	private final SwitchLayout switchLayoutMunicipality;
+	private final SwitchComponent switchComponentMunicipality;
 	private final ComboBox<MunicipalityIdentification> comboBoxMunicipality;
 	private final TextField textForeignTown;
 	
@@ -41,19 +41,19 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 
 		textForeignTown = ClientToolkit.getToolkit().createTextField(listener(), 100); // TODO
 
-		switchLayoutMunicipality = ClientToolkit.getToolkit().createSwitchLayout();
-		switchLayoutMunicipality.show(comboBoxMunicipality);
+		switchComponentMunicipality = ClientToolkit.getToolkit().createSwitchComponent(comboBoxMunicipality, textForeignTown);
+		switchComponentMunicipality.show(comboBoxMunicipality);
 
-		horizontalLayout = ClientToolkit.getToolkit().createHorizontalLayout(comboBoxCountry, switchLayoutMunicipality);
+		horizontalLayout = ClientToolkit.getToolkit().createHorizontalLayout(comboBoxCountry, switchComponentMunicipality);
 	}
 
 	@Override
 	protected void fireChange() {
 		CountryIdentification countryIdentification = (CountryIdentification) comboBoxCountry.getSelectedObject();
 		if (countryIdentification == null || countryIdentification.isSwiss()) {
-			switchLayoutMunicipality.show(comboBoxMunicipality);
+			switchComponentMunicipality.show(comboBoxMunicipality);
 		} else {
-			switchLayoutMunicipality.show(textForeignTown);
+			switchComponentMunicipality.show(textForeignTown);
 		}
 		super.fireChange();
 	}
@@ -75,13 +75,13 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 		}
 		if (place.isSwiss()) {
 			comboBoxMunicipality.setSelectedObject(place.municipalityIdentification);
-			switchLayoutMunicipality.show(comboBoxMunicipality);
+			switchComponentMunicipality.show(comboBoxMunicipality);
 		} else if (place.isForeign()) {
 			textForeignTown.setText(place.foreignTown);
-			switchLayoutMunicipality.show(textForeignTown);
+			switchComponentMunicipality.show(textForeignTown);
 		} else {
 			logger.info("Empty Place");
-			switchLayoutMunicipality.show(comboBoxMunicipality);
+			switchComponentMunicipality.show(comboBoxMunicipality);
 			comboBoxMunicipality.setSelectedObject(null);
 		}
 	}
@@ -90,7 +90,7 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 	public Place getObject() {
 		Place place = new Place();
 		place.countryIdentification = (CountryIdentification) comboBoxCountry.getSelectedObject();
-		if (switchLayoutMunicipality.getShownComponent() == comboBoxMunicipality) {
+		if (switchComponentMunicipality.getShownComponent() == comboBoxMunicipality) {
 			if (comboBoxMunicipality.getSelectedObject() != null) {
 				place.municipalityIdentification = (MunicipalityIdentification) comboBoxMunicipality.getSelectedObject();
 			} else {
