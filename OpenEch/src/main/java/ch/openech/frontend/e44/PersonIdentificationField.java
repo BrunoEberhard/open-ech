@@ -31,7 +31,7 @@ public class PersonIdentificationField extends ObjectFlowField<PersonIdentificat
 	
 	@Override
 	protected void showActions() {
-		if (isEmpty()) {
+		if (!isEmpty()) {
 			addAction(new RemoveObjectAction());
 		}
         addAction(new PersonSearchAction());
