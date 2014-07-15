@@ -62,7 +62,7 @@ public class PersonIdentification implements ViewOf<Person> {
 	
 	public void toHtml(StringBuilder s) {
 		StringUtils.appendLine(s, firstName, officialName);
-		StringUtils.appendLine(s, dateOfBirth.value);
+		StringUtils.appendLine(s, dateOfBirth.toString());
 	}
 	
 	public boolean isMale() {
