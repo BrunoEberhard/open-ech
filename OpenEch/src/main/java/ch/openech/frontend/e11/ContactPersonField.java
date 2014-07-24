@@ -7,7 +7,6 @@ import org.minimalj.frontend.edit.SearchDialogAction;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
@@ -78,7 +77,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	public class SelectPersonContactEditor extends SearchDialogAction<Person> {
 		
 		public SelectPersonContactEditor() {
-			super(getComponent(), SearchPersonPage.FIELD_NAMES);
+			super(SearchPersonPage.FIELD_NAMES);
 		}
 		
 		@Override
@@ -128,7 +127,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
     // Kontaktperson entfernen
 	private class RemovePersonContactAction extends ResourceAction {
 		@Override
-		public void action(IContext context) {
+		public void action() {
 			getObject().person = null;
 			fireObjectChange();
 		}
@@ -161,7 +160,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
     // Kontaktadresse entfernen
 	private class RemoveAddressContactAction extends ResourceAction {
 		@Override
-		public void action(IContext pageContext) {
+		public void action() {
 			getObject().address = null;
 			fireObjectChange();
 		}

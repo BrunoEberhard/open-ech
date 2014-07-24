@@ -4,15 +4,14 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.util.DemoEnabled;
 
 import ch.openech.datagenerator.DataGenerator;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.types.ReasonOfAcquisition;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.types.ReasonOfAcquisition;
 
 public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements DemoEnabled {
 	public static final boolean WITHOUT_ADD_ON = false;
@@ -88,7 +87,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		}
 		
 		@Override
-		public void action(IContext context) {
+		public void action() {
 			getObject().remove(placeOfOrigin);
 			fireObjectChange();
 		}

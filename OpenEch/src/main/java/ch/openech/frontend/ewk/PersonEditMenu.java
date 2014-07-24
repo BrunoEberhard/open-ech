@@ -6,8 +6,8 @@ import java.util.List;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.EditorAction;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.PageLink;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.util.BusinessRule;
 
 import ch.openech.frontend.e21.CareEvent;
@@ -84,7 +84,7 @@ public class PersonEditMenu {
 	
 	private final List<EditorAction> correctEditors = new ArrayList<>();
 
-	public PersonEditMenu(EchSchema ech, PageContext pageContext, Person person) {
+	public PersonEditMenu(EchSchema ech, Person person) {
 		this.echSchema = ech;
 		this.person = person;
 		
@@ -132,7 +132,7 @@ public class PersonEditMenu {
 		addressLock = editorLink(new AddressLockEvent(ech, person));
 		paperLock = editorLink(new PaperLockEvent(ech, person));
 		
-		birthChild = editorLink(new BirthChildEvent(ech, person, (OpenEchPreferences) pageContext.getApplicationContext().getPreferences()));
+		birthChild = editorLink(new BirthChildEvent(ech, person, (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences()));
 
 		showHistory = new PageLink(PersonHistoryPage.class, echSchema.getVersion(), person.getId());
 		

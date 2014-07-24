@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.AbstractPage;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.RefreshablePage;
 import org.minimalj.frontend.toolkit.ClientToolkit.IContent;
 
@@ -29,12 +28,11 @@ public class SedexInputPage extends AbstractPage implements RefreshablePage {
 	private JPanel panel;
 	private SedexInputTable table;
 
-	public SedexInputPage(PageContext context, String echVersion) {
-		this(context, EchSchema.getNamespaceContext(20, echVersion));
+	public SedexInputPage(String echVersion) {
+		this(EchSchema.getNamespaceContext(20, echVersion));
 	}
 	
-	public SedexInputPage(PageContext context, EchSchema echNamespaceContext) {
-		super(context);
+	public SedexInputPage(EchSchema echNamespaceContext) {
 		this.echNamespaceContext = echNamespaceContext;
 	}
 

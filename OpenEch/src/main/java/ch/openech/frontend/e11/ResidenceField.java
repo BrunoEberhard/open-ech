@@ -8,17 +8,15 @@ import javax.swing.Action;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.PropertyInterface;
 
+import ch.openech.datagenerator.DataGenerator;
 import ch.openech.frontend.e07.MunicipalityField;
 import ch.openech.frontend.ewk.event.EchForm;
-import ch.openech.datagenerator.DataGenerator;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.person.Residence;
-import  ch.openech.model.types.TypeOfResidence;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.person.Residence;
+import ch.openech.model.types.TypeOfResidence;
 
 public class ResidenceField extends ObjectFlowField<Residence> {
 	private Action selectSecondary;
@@ -81,7 +79,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 
 	private final class ResidenceRemoveSecondaryAction extends ResourceAction {
 		@Override
-		public void action(IContext context) {
+		public void action() {
 			getObject().secondary.clear();
 			fireObjectChange();
 		}

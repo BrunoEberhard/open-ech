@@ -4,12 +4,11 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectViewPage;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.org.OrganisationMenu;
 import ch.openech.frontend.org.OrganisationPanel;
-import  ch.openech.model.organisation.Organisation;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationViewPage extends ObjectViewPage<Organisation> {
@@ -20,8 +19,7 @@ public class OrganisationViewPage extends ObjectViewPage<Organisation> {
 	private final OrganisationPanel organisationPanel;
 	private final OrganisationMenu menu;
 
-	public OrganisationViewPage(PageContext pageContext, String[] arguments) {
-		super(pageContext);
+	public OrganisationViewPage(String[] arguments) {
 		this.echSchema = EchSchema.getNamespaceContext(148, arguments[0]);
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
 		this.organisation = loadObject(arguments[1], time);

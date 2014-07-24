@@ -6,13 +6,12 @@ import java.util.logging.Logger;
 import org.minimalj.application.DevMode;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.Indicator;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.IAction;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.xmlpreview.XmlPreview;
-import  ch.openech.model.EchSchemaValidation;
+import ch.openech.model.EchSchemaValidation;
 import ch.openech.xml.write.EchSchema;
 
 
@@ -55,10 +54,10 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		private String description;
 		
 		@Override
-		public void action(IContext context) {
+		public void action() {
 			try {
 				List<String> xmls = getXml(getObject());
-				XmlPreview.viewXml(context, xmls);
+				XmlPreview.viewXml(xmls);
 			} catch (Exception x) {
 				throw new RuntimeException("XML Preview fehlgeschlagen", x);
 			}

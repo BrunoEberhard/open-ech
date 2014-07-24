@@ -76,7 +76,7 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 	public final class SelectHeadquarterAction extends SearchDialogAction<Organisation> {
 		
 		public SelectHeadquarterAction() {
-			super(getComponent(), SearchOrganisationPage.FIELD_NAMES);
+			super(SearchOrganisationPage.FIELD_NAMES);
 		}
 
 		@Override

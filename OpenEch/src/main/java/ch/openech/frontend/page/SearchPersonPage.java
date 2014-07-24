@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.TablePage;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.IdUtils;
 
@@ -33,18 +33,18 @@ public class SearchPersonPage extends TablePage<Person> {
 		PERSON.vn.getFormattedValue(), //
 	};
 	
-	public SearchPersonPage(PageContext context, String text) {
-		this(context, getVersionFromPreference(context), text);
+	public SearchPersonPage(String text) {
+		this(getVersionFromPreference(), text);
 	}
 
-	private static String getVersionFromPreference(PageContext context) {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+	private static String getVersionFromPreference() {
+		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
 		EchSchema0020 schema = preferences.applicationSchemaData.schema20;
 		return schema.getVersion() + "." + schema.getMinorVersion();
 	}
 	
-	public SearchPersonPage(PageContext context, String version, String text) {
-		super(context, FIELD_NAMES, text);
+	public SearchPersonPage(String version, String text) {
+		super(FIELD_NAMES, text);
 		this.echSchema = EchSchema.getNamespaceContext(20, version);
 		this.text = text;
 	}
@@ -72,7 +72,7 @@ public class SearchPersonPage extends TablePage<Person> {
 			}
 			count++;
 		}
-		getPageContext().show(pageLinks, index);
+		ClientToolkit.getToolkit().show(pageLinks, index);
 	}
 
 	@Override

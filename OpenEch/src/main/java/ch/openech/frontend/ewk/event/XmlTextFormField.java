@@ -8,11 +8,10 @@ import java.util.List;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 
-import  ch.openech.model.EchSchemaValidation;
+import ch.openech.model.EchSchemaValidation;
 
 public class XmlTextFormField extends ObjectFlowField<List<String>> {
 
@@ -28,9 +27,9 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 		}
 		
 		@Override
-		public void action(IContext context) {
+		public void action() {
 			String message = EchSchemaValidation.validate(xml);
-			ClientToolkit.getToolkit().showMessage(context, message);
+			ClientToolkit.getToolkit().showMessage(message);
 		}
 	}
 
@@ -42,7 +41,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 		}
 
 		@Override
-		public void action(IContext pageContext) {
+		public void action() {
 			StringSelection stringSelection = new StringSelection(xml);
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clipboard.setContents(stringSelection, null);

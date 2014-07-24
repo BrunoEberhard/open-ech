@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 
@@ -22,7 +21,7 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 		}
 
 		@Override
-		public void action(IContext context) {
+		public void action() {
 			getObject().remove(object);
 			setObject(getObject());
 		}

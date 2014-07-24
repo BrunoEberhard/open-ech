@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 import org.minimalj.application.DevMode;
 import org.minimalj.application.MjApplication;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.PageContext;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.IAction;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
@@ -89,15 +89,15 @@ public class OpenEchApplication extends MjApplication {
 	}
 
 	@Override
-	public Class<?>[] getSearchClasses(PageContext context) {
+	public Class<?>[] getSearchClasses() {
 		return new Class<?>[]{SearchPersonPage.class, SearchOrganisationPage.class};
 	}
 
 	@Override
-	public List<IAction> getActionsNew(PageContext context) {
+	public List<IAction> getActionsNew() {
 		ActionGroup menu = new ActionGroup(null);
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-		updateEwkNamespaceContext(context);
+		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
+		updateEwkNamespaceContext();
 		
 		if (ewkSchema != null) {
 			menu.add(new MoveInWizard(ewkSchema, preferences));
@@ -117,9 +117,9 @@ public class OpenEchApplication extends MjApplication {
 	}
 
 	@Override
-	public List<IAction> getActionsImport(PageContext context) {
+	public List<IAction> getActionsImport() {
 		ActionGroup menu = new ActionGroup(null);
-		updateEwkNamespaceContext(context);
+		updateEwkNamespaceContext();
 		
 		if (ewkSchema != null) {
 			menu.add(new ImportAllPersonAction());
@@ -137,9 +137,9 @@ public class OpenEchApplication extends MjApplication {
 	}
 
 	@Override
-	public List<IAction> getActionsExport(PageContext context) {
+	public List<IAction> getActionsExport() {
 		ActionGroup menu = new ActionGroup(null);
-		updateEwkNamespaceContext(context);
+		updateEwkNamespaceContext();
 		
 		if (ewkSchema != null) {
 			menu.add(new ExportAllPersonAction(ewkSchema.getVersion()));
@@ -155,14 +155,14 @@ public class OpenEchApplication extends MjApplication {
 	}
 
 	@Override
-	public List<IAction> getActionsView(PageContext context) {
+	public List<IAction> getActionsView() {
 		ActionGroup menu = new ActionGroup(null);
-		menu.add(new PreferencesEditor(context.getApplicationContext()));
+		menu.add(new PreferencesEditor(ClientToolkit.getToolkit().getApplicationContext()));
 		return menu.getItems();
 	}
 	
-	private void updateEwkNamespaceContext(PageContext context) {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+	private void updateEwkNamespaceContext() {
+		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
 		ApplicationSchemaData applicationData = preferences.applicationSchemaData;
 		if (applicationData.schema20 != null) {
 			if (ewkSchema == null || !applicationData.schema20.equals(ewkSchema.getVersion())) {

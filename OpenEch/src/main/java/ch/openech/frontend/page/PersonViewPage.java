@@ -4,13 +4,12 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectViewPage;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.ewk.PersonEditMenu;
 import ch.openech.frontend.ewk.PersonPanel;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonEditMode;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonEditMode;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonViewPage extends ObjectViewPage<Person> {
@@ -21,13 +20,12 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 	private final PersonPanel personPanel;
 	private final PersonEditMenu menu;
 
-	public PersonViewPage(PageContext pageContext, String[] arguments) {
-		super(pageContext);
+	public PersonViewPage(String[] arguments) {
 		this.echSchema = EchSchema.getNamespaceContext(20, arguments[0]);
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
 		this.person = loadObject(arguments[1], time);
 		this.personPanel = new PersonPanel(PersonEditMode.DISPLAY, echSchema);
-		this.menu = time == 0 ? new PersonEditMenu(echSchema, pageContext, person) : null;  
+		this.menu = time == 0 ? new PersonEditMenu(echSchema, person) : null;  
 	}
 	
 	@Override

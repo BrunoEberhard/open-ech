@@ -8,14 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageContext;
 
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.tpn.MoveDirection;
 import ch.openech.frontend.tpn.TpnMoveForm;
-import  ch.openech.model.contact.Contact;
-import  ch.openech.model.contact.ContactEntry;
-import  ch.openech.model.tpn.ThirdPartyMove;
+import ch.openech.model.contact.Contact;
+import ch.openech.model.contact.ContactEntry;
+import ch.openech.model.tpn.ThirdPartyMove;
 import ch.openech.xml.read.StaxEch0046;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0046;
@@ -25,11 +24,11 @@ import ch.openech.xml.write.WriterElement;
 public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	private final MoveDirection direction;
 
-	public TpnMoveEditor(PageContext context, String direction) {
-		this(context, MoveDirection.valueOf(direction));
+	public TpnMoveEditor(String direction) {
+		this(MoveDirection.valueOf(direction));
 	}
 		
-	public TpnMoveEditor(PageContext context, MoveDirection direction) {
+	public TpnMoveEditor(MoveDirection direction) {
 		super(EchSchema.getNamespaceContext(112, "1.0"));
 		this.direction = direction;
 	}

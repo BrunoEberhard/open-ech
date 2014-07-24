@@ -10,10 +10,9 @@ import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
+import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.IAction;
-import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.annotation.Required;
@@ -26,10 +25,10 @@ import ch.openech.frontend.ewk.event.moveIn.NextPersonHelper;
 import ch.openech.frontend.page.PersonViewPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.xmlpreview.XmlPreview;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonEditMode;
-import  ch.openech.model.person.types.TypeOfRelationship;
-import  ch.openech.model.person.types.TypeOfRelationshipInverted;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonEditMode;
+import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.model.person.types.TypeOfRelationshipInverted;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -332,13 +331,13 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	private class XmlAction implements IAction {
 		@Override
-		public void action(IContext context) {
+		public void action() {
 			try {
 				List<String> xmls = new ArrayList<String>();
 				for (Person person : getObject().persons) {
 					xmls.add(getWriterEch0020().moveIn(person));
 				}
-				XmlPreview.viewXml(context, xmls);
+				XmlPreview.viewXml(xmls);
 			} catch (Exception x) {
 				throw new RuntimeException("XML Preview fehlgeschlagen", x);
 			}

@@ -5,14 +5,13 @@ import java.util.List;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.fields.ObjectLinkField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 
 import ch.openech.frontend.ewk.event.EchForm;
-import  ch.openech.model.common.NamedId;
-import  ch.openech.model.common.TechnicalIds;
+import ch.openech.model.common.NamedId;
+import ch.openech.model.common.TechnicalIds;
 
 public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	public static final boolean WITH_EU_IDS = true;
@@ -31,7 +30,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 
 	public final class TechnicalIdRemoveAction extends ResourceAction {
 		@Override
-		public void action(IContext context) {
+		public void action() {
 			getObject().clear();
 			fireObjectChange();
 		}
@@ -114,7 +113,7 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 			}
 
 			@Override
-			public void action(IContext context) {
+			public void action() {
 				OtherIdField.this.getObject().remove(id);
 				setObject(getObject());
 			}

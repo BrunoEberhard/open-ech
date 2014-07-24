@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.RefreshablePage;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
@@ -19,16 +18,15 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> implement
 	private final EchSchema echNamespaceContext;
 	private final long organisationId;
 
-	public OrganisationHistoryPage(PageContext context, String[] arguments) {
-		this(context, arguments[0], arguments[1]);
+	public OrganisationHistoryPage(String[] arguments) {
+		this(arguments[0], arguments[1]);
 	}
 	
-	public OrganisationHistoryPage(PageContext context, String version, String organisationId) {
-		this(context, EchSchema.getNamespaceContext(20, version), organisationId);
+	public OrganisationHistoryPage(String version, String organisationId) {
+		this(EchSchema.getNamespaceContext(20, version), organisationId);
 	}
 	
-	public OrganisationHistoryPage(PageContext context, EchSchema echNamespaceContext, String organisationId) {
-		super(context);
+	public OrganisationHistoryPage(EchSchema echNamespaceContext, String organisationId) {
 		this.organisationId = Long.valueOf(organisationId);
 		this.echNamespaceContext = echNamespaceContext;
 	}

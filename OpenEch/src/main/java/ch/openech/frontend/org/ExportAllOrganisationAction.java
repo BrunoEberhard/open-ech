@@ -4,7 +4,6 @@ import java.io.OutputStream;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContext;
 import org.minimalj.frontend.toolkit.ResourceAction;
 
 import ch.openech.transaction.OrganisationExportStreamProducer;
@@ -16,8 +15,8 @@ public class ExportAllOrganisationAction extends ResourceAction {
 		this.orgVersion = orgVersion;
 	}
 	
-	public void action(IContext context) {
-		OutputStream outputStream = ClientToolkit.getToolkit().store(context, "Export");
+	public void action() {
+		OutputStream outputStream = ClientToolkit.getToolkit().store("Export");
 		if (outputStream != null) {
 			export(outputStream);
 		}

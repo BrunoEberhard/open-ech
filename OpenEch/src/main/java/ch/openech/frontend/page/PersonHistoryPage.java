@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.RefreshablePage;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
@@ -19,16 +18,15 @@ public class PersonHistoryPage extends HistoryPage<Person> implements Refreshabl
 	private final EchSchema echNamespaceContext;
 	private final long personId;
 
-	public PersonHistoryPage(PageContext context, String[] arguments) {
-		this(context, arguments[0], arguments[1]);
+	public PersonHistoryPage(String[] arguments) {
+		this(arguments[0], arguments[1]);
 	}
 	
-	public PersonHistoryPage(PageContext context, String version, String personId) {
-		this(context, EchSchema.getNamespaceContext(20, version), personId);
+	public PersonHistoryPage(String version, String personId) {
+		this(EchSchema.getNamespaceContext(20, version), personId);
 	}
 	
-	public PersonHistoryPage(PageContext context, EchSchema echNamespaceContext, String personId) {
-		super(context);
+	public PersonHistoryPage(EchSchema echNamespaceContext, String personId) {
 		this.personId = Long.valueOf(personId);
 		this.echNamespaceContext = echNamespaceContext;
 	}

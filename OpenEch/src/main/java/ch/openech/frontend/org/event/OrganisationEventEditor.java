@@ -4,9 +4,8 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.PageLink;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.util.SerializationContainer;
 
 import ch.openech.frontend.XmlEditor;
@@ -14,8 +13,8 @@ import ch.openech.frontend.ewk.XmlResult;
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.frontend.page.OrganisationViewPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
-import  ch.openech.model.common.NamedId;
-import  ch.openech.model.organisation.Organisation;
+import ch.openech.model.common.NamedId;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.transaction.OrganisationTransaction;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
@@ -31,8 +30,8 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 		this.organisation.technicalIds.localId.personId = String.valueOf(organisation.id);
 	}
 
-	protected static EchSchema getNamespaceContextOrg(PageContext context) {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+	protected static EchSchema getNamespaceContextOrg() {
+		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
 		return EchSchema.getNamespaceContext(preferences.applicationSchemaData.schema148);
 	}
 

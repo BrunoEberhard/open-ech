@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.PageContext;
 import org.minimalj.frontend.page.TablePage;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.frontend.preferences.OpenEchPreferences;
@@ -29,18 +29,18 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 		ORGANISATION.businessAddress.mailAddress.town, //
 	};
 	
-	public SearchOrganisationPage(PageContext context, String text) {
-		this(context, getVersionFromPreference(context), text);
+	public SearchOrganisationPage(String text) {
+		this(getVersionFromPreference(), text);
 	}
 	
-	private static String getVersionFromPreference(PageContext context) {
-		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+	private static String getVersionFromPreference() {
+		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
 		EchSchema0148 schema = preferences.applicationSchemaData.schema148;
 		return schema.getVersion() + "." + schema.getMinorVersion();
 	}
 	
-	public SearchOrganisationPage(PageContext context, String version, String text) {
-		super(context, FIELD_NAMES, text);
+	public SearchOrganisationPage(String version, String text) {
+		super(FIELD_NAMES, text);
 		this.echSchema = EchSchema.getNamespaceContext(148, version);
 		this.text = text;
 	}
@@ -68,7 +68,7 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 			}
 			count++;
 		}
-		getPageContext().show(pageLinks, index);
+		ClientToolkit.getToolkit().show(pageLinks, index);
 	}
 
 	@Override
