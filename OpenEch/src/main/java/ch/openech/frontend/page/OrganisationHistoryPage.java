@@ -79,9 +79,9 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> {
 	@Override
 	protected String link(Organisation object, String version) {
 		if (version != null) {
-			return link(OrganisationViewPage.class, echNamespaceContext.getVersion(), object.getId(), version);
+			return link(OrganisationPage.class, echNamespaceContext.getVersion(), object.getId(), version);
 		} else {
-			return link(OrganisationViewPage.class, echNamespaceContext.getVersion(), object.getId());
+			return link(OrganisationPage.class, echNamespaceContext.getVersion(), object.getId());
 		}
 	}
 	

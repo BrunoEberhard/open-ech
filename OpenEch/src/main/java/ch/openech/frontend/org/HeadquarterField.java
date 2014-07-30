@@ -12,7 +12,7 @@ import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.transaction.criteria.Criteria;
 
-import ch.openech.frontend.page.OrganisationViewPage;
+import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.page.SearchOrganisationPage;
 import ch.openech.model.organisation.Headquarter;
 import ch.openech.model.organisation.Organisation;
@@ -62,7 +62,7 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 			
 		} else {
 			if (headquarter.identification != null) {
-				addLink(headquarter.identification.organisationName, PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), headquarter.identification.technicalIds.localId.personId));
+				addLink(headquarter.identification.organisationName, PageLink.link(OrganisationPage.class, echSchema.getVersion(), headquarter.identification.technicalIds.localId.personId));
 			}
 			if (headquarter.reportingMunicipality != null) {
 				addText(headquarter.reportingMunicipality.municipalityName);

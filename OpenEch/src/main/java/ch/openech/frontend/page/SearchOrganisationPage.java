@@ -55,7 +55,7 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 		int index = 0;
 		int count = 0;
 		for (Organisation o : selectedObjects) {
-			String link = link(OrganisationViewPage.class, echSchema.getVersion(), o.technicalIds.localId.personId);
+			String link = link(OrganisationPage.class, echSchema.getVersion(), o.technicalIds.localId.personId);
 			pageLinks.add(link);
 			if (o == organisation) {
 				index = count;

@@ -11,7 +11,7 @@ import ch.openech.frontend.org.OrganisationPanel;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 
-public class OrganisationViewPage extends ObjectPage<Organisation> {
+public class OrganisationPage extends ObjectPage<Organisation> {
 
 	private final Organisation organisation;
 	private final int time;
@@ -19,7 +19,7 @@ public class OrganisationViewPage extends ObjectPage<Organisation> {
 	private final OrganisationPanel organisationPanel;
 	private final OrganisationMenu menu;
 
-	public OrganisationViewPage(String[] arguments) {
+	public OrganisationPage(String[] arguments) {
 		this.echSchema = EchSchema.getNamespaceContext(148, arguments[0]);
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
 		this.organisation = loadObject(arguments[1], time);

@@ -13,7 +13,7 @@ import org.minimalj.util.SerializationContainer;
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
 import ch.openech.frontend.org.OrganisationPanel;
-import ch.openech.frontend.page.OrganisationViewPage;
+import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import  ch.openech.model.organisation.Organisation;
 import ch.openech.transaction.OrganisationTransaction;
@@ -52,7 +52,7 @@ public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<O
 	public String save(Organisation organisation) {
 		String xml = getXml(organisation).get(0);
 		organisation = (Organisation) SerializationContainer.unwrap(Backend.getInstance().execute(new OrganisationTransaction(xml)));
-		return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
+		return PageLink.link(OrganisationPage.class, echSchema.getVersion(), organisation.getId());
 	}
 	
 	@Override

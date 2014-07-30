@@ -11,7 +11,7 @@ import org.minimalj.util.SerializationContainer;
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
 import ch.openech.frontend.ewk.event.EchForm;
-import ch.openech.frontend.page.OrganisationViewPage;
+import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.common.NamedId;
 import ch.openech.model.organisation.Organisation;
@@ -59,7 +59,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
 		Organisation organisation = send(xmls);
-		return PageLink.link(OrganisationViewPage.class, echSchema.getVersion(), organisation.getId());
+		return PageLink.link(OrganisationPage.class, echSchema.getVersion(), organisation.getId());
 	}
 	
 	public static Organisation send(final List<String> xmls) {
