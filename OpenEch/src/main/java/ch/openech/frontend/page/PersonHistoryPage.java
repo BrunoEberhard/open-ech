@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
-import org.minimalj.frontend.page.RefreshablePage;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
 import org.threeten.bp.LocalDateTime;
@@ -13,7 +12,7 @@ import org.threeten.bp.LocalDateTime;
 import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 
-public class PersonHistoryPage extends HistoryPage<Person> implements RefreshablePage {
+public class PersonHistoryPage extends HistoryPage<Person> {
 
 	private final EchSchema echNamespaceContext;
 	private final long personId;
