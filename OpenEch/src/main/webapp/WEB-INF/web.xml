@@ -22,6 +22,14 @@
 			<param-name>MjApplication</param-name>
 			<param-value>ch.openech.OpenEchApplication</param-value>
 		</init-param>
+		<init-param>
+			<param-name>MjBackendDatabase</param-name>
+			<param-value>openech</param-value>
+		</init-param>
+		<init-param>
+			<param-name>MjDevMode</param-name>
+			<param-value>true</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>OpenEch</servlet-name>
