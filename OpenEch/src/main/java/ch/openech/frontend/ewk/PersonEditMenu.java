@@ -60,14 +60,14 @@ import ch.openech.frontend.ewk.event.correct.CorrectReligionEvent;
 import ch.openech.frontend.ewk.event.correct.CorrectReportingEvent;
 import ch.openech.frontend.ewk.event.correct.CorrectResidencePermitEvent;
 import ch.openech.frontend.page.PersonHistoryPage;
-import ch.openech.frontend.page.PersonViewPage;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonEditMenu {
 
-	private final PersonViewPage personViewPage;
+	private final PersonPage personViewPage;
 	private final EchSchema echSchema;
 	private final Person person;
 	
@@ -86,7 +86,7 @@ public class PersonEditMenu {
 	
 	private final List<EditorAction> correctEditors = new ArrayList<>();
 
-	public PersonEditMenu(PersonViewPage personViewPage, EchSchema ech, Person person) {
+	public PersonEditMenu(PersonPage personViewPage, EchSchema ech, Person person) {
 		this.echSchema = ech;
 		this.person = person;
 		this.personViewPage = personViewPage;

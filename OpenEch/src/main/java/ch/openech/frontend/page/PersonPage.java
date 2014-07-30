@@ -12,7 +12,7 @@ import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
 import ch.openech.xml.write.EchSchema;
 
-public class PersonViewPage extends ObjectPage<Person> {
+public class PersonPage extends ObjectPage<Person> {
 
 	private Person person;
 	private final int time;
@@ -20,7 +20,7 @@ public class PersonViewPage extends ObjectPage<Person> {
 	private final PersonPanel personPanel;
 	private final PersonEditMenu menu;
 
-	public PersonViewPage(String[] arguments) {
+	public PersonPage(String[] arguments) {
 		this.echSchema = EchSchema.getNamespaceContext(20, arguments[0]);
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
 		this.person = loadObject(arguments[1], time);

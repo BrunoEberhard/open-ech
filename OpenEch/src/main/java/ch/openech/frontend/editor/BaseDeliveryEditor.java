@@ -11,7 +11,7 @@ import org.minimalj.util.SerializationContainer;
 
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.PersonPanel;
-import ch.openech.frontend.page.PersonViewPage;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import  ch.openech.model.person.Person;
 import  ch.openech.model.person.PersonEditMode;
@@ -46,7 +46,7 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
     public Object save(Person person) {
 		String xml = getXml(person).get(0);
 		person = (Person) SerializationContainer.unwrap(Backend.getInstance().execute(new PersonTransaction(xml)));
-		return PageLink.link(PersonViewPage.class, echSchema.getVersion(), person.getId());
+		return PageLink.link(PersonPage.class, echSchema.getVersion(), person.getId());
 	}
 	
 	@Override

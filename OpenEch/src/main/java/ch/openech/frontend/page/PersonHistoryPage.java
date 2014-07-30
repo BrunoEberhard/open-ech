@@ -78,9 +78,9 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 	@Override
 	protected String link(Person object, String version) {
 		if (version != null) {
-			return link(PersonViewPage.class, echNamespaceContext.getVersion(), object.getId(), version);
+			return link(PersonPage.class, echNamespaceContext.getVersion(), object.getId(), version);
 		} else {
-			return link(PersonViewPage.class, echNamespaceContext.getVersion(), object.getId());
+			return link(PersonPage.class, echNamespaceContext.getVersion(), object.getId());
 		}
 	}
 	

@@ -12,7 +12,7 @@ import org.minimalj.util.CloneHelper;
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
-import ch.openech.frontend.page.PersonViewPage;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import  ch.openech.model.common.Place;
 import  ch.openech.model.person.Person;
@@ -49,7 +49,7 @@ public class BirthEvent extends XmlEditor<Person> {
 	public Object save(Person object) throws Exception {
 		List<String> xmls = getXml(object);
 		Person person = PersonEventEditor.send(xmls);
-		return PageLink.link(PersonViewPage.class, echSchema.getVersion(), person.getId());
+		return PageLink.link(PersonPage.class, echSchema.getVersion(), person.getId());
 	}
 
 	@Override

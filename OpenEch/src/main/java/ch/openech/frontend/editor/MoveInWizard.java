@@ -22,7 +22,7 @@ import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
 import ch.openech.frontend.ewk.event.moveIn.NextPersonHelper;
-import ch.openech.frontend.page.PersonViewPage;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.xmlpreview.XmlPreview;
 import ch.openech.model.person.Person;
@@ -265,7 +265,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			}
 		}
 		Person person = PersonEventEditor.send(xmlList);
-		return PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), person.getId());
+		return PageLink.link(PersonPage.class, echNamespaceContext.getVersion(), person.getId());
 	}
 
 

@@ -59,7 +59,7 @@ public class SearchPersonPage extends TablePage<Person> {
 		int index = 0;
 		int count = 0;
 		for (Person p : selectedObjects) {
-			String link = link(PersonViewPage.class, echSchema.getVersion(), IdUtils.getIdString(p));
+			String link = link(PersonPage.class, echSchema.getVersion(), IdUtils.getIdString(p));
 			pageLinks.add(link);
 			if (p == person) {
 				index = count;

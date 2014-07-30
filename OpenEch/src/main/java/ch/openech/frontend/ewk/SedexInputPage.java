@@ -119,7 +119,7 @@ public class SedexInputPage extends AbstractPage {
 //			int answer = showOptionDialog(message);
 //			if (answer == JOptionPane.YES_OPTION) {
 //				
-//				show(new PersonViewPage(getPageContext(), echNamespaceContext.getVersion(), person.getId()));
+//				show(new PersonPage(getPageContext(), echNamespaceContext.getVersion(), person.getId()));
 //			}
 //		} else {
 //			JOptionPane.showMessageDialog(null, "Person mit entsprechender Identifikation nicht vorhanden");
@@ -134,7 +134,7 @@ public class SedexInputPage extends AbstractPage {
 //			String message = "Bei der Nachricht handelt es sich um einen Todesfall.\n\nSoll der entsprechende Fall erfasst werden?";
 //			int answer = showOptionDialog(message);
 //			if (answer == JOptionPane.YES_OPTION) {
-//				PersonViewPage page = new PersonViewPage(echNamespaceContext, person.getId());
+//				PersonPage page = new PersonPage(echNamespaceContext, person.getId());
 //				show(page);
 //				// TODO showDeathPage öffnen des Tod - Dialoges richtig kapseln
 //				Editor<?> editor = new ChangeWithSecondPersonEvent.DeathEvent(echNamespaceContext);

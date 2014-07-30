@@ -14,7 +14,7 @@ import org.minimalj.util.DateUtils;
 
 import ch.openech.frontend.e10.AddressPanel;
 import ch.openech.frontend.e44.PersonIdentificationPanel;
-import ch.openech.frontend.page.PersonViewPage;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.page.SearchPersonPage;
 import ch.openech.model.common.Address;
 import ch.openech.model.person.ContactPerson;
@@ -44,7 +44,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			if (isEditable()) {
 				addAction(new RemovePersonContactAction());
 			} else {
-				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echSchema.getVersion(), contactPerson.person.idAsString()));
+				addLink("Person anzeigen", PageLink.link(PersonPage.class, echSchema.getVersion(), contactPerson.person.idAsString()));
 			}
 			addGap();
 		}

@@ -8,7 +8,7 @@ import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 
-import ch.openech.frontend.page.PersonViewPage;
+import ch.openech.frontend.page.PersonPage;
 import  ch.openech.model.person.Relation;
 import ch.openech.xml.write.EchSchema;
 
@@ -74,7 +74,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		} else {
 			for (Relation relation : objects) {
 				addText(relation.toHtml());
-				addLink("Person anzeigen", PageLink.link(PersonViewPage.class, echNamespaceContext.getVersion(), relation.partner.idAsString()));
+				addLink("Person anzeigen", PageLink.link(PersonPage.class, echNamespaceContext.getVersion(), relation.partner.idAsString()));
 				addGap();
 			}
 		}
