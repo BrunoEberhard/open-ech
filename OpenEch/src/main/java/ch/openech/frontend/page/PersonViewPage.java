@@ -14,7 +14,7 @@ import ch.openech.xml.write.EchSchema;
 
 public class PersonViewPage extends ObjectViewPage<Person> {
 
-	private final Person person;
+	private Person person;
 	private final int time;
 	private final EchSchema echSchema;
 	private final PersonPanel personPanel;
@@ -25,7 +25,7 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
 		this.person = loadObject(arguments[1], time);
 		this.personPanel = new PersonPanel(PersonEditMode.DISPLAY, echSchema);
-		this.menu = time == 0 ? new PersonEditMenu(echSchema, person) : null;  
+		this.menu = time == 0 ? new PersonEditMenu(this, echSchema, person) : null;  
 	}
 	
 	@Override
@@ -40,6 +40,12 @@ public class PersonViewPage extends ObjectViewPage<Person> {
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public void updateObject(Person person) {
+		this.person = person;
+		personPanel.setObject(person);
 	}
 
 	private static Person loadObject(String personId, int time) {

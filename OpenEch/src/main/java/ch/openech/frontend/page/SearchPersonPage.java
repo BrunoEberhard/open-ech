@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.TablePage;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.criteria.Criteria;
@@ -52,11 +51,6 @@ public class SearchPersonPage extends TablePage<Person> {
 	@Override
 	public String getTitle() {
 		return "Suche Personen mit " + text;
-	}
-
-	@Override
-	public ActionGroup getMenu() {
-		return null;
 	}
 
 	@Override

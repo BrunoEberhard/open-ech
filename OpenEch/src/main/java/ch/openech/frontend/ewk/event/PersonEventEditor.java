@@ -4,15 +4,12 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageLink;
 import org.minimalj.util.SerializationContainer;
 
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
-import ch.openech.frontend.page.PersonViewPage;
-import  ch.openech.model.common.NamedId;
-import  ch.openech.model.person.Person;
+import ch.openech.model.common.NamedId;
+import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
@@ -45,7 +42,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
 		Person person = send(xmls);
-		return PageLink.link(PersonViewPage.class, echSchema.getVersion(), person.getId());
+		return person;
 	}
 	
 	public static Person send(final List<String> xmls) {

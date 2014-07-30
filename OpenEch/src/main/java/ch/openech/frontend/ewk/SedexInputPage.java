@@ -13,7 +13,6 @@ import javax.swing.JScrollPane;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.AbstractPage;
-import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.RefreshablePage;
 import org.minimalj.frontend.toolkit.ClientToolkit.IContent;
 
@@ -50,11 +49,6 @@ public class SedexInputPage extends AbstractPage implements RefreshablePage {
 	@Override
 	public String getTitle() {
 		return "Sedex Input";
-	}
-
-	@Override
-	public ActionGroup getMenu() {
-		return null;
 	}
 
 	private void createPanel() {
