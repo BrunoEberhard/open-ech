@@ -67,7 +67,7 @@ import ch.openech.xml.write.EchSchema;
 
 public class PersonEditMenu {
 
-	private final PersonPage personViewPage;
+	private final PersonPage personPage;
 	private final EchSchema echSchema;
 	private final Person person;
 	
@@ -86,10 +86,10 @@ public class PersonEditMenu {
 	
 	private final List<EditorAction> correctEditors = new ArrayList<>();
 
-	public PersonEditMenu(PersonPage personViewPage, EchSchema ech, Person person) {
+	public PersonEditMenu(PersonPage personPage, EchSchema ech, Person person) {
 		this.echSchema = ech;
 		this.person = person;
-		this.personViewPage = personViewPage;
+		this.personPage = personPage;
 		
 		marriage = editorLink(new MarriageEvent(ech, person));
 		
@@ -214,7 +214,7 @@ public class PersonEditMenu {
 	private EditorAction editorLink(PersonEventEditor<?> editor) {
 		EditorAction action = new EditorAction(editor);
 		action.setEnabled(editor.isEnabled());
-		action.setObjectViewPage(personViewPage);
+		action.setObjectViewPage(personPage);
 		return action;
 	}
 	
