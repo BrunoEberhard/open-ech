@@ -42,7 +42,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
 		Person person = send(xmls);
-		return person;
+		return person.id;
 	}
 	
 	public static Person send(final List<String> xmls) {

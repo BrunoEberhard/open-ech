@@ -14,27 +14,27 @@ import ch.openech.xml.write.EchSchema;
 
 public class PersonPage extends ObjectPage<Person> {
 
-	private Person person;
-	private final int time;
 	private final EchSchema echSchema;
-	private final PersonPanel personPanel;
-	private final PersonEditMenu menu;
+	private final String personId;
+	private final int time;
+	private PersonEditMenu menu;
 
 	public PersonPage(String[] arguments) {
 		this.echSchema = EchSchema.getNamespaceContext(20, arguments[0]);
+		this.personId = arguments[1];
 		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
-		this.person = loadObject(arguments[1], time);
-		this.personPanel = new PersonPanel(PersonEditMode.DISPLAY, echSchema);
-		this.menu = time == 0 ? new PersonEditMenu(this, echSchema, person) : null;  
 	}
 	
 	@Override
 	public String getTitle() {
-		return pageTitle(person);
+		return pageTitle(getObject());
 	}
 
 	@Override
 	public ActionGroup getMenu() {
+		if (time == 0 && menu == null) {
+			menu = new PersonEditMenu(echSchema, getObject());
+		}
 		if (menu != null) {
 			return menu.getActions();
 		} else {
@@ -43,9 +43,16 @@ public class PersonPage extends ObjectPage<Person> {
 	}
 	
 	@Override
-	public void updateObject(Person person) {
-		this.person = person;
-		personPanel.setObject(person);
+	public void refresh() {
+		super.refresh();
+		if (menu != null) {
+			menu.update(getObject(), true);
+		}
+	}
+
+	@Override
+	protected Person loadObject() {
+		return loadObject(personId, time);
 	}
 
 	private static Person loadObject(String personId, int time) {
@@ -59,14 +66,9 @@ public class PersonPage extends ObjectPage<Person> {
 
 	@Override
 	public Form<Person> createForm() {
-		return personPanel;
+		return new PersonPanel(PersonEditMode.DISPLAY, echSchema);
 	}
 	
-	@Override
-	protected Person getObject() {
-		return person;
-	}
-
 	private static final int MAX_NAME_LENGTH = 10;
 	
 	private static String pageTitle(Person person) {
