@@ -7,14 +7,13 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.util.LoggingRuntimeException;
-import org.minimalj.util.SerializationContainer;
 
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonEditMode;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonEditMode;
 import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
 
@@ -45,8 +44,8 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
     @Override
     public Object save(Person person) {
 		String xml = getXml(person).get(0);
-		person = (Person) SerializationContainer.unwrap(Backend.getInstance().execute(new PersonTransaction(xml)));
-		return PageLink.link(PersonPage.class, echSchema.getVersion(), person.getId());
+		Long insertId = Backend.getInstance().execute(new PersonTransaction(xml));
+		return PageLink.link(PersonPage.class, echSchema.getVersion(), insertId.toString());
 	}
 	
 	@Override

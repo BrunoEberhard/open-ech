@@ -14,9 +14,9 @@ import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
 import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonEditMode;
+import ch.openech.model.common.Place;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonEditMode;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -48,8 +48,8 @@ public class BirthEvent extends XmlEditor<Person> {
 	@Override
 	public Object save(Person object) throws Exception {
 		List<String> xmls = getXml(object);
-		Person person = PersonEventEditor.send(xmls);
-		return PageLink.link(PersonPage.class, echSchema.getVersion(), person.getId());
+		Long insertId = PersonEventEditor.send(xmls);
+		return PageLink.link(PersonPage.class, echSchema.getVersion(), insertId.toString());
 	}
 
 	@Override

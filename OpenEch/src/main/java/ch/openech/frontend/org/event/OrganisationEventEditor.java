@@ -6,7 +6,6 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.util.SerializationContainer;
 
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
@@ -58,20 +57,13 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	@Override
 	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
-		Organisation organisation = send(xmls);
-		return PageLink.link(OrganisationPage.class, echSchema.getVersion(), organisation.getId());
+		Long insertId = send(xmls);
+		return PageLink.link(OrganisationPage.class, echSchema.getVersion(), insertId.toString());
 	}
 	
-	public static Organisation send(final List<String> xmls) {
-		Organisation firstOrganisation = null;
-		for (String xml : xmls) {
-			if (firstOrganisation == null) {
-				firstOrganisation = (Organisation) SerializationContainer.unwrap(Backend.getInstance().execute(new OrganisationTransaction(xml)));
-			} else {
-				Backend.getInstance().execute(new OrganisationTransaction(xml));
-			}
-		}
-		return firstOrganisation;
+	public static Long send(final List<String> xmls) {
+		Long firstInsertId = Backend.getInstance().execute(new OrganisationTransaction(xmls));
+		return firstInsertId;
 	}
 	
 }

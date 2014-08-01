@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.minimalj.application.MjApplication;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria;
-import org.minimalj.util.SerializationContainer;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.model.EchSchemaValidation;
@@ -56,17 +55,18 @@ public abstract class AbstractServerTest {
 	public static Person processFile(String relativFileName) throws IOException {
 		InputStream inputStream = AbstractServerTest.class.getResourceAsStream(relativFileName);
 		String xml = convertStreamToString(inputStream);
-		return (Person) SerializationContainer.unwrap(Backend.getInstance().execute(new PersonTransaction(xml)));
+		long insertId = Backend.getInstance().execute(new PersonTransaction(xml));
+		return Backend.getInstance().read(Person.class, insertId);
 	}
 	
-	public static Person process(String string) throws IOException {
+	public static Long process(String string) throws IOException {
 		String validationMessage = EchSchemaValidation.validate(string);
 		boolean valid = EchSchemaValidation.OK.equals(validationMessage);
 		if (!valid) {
 			System.out.println(string);
 			Assert.fail(validationMessage);
 		}
-		return (Person) SerializationContainer.unwrap(Backend.getInstance().execute(new PersonTransaction(string)));
+		return Backend.getInstance().execute(new PersonTransaction(string));
 	}
 	
 	public static String convertStreamToString(InputStream is) throws IOException {

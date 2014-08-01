@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.util.SerializationContainer;
 
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
@@ -41,20 +40,13 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 	@Override
 	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
-		Person person = send(xmls);
-		return person.id;
+		Long insertId = send(xmls);
+		return insertId;
 	}
 	
-	public static Person send(final List<String> xmls) {
-		Person firstPerson = null;
-		for (String xml : xmls) {
-			if (firstPerson == null) {
-				firstPerson = (Person) SerializationContainer.unwrap(Backend.getInstance().execute(new PersonTransaction(xml)));
-			} else {
-				Backend.getInstance().execute(new PersonTransaction(xml));
-			}
-		}
-		return firstPerson;
+	public static Long send(final List<String> xmls) {
+		Long firstInsertId = Backend.getInstance().execute(new PersonTransaction(xmls));
+		return firstInsertId;
 	}
 	
 	@Override

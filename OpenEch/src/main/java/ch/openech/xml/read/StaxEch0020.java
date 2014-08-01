@@ -18,7 +18,6 @@ import javax.xml.stream.events.XMLEvent;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
 import org.minimalj.util.FieldUtils;
-import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 import org.threeten.bp.LocalDateTime;
 
@@ -43,7 +42,7 @@ public class StaxEch0020 {
 	// Person enthält, andererseits aber schon einen Teil (!) der neuen Werte.
 	private Person personToChange = null;
 	private Event e;
-	private Person lastChanged;
+	private long insertId = -1;
 	
 	public StaxEch0020(Backend backend) {
 		this.backend = backend;
@@ -54,13 +53,11 @@ public class StaxEch0020 {
 	public void insertPerson(Person person) {
 		person.event = e;
 		updatePersonIdentifications(person);
-		long id = backend.insert(person);
-		IdUtils.setId(person, id);
-		lastChanged = person;
+		insertId = backend.insert(person);
 	}
 
-	public Person getLastChanged() {
-		return lastChanged;
+	public long getInsertId() {
+		return insertId;
 	}
 	
 	private void simplePersonEvent(String type, PersonIdentification personIdentification, Person person) {
@@ -74,7 +71,6 @@ public class StaxEch0020 {
 		}
 		updatePersonIdentifications(person);
 		backend.update(person);
-		lastChanged = backend.read(Person.class, person.id);
 	}
 
 	//

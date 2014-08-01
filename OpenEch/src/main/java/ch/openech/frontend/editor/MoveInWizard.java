@@ -8,7 +8,6 @@ import org.minimalj.frontend.edit.Wizard;
 import org.minimalj.frontend.edit.WizardStep;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ComboBox;
@@ -22,7 +21,6 @@ import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
 import ch.openech.frontend.ewk.event.moveIn.NextPersonHelper;
-import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.xmlpreview.XmlPreview;
 import ch.openech.model.person.Person;
@@ -248,7 +246,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	@Override
-	protected String save(MoveInEditorData object) {
+	protected Long save(MoveInEditorData object) {
 		// Personen, die mit man previous verlassen hat werden nicht mitgespeichert,
 		// da sie eventuell ungültig sein könnten
 		for (int i = object.persons.size() - 1; i > getPersonIndex(); i--) {
@@ -264,10 +262,9 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 				e.printStackTrace();
 			}
 		}
-		Person person = PersonEventEditor.send(xmlList);
-		return PageLink.link(PersonPage.class, echNamespaceContext.getVersion(), person.getId());
+		Long insertId = PersonEventEditor.send(xmlList);
+		return insertId;
 	}
-
 
 	private class MoveInNextPersonField extends AbstractEditField<Person> {
 
