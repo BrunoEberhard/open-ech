@@ -3,8 +3,6 @@ package ch.openech.frontend.e11;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Action;
-
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
@@ -19,7 +17,6 @@ import ch.openech.model.person.Residence;
 import ch.openech.model.types.TypeOfResidence;
 
 public class ResidenceField extends ObjectFlowField<Residence> {
-	private Action selectSecondary;
 
 	public ResidenceField(PropertyInterface property, boolean editable) {
 		super(property, editable);
