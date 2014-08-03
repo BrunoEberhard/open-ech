@@ -7,7 +7,7 @@ import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 
-import  ch.openech.model.person.Person;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

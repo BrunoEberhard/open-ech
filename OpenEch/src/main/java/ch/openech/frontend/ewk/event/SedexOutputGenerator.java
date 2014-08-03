@@ -3,7 +3,7 @@ package ch.openech.frontend.ewk.event;
 import java.io.File;
 import java.io.FileWriter;
 
-import  ch.openech.model.Envelope;
+import ch.openech.model.Envelope;
 import ch.openech.xml.write.WriterEch0090;
 
 public class SedexOutputGenerator {

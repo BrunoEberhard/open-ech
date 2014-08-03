@@ -4,11 +4,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.Form;
 
 import ch.openech.frontend.e21.OccupationPanel;
-import  ch.openech.model.person.Occupation;
-import  ch.openech.model.person.Person;
+import ch.openech.model.person.Occupation;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

@@ -3,7 +3,6 @@ package ch.openech.frontend.ewk.event;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.threeten.bp.LocalDate;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Enabled;
@@ -14,13 +13,14 @@ import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
+import org.threeten.bp.LocalDate;
 
 import ch.openech.frontend.e44.PersonField;
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.person.Relation;
-import  ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.model.EchFormats;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

@@ -1,26 +1,26 @@
 package ch.openech.frontend.ewk.event;
 
-import static  ch.openech.model.person.PlaceOfOrigin.*;
+import static ch.openech.model.person.PlaceOfOrigin.*;
 
 import java.util.Collections;
 import java.util.List;
 
-import org.threeten.bp.LocalDate;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
+import org.threeten.bp.LocalDate;
 
 import ch.openech.frontend.ewk.event.UndoCitizenEvent.UndoCitizenData;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

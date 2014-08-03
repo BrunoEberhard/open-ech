@@ -3,8 +3,8 @@ package ch.openech.frontend.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

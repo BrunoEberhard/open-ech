@@ -3,16 +3,16 @@ package ch.openech.frontend.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import org.threeten.bp.LocalDate;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
+import org.threeten.bp.LocalDate;
 
 import ch.openech.frontend.e07.MunicipalityField;
 import ch.openech.frontend.ewk.event.MoveOutEvent.MoveOutData;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.person.Person;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0093;

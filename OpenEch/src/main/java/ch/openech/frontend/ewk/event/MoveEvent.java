@@ -8,9 +8,9 @@ import org.minimalj.model.Keys;
 
 import ch.openech.frontend.e07.MunicipalityField;
 import ch.openech.frontend.e10.AddressField;
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.person.Person;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

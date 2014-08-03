@@ -4,13 +4,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.e11.OriginPanel;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.types.ReasonOfAcquisition;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.types.ReasonOfAcquisition;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

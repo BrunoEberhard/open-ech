@@ -1,6 +1,6 @@
 package ch.openech.frontend.ewk.event;
 
-import static  ch.openech.model.person.Person.*;
+import static ch.openech.model.person.Person.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
-import  ch.openech.model.person.Person;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
 
-import  ch.openech.model.person.Person;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

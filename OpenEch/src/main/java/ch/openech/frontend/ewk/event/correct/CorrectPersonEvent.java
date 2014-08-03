@@ -4,12 +4,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.edit.form.Form;
 
 import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonEditMode;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonEditMode;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
