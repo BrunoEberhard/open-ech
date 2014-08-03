@@ -1,32 +1,29 @@
 package ch.openech.frontend.ewk;
 
-import static  ch.openech.model.person.Person.*;
-import static  ch.openech.model.person.Relation.*;
+import static ch.openech.model.person.Person.*;
+import static ch.openech.model.person.Relation.*;
 
 import org.minimalj.autofill.FirstNameGenerator;
 import org.minimalj.autofill.NameGenerator;
 import org.minimalj.autofill.NameWithFrequency;
-import org.minimalj.frontend.edit.fields.TextFormatField;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.frontend.e10.AddressField;
 import ch.openech.frontend.e11.PlaceOfOriginField;
-import ch.openech.frontend.e11.PlaceReadOnlyField;
 import ch.openech.frontend.e11.ResidenceField;
 import ch.openech.frontend.e21.NameOfParentsField;
 import ch.openech.frontend.e21.RelationField;
 import ch.openech.frontend.e44.TechnicalIdsField;
 import ch.openech.frontend.ewk.event.EchForm;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonEditMode;
-import  ch.openech.model.person.Relation;
-import  ch.openech.model.person.Residence;
-import  ch.openech.model.types.Sex;
-import  ch.openech.model.types.TypeOfResidence;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonEditMode;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.Residence;
+import ch.openech.model.types.Sex;
+import ch.openech.model.types.TypeOfResidence;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonPanel extends EchForm<Person>  {
@@ -185,22 +182,6 @@ public class PersonPanel extends EchForm<Person>  {
 	public void setObject(Person person) {
 		person.editMode = mode;
 		super.setObject(person);
-		disableDeathFieldIfAlive(person);
-		disableMoveOutFields(person);
-	}
-
-	private void disableDeathFieldIfAlive(Person person) {
-		if (mode == PersonEditMode.DISPLAY) {
-			((TextFormatField<?>) getField(PERSON.dateOfDeath)).setEnabled(person.dateOfDeath != null);
-		}
-	}
-
-	private void disableMoveOutFields(Person person) {
-		if (mode == PersonEditMode.DISPLAY) {
-			((TextFormatField<?>) getField(PERSON.departureDate)).setEnabled(person.departureDate != null);
-			((PlaceReadOnlyField) getField(PERSON.goesTo)).setEnabled(person.goesTo != null && !person.goesTo.isUnknown());
-			((AddressField) getField(PERSON.goesToAddress)).setEnabled(person.goesTo != null && person.goesTo.mailAddress != null && !person.goesTo.mailAddress.isEmpty());
-		}
 	}
 	
 	@Override
