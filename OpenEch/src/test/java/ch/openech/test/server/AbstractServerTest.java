@@ -56,7 +56,11 @@ public abstract class AbstractServerTest {
 		InputStream inputStream = AbstractServerTest.class.getResourceAsStream(relativFileName);
 		String xml = convertStreamToString(inputStream);
 		long insertId = Backend.getInstance().execute(new PersonTransaction(xml));
-		return Backend.getInstance().read(Person.class, insertId);
+		if (insertId > 0) {
+			return Backend.getInstance().read(Person.class, insertId);
+		} else {
+			return null;
+		}
 	}
 	
 	public static Long process(String string) throws IOException {
