@@ -1,8 +1,8 @@
 package ch.openech.frontend.e44;
 
-import static  ch.openech.model.person.PersonIdentification.*;
+import static ch.openech.model.person.PersonIdentification.*;
 import ch.openech.frontend.ewk.event.EchForm;
-import  ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PersonIdentification;
 
 public class PersonIdentificationPanel extends EchForm<PersonIdentification> {
 
@@ -15,7 +15,7 @@ public class PersonIdentificationPanel extends EchForm<PersonIdentification> {
 		super(2);
 		TechnicalIdsField technicalIdField = new TechnicalIdsField(PERSON_IDENTIFICATION.technicalIds, partner ? TechnicalIdsField.WITHOUT_EU_IDS : TechnicalIdsField.WITH_EU_IDS, editable);
 		
-		text("<b>Hinweis:</b> Normalerweise kann eine Person über die Suche ausgewählt werden.<br>Nur bei Ausnahmen sollten hier die Identifikationsmerkmale der Person direkt eingegeben werden.", 2);
+		text("<b>Hinweis:</b> Normalerweise kann eine Person über die Suche ausgewählt werden.<br>Nur bei Ausnahmen sollten hier die Identifikationsmerkmale der Person direkt eingegeben werden.");
         line(PERSON_IDENTIFICATION.officialName);
         line(PERSON_IDENTIFICATION.firstName);
         line(PERSON_IDENTIFICATION.dateOfBirth, PERSON_IDENTIFICATION.sex);
