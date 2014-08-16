@@ -2,19 +2,18 @@ package ch.openech.frontend.e10;
 
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.HorizontalLayout;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.PropertyInterface;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.common.HouseNumber;
+import ch.openech.model.EchFormats;
+import ch.openech.model.common.HouseNumber;
 
 public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	private HouseNumber houseNumber;
 	private final TextField houseNumberTextField;
 	private final TextField dwellingNumberTextField;
-	private final HorizontalLayout horizontalLayout;
+	private final IComponent horizontalLayout;
 	
 	public HouseNumberField(PropertyInterface property) {
 		super(property, true);

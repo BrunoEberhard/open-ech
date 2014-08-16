@@ -5,9 +5,8 @@ import java.util.logging.Logger;
 import org.minimalj.autofill.NameGenerator;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ComboBox;
-import org.minimalj.frontend.toolkit.HorizontalLayout;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.SwitchComponent;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.PropertyInterface;
@@ -28,7 +27,7 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 	private final ComboBox<MunicipalityIdentification> comboBoxMunicipality;
 	private final TextField textForeignTown;
 	
-	private final HorizontalLayout horizontalLayout;
+	private final IComponent horizontalLayout;
 
 	public PlaceField(PropertyInterface property) {
 		super(property, true);
