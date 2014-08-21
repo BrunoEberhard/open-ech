@@ -1,6 +1,6 @@
 package ch.openech.frontend.page;
 
-import static ch.openech.model.person.Person.*;
+import static ch.openech.model.person.PersonSearch.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,23 +13,23 @@ import org.minimalj.util.IdUtils;
 
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.EchSchema0020;
-import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonSearch;
 import ch.openech.xml.write.EchSchema;
 
 
-public class SearchPersonPage extends TablePage<Person> {
+public class SearchPersonPage extends TablePage<PersonSearch> {
 
 	private final EchSchema echSchema;
 	private final String text;
 
 	public static final Object[] FIELD_NAMES = {
-		PERSON.firstName, //
-		PERSON.officialName, //
-		PERSON.dateOfBirth, //
-		PERSON.getStreet(), // PERSON::getStreet()S
-		PERSON.getStreetNumber(), //
-		PERSON.getTown(), //
-		PERSON.vn.getFormattedValue(), //
+		PERSON_SEARCH.firstName, //
+		PERSON_SEARCH.officialName, //
+		PERSON_SEARCH.dateOfBirth, //
+		PERSON_SEARCH.getStreet(), // PERSON::getStreet()S
+		PERSON_SEARCH.getStreetNumber(), //
+		PERSON_SEARCH.getTown(), //
+		PERSON_SEARCH.vn.getFormattedValue(), //
 	};
 	
 	public SearchPersonPage(String text) {
@@ -54,11 +54,11 @@ public class SearchPersonPage extends TablePage<Person> {
 	}
 
 	@Override
-	protected void clicked(Person person, List<Person> selectedObjects) {
+	protected void clicked(PersonSearch person, List<PersonSearch> selectedObjects) {
 		List<String> pageLinks = new ArrayList<String>(selectedObjects.size());
 		int index = 0;
 		int count = 0;
-		for (Person p : selectedObjects) {
+		for (PersonSearch p : selectedObjects) {
 			String link = link(PersonPage.class, echSchema.getVersion(), IdUtils.getIdString(p));
 			pageLinks.add(link);
 			if (p == person) {
@@ -70,8 +70,8 @@ public class SearchPersonPage extends TablePage<Person> {
 	}
 
 	@Override
-	protected List<Person> load(String searchText) {
-		return Backend.getInstance().read(Person.class, Criteria.search(searchText), 100);
+	protected List<PersonSearch> load(String searchText) {
+		return Backend.getInstance().read(PersonSearch.class, Criteria.search(searchText), 100);
 	}
 
 }
