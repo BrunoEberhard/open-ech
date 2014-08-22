@@ -13,7 +13,7 @@ import org.minimalj.model.ViewUtil;
 import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.frontend.page.OrganisationPage;
-import ch.openech.frontend.page.SearchOrganisationPage;
+import ch.openech.frontend.page.OrganisationSearchPage;
 import ch.openech.model.organisation.Headquarter;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.organisation.OrganisationIdentification;
@@ -76,7 +76,7 @@ public class HeadquarterField extends ObjectFlowField<Headquarter> {
 	public final class SelectHeadquarterAction extends SearchDialogAction<Organisation> {
 		
 		public SelectHeadquarterAction() {
-			super(SearchOrganisationPage.FIELD_NAMES);
+			super(OrganisationSearchPage.FIELD_NAMES);
 		}
 
 		@Override

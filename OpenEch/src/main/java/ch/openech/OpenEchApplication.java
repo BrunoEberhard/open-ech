@@ -40,8 +40,8 @@ import ch.openech.frontend.ewk.event.birth.BirthEvent;
 import ch.openech.frontend.org.ExportAllOrganisationAction;
 import ch.openech.frontend.org.ImportAllOrganisationAction;
 import ch.openech.frontend.org.KeyDeliveryOrganisationAction;
-import ch.openech.frontend.page.SearchOrganisationPage;
-import ch.openech.frontend.page.SearchPersonPage;
+import ch.openech.frontend.page.OrganisationSearchPage;
+import ch.openech.frontend.page.PersonOrganisationPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.frontend.preferences.PreferencesEditor;
@@ -90,7 +90,7 @@ public class OpenEchApplication extends MjApplication {
 
 	@Override
 	public Class<?>[] getSearchClasses() {
-		return new Class<?>[]{SearchPersonPage.class, SearchOrganisationPage.class};
+		return new Class<?>[]{PersonOrganisationPage.class, OrganisationSearchPage.class};
 	}
 
 	@Override

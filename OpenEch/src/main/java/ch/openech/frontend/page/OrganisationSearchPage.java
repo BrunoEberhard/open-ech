@@ -15,7 +15,7 @@ import ch.openech.model.EchSchema0148;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 
-public class SearchOrganisationPage extends TablePage<Organisation> {
+public class OrganisationSearchPage extends TablePage<Organisation> {
 
 	private final EchSchema echSchema;
 	private final String text;
@@ -28,7 +28,7 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 		ORGANISATION.businessAddress.mailAddress.town, //
 	};
 	
-	public SearchOrganisationPage(String text) {
+	public OrganisationSearchPage(String text) {
 		this(getVersionFromPreference(), text);
 	}
 	
@@ -38,7 +38,7 @@ public class SearchOrganisationPage extends TablePage<Organisation> {
 		return schema.getVersion() + "." + schema.getMinorVersion();
 	}
 	
-	public SearchOrganisationPage(String version, String text) {
+	public OrganisationSearchPage(String version, String text) {
 		super(FIELD_NAMES, text);
 		this.echSchema = EchSchema.getNamespaceContext(148, version);
 		this.text = text;

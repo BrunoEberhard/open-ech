@@ -17,7 +17,7 @@ import ch.openech.model.person.PersonSearch;
 import ch.openech.xml.write.EchSchema;
 
 
-public class SearchPersonPage extends TablePage<PersonSearch> {
+public class PersonOrganisationPage extends TablePage<PersonSearch> {
 
 	private final EchSchema echSchema;
 	private final String text;
@@ -32,7 +32,7 @@ public class SearchPersonPage extends TablePage<PersonSearch> {
 		PERSON_SEARCH.vn.getFormattedValue(), //
 	};
 	
-	public SearchPersonPage(String text) {
+	public PersonOrganisationPage(String text) {
 		this(getVersionFromPreference(), text);
 	}
 
@@ -42,7 +42,7 @@ public class SearchPersonPage extends TablePage<PersonSearch> {
 		return schema.getVersion() + "." + schema.getMinorVersion();
 	}
 	
-	public SearchPersonPage(String version, String text) {
+	public PersonOrganisationPage(String version, String text) {
 		super(FIELD_NAMES, text);
 		this.echSchema = EchSchema.getNamespaceContext(20, version);
 		this.text = text;

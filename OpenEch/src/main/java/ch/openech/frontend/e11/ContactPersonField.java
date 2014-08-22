@@ -15,7 +15,7 @@ import org.minimalj.util.DateUtils;
 import ch.openech.frontend.e10.AddressPanel;
 import ch.openech.frontend.e44.PersonIdentificationPanel;
 import ch.openech.frontend.page.PersonPage;
-import ch.openech.frontend.page.SearchPersonPage;
+import ch.openech.frontend.page.PersonOrganisationPage;
 import ch.openech.model.common.Address;
 import ch.openech.model.person.ContactPerson;
 import ch.openech.model.person.Person;
@@ -77,7 +77,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	public class SelectPersonContactEditor extends SearchDialogAction<Person> {
 		
 		public SelectPersonContactEditor() {
-			super(SearchPersonPage.FIELD_NAMES);
+			super(PersonOrganisationPage.FIELD_NAMES);
 		}
 		
 		@Override
