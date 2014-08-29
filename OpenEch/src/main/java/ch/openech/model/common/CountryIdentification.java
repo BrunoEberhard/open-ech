@@ -3,12 +3,13 @@ package  ch.openech.model.common;
 import java.io.Serializable;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.EchFormats;
+import ch.openech.model.EchFormats;
 
 @Sizes(EchFormats.class)
 public class CountryIdentification implements Comparable<CountryIdentification>, Serializable, Cloneable {
@@ -16,7 +17,7 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 
 	public static final CountryIdentification COUNTRY_IDENTIFICATION = Keys.of(CountryIdentification.class);
 
-	@Size(4)
+	@Size(4) @Code
 	public Integer countryId;
 	public String countryIdISO2;
 	@Required
