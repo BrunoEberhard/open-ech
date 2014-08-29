@@ -10,6 +10,7 @@ import ch.openech.model.person.Person;
 import ch.openech.model.person.types.DataLock;
 import ch.openech.model.person.types.PaperLock;
 import ch.openech.model.person.types.Religion;
+import ch.openech.model.person.types.TypeOfHousehold;
 
 public class DivTest extends AbstractServerTest {
 
@@ -39,7 +40,7 @@ public class DivTest extends AbstractServerTest {
 		Assert.assertEquals(new Integer(4837), person.dwellingAddress.mailAddress.swissZipCodeId);
 		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
-		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
+		Assert.assertEquals(TypeOfHousehold.privathaushalt, person.dwellingAddress.typeOfHousehold);
 		Assert.assertEquals(LocalDate.of(2010, 8, 30), person.dwellingAddress.movingDate);
 	}
 	

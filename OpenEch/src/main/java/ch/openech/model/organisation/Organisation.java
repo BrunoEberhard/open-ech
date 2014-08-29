@@ -2,13 +2,10 @@ package  ch.openech.model.organisation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import org.minimalj.model.Codes;
 import org.minimalj.model.EmptyValidator;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
-import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Searched;
@@ -28,6 +25,15 @@ import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
 import ch.openech.model.common.TechnicalIds;
 import ch.openech.model.contact.ContactEntry;
+import ch.openech.model.organisation.OrganisationTypes.FoundationReason;
+import ch.openech.model.organisation.OrganisationTypes.LiquidationReason;
+import ch.openech.model.organisation.OrganisationTypes.OrganisationEntryStatus;
+import ch.openech.model.organisation.OrganisationTypes.OrganisationStatus;
+import ch.openech.model.organisation.OrganisationTypes.UidregLiquidationReason;
+import ch.openech.model.organisation.OrganisationTypes.UidregOrganisationType;
+import ch.openech.model.organisation.OrganisationTypes.UidregPublicStatus;
+import ch.openech.model.organisation.OrganisationTypes.UidregStatusEnterpriseDetail;
+import ch.openech.model.organisation.types.LegalForm;
 import ch.openech.model.types.Language;
 import ch.openech.xml.read.StaxEch;
 
@@ -37,10 +43,6 @@ public class Organisation implements Validation {
 
 	public static enum EditMode { DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, IN_LIQUIDATION, LIQUIDATION, CHANGE_REPORTING }
 	
-	static {
-		Codes.addCodes(ResourceBundle.getBundle("ch.openech.model.organisation.types.ech_organisation"));
-	}
-
 	public transient EditMode editMode;
 	
 	// Der eCH - Event, mit dem die aktuelle Version erstellt oder verändert wurde
@@ -58,8 +60,7 @@ public class Organisation implements Validation {
 	public String organisationName; 
 	@Size(EchFormats.organisationName)
 	public String organisationLegalName, organisationAdditionalName;
-	@Code
-	public String legalForm;
+	public LegalForm legalForm;
 	
 	// 98 : Daten
 	
@@ -70,34 +71,34 @@ public class Organisation implements Validation {
 	
 	@Required
 	public final DatePartiallyKnown foundationDate = new DatePartiallyKnown();
-	@Code
-	public String foundationReason;
+	public FoundationReason foundationReason;
 	
 	public LocalDate liquidationEntryDate;
 	public final DatePartiallyKnown liquidationDate = new DatePartiallyKnown();
-	@Code
-	public String liquidationReason;
+	public LiquidationReason liquidationReason;
 	
 	public Language languageOfCorrespondance;
 	
 	// 108 : Informationen andere Register
 	
 	// uidregInformationType
-	@Code
-	public String uidregStatusEnterpriseDetail, uidregPublicStatus, uidregOrganisationType, uidregLiquidationReason;
+	public UidregPublicStatus uidregPublicStatus;
+	public UidregLiquidationReason uidregLiquidationReason;
+	public UidregStatusEnterpriseDetail uidregStatusEnterpriseDetail;
+	public UidregOrganisationType uidregOrganisationType;
 	
 	public final UidStructure uidregSourceUid = new UidStructure(); 
 	
 	// commercialRegisterInformation
-	@Code
-	public String commercialRegisterStatus, commercialRegisterEntryStatus;
+	public OrganisationStatus commercialRegisterStatus;
+	public OrganisationEntryStatus commercialRegisterEntryStatus;
 	@Size(EchFormats.organisationName)
 	public String commercialRegisterNameTranslation;
 	public LocalDate commercialRegisterEntryDate, commercialRegisterLiquidationDate;
 	
 	// vatRegisterInformation
-	@Code
-	public String vatStatus, vatEntryStatus;
+	public OrganisationStatus vatStatus;
+	public OrganisationEntryStatus vatEntryStatus;
 	public LocalDate vatEntryDate, vatLiquidationDate;
 	
 	// if reported (gemeldet)

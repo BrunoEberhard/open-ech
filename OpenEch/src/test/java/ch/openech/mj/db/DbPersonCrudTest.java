@@ -6,6 +6,7 @@ import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.minimalj.backend.db.CodeTable;
 import org.minimalj.backend.db.DbPersistence;
 import org.minimalj.backend.db.ImmutableTable;
 import org.minimalj.backend.db.Table;
@@ -58,29 +59,22 @@ public class DbPersonCrudTest {
 	
 	@Test
 	public void testCrudCountry() throws SQLException {
-		ImmutableTable<CountryIdentification> countryTable = persistence.getImmutableTable(CountryIdentification.class);
+		CodeTable<CountryIdentification> countryTable = persistence.getCodeTable(CountryIdentification.class);
 		
 		CountryIdentification country = new CountryIdentification();
-		country.countryId = null;
+		country.countryId = 123;
 		country.countryIdISO2 = "DE";
 		country.countryNameShort = "Deutschland";
 		
-		long id = countryTable.getId(country);
+		countryTable.create(country);
 		
-		CountryIdentification readCountry = (CountryIdentification)countryTable.read(id);
+		CountryIdentification readCountry = (CountryIdentification)countryTable.read(123);
 		
 		Assert.assertEquals(country.countryId, readCountry.countryId);
 		Assert.assertEquals(country.countryIdISO2, readCountry.countryIdISO2);
 		Assert.assertEquals(country.countryNameShort, readCountry.countryNameShort);
 	
-		long id2 = countryTable.getId(country);
-		
-		Assert.assertEquals(id, id2);
-		
-		readCountry.countryIdISO2 = "GE";
-		long id3 = countryTable.getId(readCountry);
-
-		Assert.assertNotSame(id, id3);
+		countryTable.create(country);
 	}
 	
 	@Test
