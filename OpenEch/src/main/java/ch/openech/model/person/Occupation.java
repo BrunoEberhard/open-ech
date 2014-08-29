@@ -2,20 +2,20 @@ package  ch.openech.model.person;
 
 import java.util.List;
 
-import org.threeten.bp.LocalDate;
-import org.minimalj.model.Codes;
 import org.minimalj.model.EmptyValidator;
+import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
-import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.common.Address;
+import ch.openech.model.EchFormats;
+import ch.openech.model.common.Address;
+import ch.openech.model.person.types.KindOfEmployment;
 import ch.openech.xml.write.EchSchema;
 
 @Sizes(EchFormats.class)
@@ -27,8 +27,7 @@ public class Occupation implements Validation {
 	
 	@Size(100) // Wird tatsächlich in xsd nicht als Type definiert, daher nicht in EchFormats
 	public String jobTitle, employer;
-	@Code
-	public String kindOfEmployment;
+	public KindOfEmployment kindOfEmployment;
 	public LocalDate occupationValidTill;
 	
 	public Address placeOfWork;
@@ -52,7 +51,7 @@ public class Occupation implements Validation {
 		}
 
 		if (kindOfEmployment != null) {
-			StringUtils.appendLine(s, "Erwerbsart:", Codes.getCode(OCCUPATION.kindOfEmployment).getText(kindOfEmployment));
+			StringUtils.appendLine(s, "Erwerbsart:", EnumUtils.getText(kindOfEmployment));
 		}
 
 		if (!StringUtils.isBlank(employer)) {
@@ -84,7 +83,7 @@ public class Occupation implements Validation {
 		}
 
 		if (kindOfEmployment != null) {
-			StringUtils.appendLine(s, Codes.getCode(OCCUPATION.kindOfEmployment).getText(kindOfEmployment));
+			StringUtils.appendLine(s, EnumUtils.getText(kindOfEmployment));
 		}
 
 		if (!StringUtils.isBlank(employer)) {

@@ -212,8 +212,8 @@ public class StaxEch0020 {
 				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.nameOfParents.mother);
 				else if (startName.equals(_RELATIONSHIP) || startName.equals(RELATIONSHIP)) StaxEch0021.relation(xml, person);
 				else if (startName.equals(OCCUPATION)) person.occupation.add(StaxEch0021.occupation(xml));
-				else if (startName.equals(DATA_LOCK)) person.dataLock = token(xml);
-				else if (startName.equals(PAPER_LOCK)) person.paperLock = token(xml);
+				else if (startName.equals(DATA_LOCK)) enuum(xml,  person, Person.PERSON.dataLock);
+				else if (startName.equals(PAPER_LOCK)) enuum(xml,  person, Person.PERSON.paperLock);
 				else if (startName.equals(EXTENSION)) extension(xml, person);
 				// TODO householdNumber
 				else residenceChoiceOrSkip(startName, xml, person);
@@ -565,8 +565,8 @@ public class StaxEch0020 {
 				else if (startName.equals(PLACE_OF_BIRTH)) personToChange.placeOfBirth = StaxEch0011.birthplace(xml);
 				else if (startName.equals(MARITAL_DATA)) StaxEch0011.maritalData(xml, personToChange);				
 				else if (startName.equals(MAIN_RESIDENCE_ADDRESS)) personToChange.dwellingAddress = StaxEch0011.dwellingAddress(xml);				
-				else if (startName.equals(DATA_LOCK)) personToChange.dataLock = token(xml);
-				else if (startName.equals(PAPER_LOCK)) personToChange.paperLock = token(xml);
+				else if (startName.equals(DATA_LOCK)) enuum(xml, personToChange, Person.PERSON.dataLock);
+				else if (startName.equals(PAPER_LOCK)) enuum(xml, personToChange, Person.PERSON.paperLock);
 				else if (startName.equals(CHANGE_RESIDENCE_TYPE_REPORTING_RELATIONSHIP)) changeResidenceTypeReportingMunicipality(xml, personToChange);
 				else if (startName.equals(EXTENSION)) extension(xml, personToChange);
 				else residenceChoiceOrSkip(startName, xml, personToChange);
@@ -625,8 +625,8 @@ public class StaxEch0020 {
 				else if (startName.equals(OTHER_NAME)) personToChange.otherName = token(xml);
 				else if (startName.equals(CALL_NAME)) personToChange.callName = token(xml);
 				else if (startName.equals(RELIGION)) enuum(xml, personToChange, Person.PERSON.religion);
-				else if (startName.equals(DATA_LOCK)) personToChange.dataLock = token(xml);
-				else if (startName.equals(PAPER_LOCK)) personToChange.paperLock = token(xml);
+				else if (startName.equals(DATA_LOCK)) enuum(xml, personToChange, Person.PERSON.dataLock);
+				else if (startName.equals(PAPER_LOCK)) enuum(xml, personToChange, Person.PERSON.paperLock);
 
 				else if (startName.equals(DATE_OF_DEATH)) personToChange.dateOfDeath = StaxEch.date(xml);
 

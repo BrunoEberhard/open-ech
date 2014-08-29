@@ -116,7 +116,7 @@ public class StaxEch0011 {
 				else if (startName.equals(HOUSEHOLD_I_D)) dwelingAddress.householdID = token(xml);
 				else if (startName.equals(WITHOUT_E_G_I_D)) withoutEGID(xml, dwelingAddress);
 				else if (startName.equals(ADDRESS)) dwelingAddress.mailAddress = StaxEch0010.address(xml);
-				else if (startName.equals(TYPE_OF_HOUSEHOLD)) dwelingAddress.typeOfHousehold = token(xml);
+				else if (startName.equals(TYPE_OF_HOUSEHOLD)) enuum(xml, dwelingAddress, DwellingAddress.DWELLING_ADDRESS.typeOfHousehold);
 				else if (startName.equals(MOVING_DATE)) dwelingAddress.movingDate = date(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {

@@ -2,13 +2,10 @@ package  ch.openech.model.person;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import org.minimalj.model.Codes;
 import org.minimalj.model.EmptyValidator;
 import org.minimalj.model.Keys;
 import org.minimalj.model.ViewUtil;
-import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Searched;
@@ -30,6 +27,8 @@ import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.Place;
 import ch.openech.model.common.TechnicalIds;
 import ch.openech.model.contact.ContactEntry;
+import ch.openech.model.person.types.DataLock;
+import ch.openech.model.person.types.PaperLock;
 import ch.openech.model.person.types.PartnerShipAbolition;
 import ch.openech.model.person.types.Religion;
 import ch.openech.model.person.types.TypeOfRelationship;
@@ -44,10 +43,6 @@ public class Person implements Validation {
 	public static final Person PERSON = Keys.of(Person.class);
 	public static final Object[] SEARCH_BY_VN = new Object[]{PERSON.vn.value};
 	
-	static {
-		Codes.addCodes(ResourceBundle.getBundle("ch.openech.model.person.types.ech_person"));
-	}
-
 	public transient PersonEditMode editMode;
 
 	// Der eCH - Event, mit dem die aktuelle Version der Person erstellt oder
@@ -108,10 +103,8 @@ public class Person implements Validation {
 	@Enabled("isSwiss")
 	public final List<PlaceOfOrigin> placeOfOrigin = new ArrayList<PlaceOfOrigin>();
 	
-	@Code
-	public String dataLock = "0";
-	@Code
-	public String paperLock = "0";
+	public DataLock dataLock = DataLock.keine_sperre;
+	public PaperLock paperLock = PaperLock.keine_sperre;
 	
 	public PersonExtendedInformation personExtendedInformation;
 

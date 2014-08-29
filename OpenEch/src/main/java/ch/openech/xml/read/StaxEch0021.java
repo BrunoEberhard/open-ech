@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.util.List;
@@ -12,14 +12,14 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.person.NameOfParent;
-import  ch.openech.model.person.Occupation;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.Relation;
-import  ch.openech.model.person.types.TypeOfRelationship;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.person.NameOfParent;
+import ch.openech.model.person.Occupation;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.model.types.YesNo;
 
 public class StaxEch0021 {
 
@@ -32,7 +32,7 @@ public class StaxEch0021 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(JOB_TITLE)) occupation.jobTitle = token(xml);
-				else if (startName.equals(KIND_OF_EMPLOYMENT)) occupation.kindOfEmployment = token(xml);
+				else if (startName.equals(KIND_OF_EMPLOYMENT)) enuum(xml, occupation, Occupation.OCCUPATION.kindOfEmployment);
 				else if (startName.equals(EMPLOYER)) occupation.employer = token(xml);
 				else if (startName.equals(PLACE_OF_WORK)) occupation.placeOfWork = StaxEch0010.address(xml);
 				else if (startName.equals(PLACE_OF_EMPLOYER)) occupation.placeOfEmployer = StaxEch0010.address(xml);

@@ -2,16 +2,16 @@ package  ch.openech.model.common;
 
 import java.util.List;
 
-import org.threeten.bp.LocalDate;
-import org.minimalj.model.Codes;
+import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
-import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
+import org.threeten.bp.LocalDate;
 
+import ch.openech.model.person.types.TypeOfHousehold;
 import ch.openech.xml.write.EchSchema;
 
 public class DwellingAddress implements Validation {
@@ -27,8 +27,7 @@ public class DwellingAddress implements Validation {
 	@Size(12) // ist nicht bekannt aus Schema
 	public String householdID; // not for organisation
 	public Address mailAddress;
-	@Code
-	public String typeOfHousehold; // not for organisation
+	public TypeOfHousehold typeOfHousehold; // not for organisation
 	public LocalDate movingDate;
 
 	public String toHtml() {
@@ -56,7 +55,7 @@ public class DwellingAddress implements Validation {
 		}
 		s.append("<BR>");
 		if (typeOfHousehold != null) {
-			s.append(Codes.getCode("typeOfHousehold").getText(typeOfHousehold));
+			s.append(EnumUtils.getText(typeOfHousehold));
 		}
 		s.append("<BR>");
 		if (movingDate != null) {
@@ -76,7 +75,7 @@ public class DwellingAddress implements Validation {
 			mailAddress.toHtml(s);
 		}
 		s.append("Haushaltsart: ");
-		if (typeOfHousehold != null) s.append(Codes.getCode("typeOfHousehold").getText(typeOfHousehold)); else s.append("- ");
+		if (typeOfHousehold != null) s.append(EnumUtils.getText(typeOfHousehold)); else s.append("- ");
 		s.append("\n");
 		if (movingDate != null) {
 			s.append("Umzugsdatum: " ); s.append(DateUtils.format(movingDate));

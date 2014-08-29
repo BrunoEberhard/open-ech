@@ -2,12 +2,14 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.threeten.bp.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.types.Religion;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.types.DataLock;
+import ch.openech.model.person.types.PaperLock;
+import ch.openech.model.person.types.Religion;
 
 public class DivTest extends AbstractServerTest {
 
@@ -44,53 +46,52 @@ public class DivTest extends AbstractServerTest {
 	@Test
 	public void addressLock1() throws Exception {
 		Person person = reload(p);
-		person.dataLock = "1";
+		person.dataLock = DataLock.adresssperre;
 		process(writer().addressLock(person));
 		person = reload(p);
-		Assert.assertEquals("1", person.dataLock);
+		Assert.assertEquals(DataLock.adresssperre, person.dataLock);
 	}
 	
 	@Test
 	public void addressLock2() throws Exception {
 		Person person = reload(p);
-		person.dataLock = "2";
+		person.dataLock = DataLock.auskunftssperre;
 		process(writer().addressLock(person));
 		person = reload(p);
-		Assert.assertEquals("2", person.dataLock);
+		Assert.assertEquals(DataLock.auskunftssperre, person.dataLock);
 	}
 	
 	@Test
 	public void addressLock0() throws Exception {
 		Person person = reload(p);
-		person.dataLock = "0";
+		person.dataLock = DataLock.keine_sperre;
 		process(writer().addressLock(person));
 		person = reload(p);
-		Assert.assertEquals("0", person.dataLock);
+		Assert.assertEquals(DataLock.keine_sperre, person.dataLock);
 	}
 	
 	@Test
 	public void paperLock1() throws Exception {
 		Person person = reload(p);
-		person.paperLock = "1";
+		person.paperLock = PaperLock.sperre;
 		process(writer().paperLock(person));
 		person = reload(p);
-		Assert.assertEquals("1", person.paperLock);
+		Assert.assertEquals(PaperLock.sperre, person.paperLock);
 	}
 
 	@Test
 	public void paperLock0() throws Exception {
 		Person person = reload(p);
-		person.paperLock = "0";
+		person.paperLock = PaperLock.keine_sperre;
 		process(writer().paperLock(person));
 		person = reload(p);
-		Assert.assertEquals("0", person.paperLock);
+		Assert.assertEquals(PaperLock.keine_sperre, person.paperLock);
 	}
 
 	@Test
 	public void changeReligion() throws Exception {
 		Person person = reload(p);
 		Assert.assertEquals(Religion.unbekannt, person.religion);
-		person.paperLock = "0";
 		process(writer().changeReligion(person.personIdentification(), Religion.evangelisch));
 		person = reload(p);
 		Assert.assertEquals(Religion.evangelisch, person.religion);

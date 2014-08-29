@@ -22,8 +22,12 @@ import ch.openech.model.person.Occupation;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.Relation;
+import ch.openech.model.person.types.DataLock;
+import ch.openech.model.person.types.KindOfEmployment;
 import ch.openech.model.person.types.MaritalStatus;
+import ch.openech.model.person.types.PaperLock;
 import ch.openech.model.person.types.Separation;
+import ch.openech.model.person.types.TypeOfHousehold;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.types.Language;
 import ch.openech.model.types.Sex;
@@ -99,12 +103,12 @@ public class DataGenerator {
 		person.comesFrom = place();
 		person.goesTo = place();
 		
-		person.dataLock = "1";
-		person.paperLock = "1";
+		person.dataLock = DataLock.adresssperre;
+		person.paperLock = PaperLock.sperre;
 		person.languageOfCorrespondance = Language.fr;
 		
 		Occupation occupation = new Occupation();
-		occupation.kindOfEmployment = "1";
+		occupation.kindOfEmployment = KindOfEmployment.selbstaendiger;
 		person.occupation.add(occupation);
 		
 		Relation relation = new Relation();
@@ -166,7 +170,7 @@ public class DataGenerator {
 		DwellingAddress dwellingAddress = new DwellingAddress();
 		dwellingAddress.EGID = "" + (int)(Math.random() * 999999998 + 1);
 		dwellingAddress.EWID = "" + (int)(Math.random() * 998 + 1);
-		dwellingAddress.typeOfHousehold =  "" + (int)(Math.random() * 4);
+		dwellingAddress.typeOfHousehold =  TypeOfHousehold.values()[(int)(Math.random() * TypeOfHousehold.values().length)];
 		dwellingAddress.mailAddress = address(true, false, false);
 		return dwellingAddress;
 	}
