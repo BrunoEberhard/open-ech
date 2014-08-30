@@ -21,10 +21,7 @@ public class StaxEch0072 {
 
 	private static StaxEch0072 instance;
 	private final List<CountryIdentification> countryIdentifications = new ArrayList<CountryIdentification>(300);
-	private final List<String> countryNames = new ArrayList<String>(300);
-
 	private final List<CountryIdentification> countriesUnmodifiable;
-	private final List<String> countryNamesUnmodifiable;
 	
 	private StaxEch0072() {
 		InputStream inputStream = this.getClass().getResourceAsStream("eCH0072.xml");
@@ -35,7 +32,6 @@ public class StaxEch0072 {
 		}
 		
 		countriesUnmodifiable = Collections.unmodifiableList(countryIdentifications);
-		countryNamesUnmodifiable = Collections.unmodifiableList(countryNames);
 	}
 	
 	public static synchronized StaxEch0072 getInstance() {
@@ -49,10 +45,6 @@ public class StaxEch0072 {
 		return countriesUnmodifiable;
 	}
 
-	public List<String> getCountryNames() {
-		return countryNamesUnmodifiable;
-	}
-	
 	private void country(XMLEventReader xml) throws XMLStreamException, SQLException {
 		CountryIdentification countryIdentification = new CountryIdentification();
 		
@@ -67,7 +59,6 @@ public class StaxEch0072 {
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				countryIdentifications.add(countryIdentification);
-				countryNames.add(countryIdentification.countryNameShort);
 				break;
 			}  // else skip
 		}
