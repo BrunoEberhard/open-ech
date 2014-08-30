@@ -17,7 +17,7 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 
 	public static final CountryIdentification COUNTRY_IDENTIFICATION = Keys.of(CountryIdentification.class);
 
-	@Size(4) @Code
+	@Size(4) @Code @Required
 	public Integer countryId;
 	public String countryIdISO2;
 	@Required
