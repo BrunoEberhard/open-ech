@@ -15,9 +15,11 @@ import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.model.EchSchemaValidation;
+import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
+import ch.openech.xml.read.StaxEch0072;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -31,8 +33,16 @@ public abstract class AbstractServerTest {
 		if (!started) {
 			started = true;
 			MjApplication.setApplication(new OpenEchApplication());
+			
+			initCodes();
 		}
 		clear();
+	}
+
+	protected static void initCodes() {
+		for (CountryIdentification country : StaxEch0072.getInstance().getCountryIdentifications()) {
+			Backend.getInstance().insert(country);
+		}
 	}
 	
 	public static void clear() {
