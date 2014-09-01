@@ -39,8 +39,7 @@ public class BirthTest extends AbstractServerTest {
 		Assert.assertEquals(new Integer(6621), child.placeOfBirth.municipalityIdentification.municipalityId);
 
 		Assert.assertEquals(NationalityStatus.with, child.nationality.nationalityStatus);
-		Assert.assertEquals(new Integer(8100), child.nationality.nationalityCountry.countryId);
-		Assert.assertEquals("Schweiz", child.nationality.nationalityCountry.countryNameShort);
+		Assert.assertTrue(child.nationality.isSwiss());
 
 		Relation motherRelation = child.getMother();
 		Assert.assertEquals(mother.id, motherRelation.partner.id);

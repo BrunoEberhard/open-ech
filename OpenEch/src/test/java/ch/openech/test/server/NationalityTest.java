@@ -4,10 +4,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import  ch.openech.model.code.NationalityStatus;
-import  ch.openech.model.common.Swiss;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PlaceOfOrigin;
 
 public class NationalityTest extends AbstractServerTest {
 
@@ -21,8 +20,7 @@ public class NationalityTest extends AbstractServerTest {
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
-		Assert.assertEquals(Swiss.SWISS_COUNTRY_ID, person.nationality.nationalityCountry.countryId);	
-		Assert.assertEquals(Swiss.SWISS_COUNTRY_NAME_SHORT, person.nationality.nationalityCountry.countryNameShort);	
+		Assert.assertTrue(person.nationality.isSwiss());	
 
 		Assert.assertEquals(1, person.placeOfOrigin.size());
 		PlaceOfOrigin placeOfOrigin = person.placeOfOrigin.get(0);
