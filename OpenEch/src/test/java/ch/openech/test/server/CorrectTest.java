@@ -1,21 +1,26 @@
 package ch.openech.test.server;
 
+import java.util.List;
+
 import junit.framework.Assert;
 
-import org.threeten.bp.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.minimalj.backend.Backend;
+import org.minimalj.transaction.criteria.Criteria.AllCriteria;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.code.NationalityStatus;
-import  ch.openech.model.code.ResidencePermit;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Swiss;
-import  ch.openech.model.person.Foreign;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.types.Religion;
-import  ch.openech.model.types.Language;
+import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.code.ResidencePermit;
+import ch.openech.model.common.Address;
+import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Swiss;
+import ch.openech.model.person.Foreign;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.types.Religion;
+import ch.openech.model.types.Language;
 
 /*
  * Diese Sammlung von Tests betrifft die bei Schema - Version 2.2. neu
@@ -220,17 +225,18 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctPlaceOfBirth_Foreign() throws Exception {
 		Person person = reload(p);
-		person.placeOfBirth.countryIdentification.countryId = 4242;
-		person.placeOfBirth.countryIdentification.countryIdISO2 = "CZ";
-		person.placeOfBirth.countryIdentification.countryNameShort = "CZ Name";
+		
+		List<CountryIdentification> countries = Backend.getInstance().read(CountryIdentification.class, new AllCriteria(), 1000);
+		CountryIdentification c10 = countries.get(10);
+		person.placeOfBirth.countryIdentification = c10;
 		person.placeOfBirth.foreignTown = "Testtown";
 		
 		process(writer().correctPlaceOfBirth(person));
 		
 		person = reload(p);
-		Assert.assertEquals(Integer.valueOf(4242), person.placeOfBirth.countryIdentification.countryId);
-		Assert.assertEquals("CZ", person.placeOfBirth.countryIdentification.countryIdISO2);
-		Assert.assertEquals("CZ Name", person.placeOfBirth.countryIdentification.countryNameShort);
+		Assert.assertEquals(c10.countryId, person.placeOfBirth.countryIdentification.countryId);
+		Assert.assertEquals(c10.countryIdISO2, person.placeOfBirth.countryIdentification.countryIdISO2);
+		Assert.assertEquals(c10.countryNameShort, person.placeOfBirth.countryIdentification.countryNameShort);
 		Assert.assertEquals("Testtown", person.placeOfBirth.foreignTown);
 	}
 	
