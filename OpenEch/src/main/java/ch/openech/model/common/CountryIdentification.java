@@ -7,7 +7,6 @@ import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
-import org.minimalj.util.StringUtils;
 
 import ch.openech.model.EchFormats;
 
@@ -32,7 +31,7 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 	}
 
 	public boolean isEmpty() {
-		return StringUtils.isBlank(countryNameShort);
+		return countryId == null || countryId == 0;
 	}
 
 	public void clear() {
