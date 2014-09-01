@@ -66,15 +66,16 @@ public class DbPersonCrudTest {
 		country.countryIdISO2 = "DE";
 		country.countryNameShort = "Deutschland";
 		
-		countryTable.create(country);
+		countryTable.insert(country);
 		
-		CountryIdentification readCountry = (CountryIdentification)countryTable.read(123);
+		CountryIdentification readCountry = (CountryIdentification)countryTable.readByCode(123);
 		
+		Assert.assertNotNull(readCountry);
 		Assert.assertEquals(country.countryId, readCountry.countryId);
 		Assert.assertEquals(country.countryIdISO2, readCountry.countryIdISO2);
 		Assert.assertEquals(country.countryNameShort, readCountry.countryNameShort);
 	
-		countryTable.create(country);
+		countryTable.update(country);
 	}
 	
 	@Test
