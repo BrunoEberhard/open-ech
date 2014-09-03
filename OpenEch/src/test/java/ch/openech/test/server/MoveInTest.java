@@ -13,6 +13,7 @@ import ch.openech.model.code.FederalRegister;
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.types.TypeOfHousehold;
 import ch.openech.model.types.Sex;
 import ch.openech.model.types.TypeOfResidence;
 
@@ -45,13 +46,13 @@ public class MoveInTest extends AbstractServerTest {
 		
 		Assert.assertEquals(FederalRegister.Ordipro, person.residence.reportingMunicipality.getFederalRegister());
 		Assert.assertEquals(LocalDate.of(2009, 4, 23), person.arrivalDate);
-		Assert.assertEquals("unknown", person.comesFrom.countryIdentification.countryNameShort);
+		Assert.assertTrue(person.comesFrom.isUnknown());
 		Assert.assertEquals("Muristrasse 53", person.dwellingAddress.mailAddress.street);
 		Assert.assertEquals("Bern", person.dwellingAddress.mailAddress.town);
 		Assert.assertEquals("3006", person.dwellingAddress.mailAddress.zip);
 		Assert.assertEquals("CH", person.dwellingAddress.mailAddress.country);
 
-		Assert.assertEquals("1", person.dwellingAddress.typeOfHousehold);
+		Assert.assertEquals(TypeOfHousehold.privathaushalt, person.dwellingAddress.typeOfHousehold);
 	}
 
 	@Test
