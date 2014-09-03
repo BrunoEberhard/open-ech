@@ -198,7 +198,7 @@ public class StaxEch0011 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(NATIONALITY_STATUS)) enuum(xml, nationality, Nationality.NATIONALITY.nationalityStatus);
-				else if (startName.equals(COUNTRY)) StaxEch0008.country(xml).copyTo(nationality.nationalityCountry);
+				else if (startName.equals(COUNTRY)) nationality.nationalityCountry = StaxEch0008.country(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) return;
 			// else skip

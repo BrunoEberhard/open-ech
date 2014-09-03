@@ -2,7 +2,7 @@ package  ch.openech.model.common;
 
 import org.minimalj.model.annotation.Size;
 
-import  ch.openech.model.EchFormats;
+import ch.openech.model.EchFormats;
 
 // Verwendung als Birthplace und als Destination
 public class Place {
@@ -24,7 +24,7 @@ public class Place {
 	}
 
 	public boolean isUnknown() {
-		return !(isSwiss() && municipalityIdentification != null || isForeign());
+		return !(isSwiss() && municipalityIdentification != null && !municipalityIdentification.isEmpty()|| isForeign());
 	}
 
 }

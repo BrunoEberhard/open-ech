@@ -7,6 +7,7 @@ import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
+import org.minimalj.util.StringUtils;
 
 import ch.openech.model.EchFormats;
 
@@ -59,8 +60,8 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 
 	@Override
 	public int compareTo(CountryIdentification c) {
-		// Used in ComboBox
-		return countryNameShort.compareTo(c.countryNameShort);
+		// Used in ComboBox to sort
+		return StringUtils.compare(toString(), c.toString());
 	}
 
 	// Generated with eclipse

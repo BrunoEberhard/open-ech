@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.model.PropertyInterface;
+import org.minimalj.util.Codes;
 
-import  ch.openech.model.common.CountryIdentification;
-import  ch.openech.model.person.Nationality;
-import ch.openech.xml.read.StaxEch0072;
+import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.person.Nationality;
 
 public class NationalityField extends AbstractEditField<Nationality> {
 	private final ComboBox<Nationality> comboBox;
@@ -23,7 +23,7 @@ public class NationalityField extends AbstractEditField<Nationality> {
 		
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 
-		List<CountryIdentification> countries = StaxEch0072.getInstance().getCountryIdentifications();
+		List<CountryIdentification> countries = Codes.get(CountryIdentification.class);
 		
 		List<Nationality> items = new ArrayList<Nationality>(countries.size() + 2);
 		items.add(itemUnknownNationality);
@@ -31,7 +31,7 @@ public class NationalityField extends AbstractEditField<Nationality> {
 
 		for (CountryIdentification country : countries) {
 			Nationality nationality = new Nationality();
-			country.copyTo(nationality.nationalityCountry);
+			nationality.nationalityCountry = country;
 			items.add(nationality);
 		}
 		comboBox.setObjects(items);

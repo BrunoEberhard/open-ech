@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria.AllCriteria;
+import org.minimalj.util.Codes;
 import org.threeten.bp.LocalDate;
 
 import ch.openech.model.code.NationalityStatus;
@@ -82,17 +83,17 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctNationality2() throws Exception {
 		Person person = reload(p);
 		person.nationality.nationalityStatus = NationalityStatus.with;
-		person.nationality.nationalityCountry.countryIdISO2 = "CX";
-		person.nationality.nationalityCountry.countryNameShort = "CX Name";
-		person.nationality.nationalityCountry.countryId = 4242;
+		
+		CountryIdentification country = Codes.findCode(CountryIdentification.class, 8244);
+		person.nationality.nationalityCountry = country;
 		
 		process(writer().correctNationality(person));
 		
 		person = reload(p);
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
-		Assert.assertEquals("CX", person.nationality.nationalityCountry.countryIdISO2);
-		Assert.assertEquals("CX Name", person.nationality.nationalityCountry.countryNameShort);
-		Assert.assertEquals(Integer.valueOf(4242), person.nationality.nationalityCountry.countryId);
+		Assert.assertEquals(country.countryIdISO2, person.nationality.nationalityCountry.countryIdISO2);
+		Assert.assertEquals("Tschechische Republik", person.nationality.nationalityCountry.countryNameShort);
+		Assert.assertEquals(Integer.valueOf(8244), person.nationality.nationalityCountry.countryId);
 	}
 	
 	@Test

@@ -199,7 +199,7 @@ public class Person implements Validation {
 
 	public boolean isSwiss() {
 		if (nationality.nationalityStatus != NationalityStatus.with) return false;
-		return nationality.nationalityCountry.isSwiss();
+		return nationality.isSwiss();
 	}
 	
 	public boolean isMaritalStatusCanceled() {	

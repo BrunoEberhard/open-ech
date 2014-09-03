@@ -9,6 +9,7 @@ import org.minimalj.autofill.NameGenerator;
 import org.minimalj.autofill.OrganisationNameGenerator;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.util.Codes;
 import org.threeten.bp.LocalDate;
 
 import ch.openech.model.code.NationalityStatus;
@@ -35,12 +36,10 @@ import ch.openech.model.types.TypeOfResidence;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 import ch.openech.xml.read.StaxEch0071;
-import ch.openech.xml.read.StaxEch0072;
 
 public class DataGenerator {
 
 	private static List<MunicipalityIdentification> municipalityIdentifications = StaxEch0071.getInstance().getMunicipalityIdentifications();
-	private static List<CountryIdentification> countryIdentifications = StaxEch0072.getInstance().getCountryIdentifications();
 	
 	public static Person person() {
 		Person person = new Person();
@@ -160,10 +159,8 @@ public class DataGenerator {
 	}
 	
 	public static CountryIdentification countryIdentification() {
-		CountryIdentification countryIdentification = new CountryIdentification();
-		CountryIdentification m = countryIdentifications.get((int)(Math.random() * countryIdentifications.size()));
-		m.copyTo(countryIdentification);
-		return countryIdentification;
+		List<CountryIdentification> countries = Codes.get(CountryIdentification.class);
+		return countries.get((int)(Math.random() * countries.size()));
 	}
 	
 	public static DwellingAddress dwellingAddress() {

@@ -6,8 +6,8 @@ import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.PropertyInterface;
 
-import  ch.openech.model.code.NationalityStatus;
-import  ch.openech.model.person.Nationality;
+import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.person.Nationality;
 
 public class NationalityReadOnlyField implements FormField<Nationality> {
 	private final PropertyInterface property;
@@ -39,7 +39,7 @@ public class NationalityReadOnlyField implements FormField<Nationality> {
 	
 	protected void display(Nationality nationality) {
 		switch (nationality.nationalityStatus) {
-		case with: textField.setText(nationality.nationalityCountry.countryNameShort); break;
+		case with: textField.setText(nationality.nationalityCountry != null ? nationality.nationalityCountry.countryNameShort : ""); break;
 		case without: textField.setText("Staatenlos"); break;
 		case unknown: textField.setText("Staatsangehörigkeit unbekannt"); break;
 		default: textField.setText(""); break;

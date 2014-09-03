@@ -17,12 +17,14 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
+import org.minimalj.util.Codes;
 import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;
 import org.threeten.bp.LocalDateTime;
 
 import ch.openech.model.Event;
 import ch.openech.model.XmlConstants;
+import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Person;
@@ -52,7 +54,7 @@ public class StaxEch0020 {
 	
 	public void insertPerson(Person person) {
 		person.event = e;
-		updatePersonIdentifications(person);
+		updateIdentifications(person);
 		insertId = backend.insert(person);
 	}
 
@@ -69,19 +71,19 @@ public class StaxEch0020 {
 			System.out.println("Person hat id noch immer gesetzt. Das sollte nicht sein");
 			person.technicalIds.localId.clear();
 		}
-		updatePersonIdentifications(person);
+		updateIdentifications(person);
 		backend.update(person);
 	}
 
 	//
 	
-	private void updatePersonIdentifications(Object object) {
+	private void updateIdentifications(Object object) {
 		if (object == null) return;
 		
 		if (object instanceof List<?>) {
 			List<?> list = (List<?>) object;
 			for (Object o : list) {
-				updatePersonIdentifications(o);
+				updateIdentifications(o);
 			}
 		} else {
 			try {
@@ -95,8 +97,22 @@ public class StaxEch0020 {
 								personIdentification = getPerson(personIdentification).personIdentification();
 								field.set(object, personIdentification);
 							}
+						} else if (value instanceof CountryIdentification) {
+							CountryIdentification countryIdentification = (CountryIdentification) value;
+							if (countryIdentification.countryId != null) {
+								countryIdentification = Codes.findCode(CountryIdentification.class, countryIdentification.countryId);
+								field.set(object, countryIdentification);
+							} else if (countryIdentification.countryIdISO2 != null) {
+								List<CountryIdentification> countryIdentifications = Codes.get(CountryIdentification.class);
+								for (CountryIdentification c : countryIdentifications) {
+									if (StringUtils.equals(countryIdentification.countryIdISO2, c.countryIdISO2)) {
+										field.set(object, c);
+										break;
+									}
+								}
+							}
 						} else {
-							updatePersonIdentifications(value);
+							updateIdentifications(value);
 						}
 					}
 				}

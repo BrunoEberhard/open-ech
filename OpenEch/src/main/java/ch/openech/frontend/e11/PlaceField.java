@@ -1,5 +1,6 @@
 package ch.openech.frontend.e11;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.minimalj.autofill.NameGenerator;
@@ -10,17 +11,18 @@ import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.SwitchComponent;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.PropertyInterface;
+import org.minimalj.util.Codes;
 import org.minimalj.util.DemoEnabled;
 
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
 import ch.openech.xml.read.StaxEch0071;
-import ch.openech.xml.read.StaxEch0072;
 
 public class PlaceField extends AbstractEditField<Place> implements DemoEnabled {
 	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
 
+	private final List<CountryIdentification> countries;
 	private final ComboBox<CountryIdentification> comboBoxCountry;
 
 	private final SwitchComponent switchComponentMunicipality;
@@ -29,11 +31,13 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 	
 	private final IComponent horizontalLayout;
 
+
 	public PlaceField(PropertyInterface property) {
 		super(property, true);
-
+		countries = Codes.get(CountryIdentification.class);
+		
 		comboBoxCountry = ClientToolkit.getToolkit().createComboBox(listener());
-		comboBoxCountry.setObjects(StaxEch0072.getInstance().getCountryIdentifications());
+		comboBoxCountry.setObjects(countries);
 
 		comboBoxMunicipality = ClientToolkit.getToolkit().createComboBox(listener());
 		comboBoxMunicipality.setObjects(StaxEch0071.getInstance().getMunicipalityIdentifications());
@@ -111,8 +115,8 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 			int index = (int)(Math.random() * (double)StaxEch0071.getInstance().getMunicipalityIdentifications().size());
 			place.municipalityIdentification = StaxEch0071.getInstance().getMunicipalityIdentifications().get(index);
 		} else {
-			int index = (int)(Math.random() * (double)StaxEch0072.getInstance().getCountryIdentifications().size());
-			place.countryIdentification = StaxEch0072.getInstance().getCountryIdentifications().get(index);
+			int index = (int)(Math.random() * (double)countries.size());
+			place.countryIdentification = countries.get(index);
 			place.foreignTown = NameGenerator.officialName() + "Town";
 		}
 		setObject(place);

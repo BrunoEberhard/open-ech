@@ -2,16 +2,15 @@ package  ch.openech.model.person;
 
 import org.minimalj.model.Keys;
 
-import  ch.openech.model.code.NationalityStatus;
-import  ch.openech.model.common.CountryIdentification;
-import  ch.openech.model.common.Swiss;
+import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.common.CountryIdentification;
 
 public class Nationality  {
 
 	public static final Nationality NATIONALITY = Keys.of(Nationality.class);
 	
 	public NationalityStatus nationalityStatus = NationalityStatus.with;
-	public final CountryIdentification nationalityCountry = Swiss.createCountryIdentification();
+	public CountryIdentification nationalityCountry;
 	
 	public Nationality() {
 		// do nothing
@@ -30,12 +29,12 @@ public class Nationality  {
 	}
 
 	public boolean isSwiss() {
-		return nationalityStatus == NationalityStatus.with && nationalityCountry.isSwiss();
+		return nationalityStatus == NationalityStatus.with && nationalityCountry != null && nationalityCountry.isSwiss();
 	}
 
 	public void copyTo(Nationality copy) {
 		copy.nationalityStatus = nationalityStatus;
-		nationalityCountry.copyTo(copy.nationalityCountry);
+		copy.nationalityCountry = nationalityCountry;
 	}
 
 	@Override
@@ -80,7 +79,7 @@ public class Nationality  {
 
 	public void clear() {
 		nationalityStatus = NationalityStatus.unknown;
-		nationalityCountry.clear();
+		nationalityCountry = null;
 	}
 	
 }
