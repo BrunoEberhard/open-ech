@@ -12,8 +12,8 @@ import org.minimalj.model.PropertyInterface;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.frontend.e07.MunicipalityField;
 import ch.openech.frontend.ewk.event.EchForm;
-import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.person.Residence;
+import ch.openech.model.person.SecondaryResidence;
 import ch.openech.model.types.TypeOfResidence;
 
 public class ResidenceField extends ObjectFlowField<Residence> {
@@ -68,7 +68,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 
 		@Override
 		public Object save(Residence residence) {
-			ResidenceField.this.getObject().secondary.add(residence.reportingMunicipality);
+			ResidenceField.this.getObject().secondary.add(new SecondaryResidence(residence.reportingMunicipality));
 			fireObjectChange();
 			return SAVE_SUCCESSFUL;
 		}
@@ -95,8 +95,8 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 
 		if (residence.secondary != null && !residence.secondary.isEmpty()) {
 			s.append(", Nebenwohnsitz: ");
-			for (MunicipalityIdentification m : residence.secondary) {
-				s.append(m);
+			for (SecondaryResidence secondaryResidence : residence.secondary) {
+				s.append(secondaryResidence.municipalityIdentification);
 				s.append(", ");
 			}
 			s.delete(s.length() - 2, s.length()); // cut last ", "
@@ -151,12 +151,12 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 			residence.reportingMunicipality = null;
 		}
 		
-		List<MunicipalityIdentification> secondaryResidences = new ArrayList<MunicipalityIdentification>();
+		List<SecondaryResidence> secondaryResidences = new ArrayList<>();
 		if (secondResidenceNeeded) {
-			secondaryResidences.add(DataGenerator.place().municipalityIdentification);
+			secondaryResidences.add(new SecondaryResidence(DataGenerator.place().municipalityIdentification));
 		}
 		while (!notMoreThanOneSecondResidence && Math.random() < 0.3) {
-			secondaryResidences.add(DataGenerator.place().municipalityIdentification);
+			secondaryResidences.add(new SecondaryResidence(DataGenerator.place().municipalityIdentification));
 		}
 		residence.setSecondary(secondaryResidences);
 	}

@@ -39,6 +39,7 @@ import ch.openech.frontend.ewk.event.KeyDeliveryPersonAction;
 import ch.openech.frontend.ewk.event.birth.BirthEvent;
 import ch.openech.frontend.org.ExportAllOrganisationAction;
 import ch.openech.frontend.org.ImportAllOrganisationAction;
+import ch.openech.frontend.org.ImportSwissDataAction;
 import ch.openech.frontend.org.KeyDeliveryOrganisationAction;
 import ch.openech.frontend.page.OrganisationSearchPage;
 import ch.openech.frontend.page.PersonOrganisationPage;
@@ -127,6 +128,7 @@ public class OpenEchApplication extends MjApplication {
 		if (orgSchema != null) {
 			menu.add(new ImportAllOrganisationAction());
 		}
+		menu.add(new ImportSwissDataAction());
 		
 		boolean isDevMode = DevMode.isActive();
 		if (isDevMode && (ewkSchema != null || orgSchema != null)) {

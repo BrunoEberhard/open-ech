@@ -44,7 +44,7 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
     @Override
     public Object save(Person person) {
 		String xml = getXml(person).get(0);
-		Long insertId = Backend.getInstance().execute(new PersonTransaction(xml));
+		Object insertId = Backend.getInstance().execute(new PersonTransaction(xml));
 		return PageLink.link(PersonPage.class, echSchema.getVersion(), insertId.toString());
 	}
 	

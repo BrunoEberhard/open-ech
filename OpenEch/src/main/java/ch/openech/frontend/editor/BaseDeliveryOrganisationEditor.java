@@ -37,7 +37,7 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> impl
 	@Override
 	public Object save(Organisation organisation) {
 		String xml = getXml(organisation).get(0);
-		Long insertId = Backend.getInstance().execute(new OrganisationTransaction(xml));
+		Object insertId = Backend.getInstance().execute(new OrganisationTransaction(xml));
 		return insertId;
 	}
 	

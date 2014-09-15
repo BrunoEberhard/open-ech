@@ -246,7 +246,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	@Override
-	protected Long save(MoveInEditorData object) {
+	protected Object save(MoveInEditorData object) {
 		// Personen, die mit man previous verlassen hat werden nicht mitgespeichert,
 		// da sie eventuell ungültig sein könnten
 		for (int i = object.persons.size() - 1; i > getPersonIndex(); i--) {
@@ -262,7 +262,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 				e.printStackTrace();
 			}
 		}
-		Long insertId = PersonEventEditor.send(xmlList);
+		Object insertId = PersonEventEditor.send(xmlList);
 		return insertId;
 	}
 

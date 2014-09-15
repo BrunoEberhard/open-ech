@@ -1,31 +1,7 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.ARRIVAL_DATE;
-import static  ch.openech.model.XmlConstants.COMES_FROM;
-import static  ch.openech.model.XmlConstants.DATE_OF_DEATH;
-import static  ch.openech.model.XmlConstants.DEATH;
-import static  ch.openech.model.XmlConstants.DEATH_PERSON;
-import static  ch.openech.model.XmlConstants.DELIVERY;
-import static  ch.openech.model.XmlConstants.DELIVERY_HEADER;
-import static  ch.openech.model.XmlConstants.DEPARTURE_DATE;
-import static  ch.openech.model.XmlConstants.DESTINATION_ADDRESS;
-import static  ch.openech.model.XmlConstants.DESTINATION_MUNICIPALITY;
-import static  ch.openech.model.XmlConstants.DWELLING_ADDRESS;
-import static  ch.openech.model.XmlConstants.GOES_TO;
-import static  ch.openech.model.XmlConstants.HAS_MAIN_RESIDENCE;
-import static  ch.openech.model.XmlConstants.MOVE_IN;
-import static  ch.openech.model.XmlConstants.MOVE_IN_PERSON;
-import static  ch.openech.model.XmlConstants.MOVE_OUT;
-import static  ch.openech.model.XmlConstants.MOVE_OUT_PERSON;
-import static  ch.openech.model.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
-import static  ch.openech.model.XmlConstants.NAME_OF_FATHER;
-import static  ch.openech.model.XmlConstants.NAME_OF_MOTHER;
-import static  ch.openech.model.XmlConstants.OCCUPATION;
-import static  ch.openech.model.XmlConstants.RELATIONSHIP;
-import static  ch.openech.model.XmlConstants.REPORTING_MUNICIPALITY;
-import static  ch.openech.model.XmlConstants.SECONDARY_RESIDENCE;
-import static ch.openech.xml.read.StaxEch.date;
-import static ch.openech.xml.read.StaxEch.skip;
+import static ch.openech.model.XmlConstants.*;
+import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
@@ -36,9 +12,10 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.person.Person;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.Place;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.SecondaryResidence;
 
 public class StaxEch0093 {
 
@@ -121,7 +98,7 @@ public class StaxEch0093 {
 				else if (startName.equals(ARRIVAL_DATE)) personToChange.arrivalDate = StaxEch.date(xml);
 				else if (startName.equals(COMES_FROM)) {
 					personToChange.comesFrom = new Place();
-					StaxEch0007.municipality(xml, personToChange.comesFrom.municipalityIdentification);
+					personToChange.comesFrom.municipalityIdentification = StaxEch0007.municipality(xml);
 				}
 				else if (startName.equals(DWELLING_ADDRESS)) personToChange.dwellingAddress = StaxEch0011.dwellingAddress(xml);
 			} else if (event.isEndElement()) {
@@ -145,7 +122,7 @@ public class StaxEch0093 {
 				else if (startName.equals(NAME_OF_MOTHER)) StaxEch0021.nameOfParentAtBirth(xml, person.nameOfParents.mother);
 				else if (startName.equals(RELATIONSHIP) || startName.equals(RELATIONSHIP)) StaxEch0021.relation(xml, person);
 				else if (startName.equals(MOVE_OUT_REPORTING_DESTINATION)) moveOutReportingDestination(xml, person);
-				else if (startName.equals(SECONDARY_RESIDENCE)) person.residence.secondary.add(StaxEch0007.municipality(xml));
+				else if (startName.equals(SECONDARY_RESIDENCE)) person.residence.secondary.add(new SecondaryResidence(StaxEch0007.municipality(xml)));
 				else if (startName.equals(OCCUPATION)) person.occupation.add(StaxEch0021.occupation(xml));
 				else skip(xml);
 			} else if (event.isEndElement()) {

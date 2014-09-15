@@ -50,7 +50,7 @@ public class MoveInEditor extends XmlEditor<Organisation> implements XmlResult<O
 	@Override
 	public String save(Organisation organisation) {
 		String xml = getXml(organisation).get(0);
-		Long insertId = Backend.getInstance().execute(new OrganisationTransaction(xml));
+		Object insertId = Backend.getInstance().execute(new OrganisationTransaction(xml));
 		return PageLink.link(OrganisationPage.class, echSchema.getVersion(), insertId.toString());
 	}
 	

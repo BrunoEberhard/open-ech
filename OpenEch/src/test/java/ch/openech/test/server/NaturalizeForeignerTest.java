@@ -3,8 +3,10 @@ package ch.openech.test.server;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.minimalj.util.Codes;
 
 import ch.openech.model.code.NationalityStatus;
+import ch.openech.model.common.Canton;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
 
@@ -27,7 +29,7 @@ public class NaturalizeForeignerTest extends AbstractServerTest {
 		
 		Assert.assertEquals(1, person.placeOfOrigin.size());
 		Assert.assertEquals("Frauenfeld", placeOfOrigin.originName);
-		Assert.assertEquals("TG", placeOfOrigin.cantonAbbreviation.canton);
+		Assert.assertEquals(Codes.findCode(Canton.class, "TG"), placeOfOrigin.canton);
 	}
 	
 }

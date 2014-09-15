@@ -17,14 +17,12 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
-import org.minimalj.util.Codes;
 import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;
 import org.threeten.bp.LocalDateTime;
 
 import ch.openech.model.Event;
 import ch.openech.model.XmlConstants;
-import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Person;
@@ -44,7 +42,7 @@ public class StaxEch0020 {
 	// Person enthält, andererseits aber schon einen Teil (!) der neuen Werte.
 	private Person personToChange = null;
 	private Event e;
-	private long insertId = -1;
+	private Object insertId = null;
 	
 	public StaxEch0020(Backend backend) {
 		this.backend = backend;
@@ -58,7 +56,7 @@ public class StaxEch0020 {
 		insertId = backend.insert(person);
 	}
 
-	public long getInsertId() {
+	public Object getInsertId() {
 		return insertId;
 	}
 	
@@ -93,23 +91,9 @@ public class StaxEch0020 {
 						Object value = field.get(object);
 						if (value instanceof PersonIdentification) {
 							PersonIdentification personIdentification = (PersonIdentification) value;
-							if (personIdentification.id == 0) {
+							if (personIdentification.id == null) {
 								personIdentification = getPerson(personIdentification).personIdentification();
 								field.set(object, personIdentification);
-							}
-						} else if (value instanceof CountryIdentification) {
-							CountryIdentification countryIdentification = (CountryIdentification) value;
-							if (countryIdentification.countryId != null) {
-								countryIdentification = Codes.findCode(CountryIdentification.class, countryIdentification.countryId);
-								field.set(object, countryIdentification);
-							} else if (countryIdentification.countryIdISO2 != null) {
-								List<CountryIdentification> countryIdentifications = Codes.get(CountryIdentification.class);
-								for (CountryIdentification c : countryIdentifications) {
-									if (StringUtils.equals(countryIdentification.countryIdISO2, c.countryIdISO2)) {
-										field.set(object, c);
-										break;
-									}
-								}
 							}
 						} else {
 							updateIdentifications(value);
@@ -411,7 +395,7 @@ public class StaxEch0020 {
 	
 	private MunicipalityIdentification federalRegister(XMLEventReader xml) throws XMLStreamException {
 		MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
-		municipalityIdentification.historyMunicipalityId = -StaxEch.integer(xml);
+		municipalityIdentification.id = -StaxEch.integer(xml);
 		return municipalityIdentification;
 	}
 	

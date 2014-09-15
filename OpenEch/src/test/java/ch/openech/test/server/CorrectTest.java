@@ -14,8 +14,10 @@ import org.threeten.bp.LocalDate;
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.code.ResidencePermit;
 import ch.openech.model.common.Address;
+import ch.openech.model.common.Canton;
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
 import ch.openech.model.common.Swiss;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Person;
@@ -93,7 +95,7 @@ public class CorrectTest extends AbstractServerTest {
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
 		Assert.assertEquals(country.countryIdISO2, person.nationality.nationalityCountry.countryIdISO2);
 		Assert.assertEquals("Tschechische Republik", person.nationality.nationalityCountry.countryNameShort);
-		Assert.assertEquals(Integer.valueOf(8244), person.nationality.nationalityCountry.countryId);
+		Assert.assertEquals(Integer.valueOf(8244), person.nationality.nationalityCountry.id);
 	}
 	
 	@Test
@@ -145,13 +147,13 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctOrigin() throws Exception {
 		Person person = reload(p);
 		PlaceOfOrigin origin1 = new PlaceOfOrigin();
-		origin1.cantonAbbreviation.canton = "TG";
+		origin1.canton = Codes.findCode(Canton.class, "TG");
 		origin1.originName = "Heimat 1";
 		origin1.naturalizationDate = LocalDate.of(1974, 2, 28);
 		origin1.expatriationDate = LocalDate.of(2007, 10, 11);
 		
 		PlaceOfOrigin origin2 = new PlaceOfOrigin();
-		origin2.cantonAbbreviation.canton = "TI";
+		origin2.canton = Codes.findCode(Canton.class, "TI");
 		origin2.originName = "Heimat 2";
 		origin2.naturalizationDate = LocalDate.of(2007, 10, 11);
 
@@ -207,20 +209,18 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctPlaceOfBirth_Swiss() throws Exception {
 		Person person = reload(p);
-		person.placeOfBirth.municipalityIdentification = new MunicipalityIdentification();
-		person.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton = "SG";
-		person.placeOfBirth.municipalityIdentification.historyMunicipalityId = 20;
-		person.placeOfBirth.municipalityIdentification.municipalityId = 2;
-		person.placeOfBirth.municipalityIdentification.municipalityName = "Testwil";
+		person.placeOfBirth = new Place();
+		MunicipalityIdentification jona = Codes.findCode(MunicipalityIdentification.class, 3340);
+		person.placeOfBirth.municipalityIdentification = jona;
 		
 		process(writer().correctPlaceOfBirth(person));
 		
 		person = reload(p);
-		Assert.assertEquals(Swiss.createCountryIdentification().toStringReadable(), person.placeOfBirth.countryIdentification.toStringReadable());
-		Assert.assertEquals("SG", person.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton);
-		Assert.assertEquals(Integer.valueOf(20), person.placeOfBirth.municipalityIdentification.historyMunicipalityId);
-		Assert.assertEquals(Integer.valueOf(2), person.placeOfBirth.municipalityIdentification.municipalityId);
-		Assert.assertEquals("Testwil", person.placeOfBirth.municipalityIdentification.municipalityName);
+		Assert.assertEquals(Swiss.createCountryIdentification(), person.placeOfBirth.countryIdentification);
+		Assert.assertEquals(jona.canton, person.placeOfBirth.municipalityIdentification.canton);
+		Assert.assertEquals(jona.historyMunicipalityId, person.placeOfBirth.municipalityIdentification.historyMunicipalityId);
+		Assert.assertEquals(jona.id, person.placeOfBirth.municipalityIdentification.id);
+		Assert.assertEquals(jona.municipalityName, person.placeOfBirth.municipalityIdentification.municipalityName);
 	}
 	
 	@Test
@@ -229,13 +229,14 @@ public class CorrectTest extends AbstractServerTest {
 		
 		List<CountryIdentification> countries = Backend.getInstance().read(CountryIdentification.class, new AllCriteria(), 1000);
 		CountryIdentification c10 = countries.get(10);
+		person.placeOfBirth = new Place();
 		person.placeOfBirth.countryIdentification = c10;
 		person.placeOfBirth.foreignTown = "Testtown";
 		
 		process(writer().correctPlaceOfBirth(person));
 		
 		person = reload(p);
-		Assert.assertEquals(c10.countryId, person.placeOfBirth.countryIdentification.countryId);
+		Assert.assertEquals(c10.id, person.placeOfBirth.countryIdentification.id);
 		Assert.assertEquals(c10.countryIdISO2, person.placeOfBirth.countryIdentification.countryIdISO2);
 		Assert.assertEquals(c10.countryNameShort, person.placeOfBirth.countryIdentification.countryNameShort);
 		Assert.assertEquals("Testtown", person.placeOfBirth.foreignTown);

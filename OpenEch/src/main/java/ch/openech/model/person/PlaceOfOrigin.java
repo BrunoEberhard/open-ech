@@ -1,16 +1,16 @@
 package  ch.openech.model.person;
 
-import org.threeten.bp.LocalDate;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
+import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.common.CantonAbbreviation;
-import  ch.openech.model.person.types.ReasonOfAcquisition;
+import ch.openech.model.EchFormats;
+import ch.openech.model.common.Canton;
+import ch.openech.model.person.types.ReasonOfAcquisition;
 
 public class PlaceOfOrigin {
 
@@ -19,7 +19,7 @@ public class PlaceOfOrigin {
 	// 11: placeOfOriginType
 	@Required @Size(EchFormats.municipalityName)
 	public String originName;
-	public final CantonAbbreviation cantonAbbreviation = new CantonAbbreviation();
+	public Canton canton;
 	
 	// 21:placeOfOriginAddonType
 	public ReasonOfAcquisition reasonOfAcquisition;
@@ -29,18 +29,18 @@ public class PlaceOfOrigin {
 	public String toString() {
 		String s = originName;
 		if (!originEndsWithCanton()) {
-			s = s + " " + cantonAbbreviation.canton;
+			s = s + " " + canton.id;
 		}
 		return s;
 	}
 	
 	public boolean originAndCantonNotBlank() {
-		return !StringUtils.isBlank(originName) && !StringUtils.isBlank(cantonAbbreviation.canton);
+		return !StringUtils.isBlank(originName) && canton != null;
 	}
 	
 	public boolean originEndsWithCanton() {
 		if (originAndCantonNotBlank()) {
-			return originName.endsWith(cantonAbbreviation.canton) || originName.endsWith(cantonAbbreviation.canton + ")");
+			return originName.endsWith(canton.id) || originName.endsWith(canton.id + ")");
 		}
 		return false;
 	}
@@ -52,9 +52,9 @@ public class PlaceOfOrigin {
 	
 	public String display(StringBuilder s) {
 		if (!StringUtils.isBlank(originName)) s.append(originName);
-		if (!StringUtils.isBlank(cantonAbbreviation.canton) && !s.toString().endsWith(cantonAbbreviation.canton)) {
+		if (canton != null && !StringUtils.isBlank(canton.id) && !s.toString().endsWith(canton.id)) {
 			if (s.length() > 0) s.append(' ');
-			s.append(cantonAbbreviation.canton);
+			s.append(canton.id);
 		}
 
 		boolean reasonOfAcquisitionAvailable = reasonOfAcquisition != null;
@@ -85,9 +85,9 @@ public class PlaceOfOrigin {
 	
 	public String displayHtml(StringBuilder s) {
 		if (!StringUtils.isBlank(originName)) s.append(originName);
-		if (!StringUtils.isBlank(cantonAbbreviation.canton) && !s.toString().endsWith(cantonAbbreviation.canton)) {
+		if (canton != null && !StringUtils.isBlank(canton.id) && !s.toString().endsWith(canton.id)) {
 			if (s.length() > 0) s.append(' ');
-			s.append(cantonAbbreviation.canton);
+			s.append(canton.id);
 		}
 
 		boolean reasonOfAcquisitionAvailable = reasonOfAcquisition != null;
@@ -113,9 +113,9 @@ public class PlaceOfOrigin {
 	
 	public void displayText(StringBuilder s) {
 		if (!StringUtils.isBlank(originName)) s.append(originName);
-		if (!StringUtils.isBlank(cantonAbbreviation.canton) && !s.toString().endsWith(cantonAbbreviation.canton)) {
+		if (canton != null && !StringUtils.isBlank(canton.id) && !s.toString().endsWith(canton.id)) {
 			if (s.length() > 0) s.append(' ');
-			s.append(cantonAbbreviation.canton);
+			s.append(canton.id);
 		}
 
 		boolean reasonOfAcquisitionAvailable = reasonOfAcquisition != null;

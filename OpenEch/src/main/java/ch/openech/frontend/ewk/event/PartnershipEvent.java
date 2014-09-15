@@ -146,7 +146,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		if (Boolean.TRUE.equals(data.changeName1)) {
 			xmls.add(changeName(writerEch0020, person, data.name1));
 		}
-		if (Boolean.TRUE.equals(data.changeName2) && data.partner2.id != 0) {
+		if (Boolean.TRUE.equals(data.changeName2) && data.partner2.id != null) {
 			xmls.add(changeName(writerEch0020, data.partner2, data.name2));
 		}
 

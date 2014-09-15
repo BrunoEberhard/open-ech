@@ -30,15 +30,13 @@ public class ContactPersistenceTest {
 		Contact contact = new Contact();
 		contact.stringId = "3";
 		
-		table.insert(contact);
-		
 		ContactEntry entry = new ContactEntry();
 		entry.typeOfContact = ContactEntryType.Phone;
 		entry.categoryCode = ContactCategory.geschaeftlich;
 
 		contact.entries.add(entry);
 		
-		long id = table.insert(contact);
+		Object id = table.insert(contact);
 		
 		Contact readContact = table.read(id); 
 		

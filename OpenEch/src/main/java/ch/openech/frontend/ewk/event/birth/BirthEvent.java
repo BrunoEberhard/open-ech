@@ -48,7 +48,7 @@ public class BirthEvent extends XmlEditor<Person> {
 	@Override
 	public Object save(Person object) throws Exception {
 		List<String> xmls = getXml(object);
-		Long insertId = PersonEventEditor.send(xmls);
+		Object insertId = PersonEventEditor.send(xmls);
 		return PageLink.link(PersonPage.class, echSchema.getVersion(), insertId.toString());
 	}
 

@@ -10,6 +10,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.minimalj.util.EqualsHelper;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.person.NameOfParent;
@@ -115,7 +116,7 @@ public class StaxEch0021 {
 	
 	public static void updatePlaceOfOrigin(List<PlaceOfOrigin> placeOfOrigins, PlaceOfOrigin placeOfOrigin) {
 		for (PlaceOfOrigin p : placeOfOrigins) {
-			if (StringUtils.equals(placeOfOrigin.originName, p.originName) && StringUtils.equals(placeOfOrigin.cantonAbbreviation.canton, p.cantonAbbreviation.canton)) {
+			if (StringUtils.equals(placeOfOrigin.originName, p.originName) && EqualsHelper.equals(placeOfOrigin.canton, p.canton)) {
 				placeOfOrigins.remove(p); break;
 			}
 		}

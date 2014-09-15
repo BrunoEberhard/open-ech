@@ -4,11 +4,16 @@ import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
-import org.minimalj.model.InvalidValues;
 import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.validation.Validatable;
+import org.minimalj.util.Codes;
 import org.minimalj.util.DemoEnabled;
+import org.minimalj.util.StringUtils;
 
-public class CantonField extends AbstractEditField<String> implements DemoEnabled {
+import ch.openech.datagenerator.DataGenerator;
+import ch.openech.model.common.Canton;
+
+public class CantonField extends AbstractEditField<Canton> implements DemoEnabled, Validatable {
 	
 	private TextField textField;
 
@@ -32,22 +37,35 @@ public class CantonField extends AbstractEditField<String> implements DemoEnable
 	}
 
 	@Override
-	public String getObject() {
-		return textField.getText();
+	public Canton getObject() {
+		Canton canton = null;
+		if (!StringUtils.isEmpty(textField.getText())) {
+			canton = Codes.findCode(Canton.class, textField.getText());
+		}
+		return canton;
 	}		
 	
 	@Override
-	public void setObject(String value) {
-		if (InvalidValues.isInvalid(value)) {
-			textField.setText(InvalidValues.getInvalidValue(value));
+	public void setObject(Canton value) {
+		if (value != null) {
+			textField.setText(value.id);
 		} else {
-			textField.setText(value);
+			textField.setText("");
 		}
 	}
 
 	@Override
 	public void fillWithDemoData() {
-		setObject("SO");
+		setObject(DataGenerator.canton());
+	}
+
+	@Override
+	public String validate() {
+		if (!StringUtils.isEmpty(textField.getText())) {
+			Canton canton = Codes.findCode(Canton.class, textField.getText());
+			if (canton == null) return "Ungültige Eingabe";
+		}
+		return null;
 	}
 
 }

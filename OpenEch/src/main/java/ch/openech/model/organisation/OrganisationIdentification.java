@@ -10,7 +10,7 @@ import ch.openech.model.organisation.types.LegalForm;
 
 public class OrganisationIdentification implements ViewOf<Organisation> {
 
-	public long id;
+	public Object id;
 	
 	public final UidStructure uid = new UidStructure(); 
 	

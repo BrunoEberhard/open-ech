@@ -15,9 +15,9 @@ public class Residence {
 	
 	
 	public MunicipalityIdentification reportingMunicipality;
-	public final List<MunicipalityIdentification> secondary = new ArrayList<MunicipalityIdentification>(); // nur bei hasMainResidence
+	public final List<SecondaryResidence> secondary = new ArrayList<>(); // nur bei hasMainResidence
 
-	public void setSecondary(List<MunicipalityIdentification> secondary2) {
+	public void setSecondary(List<SecondaryResidence> secondary2) {
 		if (secondary2 != secondary) {
 			secondary.clear();
 			secondary.addAll(secondary2);
@@ -63,12 +63,11 @@ public class Residence {
 			}
 		}
 		
-		if (secondary != null) {
-			for (MunicipalityIdentification municipalityIdentification : secondary) {
-				if (municipalityIdentification.historyMunicipalityId != null && municipalityIdentification.isFederalRegister()) {
-					if (!hasSecondResidence) {
-						return "Bundesregister als Nebenwohnsitz bei gewähltem Meldeverhältnis nicht möglich";
-					}
+		for (SecondaryResidence secondaryResidence : secondary) {
+			MunicipalityIdentification municipalityIdentification = secondaryResidence.municipalityIdentification;
+			if (municipalityIdentification.isFederalRegister()) {
+				if (!hasSecondResidence) {
+					return "Bundesregister als Nebenwohnsitz bei gewähltem Meldeverhältnis nicht möglich";
 				}
 			}
 		}
@@ -116,13 +115,12 @@ public class Residence {
 			}
 		}
 		
-		if (secondary != null) {
-			for (MunicipalityIdentification municipalityIdentification : secondary) {
-				if (municipalityIdentification.historyMunicipalityId != null && municipalityIdentification.isFederalRegister()) {
-					if (!hasSecondResidence) {
-						resultList.add(new ValidationMessage(myProperty, "Bundesregister als Nebenwohnsitz bei gewähltem Meldeverhältnis nicht möglich"));
-						break;
-					}
+		for (SecondaryResidence secondaryResidence : secondary) {
+			MunicipalityIdentification municipalityIdentification = secondaryResidence.municipalityIdentification;
+			if (municipalityIdentification.isFederalRegister()) {
+				if (!hasSecondResidence) {
+					resultList.add(new ValidationMessage(myProperty, "Bundesregister als Nebenwohnsitz bei gewähltem Meldeverhältnis nicht möglich"));
+					break;
 				}
 			}
 		}

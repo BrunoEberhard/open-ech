@@ -8,7 +8,7 @@ import org.minimalj.transaction.Transaction;
 
 import ch.openech.xml.read.StaxEch0148;
 
-public class OrganisationTransaction implements Transaction<Long> {
+public class OrganisationTransaction implements Transaction<Object> {
 	private static final long serialVersionUID = 1L;
 
 	private final List<String> xmls;
@@ -22,13 +22,13 @@ public class OrganisationTransaction implements Transaction<Long> {
 	}
 
 	@Override
-	public Long execute(Backend backend) {
-		long insertId = -1;
+	public Object execute(Backend backend) {
+		Object insertId = null;
 		StaxEch0148 stax = new StaxEch0148(backend);
 		for (String xml : xmls) {
 			try {
 				stax.process(xml);
-				if (insertId == -1) {
+				if (insertId == null) {
 					insertId = stax.getInsertId();
 				}
 			} catch (Exception e) {

@@ -28,7 +28,7 @@ public class StaxEch0148 {
 	private final Backend backend;
 	
 	private Event e;
-	private long insertId = -1;
+	private Object insertId = null;
 	
 	public StaxEch0148(Backend backend) {
 		this.backend = backend;
@@ -41,7 +41,7 @@ public class StaxEch0148 {
 		insertId = backend.insert(organisation);
 	}
 	
-	public long getInsertId() {
+	public Object getInsertId() {
 		return insertId;
 	}
 

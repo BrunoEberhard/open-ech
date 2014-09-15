@@ -14,6 +14,7 @@ import org.threeten.bp.LocalDate;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Address;
+import ch.openech.model.common.Canton;
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.MunicipalityIdentification;
@@ -35,12 +36,9 @@ import ch.openech.model.types.Sex;
 import ch.openech.model.types.TypeOfResidence;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
-import ch.openech.xml.read.StaxEch0071;
 
 public class DataGenerator {
 
-	private static List<MunicipalityIdentification> municipalityIdentifications = StaxEch0071.getInstance().getMunicipalityIdentifications();
-	
 	public static Person person() {
 		Person person = new Person();
 		person.officialName = NameGenerator.officialName();
@@ -123,10 +121,15 @@ public class DataGenerator {
 	private static MunicipalityIdentification createJona() {
 		MunicipalityIdentification reportingMunicipality = new MunicipalityIdentification();
 		reportingMunicipality.historyMunicipalityId = 14925;
-		reportingMunicipality.cantonAbbreviation.canton = "SG";
-		reportingMunicipality.municipalityId = 3340;
+		reportingMunicipality.canton = Codes.findCode(Canton.class, "SG");
+		reportingMunicipality.id = 3340;
 		reportingMunicipality.municipalityName = "Rapperswil-Jona";
 		return reportingMunicipality;
+	}
+	
+	public static Canton canton() {
+		List<Canton> cantons = Codes.get(Canton.class);
+		return cantons.get((int)(Math.random() * cantons.size()));
 	}
 	
 	public static Place place() {
@@ -144,20 +147,19 @@ public class DataGenerator {
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 		placeOfOrigin.naturalizationDate = DateGenerator.generateRandomDate();
 		
-		MunicipalityIdentification municipalityIdentification = municipalityIdentifications.get((int)(Math.random() * municipalityIdentifications.size()));
+		List<MunicipalityIdentification> municipalities = Codes.get(MunicipalityIdentification.class);
+		MunicipalityIdentification municipalityIdentification = municipalities.get((int)(Math.random() * municipalities.size()));
 		placeOfOrigin.originName = municipalityIdentification.municipalityName;
-		placeOfOrigin.cantonAbbreviation.canton = municipalityIdentification.cantonAbbreviation.canton;
+		placeOfOrigin.canton = municipalityIdentification.canton;
 		
 		return placeOfOrigin;
 	}
 	
 	public static MunicipalityIdentification municipalityIdentification() {
-		MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
-		MunicipalityIdentification m = municipalityIdentifications.get((int)(Math.random() * municipalityIdentifications.size()));
-		m.copyTo(municipalityIdentification);
-		return municipalityIdentification;
+		List<MunicipalityIdentification> municipalities = Codes.get(MunicipalityIdentification.class);
+		return municipalities.get((int)(Math.random() * municipalities.size()));
 	}
-	
+
 	public static CountryIdentification countryIdentification() {
 		List<CountryIdentification> countries = Codes.get(CountryIdentification.class);
 		return countries.get((int)(Math.random() * countries.size()));

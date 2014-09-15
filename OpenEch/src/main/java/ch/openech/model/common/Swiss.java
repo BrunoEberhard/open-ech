@@ -9,7 +9,7 @@ public class Swiss {
 
 	public static CountryIdentification createCountryIdentification() {
 		CountryIdentification countryIdentification = new CountryIdentification();
-		countryIdentification.countryId = SWISS_COUNTRY_ID;
+		countryIdentification.id = SWISS_COUNTRY_ID;
 		countryIdentification.countryIdISO2 = SWISS_COUNTRY_ISO2;
 		countryIdentification.countryNameShort = SWISS_COUNTRY_NAME_SHORT;
 		return countryIdentification;

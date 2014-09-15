@@ -53,7 +53,7 @@ public class StaxEch0072 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (ID.equals(startName)) countryIdentification.countryId = integer(xml);
+				if (ID.equals(startName)) countryIdentification.id = integer(xml);
 				else if (ISO2_ID.equals(startName)) countryIdentification.countryIdISO2 = token(xml);
 				else if (SHORT_NAME_DE.equals(startName)) countryIdentification.countryNameShort = token(xml);
 				else skip(xml);

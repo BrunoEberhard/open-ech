@@ -1,30 +1,16 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.ARRIVAL_DATE;
-import static  ch.openech.model.XmlConstants.COMES_FROM;
-import static  ch.openech.model.XmlConstants.DATE_OF_DEATH;
-import static  ch.openech.model.XmlConstants.DEATH;
-import static  ch.openech.model.XmlConstants.DEPARTURE_DATE;
-import static  ch.openech.model.XmlConstants.DESTINATION_ADDRESS;
-import static  ch.openech.model.XmlConstants.DESTINATION_MUNICIPALITY;
-import static  ch.openech.model.XmlConstants.FEDERAL_REGISTER;
-import static  ch.openech.model.XmlConstants.GOES_TO;
-import static  ch.openech.model.XmlConstants.HAS_MAIN_RESIDENCE;
-import static  ch.openech.model.XmlConstants.MOVE_IN;
-import static  ch.openech.model.XmlConstants.MOVE_OUT;
-import static  ch.openech.model.XmlConstants.MOVE_OUT_PERSON;
-import static  ch.openech.model.XmlConstants.MOVE_OUT_REPORTING_DESTINATION;
-import static  ch.openech.model.XmlConstants.REPORTING_MUNICIPALITY;
-import static  ch.openech.model.XmlConstants.SECONDARY_RESIDENCE;
+import static ch.openech.model.XmlConstants.*;
 
 import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.person.Occupation;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.person.Relation;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
+import ch.openech.model.person.Occupation;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.SecondaryResidence;
 
 // Die komplexeren Typen werden meist von 0020 wiederverwendet, vor allem
 // moveOutPersonType
@@ -112,7 +98,7 @@ public class WriterEch0093 extends DeliveryWriter {
         for (Relation relation: person.relation) ech21.relation(event, relation);
         moveOutReportingDestination(event, reportingMunicipality, goesTo, departureDate);
 		if (person.residence.secondary != null) {
-			for (MunicipalityIdentification residence : person.residence.secondary) {
+			for (SecondaryResidence residence : person.residence.secondary) {
 				ech7.municipality(event, SECONDARY_RESIDENCE, residence);
 			}
 		}

@@ -6,13 +6,13 @@ import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.minimalj.backend.db.CodeTable;
 import org.minimalj.backend.db.DbPersistence;
 import org.minimalj.backend.db.ImmutableTable;
 import org.minimalj.backend.db.Table;
 
 import ch.openech.model.common.Address;
 import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.Swiss;
 import ch.openech.model.person.Occupation;
 import ch.openech.model.person.Person;
 import ch.openech.model.types.MrMrs;
@@ -25,6 +25,7 @@ public class DbPersonCrudTest {
 	@BeforeClass
 	public static void setupDb() throws SQLException {
 		persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Person.class);
+		persistence.insert(Swiss.createCountryIdentification());
 	}
 
 	@Test
@@ -38,7 +39,7 @@ public class DbPersonCrudTest {
 		address.town = "Jona";
 		address.country = "CH";
 		
-		long id = addressTable.getId(address);
+		String id = addressTable.getId(address);
 		
 		Address readAddress = (Address)addressTable.read(id);
 		
@@ -47,31 +48,31 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(address.houseNumber.houseNumber, readAddress.houseNumber.houseNumber);
 		Assert.assertEquals(address.country, readAddress.country);
 	
-		long id2 = addressTable.getId(address);
+		String id2 = addressTable.getId(address);
 		
 		Assert.assertEquals(id, id2);
 		
 		readAddress.houseNumber.houseNumber = "11";
-		long id3 = addressTable.getId(readAddress);
+		String id3 = addressTable.getId(readAddress);
 
 		Assert.assertNotSame(id, id3);
 	}
 	
 	@Test
 	public void testCrudCountry() throws SQLException {
-		CodeTable<CountryIdentification> countryTable = persistence.getCodeTable(CountryIdentification.class);
+		Table<CountryIdentification> countryTable = persistence.getTable(CountryIdentification.class);
 		
 		CountryIdentification country = new CountryIdentification();
-		country.countryId = 123;
+		country.id = 123;
 		country.countryIdISO2 = "DE";
 		country.countryNameShort = "Deutschland";
 		
 		countryTable.insert(country);
 		
-		CountryIdentification readCountry = (CountryIdentification)countryTable.readByCode(123);
+		CountryIdentification readCountry = (CountryIdentification)countryTable.read(123);
 		
 		Assert.assertNotNull(readCountry);
-		Assert.assertEquals(country.countryId, readCountry.countryId);
+		Assert.assertEquals(country.id, readCountry.id);
 		Assert.assertEquals(country.countryIdISO2, readCountry.countryIdISO2);
 		Assert.assertEquals(country.countryNameShort, readCountry.countryNameShort);
 	
@@ -91,7 +92,7 @@ public class DbPersonCrudTest {
 		
 		person.aliasName = "Biwi";
 		
-		long id = personTable.insert(person);
+		Object id = personTable.insert(person);
 		
 		Person readPerson = (Person)personTable.read(id);
 		
@@ -133,7 +134,7 @@ public class DbPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		long id = personTable.insert(person);
+		Object id = personTable.insert(person);
 		
 		Person readPerson = personTable.read(id);
 		
@@ -174,7 +175,7 @@ public class DbPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		long id = personTable.insert(person);
+		Object id = personTable.insert(person);
 		
 		Person readPerson = personTable.read(id);
 		readPerson.aliasName = "biwi";
@@ -213,7 +214,7 @@ public class DbPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		long id = personTable.insert(person);
+		Object id = personTable.insert(person);
 		
 		Person readPerson = personTable.read(id);
 		Occupation readOccupation2 = readPerson.occupation.get(1);
@@ -236,7 +237,7 @@ public class DbPersonCrudTest {
 		person.vn.value = "123";
 		person.sex = Sex.maennlich;
 
-		long id = personTable.insert(person);
+		Object id = personTable.insert(person);
 		
 		Person readPerson = personTable.read(id);
 		readPerson.officialName = "Äberhard";
@@ -251,25 +252,23 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(readPerson2.officialName, readPerson3.officialName);
 	}
 	
-	@Test
-	public void testMaxPerson() throws SQLException {
-		int startMaxId = persistence.execute(Integer.class, "select max(id) from Person");
-		Table<Person> personTable = persistence.getTable(Person.class);
-		
-		Person person = new Person();
-		person.officialName = "Eberhard";
-		person.firstName = "Bruno";
-		person.dateOfBirth.value = "1974-08-02";
-		person.vn.value = "123";
-		person.sex = Sex.maennlich;
-		
-		person.aliasName = "Biwi";
-		
-		personTable.insert(person);
-		
-		int afterInsertMaxId = persistence.execute(Integer.class, "select max(id) from Person");
-		Assert.assertEquals(startMaxId + 1, afterInsertMaxId);
-	}
-	
-	
+//	@Test @Ignore("Not possible as long as id an UUID")
+//	public void testMaxPerson() throws SQLException {
+//		int startMaxId = persistence.execute(Integer.class, "select max(id) from Person");
+//		Table<Person> personTable = persistence.getTable(Person.class);
+//		
+//		Person person = new Person();
+//		person.officialName = "Eberhard";
+//		person.firstName = "Bruno";
+//		person.dateOfBirth.value = "1974-08-02";
+//		person.vn.value = "123";
+//		person.sex = Sex.maennlich;
+//		
+//		person.aliasName = "Biwi";
+//		
+//		personTable.insert(person);
+//		
+//		int afterInsertMaxId = persistence.execute(Integer.class, "select max(id) from Person");
+//		Assert.assertEquals(startMaxId + 1, afterInsertMaxId);
+//	}
 }

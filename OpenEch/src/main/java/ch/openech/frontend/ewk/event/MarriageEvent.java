@@ -195,7 +195,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		if (Boolean.TRUE.equals(data.changeName1)) {
 			xmls.add(changeName(writerEch0020, person, data.name1));
 		}
-		if (Boolean.TRUE.equals(data.changeName2) && data.partner2.id != 0) {
+		if (Boolean.TRUE.equals(data.changeName2) && data.partner2.id != null) {
 			xmls.add(changeName(writerEch0020, data.partner2, data.name2));
 		}
 
@@ -219,7 +219,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		for (PlaceOfOrigin existingOrigin : list) {
 			PlaceOfOrigin origin = new PlaceOfOrigin();
 			origin.originName = existingOrigin.originName;
-			origin.cantonAbbreviation.canton = existingOrigin.cantonAbbreviation.canton;
+			origin.canton = existingOrigin.canton;
 			origin.reasonOfAcquisition = ReasonOfAcquisition.Heirat;
 			origin.naturalizationDate = naturalizationDate;
 			xmls.add(writerEch0020.naturalizeSwiss(person.personIdentification(), origin));

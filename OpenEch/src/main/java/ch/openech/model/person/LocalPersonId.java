@@ -9,7 +9,7 @@ import  ch.openech.model.EchFormats;
 public class LocalPersonId {
 
 	// Wird von der Persistence verwaltet
-	public int id;
+	public Object id;
 
 	@Size(EchFormats.baseName)
 	public String laber = UUID.randomUUID().toString().substring(0, 8);

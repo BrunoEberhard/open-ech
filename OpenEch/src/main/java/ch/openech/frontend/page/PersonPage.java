@@ -56,11 +56,10 @@ public class PersonPage extends ObjectPage<Person> {
 	}
 
 	private static Person loadObject(String personId, int time) {
-		long id = Long.valueOf(personId);
 		if (time == 0) {
-			return Backend.getInstance().read(Person.class, id);
+			return Backend.getInstance().read(Person.class, personId);
 		} else {
-			return Backend.getInstance().read(Person.class, id, time);
+			return Backend.getInstance().read(Person.class, personId, time);
 		}
 	}
 

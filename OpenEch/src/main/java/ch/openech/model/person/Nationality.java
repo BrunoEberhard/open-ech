@@ -4,16 +4,22 @@ import org.minimalj.model.Keys;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.Swiss;
 
 public class Nationality  {
 
 	public static final Nationality NATIONALITY = Keys.of(Nationality.class);
 	
-	public NationalityStatus nationalityStatus = NationalityStatus.with;
+	public NationalityStatus nationalityStatus;
 	public CountryIdentification nationalityCountry;
 	
 	public Nationality() {
-		// do nothing
+		this(Swiss.createCountryIdentification());
+	}
+	
+	public Nationality(CountryIdentification nationalityCountry) {
+		this.nationalityCountry = nationalityCountry;
+		this.nationalityStatus = NationalityStatus.with;
 	}
 	
 	private Nationality(NationalityStatus nationalityStatus) {

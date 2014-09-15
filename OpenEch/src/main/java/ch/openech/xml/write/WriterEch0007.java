@@ -1,11 +1,8 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.CANTON_ABBREVIATION;
-import static  ch.openech.model.XmlConstants.HISTORY_MUNICIPALITY_ID;
-import static  ch.openech.model.XmlConstants.HISTORY_MUNICIPIALITY_ID;
-import static  ch.openech.model.XmlConstants.MUNICIPALITY_ID;
-import static  ch.openech.model.XmlConstants.MUNICIPALITY_NAME;
-import  ch.openech.model.common.MunicipalityIdentification;
+import static ch.openech.model.XmlConstants.*;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.person.SecondaryResidence;
 
 public class WriterEch0007 {
 
@@ -22,9 +19,9 @@ public class WriterEch0007 {
 
 		WriterElement writer = parent.create(URI, tagName);
 		
-		writer.text(MUNICIPALITY_ID, municipalityIdentification.municipalityId);
+		writer.text(MUNICIPALITY_ID, municipalityIdentification.id);
 		writer.text(MUNICIPALITY_NAME, municipalityIdentification.municipalityName);
-		writer.text(CANTON_ABBREVIATION, municipalityIdentification.cantonAbbreviation.canton);
+		writer.text(CANTON_ABBREVIATION, municipalityIdentification.canton.id);
 		if (HAS_TYPO) {
 			// im XML Schmema eCH-0007-3-0 heisst ein Attribut
 			// historyMunicipialityId statt
@@ -34,6 +31,11 @@ public class WriterEch0007 {
 			// in Version 4.0 ist das dann korrigiert ;)
 			writer.text(HISTORY_MUNICIPALITY_ID, municipalityIdentification.historyMunicipalityId); // tagName!!!!!
 		}
+	}
+
+	public void municipality(WriterElement parent, String tagName, SecondaryResidence secondaryResidence) throws Exception {
+		if (secondaryResidence == null || secondaryResidence.municipalityIdentification == null) return;
+		municipality(parent, tagName, secondaryResidence.municipalityIdentification);
 	}
 	
 }

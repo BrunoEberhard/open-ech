@@ -27,7 +27,7 @@ public class ChangeNationalityTest extends AbstractServerTest {
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
-		Assert.assertEquals(new Integer(8236), person.nationality.nationalityCountry.countryId);	
+		Assert.assertEquals(new Integer(8236), person.nationality.nationalityCountry.id);	
 		Assert.assertEquals("Spanien", person.nationality.nationalityCountry.countryNameShort);	
 	}
 

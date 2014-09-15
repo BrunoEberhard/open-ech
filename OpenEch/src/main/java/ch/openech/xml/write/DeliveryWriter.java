@@ -62,7 +62,7 @@ public abstract class DeliveryWriter {
 	}
 	
 	public void setRecepientMunicipality(MunicipalityIdentification municipalityIdentification) {
-		getEnvelope().recipientId = "1-" + municipalityIdentification.municipalityId +"-1";
+		getEnvelope().recipientId = "1-" + municipalityIdentification.id +"-1";
 	}
 
 	public WriterElement delivery() throws Exception {

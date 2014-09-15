@@ -12,9 +12,9 @@ import org.minimalj.util.BusinessRule;
 import org.threeten.bp.LocalDate;
 
 import ch.openech.frontend.e44.SecondPersonField;
-import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
+import ch.openech.model.person.SecondaryResidence;
 import ch.openech.model.person.types.MaritalStatus;
 import ch.openech.model.person.types.PartnerShipAbolition;
 import ch.openech.model.person.types.Separation;
@@ -117,9 +117,9 @@ public abstract class ChangeWithSecondPersonEvent extends
 		@Override
 		public void generateSedexOutput(ChangeWithSecondPersonEventData object) throws Exception {
 			if (getPerson().isMainResidence() && getPerson().residence.secondary != null) {
-				for (MunicipalityIdentification secondaryResidence : getPerson().residence.secondary) {
+				for (SecondaryResidence secondaryResidence : getPerson().residence.secondary) {
 					WriterEch0093 sedexWriter = new WriterEch0093(echSchema);
-					sedexWriter.setRecepientMunicipality(secondaryResidence);
+					sedexWriter.setRecepientMunicipality(secondaryResidence.municipalityIdentification);
 					String sedexOutput = sedexWriter.death(getPerson().personIdentification(), object.date);
 					SedexOutputGenerator.generateSedex(sedexOutput, sedexWriter.getEnvelope());
 				}

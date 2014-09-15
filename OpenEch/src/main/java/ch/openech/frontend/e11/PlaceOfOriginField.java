@@ -44,7 +44,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 			// TODO Preference in PlaceOfOriginField
 //			PageContext context = PageContextHelper.findContext(visual);
 //			OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-//			placeOfOrigin.cantonAbbreviation.canton = preferences.preferencesDefaultsData.cantonAbbreviation.canton;
+//			placeOfOrigin.canton.cantonAbbreviation = preferences.preferencesDefaultsData.canton.cantonAbbreviation;
 			placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
 			return placeOfOrigin;
 		}

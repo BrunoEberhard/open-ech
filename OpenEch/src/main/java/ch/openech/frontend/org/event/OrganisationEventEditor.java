@@ -57,12 +57,12 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	@Override
 	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
-		Long insertId = send(xmls);
+		Object insertId = send(xmls);
 		return PageLink.link(OrganisationPage.class, echSchema.getVersion(), insertId.toString());
 	}
 	
-	public static Long send(final List<String> xmls) {
-		Long firstInsertId = Backend.getInstance().execute(new OrganisationTransaction(xmls));
+	public static Object send(final List<String> xmls) {
+		Object firstInsertId = Backend.getInstance().execute(new OrganisationTransaction(xmls));
 		return firstInsertId;
 	}
 	

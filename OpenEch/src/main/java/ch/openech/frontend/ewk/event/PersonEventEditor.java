@@ -40,12 +40,12 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T> implements XmlRe
 	@Override
 	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
-		Long insertId = send(xmls);
+		Object insertId = send(xmls);
 		return insertId;
 	}
 	
-	public static Long send(final List<String> xmls) {
-		Long firstInsertId = Backend.getInstance().execute(new PersonTransaction(xmls));
+	public static Object send(final List<String> xmls) {
+		Object firstInsertId = Backend.getInstance().execute(new PersonTransaction(xmls));
 		return firstInsertId;
 	}
 	

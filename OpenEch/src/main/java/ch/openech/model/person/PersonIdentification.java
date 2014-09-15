@@ -18,7 +18,7 @@ public class PersonIdentification implements ViewOf<Person> {
 	
 	//
 	
-	public long id;
+	public Object id;
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 

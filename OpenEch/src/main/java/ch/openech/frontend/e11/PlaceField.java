@@ -17,7 +17,6 @@ import org.minimalj.util.DemoEnabled;
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
-import ch.openech.xml.read.StaxEch0071;
 
 public class PlaceField extends AbstractEditField<Place> implements DemoEnabled {
 	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
@@ -25,6 +24,7 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 	private final List<CountryIdentification> countries;
 	private final ComboBox<CountryIdentification> comboBoxCountry;
 
+	private final List<MunicipalityIdentification> municipalityIdentifications;
 	private final SwitchComponent switchComponentMunicipality;
 	private final ComboBox<MunicipalityIdentification> comboBoxMunicipality;
 	private final TextField textForeignTown;
@@ -35,12 +35,13 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 	public PlaceField(PropertyInterface property) {
 		super(property, true);
 		countries = Codes.get(CountryIdentification.class);
+		municipalityIdentifications = Codes.get(MunicipalityIdentification.class);
 		
 		comboBoxCountry = ClientToolkit.getToolkit().createComboBox(listener());
 		comboBoxCountry.setObjects(countries);
 
 		comboBoxMunicipality = ClientToolkit.getToolkit().createComboBox(listener());
-		comboBoxMunicipality.setObjects(StaxEch0071.getInstance().getMunicipalityIdentifications());
+		comboBoxMunicipality.setObjects(municipalityIdentifications);
 
 		textForeignTown = ClientToolkit.getToolkit().createTextField(listener(), 100); // TODO
 
@@ -112,8 +113,8 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 	public void fillWithDemoData() {
 		Place place = new Place();
 		if (Math.random() < 0.8) {
-			int index = (int)(Math.random() * (double)StaxEch0071.getInstance().getMunicipalityIdentifications().size());
-			place.municipalityIdentification = StaxEch0071.getInstance().getMunicipalityIdentifications().get(index);
+			int index = (int)(Math.random() * (double)municipalityIdentifications.size());
+			place.municipalityIdentification = municipalityIdentifications.get(index);
 		} else {
 			int index = (int)(Math.random() * (double)countries.size());
 			place.countryIdentification = countries.get(index);

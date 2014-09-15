@@ -19,7 +19,7 @@ public class PersonExtendedInformationPersistenceTest extends AbstractServerTest
 		person.personExtendedInformation = new PersonExtendedInformation();
 		person.personExtendedInformation.armedForcesLiability = YesNo.Yes;
 		
-		long id = DbBackend.getInstance().insert(person);
+		Object id = DbBackend.getInstance().insert(person);
 		
 		Person readPerson = DbBackend.getInstance().read(Person.class, id);
 		Assert.assertEquals(YesNo.Yes, readPerson.personExtendedInformation.armedForcesLiability);
@@ -31,7 +31,7 @@ public class PersonExtendedInformationPersistenceTest extends AbstractServerTest
 		person.personExtendedInformation = new PersonExtendedInformation();
 		person.personExtendedInformation.armedForcesLiability = YesNo.Yes;
 		
-		long id = DbBackend.getInstance().insert(person);
+		Object id = DbBackend.getInstance().insert(person);
 		
 		Person readPerson = DbBackend.getInstance().read(Person.class, id);
 		Assert.assertEquals(YesNo.Yes, readPerson.personExtendedInformation.armedForcesLiability);

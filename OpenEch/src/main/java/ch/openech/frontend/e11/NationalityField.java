@@ -30,8 +30,7 @@ public class NationalityField extends AbstractEditField<Nationality> {
 		items.add(itemWithoutNationality);
 
 		for (CountryIdentification country : countries) {
-			Nationality nationality = new Nationality();
-			nationality.nationalityCountry = country;
+			Nationality nationality = new Nationality(country);
 			items.add(nationality);
 		}
 		comboBox.setObjects(items);

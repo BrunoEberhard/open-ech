@@ -12,13 +12,13 @@ import org.minimalj.util.StringUtils;
 import ch.openech.model.EchFormats;
 
 @Sizes(EchFormats.class)
-public class CountryIdentification implements Comparable<CountryIdentification>, Serializable, Cloneable {
+public class CountryIdentification implements Code, Comparable<CountryIdentification>, Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 
 	public static final CountryIdentification COUNTRY_IDENTIFICATION = Keys.of(CountryIdentification.class);
 
-	@Size(4) @Code @Required
-	public Integer countryId;
+	@Size(4)
+	public Integer id;
 	public String countryIdISO2;
 	@Required
 	public String countryNameShort;
@@ -27,27 +27,21 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 		StringBuilder s = new StringBuilder();
 		s.append("Name Land = " + countryNameShort);
 		s.append(", Iso Code = " + countryIdISO2);
-		s.append(", Id = " + countryId);
+		s.append(", Id = " + id);
 		return s.toString();
 	}
 
 	public boolean isEmpty() {
-		return countryId == null || countryId == 0;
+		return id == null || id == 0;
 	}
 
 	public void clear() {
-		countryId = null;
+		id = null;
 		countryIdISO2 = countryNameShort = null;
 	}
 
-	public void copyTo(CountryIdentification copy) {
-		copy.countryId = countryId;
-		copy.countryIdISO2 = countryIdISO2;
-		copy.countryNameShort = countryNameShort;
-	}
-
 	public boolean isSwiss() {
-		return Swiss.SWISS_COUNTRY_ID.equals(countryId) && //
+		return Swiss.SWISS_COUNTRY_ID.equals(id) && //
 				Swiss.SWISS_COUNTRY_ISO2.equals(countryIdISO2) && //
 				Swiss.SWISS_COUNTRY_NAME_SHORT.equals(countryNameShort);
 	}
@@ -59,52 +53,55 @@ public class CountryIdentification implements Comparable<CountryIdentification>,
 	}
 
 	@Override
+//	public String getText(Locale local) {
+	public String display() {
+		return countryNameShort;
+	}
+	
+	@Override
 	public int compareTo(CountryIdentification c) {
 		// Used in ComboBox to sort
 		return StringUtils.compare(toString(), c.toString());
 	}
 
-	// Generated with eclipse
+	// hash / equals. This is important
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((countryId == null) ? 0 : countryId.hashCode());
-		result = prime * result
-				+ ((countryIdISO2 == null) ? 0 : countryIdISO2.hashCode());
-		result = prime
-				* result
-				+ ((countryNameShort == null) ? 0 : countryNameShort.hashCode());
-		return result;
+		if (id != null) {
+			return id.hashCode();
+		} else if (countryIdISO2 != null) {
+			return countryIdISO2.hashCode();
+		} else if (countryNameShort != null) {
+			return countryNameShort.hashCode();
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!(obj instanceof CountryIdentification))
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		
 		CountryIdentification other = (CountryIdentification) obj;
-		if (countryId == null) {
-			if (other.countryId != null)
-				return false;
-		} else if (!countryId.equals(other.countryId))
-			return false;
-		if (countryIdISO2 == null) {
-			if (other.countryIdISO2 != null)
-				return false;
-		} else if (!countryIdISO2.equals(other.countryIdISO2))
-			return false;
-		if (countryNameShort == null) {
-			if (other.countryNameShort != null)
-				return false;
-		} else if (!countryNameShort.equals(other.countryNameShort))
-			return false;
-		return true;
+		
+		// if id is the same other values don't matter
+		if (id != null && other.id != null) {
+			return id.equals(other.id);
+		}
+		
+		if (countryIdISO2 != null && other.countryIdISO2 != null) {
+			return countryIdISO2.equals(other.countryIdISO2);
+		}
+		
+		if (countryNameShort != null && other.countryNameShort != null) {
+			return countryNameShort.equals(other.countryNameShort);
+		}
+		
+		return false;
 	}
 
 }

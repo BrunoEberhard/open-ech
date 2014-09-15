@@ -17,7 +17,7 @@ public class PersonSearch implements ViewOf<Person> {
 	
 	//
 	
-	public long id;
+	public Object id;
 	
 	public final Vn vn = new Vn();
 	

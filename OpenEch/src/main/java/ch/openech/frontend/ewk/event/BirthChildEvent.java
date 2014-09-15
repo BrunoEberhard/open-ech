@@ -184,7 +184,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 			// auch gar nicht zu
 			PlaceOfOrigin newPlaceOfOrigin = new PlaceOfOrigin();
 			newPlaceOfOrigin.originName = placeOfOrigin.originName;
-			newPlaceOfOrigin.cantonAbbreviation.canton = placeOfOrigin.cantonAbbreviation.canton;
+			newPlaceOfOrigin.canton = placeOfOrigin.canton;
 			result.add(newPlaceOfOrigin);
 		}
 		return result;

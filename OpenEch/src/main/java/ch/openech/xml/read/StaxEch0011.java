@@ -10,9 +10,11 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.code.FederalRegister;
+import ch.openech.model.common.Canton;
 import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
@@ -20,6 +22,7 @@ import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Nationality;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.SecondaryResidence;
 
 public class StaxEch0011 {
 
@@ -63,7 +66,7 @@ public class StaxEch0011 {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(UNKNOWN)) skip(xml);
 				// Der Typ von swissTown ist unterschiedlich zwischen birthplace und destination
-				else if (startName.equals(SWISS_TOWN)) StaxEch0007.municipality(xml, place.municipalityIdentification);
+				else if (startName.equals(SWISS_TOWN)) place.municipalityIdentification = StaxEch0007.municipality(xml);
 				else if (startName.equals(FOREIGN_COUNTRY)) foreignCountry(xml, place);
 				else if (startName.equals(MAIL_ADDRESS)) place.mailAddress = StaxEch0010.address(xml);
 				else skip(xml);
@@ -80,7 +83,7 @@ public class StaxEch0011 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(COUNTRY)) skip(xml); //allways CH
-				else if (startName.equals(MUNICIPALITY)) StaxEch0007.municipality(xml, birthplace.municipalityIdentification);
+				else if (startName.equals(MUNICIPALITY)) birthplace.municipalityIdentification = StaxEch0007.municipality(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
@@ -236,7 +239,7 @@ public class StaxEch0011 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(ORIGIN_NAME)) placeOfOrigin.originName = token(xml);
-				else if (startName.equals(CANTON)) placeOfOrigin.cantonAbbreviation.canton = token(xml);
+				else if (startName.equals(CANTON)) placeOfOrigin.canton = Codes.findCode(Canton.class, token(xml));
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
@@ -269,7 +272,7 @@ public class StaxEch0011 {
 					// eventuell wurden diese Daten schon mit AddOn geliefert, in dem Fall werden sie ignoriert
 					boolean alreadyKnown = false;
 					for (PlaceOfOrigin p : person.placeOfOrigin) {
-						if (StringUtils.equals(placeOfOrigin.cantonAbbreviation.canton, p.cantonAbbreviation.canton) && StringUtils.equals(placeOfOrigin.originName, p.originName)) {
+						if (StringUtils.equals(placeOfOrigin.canton.id, p.canton.id) && StringUtils.equals(placeOfOrigin.originName, p.originName)) {
 							alreadyKnown = true; break;
 						}
 					}
@@ -307,7 +310,7 @@ public class StaxEch0011 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(MAIN_RESIDENCE)) residence(xml, person, true);
-				else if (startName.equals(SECONDARY_RESIDENCE)) person.residence.secondary.add(StaxEch0007.municipality(xml));
+				else if (startName.equals(SECONDARY_RESIDENCE)) person.residence.secondary.add(new SecondaryResidence(StaxEch0007.municipality(xml)));
 				else skip(xml);
 			} else if (event.isEndElement()) return;
 			// else skip
@@ -327,13 +330,13 @@ public class StaxEch0011 {
 					} else {
 						municipalityIdentification = new MunicipalityIdentification();
 						Integer federRegister = StaxEch.integer(xml);
-						municipalityIdentification.historyMunicipalityId = -federRegister;
+						municipalityIdentification.id = -federRegister;
 						municipalityIdentification.municipalityName = EnumUtils.getText(FederalRegister.values()[federRegister-1]);
 					}
 					if (main) {
 						person.residence.reportingMunicipality = municipalityIdentification;
 					} else {
-						person.residence.secondary.add(municipalityIdentification);
+						person.residence.secondary.add(new SecondaryResidence(municipalityIdentification));
 					}
 				}
 				else if (startName.equals(ARRIVAL_DATE)) person.arrivalDate = StaxEch.date(xml);

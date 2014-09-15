@@ -8,6 +8,7 @@ import org.minimalj.model.PropertyInterface;
 import org.minimalj.util.GenericUtils;
 import org.minimalj.util.resources.Resources;
 
+import ch.openech.frontend.e07.CantonField;
 import ch.openech.frontend.e07.MunicipalityField;
 import ch.openech.frontend.e07.MunicipalityReadOnlyField;
 import ch.openech.frontend.e08.CountryField;
@@ -30,6 +31,7 @@ import ch.openech.frontend.e44.VnField;
 import ch.openech.frontend.e46.ContactField;
 import ch.openech.frontend.e97.UidStructureField;
 import ch.openech.model.common.Address;
+import ch.openech.model.common.Canton;
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.DatePartiallyKnown;
 import ch.openech.model.common.DwellingAddress;
@@ -88,6 +90,8 @@ public class EchForm<T> extends Form<T> {
 			return new ch.openech.frontend.e44.PersonField(property);
 		} else if (type == Nationality.class) {
 			return editable ? new NationalityField(property) : new NationalityReadOnlyField(property);
+		} else if (type == Canton.class) {
+			return new CantonField(property, editable);
 		} else if (type == ContactPerson.class) {
 			return new ContactPersonField(property, echSchema, editable);
 		} else if (type == Foreign.class) {

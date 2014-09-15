@@ -15,7 +15,7 @@ public class PreferenceForm extends EchForm<OpenEchPreferences> {
 
 		addTitle("Voreingestellte Werte");
 		line(new MunicipalityField(OPEN_ECH_PREFERENCES.preferencesDefaultsData.residence, false), OPEN_ECH_PREFERENCES.preferencesDefaultsData.plz);
-		line(OPEN_ECH_PREFERENCES.preferencesDefaultsData.cantonAbbreviation.canton);
+		line(OPEN_ECH_PREFERENCES.preferencesDefaultsData.canton);
 		line(OPEN_ECH_PREFERENCES.preferencesDefaultsData.language, OPEN_ECH_PREFERENCES.preferencesDefaultsData.religion);
 
 		text("<b>Hinweis:</b> Die Einstellungen werden erst bei neu geöffneten Ansichten aktiv");

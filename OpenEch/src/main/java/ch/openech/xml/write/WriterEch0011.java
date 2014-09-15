@@ -1,20 +1,20 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.common.CountryIdentification;
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.person.Foreign;
-import  ch.openech.model.person.Nationality;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.Place;
+import ch.openech.model.person.Foreign;
+import ch.openech.model.person.Nationality;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.SecondaryResidence;
 
 public class WriterEch0011 {
 	private static final Logger logger = Logger.getLogger(WriterEch0011.class.getName());
@@ -134,10 +134,9 @@ public class WriterEch0011 {
 	
 	public void placeOfOrigin(WriterElement parent, String tagName, PlaceOfOrigin origin) throws Exception {
 		WriterElement placeOfOrigin = parent.create(URI, tagName);
-		placeOfOrigin.values(origin, ORIGIN_NAME, CANTON);
-//		placeOfOrigin.values(origin, ORIGIN_NAME);
-//		placeOfOrigin.text(CANTON, origin.canton.value);
-
+//		placeOfOrigin.values(origin, ORIGIN_NAME, CANTON);
+		placeOfOrigin.text(ORIGIN_NAME, origin.originName);
+		placeOfOrigin.text(CANTON, origin.canton.id);
 	}
 
 	private void foreigner(WriterElement anyPerson, Foreign foreignValues) throws Exception {
@@ -186,7 +185,7 @@ public class WriterEch0011 {
 		commonResidenceInformation(informationElement, values);
 		
 		if (values.residence.secondary != null) {
-			for (MunicipalityIdentification residence : values.residence.secondary) {
+			for (SecondaryResidence residence : values.residence.secondary) {
 				ech7.municipality(element, SECONDARY_RESIDENCE, residence);
 			}
 		}

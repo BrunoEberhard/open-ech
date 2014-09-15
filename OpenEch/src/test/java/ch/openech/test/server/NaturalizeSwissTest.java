@@ -4,9 +4,11 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.minimalj.util.Codes;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.code.ResidencePermit;
+import ch.openech.model.common.Canton;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
 
@@ -37,13 +39,13 @@ public class NaturalizeSwissTest extends AbstractServerTest {
 		Assert.assertEquals(placeOfOriginCountBefore + 1, person.placeOfOrigin.size());
 		PlaceOfOrigin placeOfOrigin = person.placeOfOrigin.get(person.placeOfOrigin.size() - 1);
 		Assert.assertEquals("Murten", placeOfOrigin.originName);
-		Assert.assertEquals("FR", placeOfOrigin.cantonAbbreviation.canton);
+		Assert.assertEquals(Codes.findCode(Canton.class, "FR"), placeOfOrigin.canton);
 	}
 
 	@Test
 	public void undoSwiss() throws Exception {
 		Person person = reload(p);
-		person.nationality.nationalityCountry.countryId = 8345;
+		person.nationality.nationalityCountry.id = 8345;
 		person.nationality.nationalityCountry.countryIdISO2 = "SN";
 		person.nationality.nationalityCountry.countryNameShort = "Senegal";
 		person.foreign.residencePermit = ResidencePermit.Saisonarbeiter;
@@ -53,7 +55,7 @@ public class NaturalizeSwissTest extends AbstractServerTest {
 		person = reload(p);
 		Assert.assertNotNull(person);
 		Assert.assertEquals(NationalityStatus.with, person.nationality.nationalityStatus);
-		Assert.assertEquals(Integer.valueOf(8345), person.nationality.nationalityCountry.countryId);	
+		Assert.assertEquals(Integer.valueOf(8345), person.nationality.nationalityCountry.id);	
 		Assert.assertEquals("Senegal", person.nationality.nationalityCountry.countryNameShort);	
 		Assert.assertEquals("SN", person.nationality.nationalityCountry.countryIdISO2);	
 		

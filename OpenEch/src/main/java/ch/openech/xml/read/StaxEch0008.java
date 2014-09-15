@@ -5,7 +5,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import  ch.openech.model.common.CountryIdentification;
+import ch.openech.model.common.CountryIdentification;
 
 public class StaxEch0008 {
 
@@ -20,6 +20,9 @@ public class StaxEch0008 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
+				if ("countryId".equals(startName)) {
+					startName = "id";
+				} 
 				StaxEch.simpleValue(xml, countryIdentification, startName);
 			} else if (event.isEndElement()) return countryIdentification;
 			// else skip

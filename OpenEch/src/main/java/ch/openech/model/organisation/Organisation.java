@@ -48,7 +48,7 @@ public class Organisation implements Validation {
 	// Der eCH - Event, mit dem die aktuelle Version erstellt oder verändert wurde
 	public Event event;
 	
-	public long id;
+	public Object id;
 	public int version;
 	
 	// 97 : Identification

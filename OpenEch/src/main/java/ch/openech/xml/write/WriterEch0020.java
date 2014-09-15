@@ -1,28 +1,29 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
 import org.threeten.bp.LocalDate;
 
-import  ch.openech.model.common.DwellingAddress;
-import  ch.openech.model.common.MunicipalityIdentification;
-import  ch.openech.model.common.Place;
-import  ch.openech.model.common.Swiss;
-import  ch.openech.model.person.Foreign;
-import  ch.openech.model.person.NameOfParent;
-import  ch.openech.model.person.Nationality;
-import  ch.openech.model.person.Occupation;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.PersonIdentification;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.Relation;
-import  ch.openech.model.person.types.MaritalStatus;
-import  ch.openech.model.person.types.PartnerShipAbolition;
-import  ch.openech.model.person.types.Religion;
-import  ch.openech.model.person.types.Separation;
-import  ch.openech.model.types.TypeOfResidence;
+import ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.Place;
+import ch.openech.model.common.Swiss;
+import ch.openech.model.person.Foreign;
+import ch.openech.model.person.NameOfParent;
+import ch.openech.model.person.Nationality;
+import ch.openech.model.person.Occupation;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.SecondaryResidence;
+import ch.openech.model.person.types.MaritalStatus;
+import ch.openech.model.person.types.PartnerShipAbolition;
+import ch.openech.model.person.types.Religion;
+import ch.openech.model.person.types.Separation;
+import ch.openech.model.types.TypeOfResidence;
 
 public class WriterEch0020 extends DeliveryWriter {
 
@@ -407,7 +408,7 @@ public class WriterEch0020 extends DeliveryWriter {
 		WriterElement element = parent.create(URI, HAS_MAIN_RESIDENCE);
 		reportingMunicipality(element, MAIN_RESIDENCE, values.residence.reportingMunicipality, values);
 		if (values.residence.secondary != null) {
-			for (MunicipalityIdentification residence : values.residence.secondary) {
+			for (SecondaryResidence residence : values.residence.secondary) {
 				ech7.municipality(element, SECONDARY_RESIDENCE, residence);
 			}
 		}
@@ -424,6 +425,10 @@ public class WriterEch0020 extends DeliveryWriter {
 	private void hasOtherResidence(WriterElement parent, Person values) throws Exception {
 		WriterElement element = parent.create(URI, HAS_OTHER_RESIDENCE);
 		reportingMunicipality(element, SECONDARY_RESIDENCE, values.residence.secondary.get(0), values);
+	}
+
+	private void reportingMunicipality(WriterElement parent, String tagName, SecondaryResidence secondaryResidence, Person values) throws Exception {
+		reportingMunicipality(parent, tagName, secondaryResidence.municipalityIdentification, values);
 	}
 	
 	private void reportingMunicipality(WriterElement parent, String tagName, MunicipalityIdentification reportingMunicipality, Person values) throws Exception {

@@ -14,12 +14,11 @@ import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.OpenEchApplication;
+import ch.openech.frontend.org.ImportSwissDataAction;
 import ch.openech.model.EchSchemaValidation;
-import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
-import ch.openech.xml.read.StaxEch0072;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -40,9 +39,7 @@ public abstract class AbstractServerTest {
 	}
 
 	protected static void initCodes() {
-		for (CountryIdentification country : StaxEch0072.getInstance().getCountryIdentifications()) {
-			Backend.getInstance().insert(country);
-		}
+		new ImportSwissDataAction().action();
 	}
 	
 	public static void clear() {
@@ -65,15 +62,15 @@ public abstract class AbstractServerTest {
 	public static Person processFile(String relativFileName) throws IOException {
 		InputStream inputStream = AbstractServerTest.class.getResourceAsStream(relativFileName);
 		String xml = convertStreamToString(inputStream);
-		long insertId = Backend.getInstance().execute(new PersonTransaction(xml));
-		if (insertId > 0) {
+		Object insertId = Backend.getInstance().execute(new PersonTransaction(xml));
+		if (insertId != null) {
 			return Backend.getInstance().read(Person.class, insertId);
 		} else {
 			return null;
 		}
 	}
 	
-	public static Long process(String string) throws IOException {
+	public static Object process(String string) throws IOException {
 		String validationMessage = EchSchemaValidation.validate(string);
 		boolean valid = EchSchemaValidation.OK.equals(validationMessage);
 		if (!valid) {

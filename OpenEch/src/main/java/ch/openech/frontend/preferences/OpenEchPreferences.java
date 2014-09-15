@@ -11,7 +11,7 @@ import org.minimalj.model.validation.ValidationMessage;
 import ch.openech.model.EchSchema0020;
 import ch.openech.model.EchSchema0093;
 import ch.openech.model.EchSchema0148;
-import ch.openech.model.common.CantonAbbreviation;
+import ch.openech.model.common.Canton;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.person.types.Religion;
 import ch.openech.model.types.Language;
@@ -36,7 +36,7 @@ public class OpenEchPreferences implements Validation {
 		public final MunicipalityIdentification residence = new MunicipalityIdentification();
 		@Size(4)
 		public String plz;
-		public final CantonAbbreviation cantonAbbreviation = new CantonAbbreviation();
+		public Canton canton;
 		public Language language = Language.de;
 		public Religion religion = Religion.unbekannt;
 	}

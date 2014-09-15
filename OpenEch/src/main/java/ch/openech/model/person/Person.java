@@ -52,7 +52,7 @@ public class Person implements Validation {
 	
 	//
 
-	public long id;
+	public Object id;
 	public int version;
 	
 	@Required @Size(EchFormats.baseName) @Searched

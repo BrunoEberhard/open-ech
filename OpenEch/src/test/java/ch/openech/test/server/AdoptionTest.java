@@ -4,9 +4,11 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.minimalj.util.Codes;
 
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.Relation;
+import ch.openech.model.common.Canton;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.Relation;
 
 public class AdoptionTest extends AbstractServerTest {
 
@@ -36,9 +38,9 @@ public class AdoptionTest extends AbstractServerTest {
 		Assert.assertEquals(father.officialName, child.officialName);
 
 		Assert.assertEquals("CH", child.placeOfBirth.countryIdentification.countryIdISO2);
-		Assert.assertEquals(new Integer(2196), child.placeOfBirth.municipalityIdentification.municipalityId);
+		Assert.assertEquals(new Integer(2196), child.placeOfBirth.municipalityIdentification.id);
 		Assert.assertEquals("Fribourg", child.placeOfBirth.municipalityIdentification.municipalityName);
-		Assert.assertEquals("FR", child.placeOfBirth.municipalityIdentification.cantonAbbreviation.canton);
+		Assert.assertEquals(Codes.findCode(Canton.class, "FR"), child.placeOfBirth.municipalityIdentification.canton);
 		
 		Relation motherRelation = child.getMother();
 		Assert.assertEquals(mother.id, motherRelation.partner.id);

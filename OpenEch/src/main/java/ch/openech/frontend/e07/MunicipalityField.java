@@ -5,17 +5,17 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.PropertyInterface;
+import org.minimalj.util.Codes;
 import org.minimalj.util.DemoEnabled;
 
 import ch.openech.datagenerator.DataGenerator;
-import  ch.openech.model.code.FederalRegister;
-import  ch.openech.model.common.MunicipalityIdentification;
-import ch.openech.xml.read.StaxEch0071;
+import ch.openech.model.code.FederalRegister;
+import ch.openech.model.common.MunicipalityIdentification;
 
 public class MunicipalityField extends AbstractEditField<MunicipalityIdentification> implements DemoEnabled {
 	private final List<MunicipalityIdentification> municipalities;
@@ -30,7 +30,7 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 		
 		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 		
-		municipalities = StaxEch0071.getInstance().getMunicipalityIdentifications();
+		municipalities = Codes.get(MunicipalityIdentification.class);
 		List<MunicipalityIdentification> items = new ArrayList<MunicipalityIdentification>(municipalities.size() + 5);
 		if (allowFederalRegister) {
 			for (FederalRegister federalRegister : FederalRegister.values()) {
@@ -72,7 +72,7 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 
 		private FederalRegisterMunicipality(FederalRegister federalRegister) {
 			this.federalRegister = federalRegister;
-			this.historyMunicipalityId = - federalRegister.ordinal() - 1;
+			this.id = - federalRegister.ordinal() - 1;
 		}
 		
 		@Override
