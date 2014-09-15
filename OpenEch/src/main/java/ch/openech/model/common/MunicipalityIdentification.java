@@ -47,13 +47,12 @@ public class MunicipalityIdentification implements Code, Comparable<Municipality
 		}
 	}
 	
-//	@Override
-//	public String toString() {
-//		return formatMunicipality(municipalityName, canton.id);
-//	}
-//	
 	@Override
-//	public String getText(Locale local) {
+	public String toString() {
+		return formatMunicipality(municipalityName, canton.id);
+	}
+	
+	@Override
 	public String display() {
 		return formatMunicipality(municipalityName, canton.id);
 	}
