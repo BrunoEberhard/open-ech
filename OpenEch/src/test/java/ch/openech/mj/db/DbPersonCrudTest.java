@@ -7,7 +7,6 @@ import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.minimalj.backend.db.DbPersistence;
-import org.minimalj.backend.db.ImmutableTable;
 import org.minimalj.backend.db.Table;
 
 import ch.openech.model.common.Address;
@@ -30,7 +29,7 @@ public class DbPersonCrudTest {
 
 	@Test
 	public void testCrud() throws SQLException {
-		ImmutableTable<Address> addressTable = persistence.getImmutableTable(Address.class);
+		Table<Address> addressTable = persistence.getTable(Address.class);
 		
 		Address address = new Address();
 		address.street = "Grütstrasse";
@@ -39,7 +38,7 @@ public class DbPersonCrudTest {
 		address.town = "Jona";
 		address.country = "CH";
 		
-		String id = addressTable.getId(address);
+		Object id = addressTable.insert(address);
 		
 		Address readAddress = (Address)addressTable.read(id);
 		
@@ -47,15 +46,12 @@ public class DbPersonCrudTest {
 		Assert.assertEquals(address.street, readAddress.street);
 		Assert.assertEquals(address.houseNumber.houseNumber, readAddress.houseNumber.houseNumber);
 		Assert.assertEquals(address.country, readAddress.country);
-	
-		String id2 = addressTable.getId(address);
-		
-		Assert.assertEquals(id, id2);
 		
 		readAddress.houseNumber.houseNumber = "11";
-		String id3 = addressTable.getId(readAddress);
+		addressTable.update(readAddress);
 
-		Assert.assertNotSame(id, id3);
+		readAddress = (Address)addressTable.read(id);
+		Assert.assertEquals("11", readAddress.houseNumber.houseNumber);
 	}
 	
 	@Test

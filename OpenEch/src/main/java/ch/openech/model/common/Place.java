@@ -7,6 +7,8 @@ import ch.openech.model.EchFormats;
 // Verwendung als Birthplace und als Destination
 public class Place {
 	
+	public Object id;
+	
 	public MunicipalityIdentification municipalityIdentification;
 	public CountryIdentification countryIdentification = Swiss.createCountryIdentification();
 	@Size(EchFormats.baseName)  // TODO REMOVE

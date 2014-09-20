@@ -20,6 +20,8 @@ public class DwellingAddress implements Validation {
 	
 	public transient EchSchema echSchema;
 	
+	public Object id;
+	
 	@Size(9)
 	public String EGID;
 	@Size(3)

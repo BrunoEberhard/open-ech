@@ -11,8 +11,8 @@ import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.types.MrMrs;
+import ch.openech.model.EchFormats;
+import ch.openech.model.types.MrMrs;
 import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 
@@ -21,6 +21,8 @@ public class Address implements Validation {
 	
 	public static final Address ADDRESS = Keys.of(Address.class);
 
+	public Object id;
+	
 	// organisation
 	@Size(EchFormats.organisationName)
 	public String organisationName, organisationNameAddOn1, organisationNameAddOn2;

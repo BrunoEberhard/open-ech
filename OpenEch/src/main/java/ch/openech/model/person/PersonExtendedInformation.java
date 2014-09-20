@@ -4,13 +4,15 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.EchFormats;
+import ch.openech.model.common.Address;
+import ch.openech.model.types.YesNo;
 
 public class PersonExtendedInformation {
 
 	public static final PersonExtendedInformation PERSON_EXTENDED_INFORMATION = Keys.of(PersonExtendedInformation.class);
+	
+	public Object id;
 	
 	public PersonIdentification personIdentification;
 	
