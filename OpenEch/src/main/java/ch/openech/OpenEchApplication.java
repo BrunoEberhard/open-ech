@@ -42,7 +42,7 @@ import ch.openech.frontend.org.ImportAllOrganisationAction;
 import ch.openech.frontend.org.ImportSwissDataAction;
 import ch.openech.frontend.org.KeyDeliveryOrganisationAction;
 import ch.openech.frontend.page.OrganisationSearchPage;
-import ch.openech.frontend.page.PersonOrganisationPage;
+import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.frontend.preferences.PreferencesEditor;
@@ -91,7 +91,7 @@ public class OpenEchApplication extends MjApplication {
 
 	@Override
 	public Class<?>[] getSearchClasses() {
-		return new Class<?>[]{PersonOrganisationPage.class, OrganisationSearchPage.class};
+		return new Class<?>[]{PersonSearchPage.class, OrganisationSearchPage.class};
 	}
 
 	@Override

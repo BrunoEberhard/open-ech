@@ -9,7 +9,7 @@ import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
 
-import ch.openech.frontend.page.PersonOrganisationPage;
+import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
 
@@ -41,7 +41,7 @@ public class PersonIdentificationField extends ObjectFlowField<PersonIdentificat
 	public final class PersonSearchAction extends SearchDialogAction<Person> {
 		
 		public PersonSearchAction() {
-			super(PersonOrganisationPage.FIELD_NAMES);
+			super(PersonSearchPage.FIELD_NAMES);
 		}
 
 		@Override
