@@ -12,6 +12,7 @@ import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.frontend.page.PersonOrganisationPage;
 import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonSearch;
 
 public class PersonField extends ObjectFlowField<Person> {
 
@@ -40,20 +41,21 @@ public class PersonField extends ObjectFlowField<Person> {
         addAction(new RemoveObjectAction());
 	}
 	
-	public class PersonSearchAction extends SearchDialogAction<Person> {
+	public class PersonSearchAction extends SearchDialogAction<PersonSearch> {
 		
 		public PersonSearchAction() {
 			super(PersonOrganisationPage.FIELD_NAMES);
 		}
 
 		@Override
-		protected void save(Person object) {
-			setObject(object);
+		protected void save(PersonSearch object) {
+			Person person = Backend.getInstance().read(Person.class, object.id);
+			setObject(person);
 		}
 
 		@Override
-		public List<Person> search(String searchText) {
-			return Backend.getInstance().read(Person.class, Criteria.search(searchText), 100);
+		public List<PersonSearch> search(String searchText) {
+			return Backend.getInstance().read(PersonSearch.class, Criteria.search(searchText), 100);
 		}
 
 	}
