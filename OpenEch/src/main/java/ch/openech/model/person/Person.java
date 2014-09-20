@@ -71,7 +71,7 @@ public class Person implements Validation {
 	@Size(EchFormats.baseName) @Searched
 	public String originalName, alliancePartnershipName, aliasName, otherName, callName;
 
-	public Place placeOfBirth; // 1:0-1 -> not final and Place inline as immutable
+	public Place placeOfBirth; // 1:0-1 -> not final but a dependable
 	public LocalDate dateOfDeath;
 	
 	public final MaritalStatus maritalStatus = new MaritalStatus(); // 1:1 -> final and MaritalStatus inline
