@@ -49,20 +49,21 @@ public class MunicipalityIdentification implements Code, Comparable<Municipality
 	
 	@Override
 	public String toString() {
-		return formatMunicipality(municipalityName, canton.id);
+		return formatMunicipality(municipalityName, canton);
 	}
 	
 	@Override
 	public String display() {
-		return formatMunicipality(municipalityName, canton.id);
+		return formatMunicipality(municipalityName, canton);
 	}
 
-	public static String formatMunicipality(String municipalityName, String cantonAbbreviation) {
-		String canton = " (" + cantonAbbreviation + ")";
-		if (cantonAbbreviation == null || municipalityName.endsWith(canton)) {
+	public static String formatMunicipality(String municipalityName, Canton canton) {
+		if (canton == null) return municipalityName;
+		String cantonString = " (" + canton.id + ")";
+		if (canton == null || municipalityName.endsWith(cantonString)) {
 			return municipalityName;
 		} else {
-			return municipalityName + canton;
+			return municipalityName + cantonString;
 		}
 	}
 	
