@@ -15,7 +15,7 @@ import ch.openech.xml.write.EchSchema;
 public class PersonHistoryPage extends HistoryPage<Person> {
 
 	private final EchSchema echNamespaceContext;
-	private final long personId;
+	private final String personId;
 
 	public PersonHistoryPage(String[] arguments) {
 		this(arguments[0], arguments[1]);
@@ -26,7 +26,7 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 	}
 	
 	public PersonHistoryPage(EchSchema echNamespaceContext, String personId) {
-		this.personId = Long.valueOf(personId);
+		this.personId = personId;
 		this.echNamespaceContext = echNamespaceContext;
 	}
 	
