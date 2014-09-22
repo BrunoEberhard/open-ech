@@ -1,15 +1,16 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
 import org.minimalj.model.ViewUtil;
 
-import  ch.openech.model.common.NamedId;
-import  ch.openech.model.organisation.Organisation;
-import  ch.openech.model.organisation.OrganisationIdentification;
-import  ch.openech.model.organisation.UidStructure;
+import ch.openech.model.common.NamedId;
+import ch.openech.model.organisation.Organisation;
+import ch.openech.model.organisation.OrganisationIdentification;
+import ch.openech.model.organisation.UidStructure;
+import ch.openech.model.organisation.types.LegalForm;
 
 public class WriterEch0097 {
 
@@ -35,7 +36,8 @@ public class WriterEch0097 {
 		// localOrganisationId(element, values.technicalIds.id);
 		namedId(element, values.technicalIds.localId, LOCAL_ORGANISATION_ID);
 		namedId(element, values.technicalIds.otherId, _OTHER_ORGANISATION_ID); // VERSION
-		element.values(values, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME, LEGAL_FORM);
+		element.values(values, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME);
+		legalForm(element, values.legalForm);
     }
 	
 	public void uidStructure(WriterElement parent, String tagName, UidStructure uid) throws Exception {
@@ -59,4 +61,10 @@ public class WriterEch0097 {
 		element.text(ORGANISATION_ID, namedId.personId);
 	}
 
+	private void legalForm(WriterElement parent, LegalForm legalForm) throws Exception {
+		if (legalForm != null) {
+			parent.text(LEGAL_FORM, legalForm.id);
+		}
+	}
+	
 }

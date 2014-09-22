@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import javax.xml.stream.XMLEventReader;
@@ -11,10 +11,11 @@ import javax.xml.stream.events.XMLEvent;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.common.NamedId;
-import  ch.openech.model.organisation.Organisation;
-import  ch.openech.model.organisation.OrganisationIdentification;
-import  ch.openech.model.organisation.UidStructure;
+import ch.openech.model.common.NamedId;
+import ch.openech.model.organisation.Organisation;
+import ch.openech.model.organisation.OrganisationIdentification;
+import ch.openech.model.organisation.UidStructure;
+import ch.openech.model.organisation.types.LegalForm;
 
 public class StaxEch0097 {
 
@@ -78,7 +79,8 @@ public class StaxEch0097 {
 				else if (startName.equals(LOCAL_ORGANISATION_ID)) namedOrganisationId(xml, organisation.technicalIds.localId);
 				else if (startName.equals("otherOrganisationId") || startName.equals(_OTHER_ORGANISATION_ID)) organisation.technicalIds.otherId.add(namedOrganisationId(xml));
 				
-				else if (StringUtils.equals(startName, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME, LEGAL_FORM)) organisation.set(startName, token(xml));
+				else if (StringUtils.equals(startName, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME)) organisation.set(startName, token(xml));
+				else if (StringUtils.equals(startName, LEGAL_FORM)) organisation.legalForm = new LegalForm(token(xml));
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
