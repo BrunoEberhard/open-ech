@@ -37,10 +37,6 @@ public class ImportSwissDataAction extends ResourceAction {
 			municipalityIdentification.municipalityName = EnumUtils.getText(federalRegister);
 			Backend.getInstance().insert(municipalityIdentification);
 		}
-
-//		if (inputStream != null) {
-//			Backend.getInstance().execute(new OrganisationImportStreamConsumer(), inputStream);
-//		}
 	}
 	
 }
