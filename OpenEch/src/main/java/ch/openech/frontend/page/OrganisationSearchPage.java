@@ -9,6 +9,7 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.TablePage;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.util.IdUtils;
 
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.EchSchema0148;
@@ -55,7 +56,7 @@ public class OrganisationSearchPage extends TablePage<Organisation> {
 		int index = 0;
 		int count = 0;
 		for (Organisation o : selectedObjects) {
-			String link = link(OrganisationPage.class, echSchema.getVersion(), o.technicalIds.localId.personId);
+			String link = link(OrganisationPage.class, echSchema.getVersion(), IdUtils.getIdString(o));
 			pageLinks.add(link);
 			if (o == organisation) {
 				index = count;

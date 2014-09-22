@@ -50,11 +50,10 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 	}
 
 	private static Organisation loadObject(String organisationId, int time) {
-		long id = Long.valueOf(organisationId);
 		if (time == 0) {
-			return Backend.getInstance().read(Organisation.class, id);
+			return Backend.getInstance().read(Organisation.class, organisationId);
 		} else {
-			return Backend.getInstance().read(Organisation.class, id, time);
+			return Backend.getInstance().read(Organisation.class, organisationId, time);
 		}
 	}
 
