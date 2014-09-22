@@ -36,8 +36,6 @@ public class StaxEch0148 {
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
-		
-		backend.insert(organisation);
 		insertId = backend.insert(organisation);
 	}
 	
