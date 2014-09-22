@@ -14,12 +14,24 @@ public class LegalForm implements Code {
 	@Size(255)
 	public String description;
 
+	public LegalForm() {
+		// nothing
+	}
+	
+	public LegalForm(String id) {
+		this.id = id;
+	}
+
 	@Override
-//	public String getText(Locale local) {
 	public String display() {
 		return text;
 	}
-	
+
+	@Override
+	public String toString() {
+		return text;
+	}
+
 	// hash / equals. This is important
 
 	@Override
