@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.threeten.bp.LocalDate;
 
+import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
-import ch.openech.model.common.Swiss;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.NameOfParent;
 import ch.openech.model.person.Nationality;
@@ -193,9 +193,9 @@ public class WriterEch0020 extends DeliveryWriter {
 		WriterElement nationality = event.create(URI, tagName);
 		nationality.text(NATIONALITY_STATUS, "2");
 		WriterElement country = nationality.create(URI, COUNTRY);
-		country.text(COUNTRY_ID, Swiss.SWISS_COUNTRY_ID);
-		country.text(COUNTRY_ID_I_S_O2, Swiss.SWISS_COUNTRY_ISO2);
-		country.text(COUNTRY_NAME_SHORT, Swiss.SWISS_COUNTRY_NAME_SHORT);
+		country.text(COUNTRY_ID, CountryIdentification.SWISS_COUNTRY_ID);
+		country.text(COUNTRY_ID_I_S_O2, CountryIdentification.SWISS_COUNTRY_ISO2);
+		country.text(COUNTRY_NAME_SHORT, CountryIdentification.SWISS_COUNTRY_NAME_SHORT);
 	}
 
 	// Elemente für 25, Gardian und 39, Care

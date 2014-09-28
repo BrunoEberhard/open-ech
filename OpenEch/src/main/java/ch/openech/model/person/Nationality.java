@@ -4,7 +4,6 @@ import org.minimalj.model.Keys;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.CountryIdentification;
-import ch.openech.model.common.Swiss;
 
 public class Nationality  {
 
@@ -14,7 +13,7 @@ public class Nationality  {
 	public CountryIdentification nationalityCountry;
 	
 	public Nationality() {
-		this(Swiss.createCountryIdentification());
+		this(CountryIdentification.createSwiss());
 	}
 	
 	public Nationality(CountryIdentification nationalityCountry) {

@@ -11,7 +11,6 @@ import org.minimalj.backend.db.Table;
 
 import ch.openech.model.common.Address;
 import ch.openech.model.common.CountryIdentification;
-import ch.openech.model.common.Swiss;
 import ch.openech.model.person.Occupation;
 import ch.openech.model.person.Person;
 import ch.openech.model.types.MrMrs;
@@ -24,7 +23,7 @@ public class DbPersonCrudTest {
 	@BeforeClass
 	public static void setupDb() throws SQLException {
 		persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Person.class);
-		persistence.insert(Swiss.createCountryIdentification());
+		persistence.insert(CountryIdentification.createSwiss());
 	}
 
 	@Test

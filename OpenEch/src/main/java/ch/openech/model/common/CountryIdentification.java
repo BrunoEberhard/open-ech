@@ -17,6 +17,10 @@ public class CountryIdentification implements Code, Comparable<CountryIdentifica
 
 	public static final CountryIdentification COUNTRY_IDENTIFICATION = Keys.of(CountryIdentification.class);
 
+	public static final Integer SWISS_COUNTRY_ID = 8100;
+	public static final String SWISS_COUNTRY_ISO2 = "CH";
+	public static final String SWISS_COUNTRY_NAME_SHORT = "Schweiz";
+	
 	@Size(4)
 	public Integer id;
 	public String countryIdISO2;
@@ -40,10 +44,18 @@ public class CountryIdentification implements Code, Comparable<CountryIdentifica
 		countryIdISO2 = countryNameShort = null;
 	}
 
+	public static CountryIdentification createSwiss() {
+		CountryIdentification countryIdentification = new CountryIdentification();
+		countryIdentification.id = SWISS_COUNTRY_ID;
+		countryIdentification.countryIdISO2 = SWISS_COUNTRY_ISO2;
+		countryIdentification.countryNameShort = SWISS_COUNTRY_NAME_SHORT;
+		return countryIdentification;
+	}
+	
 	public boolean isSwiss() {
-		return Swiss.SWISS_COUNTRY_ID.equals(id) && //
-				Swiss.SWISS_COUNTRY_ISO2.equals(countryIdISO2) && //
-				Swiss.SWISS_COUNTRY_NAME_SHORT.equals(countryNameShort);
+		return SWISS_COUNTRY_ID.equals(id) || //
+				SWISS_COUNTRY_ISO2.equals(countryIdISO2) || //
+				SWISS_COUNTRY_NAME_SHORT.equals(countryNameShort);
 	}
 
 	@Override

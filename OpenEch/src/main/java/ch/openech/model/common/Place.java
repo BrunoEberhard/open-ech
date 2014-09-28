@@ -10,7 +10,7 @@ public class Place {
 	public Object id;
 	
 	public MunicipalityIdentification municipalityIdentification;
-	public CountryIdentification countryIdentification = Swiss.createCountryIdentification();
+	public CountryIdentification countryIdentification = CountryIdentification.createSwiss();
 	@Size(EchFormats.baseName)  // TODO REMOVE
 	public String foreignTown;
 	public Address mailAddress; // nur bei Verwendung als Destination

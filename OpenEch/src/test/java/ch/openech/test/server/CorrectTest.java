@@ -18,7 +18,6 @@ import ch.openech.model.common.Canton;
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
-import ch.openech.model.common.Swiss;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
@@ -216,7 +215,7 @@ public class CorrectTest extends AbstractServerTest {
 		process(writer().correctPlaceOfBirth(person));
 		
 		person = reload(p);
-		Assert.assertEquals(Swiss.createCountryIdentification(), person.placeOfBirth.countryIdentification);
+		Assert.assertEquals(CountryIdentification.createSwiss(), person.placeOfBirth.countryIdentification);
 		Assert.assertEquals(jona.canton, person.placeOfBirth.municipalityIdentification.canton);
 		Assert.assertEquals(jona.historyMunicipalityId, person.placeOfBirth.municipalityIdentification.historyMunicipalityId);
 		Assert.assertEquals(jona.id, person.placeOfBirth.municipalityIdentification.id);
