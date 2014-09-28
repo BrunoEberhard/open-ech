@@ -13,6 +13,7 @@ import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.preferences.OpenEchPreferences;
+import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Place;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
@@ -159,9 +160,9 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 
 	@BusinessRule("Bei Geburt wird Staatsangehörigkeit von Vater übernommen, wenn nicht vorhanden von Mutter")
 	private static void presetNationality(Person person, Person father, Person mother) {
-		if (father != null && "2".equals(father.nationality.nationalityStatus)) {
+		if (father != null && father.nationality.nationalityStatus == NationalityStatus.with) {
 			father.nationality.copyTo(person.nationality);
-		} else if (mother != null && "2".equals(mother.nationality.nationalityStatus)) {
+		} else if (mother != null && mother.nationality.nationalityStatus == NationalityStatus.with) {
 			mother.nationality.copyTo(person.nationality);
 		}
 	}
