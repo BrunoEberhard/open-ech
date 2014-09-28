@@ -15,6 +15,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
+import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 import org.threeten.bp.LocalDateTime;
 
@@ -28,7 +29,7 @@ public class StaxEch0148 {
 	private final Backend backend;
 	
 	private Event e;
-	private Object insertId = null;
+	private Object changedOrganisationId = null;
 	
 	public StaxEch0148(Backend backend) {
 		this.backend = backend;
@@ -36,11 +37,11 @@ public class StaxEch0148 {
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
-		insertId = backend.insert(organisation);
+		changedOrganisationId = backend.insert(organisation);
 	}
 	
-	public Object getInsertId() {
-		return insertId;
+	public Object getChangedOrganisationId() {
+		return changedOrganisationId;
 	}
 
 	public void process(String xmlString) throws XMLStreamException {
@@ -129,6 +130,7 @@ public class StaxEch0148 {
 		try {
 			organisation.event = e;
 			backend.update(organisation);
+			changedOrganisationId = IdUtils.getId(organisation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

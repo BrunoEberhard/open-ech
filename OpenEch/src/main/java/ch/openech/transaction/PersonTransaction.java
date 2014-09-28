@@ -23,19 +23,19 @@ public class PersonTransaction implements Transaction<Object> {
 	
 	@Override
 	public Object execute(Backend backend) {
-		Object insertId = null;
+		Object changedPersonId = null;
 		StaxEch0020 stax = new StaxEch0020(backend);
 		for (String xml : xmls) {
 			try {
 				stax.process(xml);
-				if (insertId == null) {
-					insertId = stax.getInsertId();
+				if (changedPersonId == null) {
+					changedPersonId = stax.getChangedPersonId();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return insertId;
+		return changedPersonId;
 	}
 	
 }
