@@ -17,8 +17,9 @@ import org.threeten.bp.LocalTime;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.person.Person;
+import ch.openech.test.server.AbstractServerTest;
 
-public class SerializationTest {
+public class SerializationTest extends AbstractServerTest {
 
 	@Test
 	public void serializeTestClass1() throws Exception {
