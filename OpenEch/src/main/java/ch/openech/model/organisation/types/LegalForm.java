@@ -11,7 +11,7 @@ public class LegalForm implements Code {
 	@Size(255)
 	public String text;
 	
-	@Size(255)
+	@Size(1023)
 	public String description;
 
 	public LegalForm() {
