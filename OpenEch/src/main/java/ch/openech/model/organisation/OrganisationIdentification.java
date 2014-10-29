@@ -1,14 +1,17 @@
 package  ch.openech.model.organisation;
 
+import java.util.Locale;
+
+import org.minimalj.model.Rendering;
+import org.minimalj.model.View;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
-import org.minimalj.model.annotation.ViewOf;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.common.TechnicalIds;
 import ch.openech.model.organisation.types.LegalForm;
 
-public class OrganisationIdentification implements ViewOf<Organisation> {
+public class OrganisationIdentification implements View<Organisation>, Rendering {
 
 	public Object id;
 	
@@ -23,7 +26,7 @@ public class OrganisationIdentification implements ViewOf<Organisation> {
 	public LegalForm legalForm;
 	
 	@Override
-	public String display() {
+	public String render(RenderType renderType, Locale locale) {
 		return organisationName;
 	}
 }

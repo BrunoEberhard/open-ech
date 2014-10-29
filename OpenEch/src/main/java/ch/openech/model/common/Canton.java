@@ -1,13 +1,16 @@
 package  ch.openech.model.common;
 
+import java.util.Locale;
+
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.EchFormats;
 
-public class Canton implements Code, Comparable<Canton> {
+public class Canton implements Code, Rendering, Comparable<Canton> {
 
 	public static final Canton CANTON = Keys.of(Canton.class);
 
@@ -29,10 +32,9 @@ public class Canton implements Code, Comparable<Canton> {
 		// Used in ComboBox
 		return StringUtils.compare(id, c.id);
 	}
-	
+
 	@Override
-//	public String getText(Locale local) {
-	public String display() {
+	public String render(RenderType renderType, Locale locale) {
 		return id;
 	}
 

@@ -1,9 +1,12 @@
 package ch.openech.model.organisation.types;
 
+import java.util.Locale;
+
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Size;
 
-public class LegalForm implements Code {
+public class LegalForm implements Code, Rendering {
 	
 	@Size(4)
 	public String id;
@@ -23,7 +26,7 @@ public class LegalForm implements Code {
 	}
 
 	@Override
-	public String display() {
+	public String render(RenderType renderType, Locale locale) {
 		return text;
 	}
 

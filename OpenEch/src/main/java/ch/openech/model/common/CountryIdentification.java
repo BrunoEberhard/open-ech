@@ -1,8 +1,10 @@
 package  ch.openech.model.common;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
@@ -12,7 +14,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.model.EchFormats;
 
 @Sizes(EchFormats.class)
-public class CountryIdentification implements Code, Comparable<CountryIdentification>, Serializable, Cloneable {
+public class CountryIdentification implements Code, Rendering, Comparable<CountryIdentification>, Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 
 	public static final CountryIdentification COUNTRY_IDENTIFICATION = Keys.of(CountryIdentification.class);
@@ -59,17 +61,16 @@ public class CountryIdentification implements Code, Comparable<CountryIdentifica
 	}
 
 	@Override
-	public String toString() {
-		// Used in ComboBox - Renderer
+	public String render(RenderType renderType, Locale locale) {
 		return countryNameShort;
 	}
 
 	@Override
-//	public String getText(Locale local) {
-	public String display() {
-		return countryNameShort;
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
 	}
-	
+
 	@Override
 	public int compareTo(CountryIdentification c) {
 		// Used in ComboBox to sort

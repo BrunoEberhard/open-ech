@@ -1,9 +1,9 @@
 package  ch.openech.model.person;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.View;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
-import org.minimalj.model.annotation.ViewOf;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.EchFormats;
@@ -12,7 +12,7 @@ import ch.openech.model.common.TechnicalIds;
 import ch.openech.model.person.types.Vn;
 import ch.openech.model.types.Sex;
 
-public class PersonIdentification implements ViewOf<Person> {
+public class PersonIdentification implements View<Person> {
 
 	public static final PersonIdentification PERSON_IDENTIFICATION = Keys.of(PersonIdentification.class);
 	

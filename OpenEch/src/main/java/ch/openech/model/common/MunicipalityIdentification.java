@@ -1,8 +1,10 @@
 package  ch.openech.model.common;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
@@ -12,7 +14,7 @@ import ch.openech.model.EchFormats;
 import ch.openech.model.code.FederalRegister;
 
 @Sizes(EchFormats.class)
-public class MunicipalityIdentification implements Code, Comparable<MunicipalityIdentification>, Serializable {
+public class MunicipalityIdentification implements Code, Rendering, Comparable<MunicipalityIdentification>, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static MunicipalityIdentification MUNICIPALITY_IDENTIFICATION = Keys.of(MunicipalityIdentification.class);
@@ -48,12 +50,7 @@ public class MunicipalityIdentification implements Code, Comparable<Municipality
 	}
 	
 	@Override
-	public String toString() {
-		return formatMunicipality(municipalityName, canton);
-	}
-	
-	@Override
-	public String display() {
+	public String render(RenderType renderType, Locale locale) {
 		return formatMunicipality(municipalityName, canton);
 	}
 
