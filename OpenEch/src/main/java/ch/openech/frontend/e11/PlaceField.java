@@ -111,6 +111,10 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 
 	@Override
 	public void fillWithDemoData() {
+		if (municipalityIdentifications.isEmpty() || countries.isEmpty()) {
+			logger.warning("Keine Demodaten für Gemeinden oder Länder vorhanden");
+			return;
+		}
 		Place place = new Place();
 		if (Math.random() < 0.8) {
 			int index = (int)(Math.random() * (double)municipalityIdentifications.size());
