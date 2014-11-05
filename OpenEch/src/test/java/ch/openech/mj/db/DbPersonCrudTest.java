@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.minimalj.backend.db.DbPersistence;
 import org.minimalj.backend.db.Table;
@@ -27,6 +28,7 @@ public class DbPersonCrudTest {
 	}
 
 	@Test
+	@Ignore("Nicht mehr möglich, da Adresse kein Identifiable")
 	public void testCrud() throws SQLException {
 		Table<Address> addressTable = persistence.getTable(Address.class);
 		

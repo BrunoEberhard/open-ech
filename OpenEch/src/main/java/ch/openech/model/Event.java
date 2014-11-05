@@ -5,8 +5,6 @@ import org.threeten.bp.LocalDateTime;
 
 public class Event {
 
-	public Object id;
-	
 	public LocalDateTime time;
 	@Size(255)
 	public String type;

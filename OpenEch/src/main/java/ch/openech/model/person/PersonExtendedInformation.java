@@ -12,8 +12,6 @@ public class PersonExtendedInformation {
 
 	public static final PersonExtendedInformation PERSON_EXTENDED_INFORMATION = Keys.of(PersonExtendedInformation.class);
 	
-	public Object id;
-	
 	public PersonIdentification personIdentification;
 	
 	public YesNo armedForcesService, armedForcesLiability;

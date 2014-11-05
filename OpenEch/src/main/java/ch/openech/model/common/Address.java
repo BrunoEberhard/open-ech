@@ -21,8 +21,6 @@ public class Address implements Validation {
 	
 	public static final Address ADDRESS = Keys.of(Address.class);
 
-	public Object id;
-	
 	// organisation
 	@Size(EchFormats.organisationName)
 	public String organisationName, organisationNameAddOn1, organisationNameAddOn2;
