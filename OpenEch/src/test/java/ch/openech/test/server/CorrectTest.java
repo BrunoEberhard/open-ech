@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria.AllCriteria;
 import org.minimalj.util.Codes;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.code.ResidencePermit;

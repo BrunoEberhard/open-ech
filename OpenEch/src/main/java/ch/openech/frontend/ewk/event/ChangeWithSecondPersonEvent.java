@@ -9,7 +9,7 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.frontend.e44.SecondPersonField;
 import ch.openech.model.person.Person;

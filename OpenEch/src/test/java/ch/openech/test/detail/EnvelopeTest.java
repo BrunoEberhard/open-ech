@@ -5,7 +5,7 @@ import java.io.InputStream;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.threeten.bp.LocalDateTime;
+import java.time.LocalDateTime;
 
 import ch.openech.model.Envelope;
 import ch.openech.test.server.AbstractServerTest;

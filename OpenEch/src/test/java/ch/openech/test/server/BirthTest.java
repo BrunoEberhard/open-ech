@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.util.Codes;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Canton;

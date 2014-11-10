@@ -5,6 +5,7 @@ import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.time.LocalDateTime;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -17,7 +18,6 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
-import org.threeten.bp.LocalDateTime;
 
 import ch.openech.model.Event;
 import ch.openech.model.code.TypeOfResidenceOrganisation;

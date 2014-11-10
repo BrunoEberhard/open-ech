@@ -1,6 +1,6 @@
 package  ch.openech.model.person;
 
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.model.common.Address;
 

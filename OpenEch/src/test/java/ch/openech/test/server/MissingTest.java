@@ -2,7 +2,7 @@ package ch.openech.test.server;
 
 import junit.framework.Assert;
 
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

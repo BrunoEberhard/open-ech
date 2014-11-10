@@ -1,21 +1,10 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.ACTION;
-import static  ch.openech.model.XmlConstants.DATA_LOCK;
-import static  ch.openech.model.XmlConstants.DELIVERY_HEADER;
-import static  ch.openech.model.XmlConstants.EVENT_DATE;
-import static  ch.openech.model.XmlConstants.EXTENSION;
-import static  ch.openech.model.XmlConstants.MANUFACTURER;
-import static  ch.openech.model.XmlConstants.PRODUCT;
-import static  ch.openech.model.XmlConstants.PRODUCT_VERSION;
-import static  ch.openech.model.XmlConstants.RECIPIENT_ID;
-import static  ch.openech.model.XmlConstants.SENDER_ID;
-import static  ch.openech.model.XmlConstants.SENDING_APPLICATION;
-import static  ch.openech.model.XmlConstants.TEST_DELIVERY_FLAG;
+import static ch.openech.model.XmlConstants.*;
 
 import org.minimalj.util.resources.ResourceHelper;
 
-import  ch.openech.model.Envelope;
+import ch.openech.model.Envelope;
 
 
 public class WriterEch0058 {

@@ -1,12 +1,13 @@
 package  ch.openech.model.person;
 
+import java.time.LocalDate;
+
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
-import org.threeten.bp.LocalDate;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.common.Canton;

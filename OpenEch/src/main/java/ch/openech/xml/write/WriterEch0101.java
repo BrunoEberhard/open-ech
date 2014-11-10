@@ -1,25 +1,11 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.ARMED_FORCES;
-import static  ch.openech.model.XmlConstants.ARMED_FORCES_LIABILITY;
-import static  ch.openech.model.XmlConstants.ARMED_FORCES_SERVICE;
-import static  ch.openech.model.XmlConstants.CIVIL_DEFENSE;
-import static  ch.openech.model.XmlConstants.FIRE_SERVICE;
-import static  ch.openech.model.XmlConstants.FIRE_SERVICE_LIABILITY;
-import static  ch.openech.model.XmlConstants.HEALTH_INSURANCE;
-import static  ch.openech.model.XmlConstants.HEALTH_INSURED;
-import static  ch.openech.model.XmlConstants.INSURANCE;
-import static  ch.openech.model.XmlConstants.INSURANCE_ADDRESS;
-import static  ch.openech.model.XmlConstants.INSURANCE_NAME;
-import static  ch.openech.model.XmlConstants.MATRIMONIAL_INHERITANCE_ARRANGEMENT;
-import static  ch.openech.model.XmlConstants.PERSONIDENTIFICATION;
-import static  ch.openech.model.XmlConstants.PERSON_ADDON;
-import static  ch.openech.model.XmlConstants.PERSON_EXTENDED_INFORMATION_ROOT;
+import static ch.openech.model.XmlConstants.*;
 
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.person.PersonExtendedInformation;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.person.PersonExtendedInformation;
+import ch.openech.model.types.YesNo;
 
 public class WriterEch0101 extends DeliveryWriter {
 

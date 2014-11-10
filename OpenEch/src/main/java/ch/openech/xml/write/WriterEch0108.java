@@ -1,24 +1,7 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.COMMERCIAL_REGISTER_ENTRY_DATE;
-import static  ch.openech.model.XmlConstants.COMMERCIAL_REGISTER_ENTRY_STATUS;
-import static  ch.openech.model.XmlConstants.COMMERCIAL_REGISTER_INFORMATION;
-import static  ch.openech.model.XmlConstants.COMMERCIAL_REGISTER_LIQUIDATION_DATE;
-import static  ch.openech.model.XmlConstants.COMMERCIAL_REGISTER_NAME_TRANSLATION;
-import static  ch.openech.model.XmlConstants.COMMERCIAL_REGISTER_STATUS;
-import static  ch.openech.model.XmlConstants.ORGANISATION;
-import static  ch.openech.model.XmlConstants.UIDREG_INFORMATION;
-import static  ch.openech.model.XmlConstants.UIDREG_LIQUIDATION_REASON;
-import static  ch.openech.model.XmlConstants.UIDREG_ORGANISATION_TYPE;
-import static  ch.openech.model.XmlConstants.UIDREG_PUBLIC_STATUS;
-import static  ch.openech.model.XmlConstants.UIDREG_SOURCE;
-import static  ch.openech.model.XmlConstants.UIDREG_STATUS_ENTERPRISE_DETAIL;
-import static  ch.openech.model.XmlConstants.VAT_ENTRY_DATE;
-import static  ch.openech.model.XmlConstants.VAT_ENTRY_STATUS;
-import static  ch.openech.model.XmlConstants.VAT_LIQUIDATION_DATE;
-import static  ch.openech.model.XmlConstants.VAT_REGISTER_INFORMATION;
-import static  ch.openech.model.XmlConstants.VAT_STATUS;
-import  ch.openech.model.organisation.Organisation;
+import static ch.openech.model.XmlConstants.*;
+import ch.openech.model.organisation.Organisation;
 
 public class WriterEch0108 extends DeliveryWriter {
 

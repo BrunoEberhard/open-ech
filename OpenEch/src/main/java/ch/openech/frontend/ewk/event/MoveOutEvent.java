@@ -6,7 +6,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.frontend.e07.MunicipalityField;
 import ch.openech.frontend.ewk.event.MoveOutEvent.MoveOutData;

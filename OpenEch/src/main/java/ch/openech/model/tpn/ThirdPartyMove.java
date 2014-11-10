@@ -1,10 +1,10 @@
 package  ch.openech.model.tpn;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.model.Keys;
-import org.threeten.bp.LocalDate;
 
 import ch.openech.model.common.Address;
 import ch.openech.model.common.CountryIdentification;

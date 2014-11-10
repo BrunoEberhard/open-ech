@@ -1,14 +1,15 @@
 package  ch.openech.model.person;
 
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
+
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.code.ResidencePermit;
+import ch.openech.model.EchFormats;
+import ch.openech.model.code.ResidencePermit;
 
 public class Foreign {
 	public static final Foreign FOREIGN = Keys.of(Foreign.class);

@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.minimalj.util.EqualsHelper;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.model.EchSchemaValidation;
 import ch.openech.model.common.Address;

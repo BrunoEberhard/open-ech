@@ -1,7 +1,8 @@
 package  ch.openech.model;
 
+import java.time.LocalDateTime;
+
 import org.minimalj.model.annotation.Size;
-import org.threeten.bp.LocalDateTime;
 
 public class Event {
 

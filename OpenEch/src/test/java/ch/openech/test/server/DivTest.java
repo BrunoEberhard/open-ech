@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.model.person.Person;
 import ch.openech.model.person.types.DataLock;

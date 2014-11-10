@@ -1,9 +1,9 @@
 package  ch.openech.model.contact;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.threeten.bp.LocalDate;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Enabled;
@@ -13,10 +13,10 @@ import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.EchFormats;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.types.ContactCategory;
-import  ch.openech.model.types.PhoneCategory;
+import ch.openech.model.EchFormats;
+import ch.openech.model.common.Address;
+import ch.openech.model.types.ContactCategory;
+import ch.openech.model.types.PhoneCategory;
 
 public class ContactEntry implements Validation {
 

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.minimalj.model.annotation.Size;
 
-import  ch.openech.model.EchFormats;
+import ch.openech.model.EchFormats;
 
 public class LocalPersonId {
 

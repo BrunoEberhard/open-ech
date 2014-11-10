@@ -2,7 +2,7 @@ package ch.openech.xml.write;
 
 import static ch.openech.model.XmlConstants.*;
 
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;

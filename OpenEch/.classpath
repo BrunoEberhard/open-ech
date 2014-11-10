@@ -10,11 +10,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.8.2/junit-4.8.2.jar" sourcepath="M2_REPO/junit/junit/4.8.2/junit-4.8.2-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/threeten/threetenbp/0.9/threetenbp-0.9.jar" sourcepath="M2_REPO/org/threeten/threetenbp/0.9/threetenbp-0.9-sources.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Minimal-J"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

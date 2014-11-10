@@ -1,6 +1,7 @@
 package  ch.openech.model.person;
 
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
+
 import org.minimalj.model.Keys;
 
 public class Separation {

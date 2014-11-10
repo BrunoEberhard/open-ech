@@ -7,7 +7,7 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
-import org.threeten.bp.LocalDateTime;
+import java.time.LocalDateTime;
 
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;

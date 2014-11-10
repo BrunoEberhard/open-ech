@@ -16,7 +16,7 @@ import org.minimalj.model.annotation.Required;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.frontend.ewk.event.UndoCitizenEvent.UndoCitizenData;
 import ch.openech.model.person.Person;

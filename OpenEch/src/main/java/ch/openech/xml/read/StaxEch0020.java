@@ -6,6 +6,7 @@ import static ch.openech.xml.read.StaxEch.*;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.swing.ProgressMonitor;
@@ -20,7 +21,6 @@ import org.minimalj.frontend.toolkit.ProgressListener;
 import org.minimalj.util.FieldUtils;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
-import org.threeten.bp.LocalDateTime;
 
 import ch.openech.model.Event;
 import ch.openech.model.XmlConstants;

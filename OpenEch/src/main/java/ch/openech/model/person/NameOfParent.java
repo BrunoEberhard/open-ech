@@ -4,7 +4,7 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.EchFormats;
+import ch.openech.model.EchFormats;
 
 /**
  * 

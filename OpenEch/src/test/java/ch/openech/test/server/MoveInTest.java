@@ -7,7 +7,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.code.NationalityStatus;

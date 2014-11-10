@@ -1,5 +1,7 @@
 package  ch.openech.model.organisation;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +15,6 @@ import org.minimalj.model.annotation.Size;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.Event;

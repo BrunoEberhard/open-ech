@@ -11,9 +11,9 @@ import org.junit.Test;
 import org.minimalj.util.EqualsHelper;
 import org.minimalj.util.SerializationInputStream;
 import org.minimalj.util.SerializationOutputStream;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.LocalTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.person.Person;

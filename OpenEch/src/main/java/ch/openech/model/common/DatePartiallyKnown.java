@@ -1,13 +1,14 @@
 package ch.openech.model.common;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import org.minimalj.model.InvalidValues;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validatable;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.format.DateTimeParseException;
 
 public class DatePartiallyKnown implements Validatable, Comparable<DatePartiallyKnown> {
 

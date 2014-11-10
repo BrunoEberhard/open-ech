@@ -2,6 +2,7 @@ package ch.openech.xml.write;
 
 import java.io.StringWriter;
 import java.io.Writer;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +12,6 @@ import java.util.logging.Logger;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import org.threeten.bp.LocalDateTime;
 
 import ch.openech.model.Envelope;
 import ch.openech.model.XmlConstants;

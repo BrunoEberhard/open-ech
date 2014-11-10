@@ -1,30 +1,12 @@
 package ch.openech.xml.write;
 
-import static  ch.openech.model.XmlConstants.ADDRESS;
-import static  ch.openech.model.XmlConstants.BASED_ON_LAW;
-import static  ch.openech.model.XmlConstants.CARE;
-import static  ch.openech.model.XmlConstants.EMPLOYER;
-import static  ch.openech.model.XmlConstants.EXPATRIATION_DATE;
-import static  ch.openech.model.XmlConstants.FIRST_NAME;
-import static  ch.openech.model.XmlConstants.JOB_TITLE;
-import static  ch.openech.model.XmlConstants.KIND_OF_EMPLOYMENT;
-import static  ch.openech.model.XmlConstants.NATURALIZATION_DATE;
-import static  ch.openech.model.XmlConstants.OCCUPATION;
-import static  ch.openech.model.XmlConstants.OCCUPATION_VALID_TILL;
-import static  ch.openech.model.XmlConstants.OFFICIAL_NAME;
-import static  ch.openech.model.XmlConstants.ORIGIN;
-import static  ch.openech.model.XmlConstants.PARTNER;
-import static  ch.openech.model.XmlConstants.PLACE_OF_EMPLOYER;
-import static  ch.openech.model.XmlConstants.PLACE_OF_WORK;
-import static  ch.openech.model.XmlConstants.REASON_OF_ACQUISITION;
-import static  ch.openech.model.XmlConstants.TYPE_OF_RELATIONSHIP;
-import static  ch.openech.model.XmlConstants._RELATIONSHIP;
+import static ch.openech.model.XmlConstants.*;
 
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.person.Occupation;
-import  ch.openech.model.person.PlaceOfOrigin;
-import  ch.openech.model.person.Relation;
+import ch.openech.model.person.Occupation;
+import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.model.person.Relation;
 
 public class WriterEch0021 {
 

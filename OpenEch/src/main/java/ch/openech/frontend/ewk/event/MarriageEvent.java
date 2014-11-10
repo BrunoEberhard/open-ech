@@ -14,7 +14,7 @@ import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
-import org.threeten.bp.LocalDate;
+import java.time.LocalDate;
 
 import ch.openech.frontend.RemoveEntriesListField;
 import ch.openech.frontend.e44.PersonField;

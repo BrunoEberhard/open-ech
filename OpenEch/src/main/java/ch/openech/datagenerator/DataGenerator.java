@@ -1,6 +1,7 @@
 package ch.openech.datagenerator;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.minimalj.autofill.DateGenerator;
@@ -10,7 +11,6 @@ import org.minimalj.autofill.OrganisationNameGenerator;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.Codes;
-import org.threeten.bp.LocalDate;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Address;

@@ -1,5 +1,6 @@
 package  ch.openech.model.person;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import org.minimalj.util.BusinessRule;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
-import org.threeten.bp.LocalDate;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.Event;

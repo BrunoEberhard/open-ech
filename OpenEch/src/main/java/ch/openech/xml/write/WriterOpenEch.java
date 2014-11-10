@@ -1,7 +1,7 @@
 package ch.openech.xml.write;
 
-import  ch.openech.model.organisation.Organisation;
-import  ch.openech.model.person.Person;
+import ch.openech.model.organisation.Organisation;
+import ch.openech.model.person.Person;
 
 public class WriterOpenEch extends DeliveryWriter {
 

@@ -8,10 +8,10 @@ import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validatable;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.code.BasedOnLaw;
-import  ch.openech.model.common.Address;
-import  ch.openech.model.person.types.TypeOfRelationship;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.code.BasedOnLaw;
+import ch.openech.model.common.Address;
+import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.model.types.YesNo;
 
 public class Relation implements Validatable {
 

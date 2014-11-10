@@ -1,5 +1,8 @@
 package ch.openech.xml.write;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import javax.xml.stream.XMLStreamWriter;
@@ -7,9 +10,6 @@ import javax.xml.stream.XMLStreamWriter;
 import org.minimalj.model.InvalidValues;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.StringUtils;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.format.DateTimeFormatter;
 
 import ch.openech.model.types.EchCode;
 

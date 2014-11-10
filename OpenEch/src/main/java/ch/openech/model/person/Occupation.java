@@ -1,5 +1,6 @@
 package  ch.openech.model.person;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.minimalj.model.EmptyValidator;
@@ -11,7 +12,6 @@ import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
-import org.threeten.bp.LocalDate;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.common.Address;

@@ -1,6 +1,6 @@
 package ch.openech.xml.read;
 
-import static  ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
@@ -15,8 +15,8 @@ import javax.xml.stream.events.XMLEvent;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.StringUtils;
 
-import  ch.openech.model.person.PersonExtendedInformation;
-import  ch.openech.model.types.YesNo;
+import ch.openech.model.person.PersonExtendedInformation;
+import ch.openech.model.types.YesNo;
 
 public class StaxEch0101 {
 
