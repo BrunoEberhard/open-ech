@@ -9,7 +9,7 @@ import org.minimalj.model.Keys;
  * von Vater/Mutter einzeln.
  */
 public class NameOfParents {
-	public static final NameOfParents KEYS = Keys.of(NameOfParents.class);
+	public static final NameOfParents $ = Keys.of(NameOfParents.class);
 
 	public final NameOfParent father = new NameOfParent();
 	public final NameOfParent mother = new NameOfParent();

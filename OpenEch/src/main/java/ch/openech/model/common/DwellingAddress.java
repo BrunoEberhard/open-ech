@@ -16,7 +16,7 @@ import ch.openech.xml.write.EchSchema;
 
 public class DwellingAddress implements Validation {
 
-	public static final DwellingAddress DWELLING_ADDRESS = Keys.of(DwellingAddress.class);
+	public static final DwellingAddress $ = Keys.of(DwellingAddress.class);
 	
 	public transient EchSchema echSchema;
 	
@@ -86,16 +86,16 @@ public class DwellingAddress implements Validation {
 		if (!echSchema.addressesAreBusiness()) {
 			if (!StringUtils.isBlank(EGID)) {
 				if (!StringUtils.isBlank(EWID) && !StringUtils.isBlank(householdID)) {
-					resultList.add(new ValidationMessage(DWELLING_ADDRESS.householdID, "Bei gesetzter EGID können nicht EWID und Haushalt ID gesetzt sein"));
+					resultList.add(new ValidationMessage($.householdID, "Bei gesetzter EGID können nicht EWID und Haushalt ID gesetzt sein"));
 				}
 			} else {
 				if (StringUtils.isBlank(householdID)) {
-					resultList.add(new ValidationMessage(DWELLING_ADDRESS.householdID, "Bei fehlender EGID muss die Haushalt ID gesetzt sein"));
+					resultList.add(new ValidationMessage($.householdID, "Bei fehlender EGID muss die Haushalt ID gesetzt sein"));
 				}
 			}
 		}
 		if (mailAddress == null || mailAddress.isEmpty()) {
-			resultList.add(new ValidationMessage(DWELLING_ADDRESS.mailAddress, "Postadresse erforderlich"));
+			resultList.add(new ValidationMessage($.mailAddress, "Postadresse erforderlich"));
 		}
 	}
 

@@ -33,7 +33,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		@Override
 		public Form<Residence> createForm() {
 			Form<Residence> form = new EchForm<Residence>();
-			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
+			form.line(new MunicipalityField(Residence.$.reportingMunicipality, true));
 			return form;
 		}
 
@@ -55,7 +55,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		@Override
 		public Form<Residence> createForm() {
 			Form<Residence> form = new EchForm<Residence>();
-			form.line(new MunicipalityField(Residence.RESIDENCE.reportingMunicipality, true));
+			form.line(new MunicipalityField(Residence.$.reportingMunicipality, true));
 			return form;
 		}
 

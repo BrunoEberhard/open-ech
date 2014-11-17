@@ -11,7 +11,7 @@ import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.types.TypeOfResidence;
 
 public class Residence {
-	public static final Residence RESIDENCE = Keys.of(Residence.class);
+	public static final Residence $ = Keys.of(Residence.class);
 	
 	
 	public MunicipalityIdentification reportingMunicipality;

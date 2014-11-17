@@ -19,14 +19,14 @@ public class ChangeNameEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> panel) {
-		panel.line(PERSON.officialName);
-		panel.line(PERSON.firstName);
-		panel.line(PERSON.originalName, PERSON.alliancePartnershipName);
-		panel.line(PERSON.aliasName, PERSON.otherName);
-		panel.line(PERSON.callName, PERSON.foreign.nameOnPassport);
+		panel.line($.officialName);
+		panel.line($.firstName);
+		panel.line($.originalName, $.alliancePartnershipName);
+		panel.line($.aliasName, $.otherName);
+		panel.line($.callName, $.foreign.nameOnPassport);
 	    if (echSchema.changeNameWithParents()) {
-	    	panel.line(PERSON.nameOfParents.father.firstName, PERSON.nameOfParents.mother.firstName);
-	    	panel.line(PERSON.nameOfParents.father.officialName, PERSON.nameOfParents.mother.officialName);
+	    	panel.line($.nameOfParents.father.firstName, $.nameOfParents.mother.firstName);
+	    	panel.line($.nameOfParents.father.officialName, $.nameOfParents.mother.officialName);
 	    }
 	}
 

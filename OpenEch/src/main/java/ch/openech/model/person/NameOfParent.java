@@ -11,7 +11,7 @@ import ch.openech.model.EchFormats;
  * Verwendet in der Person, einmal für Mutter, einmal für Vater
  */
 public class NameOfParent {
-	public static final NameOfParent KEYS = Keys.of(NameOfParent.class);
+	public static final NameOfParent $ = Keys.of(NameOfParent.class);
 
 	@Size(EchFormats.officialFirstName)
 	public String firstName;

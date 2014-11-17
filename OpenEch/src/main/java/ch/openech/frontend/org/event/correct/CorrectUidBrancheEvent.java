@@ -20,8 +20,8 @@ public class CorrectUidBrancheEvent extends OrganisationEventEditor<Organisation
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.line(Organisation.ORGANISATION.uidBrancheText);
-		formPanel.line(Organisation.ORGANISATION.nogaCode);
+		formPanel.line(Organisation.$.uidBrancheText);
+		formPanel.line(Organisation.$.nogaCode);
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class CorrectUidBrancheEvent extends OrganisationEventEditor<Organisation
 	@Override
 	protected void validate(Organisation object, List<ValidationMessage> resultList) {
 		super.validate(object, resultList);
-		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.uidBrancheText);
-		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.nogaCode);
+		EmptyValidator.validate(resultList, object, Organisation.$.uidBrancheText);
+		EmptyValidator.validate(resultList, object, Organisation.$.nogaCode);
 	}
 
 	@Override

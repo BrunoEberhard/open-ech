@@ -19,7 +19,7 @@ public class CorrectAddressEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(Person.PERSON.dwellingAddress);
+		formPanel.line(Person.$.dwellingAddress);
 	}
 
 	@Override

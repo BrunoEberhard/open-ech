@@ -18,7 +18,7 @@ public class CorrectDateOfDeathEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(Person.PERSON.dateOfDeath);
+		formPanel.line(Person.$.dateOfDeath);
 	}
 
 	@Override

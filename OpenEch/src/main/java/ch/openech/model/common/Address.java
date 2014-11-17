@@ -19,7 +19,7 @@ import ch.openech.util.PlzImport;
 @Sizes(EchFormats.class)
 public class Address implements Validation {
 	
-	public static final Address ADDRESS = Keys.of(Address.class);
+	public static final Address $ = Keys.of(Address.class);
 
 	// organisation
 	@Size(EchFormats.organisationName)
@@ -158,7 +158,7 @@ public class Address implements Validation {
 	public void validate(List<ValidationMessage> validationResult) {
 		String message = validateZip();
 		if (message != null) {
-			validationResult.add(new ValidationMessage(ADDRESS.zip, message));
+			validationResult.add(new ValidationMessage($.zip, message));
 		}
 	}
 

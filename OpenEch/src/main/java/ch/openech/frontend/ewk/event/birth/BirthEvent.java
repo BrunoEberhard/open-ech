@@ -61,7 +61,7 @@ public class BirthEvent extends XmlEditor<Person> {
 	@BusinessRule("Geburtsort muss bei Erfassung einer Geburt angegeben werden")
 	public void validatePlaceOfBirth(Person person, List<ValidationMessage> resultList) {
 		if (echSchema.birthPlaceMustNotBeUnknown() && (person.placeOfBirth == null || person.placeOfBirth.isUnknown())) {
-			resultList.add(new ValidationMessage(Person.PERSON.placeOfBirth, "Geburtsort fehlt"));
+			resultList.add(new ValidationMessage(Person.$.placeOfBirth, "Geburtsort fehlt"));
 		}
 	}
 	

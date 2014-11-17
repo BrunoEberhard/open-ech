@@ -23,8 +23,8 @@ public class CorrectResidencePermitEvent extends PersonEventEditor<Foreign> {
 
 	@Override
 	protected void fillForm(Form<Foreign> formPanel) {
-		formPanel.line(FOREIGN.residencePermit);
-		formPanel.line(FOREIGN.residencePermitTill); 
+		formPanel.line($.residencePermit);
+		formPanel.line($.residencePermitTill); 
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class CorrectResidencePermitEvent extends PersonEventEditor<Foreign> {
 	protected void validate(Foreign foreign, List<ValidationMessage> resultList) {
 		super.validate(foreign, resultList);
 		// bei Change ist diese Angabe obligatorisch, bei Correct nicht
-		EmptyValidator.validate(resultList, foreign, FOREIGN.residencePermit);
+		EmptyValidator.validate(resultList, foreign, $.residencePermit);
 	}
 
 	@Override

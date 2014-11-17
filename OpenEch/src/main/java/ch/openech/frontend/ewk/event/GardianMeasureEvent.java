@@ -1,7 +1,5 @@
 package ch.openech.frontend.ewk.event;
 
-import static ch.openech.model.person.Relation.*;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -32,20 +30,20 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 	 */
 	static void fillForm(EchSchema echSchema, Form<Relation> formPanel) {
 		if (echSchema.typeOfRelationship10Exsists()) {
-			formPanel.line(new EnumEditField(RELATION.typeOfRelationship, TypeOfRelationship.CARE_2_3));
+			formPanel.line(new EnumEditField(Relation.$.typeOfRelationship, TypeOfRelationship.CARE_2_3));
 		} else {
-			formPanel.line(new EnumEditField(RELATION.typeOfRelationship, TypeOfRelationship.CARE));			
+			formPanel.line(new EnumEditField(Relation.$.typeOfRelationship, TypeOfRelationship.CARE));			
 		}
 
-		formPanel.line(RELATION.basedOnLaw);
+		formPanel.line(Relation.$.basedOnLaw);
 		if (echSchema.basedOnLawAddOn()) {
-			formPanel.line(RELATION.basedOnLawAddOn);
+			formPanel.line(Relation.$.basedOnLawAddOn);
 		}
 		if (echSchema.gardianMeasureRelationshipHasCare()) {
-			formPanel.line(RELATION.care);
+			formPanel.line(Relation.$.care);
 		}
 		
-		formPanel.line(RELATION.partner);
+		formPanel.line(Relation.$.partner);
 	}
 	
 	@Override
@@ -57,10 +55,10 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 	public void validate(Relation relation, List<ValidationMessage> resultList) {
 		super.validate(relation, resultList);
 		if (echSchema.gardianMeasureRelationshipHasCare()) {
-			EmptyValidator.validate(resultList, relation, RELATION.care);
+			EmptyValidator.validate(resultList, relation, Relation.$.care);
 		}
 		if (!echSchema.gardianRelationshipOptional()) {
-			EmptyValidator.validate(resultList, relation, RELATION.partner);
+			EmptyValidator.validate(resultList, relation, Relation.$.partner);
 		}
 	}
 

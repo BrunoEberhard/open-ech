@@ -12,16 +12,16 @@ public class DwellingAddressPanel extends EchForm<DwellingAddress> {
 	public DwellingAddressPanel(EchSchema echSchema) {
 		super(echSchema);
 		
-		line(DWELLING_ADDRESS.EGID);
-		line(DWELLING_ADDRESS.EWID);
+		line($.EGID);
+		line($.EWID);
 		if (!echSchema.addressesAreBusiness()) {
-			line(DWELLING_ADDRESS.householdID);
+			line($.householdID);
 		}
-		line(new AddressField(DWELLING_ADDRESS.mailAddress, true, false, false));
+		line(new AddressField($.mailAddress, true, false, false));
 		if (!echSchema.addressesAreBusiness()) {
-			line(DWELLING_ADDRESS.typeOfHousehold);
+			line($.typeOfHousehold);
 		}
-		line(DWELLING_ADDRESS.movingDate);
+		line($.movingDate);
 	}
 	
 	public void setObject(DwellingAddress address) {

@@ -16,7 +16,7 @@ import ch.openech.model.types.Sex;
 
 public class PersonSearch implements View<Person>, Rendering {
 
-	public static final PersonSearch PERSON_SEARCH = Keys.of(PersonSearch.class);
+	public static final PersonSearch $ = Keys.of(PersonSearch.class);
 	
 	//
 	

@@ -9,7 +9,7 @@ import  ch.openech.model.EchFormats;
 @Sizes(EchFormats.class)
 public class HouseNumber {
 
-	public static final HouseNumber HOUSE_NUMBER = Keys.of(HouseNumber.class);
+	public static final HouseNumber $ = Keys.of(HouseNumber.class);
 	
 	public String houseNumber;
 	public String dwellingNumber;

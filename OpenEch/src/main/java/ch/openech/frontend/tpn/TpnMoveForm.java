@@ -16,24 +16,24 @@ public class TpnMoveForm extends EchForm<ThirdPartyMove> {
 
 	private void createContent() {
 		addTitle("Person");
-		line(THIRD_PARTY_MOVE.officialName);
-		line(THIRD_PARTY_MOVE.callName);
-		line(THIRD_PARTY_MOVE.sex, THIRD_PARTY_MOVE.dateOfBirth, THIRD_PARTY_MOVE.nationality);
-		line(direction == MoveDirection.IN ? THIRD_PARTY_MOVE.comesFrom : THIRD_PARTY_MOVE.goesTo);
+		line($.officialName);
+		line($.callName);
+		line($.sex, $.dateOfBirth, $.nationality);
+		line(direction == MoveDirection.IN ? $.comesFrom : $.goesTo);
 		
 		addTitle("Vertrag");
-		line(THIRD_PARTY_MOVE.beginOfContract, THIRD_PARTY_MOVE.endOfContract);
+		line($.beginOfContract, $.endOfContract);
 		
 		addTitle("Vermieter");
-		line(THIRD_PARTY_MOVE.contractor);
+		line($.contractor);
 		
 		addTitle("Gebäude");
-		line(THIRD_PARTY_MOVE.EGID);
-		line(THIRD_PARTY_MOVE.address);
+		line($.EGID);
+		line($.address);
 		
 		addTitle("Wohnung");
-		line(THIRD_PARTY_MOVE.EWID);
-		line(THIRD_PARTY_MOVE.administrativeDwellingId, THIRD_PARTY_MOVE.floor, THIRD_PARTY_MOVE.positionOnFloor, THIRD_PARTY_MOVE.roomCount);
+		line($.EWID);
+		line($.administrativeDwellingId, $.floor, $.positionOnFloor, $.roomCount);
 	}
 
 	@Override

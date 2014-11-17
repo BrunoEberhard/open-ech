@@ -1,5 +1,6 @@
 package ch.openech.frontend.ewk.event;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +15,6 @@ import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
-import java.time.LocalDate;
 
 import ch.openech.frontend.RemoveEntriesListField;
 import ch.openech.frontend.e44.PersonField;
@@ -40,7 +40,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	}
 	
 	public static class Marriage implements Validation {
-		public static final Marriage MARRIAGE = Keys.of(Marriage.class);
+		public static final Marriage $ = Keys.of(Marriage.class);
 		
 		@Required
 		public LocalDate dateOfMaritalStatus;
@@ -71,16 +71,16 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		}
 		
 		private static void validate(List<ValidationMessage> validationMessages, Person person1, Person person2) {
-			validatePartnerAlive(validationMessages, MARRIAGE.partner1, person1);
-			validatePartnerAlive(validationMessages, MARRIAGE.partner2, person2);
-			validatePartnerSet(validationMessages, MARRIAGE.partner1, person1);
-			validatePartnerSet(validationMessages, MARRIAGE.partner2, person2);
+			validatePartnerAlive(validationMessages, $.partner1, person1);
+			validatePartnerAlive(validationMessages, $.partner2, person2);
+			validatePartnerSet(validationMessages, $.partner1, person1);
+			validatePartnerSet(validationMessages, $.partner2, person2);
 			validateSex(validationMessages, person1, person2);
 		}
 		
 		private void validateNamesNotBlank(List<ValidationMessage> validationMessages) {
-			if (Boolean.TRUE.equals(changeName1)) validateNameNotBlank(validationMessages, MARRIAGE.name1, name1);
-			if (Boolean.TRUE.equals(changeName2)) validateNameNotBlank(validationMessages, MARRIAGE.name2, name2);
+			if (Boolean.TRUE.equals(changeName1)) validateNameNotBlank(validationMessages, $.name1, name1);
+			if (Boolean.TRUE.equals(changeName2)) validateNameNotBlank(validationMessages, $.name2, name2);
 		}
 		
 		@BusinessRule("2 Eheleute für Ehe notwendig")
@@ -103,7 +103,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 			if (person1 == null || person2 == null) return;
 			if (person1.sex == null || person2.sex == null) return;
 			if (person1.sex == person2.sex) {
-				validationMessages.add(new ValidationMessage(MARRIAGE.partner2, "Eheleute müssen unterschiedlichen Geschlechts sein"));
+				validationMessages.add(new ValidationMessage($.partner2, "Eheleute müssen unterschiedlichen Geschlechts sein"));
 			}
 		}
 
@@ -137,8 +137,6 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		}
 	}
 
-	private static final Marriage MARRIAGE = Keys.of(Marriage.class);
-
 	@Override
 	protected int getFormColumns() {
 		return 2;
@@ -146,25 +144,25 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	
 	@Override
 	protected void fillForm(Form<Marriage> formPanel) {
-		PersonField partner1 = new PersonField(MARRIAGE.partner1); 
-		PersonField partner2 = new PersonField(MARRIAGE.partner2);
+		PersonField partner1 = new PersonField(Marriage.$.partner1); 
+		PersonField partner2 = new PersonField(Marriage.$.partner2);
 	
-		RemoveEntriesListField<PlaceOfOrigin> origin1 = new RemoveEntriesListField<PlaceOfOrigin>(MARRIAGE.origin1);
-		RemoveEntriesListField<PlaceOfOrigin> origin2 = new RemoveEntriesListField<PlaceOfOrigin>(MARRIAGE.origin2);
+		RemoveEntriesListField<PlaceOfOrigin> origin1 = new RemoveEntriesListField<PlaceOfOrigin>(Marriage.$.origin1);
+		RemoveEntriesListField<PlaceOfOrigin> origin2 = new RemoveEntriesListField<PlaceOfOrigin>(Marriage.$.origin2);
 		
 		//
 		
-		formPanel.line(MARRIAGE.dateOfMaritalStatus, MARRIAGE.registerPartner2);
+		formPanel.line(Marriage.$.dateOfMaritalStatus, Marriage.$.registerPartner2);
 		formPanel.line(partner1, partner2);
-		formPanel.line(MARRIAGE.changeName1, MARRIAGE.changeName2);
-		formPanel.line(MARRIAGE.name1, MARRIAGE.name2);
+		formPanel.line(Marriage.$.changeName1, Marriage.$.changeName2);
+		formPanel.line(Marriage.$.name1, Marriage.$.name2);
 		formPanel.line(origin1, origin2);
 		
-		formPanel.addDependecy(MARRIAGE.partner1, new PartnerNameUpdater(), MARRIAGE.name2);
-		formPanel.addDependecy(MARRIAGE.partner1, new PartnerOriginUpdater(), MARRIAGE.origin2);
+		formPanel.addDependecy(Marriage.$.partner1, new PartnerNameUpdater(), Marriage.$.name2);
+		formPanel.addDependecy(Marriage.$.partner1, new PartnerOriginUpdater(), Marriage.$.origin2);
 
-		formPanel.addDependecy(MARRIAGE.partner2, new PartnerNameUpdater(), MARRIAGE.name1);
-		formPanel.addDependecy(MARRIAGE.partner2, new PartnerOriginUpdater(), MARRIAGE.origin1);
+		formPanel.addDependecy(Marriage.$.partner2, new PartnerNameUpdater(), Marriage.$.name1);
+		formPanel.addDependecy(Marriage.$.partner2, new PartnerOriginUpdater(), Marriage.$.origin1);
 	}
 
 	@Override

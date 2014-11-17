@@ -41,7 +41,7 @@ public class StaxEch0044 {
 					personIdentification.vn.value = token(xml);
 				}
 				else if (StringUtils.equals(startName, SEX)) {
-					StaxEch.enuum(xml,  personIdentification, PersonIdentification.PERSON_IDENTIFICATION.sex);
+					StaxEch.enuum(xml,  personIdentification, PersonIdentification.$.sex);
 				}
 				else if (startName.equals(DATE_OF_BIRTH)) {
 					personIdentification.dateOfBirth.value = datePartiallyKnown(xml);
@@ -74,7 +74,7 @@ public class StaxEch0044 {
 					person.vn.value = token(xml);
 				}
 				else if (StringUtils.equals(startName, SEX)) {
-					StaxEch.enuum(xml,  person, Person.PERSON.sex);
+					StaxEch.enuum(xml,  person, Person.$.sex);
 				}
 				else if (startName.equals(DATE_OF_BIRTH)) {
 					person.dateOfBirth.value = datePartiallyKnown(xml);

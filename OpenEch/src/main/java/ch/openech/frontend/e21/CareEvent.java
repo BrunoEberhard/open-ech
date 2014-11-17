@@ -1,7 +1,5 @@
 package ch.openech.frontend.e21;
 
-import static  ch.openech.model.person.Relation.*;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -12,10 +10,10 @@ import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 
 import ch.openech.frontend.ewk.event.PersonEventEditor;
-import  ch.openech.model.person.Person;
-import  ch.openech.model.person.Relation;
-import  ch.openech.model.person.types.TypeOfRelationship;
-import  ch.openech.model.types.Sex;
+import ch.openech.model.person.Person;
+import ch.openech.model.person.Relation;
+import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.model.types.Sex;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -32,17 +30,17 @@ public class CareEvent extends PersonEventEditor<Relation> {
 
 	@Override
 	protected void fillForm(Form<Relation> formPanel) {
-		formPanel.line(new EnumEditField(RELATION.typeOfRelationship, TypeOfRelationship.PARENT));
-		formPanel.line(RELATION.care);
-		formPanel.line(RELATION.partner);
+		formPanel.line(new EnumEditField(Relation.$.typeOfRelationship, TypeOfRelationship.PARENT));
+		formPanel.line(Relation.$.care);
+		formPanel.line(Relation.$.partner);
 	}
 
 	@Override
 	public void validate(Relation relation, List<ValidationMessage> resultList) {
 		super.validate(relation, resultList);
 		validateSex(relation, resultList);
-		EmptyValidator.validate(resultList, relation, RELATION.care);
-		EmptyValidator.validate(resultList, relation, RELATION.partner);
+		EmptyValidator.validate(resultList, relation, Relation.$.care);
+		EmptyValidator.validate(resultList, relation, Relation.$.partner);
 	}
 
 	@BusinessRule("Bei Änderung Sorgerecht müssen Eltern das richtige Geschlecht haben")
@@ -52,9 +50,9 @@ public class CareEvent extends PersonEventEditor<Relation> {
 		if (sexOfPartner != null) {
 			TypeOfRelationship code = relation.typeOfRelationship;
 			if ((code == TypeOfRelationship.Mutter || code == TypeOfRelationship.Pflegemutter) && sexOfPartner != Sex.weiblich) {
-				resultList.add(new ValidationMessage(Relation.RELATION.partner, "Mutter muss weiblich sein."));
+				resultList.add(new ValidationMessage(Relation.$.partner, "Mutter muss weiblich sein."));
 			} else if ((code == TypeOfRelationship.Vater || code == TypeOfRelationship.Pflegevater) && sexOfPartner != Sex.maennlich) {
-				resultList.add(new ValidationMessage(Relation.RELATION.partner, "Vater muss männlich sein."));
+				resultList.add(new ValidationMessage(Relation.$.partner, "Vater muss männlich sein."));
 			}
 		}
 	}

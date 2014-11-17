@@ -19,7 +19,7 @@ public class CorrectLanguageOfCorrespondanceEvent extends PersonEventEditor<Pers
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(Person.PERSON.languageOfCorrespondance);
+		formPanel.line(Person.$.languageOfCorrespondance);
 	}
 
 	@Override

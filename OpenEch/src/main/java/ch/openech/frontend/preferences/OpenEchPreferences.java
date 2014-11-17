@@ -16,7 +16,7 @@ import ch.openech.model.person.types.Religion;
 import ch.openech.model.types.Language;
 
 public class OpenEchPreferences implements Validation {
-	public static final OpenEchPreferences OPEN_ECH_PREFERENCES = Keys.of(OpenEchPreferences.class);
+	public static final OpenEchPreferences $ = Keys.of(OpenEchPreferences.class);
 	
 	public final ApplicationSchemaData applicationSchemaData = new ApplicationSchemaData();
 	public final PreferencesDefaultsData preferencesDefaultsData = new PreferencesDefaultsData();

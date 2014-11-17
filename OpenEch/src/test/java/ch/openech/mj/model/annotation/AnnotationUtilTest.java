@@ -14,19 +14,19 @@ public class AnnotationUtilTest {
 
 	@Test
 	public void testSize() {
-		int size = AnnotationUtil.getSize(Keys.getProperty(Person.PERSON.aliasName));
+		int size = AnnotationUtil.getSize(Keys.getProperty(Person.$.aliasName));
 		Assert.assertEquals(EchFormats.baseName, size);
 	}
 	
 	@Test
 	public void testSizes() {
-		int size = AnnotationUtil.getSize(Keys.getProperty(Address.ADDRESS.street));
+		int size = AnnotationUtil.getSize(Keys.getProperty(Address.$.street));
 		Assert.assertEquals(EchFormats.street, size);
 	}
 
 	@Test
 	public void testSizes2() {
-		int size = AnnotationUtil.getSize(Keys.getProperty(Address.ADDRESS.houseNumber.dwellingNumber));
+		int size = AnnotationUtil.getSize(Keys.getProperty(Address.$.houseNumber.dwellingNumber));
 		Assert.assertEquals(EchFormats.dwellingNumber, size);
 	}
 	

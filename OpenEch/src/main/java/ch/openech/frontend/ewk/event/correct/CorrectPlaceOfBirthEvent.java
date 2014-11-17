@@ -20,7 +20,7 @@ public class CorrectPlaceOfBirthEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(PERSON.placeOfBirth);
+		formPanel.line($.placeOfBirth);
 		
 	}
 

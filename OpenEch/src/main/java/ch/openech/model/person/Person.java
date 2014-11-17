@@ -40,8 +40,8 @@ import ch.openech.model.types.TypeOfResidence;
 
 public class Person implements Validation {
 
-	public static final Person PERSON = Keys.of(Person.class);
-	public static final Object[] SEARCH_BY_VN = new Object[]{PERSON.vn.value};
+	public static final Person $ = Keys.of(Person.class);
+	public static final Object[] SEARCH_BY_VN = new Object[]{$.vn.value};
 	
 	public transient PersonEditMode editMode;
 
@@ -252,7 +252,7 @@ public class Person implements Validation {
 		validateDeathNotBeforeBirth(resultList);
 		
 		if (editMode == PersonEditMode.MOVE_IN) {
-			EmptyValidator.validate(resultList, this, PERSON.arrivalDate);
+			EmptyValidator.validate(resultList, this, $.arrivalDate);
 		}
 		
 		if (editMode != PersonEditMode.BIRTH) {
@@ -269,7 +269,7 @@ public class Person implements Validation {
 	private void validateForeign(List<ValidationMessage> resultList) {
 		if (!nationality.isSwiss()) {
 			if (foreign.isEmpty()) {
-				resultList.add(new ValidationMessage(PERSON.foreign, "Ausländerkategorie erforderlich"));
+				resultList.add(new ValidationMessage($.foreign, "Ausländerkategorie erforderlich"));
 			}
 		}
 	}
@@ -277,7 +277,7 @@ public class Person implements Validation {
 	private void validatePlaceOfOrigin(List<ValidationMessage> resultList) {
 		if (nationality.isSwiss()) {
 			if (placeOfOrigin.isEmpty()) {
-				resultList.add(new ValidationMessage(PERSON.placeOfOrigin, "Heimatort erforderlich"));
+				resultList.add(new ValidationMessage($.placeOfOrigin, "Heimatort erforderlich"));
 			}
 		}
 	}
@@ -286,12 +286,12 @@ public class Person implements Validation {
 	public void validateBirthAfterParents(List<ValidationMessage> resultList) {
 		Relation relation = getMother();
 		if (relation != null && !isBirthAfterRelation(relation)) {
-			resultList.add(new ValidationMessage(PERSON.dateOfBirth, "Geburtsdatum muss nach demjenigen der Mutter sein"));
+			resultList.add(new ValidationMessage($.dateOfBirth, "Geburtsdatum muss nach demjenigen der Mutter sein"));
 		}
 		
 		relation = getFather();
 		if (relation != null && !isBirthAfterRelation(relation)) {
-			resultList.add(new ValidationMessage(PERSON.dateOfBirth, "Geburtsdatum muss nach demjenigen des Vaters sein"));
+			resultList.add(new ValidationMessage($.dateOfBirth, "Geburtsdatum muss nach demjenigen des Vaters sein"));
 		}
 	};
 
@@ -317,7 +317,7 @@ public class Person implements Validation {
 		Relation relation = getMother();
 		if (relation == null || relation.partner == null || relation.partner.sex == null) return;
 		if (relation.partner.sex != Sex.weiblich) {
-			resultList.add(new ValidationMessage(Person.PERSON.getMother(), "Mutter muss weiblich sein"));
+			resultList.add(new ValidationMessage(Person.$.getMother(), "Mutter muss weiblich sein"));
 		}
 	}
 	
@@ -326,7 +326,7 @@ public class Person implements Validation {
 		Relation relation = getFather();
 		if (relation == null || relation.partner == null || relation.partner.sex == null) return;
 		if (relation.partner.sex != Sex.maennlich) {
-			resultList.add(new ValidationMessage(Person.PERSON.getFather(), "Vater muss männlich sein"));
+			resultList.add(new ValidationMessage(Person.$.getFather(), "Vater muss männlich sein"));
 		}
 	}
 	
@@ -335,7 +335,7 @@ public class Person implements Validation {
 		LocalDate localDateOfBirth = dateOfBirth.toLocalDate();
 		if (localDateOfBirth == null || dateOfDeath == null) return;
 		if (dateOfDeath.isBefore(localDateOfBirth)) {
-			resultList.add(new ValidationMessage(PERSON.dateOfDeath, "Todesdatum darf nicht vor Geburtsdatum sein"));
+			resultList.add(new ValidationMessage($.dateOfDeath, "Todesdatum darf nicht vor Geburtsdatum sein"));
 		}
 	}
 
@@ -355,7 +355,7 @@ public class Person implements Validation {
 	private void validateResidence(List<ValidationMessage> resultList) {
 		String validationMessage = residence.validate(typeOfResidence);
 		if (validationMessage != null) {
-			resultList.add(new ValidationMessage(PERSON.residence, validationMessage));
+			resultList.add(new ValidationMessage($.residence, validationMessage));
 		}
 	}
 

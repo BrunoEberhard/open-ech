@@ -21,7 +21,7 @@ public class CorrectLanguageOfCorrespondanceEvent extends OrganisationEventEdito
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.line(Organisation.ORGANISATION.languageOfCorrespondance);
+		formPanel.line(Organisation.$.languageOfCorrespondance);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class CorrectLanguageOfCorrespondanceEvent extends OrganisationEventEdito
 	@Override
 	protected void validate(Organisation object, List<ValidationMessage> resultList) {
 		super.validate(object, resultList);
-		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.languageOfCorrespondance);
+		EmptyValidator.validate(resultList, object, Organisation.$.languageOfCorrespondance);
 	}
 	
 	

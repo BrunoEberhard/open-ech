@@ -18,12 +18,12 @@ public class CorrectMaritalDataEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(Person.PERSON.maritalStatus.maritalStatus);
-		formPanel.line(Person.PERSON.maritalStatus.dateOfMaritalStatus);
+		formPanel.line(Person.$.maritalStatus.maritalStatus);
+		formPanel.line(Person.$.maritalStatus.dateOfMaritalStatus);
 
-		formPanel.line(Person.PERSON.separation.separation);
+		formPanel.line(Person.$.separation.separation);
 		if (echSchema.separationTillAvailable()) {
-			formPanel.line(Person.PERSON.separation.separationTill);
+			formPanel.line(Person.$.separation.separationTill);
 		}
 	}
 

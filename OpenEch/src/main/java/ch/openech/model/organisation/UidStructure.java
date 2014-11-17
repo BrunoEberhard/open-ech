@@ -8,7 +8,7 @@ import org.minimalj.util.StringUtils;
 
 public class UidStructure implements Validatable, DemoEnabled {
 
-	public static final UidStructure UIDSTRUCTURE_STRUCTURE = Keys.of(UidStructure.class);
+	public static final UidStructure $ = Keys.of(UidStructure.class);
 	private static final int[] mult = {5, 4, 3, 2, 7, 6, 5, 4};
 
 	public static final int LENGTH = 12;

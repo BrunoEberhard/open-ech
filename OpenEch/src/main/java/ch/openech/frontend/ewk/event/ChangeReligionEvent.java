@@ -19,7 +19,7 @@ public class ChangeReligionEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(PERSON.religion);
+		formPanel.line($.religion);
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class StaxEch0021 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(JOB_TITLE)) occupation.jobTitle = token(xml);
-				else if (startName.equals(KIND_OF_EMPLOYMENT)) enuum(xml, occupation, Occupation.OCCUPATION.kindOfEmployment);
+				else if (startName.equals(KIND_OF_EMPLOYMENT)) enuum(xml, occupation, Occupation.$.kindOfEmployment);
 				else if (startName.equals(EMPLOYER)) occupation.employer = token(xml);
 				else if (startName.equals(PLACE_OF_WORK)) occupation.placeOfWork = StaxEch0010.address(xml);
 				else if (startName.equals(PLACE_OF_EMPLOYER)) occupation.placeOfEmployer = StaxEch0010.address(xml);
@@ -78,9 +78,9 @@ public class StaxEch0021 {
 					if (relation.isParent()) relation.care = YesNo.Yes;
 					person.relation.add(relation);
 				}
-				else if (startName.equals(BASED_ON_LAW)) enuum(xml, relation, Relation.RELATION.basedOnLaw); 
+				else if (startName.equals(BASED_ON_LAW)) enuum(xml, relation, Relation.$.basedOnLaw); 
 				else if (startName.equals(BASED_ON_LAW_ADD_ON)) relation.basedOnLawAddOn = token(xml);
-				else if (startName.equals(CARE)) enuum(xml, relation, Relation.RELATION.care);
+				else if (startName.equals(CARE)) enuum(xml, relation, Relation.$.care);
 				else if (startName.equals(PARTNER)) relation.partner = partner(xml);
 				else if (startName.equals(ADDRESS)) relation.address = StaxEch0010.address(xml);
 				else skip(xml);
@@ -102,7 +102,7 @@ public class StaxEch0021 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(ORIGIN)) StaxEch0011.placeOfOrigin(xml, placeOfOrigin);
-				else if (startName.equals(REASON_OF_ACQUISITION)) enuum(xml, placeOfOrigin, PlaceOfOrigin.PLACE_OF_ORIGIN.reasonOfAcquisition);
+				else if (startName.equals(REASON_OF_ACQUISITION)) enuum(xml, placeOfOrigin, PlaceOfOrigin.$.reasonOfAcquisition);
 				else if (startName.equals(NATURALIZATION_DATE)) placeOfOrigin.naturalizationDate = StaxEch.date(xml);
 				else if (startName.equals(EXPATRIATION_DATE)) placeOfOrigin.expatriationDate = StaxEch.date(xml);
 				else skip(xml);

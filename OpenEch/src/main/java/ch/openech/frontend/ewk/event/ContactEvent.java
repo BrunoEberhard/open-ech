@@ -21,9 +21,9 @@ public class ContactEvent extends PersonEventEditor<Person> {
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
 		if (echSchema.contactHasValidTill()) {
-			formPanel.line(Person.PERSON.contactPerson.validTill);
+			formPanel.line(Person.$.contactPerson.validTill);
 		}
-		formPanel.line(Person.PERSON.contactPerson);
+		formPanel.line(Person.$.contactPerson);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class ContactEvent extends PersonEventEditor<Person> {
 	@BusinessRule("Bei Änderungen an der Zustelladresse / Kontaktadresse muss die Adresse gesetzt sein")
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		if (person.contactPerson.address == null) {
-			resultList.add(new ValidationMessage(Person.PERSON.contactPerson.address, "Kontaktadresse muss gesetzt sein"));
+			resultList.add(new ValidationMessage(Person.$.contactPerson.address, "Kontaktadresse muss gesetzt sein"));
 		}
 	}
 

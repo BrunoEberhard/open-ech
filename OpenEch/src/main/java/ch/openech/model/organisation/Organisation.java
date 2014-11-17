@@ -39,7 +39,7 @@ import ch.openech.xml.read.StaxEch;
 
 public class Organisation implements Validation {
 
-	public static final Organisation ORGANISATION = Keys.of(Organisation.class);
+	public static final Organisation $ = Keys.of(Organisation.class);
 
 	public static enum EditMode { DISPLAY, BASE_DELIVERY, MOVE_IN, FOUNDATION, CHANGE_RESIDENCE_TYPE, IN_LIQUIDATION, LIQUIDATION, CHANGE_REPORTING }
 	
@@ -148,18 +148,18 @@ public class Organisation implements Validation {
 	@Override
 	public void validate(List<ValidationMessage> resultList) {
 		if (editMode == EditMode.IN_LIQUIDATION || editMode == EditMode.LIQUIDATION) {
-			EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.liquidationReason);
+			EmptyValidator.validate(resultList, this, Organisation.$.liquidationReason);
 			if (editMode == EditMode.IN_LIQUIDATION) {
-				EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.liquidationEntryDate);
+				EmptyValidator.validate(resultList, this, Organisation.$.liquidationEntryDate);
 			} else {
-				EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.liquidationDate);
+				EmptyValidator.validate(resultList, this, Organisation.$.liquidationDate);
 			}
 		} else if (editMode != null) {
-			EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.businessAddress);
+			EmptyValidator.validate(resultList, this, Organisation.$.businessAddress);
 			if (editMode == EditMode.CHANGE_REPORTING) {
-				EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.typeOfResidenceOrganisation);
+				EmptyValidator.validate(resultList, this, Organisation.$.typeOfResidenceOrganisation);
 			} else {
-				EmptyValidator.validate(resultList, this, Organisation.ORGANISATION.arrivalDate);
+				EmptyValidator.validate(resultList, this, Organisation.$.arrivalDate);
 			}
 		}
 	}

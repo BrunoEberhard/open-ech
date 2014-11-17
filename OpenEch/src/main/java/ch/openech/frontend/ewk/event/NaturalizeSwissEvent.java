@@ -44,9 +44,9 @@ public class NaturalizeSwissEvent extends PersonEventEditor<PlaceOfOrigin> {
 	@Override
 	public void validate(PlaceOfOrigin object, List<ValidationMessage> resultList) {
 		super.validate(object, resultList);
-		Person.validateEventNotBeforeBirth(resultList, getPerson(), object.naturalizationDate, PlaceOfOrigin.PLACE_OF_ORIGIN.naturalizationDate);
+		Person.validateEventNotBeforeBirth(resultList, getPerson(), object.naturalizationDate, PlaceOfOrigin.$.naturalizationDate);
 		if (object.naturalizationDate == null) {
-			resultList.add(new ValidationMessage(PlaceOfOrigin.PLACE_OF_ORIGIN.naturalizationDate, "Erwerbsdatum erforderlich"));
+			resultList.add(new ValidationMessage(PlaceOfOrigin.$.naturalizationDate, "Erwerbsdatum erforderlich"));
 		}
 	}
 

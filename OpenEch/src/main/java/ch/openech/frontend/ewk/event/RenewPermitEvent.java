@@ -21,12 +21,12 @@ public class RenewPermitEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(PERSON.foreign.residencePermit);
+		formPanel.line($.foreign.residencePermit);
 		if (echSchema.renewPermitHasTill()) {
 			// bei Change ist diese Angabe obligatorisch, bei Correct und Renew nicht
-			formPanel.line(PERSON.foreign.residencePermitTill);
+			formPanel.line($.foreign.residencePermitTill);
 		}
-		formPanel.line(PERSON.occupation);
+		formPanel.line($.occupation);
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class RenewPermitEvent extends PersonEventEditor<Person> {
 	@Override
 	public void validate(Person data, List<ValidationMessage> resultList) {
 		super.validate(data, resultList);
-		EmptyValidator.validate(resultList, data, PERSON.foreign.residencePermit);
+		EmptyValidator.validate(resultList, data, $.foreign.residencePermit);
 		if (data.occupation.isEmpty()) {
-			resultList.add(new ValidationMessage(Person.PERSON.occupation, "Beruf erforderlich"));
+			resultList.add(new ValidationMessage(Person.$.occupation, "Beruf erforderlich"));
 		}
 	}
 

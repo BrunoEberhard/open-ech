@@ -1,5 +1,6 @@
 package ch.openech.frontend.ewk.event;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
-import java.time.LocalDate;
 
 import ch.openech.frontend.e44.PersonField;
 import ch.openech.model.EchFormats;
@@ -34,7 +34,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 		
 	public static class Partnership implements Validation {
-		public static final Partnership PARTNERSHIP = Keys.of(Partnership.class);
+		public static final Partnership $ = Keys.of(Partnership.class);
 		
 		@Required
 		public LocalDate dateOfMaritalStatus;
@@ -56,8 +56,8 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		}
 
 		private void validateNamesNotBlank(List<ValidationMessage> validationMessages) {
-			if (Boolean.TRUE.equals(changeName1)) validateNameNotBlank(validationMessages, PARTNERSHIP.name1, name1);
-			if (Boolean.TRUE.equals(changeName2)) validateNameNotBlank(validationMessages, PARTNERSHIP.name2, name2);
+			if (Boolean.TRUE.equals(changeName1)) validateNameNotBlank(validationMessages, Partnership.$.name1, name1);
+			if (Boolean.TRUE.equals(changeName2)) validateNameNotBlank(validationMessages, Partnership.$.name2, name2);
 		}
 		
 		@Override
@@ -67,10 +67,10 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		}
 		
 		private static void validate(List<ValidationMessage> validationMessages, Person person1, Person person2) {
-			validatePartnerAlive(validationMessages, PARTNERSHIP.partner1, person1);
-			validatePartnerAlive(validationMessages, PARTNERSHIP.partner2, person2);
-			validatePartnerSet(validationMessages, PARTNERSHIP.partner1, person1);
-			validatePartnerSet(validationMessages, PARTNERSHIP.partner2, person2);
+			validatePartnerAlive(validationMessages, Partnership.$.partner1, person1);
+			validatePartnerAlive(validationMessages, Partnership.$.partner2, person2);
+			validatePartnerSet(validationMessages, Partnership.$.partner1, person1);
+			validatePartnerSet(validationMessages, Partnership.$.partner2, person2);
 			validateSex(validationMessages, person1, person2);
 		}
 		
@@ -94,7 +94,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 			if (person1 == null || person2 == null) return;
 			if (person1.sex == null || person2.sex == null) return;
 			if (person1.sex != person2.sex) {
-				validationMessages.add(new ValidationMessage(PartnershipEvent.Partnership.PARTNERSHIP.partner2, "Partner müssen gleichen Geschlechts sein"));
+				validationMessages.add(new ValidationMessage(PartnershipEvent.Partnership.$.partner2, "Partner müssen gleichen Geschlechts sein"));
 			}
 		}
 
@@ -107,7 +107,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 
 	}
 	
-	private static final Partnership PARTNERSHIP = Keys.of(Partnership.class);
+	private static final Partnership $ = Keys.of(Partnership.class);
 
 	@Override
 	protected int getFormColumns() {
@@ -116,16 +116,16 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	
 	@Override
 	protected void fillForm(Form<Partnership> formPanel) {
-		PersonField partner1 = new PersonField(PARTNERSHIP.partner1); 
-		PersonField partner2 = new PersonField(PARTNERSHIP.partner2);
+		PersonField partner1 = new PersonField($.partner1); 
+		PersonField partner2 = new PersonField($.partner2);
 		
 		//
 		
-		formPanel.line(PARTNERSHIP.dateOfMaritalStatus, PARTNERSHIP.registerPartner2);
+		formPanel.line($.dateOfMaritalStatus, $.registerPartner2);
 		formPanel.line(partner1, partner2);
 	
-		formPanel.line(PARTNERSHIP.changeName1, PARTNERSHIP.changeName2);
-		formPanel.line(PARTNERSHIP.name1, PARTNERSHIP.name2);
+		formPanel.line($.changeName1, $.changeName2);
+		formPanel.line($.name1, $.name2);
 	}
 	
 	@Override

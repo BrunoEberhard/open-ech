@@ -20,7 +20,7 @@ public class AddressLockEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(PERSON.dataLock);
+		formPanel.line($.dataLock);
 	}
 
 	@Override

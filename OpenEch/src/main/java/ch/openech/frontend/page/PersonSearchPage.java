@@ -23,13 +23,13 @@ public class PersonSearchPage extends TablePage<PersonSearch> {
 	private final String text;
 
 	public static final Object[] FIELD_NAMES = {
-		PERSON_SEARCH.firstName, //
-		PERSON_SEARCH.officialName, //
-		PERSON_SEARCH.dateOfBirth, //
-		PERSON_SEARCH.getStreet(), // PERSON::getStreet()S
-		PERSON_SEARCH.getStreetNumber(), //
-		PERSON_SEARCH.getTown(), //
-		PERSON_SEARCH.vn.getFormattedValue(), //
+		$.firstName, //
+		$.officialName, //
+		$.dateOfBirth, //
+		$.getStreet(), // PERSON::getStreet()S
+		$.getStreetNumber(), //
+		$.getTown(), //
+		$.vn.getFormattedValue(), //
 	};
 	
 	public PersonSearchPage(String text) {

@@ -8,13 +8,13 @@ public class OriginPanel extends EchForm<PlaceOfOrigin> {
 	
 	public OriginPanel(boolean withReasonAndDate, boolean withExpirationDate) {
 		super(2);
-		line(PLACE_OF_ORIGIN.originName, PLACE_OF_ORIGIN.canton);
+		line($.originName, $.canton);
 		if (withReasonAndDate) {
-			line(PLACE_OF_ORIGIN.reasonOfAcquisition);
-			line(PLACE_OF_ORIGIN.naturalizationDate);
+			line($.reasonOfAcquisition);
+			line($.naturalizationDate);
 		}
 		if (withExpirationDate) {
-			line(PLACE_OF_ORIGIN.expatriationDate);
+			line($.expatriationDate);
 		}
 	}
 

@@ -20,8 +20,8 @@ public class CorrectReportingEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(PERSON.typeOfResidence);
-		formPanel.line(PERSON.residence);
+		formPanel.line($.typeOfResidence);
+		formPanel.line($.residence);
 	}
 
 	@Override

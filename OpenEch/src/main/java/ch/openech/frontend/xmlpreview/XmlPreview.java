@@ -32,7 +32,7 @@ public class XmlPreview {
 					return 400;
 				}
 			};
-			XmlTextFormField xmlTextFormField = new XmlTextFormField(XmlPreviewValue.XML_PREVIEW_VALUE.xmls);
+			XmlTextFormField xmlTextFormField = new XmlTextFormField(XmlPreviewValue.$.xmls);
 			form.line(xmlTextFormField);
 			xmlTextFormField.setObject(xmls);
 			ClientToolkit.getToolkit().createDialog("XML", form.getContent()).openDialog();
@@ -40,7 +40,7 @@ public class XmlPreview {
 	}
 	
 	public static class XmlPreviewValue {
-		public static final XmlPreviewValue XML_PREVIEW_VALUE = Keys.of(XmlPreviewValue.class);
+		public static final XmlPreviewValue $ = Keys.of(XmlPreviewValue.class);
 		
 		public List<String> xmls;
 	}

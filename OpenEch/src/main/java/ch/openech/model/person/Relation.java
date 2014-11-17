@@ -15,7 +15,7 @@ import ch.openech.model.types.YesNo;
 
 public class Relation implements Validatable {
 
-	public static final Relation RELATION = Keys.of(Relation.class);
+	public static final Relation $ = Keys.of(Relation.class);
 	
 	@Required
 	public TypeOfRelationship typeOfRelationship;

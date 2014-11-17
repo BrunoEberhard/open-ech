@@ -1,8 +1,5 @@
 package ch.openech.frontend.ewk;
 
-import static ch.openech.model.person.Person.*;
-import static ch.openech.model.person.Relation.*;
-
 import org.minimalj.autofill.FirstNameGenerator;
 import org.minimalj.autofill.NameGenerator;
 import org.minimalj.autofill.NameWithFrequency;
@@ -55,82 +52,82 @@ public class PersonPanel extends EchForm<Person>  {
 	}
 
 	public void createIdentification() {
-		TechnicalIdsField technicalId = new TechnicalIdsField(PERSON.technicalIds, TechnicalIdsField.WITH_EU_IDS, editable);
+		TechnicalIdsField technicalId = new TechnicalIdsField(Person.$.technicalIds, TechnicalIdsField.WITH_EU_IDS, editable);
 		
-		line(PERSON.officialName);
-		line(PERSON.firstName);
-		line(PERSON.sex, PERSON.dateOfBirth, PERSON.vn, technicalId);
+		line(Person.$.officialName);
+		line(Person.$.firstName);
+		line(Person.$.sex, Person.$.dateOfBirth, Person.$.vn, technicalId);
 	}
 
 	protected void createData() {
 		// not visible for: BIRTH, CORRECT_IDENTIFICATION
 		
-		line(PERSON.originalName, PERSON.alliancePartnershipName, PERSON.aliasName, PERSON.otherName);
-		line(PERSON.maritalStatus.maritalStatus, PERSON.maritalStatus.dateOfMaritalStatus, PERSON.cancelationReason, PERSON.callName);
+		line(Person.$.originalName, Person.$.alliancePartnershipName, Person.$.aliasName, Person.$.otherName);
+		line(Person.$.maritalStatus.maritalStatus, Person.$.maritalStatus.dateOfMaritalStatus, Person.$.cancelationReason, Person.$.callName);
 
 		if (echSchema.separationTillAvailable()) {
-			line(PERSON.separation.separation, PERSON.separation.dateOfSeparation, PERSON.separation.separationTill, PERSON.languageOfCorrespondance);
+			line(Person.$.separation.separation, Person.$.separation.dateOfSeparation, Person.$.separation.separationTill, Person.$.languageOfCorrespondance);
 		} else {
-			line(PERSON.separation.separation, PERSON.separation.dateOfSeparation, PERSON.languageOfCorrespondance);
+			line(Person.$.separation.separation, Person.$.separation.dateOfSeparation, Person.$.languageOfCorrespondance);
 		}
 
-		line(PERSON.nationality, PERSON.religion);
+		line(Person.$.nationality, Person.$.religion);
 		if (!mode.isMoveIn()) {
-			line(PERSON.placeOfBirth, PERSON.dateOfDeath);
+			line(Person.$.placeOfBirth, Person.$.dateOfDeath);
 		}
 		
 		//
 
-		RelationField relationField = new RelationField(PERSON.relation, echSchema, editable);
-		NameOfParentsField nameOfParentsField = new NameOfParentsField(Person.PERSON.nameOfParents, editable);
+		RelationField relationField = new RelationField(Person.$.relation, echSchema, editable);
+		NameOfParentsField nameOfParentsField = new NameOfParentsField(Person.$.nameOfParents, editable);
 
 		switch (mode) {
 		case DISPLAY:
 		case BASE_DELIVERY:
-			line(PERSON.typeOfResidence, PERSON.residence);
-			addDependecy(PERSON.typeOfResidence, new ResidenceUpdater(), PERSON.residence);
+			line(Person.$.typeOfResidence, Person.$.residence);
+			addDependecy(Person.$.typeOfResidence, new ResidenceUpdater(), Person.$.residence);
 			
-			line(PERSON.arrivalDate, PERSON.departureDate);
-			line(PERSON.comesFrom, PERSON.goesTo);
-			line(PERSON.comesFromAddress, PERSON.dwellingAddress, PERSON.goesToAddress);
+			line(Person.$.arrivalDate, Person.$.departureDate);
+			line(Person.$.comesFrom, Person.$.goesTo);
+			line(Person.$.comesFromAddress, Person.$.dwellingAddress, Person.$.goesToAddress);
 			
 			if (extensionAvailable()) {
-				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
-				line(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contacts);
+				line(Person.$.placeOfOrigin, Person.$.foreign, Person.$.occupation, Person.$.personExtendedInformation);
+				line(relationField, nameOfParentsField, Person.$.contactPerson, Person.$.contacts);
 			} else {
-				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
-				line(relationField, nameOfParentsField, PERSON.contactPerson);
+				line(Person.$.placeOfOrigin, Person.$.foreign, Person.$.occupation);
+				line(relationField, nameOfParentsField, Person.$.contactPerson);
 			}
 			
-			line(PERSON.dataLock, PERSON.paperLock);
+			line(Person.$.dataLock, Person.$.paperLock);
 			break;
 		case MOVE_IN:
-			line(PERSON.placeOfBirth, PERSON.arrivalDate);
-			line(PERSON.typeOfResidence, PERSON.comesFrom);
-			line(PERSON.residence, PERSON.dwellingAddress, PERSON.comesFromAddress);
+			line(Person.$.placeOfBirth, Person.$.arrivalDate);
+			line(Person.$.typeOfResidence, Person.$.comesFrom);
+			line(Person.$.residence, Person.$.dwellingAddress, Person.$.comesFromAddress);
 			
 			if (extensionAvailable()) {
-				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation, PERSON.personExtendedInformation);
-				line(relationField, nameOfParentsField, PERSON.contactPerson, PERSON.contacts);
+				line(Person.$.placeOfOrigin, Person.$.foreign, Person.$.occupation, Person.$.personExtendedInformation);
+				line(relationField, nameOfParentsField, Person.$.contactPerson, Person.$.contacts);
 			} else {
-				line(PERSON.placeOfOrigin, PERSON.foreign, PERSON.occupation);
-				line(relationField, nameOfParentsField, PERSON.contactPerson);
+				line(Person.$.placeOfOrigin, Person.$.foreign, Person.$.occupation);
+				line(relationField, nameOfParentsField, Person.$.contactPerson);
 			}
 			break;
 		case CHANGE_RESIDENCE_TYPE:
-			line(PERSON.arrivalDate, PERSON.departureDate);
-			line(PERSON.comesFrom, PERSON.goesTo);
-			line(PERSON.comesFromAddress, PERSON.goesToAddress);
-			line(PERSON.placeOfOrigin, PERSON.foreign);
-			line(PERSON.dwellingAddress, PERSON.occupation);
-			line(new RelationField(PERSON.relation, echSchema, editable), new NameOfParentsField(Person.PERSON.nameOfParents, true));
+			line(Person.$.arrivalDate, Person.$.departureDate);
+			line(Person.$.comesFrom, Person.$.goesTo);
+			line(Person.$.comesFromAddress, Person.$.goesToAddress);
+			line(Person.$.placeOfOrigin, Person.$.foreign);
+			line(Person.$.dwellingAddress, Person.$.occupation);
+			line(new RelationField(Person.$.relation, echSchema, editable), new NameOfParentsField(Person.$.nameOfParents, true));
 			break;
 		case CORRECT_PERSON:
-			line(PERSON.placeOfOrigin, PERSON.foreign);
+			line(Person.$.placeOfOrigin, Person.$.foreign);
 			if (extensionAvailable()) {
-				line(PERSON.contactPerson, PERSON.personExtendedInformation, PERSON.contacts);
+				line(Person.$.contactPerson, Person.$.personExtendedInformation, Person.$.contacts);
 			} else {
-				line(PERSON.contactPerson);
+				line(Person.$.contactPerson);
 			}
 			break;
 		case BIRTH:
@@ -150,15 +147,15 @@ public class PersonPanel extends EchForm<Person>  {
 	}
 	
 	protected void createBirth() {
-		line(PERSON.callName, PERSON.languageOfCorrespondance);
-		line(PERSON.nationality, PERSON.religion);
-		line(PERSON.placeOfBirth);
-		ParentField mother = new ParentField(PERSON.getMother());
-		ParentField father = new ParentField(PERSON.getFather());
+		line(Person.$.callName, Person.$.languageOfCorrespondance);
+		line(Person.$.nationality, Person.$.religion);
+		line(Person.$.placeOfBirth);
+		ParentField mother = new ParentField(Person.$.getMother());
+		ParentField father = new ParentField(Person.$.getFather());
 		line(mother, father);
-		line(new PlaceOfOriginField(PERSON.placeOfOrigin, false, editable), PERSON.foreign);
+		line(new PlaceOfOriginField(Person.$.placeOfOrigin, false, editable), Person.$.foreign);
 		
-		addDependecy(PERSON.getMother(), new OfficialNameFromMotherUpdater(), PERSON.officialName);
+		addDependecy(Person.$.getMother(), new OfficialNameFromMotherUpdater(), Person.$.officialName);
 	}
 
 	private class OfficialNameFromMotherUpdater implements Form.PropertyUpdater<Relation, String, Person> {
@@ -221,8 +218,8 @@ public class PersonPanel extends EchForm<Person>  {
 		@Override
 		public Form<Relation> createFormPanel() {
 			EchForm<Relation> form = new EchForm<>();
-			form.line(RELATION.partner);
-			form.line(new AddressField(RELATION.address, true));
+			form.line(Relation.$.partner);
+			form.line(new AddressField(Relation.$.address, true));
 			return form;
 		}
 	}

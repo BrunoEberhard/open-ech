@@ -20,7 +20,7 @@ import ch.openech.model.types.PhoneCategory;
 
 public class ContactEntry implements Validation {
 
-	public static ContactEntry CONTACT_ENTRY = Keys.of(ContactEntry.class);
+	public static ContactEntry $ = Keys.of(ContactEntry.class);
 	
 	public ContactEntryType typeOfContact;
 	
@@ -119,32 +119,32 @@ public class ContactEntry implements Validation {
 	public void validate(List<ValidationMessage> validationMessages) {
 		if (dateFrom != null && dateTo != null) {
 			if (dateFrom.isAfter(dateTo)) {
-				validationMessages.add(new ValidationMessage(CONTACT_ENTRY.dateTo, "Zeitraum ungültig"));
+				validationMessages.add(new ValidationMessage($.dateTo, "Zeitraum ungültig"));
 			}
 		}
 		
 		// Die Regex stammen aus dem eCH-0046-2-0.xsd
 		if (isAddressEntry()) {
 			if (address == null || address.isEmpty()) {
-				validationMessages.add(new ValidationMessage(CONTACT_ENTRY.address, "Adresse erforderlich"));
+				validationMessages.add(new ValidationMessage($.address, "Adresse erforderlich"));
 			}
 		} else {
 			if (StringUtils.isEmpty(value)) {
-				validationMessages.add(new ValidationMessage(CONTACT_ENTRY.value, "Eingabe erforderlich"));
+				validationMessages.add(new ValidationMessage($.value, "Eingabe erforderlich"));
 			} else if (isEmail()) {
 				String regex = "[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+(\\.[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+)*@[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+(\\.[A-Za-z0-9!#-'\\*\\+\\-/=\\?\\^_`\\{-~]+)*";
 				if (!Pattern.matches(regex, value)) {
-					validationMessages.add(new ValidationMessage(CONTACT_ENTRY.value, "Ungültige EMail - Adresse"));
+					validationMessages.add(new ValidationMessage($.value, "Ungültige EMail - Adresse"));
 				}
 			} else if (isPhone()) {
 				String regex = "\\d{10,20}";
 				if (!Pattern.matches(regex, value)) {
-					validationMessages.add(new ValidationMessage(CONTACT_ENTRY.value, "Ungültige Telefonnummer (10-20 Zahlen)"));
+					validationMessages.add(new ValidationMessage($.value, "Ungültige Telefonnummer (10-20 Zahlen)"));
 				}
 			} else if (isInternet()) {
 				String regex = "http://.*";
 				if (!Pattern.matches(regex, value)) {
-					validationMessages.add(new ValidationMessage(CONTACT_ENTRY.value, "Ungültige Internetadresse (muss mit http:// beginnen)"));
+					validationMessages.add(new ValidationMessage($.value, "Ungültige Internetadresse (muss mit http:// beginnen)"));
 				}
 			}
 		}

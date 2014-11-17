@@ -53,11 +53,11 @@ public class TechnicalIdsField extends ObjectLinkField<TechnicalIds> {
 	@Override
 	public Form<TechnicalIds> createFormPanel() {
 		EchForm<TechnicalIds> form = new EchForm<TechnicalIds>();
-		form.line(TechnicalIds.TECHNICAL_IDS.localId.personIdCategory);
-		form.line(TechnicalIds.TECHNICAL_IDS.localId.personId);
-		form.line(new OtherIdField(TechnicalIds.TECHNICAL_IDS.otherId, isEditable()));
+		form.line(TechnicalIds.$.localId.personIdCategory);
+		form.line(TechnicalIds.$.localId.personId);
+		form.line(new OtherIdField(TechnicalIds.$.otherId, isEditable()));
 		if (hasSpecialEuIds) {
-			form.line(new OtherIdField(TechnicalIds.TECHNICAL_IDS.euId, isEditable()));
+			form.line(new OtherIdField(TechnicalIds.$.euId, isEditable()));
 		}
 		return form;
 	}

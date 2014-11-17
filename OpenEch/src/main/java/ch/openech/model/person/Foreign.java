@@ -12,7 +12,7 @@ import ch.openech.model.EchFormats;
 import ch.openech.model.code.ResidencePermit;
 
 public class Foreign {
-	public static final Foreign FOREIGN = Keys.of(Foreign.class);
+	public static final Foreign $ = Keys.of(Foreign.class);
 	
 	public ResidencePermit residencePermit;
 	public LocalDate residencePermitTill;

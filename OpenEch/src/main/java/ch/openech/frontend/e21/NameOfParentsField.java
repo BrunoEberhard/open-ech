@@ -49,9 +49,9 @@ public class NameOfParentsField extends ObjectFlowField<NameOfParents> {
 		@Override
 		public Form<NameOfParent> createForm() {
 			Form<NameOfParent> form = new Form<NameOfParent>();
-			form.line(NameOfParent.KEYS.firstName);
-			form.line(NameOfParent.KEYS.officialName);
-			form.line(NameOfParent.KEYS.officialProof);
+			form.line(NameOfParent.$.firstName);
+			form.line(NameOfParent.$.officialName);
+			form.line(NameOfParent.$.officialProof);
 			return form;
 		}
 

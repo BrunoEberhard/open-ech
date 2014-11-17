@@ -46,7 +46,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	public static class MoveInNextPerson {
-		public static final MoveInNextPerson MOVE_IN_NEXT_PERSON = Keys.of(MoveInNextPerson.class);
+		public static final MoveInNextPerson $ = Keys.of(MoveInNextPerson.class);
 		
 		@Required
 		public TypeOfRelationshipInverted typeOfRelationshipInverted = TypeOfRelationshipInverted.Kind;
@@ -59,7 +59,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 		
 	public static class MoveInEditorData {
-		public static final MoveInEditorData MOVE_IN_EDITOR_DATA = Keys.of(MoveInEditorData.class);
+		public static final MoveInEditorData $ = Keys.of(MoveInEditorData.class);
 		
 		public final List<Person> persons = new ArrayList<Person>();
 		public final List<MoveInNextPerson> nextPersons = new ArrayList<MoveInWizard.MoveInNextPerson>();
@@ -170,15 +170,15 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		protected Form<MoveInNextPerson> createForm() {
 			EchForm<MoveInNextPerson> form = new EchForm<MoveInNextPerson>(2);
 			
-			form.line(MoveInNextPerson.MOVE_IN_NEXT_PERSON.typeOfRelationshipInverted);
+			form.line(MoveInNextPerson.$.typeOfRelationshipInverted);
 
-			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.basePerson, TypeOfRelationship.Partner));
+			form.line(new MoveInNextPersonField(MoveInNextPerson.$.basePerson, TypeOfRelationship.Partner));
 
-			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.mother, TypeOfRelationship.Mutter));
-			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.father, TypeOfRelationship.Vater));
+			form.line(new MoveInNextPersonField(MoveInNextPerson.$.mother, TypeOfRelationship.Mutter));
+			form.line(new MoveInNextPersonField(MoveInNextPerson.$.father, TypeOfRelationship.Vater));
 
-			form.line(new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.fosterMother, TypeOfRelationship.Pflegemutter), //
-					new MoveInNextPersonField(MoveInNextPerson.MOVE_IN_NEXT_PERSON.fosterFather, TypeOfRelationship.Pflegevater));
+			form.line(new MoveInNextPersonField(MoveInNextPerson.$.fosterMother, TypeOfRelationship.Pflegemutter), //
+					new MoveInNextPersonField(MoveInNextPerson.$.fosterFather, TypeOfRelationship.Pflegevater));
 			
 			return form;
 		}

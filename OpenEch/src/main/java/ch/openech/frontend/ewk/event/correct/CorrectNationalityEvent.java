@@ -18,7 +18,7 @@ public class CorrectNationalityEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(Person.PERSON.nationality);
+		formPanel.line(Person.$.nationality);
 		// TODO nationalityFrom (how?)
 	}
 

@@ -33,28 +33,28 @@ public class OrganisationPanel extends EchForm<Organisation> {
 	}
 
 	public void organisation() {
-		line(ORGANISATION.organisationName);
-		line(ORGANISATION.organisationLegalName, ORGANISATION.organisationAdditionalName, ORGANISATION.legalForm, ORGANISATION.languageOfCorrespondance);
-		line(ORGANISATION.uid, new TechnicalIdsField(ORGANISATION.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
+		line($.organisationName);
+		line($.organisationLegalName, $.organisationAdditionalName, $.legalForm, $.languageOfCorrespondance);
+		line($.uid, new TechnicalIdsField($.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
 
-		line(ORGANISATION.uidBrancheText, ORGANISATION.nogaCode);
+		line($.uidBrancheText, $.nogaCode);
 		if (EditMode.DISPLAY != mode) {
-			line(ORGANISATION.foundationDate, ORGANISATION.liquidationDate);
+			line($.foundationDate, $.liquidationDate);
 		} else {
 			// TODO das verteilt sich falsch
-			line(ORGANISATION.foundationDate, ORGANISATION.liquidationEntryDate, ORGANISATION.liquidationDate);
+			line($.foundationDate, $.liquidationEntryDate, $.liquidationDate);
 		}
-		line(ORGANISATION.foundationReason, ORGANISATION.liquidationReason);
+		line($.foundationReason, $.liquidationReason);
 	}
 
 	private void residence() {
-		line(ORGANISATION.typeOfResidenceOrganisation, ORGANISATION.reportingMunicipality);
-		line(ORGANISATION.arrivalDate, ORGANISATION.departureDate);
-		line(ORGANISATION.comesFrom, ORGANISATION.goesTo);
+		line($.typeOfResidenceOrganisation, $.reportingMunicipality);
+		line($.arrivalDate, $.departureDate);
+		line($.comesFrom, $.goesTo);
 		if (EditMode.CHANGE_RESIDENCE_TYPE != mode) {
-			line(ORGANISATION.businessAddress, ORGANISATION.contacts, new HeadquarterField(ORGANISATION.headquarter, echSchema, editable));
+			line($.businessAddress, $.contacts, new HeadquarterField($.headquarter, echSchema, editable));
 		} else {
-			line(ORGANISATION.businessAddress, new HeadquarterField(ORGANISATION.headquarter, echSchema, editable));
+			line($.businessAddress, new HeadquarterField($.headquarter, echSchema, editable));
 		}
 	}
 
@@ -62,19 +62,19 @@ public class OrganisationPanel extends EchForm<Organisation> {
 	
 	private void uidregInformation() {
 		addTitle("UID - Register");
-		line(ORGANISATION.uidregStatusEnterpriseDetail, ORGANISATION.uidregPublicStatus, ORGANISATION.uidregOrganisationType, ORGANISATION.uidregLiquidationReason);
-		line(ORGANISATION.uidregSourceUid);
+		line($.uidregStatusEnterpriseDetail, $.uidregPublicStatus, $.uidregOrganisationType, $.uidregLiquidationReason);
+		line($.uidregSourceUid);
 	}
 
 	private void commercialRegisterInformation() {
 		addTitle("Handelsregister");
-		line(ORGANISATION.commercialRegisterNameTranslation);
-		line(ORGANISATION.commercialRegisterStatus,  ORGANISATION.commercialRegisterEntryStatus, ORGANISATION.commercialRegisterEntryDate, ORGANISATION.commercialRegisterLiquidationDate);
+		line($.commercialRegisterNameTranslation);
+		line($.commercialRegisterStatus,  $.commercialRegisterEntryStatus, $.commercialRegisterEntryDate, $.commercialRegisterLiquidationDate);
 	}
 	
 	private void vatRegisterInformation() {
 		addTitle("Mehrwertsteuerregister");
-		line(ORGANISATION.vatStatus, ORGANISATION.vatEntryStatus, ORGANISATION.vatEntryDate, ORGANISATION.vatLiquidationDate);
+		line($.vatStatus, $.vatEntryStatus, $.vatEntryDate, $.vatLiquidationDate);
 	}
 	
 }

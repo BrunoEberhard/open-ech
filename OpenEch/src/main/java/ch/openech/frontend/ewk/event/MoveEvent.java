@@ -25,16 +25,16 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 		public MunicipalityIdentification reportingMunicipality;
 	}
 
-	private static final MoveEventData MED = Keys.of(MoveEventData.class);
+	private static final MoveEventData $ = Keys.of(MoveEventData.class);
 	
 	@Override
 	protected void fillForm(Form<MoveEventData> formPanel) {
-		formPanel.line(MED.dwellingAddress.EGID);
-		formPanel.line(MED.dwellingAddress.EWID);
-		formPanel.line(MED.dwellingAddress.householdID);
-		formPanel.line(new AddressField(MED.dwellingAddress.mailAddress, true, false, false));
-		formPanel.line(MED.dwellingAddress.typeOfHousehold);
-		formPanel.line(new MunicipalityField(MED.reportingMunicipality, true));
+		formPanel.line($.dwellingAddress.EGID);
+		formPanel.line($.dwellingAddress.EWID);
+		formPanel.line($.dwellingAddress.householdID);
+		formPanel.line(new AddressField($.dwellingAddress.mailAddress, true, false, false));
+		formPanel.line($.dwellingAddress.typeOfHousehold);
+		formPanel.line(new MunicipalityField($.reportingMunicipality, true));
 	}
 
 	@Override

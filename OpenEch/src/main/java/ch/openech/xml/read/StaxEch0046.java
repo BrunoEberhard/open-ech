@@ -119,9 +119,9 @@ public class StaxEch0046 {
 						}						
 					} else {
 						if (phone) {
-							StaxEch.enuum(xml, contactEntry, ContactEntry.CONTACT_ENTRY.phoneCategory);
+							StaxEch.enuum(xml, contactEntry, ContactEntry.$.phoneCategory);
 						} else {
-							StaxEch.enuum(xml, contactEntry, ContactEntry.CONTACT_ENTRY.categoryCode);
+							StaxEch.enuum(xml, contactEntry, ContactEntry.$.categoryCode);
 						}
 					}
 				} else if (startName.equals(VALIDITY)) {

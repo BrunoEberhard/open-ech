@@ -17,20 +17,20 @@ public class ContactEntryPanel extends EchForm<ContactEntry> {
 		this.type = type;
 
 		if (type == ContactEntryType.Phone) {
-			line(ContactEntry.CONTACT_ENTRY.phoneCategory);
-			line(ContactEntry.CONTACT_ENTRY.phoneCategoryOther);
+			line(ContactEntry.$.phoneCategory);
+			line(ContactEntry.$.phoneCategoryOther);
 		} else {
-			line(ContactEntry.CONTACT_ENTRY.categoryCode);
-			line(ContactEntry.CONTACT_ENTRY.categoryOther);
+			line(ContactEntry.$.categoryCode);
+			line(ContactEntry.$.categoryOther);
 		}
 		
 		if (type == ContactEntryType.Address) {
-			addressField = new AddressField(ContactEntry.CONTACT_ENTRY.address, false, person, !person);
+			addressField = new AddressField(ContactEntry.$.address, false, person, !person);
 			line(addressField);
 		} else {
-			line(ContactEntry.CONTACT_ENTRY.value);
+			line(ContactEntry.$.value);
 		}
-		line(ContactEntry.CONTACT_ENTRY.dateFrom, ContactEntry.CONTACT_ENTRY.dateTo);
+		line(ContactEntry.$.dateFrom, ContactEntry.$.dateTo);
 	}
 	
 	@Override

@@ -42,10 +42,10 @@ public class ChangeTypeOfResidenceEvent extends PersonEventEditor<Person> {
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		if (person.comesFrom == null || person.comesFrom.isUnknown()) {
-			resultList.add(new ValidationMessage(Person.PERSON.comesFrom, "Herkunftsort erforderlich"));
+			resultList.add(new ValidationMessage(Person.$.comesFrom, "Herkunftsort erforderlich"));
 		}
 		if (person.comesFrom == null || person.comesFrom.mailAddress == null || person.comesFrom.mailAddress.isEmpty()) {
-			resultList.add(new ValidationMessage(Person.PERSON.comesFromAddress, "Herkunftsadresse erforderlich"));
+			resultList.add(new ValidationMessage(Person.$.comesFromAddress, "Herkunftsadresse erforderlich"));
 		}
 	}
 	

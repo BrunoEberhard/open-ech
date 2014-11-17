@@ -12,7 +12,7 @@ import ch.openech.model.EchFormats;
 
 public class Canton implements Code, Rendering, Comparable<Canton> {
 
-	public static final Canton CANTON = Keys.of(Canton.class);
+	public static final Canton $ = Keys.of(Canton.class);
 
 	public Canton() {
 	}

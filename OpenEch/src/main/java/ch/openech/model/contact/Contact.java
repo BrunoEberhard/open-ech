@@ -10,7 +10,7 @@ import org.minimalj.model.annotation.Size;
 // Für Personen, aber auch für Vermieter
 public class Contact {
 
-	public static final Contact CONTACT = Keys.of(Contact.class);
+	public static final Contact $ = Keys.of(Contact.class);
 	
 	public Object id;
 	

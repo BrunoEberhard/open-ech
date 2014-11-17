@@ -17,8 +17,8 @@ public class LiquidationEvent extends OrganisationEventEditor<Organisation> {
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.line(Organisation.ORGANISATION.liquidationDate);
-		formPanel.line(Organisation.ORGANISATION.liquidationReason);
+		formPanel.line(Organisation.$.liquidationDate);
+		formPanel.line(Organisation.$.liquidationReason);
 	}
 
 	@Override

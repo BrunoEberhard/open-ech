@@ -1,7 +1,6 @@
 package ch.openech.frontend.ewk.event;
 
-import static ch.openech.model.person.PlaceOfOrigin.*;
-
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.minimalj.model.annotation.Required;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
-import java.time.LocalDate;
 
 import ch.openech.frontend.ewk.event.UndoCitizenEvent.UndoCitizenData;
 import ch.openech.model.person.Person;
@@ -34,9 +32,9 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 	
 	@Override
 	protected void fillForm(Form<UndoCitizenData> formPanel) {
-		originField = new UndoCitizenField(UndoCitizenData.UNDO_CITIZEN_DATA.placeOfOrigin);
+		originField = new UndoCitizenField(UndoCitizenData.$.placeOfOrigin);
 	    formPanel.line(originField);
-	    formPanel.line(UndoCitizenData.UNDO_CITIZEN_DATA.expatriationDate);
+	    formPanel.line(UndoCitizenData.$.expatriationDate);
 	}
 
 	@Override
@@ -85,7 +83,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 	}
 	
 	public static class UndoCitizenData implements Validation {
-		public static final UndoCitizenData UNDO_CITIZEN_DATA = Keys.of(UndoCitizenData.class);
+		public static final UndoCitizenData $ = Keys.of(UndoCitizenData.class);
 		
 		public Person person;
 		@Required
@@ -95,7 +93,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		
 		@Override
 		public void validate(List<ValidationMessage> resultList) {
-			Person.validateEventNotBeforeBirth(resultList, person, expatriationDate, PLACE_OF_ORIGIN.expatriationDate);
+			Person.validateEventNotBeforeBirth(resultList, person, expatriationDate, PlaceOfOrigin.$.expatriationDate);
 			validateExpatriationNotBeforeNaturalization(placeOfOrigin, resultList);
 		}
 		
@@ -105,7 +103,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 			LocalDate date = placeOfOrigin.expatriationDate;
 			if (date == null) return;
 			if (date.compareTo(placeOfOrigin.naturalizationDate)  < 0) {
-				validationMessages.add(new ValidationMessage(PLACE_OF_ORIGIN.expatriationDate, "Kann nicht vor Datum der Einbürgerung sein"));
+				validationMessages.add(new ValidationMessage(PlaceOfOrigin.$.expatriationDate, "Kann nicht vor Datum der Einbürgerung sein"));
 			}
 		}
 	}

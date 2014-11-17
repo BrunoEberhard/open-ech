@@ -17,8 +17,8 @@ public class MoveEvent extends OrganisationEventEditor<Organisation> {
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.line(Organisation.ORGANISATION.reportingMunicipality);
-		formPanel.line(Organisation.ORGANISATION.businessAddress);
+		formPanel.line(Organisation.$.reportingMunicipality);
+		formPanel.line(Organisation.$.businessAddress);
 	}
 
 	@Override

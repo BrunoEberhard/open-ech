@@ -17,7 +17,7 @@ import ch.openech.model.code.FederalRegister;
 public class MunicipalityIdentification implements Code, Rendering, Comparable<MunicipalityIdentification>, Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static MunicipalityIdentification MUNICIPALITY_IDENTIFICATION = Keys.of(MunicipalityIdentification.class);
+	public static MunicipalityIdentification $ = Keys.of(MunicipalityIdentification.class);
 
 	@Size(4)
 	public Integer id;

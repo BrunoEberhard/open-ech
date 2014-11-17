@@ -18,7 +18,7 @@ public class CorrectOriginEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(Person.PERSON.placeOfOrigin);
+		formPanel.line(Person.$.placeOfOrigin);
 	}
 
 	@Override

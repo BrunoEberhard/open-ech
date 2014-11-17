@@ -17,9 +17,9 @@ public class ChangeOrganisationNameEvent extends OrganisationEventEditor<Organis
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.line(Organisation.ORGANISATION.organisationName);
-		formPanel.line(Organisation.ORGANISATION.organisationLegalName);
-		formPanel.line(Organisation.ORGANISATION.organisationAdditionalName);
+		formPanel.line(Organisation.$.organisationName);
+		formPanel.line(Organisation.$.organisationLegalName);
+		formPanel.line(Organisation.$.organisationAdditionalName);
 	}
 
 	@Override

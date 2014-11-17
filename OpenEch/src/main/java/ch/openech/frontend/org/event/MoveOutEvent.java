@@ -19,9 +19,9 @@ public class MoveOutEvent extends OrganisationEventEditor<Organisation> {
 
 	@Override
 	protected void fillForm(Form<Organisation> formPanel) {
-		formPanel.line(Organisation.ORGANISATION.reportingMunicipality);
-		formPanel.line(Organisation.ORGANISATION.departureDate);
-		formPanel.line(Organisation.ORGANISATION.goesTo);
+		formPanel.line(Organisation.$.reportingMunicipality);
+		formPanel.line(Organisation.$.departureDate);
+		formPanel.line(Organisation.$.goesTo);
 	}
 
 	
@@ -29,8 +29,8 @@ public class MoveOutEvent extends OrganisationEventEditor<Organisation> {
 	@Override
 	protected void validate(Organisation object, List<ValidationMessage> resultList) {
 		super.validate(object, resultList);
-		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.departureDate);
-		EmptyValidator.validate(resultList, object, Organisation.ORGANISATION.goesTo);
+		EmptyValidator.validate(resultList, object, Organisation.$.departureDate);
+		EmptyValidator.validate(resultList, object, Organisation.$.goesTo);
 	}
 
 	@Override

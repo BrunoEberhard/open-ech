@@ -21,9 +21,9 @@ public class CorrectContactEvent extends PersonEventEditor<Person> {
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
 		if (echSchema.contactHasValidTill()) {
-			formPanel.line(Person.PERSON.contactPerson.validTill);
+			formPanel.line(Person.$.contactPerson.validTill);
 		}
-		formPanel.line(Person.PERSON.contactPerson);
+		formPanel.line(Person.$.contactPerson);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ import ch.openech.xml.write.EchSchema;
 @Sizes(EchFormats.class)
 public class Occupation implements Validation {
 
-	public static final Occupation OCCUPATION = Keys.of(Occupation.class);
+	public static final Occupation $ = Keys.of(Occupation.class);
 	
 	private final transient EchSchema echSchema;
 	
@@ -105,7 +105,7 @@ public class Occupation implements Validation {
 	@Override
 	public void validate(List<ValidationMessage> resultList) {
 		if (echSchema.kindOfEmploymentMandatory()) {
-			EmptyValidator.validate(resultList, this, OCCUPATION.kindOfEmployment);
+			EmptyValidator.validate(resultList, this, $.kindOfEmployment);
 		}
 	}
 	

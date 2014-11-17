@@ -19,7 +19,7 @@ public class PaperLockEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(PERSON.paperLock);
+		formPanel.line($.paperLock);
 	}
 
 	@Override

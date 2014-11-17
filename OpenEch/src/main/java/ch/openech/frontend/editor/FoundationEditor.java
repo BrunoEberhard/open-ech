@@ -39,8 +39,8 @@ public class FoundationEditor extends XmlEditor<Organisation> implements XmlResu
 	@Override
 	protected void validate(Organisation object, List<ValidationMessage> resultList) {
 		super.validate(object, resultList);
-		EmptyValidator.validate(resultList, object, ORGANISATION.commercialRegisterStatus);
-		EmptyValidator.validate(resultList, object, ORGANISATION.vatStatus);
+		EmptyValidator.validate(resultList, object, $.commercialRegisterStatus);
+		EmptyValidator.validate(resultList, object, $.vatStatus);
 	}
 
 	@Override

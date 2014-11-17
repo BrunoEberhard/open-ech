@@ -7,7 +7,7 @@ import ch.openech.model.common.CountryIdentification;
 
 public class Nationality  {
 
-	public static final Nationality NATIONALITY = Keys.of(Nationality.class);
+	public static final Nationality $ = Keys.of(Nationality.class);
 	
 	public NationalityStatus nationalityStatus;
 	public CountryIdentification nationalityCountry;

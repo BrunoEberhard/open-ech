@@ -9,15 +9,15 @@ import  ch.openech.model.person.PersonExtendedInformation;
 public class PersonExtendedInformationPanel extends EchForm<PersonExtendedInformation> {
 
 	public PersonExtendedInformationPanel() {
-		line(PERSON_EXTENDED_INFORMATION.armedForcesService);
-		line(PERSON_EXTENDED_INFORMATION.armedForcesLiability);
-		line(PERSON_EXTENDED_INFORMATION.civilDefense);
-		line(PERSON_EXTENDED_INFORMATION.fireService);
-		line(PERSON_EXTENDED_INFORMATION.fireServiceLiability);
-		line(PERSON_EXTENDED_INFORMATION.healthInsured);
-		line(PERSON_EXTENDED_INFORMATION.insuranceName);
-		line(new AddressField(PERSON_EXTENDED_INFORMATION.insuranceAddress, true, false, true));
-		line(PERSON_EXTENDED_INFORMATION.matrimonialInheritanceArrangement);
+		line($.armedForcesService);
+		line($.armedForcesLiability);
+		line($.civilDefense);
+		line($.fireService);
+		line($.fireServiceLiability);
+		line($.healthInsured);
+		line($.insuranceName);
+		line(new AddressField($.insuranceAddress, true, false, true));
+		line($.matrimonialInheritanceArrangement);
 	}
 
 }

@@ -10,7 +10,7 @@ import ch.openech.model.types.YesNo;
 
 public class PersonExtendedInformation {
 
-	public static final PersonExtendedInformation PERSON_EXTENDED_INFORMATION = Keys.of(PersonExtendedInformation.class);
+	public static final PersonExtendedInformation $ = Keys.of(PersonExtendedInformation.class);
 	
 	public PersonIdentification personIdentification;
 	

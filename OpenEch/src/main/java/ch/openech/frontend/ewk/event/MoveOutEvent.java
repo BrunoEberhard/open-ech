@@ -30,7 +30,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 		public Place goesTo;
 	}
 
-	private static final MoveOutData MOD = Keys.of(MoveOutData.class);
+	private static final MoveOutData $ = Keys.of(MoveOutData.class);
 	
 	@Override
 	protected List<String> getXml(Person person, MoveOutData data, WriterEch0020 writerEch0020) throws Exception {
@@ -44,9 +44,9 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 
 	@Override
 	protected void fillForm(Form<MoveOutData> formPanel) {
-		formPanel.line(MOD.departureDate);
-		formPanel.line(new MunicipalityField(MOD.reportingMunicipality, true));
-		formPanel.line(MOD.goesTo);
+		formPanel.line($.departureDate);
+		formPanel.line(new MunicipalityField($.reportingMunicipality, true));
+		formPanel.line($.goesTo);
 	}
 	
 	@Override

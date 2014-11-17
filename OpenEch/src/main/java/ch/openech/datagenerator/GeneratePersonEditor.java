@@ -28,8 +28,8 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 	@Override
 	protected Form<GeneratePersonData> createForm() {
 		Form<GeneratePersonData> form = new Form<GeneratePersonData>();
-		form.line(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons);
-		form.line(GeneratePersonData.GENERATE_PERSON_DATA.numberOfOrganisations);
+		form.line(GeneratePersonData.$.numberOfPersons);
+		form.line(GeneratePersonData.$.numberOfOrganisations);
 		return form;
 	}
 
@@ -40,7 +40,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 	}
 
 	public static class GeneratePersonData implements Validation {
-		public static final GeneratePersonData GENERATE_PERSON_DATA = Keys.of(GeneratePersonData.class);
+		public static final GeneratePersonData $ = Keys.of(GeneratePersonData.class);
 
 		@Size(5)
 		public Integer numberOfPersons;
@@ -54,11 +54,11 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 			boolean organisation = numberOfOrganisations  != null && numberOfOrganisations > 0;
 			
 			if (!person && !organisation) {
-				resultList.add(new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfPersons, "Anzahl Personen oder Unternehmen wählen"));
+				resultList.add(new ValidationMessage(GeneratePersonData.$.numberOfPersons, "Anzahl Personen oder Unternehmen wählen"));
 			}
 			
 			if (organisation && numberOfOrganisations > 110) {
-				resultList.add(new ValidationMessage(GeneratePersonData.GENERATE_PERSON_DATA.numberOfOrganisations, "So viele Testdatensätze existieren nicht"));
+				resultList.add(new ValidationMessage(GeneratePersonData.$.numberOfOrganisations, "So viele Testdatensätze existieren nicht"));
 			}
 		}
 	}

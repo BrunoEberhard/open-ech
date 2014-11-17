@@ -22,11 +22,11 @@ public class OrganisationSearchPage extends TablePage<Organisation> {
 	private final String text;
 
 	public static final Object[] FIELD_NAMES = {
-		ORGANISATION.technicalIds.localId.personId, // TODO move to invisible
-		ORGANISATION.organisationName, //
-		ORGANISATION.businessAddress.mailAddress.street, //
-		ORGANISATION.businessAddress.mailAddress.houseNumber.houseNumber, //
-		ORGANISATION.businessAddress.mailAddress.town, //
+		$.technicalIds.localId.personId, // TODO move to invisible
+		$.organisationName, //
+		$.businessAddress.mailAddress.street, //
+		$.businessAddress.mailAddress.houseNumber.houseNumber, //
+		$.businessAddress.mailAddress.town, //
 	};
 	
 	public OrganisationSearchPage(String text) {

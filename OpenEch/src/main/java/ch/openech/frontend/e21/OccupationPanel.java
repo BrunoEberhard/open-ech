@@ -12,12 +12,12 @@ public class OccupationPanel extends EchForm<Occupation> {
 	public OccupationPanel(EchSchema echSchema) {
 		super(echSchema, 2);
 		
-		line(OCCUPATION.kindOfEmployment);
-		line(OCCUPATION.jobTitle);
-		line(OCCUPATION.employer);
-		line(new AddressField(OCCUPATION.placeOfWork, false, false, false), new AddressField(OCCUPATION.placeOfEmployer, false, false, false));
+		line($.kindOfEmployment);
+		line($.jobTitle);
+		line($.employer);
+		line(new AddressField($.placeOfWork, false, false, false), new AddressField($.placeOfEmployer, false, false, false));
 		if (echSchema.occupationValidTillAvailable()) {
-			line(OCCUPATION.occupationValidTill);
+			line($.occupationValidTill);
 		}
 	}
 

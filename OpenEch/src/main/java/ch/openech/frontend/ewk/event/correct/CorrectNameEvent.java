@@ -20,12 +20,12 @@ public class CorrectNameEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> form) {
-		form.line(PERSON.originalName);
-		form.line(PERSON.alliancePartnershipName);
-		form.line(PERSON.aliasName);
-		form.line(PERSON.otherName);
-		form.line(PERSON.callName);
-		form.line(PERSON.foreign.nameOnPassport);
+		form.line($.originalName);
+		form.line($.alliancePartnershipName);
+		form.line($.aliasName);
+		form.line($.otherName);
+		form.line($.callName);
+		form.line($.foreign.nameOnPassport);
 	}
 
 	@Override

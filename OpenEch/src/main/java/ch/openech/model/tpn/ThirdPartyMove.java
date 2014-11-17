@@ -14,7 +14,7 @@ import ch.openech.model.contact.ContactEntry;
 // e46
 public class ThirdPartyMove {
 
-	public static final ThirdPartyMove THIRD_PARTY_MOVE = Keys.of(ThirdPartyMove.class);
+	public static final ThirdPartyMove $ = Keys.of(ThirdPartyMove.class);
 	
 	public final List<ContactEntry> contractor = new ArrayList<ContactEntry>();
 	

@@ -1,7 +1,5 @@
 package ch.openech.frontend.ewk.event;
 
-import static ch.openech.model.person.Relation.*;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class ChangeGardianEvent extends PersonEventEditor<Relation> {
 	public void validate(Relation relation, List<ValidationMessage> resultList) {
 		super.validate(relation, resultList);
 		if (!echSchema.gardianRelationshipOptional()) {
-			EmptyValidator.validate(resultList, relation, RELATION.partner);
+			EmptyValidator.validate(resultList, relation, Relation.$.partner);
 		}
 	}
 

@@ -17,7 +17,7 @@ import ch.openech.model.EchFormats;
 public class CountryIdentification implements Code, Rendering, Comparable<CountryIdentification>, Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 
-	public static final CountryIdentification COUNTRY_IDENTIFICATION = Keys.of(CountryIdentification.class);
+	public static final CountryIdentification $ = Keys.of(CountryIdentification.class);
 
 	public static final Integer SWISS_COUNTRY_ID = 8100;
 	public static final String SWISS_COUNTRY_ISO2 = "CH";

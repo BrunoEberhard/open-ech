@@ -14,7 +14,7 @@ import ch.openech.model.types.Sex;
 
 public class PersonIdentification implements View<Person> {
 
-	public static final PersonIdentification PERSON_IDENTIFICATION = Keys.of(PersonIdentification.class);
+	public static final PersonIdentification $ = Keys.of(PersonIdentification.class);
 	
 	//
 	

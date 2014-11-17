@@ -15,7 +15,7 @@ import ch.openech.model.person.types.ReasonOfAcquisition;
 
 public class PlaceOfOrigin {
 
-	public static final PlaceOfOrigin PLACE_OF_ORIGIN = Keys.of(PlaceOfOrigin.class);
+	public static final PlaceOfOrigin $ = Keys.of(PlaceOfOrigin.class);
 	
 	// 11: placeOfOriginType
 	@Required @Size(EchFormats.municipalityName)

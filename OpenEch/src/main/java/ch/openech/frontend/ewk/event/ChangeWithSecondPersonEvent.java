@@ -31,7 +31,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 	}
 
 	public static class ChangeWithSecondPersonEventData {
-		public static final ChangeWithSecondPersonEventData DATA = Keys.of(ChangeWithSecondPersonEventData.class);
+		public static final ChangeWithSecondPersonEventData $ = Keys.of(ChangeWithSecondPersonEventData.class);
 		@Required
 		public LocalDate date;
 		public Separation separation;
@@ -50,8 +50,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 	protected void fillForm(Form<ChangeWithSecondPersonEventData> formPanel) {
 		createSpecificForm(formPanel);
 		if (getPerson().getPartner() != null) {
-			formPanel.line(ChangeWithSecondPersonEventData.DATA.registerPartner);
-			formPanel.line(new SecondPersonField(ChangeWithSecondPersonEventData.DATA.relationPartner));
+			formPanel.line(ChangeWithSecondPersonEventData.$.registerPartner);
+			formPanel.line(new SecondPersonField(ChangeWithSecondPersonEventData.$.relationPartner));
 		} else {
 			formPanel.text("(Person ohne Partner)");
 		}
@@ -69,7 +69,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
 		if (data.registerPartner() && data.relationPartner == null) {
-			validationMessages.add(new ValidationMessage(ChangeWithSecondPersonEventData.DATA.registerPartner,
+			validationMessages.add(new ValidationMessage(ChangeWithSecondPersonEventData.$.registerPartner,
 					"Für Partnereintrag ist vorhandener Partner bei Person erforderlich"));
 		}
 	}
@@ -80,7 +80,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		if (getPerson() != null && getPerson().maritalStatus.dateOfMaritalStatus != null
 				&& date != null) {
 			if (date.compareTo(getPerson().maritalStatus.dateOfMaritalStatus) < 0) {
-				validationMessages.add(new ValidationMessage(ChangeWithSecondPersonEventData.DATA.date,
+				validationMessages.add(new ValidationMessage(ChangeWithSecondPersonEventData.$.date,
 						"Datum darf nicht vor letztem Zivilstandsereignis sein"));
 			}
 		}
@@ -94,7 +94,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
+			formPanel.line(ChangeWithSecondPersonEventData.$.date);
 		}
 
 		@Override
@@ -129,7 +129,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
 			super.validate(data, validationMessages);
-			Person.validateEventNotBeforeBirth(validationMessages, getPerson(), data.date, ChangeWithSecondPersonEventData.DATA.date);
+			Person.validateEventNotBeforeBirth(validationMessages, getPerson(), data.date, ChangeWithSecondPersonEventData.$.date);
 		}
 	}
 
@@ -141,7 +141,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
+			formPanel.line(ChangeWithSecondPersonEventData.$.date);
 		}
 
 		@Override
@@ -165,7 +165,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
 			super.validate(data, validationMessages);
-			Person.validateEventNotBeforeBirth(validationMessages, getPerson(), data.date, ChangeWithSecondPersonEventData.DATA.date);
+			Person.validateEventNotBeforeBirth(validationMessages, getPerson(), data.date, ChangeWithSecondPersonEventData.$.date);
 		}
 	}
 
@@ -177,8 +177,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(Person.PERSON.separation);
-			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
+			formPanel.line(Person.$.separation);
+			formPanel.line(ChangeWithSecondPersonEventData.$.date);
 		}
 
 		@Override
@@ -234,7 +234,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
+			formPanel.line(ChangeWithSecondPersonEventData.$.date);
 		}
 
 		@Override
@@ -265,15 +265,15 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
-			formPanel.line(ChangeWithSecondPersonEventData.DATA.cancelationReason);
+			formPanel.line(ChangeWithSecondPersonEventData.$.date);
+			formPanel.line(ChangeWithSecondPersonEventData.$.cancelationReason);
 		}
 
 		@Override
 		public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
 			super.validate(data, validationMessages);
 			validateEventNotBeforeDateOfMaritalStatus(data, validationMessages);
-			EmptyValidator.validate(validationMessages, data, ChangeWithSecondPersonEventData.DATA.cancelationReason);
+			EmptyValidator.validate(validationMessages, data, ChangeWithSecondPersonEventData.$.cancelationReason);
 		}
 
 		@Override
@@ -298,7 +298,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(ChangeWithSecondPersonEventData.DATA.date);
+			formPanel.line(ChangeWithSecondPersonEventData.$.date);
 		}
 
 		@Override
