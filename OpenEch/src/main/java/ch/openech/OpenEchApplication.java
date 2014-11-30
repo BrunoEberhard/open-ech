@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.minimalj.application.DevMode;
-import org.minimalj.application.MjApplication;
+import org.minimalj.application.Application;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.IAction;
@@ -50,7 +50,7 @@ import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 
-public class OpenEchApplication extends MjApplication {
+public class OpenEchApplication extends Application {
 
 	private EchSchema ewkSchema;
 	private EchSchema orgSchema;
