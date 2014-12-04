@@ -1,13 +1,14 @@
 package ch.openech.frontend.page;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
+import org.minimalj.frontend.page.PageLink;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
-import java.time.LocalDateTime;
 
 import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
@@ -78,9 +79,9 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 	@Override
 	protected String link(Person object, String version) {
 		if (version != null) {
-			return link(PersonPage.class, echNamespaceContext.getVersion(), object.getId(), version);
+			return PageLink.link(PersonPage.class, echNamespaceContext.getVersion(), object.getId(), version);
 		} else {
-			return link(PersonPage.class, echNamespaceContext.getVersion(), object.getId());
+			return PageLink.link(PersonPage.class, echNamespaceContext.getVersion(), object.getId());
 		}
 	}
 	

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.page.TablePage;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.criteria.Criteria;
@@ -56,7 +57,7 @@ public class OrganisationSearchPage extends TablePage<Organisation> {
 		int index = 0;
 		int count = 0;
 		for (Organisation o : selectedObjects) {
-			String link = link(OrganisationPage.class, echSchema.getVersion(), IdUtils.getIdString(o));
+			String link = PageLink.link(OrganisationPage.class, echSchema.getVersion(), IdUtils.getIdString(o));
 			pageLinks.add(link);
 			if (o == organisation) {
 				index = count;
