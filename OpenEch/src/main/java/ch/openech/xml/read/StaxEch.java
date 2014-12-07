@@ -54,19 +54,19 @@ public class StaxEch {
 			throw new IllegalArgumentException("Unknown field: " + key);
 		}
 		Object value = null;
-		if (property.getFieldClazz() == String.class) {
+		if (property.getClazz() == String.class) {
 			value = token(xml);
-		} else if (property.getFieldClazz() == Boolean.class) {
+		} else if (property.getClazz() == Boolean.class) {
 			value = bulean(xml);
-		} else if (property.getFieldClazz() == Integer.class) {
+		} else if (property.getClazz() == Integer.class) {
 			value = integer(xml);
-		} else if (property.getFieldClazz() == LocalDate.class) {
+		} else if (property.getClazz() == LocalDate.class) {
 			value = date(xml);
-		} else if (Enum.class.isAssignableFrom(property.getFieldClazz())) {
+		} else if (Enum.class.isAssignableFrom(property.getClazz())) {
 			enuum(xml, object, property);
 			return;
 		} else {
-			throw new IllegalArgumentException("Unknown field type: " + property.getFieldClazz().getName());
+			throw new IllegalArgumentException("Unknown field type: " + property.getClazz().getName());
 		}
 		property.setValue(object, value);
 	}
@@ -131,7 +131,7 @@ public class StaxEch {
 	
 	public static <T extends Enum<T>> void enuum(String value, Object object, PropertyInterface property) {
 		@SuppressWarnings("unchecked")
-		Class<T> enumClass = (Class<T>) property.getFieldClazz();
+		Class<T> enumClass = (Class<T>) property.getClazz();
 		List<T> values = EnumUtils.valueList(enumClass);
 		for (Object enumValue : values) {
 			EchCode echCode = (EchCode) enumValue;

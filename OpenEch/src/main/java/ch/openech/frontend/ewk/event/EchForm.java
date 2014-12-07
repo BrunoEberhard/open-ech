@@ -81,7 +81,7 @@ public class EchForm<T> extends Form<T> {
 
 	@Override
 	public FormField<?> createField(PropertyInterface property) {
-		Class<?> type = property.getFieldClazz();
+		Class<?> type = property.getClazz();
 		if (type == DatePartiallyKnown.class) {
 			return new DatePartiallyKnownField(property, editable);
 		} else if (type == PersonIdentification.class) {

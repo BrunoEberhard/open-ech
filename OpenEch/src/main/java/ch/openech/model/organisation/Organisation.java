@@ -134,9 +134,9 @@ public class Organisation implements Validation {
 
 	public void set(String propertyName, Object value) {
 		PropertyInterface property = FlatProperties.getProperties(this.getClass()).get(propertyName);
-		if (property.getFieldClazz() == LocalDate.class && value instanceof String) {
+		if (property.getClazz() == LocalDate.class && value instanceof String) {
 			value = (LocalDate) DateTimeFormatter.ISO_DATE.parse((String) value);
-		} else if (Enum.class.isAssignableFrom(property.getFieldClazz()) && value instanceof String) {
+		} else if (Enum.class.isAssignableFrom(property.getClazz()) && value instanceof String) {
 			StaxEch.enuum((String) value, this, property);
 			return;
 		} 
