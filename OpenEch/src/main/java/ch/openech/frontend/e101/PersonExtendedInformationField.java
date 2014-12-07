@@ -3,7 +3,7 @@ package ch.openech.frontend.e101;
 import org.minimalj.backend.db.EmptyObjects;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 
 import  ch.openech.model.person.PersonExtendedInformation;
 

@@ -7,12 +7,12 @@ import java.util.List;
 
 import org.minimalj.model.EmptyValidator;
 import org.minimalj.model.Keys;
-import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 

@@ -7,7 +7,7 @@ import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ResourceAction;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.frontend.e07.MunicipalityField;

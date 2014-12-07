@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.model.Keys;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.model.common.MunicipalityIdentification;

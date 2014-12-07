@@ -13,8 +13,8 @@ import javax.xml.stream.events.XMLEvent;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.InvalidValues;
 import org.minimalj.model.Keys;
-import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.types.EchCode;
 

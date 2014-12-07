@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.FormField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.GenericUtils;
 import org.minimalj.util.resources.Resources;
 

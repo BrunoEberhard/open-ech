@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ResourceAction;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.contact.ContactEntry;
 import ch.openech.model.contact.ContactEntryType;

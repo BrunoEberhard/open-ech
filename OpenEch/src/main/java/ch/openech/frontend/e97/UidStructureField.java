@@ -1,7 +1,7 @@
 package ch.openech.frontend.e97;
 
 import org.minimalj.frontend.edit.fields.TextFormatField;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.organisation.UidStructure;
 

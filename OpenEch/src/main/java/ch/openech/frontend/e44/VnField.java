@@ -1,7 +1,7 @@
 package ch.openech.frontend.e44;
 
 import org.minimalj.frontend.edit.fields.TextFormatField;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.EchFormats;

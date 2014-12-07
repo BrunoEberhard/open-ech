@@ -13,8 +13,8 @@ import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.IAction;
 import org.minimalj.model.Keys;
-import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.annotation.Required;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.ewk.PersonPanel;

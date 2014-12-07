@@ -9,7 +9,7 @@ import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.DemoEnabled;
 

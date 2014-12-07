@@ -8,7 +8,7 @@ import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.ResourceAction;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.DateUtils;
 

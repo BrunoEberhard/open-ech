@@ -8,8 +8,8 @@ import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.PageLink;
 import org.minimalj.model.Keys;
-import org.minimalj.model.PropertyInterface;
 import org.minimalj.model.ViewUtil;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
 
 import ch.openech.frontend.page.OrganisationPage;

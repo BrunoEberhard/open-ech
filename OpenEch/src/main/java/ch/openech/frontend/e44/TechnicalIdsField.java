@@ -7,7 +7,7 @@ import org.minimalj.frontend.edit.fields.ObjectLinkField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.common.NamedId;

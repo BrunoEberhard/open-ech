@@ -4,7 +4,7 @@ import org.minimalj.frontend.edit.fields.FormField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 
 import  ch.openech.model.common.Place;
 

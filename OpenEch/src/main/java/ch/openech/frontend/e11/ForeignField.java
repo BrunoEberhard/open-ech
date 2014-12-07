@@ -2,7 +2,7 @@ package ch.openech.frontend.e11;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.model.PropertyInterface;
+import org.minimalj.model.properties.PropertyInterface;
 
 import  ch.openech.model.person.Foreign;
 import ch.openech.xml.write.EchSchema;
