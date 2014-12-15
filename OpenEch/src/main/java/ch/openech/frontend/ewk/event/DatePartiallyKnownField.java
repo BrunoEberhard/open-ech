@@ -2,8 +2,8 @@ package ch.openech.frontend.ewk.event;
 
 import org.minimalj.autofill.DateGenerator;
 import org.minimalj.frontend.edit.fields.TextFormatField;
-import org.minimalj.model.InvalidValues;
 import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
 

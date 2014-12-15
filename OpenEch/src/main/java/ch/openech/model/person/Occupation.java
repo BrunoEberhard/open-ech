@@ -3,11 +3,11 @@ package  ch.openech.model.person;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.minimalj.model.EmptyValidator;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
+import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.DateUtils;

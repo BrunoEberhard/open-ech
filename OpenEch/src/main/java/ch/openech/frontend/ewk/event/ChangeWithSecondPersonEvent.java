@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.model.EmptyValidator;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
+import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
+
 import java.time.LocalDate;
 
 import ch.openech.frontend.e44.SecondPersonField;

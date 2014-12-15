@@ -7,8 +7,8 @@ import java.util.Set;
 
 import javax.xml.stream.XMLStreamWriter;
 
-import org.minimalj.model.InvalidValues;
 import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.types.EchCode;

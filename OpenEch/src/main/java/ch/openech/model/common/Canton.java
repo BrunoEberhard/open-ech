@@ -2,9 +2,9 @@ package  ch.openech.model.common;
 
 import java.util.Locale;
 
+import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
-import org.minimalj.model.annotation.Code;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 

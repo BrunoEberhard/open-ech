@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.EnumEditField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.model.EmptyValidator;
+import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 
