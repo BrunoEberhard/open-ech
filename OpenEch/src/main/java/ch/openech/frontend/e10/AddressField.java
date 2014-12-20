@@ -7,10 +7,9 @@ import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.DemoEnabled;
 
 import ch.openech.datagenerator.DataGenerator;
-import  ch.openech.model.common.Address;
+import ch.openech.model.common.Address;
 
 public class AddressField extends ObjectFlowField<Address> implements DemoEnabled {
-	// TODO private final PageContext context;
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;
@@ -34,7 +33,6 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	
 	public AddressField(PropertyInterface property, boolean editable, boolean swiss, boolean person, boolean organisation) {
 		super(property, editable);
-//		this.context = context;
 		this.swiss = swiss;
 		this.person = person;
 		this.organisation = organisation;
@@ -77,6 +75,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	@Override
 	protected Address newInstance() {
 		Address address = new Address();
+		// Was war hier gemeint? Einen default value aus den Preferences auslesen?
 		// context.getApplicationContext();
 		return address;
 	}
