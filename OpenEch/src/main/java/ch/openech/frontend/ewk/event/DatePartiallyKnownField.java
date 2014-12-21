@@ -1,11 +1,11 @@
 package ch.openech.frontend.ewk.event;
 
-import org.minimalj.autofill.DateGenerator;
 import org.minimalj.frontend.edit.fields.TextFormatField;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
+import org.minimalj.util.mock.MockDate;
 
 import ch.openech.model.common.DatePartiallyKnown;
 
@@ -20,9 +20,9 @@ public class DatePartiallyKnownField extends TextFormatField<DatePartiallyKnown>
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		DatePartiallyKnown datePartiallyKnown = new DatePartiallyKnown();
-		datePartiallyKnown.value = DateGenerator.generateRandomDatePartiallyKnown();
+		datePartiallyKnown.value = MockDate.generateRandomDatePartiallyKnown();
 		setObject(datePartiallyKnown);
 	}
 

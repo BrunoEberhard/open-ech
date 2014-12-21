@@ -3,13 +3,13 @@ package ch.openech.frontend.e11;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.util.DemoEnabled;
+import org.minimalj.util.mock.Mocking;
 
 import ch.openech.datagenerator.DataGenerator;
 import  ch.openech.model.common.DwellingAddress;
 import ch.openech.xml.write.EchSchema;
 
-public class DwellingAddressField extends ObjectFlowField<DwellingAddress> implements DemoEnabled {
+public class DwellingAddressField extends ObjectFlowField<DwellingAddress> implements Mocking {
 	private final EchSchema echSchema;
 	
 	public DwellingAddressField(PropertyInterface property, EchSchema echSchema, boolean editable) {
@@ -36,7 +36,7 @@ public class DwellingAddressField extends ObjectFlowField<DwellingAddress> imple
 	//
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		DwellingAddress dwellingAddress = DataGenerator.dwellingAddress();
 		if (echSchema.addressesAreBusiness()) {
 			// Kollektivhaushalt oder ähnliches passt auch bei Unternehmen nicht wirklich

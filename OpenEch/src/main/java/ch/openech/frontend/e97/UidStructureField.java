@@ -43,9 +43,9 @@ public class UidStructureField extends TextFormatField<UidStructure> {
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		UidStructure uid = new UidStructure();
-		uid.fillWithDemoData();
+		uid.mock();
 		setObject(uid);
 	}
 

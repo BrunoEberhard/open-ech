@@ -3,7 +3,6 @@ package ch.openech.frontend.e11;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.minimalj.autofill.NameGenerator;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
@@ -12,13 +11,14 @@ import org.minimalj.frontend.toolkit.SwitchComponent;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
-import org.minimalj.util.DemoEnabled;
+import org.minimalj.util.mock.Mocking;
+import org.minimalj.util.mock.MockName;
 
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
 
-public class PlaceField extends AbstractEditField<Place> implements DemoEnabled {
+public class PlaceField extends AbstractEditField<Place> implements Mocking {
 	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
 
 	private final List<CountryIdentification> countries;
@@ -110,7 +110,7 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		if (municipalityIdentifications.isEmpty() || countries.isEmpty()) {
 			logger.warning("Keine Demodaten für Gemeinden oder Länder vorhanden");
 			return;
@@ -122,7 +122,7 @@ public class PlaceField extends AbstractEditField<Place> implements DemoEnabled 
 		} else {
 			int index = (int)(Math.random() * (double)countries.size());
 			place.countryIdentification = countries.get(index);
-			place.foreignTown = NameGenerator.officialName() + "Town";
+			place.foreignTown = MockName.officialName() + "Town";
 		}
 		setObject(place);
 	}

@@ -4,12 +4,12 @@ import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.util.DemoEnabled;
+import org.minimalj.util.mock.Mocking;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.common.Address;
 
-public class AddressField extends ObjectFlowField<Address> implements DemoEnabled {
+public class AddressField extends ObjectFlowField<Address> implements Mocking {
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;
@@ -48,7 +48,7 @@ public class AddressField extends ObjectFlowField<Address> implements DemoEnable
 	}
 	
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		setObject(DataGenerator.address(true, true, false));
 	}
 

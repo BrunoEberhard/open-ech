@@ -4,12 +4,12 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validatable;
-import org.minimalj.util.DemoEnabled;
 import org.minimalj.util.StringUtils;
+import org.minimalj.util.mock.Mocking;
 
 import ch.openech.model.EchFormats;
 
-public class Vn implements Validatable, DemoEnabled {
+public class Vn implements Validatable, Mocking {
 
 	@Size(EchFormats.vn) @Searched
 	public String value;
@@ -45,7 +45,7 @@ public class Vn implements Validatable, DemoEnabled {
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		Long n = 1 + (long)(999999999L * Math.random());
 		value = "756" + StringUtils.padLeft(n.toString(), 9, '0');
 		value += calculate(value);

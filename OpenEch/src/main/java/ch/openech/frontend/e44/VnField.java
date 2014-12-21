@@ -48,9 +48,9 @@ public class VnField extends TextFormatField<Vn> {
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		Vn vn = new Vn();
-		vn.fillWithDemoData();
+		vn.mock();
 		setObject(vn);
 	}
 

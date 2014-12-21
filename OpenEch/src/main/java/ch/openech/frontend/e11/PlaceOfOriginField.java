@@ -7,13 +7,13 @@ import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ResourceAction;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.util.DemoEnabled;
+import org.minimalj.util.mock.Mocking;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.types.ReasonOfAcquisition;
 
-public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements DemoEnabled {
+public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements Mocking {
 	public static final boolean WITHOUT_ADD_ON = false;
 	private final boolean withAddOn;
 	private boolean swiss = true;
@@ -103,7 +103,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		getObject().clear();
 		do {
 			getObject().add(DataGenerator.placeOfOrigin());

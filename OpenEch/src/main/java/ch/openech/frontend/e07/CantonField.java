@@ -7,13 +7,13 @@ import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validatable;
 import org.minimalj.util.Codes;
-import org.minimalj.util.DemoEnabled;
 import org.minimalj.util.StringUtils;
+import org.minimalj.util.mock.Mocking;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.common.Canton;
 
-public class CantonField extends AbstractEditField<Canton> implements DemoEnabled, Validatable {
+public class CantonField extends AbstractEditField<Canton> implements Mocking, Validatable {
 	
 	private TextField textField;
 
@@ -55,7 +55,7 @@ public class CantonField extends AbstractEditField<Canton> implements DemoEnable
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		setObject(DataGenerator.canton());
 	}
 

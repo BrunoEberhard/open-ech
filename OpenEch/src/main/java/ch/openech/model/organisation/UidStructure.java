@@ -3,10 +3,10 @@ package  ch.openech.model.organisation;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validatable;
-import org.minimalj.util.DemoEnabled;
 import org.minimalj.util.StringUtils;
+import org.minimalj.util.mock.Mocking;
 
-public class UidStructure implements Validatable, DemoEnabled {
+public class UidStructure implements Validatable, Mocking {
 
 	public static final UidStructure $ = Keys.of(UidStructure.class);
 	private static final int[] mult = {5, 4, 3, 2, 7, 6, 5, 4};
@@ -48,7 +48,7 @@ public class UidStructure implements Validatable, DemoEnabled {
 	}
 	
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		do {
 			value = Math.random() < 5 ? "ADM" : "CHE";
 			value += (int)(Math.random() * 900000000 + 100000000);

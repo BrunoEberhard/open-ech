@@ -11,13 +11,13 @@ import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
-import org.minimalj.util.DemoEnabled;
+import org.minimalj.util.mock.Mocking;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.common.MunicipalityIdentification;
 
-public class MunicipalityField extends AbstractEditField<MunicipalityIdentification> implements DemoEnabled {
+public class MunicipalityField extends AbstractEditField<MunicipalityIdentification> implements Mocking {
 	private final List<MunicipalityIdentification> municipalities;
 	private final ComboBox<MunicipalityIdentification> comboBox;
 
@@ -91,7 +91,7 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		setObject(DataGenerator.municipalityIdentification());
 	}
 }

@@ -9,14 +9,14 @@ import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
-import org.minimalj.util.DemoEnabled;
+import org.minimalj.util.mock.Mocking;
 
 import ch.openech.model.common.CountryIdentification;
 
 /* Dieses Feld wurde erst mit ech 112 gebraucht. 
  * 
  */
-public class CountryField extends AbstractEditField<CountryIdentification> implements DemoEnabled {
+public class CountryField extends AbstractEditField<CountryIdentification> implements Mocking {
 	private static final Logger logger = Logger.getLogger(CountryField.class.getName());
 
 	private final ComboBox<CountryIdentification> comboBox;
@@ -57,7 +57,7 @@ public class CountryField extends AbstractEditField<CountryIdentification> imple
 	}
 
 	@Override
-	public void fillWithDemoData() {
+	public void mock() {
 		int index = (int) (Math.random() * (double) countries.size());
 		setObject(countries.get(index));
 	}

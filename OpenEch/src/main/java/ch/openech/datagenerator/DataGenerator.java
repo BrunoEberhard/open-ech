@@ -4,13 +4,13 @@ import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.minimalj.autofill.DateGenerator;
-import org.minimalj.autofill.FirstNameGenerator;
-import org.minimalj.autofill.NameGenerator;
-import org.minimalj.autofill.OrganisationNameGenerator;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.Codes;
+import org.minimalj.util.mock.MockDate;
+import org.minimalj.util.mock.MockPrename;
+import org.minimalj.util.mock.MockName;
+import org.minimalj.util.mock.MockOrganisation;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Address;
@@ -41,19 +41,19 @@ public class DataGenerator {
 
 	public static Person person() {
 		Person person = new Person();
-		person.officialName = NameGenerator.officialName();
+		person.officialName = MockName.officialName();
 		boolean male = Math.random() > .5;
-		person.firstName = FirstNameGenerator.getFirstName(male);
+		person.firstName = MockPrename.getFirstName(male);
 		person.sex = male ? Sex.maennlich : Sex.weiblich;
-		person.dateOfBirth.value = DateGenerator.generateRandomDatePartiallyKnown();
+		person.dateOfBirth.value = MockDate.generateRandomDatePartiallyKnown();
 		if (Math.random() > .9) {
-			person.dateOfDeath = DateGenerator.generateRandomDate();
+			person.dateOfDeath = MockDate.generateRandomDate();
 		}
-		person.vn.fillWithDemoData();
+		person.vn.mock();
 		person.callName = "Lorem Ipsum";
 		person.placeOfBirth = place();
 		
-		person.arrivalDate = DateGenerator.generateRandomDate();
+		person.arrivalDate = MockDate.generateRandomDate();
 		person.residence.reportingMunicipality = createJona();
 		
 		person.placeOfOrigin.add(placeOfOrigin());
@@ -81,7 +81,7 @@ public class DataGenerator {
 		person.sex = Sex.weiblich;
 		person.dateOfBirth.value = "1999-01-02";
 		person.dateOfDeath = LocalDate.of(2010, 3, 4);
-		person.vn.fillWithDemoData();
+		person.vn.mock();
 		person.placeOfBirth = place();
 		
 		person.maritalStatus.maritalStatus = MaritalStatus.ledig;
@@ -145,7 +145,7 @@ public class DataGenerator {
 	
 	public static PlaceOfOrigin placeOfOrigin() {
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
-		placeOfOrigin.naturalizationDate = DateGenerator.generateRandomDate();
+		placeOfOrigin.naturalizationDate = MockDate.generateRandomDate();
 		
 		List<MunicipalityIdentification> municipalities = Codes.get(MunicipalityIdentification.class);
 		MunicipalityIdentification municipalityIdentification = municipalities.get((int)(Math.random() * municipalities.size()));
@@ -177,7 +177,7 @@ public class DataGenerator {
 	public static Address address(boolean swiss, boolean person, boolean organisation) {
 		Address address = new Address();
 		
-		address.street = NameGenerator.street();
+		address.street = MockName.street();
 		if (Math.random() < 0.75) {
 			address.houseNumber.houseNumber = "" + (int)(1 + Math.random() * 42);
 		} else if (Math.random() < 0.8) {
@@ -197,7 +197,7 @@ public class DataGenerator {
 				address.postOfficeBoxNumber = (int)(1000 + Math.random() * 9000);
 			}
 			address.zip = "" + ((int)(Math.random() * 90000 + 10000));
-			address.town = NameGenerator.officialName() + "Town";
+			address.town = MockName.officialName() + "Town";
 			address.country = "DE";
 		}
 		
@@ -206,14 +206,14 @@ public class DataGenerator {
 	
 	public static Organisation organisation() {
 		Organisation organisation = new Organisation();
-		organisation.organisationName = OrganisationNameGenerator.getName();
+		organisation.organisationName = MockOrganisation.getName();
 		if (organisation.organisationName.length() > 60) {
 			organisation.organisationAdditionalName = organisation.organisationName.substring(60);
 			organisation.organisationName = organisation.organisationName.substring(0, 60);
 		}
 		organisation.uid.value = "ADM323423421";
-		organisation.foundationDate.value = DateGenerator.generateRandomDatePartiallyKnown();
-		organisation.arrivalDate = DateGenerator.generateRandomDate();
+		organisation.foundationDate.value = MockDate.generateRandomDatePartiallyKnown();
+		organisation.arrivalDate = MockDate.generateRandomDate();
 		organisation.reportingMunicipality = createJona();
 		organisation.businessAddress = dwellingAddress();
 		

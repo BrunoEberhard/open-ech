@@ -1,12 +1,12 @@
 package ch.openech.frontend.ewk;
 
-import org.minimalj.autofill.FirstNameGenerator;
-import org.minimalj.autofill.NameGenerator;
-import org.minimalj.autofill.NameWithFrequency;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.util.StringUtils;
+import org.minimalj.util.mock.MockName;
+import org.minimalj.util.mock.MockPrename;
+import org.minimalj.util.mock.MockPrename.NameWithFrequency;
 
 import ch.openech.frontend.e10.AddressField;
 import ch.openech.frontend.e11.PlaceOfOriginField;
@@ -186,11 +186,11 @@ public class PersonPanel extends EchForm<Person>  {
 		super.fillWithDemoData(person);
 		
 		boolean male = Math.random() < .5;
-		NameWithFrequency generatedName = FirstNameGenerator.getName(male);
+		NameWithFrequency generatedName = MockPrename.getName(male);
 		person.firstName = generatedName.name;
 		person.sex = male ? Sex.maennlich : Sex.weiblich;
 		person.callName = "Lorem Ipsum";
-		person.officialName = NameGenerator.officialName();
+		person.officialName = MockName.officialName();
 		
 		ResidenceField.fillWithMockupData(person.residence, person.typeOfResidence);
 	}
