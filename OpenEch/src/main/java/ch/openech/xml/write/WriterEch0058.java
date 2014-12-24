@@ -2,7 +2,7 @@ package ch.openech.xml.write;
 
 import static ch.openech.model.XmlConstants.*;
 
-import org.minimalj.util.resources.ResourceHelper;
+import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.Envelope;
 
@@ -19,9 +19,9 @@ public class WriterEch0058 {
     	
 		WriterElement sendingApplication = parent.create(URI, SENDING_APPLICATION);
     	
-		sendingApplication.text(MANUFACTURER, ResourceHelper.getApplicationVendor());
-		sendingApplication.text(PRODUCT, ResourceHelper.getApplicationTitle());
-		sendingApplication.text(PRODUCT_VERSION, ResourceHelper.getApplicationVersion());
+		sendingApplication.text(MANUFACTURER, Resources.getString(Resources.APPLICATION_VENDOR));
+		sendingApplication.text(PRODUCT, Resources.getString(Resources.APPLICATION_TITLE));
+		sendingApplication.text(PRODUCT_VERSION, Resources.getString(Resources.APPLICATION_VERSION));
     }
     
 	public void testDeliveryFlag(WriterElement parent) throws Exception {
