@@ -1,11 +1,14 @@
 package  ch.openech.model.person;
 
+import java.util.Locale;
+
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.CountryIdentification;
 
-public class Nationality  {
+public class Nationality implements Rendering {
 
 	public static final Nationality $ = Keys.of(Nationality.class);
 	
@@ -68,15 +71,15 @@ public class Nationality  {
 			return true;
 		}
 	}
-
+	
 	@Override
-	public String toString() {
+	public String render(RenderType renderType, Locale locale) {
 		if (nationalityStatus == NationalityStatus.without) {
 			return "Staatenlos";
 		} else if (nationalityStatus == NationalityStatus.unknown) {
 			return "Staatsangehörigkeit unbekannt";
 		} else if (nationalityStatus == NationalityStatus.with) {
-			return nationalityCountry.toString();
+			return nationalityCountry.render(renderType, locale);
 		} else {
 			return nationalityStatus + " / " + nationalityCountry.toString();
 		}
