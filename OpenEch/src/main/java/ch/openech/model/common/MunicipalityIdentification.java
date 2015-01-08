@@ -1,6 +1,5 @@
 package  ch.openech.model.common;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import org.minimalj.model.Code;
@@ -14,9 +13,7 @@ import ch.openech.model.EchFormats;
 import ch.openech.model.code.FederalRegister;
 
 @Sizes(EchFormats.class)
-public class MunicipalityIdentification implements Code, Rendering, Comparable<MunicipalityIdentification>, Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class MunicipalityIdentification implements Code, Rendering, Comparable<MunicipalityIdentification> {
 	public static MunicipalityIdentification $ = Keys.of(MunicipalityIdentification.class);
 
 	@Size(4)

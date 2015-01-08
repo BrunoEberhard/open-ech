@@ -1,6 +1,5 @@
 package  ch.openech.model.common;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import org.minimalj.model.Code;
@@ -14,9 +13,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.model.EchFormats;
 
 @Sizes(EchFormats.class)
-public class CountryIdentification implements Code, Rendering, Comparable<CountryIdentification>, Serializable, Cloneable {
-	private static final long serialVersionUID = 1L;
-
+public class CountryIdentification implements Code, Rendering, Comparable<CountryIdentification>, Cloneable {
 	public static final CountryIdentification $ = Keys.of(CountryIdentification.class);
 
 	public static final Integer SWISS_COUNTRY_ID = 8100;
