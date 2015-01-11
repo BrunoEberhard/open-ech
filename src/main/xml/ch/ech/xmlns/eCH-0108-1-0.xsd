@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2009 sp1 (http://www.altova.com) von Martin Stingelin (Stingelin Informatik GmbH) bearbeitet -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Martin Stingelin (Stingelin Informatik GmbH) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by BITUSER (Bundesamt für Informatik und Telekommunikation) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/1" xmlns:eCH-0108="http://www.ech.ch/xmlns/eCH-0108/1" xmlns:eCH-0098="http://www.ech.ch/xmlns/eCH-0098/1" targetNamespace="http://www.ech.ch/xmlns/eCH-0108/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:annotation>
+		<xs:documentation xml:lang="de">Ausgabedatum:05.07.2010</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0097/1/eCH-0097-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0098/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0098/1/eCH-0098-1-0.xsd"/>
+	<xs:complexType name="organisationType">
+		<xs:sequence>
+			<xs:element name="organisation" type="eCH-0098:organisationType"/>
+			<xs:element name="uidregInformation" type="eCH-0108:uidregInformationType" minOccurs="0"/>
+			<xs:element name="commercialRegisterInformation" type="eCH-0108:commercialRegisterInformationType" minOccurs="0"/>
+			<xs:element name="vatRegisterInformation" type="eCH-0108:vatRegisterInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="uidregInformationType">
+		<xs:sequence>
+			<xs:element name="uidregStatusEnterpriseDetail" type="eCH-0108:uidregStatusEnterpriseDetailType" minOccurs="0"/>
+			<xs:element name="uidregPublicStatus" type="eCH-0108:uidregPublicStatusType" minOccurs="0"/>
+			<xs:element name="uidregOrganisationType" type="eCH-0108:uidregOrganisationTypeType" minOccurs="0"/>
+			<xs:element name="uidregLiquidationReason" type="eCH-0108:uidregLiquidationReasonType" minOccurs="0"/>
+			<xs:element name="uidregSource" type="eCH-0097:uidStructureType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="uidregStatusEnterpriseDetailType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="uidregPublicStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="uidregOrganisationTypeType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="9"/>
+			<xs:enumeration value="10"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="uidregLiquidationReasonType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="commercialRegisterInformationType">
+		<xs:sequence>
+			<xs:element name="commercialRegisterStatus" type="eCH-0108:commercialRegisterStatusType"/>
+			<xs:element name="commercialRegisterEntryStatus" type="eCH-0108:commercialRegisterEntryStatusType" minOccurs="0"/>
+			<xs:element name="commercialRegisterNameTranslation" type="eCH-0097:organisationNameType" minOccurs="0"/>
+			<xs:element name="commercialRegisterEntryDate" type="eCH-0108:commercialRegisterEntryDateType" minOccurs="0"/>
+			<xs:element name="commercialRegisterLiquidationDate" type="eCH-0108:commercialRegisterLiquidationDateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="commercialRegisterStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="commercialRegisterEntryStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="commercialRegisterNameTranslationType">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="commercialRegisterEntryDateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="commercialRegisterLiquidationDateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:complexType name="vatRegisterInformationType">
+		<xs:sequence>
+			<xs:element name="vatStatus" type="eCH-0108:vatStatusType"/>
+			<xs:element name="vatEntryStatus" type="eCH-0108:vatEntryStatusType" minOccurs="0"/>
+			<xs:element name="vatEntryDate" type="eCH-0108:vatEntryDateType" minOccurs="0"/>
+			<xs:element name="vatLiquidationDate" type="eCH-0108:vatLiquidationDateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="vatStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="vatEntryStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="vatEntryDateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="vatLiquidationDateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:element name="organisationRoot">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="organisation" type="eCH-0108:organisationType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

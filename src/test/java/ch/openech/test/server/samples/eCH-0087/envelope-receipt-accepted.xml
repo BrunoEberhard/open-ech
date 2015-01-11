@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Beispiel: Sedex Umschlag einer positiven fachlichen Quittung der Post an
+  das EWR der Gemeinde Bern.
+  
+  $Id: envelope-receipt-accepted.xml 55 2008-03-10 16:58:56Z metz $
+-->
+<envelope xmlns="http://www.ech.ch/xmlns/eCH-0090/1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.ech.ch/xmlns/eCH-0090/1 http://www.ech.ch/xmlns/eCH-0090/1/eCH-0090-1-0.xsd" version="1.0">
+  <messageId>9f13db40-ed1f-11dc-95ff-0800200c9a66</messageId>
+  <messageType>87</messageType>
+  <messageClass>2</messageClass>
+  <referenceMessageId>2147483647</referenceMessageId>
+  <senderId>7-XXXX-1</senderId>
+  <recipientId>1-351-1</recipientId>
+  <eventDate>2009-01-15T09:14:51Z</eventDate>
+  <messageDate>2009-01-15T09:14:51Z</messageDate>
+</envelope>

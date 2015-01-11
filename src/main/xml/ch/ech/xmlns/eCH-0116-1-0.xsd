@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Martin Stingelin (Stingelin Informatik GmbH) bearbeitet -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Martin Stingelin (Stingelin Informatik GmbH) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by BITUSER (Bundesamt für Informatik und Telekommunikation) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/1" xmlns:eCH-0098="http://www.ech.ch/xmlns/eCH-0098/1" xmlns:eCH-0108="http://www.ech.ch/xmlns/eCH-0108/1" xmlns:eCH-0116="http://www.ech.ch/xmlns/eCH-0116/1" xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/3" xmlns:eCH-0137="http://www.ech.ch/xmlns/eCH-0137/1" targetNamespace="http://www.ech.ch/xmlns/eCH-0116/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:annotation>
+		<xs:documentation>Ausgabedatum: 20.07.2011</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0097/1/eCH-0097-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0098/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0098/1/eCH-0098-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0108/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0108/1/eCH-0108-1-1.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0007/3" schemaLocation="http://www.ech.ch/xmlns/eCH-0007/3/eCH-0007-3-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0137/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0137/1/eCH-0137-1-0.xsd"/>
+	<xs:simpleType name="eventTypesType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="9"/>
+			<xs:enumeration value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="numberOfOrganisationsType">
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:complexType name="eventFederalRegisterBaseDelivery">
+		<xs:sequence>
+			<xs:element name="organisationRegisterOnly" type="eCH-0108:organisationType" maxOccurs="unbounded"/>
+			<xs:element name="numberOfOrganisations" type="eCH-0116:numberOfOrganisationsType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="organisationSearchCriteria">
+		<xs:sequence>
+			<xs:element name="uid" type="eCH-0097:uidStructureType" minOccurs="0"/>
+			<xs:element name="OtherOrganisationId" type="eCH-0097:namedOrganisationIdType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="organisationName" type="eCH-0097:organisationNameType" minOccurs="0"/>
+			<xs:element name="organisationAdditionalName" type="eCH-0097:organisationNameType" minOccurs="0"/>
+			<xs:element name="nogaCode" type="eCH-0098:nogaCodeType" minOccurs="0"/>
+			<xs:element name="foundation" type="eCH-0098:foundationType" minOccurs="0"/>
+			<xs:element name="liquidation" type="eCH-0098:liquidationType" minOccurs="0"/>
+			<xs:element name="languageOfCorrespondance" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="eCH-0098:languageType">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="uidregInformation" type="eCH-0108:uidregInformationType" minOccurs="0"/>
+			<xs:element name="commercialRegisterInformation" type="eCH-0108:commercialRegisterInformationType" minOccurs="0"/>
+			<xs:element name="vatRegisterInformation" type="eCH-0108:vatRegisterInformationType" minOccurs="0"/>
+			<xs:element name="organisationMunicipalityID" type="eCH-0007:municipalityIdType" minOccurs="0"/>
+			<xs:element name="cantonAbbreviationMainAddress" type="eCH-0007:cantonAbbreviationType" minOccurs="0"/>
+			<xs:element name="cantonAbbreviationAdditionalAddress" type="eCH-0007:cantonAbbreviationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventRegisterRequest">
+		<xs:sequence>
+			<xs:element name="searchCriteria" type="eCH-0116:organisationSearchCriteria" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventRequestNewOrganisation">
+		<xs:sequence>
+			<xs:element name="registerOrganisationData" type="eCH-0108:organisationType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventRequestRegisterModification">
+		<xs:sequence>
+			<xs:element name="registerOrganisationData" type="eCH-0108:organisationType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventRequestRegisterDeletion">
+		<xs:sequence>
+			<xs:element name="registerOrganisationData" type="eCH-0108:organisationType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventRequestOrganisationReactivation">
+		<xs:sequence>
+			<xs:element name="uid" type="eCH-0097:uidStructureType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventRequestRegistration">
+		<xs:sequence>
+			<xs:element name="uid" type="eCH-0097:uidStructureType" maxOccurs="unbounded"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventRequestDeregistration">
+		<xs:sequence>
+			<xs:element name="uid" type="eCH-0097:uidStructureType" maxOccurs="unbounded"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventNewRegisterEntry">
+		<xs:sequence>
+			<xs:element name="registerOrganisationData" type="eCH-0108:organisationType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventRegisterModification">
+		<xs:sequence>
+			<xs:element name="registerOrganisationData" type="eCH-0108:organisationType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="delivery">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="deliveryHeader" type="eCH-0137:headerType"/>
+				<xs:choice>
+					<!-- Meldungen UID-Stelle zu UID-Register -->
+					<xs:element name="FederalRegisterBaseDelivery" type="eCH-0116:eventFederalRegisterBaseDelivery"/>
+					<xs:element name="requestNewOrganisation" type="eCH-0116:eventRequestNewOrganisation"/>
+					<xs:element name="requestRegisterModification" type="eCH-0116:eventRequestRegisterModification"/>
+					<xs:element name="requestRegisterDeletion" type="eCH-0116:eventRequestRegisterDeletion"/>
+					<xs:element name="requestOrganisationReactivation" type="eCH-0116:eventRequestOrganisationReactivation"/>
+					<xs:element name="requestRegistration" type="eCH-0116:eventRequestRegistration"/>
+					<xs:element name="requestDeregistration" type="eCH-0116:eventRequestDeregistration"/>
+					<xs:element name="registerRequest" type="eCH-0116:eventRegisterRequest"/>
+					<!-- InfoAbo: Meldungen UID-Register an UID-Stellen -->
+					<xs:element name="newRegisterEntry" type="eCH-0116:eventNewRegisterEntry"/>
+					<xs:element name="registerModification" type="eCH-0116:eventRegisterModification"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="response">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="eventReport">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="reportHeader" type="eCH-0137:reportHeaderType"/>
+							<xs:choice>
+								<xs:element name="negativeReport" type="eCH-0137:negativeReportType"/>
+								<xs:element name="positiveReport" type="eCH-0137:positiveReportType"/>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:choice>
+					<!-- Rückgabe des vollständigen Datensatzes wie er im UID-Register besteht -->
+					<xs:element name="federalRegisterBaseDelivery" type="eCH-0116:eventFederalRegisterBaseDelivery" minOccurs="0"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

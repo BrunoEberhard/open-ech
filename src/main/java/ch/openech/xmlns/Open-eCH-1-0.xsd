@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited by Bruno Eberhard (Open-eCH) -->
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:eCH-0101="http://www.ech.ch/xmlns/eCH-0101/1" 
+	xmlns:eCH-0046="http://www.ech.ch/xmlns/eCH-0046/1" 
+	targetNamespace="http://www.open-ech.ch/xmlns/open-eCH/1"
+ 	elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+ 	
+	<xs:annotation>
+		<xs:documentation>Ausgabedatum: 27.05.2014</xs:documentation>
+	</xs:annotation>
+	
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0046/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0046/1/eCH-0046-1-0.xsd"/>
+		
+	<xs:complexType name="openEchPersonExtensionType">
+		<xs:sequence>
+			<xs:element name="personExtendedInformation" type="eCH-0101:personExtendedInformationType" minOccurs="0"/>
+			<xs:element name="contact" type="eCH-0046:contactType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+		
+</xs:schema>

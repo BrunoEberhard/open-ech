@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Martin Stingelin (Stingelin Informatik GmbH) bearbeitet -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Martin Stingelin (Stingelin Informatik GmbH) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by BITUSER (Bundesamt für Informatik und Telekommunikation) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/1" xmlns:eCH-0098="http://www.ech.ch/xmlns/eCH-0098/1" xmlns:eCH-0108="http://www.ech.ch/xmlns/eCH-0108/1" xmlns:eCH-0148="http://www.ech.ch/xmlns/eCH-0148/1" xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/3" xmlns:eCH-0046="http://www.ech.ch/xmlns/eCH-0046/1" xmlns:eCH-0102="http://www.ech.ch/xmlns/eCH-0102/1" targetNamespace="http://www.ech.ch/xmlns/eCH-0148/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:annotation>
+		<xs:documentation>Ausgabedatum: 28.01.2012</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0097/1/eCH-0097-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0098/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0098/1/eCH-0098-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0108/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0108/1/eCH-0108-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0007/3" schemaLocation="http://www.ech.ch/xmlns/eCH-0007/3/eCH-0007-3-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0046/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0046/1/eCH-0046-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0102/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0102/1/eCH-0102-1-0.xsd"/>
+	<xs:simpleType name="eventTypesType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="10"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="16"/>
+			<xs:enumeration value="17"/>
+			<xs:enumeration value="18"/>
+			<xs:enumeration value="19"/>
+			<xs:enumeration value="20"/>
+			<xs:enumeration value="21"/>
+			<xs:enumeration value="22"/>
+			<xs:enumeration value="23"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="numberOfOrganisationsType">
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:complexType name="eventOrganisationBaseDelivery">
+		<xs:sequence>
+			<xs:element name="reportedOrganisation" type="eCH-0098:reportedOrganisationType" maxOccurs="unbounded"/>
+			<xs:element name="numberOfOrganisations" type="eCH-0148:numberOfOrganisationsType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventKeyExchange">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType" maxOccurs="unbounded"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventDataRequest">
+		<xs:sequence>
+			<xs:element name="uid" type="eCH-0097:uidStructureType" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventFoundation">
+		<xs:sequence>
+			<xs:element name="reportedOrganisation" type="eCH-0098:reportedOrganisationType"/>
+			<xs:element name="uidregInformation" type="eCH-0108:uidregInformationType" minOccurs="0"/>
+			<xs:element name="commercialRegisterInformation" type="eCH-0108:commercialRegisterInformationType" minOccurs="0"/>
+			<xs:element name="vatRegisterInformation" type="eCH-0108:vatRegisterInformationType" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventLiquidation">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="liquidationDate" type="eCH-0098:datePartiallyKnownType"/>
+			<xs:element name="liquidationReason" type="eCH-0098:liquidationReasonType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="liquidationEntryDateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:complexType name="eventInliquidation">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="liquidationEntryDate" type="eCH-0148:liquidationEntryDateType"/>
+			<xs:element name="liquidationReason" type="eCH-0098:liquidationReasonType"/>
+			<xs:element name="contact" type="eCH-0046:contactType" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventMoveIn">
+		<xs:sequence>
+			<xs:element name="reportedOrganisation" type="eCH-0098:reportedOrganisationType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="moveOutReportingDestinationType">
+		<xs:sequence>
+			<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+			<xs:element name="departureDate" type="xs:date"/>
+			<xs:element name="goesTo" type="eCH-0098:destinationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventMoveOut">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="moveOutReportingDestination" type="eCH-0148:moveOutReportingDestinationType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="moveReportingAddressType">
+		<xs:sequence>
+			<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+			<xs:element name="businessAddress" type="eCH-0098:dwellingAddressType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="moveDateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:complexType name="eventMove">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="moveReportingAddress" type="eCH-0148:moveReportingAddressType"/>
+			<xs:element name="moveDate" type="eCH-0148:moveDateType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventContact">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="contact" type="eCH-0046:contactType"/>
+			<xs:element name="dateValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element name="dateValidTill" type="xs:date" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeOrganisationName">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="organisationName" type="eCH-0097:organisationNameType"/>
+			<xs:element name="organisationLegalName" type="eCH-0097:organisationNameType" minOccurs="0"/>
+			<xs:element name="organisationAdditionalName" type="eCH-0097:organisationNameType" minOccurs="0"/>
+			<xs:element name="dateValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeLegalForm">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="legalForm" type="eCH-0097:legalFormType"/>
+			<xs:element name="dateValidFrom" type="xs:date"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="typeOfResidenceType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="eventChangeReporting">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+			<xs:element name="typOfResidence" type="eCH-0148:typeOfResidenceType"/>
+			<xs:element name="arrivalDate" type="xs:date"/>
+			<xs:element name="comesFrom" type="eCH-0098:destinationType" minOccurs="0"/>
+			<xs:element name="businessAddress" type="eCH-0098:dwellingAddressType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectOrganisationName">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="organisationName" type="eCH-0097:organisationNameType"/>
+			<xs:element name="organisationLegalName" type="eCH-0097:organisationNameType" minOccurs="0"/>
+			<xs:element name="organisationAdditionalName" type="eCH-0097:organisationNameType" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectLegalForm">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="legalForm" type="eCH-0097:legalFormType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectUidBranche">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="uidBrancheText" type="eCH-0098:uidBrancheTextType"/>
+			<xs:element name="nogaCode" type="eCH-0098:nogaCodeType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectFoundation">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="foundation" type="eCH-0098:foundationType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectLiquidation">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="liquidationEntryDate" type="eCH-0148:liquidationEntryDateType" minOccurs="0"/>
+			<xs:element name="liquidation" type="eCH-0098:liquidationType"/>
+			<xs:element name="contact" type="eCH-0046:contactType" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectContact">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="contact" type="eCH-0046:contactType"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectLanguageOfCorrespondance">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:element name="languageOfCorrespondance">
+				<xs:simpleType>
+					<xs:restriction base="eCH-0098:languageType">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectReporting">
+		<xs:sequence>
+			<xs:element name="organisationIdentification" type="eCH-0097:organisationIdentificationType"/>
+			<xs:choice>
+				<xs:element name="hasMainResidence" type="eCH-0098:mainResidenceType"/>
+				<xs:element name="hasSecondaryResidence" type="eCH-0098:secondaryResidenceType"/>
+				<xs:element name="hasOtherResidence" type="eCH-0098:otherResidenceType"/>
+			</xs:choice>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="delivery">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="header" type="eCH-0102:headerType"/>
+				<xs:choice>
+					<xs:element name="organisationBaseDelivery" type="eCH-0148:eventOrganisationBaseDelivery"/>
+					<xs:element name="keyExchange" type="eCH-0148:eventKeyExchange"/>
+					<xs:element name="dataRequest" type="eCH-0148:eventDataRequest"/>
+					<xs:element name="foundation" type="eCH-0148:eventFoundation"/>
+					<xs:element name="liquidation" type="eCH-0148:eventLiquidation"/>
+					<xs:element name="inliquidation" type="eCH-0148:eventInliquidation"/>
+					<xs:element name="moveIn" type="eCH-0148:eventMoveIn"/>
+					<xs:element name="moveOut" type="eCH-0148:eventMoveOut"/>
+					<xs:element name="move" type="eCH-0148:eventMove"/>
+					<xs:element name="contact" type="eCH-0148:eventContact"/>
+					<xs:element name="changeOrganisationName" type="eCH-0148:eventChangeOrganisationName"/>
+					<xs:element name="changeLegalForm" type="eCH-0148:eventChangeLegalForm"/>
+					<xs:element name="changeReporting" type="eCH-0148:eventChangeReporting"/>
+					<xs:element name="correctOrganisationName" type="eCH-0148:eventCorrectOrganisationName"/>
+					<xs:element name="correctLegalForm" type="eCH-0148:eventCorrectLegalForm"/>
+					<xs:element name="correctUidBranche" type="eCH-0148:eventCorrectUidBranche"/>
+					<xs:element name="correctFoundation" type="eCH-0148:eventCorrectFoundation"/>
+					<xs:element name="correctLiquidation" type="eCH-0148:eventCorrectLiquidation"/>
+					<xs:element name="correctContact" type="eCH-0148:eventCorrectContact"/>
+					<xs:element name="correctLanguageOfCorrespondance" type="eCH-0148:eventCorrectLanguageOfCorrespondance"/>
+					<xs:element name="correctReporting" type="eCH-0148:eventCorrectReporting"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

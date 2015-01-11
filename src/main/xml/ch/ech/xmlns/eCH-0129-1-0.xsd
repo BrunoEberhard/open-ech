@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Martin Stingelin (Stingelin Informatik GmbH) bearbeitet -->
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Martin Stingelin (Stingelin Informatik GmbH) -->
+<!-- 
+<xs:schema xmlns:eCH-0129="http://www.ech.ch/xmlns/eCH-0129/1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/5" xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/5" targetNamespace="http://www.ech.ch/xmlns/eCH-0129/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+ -->
+<xs:schema xmlns:eCH-0129="http://www.ech.ch/xmlns/eCH-0129/1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/4" xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/4" targetNamespace="http://www.ech.ch/xmlns/eCH-0129/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:annotation>
+		<xs:documentation>Ausgabedatum: 22.07.2011</xs:documentation>
+	</xs:annotation>
+<!-- 
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0007/5" schemaLocation="http://www.ech.ch/xmlns/eCH-0007/5/eCH-0007-5-0.xsd"/>
+ -->
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0007/4" schemaLocation="http://www.ech.ch/xmlns/eCH-0007/4/eCH-0007-4-0.xsd"/>
+<!-- 
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0010/5" schemaLocation="http://www.ech.ch/xmlns/eCH-0010/5/eCH-0010-5-0.xsd"/>
+ -->
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0010/4" schemaLocation="http://www.ech.ch/xmlns/eCH-0010/4/eCH-0010-4-0.xsd"/>
+	<xs:complexType name="namedIdType">
+		<xs:sequence>
+			<xs:element name="IdCategory" type="eCH-0129:iDCategoryType"/>
+			<xs:element name="Id">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="20"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="officialConstructionProjectFileNoType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="extensionOfOfficialConstructionProjectFileNoType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="newBuildingsWithDwellingPurposeCompletedType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="newBuildingsWithDwellingPurposeTotalType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="newBuildingsWithoutDwellingPurposeCompletedType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="newBuildingsWithoutDwellingPurposeTotalType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="newDwellingsCompletedType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="newDwellingsTotalType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="constructionWorkDoneType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="6003"/>
+			<xs:enumeration value="6004"/>
+			<xs:enumeration value="6005"/>
+			<xs:enumeration value="6007"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeOfConstructionProjectType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="6010"/>
+			<xs:enumeration value="6011"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="constructionLocalisationType">
+		<xs:restriction base="eCH-0007:municipalityIdType"/>
+	</xs:simpleType>
+	<xs:simpleType name="withinBuildingAreaPerimeterType">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="typeOfPermitType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="5001"/>
+			<xs:enumeration value="5002"/>
+			<xs:enumeration value="5003"/>
+			<xs:enumeration value="5004"/>
+			<xs:enumeration value="5005"/>
+			<xs:enumeration value="5006"/>
+			<xs:enumeration value="5007"/>
+			<xs:enumeration value="5008"/>
+			<xs:enumeration value="5011"/>
+			<xs:enumeration value="5012"/>
+			<xs:enumeration value="5015"/>
+			<xs:enumeration value="5021"/>
+			<xs:enumeration value="5022"/>
+			<xs:enumeration value="5023"/>
+			<xs:enumeration value="5031"/>
+			<xs:enumeration value="5041"/>
+			<xs:enumeration value="5043"/>
+			<xs:enumeration value="5044"/>
+			<xs:enumeration value="5051"/>
+			<xs:enumeration value="5061"/>
+			<xs:enumeration value="5063"/>
+			<xs:enumeration value="5064"/>
+			<xs:enumeration value="5062"/>
+			<xs:enumeration value="5071"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="projectStartDateType">
+		<xs:restriction base="xs:date">
+			<xs:minInclusive value="2000-01-01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="buildingPermitIssueDateType">
+		<xs:restriction base="xs:date">
+			<xs:minInclusive value="2000-01-01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="projectAnnouncementDateType">
+		<xs:restriction base="xs:date">
+			<xs:minInclusive value="2000-01-01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="projectCompletionDateType">
+		<xs:restriction base="xs:date">
+			<xs:minInclusive value="2000-01-01"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="durationOfConstructionPhaseType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="federalConstructionProjectIDType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="900000000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="buildingStatisticsSurveyDeptType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="100"/>
+			<xs:maxInclusive value="999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="totalCostsOfProjectType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1000"/>
+			<xs:maxInclusive value="999999999000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="projectStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="6700"/>
+			<xs:enumeration value="6701"/>
+			<xs:enumeration value="6702"/>
+			<xs:enumeration value="6703"/>
+			<xs:enumeration value="6704"/>
+			<xs:enumeration value="6706"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeOfClientType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="6101"/>
+			<xs:enumeration value="6103"/>
+			<xs:enumeration value="6104"/>
+			<xs:enumeration value="6107"/>
+			<xs:enumeration value="6108"/>
+			<xs:enumeration value="6110"/>
+			<xs:enumeration value="6111"/>
+			<xs:enumeration value="6115"/>
+			<xs:enumeration value="6116"/>
+			<xs:enumeration value="6121"/>
+			<xs:enumeration value="6122"/>
+			<xs:enumeration value="6123"/>
+			<xs:enumeration value="6124"/>
+			<xs:enumeration value="6131"/>
+			<xs:enumeration value="6132"/>
+			<xs:enumeration value="6133"/>
+			<xs:enumeration value="6141"/>
+			<xs:enumeration value="6142"/>
+			<xs:enumeration value="6143"/>
+			<xs:enumeration value="6161"/>
+			<xs:enumeration value="6151"/>
+			<xs:enumeration value="6152"/>
+			<xs:enumeration value="6162"/>
+			<xs:enumeration value="6163"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeOfConstructionType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="6211"/>
+			<xs:enumeration value="6212"/>
+			<xs:enumeration value="6213"/>
+			<xs:enumeration value="6214"/>
+			<xs:enumeration value="6219"/>
+			<xs:enumeration value="6221"/>
+			<xs:enumeration value="6222"/>
+			<xs:enumeration value="6223"/>
+			<xs:enumeration value="6231"/>
+			<xs:enumeration value="6232"/>
+			<xs:enumeration value="6233"/>
+			<xs:enumeration value="6234"/>
+			<xs:enumeration value="6235"/>
+			<xs:enumeration value="6241"/>
+			<xs:enumeration value="6242"/>
+			<xs:enumeration value="6243"/>
+			<xs:enumeration value="6244"/>
+			<xs:enumeration value="6245"/>
+			<xs:enumeration value="6249"/>
+			<xs:enumeration value="6251"/>
+			<xs:enumeration value="6252"/>
+			<xs:enumeration value="6253"/>
+			<xs:enumeration value="6254"/>
+			<xs:enumeration value="6255"/>
+			<xs:enumeration value="6256"/>
+			<xs:enumeration value="6257"/>
+			<xs:enumeration value="6258"/>
+			<xs:enumeration value="6259"/>
+			<xs:enumeration value="6261"/>
+			<xs:enumeration value="6262"/>
+			<xs:enumeration value="6269"/>
+			<xs:enumeration value="6271"/>
+			<xs:enumeration value="6272"/>
+			<xs:enumeration value="6273"/>
+			<xs:enumeration value="6274"/>
+			<xs:enumeration value="6276"/>
+			<xs:enumeration value="6278"/>
+			<xs:enumeration value="6279"/>
+			<xs:enumeration value="6281"/>
+			<xs:enumeration value="6282"/>
+			<xs:enumeration value="6283"/>
+			<xs:enumeration value="6291"/>
+			<xs:enumeration value="6292"/>
+			<xs:enumeration value="6293"/>
+			<xs:enumeration value="6294"/>
+			<xs:enumeration value="6295"/>
+			<xs:enumeration value="6296"/>
+			<xs:enumeration value="6299"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="constructionProjectDescriptionType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="iDCategoryType">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="20"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="constructionProjectType">
+		<xs:sequence>
+			<xs:element name="officialConstructionProjectFileNo" type="eCH-0129:officialConstructionProjectFileNoType" minOccurs="0"/>
+			<xs:element name="extensionOfOfficialConstructionProjectFileNo" type="eCH-0129:extensionOfOfficialConstructionProjectFileNoType" minOccurs="0"/>
+			<xs:element name="newBuildingsWithDwellingPurposeCompleted" type="eCH-0129:newBuildingsWithDwellingPurposeCompletedType" minOccurs="0"/>
+			<xs:element name="newBuildingsWithDwellingPurposeTotal" type="eCH-0129:newBuildingsWithDwellingPurposeTotalType" minOccurs="0"/>
+			<xs:element name="newBuildingsWithoutDwellingPurposeCompleted" type="eCH-0129:newBuildingsWithoutDwellingPurposeCompletedType" minOccurs="0"/>
+			<xs:element name="newBuildingsWithoutDwellingPurposeTotal" type="eCH-0129:newBuildingsWithoutDwellingPurposeTotalType" minOccurs="0"/>
+			<xs:element name="newDwellingsCompleted" type="eCH-0129:newDwellingsCompletedType" minOccurs="0"/>
+			<xs:element name="newDwellingsTotal" type="eCH-0129:newDwellingsTotalType" minOccurs="0"/>
+			<xs:element name="constructionWorkDone" type="eCH-0129:constructionWorkDoneType" minOccurs="0"/>
+			<xs:element name="typeOfConstructionProject" type="eCH-0129:typeOfConstructionProjectType" minOccurs="0"/>
+			<xs:element name="constructionLocalisation" type="eCH-0129:constructionLocalisationType" minOccurs="0"/>
+			<xs:element name="withinBuildingAreaPerimeter" type="eCH-0129:withinBuildingAreaPerimeterType" minOccurs="0"/>
+			<xs:element name="typeOfPermit" type="eCH-0129:typeOfPermitType" minOccurs="0"/>
+			<xs:element name="projectStartDate" type="eCH-0129:projectStartDateType" minOccurs="0"/>
+			<xs:element name="buildingPermitIssueDate" type="eCH-0129:buildingPermitIssueDateType" minOccurs="0"/>
+			<xs:element name="projectAnnouncementDate" type="eCH-0129:projectAnnouncementDateType" minOccurs="0"/>
+			<xs:element name="projectCompletionDate" type="eCH-0129:projectCompletionDateType" minOccurs="0"/>
+			<xs:element name="federalConstructionProjectID" type="eCH-0129:federalConstructionProjectIDType" minOccurs="0"/>
+			<xs:element name="buildingStatisticsSurveyDept" type="eCH-0129:buildingStatisticsSurveyDeptType" minOccurs="0"/>
+			<xs:element name="localID" type="eCH-0129:namedIdType" minOccurs="0"/>
+			<xs:element name="client" type="eCH-0129:clientType" minOccurs="0"/>
+			<xs:element name="totalCostsOfProject" type="eCH-0129:totalCostsOfProjectType" minOccurs="0"/>
+			<xs:element name="projectStatus" type="eCH-0129:projectStatusType" minOccurs="0"/>
+			<xs:element name="typeOfClient" type="eCH-0129:typeOfClientType" minOccurs="0"/>
+			<xs:element name="typeOfConstruction" type="eCH-0129:typeOfConstructionType" minOccurs="0"/>
+			<xs:element name="constructionProjectDescription" type="eCH-0129:constructionProjectDescriptionType" minOccurs="0"/>
+			<xs:element name="durationOfConstructionPhase" type="eCH-0129:durationOfConstructionPhaseType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="yearOfDemolitionType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1999"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="officialBuildingNoType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="numberOfFloorsType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="59"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="numberOfSeparateHabitableRoomsType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="numberOfDwellingType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="yearOfConstructionType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1000"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="monthOfConstructionType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="federalBuildingIDType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="900000000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="energySourceOfHeatingSystemType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="7200"/>
+			<xs:enumeration value="7201"/>
+			<xs:enumeration value="7202"/>
+			<xs:enumeration value="7203"/>
+			<xs:enumeration value="7204"/>
+			<xs:enumeration value="7205"/>
+			<xs:enumeration value="7206"/>
+			<xs:enumeration value="7207"/>
+			<xs:enumeration value="7208"/>
+			<xs:enumeration value="7209"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="energySourceOfHotWaterSystemType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="7200"/>
+			<xs:enumeration value="7201"/>
+			<xs:enumeration value="7202"/>
+			<xs:enumeration value="7203"/>
+			<xs:enumeration value="7204"/>
+			<xs:enumeration value="7205"/>
+			<xs:enumeration value="7206"/>
+			<xs:enumeration value="7207"/>
+			<xs:enumeration value="7208"/>
+			<xs:enumeration value="7209"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="nameOfBuildingType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="surfaceAreaOfBuildingType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="99999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="buildingCategoryType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1010"/>
+			<xs:enumeration value="1021"/>
+			<xs:enumeration value="1025"/>
+			<xs:enumeration value="1030"/>
+			<xs:enumeration value="1040"/>
+			<xs:enumeration value="1060"/>
+			<xs:enumeration value="1080"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="buildingClassType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1110"/>
+			<xs:maxInclusive value="1274"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="buildingStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1001"/>
+			<xs:enumeration value="1003"/>
+			<xs:enumeration value="1004"/>
+			<xs:enumeration value="1007"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="heatingSystemType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="7100"/>
+			<xs:enumeration value="7101"/>
+			<xs:enumeration value="7102"/>
+			<xs:enumeration value="7103"/>
+			<xs:enumeration value="7104"/>
+			<xs:enumeration value="7105"/>
+			<xs:enumeration value="7109"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="originOfCoordinatesType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="901"/>
+			<xs:enumeration value="902"/>
+			<xs:enumeration value="903"/>
+			<xs:enumeration value="904"/>
+			<xs:enumeration value="905"/>
+			<xs:enumeration value="906"/>
+			<xs:enumeration value="909"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="coordinatesType">
+		<xs:sequence>
+			<xs:element name="east">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="2480000.000"/>
+						<xs:totalDigits value="10"/>
+						<xs:fractionDigits value="3"/>
+						<xs:maxInclusive value="2840000.999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="north">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="10"/>
+						<xs:fractionDigits value="3"/>
+						<xs:minInclusive value="1070000.000"/>
+						<xs:maxInclusive value="1300000.999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="yearOfRenovationType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1000"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="hotWaterSystemType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="purposeOfBuildingType">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="purposeOfBuildingCodeType">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="buildingInsuranceNumberType">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="isUndergroundType">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="purposeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="buildingType">
+		<xs:sequence>
+			<xs:element name="yearOfDemolition" type="eCH-0129:yearOfDemolitionType" minOccurs="0"/>
+			<xs:element name="officialBuildingNo" type="eCH-0129:officialBuildingNoType" minOccurs="0"/>
+			<xs:element name="numberOfFloors" type="eCH-0129:numberOfFloorsType" minOccurs="0"/>
+			<xs:element name="numberOfSeparateHabitableRooms" type="eCH-0129:numberOfSeparateHabitableRoomsType" minOccurs="0"/>
+			<xs:element name="numberOfDwelling" type="eCH-0129:numberOfDwellingType" minOccurs="0"/>
+			<xs:element name="yearOfConstruction" type="eCH-0129:yearOfConstructionType" minOccurs="0"/>
+			<xs:element name="monthOfConstruction" type="eCH-0129:monthOfConstructionType" minOccurs="0"/>
+			<xs:element name="federalBuildingID" type="eCH-0129:federalBuildingIDType" minOccurs="0"/>
+			<xs:element name="energySourceOfHeatingSystem" type="eCH-0129:energySourceOfHeatingSystemType" minOccurs="0"/>
+			<xs:element name="energySourceOfHotWaterSystem" type="eCH-0129:energySourceOfHotWaterSystemType" minOccurs="0"/>
+			<xs:element name="purposeOfBuilding" type="eCH-0129:purposeOfBuildingType" minOccurs="0"/>
+			<xs:element name="purposeOfBuildingCode" type="eCH-0129:purposeOfBuildingCodeType" minOccurs="0"/>
+			<xs:element name="buildingInsuranceNumber" type="eCH-0129:buildingInsuranceNumberType" minOccurs="0"/>
+			<xs:element name="surfaceAreaOfBuilding" type="eCH-0129:surfaceAreaOfBuildingType" minOccurs="0"/>
+			<xs:element name="buildingCategory" type="eCH-0129:buildingCategoryType" minOccurs="0"/>
+			<xs:element name="buildingClass" type="eCH-0129:buildingClassType" minOccurs="0"/>
+			<xs:element name="buildingStatus" type="eCH-0129:buildingStatusType" minOccurs="0"/>
+			<xs:element name="heatingSystem" type="eCH-0129:heatingSystemType" minOccurs="0"/>
+			<xs:element name="isUnderground" type="eCH-0129:isUndergroundType" minOccurs="0"/>
+			<xs:element name="coordinates" type="eCH-0129:coordinatesType" minOccurs="0"/>
+			<xs:element name="originOfCoordinates" type="eCH-0129:originOfCoordinatesType" minOccurs="0"/>
+			<xs:element name="localID" type="eCH-0129:namedIdType" minOccurs="0"/>
+			<xs:element name="nameOfBuilding" type="eCH-0129:nameOfBuildingType" minOccurs="0"/>
+			<xs:element name="yearOfRenovation" type="eCH-0129:yearOfRenovationType" minOccurs="0"/>
+			<xs:element name="hotWaterSystem" type="eCH-0129:hotWaterSystemType" minOccurs="0"/>
+			<xs:element name="purposeCode" type="eCH-0129:purposeCodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="federalEntranceIDType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="90"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="buildingEntranceNoType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="entranceStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="2001"/>
+			<xs:enumeration value="2003"/>
+			<xs:enumeration value="2004"/>
+			<xs:enumeration value="2007"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="buildingEntranceType">
+		<xs:sequence>
+			<xs:element name="federalEntranceID" type="eCH-0129:federalEntranceIDType" minOccurs="0"/>
+			<xs:element name="federalBuildingID" type="eCH-0129:federalBuildingIDType" minOccurs="0"/>
+			<xs:element name="buildingEntranceNo" type="eCH-0129:buildingEntranceNoType" minOccurs="0"/>
+			<xs:element name="entranceStatus" type="eCH-0129:entranceStatusType" minOccurs="0"/>
+			<xs:element name="coordinates" type="eCH-0129:coordinatesType" minOccurs="0"/>
+			<xs:element name="originOfCoordinates" type="eCH-0129:originOfCoordinatesType" minOccurs="0"/>
+			<xs:element name="localID" type="eCH-0129:namedIdType" minOccurs="0"/>
+			<xs:element name="nameOfBuilding" type="eCH-0129:nameOfBuildingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="validFromType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="validTillType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:complexType name="valueType">
+		<xs:choice>
+			<xs:element name="amount">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+						<xs:totalDigits value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="percentage">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="5"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="valueIDType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeOfvalueType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1001"/>
+			<xs:enumeration value="1002"/>
+			<xs:enumeration value="1003"/>
+			<xs:enumeration value="1004"/>
+			<xs:enumeration value="1005"/>
+			<xs:enumeration value="1006"/>
+			<xs:enumeration value="2001"/>
+			<xs:enumeration value="2002"/>
+			<xs:enumeration value="2003"/>
+			<xs:enumeration value="2004"/>
+			<xs:enumeration value="2005"/>
+			<xs:enumeration value="2006"/>
+			<xs:enumeration value="2007"/>
+			<xs:enumeration value="2008"/>
+			<xs:enumeration value="2009"/>
+			<xs:enumeration value="2010"/>
+			<xs:enumeration value="2011"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="valueTypeType">
+		<xs:sequence>
+			<xs:element name="baseYear" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:nonNegativeInteger">
+						<xs:minInclusive value="1000"/>
+						<xs:maxInclusive value="2999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="validFrom" type="eCH-0129:validFromType" minOccurs="0"/>
+			<xs:element name="indexValue" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:maxInclusive value="999.99"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="value" type="eCH-0129:valueType" minOccurs="0"/>
+			<xs:element name="valueID" type="eCH-0129:valueIDType" minOccurs="0"/>
+			<xs:element name="typeOfvalue" type="eCH-0129:typeOfvalueType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="dwellingNoType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="federalDwellingIDType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="900"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="kitchenType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="7300"/>
+			<xs:enumeration value="7301"/>
+			<xs:enumeration value="7302"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="locationOfDwellingOnFloorType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="purposeOfDwellingType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="3010"/>
+			<xs:enumeration value="3020"/>
+			<xs:enumeration value="3030"/>
+			<xs:enumeration value="3070"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="physicalDwellingNoType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="floorType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="3100"/>
+			<xs:maxInclusive value="3349"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="surfaceAreaOfDwellingType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="dwellingStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="3001"/>
+			<xs:enumeration value="3003"/>
+			<xs:enumeration value="3004"/>
+			<xs:enumeration value="3007"/>
+			<xs:enumeration value="3009"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="noOfHabitableRoomsType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="dwellingType">
+		<xs:sequence>
+			<xs:element name="yearOfDemolition" type="eCH-0129:yearOfDemolitionType" minOccurs="0"/>
+			<xs:element name="dwellingNo" type="eCH-0129:dwellingNoType" minOccurs="0"/>
+			<xs:element name="noOfHabitableRooms" type="eCH-0129:noOfHabitableRoomsType" minOccurs="0"/>
+			<xs:element name="yearOfConstruction" type="eCH-0129:yearOfConstructionType" minOccurs="0"/>
+			<xs:element name="federalEntranceID" type="eCH-0129:federalEntranceIDType" minOccurs="0"/>
+			<xs:element name="federalBuildingID" type="eCH-0129:federalBuildingIDType" minOccurs="0"/>
+			<xs:element name="federalDwellingID" type="eCH-0129:federalDwellingIDType" minOccurs="0"/>
+			<xs:element name="kitchen" type="eCH-0129:kitchenType" minOccurs="0"/>
+			<xs:element name="locationOfDwellingOnFloor" type="eCH-0129:locationOfDwellingOnFloorType" minOccurs="0"/>
+			<xs:element name="localID" type="eCH-0129:namedIdType" minOccurs="0"/>
+			<xs:element name="purposeOfDwelling" type="eCH-0129:purposeOfDwellingType" minOccurs="0"/>
+			<xs:element name="physicalDwellingNo" type="eCH-0129:physicalDwellingNoType" minOccurs="0"/>
+			<xs:element name="floor" type="eCH-0129:floorType" minOccurs="0"/>
+			<xs:element name="surfaceAreaOfDwelling" type="eCH-0129:surfaceAreaOfDwellingType" minOccurs="0"/>
+			<xs:element name="dwellingStatus" type="eCH-0129:dwellingStatusType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="officialStreetNoType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="federalStreetIDType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1000000"/>
+			<xs:maxInclusive value="9990000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="geometryType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="9801"/>
+			<xs:enumeration value="9802"/>
+			<xs:enumeration value="9803"/>
+			<xs:enumeration value="9809"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="longNameOfStreetType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="indexNameOfStreetType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="shortNameOfStreetType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="24"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="numberingType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="9830"/>
+			<xs:enumeration value="9832"/>
+			<xs:enumeration value="9835"/>
+			<xs:enumeration value="9836"/>
+			<xs:enumeration value="9837"/>
+			<xs:enumeration value="9839"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="streetType">
+		<xs:sequence>
+			<xs:element name="officialStreetNo" type="eCH-0129:officialStreetNoType" minOccurs="0"/>
+			<xs:element name="federalStreetID" type="eCH-0129:federalStreetIDType" minOccurs="0"/>
+			<xs:element name="localStreetID" type="eCH-0129:namedIdType" minOccurs="0"/>
+			<xs:element name="longNameOfStreet" type="eCH-0129:longNameOfStreetType" minOccurs="0"/>
+			<xs:element name="indexNameOfStreet" type="eCH-0129:indexNameOfStreetType" minOccurs="0"/>
+			<xs:element name="shortNameOfStreet" type="eCH-0129:shortNameOfStreetType" minOccurs="0"/>
+			<xs:element name="geometry" type="eCH-0129:geometryType" minOccurs="0"/>
+			<xs:element name="numbering" type="eCH-0129:numberingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="extendedFederalStreetIDTypeType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="90"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="streetSectionType">
+		<xs:sequence>
+			<xs:element name="federalStreetID" type="eCH-0129:federalStreetIDType" minOccurs="0"/>
+			<xs:element name="extendedFederalStreetIDType" type="eCH-0129:extendedFederalStreetIDTypeType" minOccurs="0"/>
+			<xs:element name="localID" type="eCH-0129:namedIdType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EGRIDType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="14"/>
+			<xs:maxLength value="14"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="realestateNumberType">
+		<xs:sequence>
+			<xs:element name="EGRID" type="eCH-0129:EGRIDType"/>
+			<xs:element name="number">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="numberSuffix" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SubDistrict" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="lot" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="cadasterAreaNumberType">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="realestateTypeType">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="authorityType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="squareMeasureType">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0.0"/>
+			<xs:maxInclusive value="1000000000.0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="realestateStatusType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="realestateMutnumberType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="realestateDateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:complexType name="realestateType">
+		<xs:sequence>
+			<xs:element name="authority" type="eCH-0129:authorityType" minOccurs="0"/>
+			<xs:element name="date" type="eCH-0129:realestateDateType" minOccurs="0"/>
+			<xs:element name="realestateType" type="eCH-0129:realestateTypeType" minOccurs="0"/>
+			<xs:element name="status" type="eCH-0129:realestateStatusType" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="EGRID" type="eCH-0129:EGRIDType"/>
+				<xs:sequence>
+					<xs:element name="cadasterAreaNumber" type="eCH-0129:cadasterAreaNumberType"/>
+					<xs:element name="realestateNumber" type="eCH-0129:realestateNumberType"/>
+				</xs:sequence>
+			</xs:choice>
+			<xs:element name="mutnumber" type="eCH-0129:realestateMutnumberType" minOccurs="0"/>
+			<xs:element name="squareMeasure" type="eCH-0129:squareMeasureType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="zipcode6Type">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="6"/>
+			<xs:minInclusive value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="indentureNumberPostType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="99999"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="localityNameType">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:complexType name="localityType">
+		<xs:sequence>
+			<xs:element name="localityName" type="eCH-0129:localityNameType" minOccurs="0"/>
+			<xs:element name="indentureNumberPost" type="eCH-0129:indentureNumberPostType" minOccurs="0"/>
+			<xs:element name="zipcode6" type="eCH-0129:zipcode6Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="clientType">
+		<xs:sequence>
+			<xs:element name="Client" type="eCH-0010:personMailAddressType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fiscalOwnershipType">
+		<xs:sequence>
+			<xs:element name="fiscalRelationship">
+				<xs:simpleType>
+					<xs:restriction base="xs:nonNegativeInteger">
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="kindOfOwnership">
+				<xs:simpleType>
+					<xs:restriction base="xs:nonNegativeInteger">
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="2"/>
+						<xs:enumeration value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="tally" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:nonNegativeInteger">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="denominator" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:nonNegativeInteger">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="accessionDate" type="xs:date"/>
+			<xs:element name="validFrom" type="xs:date" minOccurs="0"/>
+			<xs:element name="validTill" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="areaTypeType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="areaDescriptionCodeType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="25"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="9"/>
+			<xs:enumeration value="10"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="16"/>
+			<xs:enumeration value="17"/>
+			<xs:enumeration value="18"/>
+			<xs:enumeration value="19"/>
+			<xs:enumeration value="20"/>
+			<xs:enumeration value="21"/>
+			<xs:enumeration value="22"/>
+			<xs:enumeration value="23"/>
+			<xs:enumeration value="24"/>
+			<xs:enumeration value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="areaDescriptionType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="areaValueType">
+		<xs:restriction base="xs:decimal">
+			<xs:maxInclusive value="1000000000.0"/>
+			<xs:minInclusive value="0.0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="areaType">
+		<xs:sequence>
+			<xs:element name="areaType" type="eCH-0129:areaTypeType"/>
+			<xs:element name="areaDescriptionCode" type="eCH-0129:areaDescriptionCodeType"/>
+			<xs:element name="areaDescription" type="eCH-0129:areaDescriptionType"/>
+			<xs:element name="areaValue" type="eCH-0129:areaValueType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
