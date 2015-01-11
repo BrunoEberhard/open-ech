@@ -1,5 +1,6 @@
 package ch.openech.test.server;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -7,9 +8,8 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
-import org.minimalj.transaction.criteria.Criteria.AllCriteria;
+import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.Codes;
-import java.time.LocalDate;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.code.ResidencePermit;
@@ -226,7 +226,7 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctPlaceOfBirth_Foreign() throws Exception {
 		Person person = reload(p);
 		
-		List<CountryIdentification> countries = Backend.getInstance().read(CountryIdentification.class, new AllCriteria(), 1000);
+		List<CountryIdentification> countries = Backend.getInstance().read(CountryIdentification.class, Criteria.all(), 1000);
 		CountryIdentification c10 = countries.get(10);
 		person.placeOfBirth = new Place();
 		person.placeOfBirth.countryIdentification = c10;

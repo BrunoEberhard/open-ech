@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.minimalj.application.Application;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.transaction.persistence.DeleteAllTransaction;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;
@@ -43,8 +44,8 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static void clear() {
-		Backend.getInstance().deleteAll(Person.class);
-		Backend.getInstance().deleteAll(Organisation.class);
+		Backend.getInstance().execute(new DeleteAllTransaction(Person.class));
+		Backend.getInstance().execute(new DeleteAllTransaction(Organisation.class));
 	}
 
 	protected Person insertPerson(String vn) throws Exception {
