@@ -4,6 +4,7 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectPage;
+import org.minimalj.transaction.persistence.ReadTransaction;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.org.OrganisationMenu;
@@ -53,7 +54,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 		if (time == 0) {
 			return Backend.getInstance().read(Organisation.class, organisationId);
 		} else {
-			return Backend.getInstance().read(Organisation.class, organisationId, time);
+			return Backend.getInstance().execute(new ReadTransaction<Organisation>(Organisation.class, organisationId, time));
 		}
 	}
 

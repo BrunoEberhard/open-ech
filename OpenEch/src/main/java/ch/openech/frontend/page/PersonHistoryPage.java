@@ -7,6 +7,7 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
 import org.minimalj.frontend.page.PageLink;
+import org.minimalj.transaction.persistence.ReadHistoryTransaction;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
 
@@ -39,7 +40,7 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 	@Override
 	protected List<HistoryVersion<Person>> loadVersions() {
 		Person person = Backend.getInstance().read(Person.class, personId);
-		List<Person> persons = Backend.getInstance().loadHistory(person);
+		List<Person> persons = Backend.getInstance().execute(new ReadHistoryTransaction<Person>(person));
 //		Collections.sort(times);
 //		Collections.reverse(times);
 

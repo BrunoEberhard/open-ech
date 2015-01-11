@@ -4,6 +4,7 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectPage;
+import org.minimalj.transaction.persistence.ReadTransaction;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.ewk.PersonEditMenu;
@@ -59,7 +60,7 @@ public class PersonPage extends ObjectPage<Person> {
 		if (time == 0) {
 			return Backend.getInstance().read(Person.class, personId);
 		} else {
-			return Backend.getInstance().read(Person.class, personId, time);
+			return Backend.getInstance().execute(new ReadTransaction<Person>(Person.class, personId, time));
 		}
 	}
 
