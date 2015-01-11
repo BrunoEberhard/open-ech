@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>OpenEch</groupId>
 	<artifactId>OpenEch</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0.1-SNAPSHOT</version>
 	<build>
 		<resources>
 			<resource>
@@ -35,10 +35,9 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>Minimal-J</groupId>
-			<artifactId>Minimal-J</artifactId>
+			<groupId>org.minimalj</groupId>
+			<artifactId>minimalj</artifactId>
 			<version>0.1-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.derby</groupId>
