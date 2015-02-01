@@ -3,6 +3,7 @@ package ch.openech.frontend.e07;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.InputType;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validatable;
@@ -25,7 +26,7 @@ public class CantonField extends AbstractEditField<Canton> implements Mocking, V
 		super(property, editable);
 		
 		if (editable) {
-			textField = ClientToolkit.getToolkit().createTextField(listener(), 2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"); // new IndicatingTextField(new LimitedDocument());
+			textField = ClientToolkit.getToolkit().createTextField(false, listener(), 2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", InputType.FREE);
 		} else {
 			textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 		}
