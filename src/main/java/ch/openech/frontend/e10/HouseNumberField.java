@@ -21,7 +21,7 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 		houseNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), EchFormats.houseNumber);
 		dwellingNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), EchFormats.dwellingNumber);
 
-		horizontalLayout = ClientToolkit.getToolkit().createHorizontalLayout(houseNumberTextField, dwellingNumberTextField);
+		horizontalLayout = ClientToolkit.getToolkit().createComponentGroup(houseNumberTextField, dwellingNumberTextField);
 	}
 	
 	@Override

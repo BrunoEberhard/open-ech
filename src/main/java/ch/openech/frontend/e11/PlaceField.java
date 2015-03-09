@@ -48,7 +48,7 @@ public class PlaceField extends AbstractEditField<Place> implements Mocking {
 		switchComponentMunicipality = ClientToolkit.getToolkit().createSwitchComponent(comboBoxMunicipality, textForeignTown);
 		switchComponentMunicipality.show(comboBoxMunicipality);
 
-		horizontalLayout = ClientToolkit.getToolkit().createHorizontalLayout(comboBoxCountry, switchComponentMunicipality);
+		horizontalLayout = ClientToolkit.getToolkit().createComponentGroup(comboBoxCountry, switchComponentMunicipality);
 	}
 
 	@Override
