@@ -6,7 +6,7 @@ import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.properties.PropertyInterface;
 
-import  ch.openech.model.common.Place;
+import ch.openech.model.common.Place;
 
 
 public class PlaceReadOnlyField implements FormField<Place> {
@@ -38,13 +38,8 @@ public class PlaceReadOnlyField implements FormField<Place> {
 		}
 	}
 	
-	public void setEnabled(boolean enabled) {
-		textField.setEditable(enabled);
-	}
-
 	@Override
 	public PropertyInterface getProperty() {
 		return property;
 	}
-
 }
