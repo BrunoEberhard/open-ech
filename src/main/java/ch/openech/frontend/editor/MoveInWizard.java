@@ -280,9 +280,8 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			
 			this.relation = relation;
 			
-			comboBox = ClientToolkit.getToolkit().createComboBox(listener());
 			List<Person> possiblePersons = filter(MoveInWizard.this.getObject().persons);
-			comboBox.setObjects(possiblePersons);
+			comboBox = ClientToolkit.getToolkit().createComboBox(possiblePersons, listener());
 		}
 		
 		private List<Person> filter(List<Person> persons) {

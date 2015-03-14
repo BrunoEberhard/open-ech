@@ -24,25 +24,17 @@ import ch.openech.xml.write.WriterEch0020;
 
 
 public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
-	private UndoCitizenField originField;
+	private final Person person;
 
 	public UndoCitizenEvent(EchSchema ech, Person person) {
 		super(ech, person);
+		this.person = person;
 	}
 	
 	@Override
 	protected void fillForm(Form<UndoCitizenData> formPanel) {
-		originField = new UndoCitizenField(UndoCitizenData.$.placeOfOrigin);
-	    formPanel.line(originField);
+	    formPanel.line(new UndoCitizenField(UndoCitizenData.$.placeOfOrigin));
 	    formPanel.line(UndoCitizenData.$.expatriationDate);
-	}
-
-	@Override
-	public UndoCitizenData load() {
-		UndoCitizenData data = new UndoCitizenData();
-		data.person = getPerson();
-		originField.setValues(getPerson().placeOfOrigin);
-		return data;
 	}
 
 	@Override
@@ -55,7 +47,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		
 		public UndoCitizenField(PropertyInterface property) {
 			super(property, true);
-			comboBox = ClientToolkit.getToolkit().createComboBox(listener());
+			comboBox = ClientToolkit.getToolkit().createComboBox(person.placeOfOrigin, listener());
 		}
 
 		public UndoCitizenField(PlaceOfOrigin key) {
@@ -75,10 +67,6 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		@Override
 		public void setObject(PlaceOfOrigin object) {
 			comboBox.setSelectedObject(object);
-		}
-		
-		public void setValues(List<PlaceOfOrigin> placeOfOrigin) {
-			comboBox.setObjects(placeOfOrigin);
 		}
 	}
 	

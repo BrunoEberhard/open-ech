@@ -3,6 +3,7 @@ package ch.openech.frontend.e10;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.InputType;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.properties.PropertyInterface;
 
@@ -18,8 +19,8 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	public HouseNumberField(PropertyInterface property) {
 		super(property, true);
 		
-		houseNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), EchFormats.houseNumber);
-		dwellingNumberTextField = ClientToolkit.getToolkit().createTextField(listener(), EchFormats.dwellingNumber);
+		houseNumberTextField = ClientToolkit.getToolkit().createTextField(EchFormats.houseNumber, null, InputType.FREE, null, listener());
+		dwellingNumberTextField = ClientToolkit.getToolkit().createTextField(EchFormats.dwellingNumber, null, InputType.FREE, null, listener());
 
 		horizontalLayout = ClientToolkit.getToolkit().createComponentGroup(houseNumberTextField, dwellingNumberTextField);
 	}

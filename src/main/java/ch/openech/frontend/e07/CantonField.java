@@ -26,7 +26,7 @@ public class CantonField extends AbstractEditField<Canton> implements Mocking, V
 		super(property, editable);
 		
 		if (editable) {
-			textField = ClientToolkit.getToolkit().createTextField(false, listener(), 2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", InputType.FREE);
+			textField = ClientToolkit.getToolkit().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, null, listener());
 		} else {
 			textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 		}

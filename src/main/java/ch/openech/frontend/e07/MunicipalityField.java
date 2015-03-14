@@ -28,8 +28,6 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 	public MunicipalityField(PropertyInterface property, boolean allowFederalRegister) {
 		super(property, true);
 		
-		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
-		
 		municipalities = Codes.get(MunicipalityIdentification.class);
 		List<MunicipalityIdentification> items = new ArrayList<MunicipalityIdentification>(municipalities.size() + 5);
 		if (allowFederalRegister) {
@@ -38,7 +36,8 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
         	}
 		}
 		items.addAll(municipalities);
-		comboBox.setObjects(items);
+		
+		comboBox = ClientToolkit.getToolkit().createComboBox(items, listener());
 	}
 	
 	@Override

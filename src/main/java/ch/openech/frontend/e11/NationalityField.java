@@ -21,8 +21,6 @@ public class NationalityField extends AbstractEditField<Nationality> {
 	public NationalityField(PropertyInterface property) {
 		super(property, true);
 		
-		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
-
 		List<CountryIdentification> countries = Codes.get(CountryIdentification.class);
 		
 		List<Nationality> items = new ArrayList<Nationality>(countries.size() + 2);
@@ -33,7 +31,8 @@ public class NationalityField extends AbstractEditField<Nationality> {
 			Nationality nationality = new Nationality(country);
 			items.add(nationality);
 		}
-		comboBox.setObjects(items);
+
+		comboBox = ClientToolkit.getToolkit().createComboBox(items, listener());
 	}
 	
 	@Override

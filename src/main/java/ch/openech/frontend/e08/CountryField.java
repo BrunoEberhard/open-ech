@@ -25,8 +25,7 @@ public class CountryField extends AbstractEditField<CountryIdentification> imple
 	public CountryField(PropertyInterface property) {
 		super(property, true);
 		countries = Codes.get(CountryIdentification.class);
-		comboBox = ClientToolkit.getToolkit().createComboBox(listener());
-		comboBox.setObjects(countries);
+		comboBox = ClientToolkit.getToolkit().createComboBox(countries, listener());
 	}
 	
 	@Override
