@@ -89,5 +89,9 @@ public class Nationality implements Rendering {
 		nationalityStatus = NationalityStatus.unknown;
 		nationalityCountry = null;
 	}
-	
+
+	@Override
+	public String toString() {
+		return render(RenderType.PLAIN_TEXT, Locale.getDefault());
+	}
 }
