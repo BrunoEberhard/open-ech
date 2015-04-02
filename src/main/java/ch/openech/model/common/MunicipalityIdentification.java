@@ -114,4 +114,9 @@ public class MunicipalityIdentification implements Code, Rendering, Comparable<M
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return render(RenderType.PLAIN_TEXT, Locale.getDefault());
+	}
+
 }

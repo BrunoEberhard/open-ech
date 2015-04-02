@@ -114,4 +114,8 @@ public class CountryIdentification implements Code, Rendering, Comparable<Countr
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return render(RenderType.PLAIN_TEXT, Locale.getDefault());
+	}
 }
