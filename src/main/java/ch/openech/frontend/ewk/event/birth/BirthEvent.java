@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageLink;
+import org.minimalj.frontend.page.Page;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
@@ -46,10 +46,10 @@ public class BirthEvent extends XmlEditor<Person> {
 	}
 	
 	@Override
-	public Object save(Person object) throws Exception {
+	public Page save(Person object) throws Exception {
 		List<String> xmls = getXml(object);
-		Object insertId = PersonEventEditor.send(xmls);
-		return PageLink.link(PersonPage.class, echSchema.getVersion(), insertId.toString());
+		Person savedPerson = PersonEventEditor.send(xmls);
+		return new PersonPage(echSchema, savedPerson);
 	}
 
 	@Override

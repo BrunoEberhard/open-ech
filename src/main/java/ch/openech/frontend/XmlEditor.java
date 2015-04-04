@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 import org.minimalj.application.DevMode;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.Indicator;
-import org.minimalj.frontend.toolkit.IAction;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.xmlpreview.XmlPreview;
@@ -39,15 +39,15 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	}
 
 	@Override
-	public IAction[] getActions() {
+	public Action[] getActions() {
 		if (DevMode.isActive()) {
-			return new IAction[]{demoAction, xmlAction, cancelAction, saveAction};
+			return new Action[]{demoAction, xmlAction, cancelAction, saveAction};
 		} else {
-			return new IAction[]{cancelAction, saveAction};
+			return new Action[]{cancelAction, saveAction};
 		}
 	}
 
-	private class XmlAction extends ResourceAction implements Indicator {
+	private class XmlAction extends Action implements Indicator {
 		
 		private boolean enabled = true;
 		private ActionChangeListener changeListener;

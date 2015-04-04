@@ -1,7 +1,7 @@
 package ch.openech.frontend.org;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.EnumUtils;
 
 import ch.openech.model.code.FederalRegister;
@@ -11,7 +11,7 @@ import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.xml.read.StaxEch0071;
 import ch.openech.xml.read.StaxEch0072;
 
-public class ImportSwissDataAction extends ResourceAction {
+public class ImportSwissDataAction extends Action {
 
 	public ImportSwissDataAction() {
 	}

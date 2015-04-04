@@ -5,8 +5,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.EditorAction;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.PageLink;
-import org.minimalj.frontend.toolkit.IAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.util.BusinessRule;
 
 import ch.openech.frontend.org.event.ChangeLegalFormEvent;
@@ -35,7 +34,7 @@ public class OrganisationMenu {
 	private final EchSchema ech;
 	private final Organisation organisation;
 	
-	private final PageLink showHistory;
+	private final OrganisationHistoryPage historyPage;
 
 	private final EditorAction moveOut, move;
 	private final EditorAction contact, changeOrganisationName, changeLegalForm, changeReporting;
@@ -58,7 +57,7 @@ public class OrganisationMenu {
 		inLiquidation = editorLink(new InLiquidationEvent(ech, organisation));
 		liquidation = editorLink(new LiquidationEvent(ech, organisation));
 		
-		showHistory = new PageLink(OrganisationHistoryPage.class, ech.getVersion(), organisation.getId());
+		historyPage = new OrganisationHistoryPage(ech, organisation);
 	}
 
 	private EditorAction editorLink(OrganisationEventEditor<?> editor) {
@@ -88,12 +87,12 @@ public class OrganisationMenu {
 
 		fillCorrectionActionList();
 		ActionGroup correct = menu.addGroup("ActionGroup.correction");
-		for (IAction action : correctEditors) {
+		for (Action action : correctEditors) {
 			correct.add(action);
 		}
 		
 		menu.addSeparator();
-		menu.add(showHistory); 
+		menu.add(historyPage); 
 		
 		return menu;
 	}

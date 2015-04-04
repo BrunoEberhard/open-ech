@@ -6,9 +6,10 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.Transaction;
 
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.read.StaxEch0148;
 
-public class OrganisationTransaction implements Transaction<Object> {
+public class OrganisationTransaction implements Transaction<Organisation> {
 	private static final long serialVersionUID = 1L;
 
 	private final List<String> xmls;
@@ -22,20 +23,20 @@ public class OrganisationTransaction implements Transaction<Object> {
 	}
 
 	@Override
-	public Object execute(Backend backend) {
-		Object changedOrganisationId = null;
+	public Organisation execute(Backend backend) {
+		Organisation changedOrganisation = null;
 		StaxEch0148 stax = new StaxEch0148(backend);
 		for (String xml : xmls) {
 			try {
 				stax.process(xml);
-				if (changedOrganisationId == null) {
-					changedOrganisationId = stax.getChangedOrganisationId();
+				if (changedOrganisation == null) {
+					changedOrganisation = stax.getChangedOrganisation();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return changedOrganisationId;
+		return changedOrganisation;
 	}
 	
 }

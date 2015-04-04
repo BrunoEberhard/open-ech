@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
 public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
@@ -13,7 +13,7 @@ public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
 		super(Keys.getProperty(key), true);
 	}
 
-	private class RemoveThisObjectAction extends ResourceAction {
+	private class RemoveThisObjectAction extends Action {
 		private final T object;
 		
 		private RemoveThisObjectAction(T object) {

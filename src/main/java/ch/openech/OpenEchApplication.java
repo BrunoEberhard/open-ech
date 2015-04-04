@@ -21,11 +21,12 @@ package ch.openech;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.minimalj.application.DevMode;
 import org.minimalj.application.Application;
+import org.minimalj.application.DevMode;
 import org.minimalj.frontend.page.ActionGroup;
+import org.minimalj.frontend.page.SearchPage;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.IAction;
+import org.minimalj.frontend.toolkit.Action;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.frontend.editor.BaseDeliveryEditor;
@@ -90,19 +91,19 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
-	public Class<?>[] getSearchClasses() {
-		return new Class<?>[]{PersonSearchPage.class, OrganisationSearchPage.class};
+	public SearchPage[] getSearchPages() {
+		return new SearchPage[]{new PersonSearchPage(), new OrganisationSearchPage()};
 	}
 
 	@Override
-	public List<IAction> getActionsNew() {
+	public List<Action> getActionsNew() {
 		ActionGroup menu = new ActionGroup(null);
 		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
 		updateEwkNamespaceContext();
 		
 		if (ewkSchema != null) {
 			menu.add(new MoveInWizard(ewkSchema, preferences));
-			menu.add(new BirthEvent(ewkSchema, preferences)); // Dialog!
+			menu.add(new BirthEvent(ewkSchema, preferences));
 			menu.add(new BaseDeliveryEditor(ewkSchema, preferences));
 		}
 		if (orgSchema != null) {
@@ -118,7 +119,7 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
-	public List<IAction> getActionsImport() {
+	public List<Action> getActionImport() {
 		ActionGroup menu = new ActionGroup(null);
 		updateEwkNamespaceContext();
 		
@@ -139,7 +140,7 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
-	public List<IAction> getActionsExport() {
+	public List<Action> getActionExport() {
 		ActionGroup menu = new ActionGroup(null);
 		updateEwkNamespaceContext();
 		
@@ -157,7 +158,7 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
-	public List<IAction> getActionsView() {
+	public List<Action> getActionView() {
 		ActionGroup menu = new ActionGroup(null);
 		menu.add(new PreferencesEditor(ClientToolkit.getToolkit().getApplicationContext()));
 		return menu.getItems();

@@ -6,7 +6,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.EditorAction;
 import org.minimalj.frontend.page.ActionGroup;
-import org.minimalj.frontend.page.PageLink;
+import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.util.BusinessRule;
 
@@ -60,7 +60,6 @@ import ch.openech.frontend.ewk.event.correct.CorrectReligionEvent;
 import ch.openech.frontend.ewk.event.correct.CorrectReportingEvent;
 import ch.openech.frontend.ewk.event.correct.CorrectResidencePermitEvent;
 import ch.openech.frontend.page.PersonHistoryPage;
-import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
@@ -70,7 +69,7 @@ public class PersonEditMenu {
 	private final EchSchema echSchema;
 	private final Person person;
 	
-	private final PageLink showHistory;
+	private final Page showHistory;
 
 	private final EditorAction marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
 	private final EditorAction naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality, changeResidencePermit, renewPermit, undoCitizen;
@@ -133,9 +132,9 @@ public class PersonEditMenu {
 		addressLock = editorAction(new AddressLockEvent(ech, person));
 		paperLock = editorAction(new PaperLockEvent(ech, person));
 		
-		birthChild = createAction(new BirthChildEvent(ech, person, (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences()));
+		birthChild = editorAction(new BirthChildEvent(ech, person, (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences()));
 
-		showHistory = new PageLink(PersonHistoryPage.class, echSchema.getVersion(), person.getId());
+		showHistory = new PersonHistoryPage(echSchema, person);
 		
 		update(person, true);
 	}
@@ -212,13 +211,6 @@ public class PersonEditMenu {
 	private EditorAction editorAction(PersonEventEditor<?> editor) {
 		EditorAction action = new EditorAction(editor);
 		action.setEnabled(editor.isEnabled());
-		return action;
-	}
-	
-	private EditorAction createAction(PersonEventEditor<?> editor) {
-		EditorAction action = new EditorAction(editor);
-		action.setEnabled(editor.isEnabled());
-		action.setForward(PageLink.link(PersonPage.class, echSchema.getVersion(), "{0}"));
 		return action;
 	}
 	

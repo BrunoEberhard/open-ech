@@ -8,10 +8,11 @@ import org.minimalj.frontend.edit.Wizard;
 import org.minimalj.frontend.edit.WizardStep;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ComboBox;
-import org.minimalj.frontend.toolkit.IAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.properties.PropertyInterface;
@@ -88,11 +89,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	@Override
-	public IAction[] getActions() {
+	public Action[] getActions() {
 		if (DevMode.isActive()) {
-			return new IAction[]{demoAction, new XmlAction(), cancelAction, prevAction, nextAction, saveAction};
+			return new Action[]{demoAction, new XmlAction(), cancelAction, prevAction, nextAction, saveAction};
 		} else {
-			return new IAction[]{cancelAction, prevAction, nextAction, saveAction};
+			return new Action[]{cancelAction, prevAction, nextAction, saveAction};
 		}
 	}
 
@@ -325,7 +326,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		
 	}
 
-	private class XmlAction implements IAction {
+	private class XmlAction extends Action {
 		@Override
 		public void action() {
 			try {

@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
-import  ch.openech.model.person.Occupation;
+import ch.openech.model.person.Occupation;
 import ch.openech.xml.write.EchSchema;
 
 public class OccupationField extends ObjectFlowField<List<Occupation>> {
@@ -39,7 +39,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 		}
 	}
 	
-	private class RemoveOccupationAction extends ResourceAction {
+	private class RemoveOccupationAction extends Action {
 		private final Occupation occupation;
 		
 		private RemoveOccupationAction(Occupation occupation) {

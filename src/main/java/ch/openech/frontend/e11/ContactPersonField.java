@@ -6,8 +6,7 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.SearchDialogAction;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageLink;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.DateUtils;
@@ -44,7 +43,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			if (isEditable()) {
 				addAction(new RemovePersonContactAction());
 			} else {
-				addLink("Person anzeigen", PageLink.link(PersonPage.class, echSchema.getVersion(), contactPerson.person.idAsString()));
+				addAction(new PersonPage(echSchema, contactPerson.person.id), "Person anzeigen");
 			}
 			addGap();
 		}
@@ -125,7 +124,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
     };
 
     // Kontaktperson entfernen
-	private class RemovePersonContactAction extends ResourceAction {
+	private class RemovePersonContactAction extends Action {
 		@Override
 		public void action() {
 			getObject().person = null;
@@ -158,7 +157,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
     };
 
     // Kontaktadresse entfernen
-	private class RemoveAddressContactAction extends ResourceAction {
+	private class RemoveAddressContactAction extends Action {
 		@Override
 		public void action() {
 			getObject().address = null;

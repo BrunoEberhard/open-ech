@@ -8,7 +8,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
 import ch.openech.model.EchSchemaValidation;
@@ -19,7 +19,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 		super(Keys.getProperty(key), false);
 	}
 	
-	private class XmlValidateAction extends ResourceAction {
+	private class XmlValidateAction extends Action {
 		public final String xml;
 		
 		public XmlValidateAction(String xml) {
@@ -33,7 +33,7 @@ public class XmlTextFormField extends ObjectFlowField<List<String>> {
 		}
 	}
 
-	private class CopyToClipboardAction extends ResourceAction {
+	private class CopyToClipboardAction extends Action {
 		public final String xml;
 
 		public CopyToClipboardAction(String xml) {

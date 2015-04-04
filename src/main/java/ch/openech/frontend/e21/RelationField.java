@@ -4,12 +4,11 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageLink;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
 import ch.openech.frontend.page.PersonPage;
-import  ch.openech.model.person.Relation;
+import ch.openech.model.person.Relation;
 import ch.openech.xml.write.EchSchema;
 
 public class RelationField extends ObjectFlowField<List<Relation>> {
@@ -42,7 +41,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		}
 	}
 	
-	private class RemoveRelationAction extends ResourceAction {
+	private class RemoveRelationAction extends Action {
 		private final Relation relation;
 		
 		private RemoveRelationAction(Relation relation) {
@@ -74,7 +73,7 @@ public class RelationField extends ObjectFlowField<List<Relation>> {
 		} else {
 			for (Relation relation : objects) {
 				addText(relation.toHtml());
-				addLink("Person anzeigen", PageLink.link(PersonPage.class, echNamespaceContext.getVersion(), relation.partner.idAsString()));
+				addAction(new PersonPage(echNamespaceContext, relation.partner.id), "Person anzeigen");
 				addGap();
 			}
 		}

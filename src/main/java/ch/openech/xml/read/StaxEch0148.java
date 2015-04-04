@@ -16,7 +16,6 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
-import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.Event;
@@ -29,7 +28,7 @@ public class StaxEch0148 {
 	private final Backend backend;
 	
 	private Event e;
-	private Object changedOrganisationId = null;
+	private Organisation changedOrganisation = null;
 	
 	public StaxEch0148(Backend backend) {
 		this.backend = backend;
@@ -37,11 +36,11 @@ public class StaxEch0148 {
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
-		changedOrganisationId = backend.insert(organisation);
+		changedOrganisation = backend.insert(organisation);
 	}
 	
-	public Object getChangedOrganisationId() {
-		return changedOrganisationId;
+	public Organisation getChangedOrganisation() {
+		return changedOrganisation;
 	}
 
 	public void process(String xmlString) throws XMLStreamException {
@@ -129,8 +128,7 @@ public class StaxEch0148 {
 	public void simpleOrganisationEvent(String type, Organisation organisation) {
 		try {
 			organisation.event = e;
-			backend.update(organisation);
-			changedOrganisationId = IdUtils.getId(organisation);
+			changedOrganisation = backend.update(organisation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

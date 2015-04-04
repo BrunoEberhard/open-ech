@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.page.AbstractPage;
+import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.toolkit.ClientToolkit.IContent;
 
 import ch.openech.model.SedexMessageInformation;
@@ -20,7 +20,7 @@ import ch.openech.model.person.Person;
 import ch.openech.transaction.EchPersistence;
 import ch.openech.xml.write.EchSchema;
 
-public class SedexInputPage extends AbstractPage {
+public class SedexInputPage implements Page {
 
 	private final EchSchema echNamespaceContext;
 	private JPanel panel;
@@ -39,7 +39,7 @@ public class SedexInputPage extends AbstractPage {
 		if (panel == null) {
 			createPanel();
 		}
-		refresh();
+		table.refresh();
 		return null;
 		// TODO
 //		return panel;
@@ -155,9 +155,4 @@ public class SedexInputPage extends AbstractPage {
 		return EchPersistence.getByIdentification(Backend.getInstance(), envelope.personIdentification);
 	}
 	
-	@Override
-	public void refresh() {
-		table.refresh();
-	}
-
 }

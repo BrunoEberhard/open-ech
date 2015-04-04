@@ -4,11 +4,11 @@ import java.io.OutputStream;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 
 import ch.openech.transaction.PersonExportStreamProducer;
 
-public class ExportAllPersonAction extends ResourceAction {
+public class ExportAllPersonAction extends Action {
 	protected final String ewkVersion;
 	
 	public ExportAllPersonAction(String ewkVersion) {

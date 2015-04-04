@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
-import org.minimalj.frontend.page.PageLink;
+import org.minimalj.frontend.page.Page;
 import org.minimalj.transaction.persistence.ReadHistoryTransaction;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
@@ -17,19 +17,11 @@ import ch.openech.xml.write.EchSchema;
 public class OrganisationHistoryPage extends HistoryPage<Organisation> {
 
 	private final EchSchema echNamespaceContext;
-	private final long organisationId;
+	private final Organisation organisation;
 
-	public OrganisationHistoryPage(String[] arguments) {
-		this(arguments[0], arguments[1]);
-	}
-	
-	public OrganisationHistoryPage(String version, String organisationId) {
-		this(EchSchema.getNamespaceContext(20, version), organisationId);
-	}
-	
-	public OrganisationHistoryPage(EchSchema echNamespaceContext, String organisationId) {
-		this.organisationId = Long.valueOf(organisationId);
+	public OrganisationHistoryPage(EchSchema echNamespaceContext, Organisation organisation) {
 		this.echNamespaceContext = echNamespaceContext;
+		this.organisation = organisation;
 	}
 
 	@Override
@@ -39,7 +31,6 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> {
 
 	@Override
 	protected List<HistoryVersion<Organisation>> loadVersions() {
-		Organisation organisation = Backend.getInstance().read(Organisation.class, organisationId);
 		List<Organisation> organisations = Backend.getInstance().execute(new ReadHistoryTransaction<Organisation>(organisation));
 //		Collections.sort(times);
 //		Collections.reverse(times);
@@ -77,13 +68,12 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> {
 		}
 	}
 
-
 	@Override
-	protected String link(Organisation object, String version) {
+	protected Page click(Organisation object, String version) {
 		if (version != null) {
-			return PageLink.link(OrganisationPage.class, echNamespaceContext.getVersion(), object.getId(), version);
+			return new OrganisationPage(echNamespaceContext, object, Integer.valueOf(version));
 		} else {
-			return PageLink.link(OrganisationPage.class, echNamespaceContext.getVersion(), object.getId());
+			return new OrganisationPage(echNamespaceContext, object);
 		}
 	}
 	

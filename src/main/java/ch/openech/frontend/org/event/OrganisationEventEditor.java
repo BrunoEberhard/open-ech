@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageLink;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 
 import ch.openech.frontend.XmlEditor;
@@ -57,13 +56,8 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	@Override
 	public Object save(T object) throws Exception {
 		List<String> xmls = getXml(object);
-		Object insertId = send(xmls);
-		return PageLink.link(OrganisationPage.class, echSchema.getVersion(), insertId.toString());
-	}
-	
-	public static Object send(final List<String> xmls) {
-		Object firstInsertId = Backend.getInstance().execute(new OrganisationTransaction(xmls));
-		return firstInsertId;
+		Organisation firstInsertOrganisation = Backend.getInstance().execute(new OrganisationTransaction(xmls));
+		return new OrganisationPage(echSchema, firstInsertOrganisation);
 	}
 	
 }

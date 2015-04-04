@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.HistoryPage;
-import org.minimalj.frontend.page.PageLink;
+import org.minimalj.frontend.page.Page;
 import org.minimalj.transaction.persistence.ReadHistoryTransaction;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
@@ -17,21 +17,13 @@ import ch.openech.xml.write.EchSchema;
 public class PersonHistoryPage extends HistoryPage<Person> {
 
 	private final EchSchema echNamespaceContext;
-	private final String personId;
+	private final Person person;
 
-	public PersonHistoryPage(String[] arguments) {
-		this(arguments[0], arguments[1]);
-	}
-	
-	public PersonHistoryPage(String version, String personId) {
-		this(EchSchema.getNamespaceContext(20, version), personId);
-	}
-	
-	public PersonHistoryPage(EchSchema echNamespaceContext, String personId) {
-		this.personId = personId;
+	public PersonHistoryPage(EchSchema echNamespaceContext, Person person) {
 		this.echNamespaceContext = echNamespaceContext;
+		this.person = person;
 	}
-	
+
 	@Override
 	public String getTitle() {
 		return "Verlauf Person";
@@ -39,7 +31,6 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 
 	@Override
 	protected List<HistoryVersion<Person>> loadVersions() {
-		Person person = Backend.getInstance().read(Person.class, personId);
 		List<Person> persons = Backend.getInstance().execute(new ReadHistoryTransaction<Person>(person));
 //		Collections.sort(times);
 //		Collections.reverse(times);
@@ -78,11 +69,11 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 	}
 
 	@Override
-	protected String link(Person object, String version) {
+	protected Page click(Person object, String version) {
 		if (version != null) {
-			return PageLink.link(PersonPage.class, echNamespaceContext.getVersion(), object.getId(), version);
+			return new PersonPage(echNamespaceContext, object, Integer.valueOf(version));
 		} else {
-			return PageLink.link(PersonPage.class, echNamespaceContext.getVersion(), object.getId());
+			return new PersonPage(echNamespaceContext, object);
 		}
 	}
 	

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.page.PageLink;
 import org.minimalj.util.LoggingRuntimeException;
 
 import ch.openech.frontend.XmlEditor;
@@ -44,8 +43,8 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
     @Override
     public Object save(Person person) {
 		String xml = getXml(person).get(0);
-		Object insertId = Backend.getInstance().execute(new PersonTransaction(xml));
-		return PageLink.link(PersonPage.class, echSchema.getVersion(), insertId.toString());
+		Person savedPerson = Backend.getInstance().execute(new PersonTransaction(xml));
+		return new PersonPage(echSchema, savedPerson);
 	}
 	
 	@Override

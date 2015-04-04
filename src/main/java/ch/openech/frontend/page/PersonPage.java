@@ -16,19 +16,23 @@ import ch.openech.xml.write.EchSchema;
 public class PersonPage extends ObjectPage<Person> {
 
 	private final EchSchema echSchema;
-	private final String personId;
 	private final int time;
 	private PersonEditMenu menu;
 
-	public PersonPage(String[] arguments) {
-		this.echSchema = EchSchema.getNamespaceContext(20, arguments[0]);
-		this.personId = arguments[1];
-		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
+	public PersonPage(EchSchema echSchema, Person person) {
+		this(echSchema, person, 0);
 	}
 	
-	@Override
-	public String getTitle() {
-		return pageTitle(getObject());
+	public PersonPage(EchSchema echSchema, Person person, int time) {
+		super(person);
+		this.echSchema = echSchema;
+		this.time = time;
+	}
+
+	public PersonPage(EchSchema echSchema, Object personId) {
+		super(Person.class, personId);
+		this.echSchema = echSchema;
+		this.time = 0;
 	}
 
 	@Override
@@ -44,24 +48,14 @@ public class PersonPage extends ObjectPage<Person> {
 	}
 	
 	@Override
-	public void refresh() {
-		super.refresh();
-		if (menu != null) {
-			menu.update(getObject(), true);
-		}
-	}
-
-	@Override
-	protected Person loadObject() {
-		return loadObject(personId, time);
-	}
-
-	private static Person loadObject(String personId, int time) {
+	public Person load() {
+		Person person;
 		if (time == 0) {
-			return Backend.getInstance().read(Person.class, personId);
+			person = Backend.getInstance().read(Person.class, getObjectId());
 		} else {
-			return Backend.getInstance().execute(new ReadTransaction<Person>(Person.class, personId, time));
+			person = Backend.getInstance().execute(new ReadTransaction<Person>(Person.class, getObject().id, time));
 		}
+		return person;
 	}
 
 	@Override
@@ -71,7 +65,9 @@ public class PersonPage extends ObjectPage<Person> {
 	
 	private static final int MAX_NAME_LENGTH = 10;
 	
-	private static String pageTitle(Person person) {
+	@Override
+	public String getTitle() {
+		Person person = getObject();
 		String title;
 		if (person.officialName != null) {
 			if (person.officialName.length() <= MAX_NAME_LENGTH) {

@@ -63,12 +63,7 @@ public abstract class AbstractServerTest {
 	public static Person processFile(String relativFileName) throws IOException {
 		InputStream inputStream = AbstractServerTest.class.getResourceAsStream(relativFileName);
 		String xml = convertStreamToString(inputStream);
-		Object insertId = Backend.getInstance().execute(new PersonTransaction(xml));
-		if (insertId != null) {
-			return Backend.getInstance().read(Person.class, insertId);
-		} else {
-			return null;
-		}
+		return Backend.getInstance().execute(new PersonTransaction(xml));
 	}
 	
 	public static Object process(String string) throws IOException {

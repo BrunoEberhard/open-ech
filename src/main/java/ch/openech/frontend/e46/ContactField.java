@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.contact.ContactEntry;
@@ -55,7 +55,7 @@ public class ContactField extends ObjectFlowField<List<ContactEntry>> {
 		}
     };
 
-	private class RemoveContactEntryAction extends ResourceAction {
+	private class RemoveContactEntryAction extends Action {
 		private final ContactEntry contactEntry;
 		
 		private RemoveContactEntryAction(ContactEntry contactEntry) {

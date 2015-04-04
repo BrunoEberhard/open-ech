@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.mock.Mocking;
@@ -79,7 +79,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 		}
 	}
 
-	private class RemoveOriginAction extends ResourceAction {
+	private class RemoveOriginAction extends Action {
 		private final PlaceOfOrigin placeOfOrigin;
 		
 		private RemoveOriginAction(PlaceOfOrigin placeOfOrigin) {

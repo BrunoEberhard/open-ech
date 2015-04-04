@@ -15,16 +15,25 @@ import ch.openech.xml.write.EchSchema;
 public class OrganisationPage extends ObjectPage<Organisation> {
 
 	private final EchSchema echSchema;
-	private final String organisationId;
 	private final int time;
 	private OrganisationMenu menu;
 
-	public OrganisationPage(String[] arguments) {
-		this.echSchema = EchSchema.getNamespaceContext(148, arguments[0]);
-		this.organisationId = arguments[1];
-		this.time = arguments.length > 2 ? Integer.parseInt(arguments[2]) : 0;
+	public OrganisationPage(EchSchema echSchema, Organisation organisation) {
+		this(echSchema, organisation, 0);
+	}
+	
+	public OrganisationPage(EchSchema echSchema, Organisation organisation, int time) {
+		super(organisation);
+		this.echSchema = echSchema;
+		this.time = time;
 	}
 
+	public OrganisationPage(EchSchema echSchema, Object organisationId) {
+		super(Organisation.class, organisationId);
+		this.echSchema = echSchema;
+		this.time = 0;
+	}
+	
 	@Override
 	public ActionGroup getMenu() {
 		if (time == 0 && menu == null) {
@@ -38,24 +47,14 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 	}
 	
 	@Override
-	public void refresh() {
-		super.refresh();
-		if (menu != null) {
-			menu.update(getObject(), true);
-		}
-	}
-
-	@Override
-	protected Organisation loadObject() {
-		return loadObject(organisationId, time);
-	}
-
-	private static Organisation loadObject(String organisationId, int time) {
+	public Organisation load() {
+		Organisation organisation;
 		if (time == 0) {
-			return Backend.getInstance().read(Organisation.class, organisationId);
+			organisation = Backend.getInstance().read(Organisation.class, getObjectId());
 		} else {
-			return Backend.getInstance().execute(new ReadTransaction<Organisation>(Organisation.class, organisationId, time));
+			organisation = Backend.getInstance().execute(new ReadTransaction<Organisation>(Organisation.class, getObject().id, time));
 		}
+		return organisation;
 	}
 
 	@Override

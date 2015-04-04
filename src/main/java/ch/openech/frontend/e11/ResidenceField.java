@@ -6,7 +6,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.Editor;
 import org.minimalj.frontend.edit.fields.ObjectFlowField;
 import org.minimalj.frontend.edit.form.Form;
-import org.minimalj.frontend.toolkit.ResourceAction;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.datagenerator.DataGenerator;
@@ -74,7 +74,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		}
 	}
 
-	private final class ResidenceRemoveSecondaryAction extends ResourceAction {
+	private final class ResidenceRemoveSecondaryAction extends Action {
 		@Override
 		public void action() {
 			getObject().secondary.clear();
