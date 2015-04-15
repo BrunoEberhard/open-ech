@@ -40,6 +40,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 			menu = new OrganisationMenu(echSchema, getObject());
 		}
 		if (menu != null) {
+			menu.update(getObject(), true);
 			return menu.getActions();
 		} else {
 			return null;

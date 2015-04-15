@@ -41,6 +41,7 @@ public class PersonPage extends ObjectPage<Person> {
 			menu = new PersonEditMenu(echSchema, getObject());
 		}
 		if (menu != null) {
+			menu.update(getObject(), true);
 			return menu.getActions();
 		} else {
 			return null;
