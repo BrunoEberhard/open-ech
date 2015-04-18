@@ -19,6 +19,7 @@ import ch.openech.model.common.Address;
 import ch.openech.model.person.ContactPerson;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PersonSearch;
 import ch.openech.model.types.MrMrs;
 import ch.openech.xml.write.EchSchema;
 
@@ -73,15 +74,17 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 	}
 
 	// Person suchen
-	public class SelectPersonContactEditor extends SearchDialogAction<Person> {
+	public class SelectPersonContactEditor extends SearchDialogAction<PersonSearch> {
 		
 		public SelectPersonContactEditor() {
 			super(PersonSearchPage.FIELD_NAMES);
 		}
 		
 		@Override
-		protected void save(Person person) {
-			if (person != null) {
+		protected void save(PersonSearch personSearch) {
+			if (personSearch != null) {
+				Person person = Backend.getInstance().read(Person.class, personSearch.id);
+				
 				ContactPerson contactPerson = ContactPersonField.this.getObject();
 				
 				contactPerson.person = person.personIdentification();
@@ -99,8 +102,8 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 		}
 		
 		@Override
-		public List<Person> search(String searchText) {
-			return Backend.getInstance().read(Person.class, Criteria.search(searchText), 100);
+		public List<PersonSearch> search(String query) {
+			return Backend.getInstance().read(PersonSearch.class, Criteria.search(query), 100);
 		}
 
 	};
