@@ -29,16 +29,16 @@ public class UidStructureField extends TextFormatField<UidStructure> {
 	@Override
 	public UidStructure getObject() {
 		UidStructure uid = new UidStructure();
-		uid.value = textField.getText();
+		uid.value = textField.getValue();
 		return uid;
 	}
 
 	@Override
 	public void setObject(UidStructure uid) {
 		if (uid != null) {
-			textField.setText(uid.value);
+			textField.setValue(uid.value);
 		} else {
-			textField.setText(null);
+			textField.setValue(null);
 		}
 	}
 

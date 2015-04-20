@@ -30,9 +30,9 @@ public class MunicipalityReadOnlyField implements FormField<MunicipalityIdentifi
 	@Override
 	public void setObject(MunicipalityIdentification object) {
 		if (object != null) {
-			textField.setText(object.toString());
+			textField.setValue(object.toString());
 		} else {
-			textField.setText(null);
+			textField.setValue(null);
 		}
 	}
 	

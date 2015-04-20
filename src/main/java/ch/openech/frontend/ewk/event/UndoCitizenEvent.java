@@ -8,7 +8,7 @@ import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ComboBox;
+import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.properties.PropertyInterface;
@@ -43,7 +43,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 	}
 	
 	private class UndoCitizenField extends AbstractEditField<PlaceOfOrigin> {
-		private final ComboBox<PlaceOfOrigin> comboBox;
+		private final Input<PlaceOfOrigin> comboBox;
 		
 		public UndoCitizenField(PropertyInterface property) {
 			super(property, true);
@@ -61,12 +61,12 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 
 		@Override
 		public PlaceOfOrigin getObject() {
-			return comboBox.getSelectedObject();
+			return comboBox.getValue();
 		}
 
 		@Override
 		public void setObject(PlaceOfOrigin object) {
-			comboBox.setSelectedObject(object);
+			comboBox.setValue(object);
 		}
 	}
 	

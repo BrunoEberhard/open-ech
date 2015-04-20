@@ -39,8 +39,8 @@ public class CantonField extends AbstractEditField<Canton> implements Mocking, V
 	@Override
 	public Canton getObject() {
 		Canton canton = null;
-		if (!StringUtils.isEmpty(textField.getText())) {
-			canton = Codes.findCode(Canton.class, textField.getText());
+		if (!StringUtils.isEmpty(textField.getValue())) {
+			canton = Codes.findCode(Canton.class, textField.getValue());
 		}
 		return canton;
 	}		
@@ -48,9 +48,9 @@ public class CantonField extends AbstractEditField<Canton> implements Mocking, V
 	@Override
 	public void setObject(Canton value) {
 		if (value != null) {
-			textField.setText(value.id);
+			textField.setValue(value.id);
 		} else {
-			textField.setText("");
+			textField.setValue("");
 		}
 	}
 
@@ -61,8 +61,8 @@ public class CantonField extends AbstractEditField<Canton> implements Mocking, V
 
 	@Override
 	public String validate() {
-		if (!StringUtils.isEmpty(textField.getText())) {
-			Canton canton = Codes.findCode(Canton.class, textField.getText());
+		if (!StringUtils.isEmpty(textField.getValue())) {
+			Canton canton = Codes.findCode(Canton.class, textField.getValue());
 			if (canton == null) return "Ungültige Eingabe";
 		}
 		return null;

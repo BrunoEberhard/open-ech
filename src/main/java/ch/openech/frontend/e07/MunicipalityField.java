@@ -6,7 +6,7 @@ import java.util.List;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ComboBox;
+import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
@@ -19,7 +19,7 @@ import ch.openech.model.common.MunicipalityIdentification;
 
 public class MunicipalityField extends AbstractEditField<MunicipalityIdentification> implements Mocking {
 	private final List<MunicipalityIdentification> municipalities;
-	private final ComboBox<MunicipalityIdentification> comboBox;
+	private final Input<MunicipalityIdentification> comboBox;
 
 	public MunicipalityField(MunicipalityIdentification key, boolean allowFederalRegister) {
 		this(Keys.getProperty(key), allowFederalRegister);
@@ -50,14 +50,14 @@ public class MunicipalityField extends AbstractEditField<MunicipalityIdentificat
 		if (object == null) { 
 			object = new MunicipalityIdentification();
 		}
-		comboBox.setSelectedObject(object);
+		comboBox.setValue(object);
 	}
 	
 	@Override
 	public MunicipalityIdentification getObject() {
 		MunicipalityIdentification municipality = new MunicipalityIdentification();
-		if (comboBox.getSelectedObject() != null) {
-			comboBox.getSelectedObject().copyTo(municipality);
+		if (comboBox.getValue() != null) {
+			comboBox.getValue().copyTo(municipality);
 		}
 		return municipality;
 	}

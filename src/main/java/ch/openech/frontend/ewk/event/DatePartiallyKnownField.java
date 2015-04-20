@@ -39,16 +39,16 @@ public class DatePartiallyKnownField extends TextFormatField<DatePartiallyKnown>
 	@Override
 	public DatePartiallyKnown getObject() {
 		DatePartiallyKnown datePartiallyKnown = new DatePartiallyKnown();
-		datePartiallyKnown.value = DateUtils.parseCH(textField.getText(), true);
+		datePartiallyKnown.value = DateUtils.parseCH(textField.getValue(), true);
 		if (StringUtils.isEmpty(datePartiallyKnown.value)) {
-			datePartiallyKnown.value = InvalidValues.createInvalidString(textField.getText());
+			datePartiallyKnown.value = InvalidValues.createInvalidString(textField.getValue());
 		}
 		return datePartiallyKnown;
 	}
 
 	@Override
 	public void setObject(DatePartiallyKnown datePartiallyKnown) {
-		textField.setText(datePartiallyKnown != null ? datePartiallyKnown.toString() : "");
+		textField.setValue(datePartiallyKnown != null ? datePartiallyKnown.toString() : "");
 	}
 	
 }

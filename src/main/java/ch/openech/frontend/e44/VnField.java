@@ -31,7 +31,7 @@ public class VnField extends TextFormatField<Vn> {
 	@Override
 	public Vn getObject() {
 		Vn vn = new Vn();
-		vn.value = textField.getText();
+		vn.value = textField.getValue();
 		if (!StringUtils.isEmpty(vn.value)) {
 			vn.value = vn.value.replace(".", "");
 		}
@@ -41,9 +41,9 @@ public class VnField extends TextFormatField<Vn> {
 	@Override
 	public void setObject(Vn vn) {
 		if (vn != null) {
-			textField.setText(vn.getFormattedValue());
+			textField.setValue(vn.getFormattedValue());
 		} else {
-			textField.setText(null);
+			textField.setValue(null);
 		}
 	}
 

@@ -32,8 +32,8 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 
 	@Override
 	public HouseNumber getObject() {
-		houseNumber.houseNumber = houseNumberTextField.getText();
-		houseNumber.dwellingNumber = dwellingNumberTextField.getText();
+		houseNumber.houseNumber = houseNumberTextField.getValue();
+		houseNumber.dwellingNumber = dwellingNumberTextField.getValue();
 		return houseNumber;
 	}
 
@@ -44,8 +44,8 @@ public class HouseNumberField extends AbstractEditField<HouseNumber> {
 	}
 
 	private void update() {
-		houseNumberTextField.setText(houseNumber.houseNumber);
-		dwellingNumberTextField.setText(houseNumber.dwellingNumber);
+		houseNumberTextField.setValue(houseNumber.houseNumber);
+		dwellingNumberTextField.setValue(houseNumber.dwellingNumber);
 	}
 
 }

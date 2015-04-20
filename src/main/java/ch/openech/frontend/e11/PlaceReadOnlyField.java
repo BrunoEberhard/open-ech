@@ -26,15 +26,15 @@ public class PlaceReadOnlyField implements FormField<Place> {
 	@Override
 	public void setObject(Place value) {
 		if (value != null && value.isSwiss()) {
-			textField.setText(value.municipalityIdentification != null ? value.municipalityIdentification.toString() : "-");
+			textField.setValue(value.municipalityIdentification != null ? value.municipalityIdentification.toString() : "-");
 		} else if (value != null && value.isForeign()) {
 			String text = value.countryIdentification != null ? value.countryIdentification.toString() : "";
 			if (value.foreignTown != null) {
 				text = text + ", " + value.foreignTown;
 			}
-			textField.setText(text);
+			textField.setValue(text);
 		} else {
-			textField.setText("-");
+			textField.setValue("-");
 		}
 	}
 	

@@ -11,8 +11,7 @@ import org.minimalj.frontend.edit.form.Form;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ComboBox;
-import org.minimalj.frontend.toolkit.Action;
+import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.properties.PropertyInterface;
@@ -269,7 +268,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 	private class MoveInNextPersonField extends AbstractEditField<Person> {
 
-		private final ComboBox<Person> comboBox;
+		private final Input<Person> comboBox;
 		private final TypeOfRelationship relation;
 		
 		public MoveInNextPersonField(Object key, TypeOfRelationship relation) {
@@ -316,12 +315,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		public void setObject(Person object) {
-			comboBox.setSelectedObject(object);
+			comboBox.setValue(object);
 		}
 
 		@Override
 		public Person getObject() {
-			return (Person) comboBox.getSelectedObject();
+			return (Person) comboBox.getValue();
 		}
 		
 	}

@@ -14,7 +14,7 @@ public class ChIso2Field extends AbstractEditField<String> {
 		super(Address.$.country, true);
 
 		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
-		textField.setText("CH");
+		textField.setValue("CH");
 	}
 
 	@Override

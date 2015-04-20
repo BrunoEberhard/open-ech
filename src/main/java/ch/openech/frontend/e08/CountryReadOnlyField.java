@@ -27,7 +27,7 @@ public class CountryReadOnlyField implements FormField<CountryIdentification> {
 	
 	@Override
 	public void setObject(CountryIdentification country) {
-		textCountry.setText(country != null ? country.countryNameShort : "");
+		textCountry.setValue(country != null ? country.countryNameShort : "");
 	}
 
 	@Override

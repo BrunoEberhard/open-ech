@@ -8,9 +8,9 @@ import java.util.logging.Logger;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.frontend.toolkit.ClientToolkit.InputType;
 import org.minimalj.frontend.toolkit.ClientToolkit.Search;
-import org.minimalj.frontend.toolkit.ComboBox;
 import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
@@ -26,7 +26,7 @@ public class PlaceField extends AbstractEditField<Place> implements Mocking {
 	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
 
 	private final List<CountryIdentification> countries;
-	private final ComboBox<CountryIdentification> comboBoxCountry;
+	private final Input<CountryIdentification> comboBoxCountry;
 
 	private final List<MunicipalityIdentification> municipalityIdentifications;
 	private final TextField textFieldMunicipality;
@@ -51,7 +51,7 @@ public class PlaceField extends AbstractEditField<Place> implements Mocking {
 			if (StringUtils.isBlank(query)) {
 				return Collections.emptyList();
 			}
-			CountryIdentification country = comboBoxCountry.getSelectedObject();
+			CountryIdentification country = comboBoxCountry.getValue();
 			if (country != null && !country.isSwiss()) {
 				return Collections.emptyList();
 			}
@@ -80,28 +80,28 @@ public class PlaceField extends AbstractEditField<Place> implements Mocking {
 			place = new Place();
 		}
 		if (!place.countryIdentification.isEmpty()) {
-			comboBoxCountry.setSelectedObject(place.countryIdentification);
+			comboBoxCountry.setValue(place.countryIdentification);
 		} else {
-			comboBoxCountry.setSelectedObject(null);
+			comboBoxCountry.setValue(null);
 		}
 		if (place.municipalityIdentification != null) {
-			textFieldMunicipality.setText(place.municipalityIdentification.municipalityName);
+			textFieldMunicipality.setValue(place.municipalityIdentification.municipalityName);
 		} else {
-			textFieldMunicipality.setText(null);
+			textFieldMunicipality.setValue(null);
 		}
 	}
 	
 	@Override
 	public Place getObject() {
 		Place place = new Place();
-		place.countryIdentification = (CountryIdentification) comboBoxCountry.getSelectedObject();
+		place.countryIdentification = (CountryIdentification) comboBoxCountry.getValue();
 		
-		CountryIdentification country = comboBoxCountry.getSelectedObject();
+		CountryIdentification country = comboBoxCountry.getValue();
 		if (country != null && !country.isSwiss()) {
 			place.municipalityIdentification = null;
-			place.foreignTown = textFieldMunicipality.getText();
+			place.foreignTown = textFieldMunicipality.getValue();
 		} else {
-			String m = textFieldMunicipality.getText();
+			String m = textFieldMunicipality.getValue();
 			if (!StringUtils.isBlank(m)) {
 				for (MunicipalityIdentification municipality : municipalityIdentifications) {
 					if (municipality.municipalityName.toLowerCase().startsWith(m)) {

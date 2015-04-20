@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import org.minimalj.frontend.edit.fields.AbstractEditField;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ComboBox;
+import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
@@ -19,7 +19,7 @@ import ch.openech.model.common.CountryIdentification;
 public class CountryField extends AbstractEditField<CountryIdentification> implements Mocking {
 	private static final Logger logger = Logger.getLogger(CountryField.class.getName());
 
-	private final ComboBox<CountryIdentification> comboBox;
+	private final Input<CountryIdentification> comboBox;
 	private final List<CountryIdentification> countries;
 	
 	public CountryField(PropertyInterface property) {
@@ -35,7 +35,7 @@ public class CountryField extends AbstractEditField<CountryIdentification> imple
 	
 	@Override
 	public CountryIdentification getObject() {
-		return comboBox.getSelectedObject();
+		return comboBox.getValue();
 	}
 
 	@Override
@@ -43,15 +43,15 @@ public class CountryField extends AbstractEditField<CountryIdentification> imple
 		if (country != null) {
 			int index = countries.indexOf(country);
 			if (index >= 0) {
-				comboBox.setSelectedObject(country);
+				comboBox.setValue(country);
 			} else if (!country.isEmpty()){
 				logger.warning("Unknown country");
-				comboBox.setSelectedObject(null);
+				comboBox.setValue(null);
 			} else {
-				comboBox.setSelectedObject(null);
+				comboBox.setValue(null);
 			}
 		} else {
-			comboBox.setSelectedObject(null);
+			comboBox.setValue(null);
 		}
 	}
 

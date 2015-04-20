@@ -39,10 +39,10 @@ public class NationalityReadOnlyField implements FormField<Nationality> {
 	
 	protected void display(Nationality nationality) {
 		switch (nationality.nationalityStatus) {
-		case with: textField.setText(nationality.nationalityCountry != null ? nationality.nationalityCountry.countryNameShort : ""); break;
-		case without: textField.setText("Staatenlos"); break;
-		case unknown: textField.setText("Staatsangehörigkeit unbekannt"); break;
-		default: textField.setText(""); break;
+		case with: textField.setValue(nationality.nationalityCountry != null ? nationality.nationalityCountry.countryNameShort : ""); break;
+		case without: textField.setValue("Staatenlos"); break;
+		case unknown: textField.setValue("Staatsangehörigkeit unbekannt"); break;
+		default: textField.setValue(""); break;
 		}
 	}
 
