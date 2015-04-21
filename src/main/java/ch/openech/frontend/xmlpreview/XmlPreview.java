@@ -35,7 +35,7 @@ public class XmlPreview {
 			XmlTextFormField xmlTextFormField = new XmlTextFormField(XmlPreviewValue.$.xmls);
 			form.line(xmlTextFormField);
 			xmlTextFormField.setObject(xmls);
-			ClientToolkit.getToolkit().createDialog("XML", form.getContent()).openDialog();
+			ClientToolkit.getToolkit().showDialog("XML", form.getContent(), null);
 //		}
 	}
 	

@@ -2,6 +2,8 @@ package ch.openech.frontend.editor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.minimalj.application.DevMode;
 import org.minimalj.frontend.edit.Wizard;
@@ -335,7 +337,8 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 				}
 				XmlPreview.viewXml(xmls);
 			} catch (Exception x) {
-				throw new RuntimeException("XML Preview fehlgeschlagen", x);
+				ClientToolkit.getToolkit().showMessage("XML Preview fehlgeschlagen");
+				Logger.getLogger(XmlAction.class.getName()).log(Level.SEVERE, "XML Preview fehlgeschlagen", x);
 			}
 		}
 

@@ -5,13 +5,9 @@ import java.util.logging.Logger;
 
 import org.minimalj.application.DevMode;
 import org.minimalj.frontend.edit.Editor;
-import org.minimalj.frontend.edit.Indicator;
 import org.minimalj.frontend.toolkit.Action;
-import org.minimalj.frontend.toolkit.Action;
-import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.xmlpreview.XmlPreview;
-import ch.openech.model.EchSchemaValidation;
 import ch.openech.xml.write.EchSchema;
 
 
@@ -22,10 +18,8 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	private final XmlAction xmlAction;
 
 	public XmlEditor(EchSchema echSchema) {
-//		super(pageContext);
 		this.echSchema = echSchema;
 		this.xmlAction = new XmlAction();
-		setIndicator(xmlAction);
 	}
 
 	protected int getFormColumns() {
@@ -47,11 +41,7 @@ public abstract class XmlEditor<T> extends Editor<T> {
 		}
 	}
 
-	private class XmlAction extends Action implements Indicator {
-		
-		private boolean enabled = true;
-		private ActionChangeListener changeListener;
-		private String description;
+	private class XmlAction extends Action {
 		
 		@Override
 		public void action() {
@@ -63,47 +53,32 @@ public abstract class XmlEditor<T> extends Editor<T> {
 			}
 		}
 		
-		@Override
-		public void setValidationMessages(List<ValidationMessage> validationMessages) {
-			enabled = validationMessages.isEmpty();
-			updateXmlStatus();
-			if (changeListener != null) {
-				changeListener.change();
-			}
-		}	
-		
-		@Override
-		public boolean isEnabled() {
-			return enabled;
-		}
-
-		@Override
-		public void setChangeListener(ActionChangeListener changeListener) {
-			this.changeListener = changeListener;
-		}
-		
-		@Override
-		public String getDescription() {
-			return description;
-		}
-
-		private void updateXmlStatus() {
-			if (!isEnabled()) return;
-			try {
-				List<String> xmls = getXml(getObject());
-				String result = "ok";
-				for (String string : xmls) {
-					result = EchSchemaValidation.validate(string);
-					if (!EchSchemaValidation.OK.equals(result)) {
-						break;
-					}
-				}
-				description = result;
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				description = "XML Validierung mit Exception fehlgeschlagen";
-			}
-		}
+//		@Override
+//		public void setValidationMessages(List<ValidationMessage> validationMessages) {
+//			enabled = validationMessages.isEmpty();
+//			updateXmlStatus();
+//			if (changeListener != null) {
+//				changeListener.change();
+//			}
+//		}	
+//		
+//		private void updateXmlStatus() {
+//			if (!isEnabled()) return;
+//			try {
+//				List<String> xmls = getXml(getObject());
+//				String result = "ok";
+//				for (String string : xmls) {
+//					result = EchSchemaValidation.validate(string);
+//					if (!EchSchemaValidation.OK.equals(result)) {
+//						break;
+//					}
+//				}
+//				setDescription(result);
+//			} catch (Exception e1) {
+//				e1.printStackTrace();
+//				description = "XML Validierung mit Exception fehlgeschlagen";
+//			}
+//		}
 	}
 
 
