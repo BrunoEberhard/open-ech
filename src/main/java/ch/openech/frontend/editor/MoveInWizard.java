@@ -6,10 +6,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.minimalj.application.DevMode;
-import org.minimalj.frontend.edit.Wizard;
-import org.minimalj.frontend.edit.WizardStep;
-import org.minimalj.frontend.edit.fields.AbstractEditField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.editor.Wizard;
+import org.minimalj.frontend.editor.WizardStep;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
@@ -174,13 +174,13 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			
 			form.line(MoveInNextPerson.$.typeOfRelationshipInverted);
 
-			form.line(new MoveInNextPersonField(MoveInNextPerson.$.basePerson, TypeOfRelationship.Partner));
+			form.line(new MoveInNextPersonFormElement(MoveInNextPerson.$.basePerson, TypeOfRelationship.Partner));
 
-			form.line(new MoveInNextPersonField(MoveInNextPerson.$.mother, TypeOfRelationship.Mutter));
-			form.line(new MoveInNextPersonField(MoveInNextPerson.$.father, TypeOfRelationship.Vater));
+			form.line(new MoveInNextPersonFormElement(MoveInNextPerson.$.mother, TypeOfRelationship.Mutter));
+			form.line(new MoveInNextPersonFormElement(MoveInNextPerson.$.father, TypeOfRelationship.Vater));
 
-			form.line(new MoveInNextPersonField(MoveInNextPerson.$.fosterMother, TypeOfRelationship.Pflegemutter), //
-					new MoveInNextPersonField(MoveInNextPerson.$.fosterFather, TypeOfRelationship.Pflegevater));
+			form.line(new MoveInNextPersonFormElement(MoveInNextPerson.$.fosterMother, TypeOfRelationship.Pflegemutter), //
+					new MoveInNextPersonFormElement(MoveInNextPerson.$.fosterFather, TypeOfRelationship.Pflegevater));
 			
 			return form;
 		}
@@ -268,17 +268,17 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		return insertId;
 	}
 
-	private class MoveInNextPersonField extends AbstractEditField<Person> {
+	private class MoveInNextPersonFormElement extends AbstractFormElement<Person> {
 
 		private final Input<Person> comboBox;
 		private final TypeOfRelationship relation;
 		
-		public MoveInNextPersonField(Object key, TypeOfRelationship relation) {
+		public MoveInNextPersonFormElement(Object key, TypeOfRelationship relation) {
 			this(Keys.getProperty(key), relation);
 		}
 		
-		public MoveInNextPersonField(PropertyInterface property, TypeOfRelationship relation) {
-			super(property, true);
+		public MoveInNextPersonFormElement(PropertyInterface property, TypeOfRelationship relation) {
+			super(property);
 			
 			this.relation = relation;
 			

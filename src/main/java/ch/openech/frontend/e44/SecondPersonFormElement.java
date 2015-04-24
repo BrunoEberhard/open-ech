@@ -1,19 +1,19 @@
 package ch.openech.frontend.e44;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 
 import  ch.openech.model.person.Relation;
 
-public class SecondPersonField extends ObjectFlowField<Relation> {
+public class SecondPersonFormElement extends ObjectPanelFormElement<Relation> {
 
-	public SecondPersonField(Relation key) {
+	public SecondPersonFormElement(Relation key) {
 		this(Keys.getProperty(key));
 	}
 
-	public SecondPersonField(PropertyInterface property) {
+	public SecondPersonFormElement(PropertyInterface property) {
 		super(property);
 	}
 	

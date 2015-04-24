@@ -1,8 +1,8 @@
 package ch.openech.frontend.e21;
 
-import org.minimalj.frontend.edit.fields.EnumEditField;
+import org.minimalj.frontend.form.element.EnumFormElement;
 
-import ch.openech.frontend.e10.AddressField;
+import ch.openech.frontend.e10.AddressFormElement;
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.code.BasedOnLaw;
 import ch.openech.model.person.Relation;
@@ -16,17 +16,17 @@ public class RelationPanel extends EchForm<Relation> {
 		super(echSchema);
 		
 		line(Relation.$.partner);
-		line(new AddressField(Relation.$.address, true));
+		line(new AddressFormElement(Relation.$.address, true));
 
 		line(Relation.$.typeOfRelationship);
-		line(new BasedOnLawField());
+		line(new BasedOnLawFormElement());
 
 		line(Relation.$.care);
 	}
 
-	private class BasedOnLawField extends EnumEditField<BasedOnLaw> {
+	private class BasedOnLawFormElement extends EnumFormElement<BasedOnLaw> {
 		
-		public BasedOnLawField() {
+		public BasedOnLawFormElement() {
 			super(Relation.$.basedOnLaw, echSchema == null || echSchema.reducedBasedOnLawCode() ?  BasedOnLaw.VERSION_3 :  null);
 		}
 	}

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.BusinessRule;

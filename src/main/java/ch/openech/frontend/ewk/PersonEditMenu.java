@@ -3,8 +3,8 @@ package ch.openech.frontend.ewk;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.edit.Editor;
-import org.minimalj.frontend.edit.EditorAction;
+import org.minimalj.frontend.editor.Editor;
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.toolkit.ClientToolkit;

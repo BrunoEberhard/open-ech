@@ -1,6 +1,6 @@
 package ch.openech.frontend.e44;
 
-import org.minimalj.frontend.edit.fields.TextFormatField;
+import org.minimalj.frontend.form.element.FormatFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.StringUtils;
 
@@ -8,14 +8,10 @@ import ch.openech.model.EchFormats;
 import ch.openech.model.person.types.Vn;
 
 // Todo: Formatierung von Vn (AHV Nr, Schema von LocalDate benutzen)
-public class VnField extends TextFormatField<Vn> {
+public class VnFormElement extends FormatFormElement<Vn> {
 
-	public VnField(PropertyInterface property, boolean editable) {
+	public VnFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
-	}
-
-	public VnField(PropertyInterface property) {
-		super(property);
 	}
 
 	@Override

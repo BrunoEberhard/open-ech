@@ -3,10 +3,10 @@ package ch.openech.frontend.ewk.event.correct;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 
-import ch.openech.frontend.e21.NameOfParentsField;
-import ch.openech.frontend.e21.RelationField;
+import ch.openech.frontend.e21.NameOfParentsFormElement;
+import ch.openech.frontend.e21.RelationFormElement;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
 import  ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
@@ -20,10 +20,10 @@ public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 
 	@Override
 	protected void fillForm(Form<Person> formPanel) {
-		formPanel.line(new RelationField(Person.$.relation, echSchema, true));
+		formPanel.line(new RelationFormElement(Person.$.relation, echSchema, true));
 		boolean includeParents = echSchema.correctRelationshipPersonIncludesParents();
 		if (includeParents) {
-			formPanel.line(new NameOfParentsField(Person.$.nameOfParents, true));
+			formPanel.line(new NameOfParentsFormElement(Person.$.nameOfParents, true));
 		}
 	}
 

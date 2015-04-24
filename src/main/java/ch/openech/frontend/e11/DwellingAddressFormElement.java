@@ -1,7 +1,7 @@
 package ch.openech.frontend.e11;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.mock.Mocking;
 
@@ -9,10 +9,10 @@ import ch.openech.datagenerator.DataGenerator;
 import  ch.openech.model.common.DwellingAddress;
 import ch.openech.xml.write.EchSchema;
 
-public class DwellingAddressField extends ObjectFlowField<DwellingAddress> implements Mocking {
+public class DwellingAddressFormElement extends ObjectPanelFormElement<DwellingAddress> implements Mocking {
 	private final EchSchema echSchema;
 	
-	public DwellingAddressField(PropertyInterface property, EchSchema echSchema, boolean editable) {
+	public DwellingAddressFormElement(PropertyInterface property, EchSchema echSchema, boolean editable) {
 		super(property, editable);
 		this.echSchema = echSchema;
 	}

@@ -3,9 +3,9 @@ package ch.openech.frontend.e44;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.SearchDialogAction;
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.editor.SearchDialogAction;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
 
@@ -13,9 +13,9 @@ import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
 
-public class PersonIdentificationField extends ObjectFlowField<PersonIdentification> {
+public class PersonIdentificationFormElement extends ObjectPanelFormElement<PersonIdentification> {
 
-	public PersonIdentificationField(PropertyInterface property) {
+	public PersonIdentificationFormElement(PropertyInterface property) {
 		super(property);
 	}
 	

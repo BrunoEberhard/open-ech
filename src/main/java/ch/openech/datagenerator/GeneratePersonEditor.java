@@ -3,8 +3,8 @@ package ch.openech.datagenerator;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.Editor;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.editor.Editor;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;

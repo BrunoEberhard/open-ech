@@ -2,8 +2,8 @@ package ch.openech.frontend.e21;
 
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
@@ -11,10 +11,10 @@ import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Relation;
 import ch.openech.xml.write.EchSchema;
 
-public class RelationField extends ObjectFlowField<List<Relation>> {
+public class RelationFormElement extends ObjectPanelFormElement<List<Relation>> {
 	private final EchSchema echNamespaceContext;
 	
-	public RelationField(List<Relation> key, EchSchema echNamespaceContext, boolean editable) {
+	public RelationFormElement(List<Relation> key, EchSchema echNamespaceContext, boolean editable) {
 		super(Keys.getProperty(key), editable);
 		this.echNamespaceContext = echNamespaceContext;
 	}

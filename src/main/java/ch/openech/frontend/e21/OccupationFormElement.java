@@ -2,19 +2,19 @@ package ch.openech.frontend.e21;
 
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.person.Occupation;
 import ch.openech.xml.write.EchSchema;
 
-public class OccupationField extends ObjectFlowField<List<Occupation>> {
+public class OccupationFormElement extends ObjectPanelFormElement<List<Occupation>> {
 	
 	private final EchSchema echSchema;
 	
-	public OccupationField(PropertyInterface property, EchSchema echSchema, boolean editable) {
+	public OccupationFormElement(PropertyInterface property, EchSchema echSchema, boolean editable) {
 		super(property, editable);
 		this.echSchema = echSchema;
 	}
@@ -28,7 +28,7 @@ public class OccupationField extends ObjectFlowField<List<Occupation>> {
 
 		@Override
 		protected void setPart(List<Occupation> object, Occupation p) {
-			List<Occupation> occupations = OccupationField.this.getObject();
+			List<Occupation> occupations = OccupationFormElement.this.getObject();
 			occupations.add(p);
 			fireObjectChange();
 		}

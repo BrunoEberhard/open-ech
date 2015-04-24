@@ -3,9 +3,9 @@ package ch.openech.frontend.org;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.SearchDialogAction;
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.editor.SearchDialogAction;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.model.properties.PropertyInterface;
@@ -18,15 +18,15 @@ import ch.openech.model.organisation.Organisation;
 import ch.openech.model.organisation.OrganisationIdentification;
 import ch.openech.xml.write.EchSchema;
 
-public class HeadquarterField extends ObjectFlowField<Headquarter> {
+public class HeadquarterFormElement extends ObjectPanelFormElement<Headquarter> {
 
 	private final EchSchema echSchema;
 	
-	public HeadquarterField(Headquarter key, EchSchema echSchema, boolean editable) {
+	public HeadquarterFormElement(Headquarter key, EchSchema echSchema, boolean editable) {
 		this(Keys.getProperty(key), echSchema, editable);
 	}
 	
-	public HeadquarterField(PropertyInterface property, EchSchema echSchema, boolean editable) {
+	public HeadquarterFormElement(PropertyInterface property, EchSchema echSchema, boolean editable) {
 		super(property, editable);
 		this.echSchema = echSchema;
 	}

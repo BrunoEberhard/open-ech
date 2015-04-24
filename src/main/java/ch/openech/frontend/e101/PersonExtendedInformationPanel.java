@@ -1,7 +1,7 @@
 package ch.openech.frontend.e101;
 
 import static  ch.openech.model.person.PersonExtendedInformation.*;
-import ch.openech.frontend.e10.AddressField;
+import ch.openech.frontend.e10.AddressFormElement;
 import ch.openech.frontend.ewk.event.EchForm;
 import  ch.openech.model.person.PersonExtendedInformation;
 
@@ -16,7 +16,7 @@ public class PersonExtendedInformationPanel extends EchForm<PersonExtendedInform
 		line($.fireServiceLiability);
 		line($.healthInsured);
 		line($.insuranceName);
-		line(new AddressField($.insuranceAddress, true, false, true));
+		line(new AddressFormElement($.insuranceAddress, true, false, true));
 		line($.matrimonialInheritanceArrangement);
 	}
 

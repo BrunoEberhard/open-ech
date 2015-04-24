@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.minimalj.frontend.edit.fields.AbstractEditField;
+import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ClientToolkit.Input;
@@ -22,8 +22,8 @@ import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
 
-public class PlaceField extends AbstractEditField<Place> implements Mocking {
-	private static final Logger logger = Logger.getLogger(PlaceField.class.getName());
+public class PlaceFormElement extends AbstractFormElement<Place> implements Mocking {
+	private static final Logger logger = Logger.getLogger(PlaceFormElement.class.getName());
 
 	private final List<CountryIdentification> countries;
 	private final Input<CountryIdentification> comboBoxCountry;
@@ -33,8 +33,8 @@ public class PlaceField extends AbstractEditField<Place> implements Mocking {
 	
 	private final IComponent horizontalLayout;
 
-	public PlaceField(PropertyInterface property) {
-		super(property, true);
+	public PlaceFormElement(PropertyInterface property) {
+		super(property);
 		countries = Codes.get(CountryIdentification.class);
 		municipalityIdentifications = Codes.get(MunicipalityIdentification.class);
 		

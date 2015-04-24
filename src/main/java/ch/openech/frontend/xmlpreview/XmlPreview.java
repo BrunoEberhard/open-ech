@@ -2,11 +2,11 @@ package ch.openech.frontend.xmlpreview;
 
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.model.Keys;
 
-import ch.openech.frontend.ewk.event.XmlTextFormField;
+import ch.openech.frontend.ewk.event.XmlTextFormFormElement;
 
 public class XmlPreview {
 
@@ -32,7 +32,7 @@ public class XmlPreview {
 					return 400;
 				}
 			};
-			XmlTextFormField xmlTextFormField = new XmlTextFormField(XmlPreviewValue.$.xmls);
+			XmlTextFormFormElement xmlTextFormField = new XmlTextFormFormElement(XmlPreviewValue.$.xmls);
 			form.line(xmlTextFormField);
 			xmlTextFormField.setObject(xmls);
 			ClientToolkit.getToolkit().showDialog("XML", form.getContent(), null);

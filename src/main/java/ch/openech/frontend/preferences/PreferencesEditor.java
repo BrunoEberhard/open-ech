@@ -1,8 +1,8 @@
 package ch.openech.frontend.preferences;
 
 import org.minimalj.application.ApplicationContext;
-import org.minimalj.frontend.edit.Editor;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.editor.Editor;
+import org.minimalj.frontend.form.Form;
 
 public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	private final ApplicationContext applicationContext;

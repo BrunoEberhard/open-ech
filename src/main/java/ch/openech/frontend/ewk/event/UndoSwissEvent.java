@@ -5,7 +5,7 @@ import static ch.openech.model.person.Person.*;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.model.person.Nationality;

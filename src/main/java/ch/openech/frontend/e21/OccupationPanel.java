@@ -1,7 +1,7 @@
 package ch.openech.frontend.e21;
 
 import static  ch.openech.model.person.Occupation.*;
-import ch.openech.frontend.e10.AddressField;
+import ch.openech.frontend.e10.AddressFormElement;
 import ch.openech.frontend.ewk.event.EchForm;
 import  ch.openech.model.person.Occupation;
 import ch.openech.xml.write.EchSchema;
@@ -15,7 +15,7 @@ public class OccupationPanel extends EchForm<Occupation> {
 		line($.kindOfEmployment);
 		line($.jobTitle);
 		line($.employer);
-		line(new AddressField($.placeOfWork, false, false, false), new AddressField($.placeOfEmployer, false, false, false));
+		line(new AddressFormElement($.placeOfWork, false, false, false), new AddressFormElement($.placeOfEmployer, false, false, false));
 		if (echSchema.occupationValidTillAvailable()) {
 			line($.occupationValidTill);
 		}

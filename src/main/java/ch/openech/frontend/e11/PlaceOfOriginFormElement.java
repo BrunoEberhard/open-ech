@@ -2,8 +2,8 @@ package ch.openech.frontend.e11;
 
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
@@ -13,12 +13,12 @@ import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.types.ReasonOfAcquisition;
 
-public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> implements Mocking {
+public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceOfOrigin>> implements Mocking {
 	public static final boolean WITHOUT_ADD_ON = false;
 	private final boolean withAddOn;
 	private boolean swiss = true;
 	
-	public PlaceOfOriginField(PropertyInterface property, boolean editable) {
+	public PlaceOfOriginFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
 		this.withAddOn = true;
 	}
@@ -27,7 +27,7 @@ public class PlaceOfOriginField extends ObjectFlowField<List<PlaceOfOrigin>> imp
 	 * Das macht auch Sinn, denn die Heimatorte kommen alle per Abstammung und
 	 * per Geburtstag zu der geborenen Person
 	 */
-	public PlaceOfOriginField(List<PlaceOfOrigin> key, boolean withAddOn, boolean editable) {
+	public PlaceOfOriginFormElement(List<PlaceOfOrigin> key, boolean withAddOn, boolean editable) {
 		super(Keys.getProperty(key), editable);
 		this.withAddOn = withAddOn;
 	}

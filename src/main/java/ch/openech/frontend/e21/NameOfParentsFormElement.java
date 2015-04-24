@@ -1,16 +1,16 @@
 package ch.openech.frontend.e21;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.util.CloneHelper;
 
 import  ch.openech.model.person.NameOfParent;
 import  ch.openech.model.person.NameOfParents;
 
-public class NameOfParentsField extends ObjectFlowField<NameOfParents> {
+public class NameOfParentsFormElement extends ObjectPanelFormElement<NameOfParents> {
 	
-	public NameOfParentsField(NameOfParents key, boolean editable) {
+	public NameOfParentsFormElement(NameOfParents key, boolean editable) {
 		super(Keys.getProperty(key), editable);
 	}
 

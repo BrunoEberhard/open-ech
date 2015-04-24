@@ -3,7 +3,7 @@ package ch.openech.frontend.org;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.edit.EditorAction;
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.util.BusinessRule;

@@ -3,11 +3,11 @@ package ch.openech.frontend.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
 
-import ch.openech.frontend.e07.MunicipalityField;
-import ch.openech.frontend.e10.AddressField;
+import ch.openech.frontend.e07.MunicipalityFormElement;
+import ch.openech.frontend.e10.AddressFormElement;
 import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.person.Person;
@@ -32,9 +32,9 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 		formPanel.line($.dwellingAddress.EGID);
 		formPanel.line($.dwellingAddress.EWID);
 		formPanel.line($.dwellingAddress.householdID);
-		formPanel.line(new AddressField($.dwellingAddress.mailAddress, true, false, false));
+		formPanel.line(new AddressFormElement($.dwellingAddress.mailAddress, true, false, false));
 		formPanel.line($.dwellingAddress.typeOfHousehold);
-		formPanel.line(new MunicipalityField($.reportingMunicipality, true));
+		formPanel.line(new MunicipalityFormElement($.reportingMunicipality, true));
 	}
 
 	@Override

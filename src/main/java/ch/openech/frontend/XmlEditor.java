@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.minimalj.application.DevMode;
-import org.minimalj.frontend.edit.Editor;
+import org.minimalj.frontend.editor.Editor;
 import org.minimalj.frontend.toolkit.Action;
 
 import ch.openech.frontend.xmlpreview.XmlPreview;

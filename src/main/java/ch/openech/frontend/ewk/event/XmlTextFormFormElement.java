@@ -5,17 +5,17 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
 import ch.openech.model.EchSchemaValidation;
 
-public class XmlTextFormField extends ObjectFlowField<List<String>> {
+public class XmlTextFormFormElement extends ObjectPanelFormElement<List<String>> {
 
-	public XmlTextFormField(List<String> key) {
+	public XmlTextFormFormElement(List<String> key) {
 		super(Keys.getProperty(key), false);
 	}
 	

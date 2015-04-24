@@ -1,15 +1,15 @@
 package ch.openech.frontend.e101;
 
 import org.minimalj.backend.db.EmptyObjects;
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 
 import  ch.openech.model.person.PersonExtendedInformation;
 
-public class PersonExtendedInformationField extends ObjectFlowField<PersonExtendedInformation> {
+public class PersonExtendedInformationFormElement extends ObjectPanelFormElement<PersonExtendedInformation> {
 
-	public PersonExtendedInformationField(PropertyInterface property, boolean editable) {
+	public PersonExtendedInformationFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
 	}
 	

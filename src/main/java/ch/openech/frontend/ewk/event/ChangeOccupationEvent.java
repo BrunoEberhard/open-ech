@@ -3,7 +3,7 @@ package ch.openech.frontend.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 
 import ch.openech.frontend.e21.OccupationPanel;
 import ch.openech.model.person.Occupation;

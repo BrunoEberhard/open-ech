@@ -3,7 +3,7 @@ package ch.openech.frontend.e07;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.AbstractEditField;
+import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ClientToolkit.Input;
@@ -17,16 +17,16 @@ import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.common.MunicipalityIdentification;
 
-public class MunicipalityField extends AbstractEditField<MunicipalityIdentification> implements Mocking {
+public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIdentification> implements Mocking {
 	private final List<MunicipalityIdentification> municipalities;
 	private final Input<MunicipalityIdentification> comboBox;
 
-	public MunicipalityField(MunicipalityIdentification key, boolean allowFederalRegister) {
+	public MunicipalityFormElement(MunicipalityIdentification key, boolean allowFederalRegister) {
 		this(Keys.getProperty(key), allowFederalRegister);
 	}
 	
-	public MunicipalityField(PropertyInterface property, boolean allowFederalRegister) {
-		super(property, true);
+	public MunicipalityFormElement(PropertyInterface property, boolean allowFederalRegister) {
+		super(property);
 		
 		municipalities = Codes.get(MunicipalityIdentification.class);
 		List<MunicipalityIdentification> items = new ArrayList<MunicipalityIdentification>(municipalities.size() + 5);

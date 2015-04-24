@@ -3,8 +3,8 @@ package ch.openech.frontend.e21;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.EnumEditField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.EnumFormElement;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
@@ -30,7 +30,7 @@ public class CareEvent extends PersonEventEditor<Relation> {
 
 	@Override
 	protected void fillForm(Form<Relation> formPanel) {
-		formPanel.line(new EnumEditField(Relation.$.typeOfRelationship, TypeOfRelationship.PARENT));
+		formPanel.line(new EnumFormElement(Relation.$.typeOfRelationship, TypeOfRelationship.PARENT));
 		formPanel.line(Relation.$.care);
 		formPanel.line(Relation.$.partner);
 	}

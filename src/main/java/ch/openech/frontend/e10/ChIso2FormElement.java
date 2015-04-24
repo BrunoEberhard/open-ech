@@ -1,17 +1,17 @@
 package ch.openech.frontend.e10;
 
-import org.minimalj.frontend.edit.fields.AbstractEditField;
+import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
 
-import  ch.openech.model.common.Address;
+import ch.openech.model.common.Address;
 
-public class ChIso2Field extends AbstractEditField<String> {
+public class ChIso2FormElement extends AbstractFormElement<String> {
 	private final TextField textField;
 
-	public ChIso2Field() {
-		super(Address.$.country, true);
+	public ChIso2FormElement() {
+		super(Address.$.country);
 
 		textField = ClientToolkit.getToolkit().createReadOnlyTextField();
 		textField.setValue("CH");

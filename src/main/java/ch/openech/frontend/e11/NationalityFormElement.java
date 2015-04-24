@@ -3,7 +3,7 @@ package ch.openech.frontend.e11;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.AbstractEditField;
+import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ClientToolkit.Input;
@@ -13,13 +13,13 @@ import org.minimalj.util.Codes;
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.person.Nationality;
 
-public class NationalityField extends AbstractEditField<Nationality> {
+public class NationalityFormElement extends AbstractFormElement<Nationality> {
 	private final Input<Nationality> comboBox;
 	private final Nationality itemUnknownNationality = Nationality.newUnknown();
 	private final Nationality itemWithoutNationality = Nationality.newWithout();
 	
-	public NationalityField(PropertyInterface property) {
-		super(property, true);
+	public NationalityFormElement(PropertyInterface property) {
+		super(property);
 		
 		List<CountryIdentification> countries = Codes.get(CountryIdentification.class);
 		
@@ -42,16 +42,6 @@ public class NationalityField extends AbstractEditField<Nationality> {
 	
 	@Override
 	public void setObject(Nationality nationality) {
-//		String status = nationality != null ? nationality.nationalityStatus : "0";
-//		if ("2".equals(status)) {
-//			comboBox.setValue(nationality);
-//		} else if ("1".equals(status)) {
-//			comboBox.setValue(itemWithoutNationality);
-//		} else if ("0".equals(status)) {
-//			comboBox.setValue(itemUnknownNationality);
-//		} else if (status != null) {
-//			comboBox.setValue(nationality);
-//		}
 		comboBox.setValue(nationality);
 	}
 	

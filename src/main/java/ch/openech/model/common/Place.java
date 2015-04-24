@@ -1,11 +1,14 @@
 package  ch.openech.model.common;
 
+import java.util.Locale;
+
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;
 
 import ch.openech.model.EchFormats;
 
 // Verwendung als Birthplace und als Destination
-public class Place {
+public class Place implements Rendering {
 	
 	public MunicipalityIdentification municipalityIdentification;
 	public CountryIdentification countryIdentification = CountryIdentification.createSwiss();
@@ -25,6 +28,21 @@ public class Place {
 
 	public boolean isUnknown() {
 		return !(isSwiss() && municipalityIdentification != null && !municipalityIdentification.isEmpty()|| isForeign());
+	}
+
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		if (isSwiss()) {
+			return municipalityIdentification != null ? municipalityIdentification.toString() : "-";
+		} else if (isForeign()) {
+			String text = countryIdentification != null ? countryIdentification.toString() : "";
+			if (foreignTown != null) {
+				text = text + ", " + foreignTown;
+			}
+			return text;
+		} else {
+			return "-";
+		}
 	}
 
 }

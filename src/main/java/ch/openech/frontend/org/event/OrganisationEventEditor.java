@@ -3,7 +3,7 @@ package ch.openech.frontend.org.event;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 
 import ch.openech.frontend.XmlEditor;

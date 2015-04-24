@@ -2,21 +2,21 @@ package ch.openech.frontend.e46;
 
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.contact.ContactEntry;
 import ch.openech.model.contact.ContactEntryType;
 
-public class ContactField extends ObjectFlowField<List<ContactEntry>> {
+public class ContactFormElement extends ObjectPanelFormElement<List<ContactEntry>> {
 	
-	public ContactField(PropertyInterface property) {
+	public ContactFormElement(PropertyInterface property) {
 		this(property, true);
 	}
 	
-	public ContactField(PropertyInterface property, boolean editable) {
+	public ContactFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
 	}
 	

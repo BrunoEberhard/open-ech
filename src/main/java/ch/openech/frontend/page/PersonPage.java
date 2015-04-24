@@ -1,7 +1,7 @@
 package ch.openech.frontend.page;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectPage;
 import org.minimalj.transaction.persistence.ReadTransaction;

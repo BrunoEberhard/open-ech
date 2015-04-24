@@ -1,19 +1,15 @@
 package ch.openech.frontend.e97;
 
-import org.minimalj.frontend.edit.fields.TextFormatField;
+import org.minimalj.frontend.form.element.FormatFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.organisation.UidStructure;
 
 // Todo: Formatierung von UidStructure (Firmennummer, Schema von LocalDate benutzen)
-public class UidStructureField extends TextFormatField<UidStructure> {
+public class UidStructureFormElement extends FormatFormElement<UidStructure> {
 
-	public UidStructureField(PropertyInterface property, boolean editable) {
+	public UidStructureFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
-	}
-
-	public UidStructureField(PropertyInterface property) {
-		super(property);
 	}
 
 	@Override

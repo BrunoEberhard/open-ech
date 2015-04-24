@@ -3,12 +3,13 @@ package ch.openech.frontend.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
+
 import java.time.LocalDate;
 
-import ch.openech.frontend.e07.MunicipalityField;
+import ch.openech.frontend.e07.MunicipalityFormElement;
 import ch.openech.frontend.ewk.event.MoveOutEvent.MoveOutData;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;
@@ -45,7 +46,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 	@Override
 	protected void fillForm(Form<MoveOutData> formPanel) {
 		formPanel.line($.departureDate);
-		formPanel.line(new MunicipalityField($.reportingMunicipality, true));
+		formPanel.line(new MunicipalityFormElement($.reportingMunicipality, true));
 		formPanel.line($.goesTo);
 	}
 	

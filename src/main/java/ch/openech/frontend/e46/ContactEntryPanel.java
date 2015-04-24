@@ -1,6 +1,6 @@
 package ch.openech.frontend.e46;
 
-import ch.openech.frontend.e10.AddressField;
+import ch.openech.frontend.e10.AddressFormElement;
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.datagenerator.DataGenerator;
 import  ch.openech.model.contact.ContactEntry;
@@ -10,7 +10,7 @@ import  ch.openech.model.contact.ContactEntryType;
 public class ContactEntryPanel extends EchForm<ContactEntry> {
 	
 	private final ContactEntryType type;
-	private AddressField addressField;
+	private AddressFormElement addressField;
 
 	public ContactEntryPanel(ContactEntryType type, boolean person) {
 		super(2);
@@ -25,7 +25,7 @@ public class ContactEntryPanel extends EchForm<ContactEntry> {
 		}
 		
 		if (type == ContactEntryType.Address) {
-			addressField = new AddressField(ContactEntry.$.address, false, person, !person);
+			addressField = new AddressFormElement(ContactEntry.$.address, false, person, !person);
 			line(addressField);
 		} else {
 			line(ContactEntry.$.value);

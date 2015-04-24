@@ -1,19 +1,19 @@
 package ch.openech.frontend.ewk;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.MockName;
 import org.minimalj.util.mock.MockPrename;
 import org.minimalj.util.mock.MockPrename.NameWithFrequency;
 
-import ch.openech.frontend.e10.AddressField;
-import ch.openech.frontend.e11.PlaceOfOriginField;
-import ch.openech.frontend.e11.ResidenceField;
-import ch.openech.frontend.e21.NameOfParentsField;
-import ch.openech.frontend.e21.RelationField;
-import ch.openech.frontend.e44.TechnicalIdsField;
+import ch.openech.frontend.e10.AddressFormElement;
+import ch.openech.frontend.e11.PlaceOfOriginFormElement;
+import ch.openech.frontend.e11.ResidenceFormElement;
+import ch.openech.frontend.e21.NameOfParentsFormElement;
+import ch.openech.frontend.e21.RelationFormElement;
+import ch.openech.frontend.e44.TechnicalIdsFormElement;
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
@@ -52,7 +52,7 @@ public class PersonPanel extends EchForm<Person>  {
 	}
 
 	public void createIdentification() {
-		TechnicalIdsField technicalId = new TechnicalIdsField(Person.$.technicalIds, TechnicalIdsField.WITH_EU_IDS, editable);
+		TechnicalIdsFormElement technicalId = new TechnicalIdsFormElement(Person.$.technicalIds, TechnicalIdsFormElement.WITH_EU_IDS, editable);
 		
 		line(Person.$.officialName);
 		line(Person.$.firstName);
@@ -78,8 +78,8 @@ public class PersonPanel extends EchForm<Person>  {
 		
 		//
 
-		RelationField relationField = new RelationField(Person.$.relation, echSchema, editable);
-		NameOfParentsField nameOfParentsField = new NameOfParentsField(Person.$.nameOfParents, editable);
+		RelationFormElement relationField = new RelationFormElement(Person.$.relation, echSchema, editable);
+		NameOfParentsFormElement nameOfParentsField = new NameOfParentsFormElement(Person.$.nameOfParents, editable);
 
 		switch (mode) {
 		case DISPLAY:
@@ -120,7 +120,7 @@ public class PersonPanel extends EchForm<Person>  {
 			line(Person.$.comesFromAddress, Person.$.goesToAddress);
 			line(Person.$.placeOfOrigin, Person.$.foreign);
 			line(Person.$.dwellingAddress, Person.$.occupation);
-			line(new RelationField(Person.$.relation, echSchema, editable), new NameOfParentsField(Person.$.nameOfParents, true));
+			line(new RelationFormElement(Person.$.relation, echSchema, editable), new NameOfParentsFormElement(Person.$.nameOfParents, true));
 			break;
 		case CORRECT_PERSON:
 			line(Person.$.placeOfOrigin, Person.$.foreign);
@@ -150,10 +150,10 @@ public class PersonPanel extends EchForm<Person>  {
 		line(Person.$.callName, Person.$.languageOfCorrespondance);
 		line(Person.$.nationality, Person.$.religion);
 		line(Person.$.placeOfBirth);
-		ParentField mother = new ParentField(Person.$.getMother());
-		ParentField father = new ParentField(Person.$.getFather());
+		ParentFormElement mother = new ParentFormElement(Person.$.getMother());
+		ParentFormElement father = new ParentFormElement(Person.$.getFather());
 		line(mother, father);
-		line(new PlaceOfOriginField(Person.$.placeOfOrigin, false, editable), Person.$.foreign);
+		line(new PlaceOfOriginFormElement(Person.$.placeOfOrigin, false, editable), Person.$.foreign);
 		
 		addDependecy(Person.$.getMother(), new OfficialNameFromMotherUpdater(), Person.$.officialName);
 	}
@@ -192,12 +192,12 @@ public class PersonPanel extends EchForm<Person>  {
 		person.callName = "Lorem Ipsum";
 		person.officialName = MockName.officialName();
 		
-		ResidenceField.fillWithMockupData(person.residence, person.typeOfResidence);
+		ResidenceFormElement.fillWithMockupData(person.residence, person.typeOfResidence);
 	}
 
-	private class ParentField extends ObjectFlowField<Relation> {
+	private class ParentFormElement extends ObjectPanelFormElement<Relation> {
 		
-		public ParentField(Relation key) {
+		public ParentFormElement(Relation key) {
 			super(Keys.getProperty(key));
 		}
 
@@ -219,7 +219,7 @@ public class PersonPanel extends EchForm<Person>  {
 		public Form<Relation> createFormPanel() {
 			EchForm<Relation> form = new EchForm<>();
 			form.line(Relation.$.partner);
-			form.line(new AddressField(Relation.$.address, true));
+			form.line(new AddressFormElement(Relation.$.address, true));
 			return form;
 		}
 	}

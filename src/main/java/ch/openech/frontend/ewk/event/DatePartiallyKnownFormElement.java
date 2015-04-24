@@ -1,6 +1,6 @@
 package ch.openech.frontend.ewk.event;
 
-import org.minimalj.frontend.edit.fields.TextFormatField;
+import org.minimalj.frontend.form.element.FormatFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.DateUtils;
@@ -9,13 +9,9 @@ import org.minimalj.util.mock.MockDate;
 
 import ch.openech.model.common.DatePartiallyKnown;
 
-public class DatePartiallyKnownField extends TextFormatField<DatePartiallyKnown> {
+public class DatePartiallyKnownFormElement extends FormatFormElement<DatePartiallyKnown> {
 
-	public DatePartiallyKnownField(PropertyInterface property) {
-		super(property);
-	}
-	
-	public DatePartiallyKnownField(PropertyInterface property, boolean editable) {
+	public DatePartiallyKnownFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
 	}
 

@@ -3,7 +3,7 @@ package ch.openech.frontend.ewk.event.birth;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;

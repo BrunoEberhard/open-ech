@@ -3,7 +3,7 @@ package ch.openech.frontend.e08;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.minimalj.frontend.edit.fields.AbstractEditField;
+import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ClientToolkit.Input;
@@ -16,14 +16,14 @@ import ch.openech.model.common.CountryIdentification;
 /* Dieses Feld wurde erst mit ech 112 gebraucht. 
  * 
  */
-public class CountryField extends AbstractEditField<CountryIdentification> implements Mocking {
-	private static final Logger logger = Logger.getLogger(CountryField.class.getName());
+public class CountryFormElement extends AbstractFormElement<CountryIdentification> implements Mocking {
+	private static final Logger logger = Logger.getLogger(CountryFormElement.class.getName());
 
 	private final Input<CountryIdentification> comboBox;
 	private final List<CountryIdentification> countries;
 	
-	public CountryField(PropertyInterface property) {
-		super(property, true);
+	public CountryFormElement(PropertyInterface property) {
+		super(property);
 		countries = Codes.get(CountryIdentification.class);
 		comboBox = ClientToolkit.getToolkit().createComboBox(countries, listener());
 	}

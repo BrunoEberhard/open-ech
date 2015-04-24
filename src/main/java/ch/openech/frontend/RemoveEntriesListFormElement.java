@@ -2,14 +2,14 @@ package ch.openech.frontend;
 
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
-public class RemoveEntriesListField<T> extends ObjectFlowField<List<T>> {
+public class RemoveEntriesListFormElement<T> extends ObjectPanelFormElement<List<T>> {
 
-	public RemoveEntriesListField(List<T> key) {
+	public RemoveEntriesListFormElement(List<T> key) {
 		super(Keys.getProperty(key), true);
 	}
 

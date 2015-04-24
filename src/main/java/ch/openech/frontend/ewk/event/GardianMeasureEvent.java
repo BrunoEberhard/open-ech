@@ -3,8 +3,8 @@ package ch.openech.frontend.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.EnumEditField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.EnumFormElement;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
@@ -30,9 +30,9 @@ public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 	 */
 	static void fillForm(EchSchema echSchema, Form<Relation> formPanel) {
 		if (echSchema.typeOfRelationship10Exsists()) {
-			formPanel.line(new EnumEditField(Relation.$.typeOfRelationship, TypeOfRelationship.CARE_2_3));
+			formPanel.line(new EnumFormElement(Relation.$.typeOfRelationship, TypeOfRelationship.CARE_2_3));
 		} else {
-			formPanel.line(new EnumEditField(Relation.$.typeOfRelationship, TypeOfRelationship.CARE));			
+			formPanel.line(new EnumFormElement(Relation.$.typeOfRelationship, TypeOfRelationship.CARE));			
 		}
 
 		formPanel.line(Relation.$.basedOnLaw);

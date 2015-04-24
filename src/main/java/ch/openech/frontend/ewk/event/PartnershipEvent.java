@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.Required;
@@ -15,7 +15,7 @@ import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
 
-import ch.openech.frontend.e44.PersonField;
+import ch.openech.frontend.e44.PersonFormElement;
 import ch.openech.model.EchFormats;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
@@ -116,8 +116,8 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	
 	@Override
 	protected void fillForm(Form<Partnership> formPanel) {
-		PersonField partner1 = new PersonField($.partner1); 
-		PersonField partner2 = new PersonField($.partner2);
+		PersonFormElement partner1 = new PersonFormElement($.partner1); 
+		PersonFormElement partner2 = new PersonFormElement($.partner2);
 		
 		//
 		

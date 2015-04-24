@@ -3,7 +3,7 @@ package ch.openech.frontend.ewk.event;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.validation.EmptyValidator;
@@ -12,7 +12,7 @@ import org.minimalj.util.BusinessRule;
 
 import java.time.LocalDate;
 
-import ch.openech.frontend.e44.SecondPersonField;
+import ch.openech.frontend.e44.SecondPersonFormElement;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.SecondaryResidence;
@@ -52,7 +52,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		createSpecificForm(formPanel);
 		if (getPerson().getPartner() != null) {
 			formPanel.line(ChangeWithSecondPersonEventData.$.registerPartner);
-			formPanel.line(new SecondPersonField(ChangeWithSecondPersonEventData.$.relationPartner));
+			formPanel.line(new SecondPersonFormElement(ChangeWithSecondPersonEventData.$.relationPartner));
 		} else {
 			formPanel.text("(Person ohne Partner)");
 		}

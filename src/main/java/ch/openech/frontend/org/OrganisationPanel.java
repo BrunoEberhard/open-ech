@@ -1,7 +1,7 @@
 package ch.openech.frontend.org;
 
 import static  ch.openech.model.organisation.Organisation.*;
-import ch.openech.frontend.e44.TechnicalIdsField;
+import ch.openech.frontend.e44.TechnicalIdsFormElement;
 import ch.openech.frontend.ewk.event.EchForm;
 import  ch.openech.model.organisation.Organisation;
 import  ch.openech.model.organisation.Organisation.EditMode;
@@ -35,7 +35,7 @@ public class OrganisationPanel extends EchForm<Organisation> {
 	public void organisation() {
 		line($.organisationName);
 		line($.organisationLegalName, $.organisationAdditionalName, $.legalForm, $.languageOfCorrespondance);
-		line($.uid, new TechnicalIdsField($.technicalIds, TechnicalIdsField.WITHOUT_EU_IDS, editable));
+		line($.uid, new TechnicalIdsFormElement($.technicalIds, TechnicalIdsFormElement.WITHOUT_EU_IDS, editable));
 
 		line($.uidBrancheText, $.nogaCode);
 		if (EditMode.DISPLAY != mode) {
@@ -52,9 +52,9 @@ public class OrganisationPanel extends EchForm<Organisation> {
 		line($.arrivalDate, $.departureDate);
 		line($.comesFrom, $.goesTo);
 		if (EditMode.CHANGE_RESIDENCE_TYPE != mode) {
-			line($.businessAddress, $.contacts, new HeadquarterField($.headquarter, echSchema, editable));
+			line($.businessAddress, $.contacts, new HeadquarterFormElement($.headquarter, echSchema, editable));
 		} else {
-			line($.businessAddress, new HeadquarterField($.headquarter, echSchema, editable));
+			line($.businessAddress, new HeadquarterFormElement($.headquarter, echSchema, editable));
 		}
 	}
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.Required;
@@ -16,8 +16,8 @@ import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
 
-import ch.openech.frontend.RemoveEntriesListField;
-import ch.openech.frontend.e44.PersonField;
+import ch.openech.frontend.RemoveEntriesListFormElement;
+import ch.openech.frontend.e44.PersonFormElement;
 import ch.openech.model.EchFormats;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
@@ -144,11 +144,11 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	
 	@Override
 	protected void fillForm(Form<Marriage> formPanel) {
-		PersonField partner1 = new PersonField(Marriage.$.partner1); 
-		PersonField partner2 = new PersonField(Marriage.$.partner2);
+		PersonFormElement partner1 = new PersonFormElement(Marriage.$.partner1); 
+		PersonFormElement partner2 = new PersonFormElement(Marriage.$.partner2);
 	
-		RemoveEntriesListField<PlaceOfOrigin> origin1 = new RemoveEntriesListField<PlaceOfOrigin>(Marriage.$.origin1);
-		RemoveEntriesListField<PlaceOfOrigin> origin2 = new RemoveEntriesListField<PlaceOfOrigin>(Marriage.$.origin2);
+		RemoveEntriesListFormElement<PlaceOfOrigin> origin1 = new RemoveEntriesListFormElement<PlaceOfOrigin>(Marriage.$.origin1);
+		RemoveEntriesListFormElement<PlaceOfOrigin> origin2 = new RemoveEntriesListFormElement<PlaceOfOrigin>(Marriage.$.origin2);
 		
 		//
 		

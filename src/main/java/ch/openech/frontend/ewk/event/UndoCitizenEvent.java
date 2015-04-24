@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.AbstractEditField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ClientToolkit.Input;
@@ -42,11 +42,11 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
         return Collections.singletonList(writerEch0020.undoCitizen(person.personIdentification(), data.placeOfOrigin, data.expatriationDate));
 	}
 	
-	private class UndoCitizenField extends AbstractEditField<PlaceOfOrigin> {
+	private class UndoCitizenField extends AbstractFormElement<PlaceOfOrigin> {
 		private final Input<PlaceOfOrigin> comboBox;
 		
 		public UndoCitizenField(PropertyInterface property) {
-			super(property, true);
+			super(property);
 			comboBox = ClientToolkit.getToolkit().createComboBox(person.placeOfOrigin, listener());
 		}
 

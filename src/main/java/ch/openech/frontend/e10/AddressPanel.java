@@ -2,7 +2,7 @@ package ch.openech.frontend.e10;
 
 import static  ch.openech.model.common.Address.*;
 
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
 
 import ch.openech.frontend.ewk.event.EchForm;
 import  ch.openech.model.common.Address;
@@ -34,7 +34,7 @@ public class AddressPanel extends EchForm<Address> {
 			line($.postOfficeBoxText, $.postOfficeBoxNumber);
 			line($.country, $.zip, $.town);
 		} else {
-			line(new ChIso2Field(), $.zip, $.town);
+			line(new ChIso2FormElement(), $.zip, $.town);
 		}
 		line($.locality);
 		

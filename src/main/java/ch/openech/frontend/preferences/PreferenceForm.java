@@ -1,6 +1,6 @@
 package ch.openech.frontend.preferences;
 
-import ch.openech.frontend.e07.MunicipalityField;
+import ch.openech.frontend.e07.MunicipalityFormElement;
 import ch.openech.frontend.ewk.event.EchForm;
 
 public class PreferenceForm extends EchForm<OpenEchPreferences> {
@@ -13,7 +13,7 @@ public class PreferenceForm extends EchForm<OpenEchPreferences> {
 		line(OpenEchPreferences.$.applicationSchemaData.schema93,OpenEchPreferences.$.applicationSchemaData.schema148);
 
 		addTitle("Voreingestellte Werte");
-		line(new MunicipalityField(OpenEchPreferences.$.preferencesDefaultsData.residence, false), OpenEchPreferences.$.preferencesDefaultsData.plz);
+		line(new MunicipalityFormElement(OpenEchPreferences.$.preferencesDefaultsData.residence, false), OpenEchPreferences.$.preferencesDefaultsData.plz);
 		line(OpenEchPreferences.$.preferencesDefaultsData.canton);
 		line(OpenEchPreferences.$.preferencesDefaultsData.language, OpenEchPreferences.$.preferencesDefaultsData.religion);
 

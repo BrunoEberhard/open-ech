@@ -3,9 +3,9 @@ package ch.openech.frontend.e11;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.edit.SearchDialogAction;
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.editor.SearchDialogAction;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
@@ -23,15 +23,15 @@ import ch.openech.model.person.PersonSearch;
 import ch.openech.model.types.MrMrs;
 import ch.openech.xml.write.EchSchema;
 
-public class ContactPersonField extends ObjectFlowField<ContactPerson> {
+public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPerson> {
 	
 	private final EchSchema echSchema;
 	
-	public ContactPersonField(PropertyInterface property) {
+	public ContactPersonFormElement(PropertyInterface property) {
 		this(property, null, true);
 	}
 
-	public ContactPersonField(PropertyInterface property, EchSchema echSchema, boolean editable) {
+	public ContactPersonFormElement(PropertyInterface property, EchSchema echSchema, boolean editable) {
 		super(property, editable);
 		this.echSchema = echSchema;
 	}
@@ -85,7 +85,7 @@ public class ContactPersonField extends ObjectFlowField<ContactPerson> {
 			if (personSearch != null) {
 				Person person = Backend.getInstance().read(Person.class, personSearch.id);
 				
-				ContactPerson contactPerson = ContactPersonField.this.getObject();
+				ContactPerson contactPerson = ContactPersonFormElement.this.getObject();
 				
 				contactPerson.person = person.personIdentification();
 				if (person.dwellingAddress != null) {

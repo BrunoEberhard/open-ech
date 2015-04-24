@@ -3,22 +3,22 @@ package ch.openech.frontend.e11;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.edit.Editor;
-import org.minimalj.frontend.edit.fields.ObjectFlowField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.editor.Editor;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.ObjectPanelFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.datagenerator.DataGenerator;
-import ch.openech.frontend.e07.MunicipalityField;
+import ch.openech.frontend.e07.MunicipalityFormElement;
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.person.Residence;
 import ch.openech.model.person.SecondaryResidence;
 import ch.openech.model.types.TypeOfResidence;
 
-public class ResidenceField extends ObjectFlowField<Residence> {
+public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 
-	public ResidenceField(PropertyInterface property, boolean editable) {
+	public ResidenceFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
 	}
 	
@@ -33,7 +33,7 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		@Override
 		public Form<Residence> createForm() {
 			Form<Residence> form = new EchForm<Residence>();
-			form.line(new MunicipalityField(Residence.$.reportingMunicipality, true));
+			form.line(new MunicipalityFormElement(Residence.$.reportingMunicipality, true));
 			return form;
 		}
 
@@ -55,20 +55,20 @@ public class ResidenceField extends ObjectFlowField<Residence> {
 		@Override
 		public Form<Residence> createForm() {
 			Form<Residence> form = new EchForm<Residence>();
-			form.line(new MunicipalityField(Residence.$.reportingMunicipality, true));
+			form.line(new MunicipalityFormElement(Residence.$.reportingMunicipality, true));
 			return form;
 		}
 
 		@Override
 		public Residence load() {
 			Residence residence = new Residence();
-			residence.reportingMunicipality = ResidenceField.this.getObject().reportingMunicipality;
+			residence.reportingMunicipality = ResidenceFormElement.this.getObject().reportingMunicipality;
 			return residence;
 		}
 
 		@Override
 		public Object save(Residence residence) {
-			ResidenceField.this.getObject().secondary.add(new SecondaryResidence(residence.reportingMunicipality));
+			ResidenceFormElement.this.getObject().secondary.add(new SecondaryResidence(residence.reportingMunicipality));
 			fireObjectChange();
 			return SAVE_SUCCESSFUL;
 		}

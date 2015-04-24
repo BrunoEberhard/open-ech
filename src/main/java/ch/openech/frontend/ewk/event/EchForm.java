@@ -2,34 +2,32 @@ package ch.openech.frontend.ewk.event;
 
 import java.util.List;
 
-import org.minimalj.frontend.edit.fields.FormField;
-import org.minimalj.frontend.edit.form.Form;
+import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.FormElement;
+import org.minimalj.frontend.form.element.TextFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.GenericUtils;
 import org.minimalj.util.resources.Resources;
 
-import ch.openech.frontend.e07.CantonField;
-import ch.openech.frontend.e07.MunicipalityField;
-import ch.openech.frontend.e07.MunicipalityReadOnlyField;
-import ch.openech.frontend.e08.CountryField;
-import ch.openech.frontend.e08.CountryReadOnlyField;
-import ch.openech.frontend.e10.AddressField;
-import ch.openech.frontend.e10.HouseNumberField;
-import ch.openech.frontend.e101.PersonExtendedInformationField;
-import ch.openech.frontend.e11.ContactPersonField;
-import ch.openech.frontend.e11.DwellingAddressField;
-import ch.openech.frontend.e11.ForeignField;
-import ch.openech.frontend.e11.NationalityField;
-import ch.openech.frontend.e11.NationalityReadOnlyField;
-import ch.openech.frontend.e11.PlaceField;
-import ch.openech.frontend.e11.PlaceOfOriginField;
-import ch.openech.frontend.e11.PlaceReadOnlyField;
-import ch.openech.frontend.e11.ResidenceField;
-import ch.openech.frontend.e21.OccupationField;
-import ch.openech.frontend.e44.PersonIdentificationField;
-import ch.openech.frontend.e44.VnField;
-import ch.openech.frontend.e46.ContactField;
-import ch.openech.frontend.e97.UidStructureField;
+import ch.openech.frontend.e07.CantonFormElement;
+import ch.openech.frontend.e07.MunicipalityFormElement;
+import ch.openech.frontend.e08.CountryFormElement;
+import ch.openech.frontend.e10.AddressFormElement;
+import ch.openech.frontend.e10.HouseNumberFormElement;
+import ch.openech.frontend.e101.PersonExtendedInformationFormElement;
+import ch.openech.frontend.e11.ContactPersonFormElement;
+import ch.openech.frontend.e11.DwellingAddressFormElement;
+import ch.openech.frontend.e11.ForeignFormElement;
+import ch.openech.frontend.e11.NationalityFormElement;
+import ch.openech.frontend.e11.PlaceFormElement;
+import ch.openech.frontend.e11.PlaceOfOriginFormElement;
+import ch.openech.frontend.e11.ResidenceFormElement;
+import ch.openech.frontend.e21.OccupationFormElement;
+import ch.openech.frontend.e44.PersonFormElement;
+import ch.openech.frontend.e44.PersonIdentificationFormElement;
+import ch.openech.frontend.e44.VnFormElement;
+import ch.openech.frontend.e46.ContactFormElement;
+import ch.openech.frontend.e97.UidStructureFormElement;
 import ch.openech.model.common.Address;
 import ch.openech.model.common.Canton;
 import ch.openech.model.common.CountryIdentification;
@@ -80,54 +78,54 @@ public class EchForm<T> extends Form<T> {
 	//
 
 	@Override
-	public FormField<?> createField(PropertyInterface property) {
+	public FormElement<?> createElement(PropertyInterface property) {
 		Class<?> type = property.getClazz();
 		if (type == DatePartiallyKnown.class) {
-			return new DatePartiallyKnownField(property, editable);
+			return new DatePartiallyKnownFormElement(property, editable);
 		} else if (type == PersonIdentification.class) {
-			return new PersonIdentificationField(property);
+			return new PersonIdentificationFormElement(property);
 		} else if (type == Person.class) {
-			return new ch.openech.frontend.e44.PersonField(property);
+			return new PersonFormElement(property);
 		} else if (type == Nationality.class) {
-			return editable ? new NationalityField(property) : new NationalityReadOnlyField(property);
+			return editable ? new NationalityFormElement(property) : new TextFormElement(property);
 		} else if (type == Canton.class) {
-			return new CantonField(property, editable);
+			return editable ?  new CantonFormElement(property) : new TextFormElement(property);
 		} else if (type == ContactPerson.class) {
-			return new ContactPersonField(property, echSchema, editable);
+			return new ContactPersonFormElement(property, echSchema, editable);
 		} else if (type == Foreign.class) {
-			return new ForeignField(property, echSchema, editable);
+			return new ForeignFormElement(property, echSchema, editable);
 		} else if (type == Residence.class) {
-			return new ResidenceField(property, editable);
+			return new ResidenceFormElement(property, editable);
 		} else if (type == Place.class) {
-			return editable ? new PlaceField(property) : new PlaceReadOnlyField(property);
+			return editable ? new PlaceFormElement(property) : new TextFormElement(property);
 		} else if (type == Address.class) {
-			return new AddressField(property, editable);
+			return new AddressFormElement(property, editable);
 		} else if (type == DwellingAddress.class) {
-			return new DwellingAddressField(property, echSchema, editable);
+			return new DwellingAddressFormElement(property, echSchema, editable);
 		} else if (type == PersonExtendedInformation.class) {
-			return new PersonExtendedInformationField(property, editable);
+			return new PersonExtendedInformationFormElement(property, editable);
 		} else if (type == HouseNumber.class) {
-			return new HouseNumberField(property);
+			return new HouseNumberFormElement(property);
 		} else if (type == CountryIdentification.class) {
-			return editable ? new CountryField(property) : new CountryReadOnlyField(property);
+			return editable ? new CountryFormElement(property) : new TextFormElement(property);
 		} else if (type == MunicipalityIdentification.class) {
-			return editable ? new MunicipalityField(property, false) : new MunicipalityReadOnlyField(property);
+			return editable ? new MunicipalityFormElement(property, false) : new TextFormElement(property);
 		} else if (type == Vn.class) {
-			return new VnField(property, editable);			
+			return new VnFormElement(property, editable);			
 		} else if (type == UidStructure.class) {
-			return new UidStructureField(property, editable);				
+			return new UidStructureFormElement(property, editable);				
 		} else if (type == List.class) {
 			Class<?> listClass = GenericUtils.getGenericClass(property.getType());
 			if (listClass == Occupation.class) {
-				return new OccupationField(property, echSchema, editable);
+				return new OccupationFormElement(property, echSchema, editable);
 			} else if (listClass == PlaceOfOrigin.class) {
-				return new PlaceOfOriginField(property, editable);
+				return new PlaceOfOriginFormElement(property, editable);
 			} else if (listClass == ContactEntry.class) {
-				return new ContactField(property, editable);
+				return new ContactFormElement(property, editable);
 			}
 		}
 		
-		return super.createField(property);
+		return super.createElement(property);
 	}
 
 }

@@ -1,6 +1,6 @@
 package ch.openech.frontend.e07;
 
-import org.minimalj.frontend.edit.fields.AbstractEditField;
+import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.TextField;
@@ -13,22 +13,13 @@ import org.minimalj.util.mock.Mocking;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.common.Canton;
 
-public class CantonField extends AbstractEditField<Canton> implements Mocking, Validatable {
+public class CantonFormElement extends AbstractFormElement<Canton> implements Mocking, Validatable {
 	
 	private TextField textField;
 
-	public CantonField(PropertyInterface property) {
-		this(property, true);
-	}
-	
-	public CantonField(PropertyInterface property, boolean editable) {
-		super(property, editable);
-		
-		if (editable) {
-			textField = ClientToolkit.getToolkit().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, null, listener());
-		} else {
-			textField = ClientToolkit.getToolkit().createReadOnlyTextField();
-		}
+	public CantonFormElement(PropertyInterface property) {
+		super(property);
+		textField = ClientToolkit.getToolkit().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, null, listener());
 	}
 	
 	@Override
