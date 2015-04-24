@@ -316,12 +316,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public void setObject(Person object) {
+		public void setValue(Person object) {
 			comboBox.setValue(object);
 		}
 
 		@Override
-		public Person getObject() {
+		public Person getValue() {
 			return (Person) comboBox.getValue();
 		}
 		

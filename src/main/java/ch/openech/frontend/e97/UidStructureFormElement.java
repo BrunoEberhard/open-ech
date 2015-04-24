@@ -23,14 +23,14 @@ public class UidStructureFormElement extends FormatFormElement<UidStructure> {
 	}
 
 	@Override
-	public UidStructure getObject() {
+	public UidStructure getValue() {
 		UidStructure uid = new UidStructure();
 		uid.value = textField.getValue();
 		return uid;
 	}
 
 	@Override
-	public void setObject(UidStructure uid) {
+	public void setValue(UidStructure uid) {
 		if (uid != null) {
 			textField.setValue(uid.value);
 		} else {
@@ -42,7 +42,7 @@ public class UidStructureFormElement extends FormatFormElement<UidStructure> {
 	public void mock() {
 		UidStructure uid = new UidStructure();
 		uid.mock();
-		setObject(uid);
+		setValue(uid);
 	}
 
 }

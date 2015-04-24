@@ -46,7 +46,7 @@ public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIde
 	}
 
 	@Override
-	public void setObject(MunicipalityIdentification object) {
+	public void setValue(MunicipalityIdentification object) {
 		if (object == null) { 
 			object = new MunicipalityIdentification();
 		}
@@ -54,7 +54,7 @@ public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIde
 	}
 	
 	@Override
-	public MunicipalityIdentification getObject() {
+	public MunicipalityIdentification getValue() {
 		MunicipalityIdentification municipality = new MunicipalityIdentification();
 		if (comboBox.getValue() != null) {
 			comboBox.getValue().copyTo(municipality);
@@ -91,6 +91,6 @@ public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIde
 
 	@Override
 	public void mock() {
-		setObject(DataGenerator.municipalityIdentification());
+		setValue(DataGenerator.municipalityIdentification());
 	}
 }

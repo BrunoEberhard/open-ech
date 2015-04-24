@@ -34,12 +34,12 @@ public class CountryFormElement extends AbstractFormElement<CountryIdentificatio
 	}
 	
 	@Override
-	public CountryIdentification getObject() {
+	public CountryIdentification getValue() {
 		return comboBox.getValue();
 	}
 
 	@Override
-	public void setObject(CountryIdentification country) {
+	public void setValue(CountryIdentification country) {
 		if (country != null) {
 			int index = countries.indexOf(country);
 			if (index >= 0) {
@@ -58,7 +58,7 @@ public class CountryFormElement extends AbstractFormElement<CountryIdentificatio
 	@Override
 	public void mock() {
 		int index = (int) (Math.random() * (double) countries.size());
-		setObject(countries.get(index));
+		setValue(countries.get(index));
 	}
 
 }

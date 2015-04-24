@@ -31,14 +31,14 @@ public class HouseNumberFormElement extends AbstractFormElement<HouseNumber> {
 	}
 
 	@Override
-	public HouseNumber getObject() {
+	public HouseNumber getValue() {
 		houseNumber.houseNumber = houseNumberTextField.getValue();
 		houseNumber.dwellingNumber = dwellingNumberTextField.getValue();
 		return houseNumber;
 	}
 
 	@Override
-	public void setObject(HouseNumber houseNumber) {
+	public void setValue(HouseNumber houseNumber) {
 		this.houseNumber = houseNumber != null ? houseNumber : new HouseNumber();
 		update();
 	}

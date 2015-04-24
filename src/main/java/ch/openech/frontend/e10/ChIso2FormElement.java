@@ -23,12 +23,12 @@ public class ChIso2FormElement extends AbstractFormElement<String> {
 	}
 
 	@Override
-	public String getObject() {
+	public String getValue() {
 		return "CH";
 	}
 
 	@Override
-	public void setObject(String object) {
+	public void setValue(String object) {
 		// not supported
 	}
 

@@ -31,7 +31,7 @@ public class TechnicalIdsFormElement extends ObjectLinkFormElement<TechnicalIds>
 	public final class TechnicalIdRemoveAction extends Action {
 		@Override
 		public void action() {
-			getObject().clear();
+			getValue().clear();
 			fireObjectChange();
 		}
 	}
@@ -101,7 +101,7 @@ public class TechnicalIdsFormElement extends ObjectLinkFormElement<TechnicalIds>
 
 			@Override
 			protected void setPart(List<NamedId> ids, NamedId id) {
-				OtherIdFormElement.this.getObject().add(id);
+				OtherIdFormElement.this.getValue().add(id);
 			}
 	    };
 		
@@ -114,8 +114,8 @@ public class TechnicalIdsFormElement extends ObjectLinkFormElement<TechnicalIds>
 
 			@Override
 			public void action() {
-				OtherIdFormElement.this.getObject().remove(id);
-				setObject(getObject());
+				OtherIdFormElement.this.getValue().remove(id);
+				setValue(getValue());
 			}
 		}
 				

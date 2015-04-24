@@ -50,7 +50,7 @@ public class PersonFormElement extends ObjectPanelFormElement<Person> {
 		@Override
 		protected void save(PersonSearch object) {
 			Person person = Backend.getInstance().read(Person.class, object.id);
-			setObject(person);
+			setValue(person);
 		}
 
 		@Override

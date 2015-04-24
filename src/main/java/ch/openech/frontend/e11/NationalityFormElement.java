@@ -41,12 +41,12 @@ public class NationalityFormElement extends AbstractFormElement<Nationality> {
 	}
 	
 	@Override
-	public void setObject(Nationality nationality) {
+	public void setValue(Nationality nationality) {
 		comboBox.setValue(nationality);
 	}
 	
 	@Override
-	public Nationality getObject() {
+	public Nationality getValue() {
 		Nationality nationality = Nationality.newUnknown();
 		
 		if (comboBox.getValue() != null) {

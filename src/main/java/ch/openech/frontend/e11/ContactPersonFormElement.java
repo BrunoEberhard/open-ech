@@ -85,7 +85,7 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 			if (personSearch != null) {
 				Person person = Backend.getInstance().read(Person.class, personSearch.id);
 				
-				ContactPerson contactPerson = ContactPersonFormElement.this.getObject();
+				ContactPerson contactPerson = ContactPersonFormElement.this.getValue();
 				
 				contactPerson.person = person.personIdentification();
 				if (person.dwellingAddress != null) {
@@ -130,7 +130,7 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 	private class RemovePersonContactAction extends Action {
 		@Override
 		public void action() {
-			getObject().person = null;
+			getValue().person = null;
 			fireObjectChange();
 		}
     };
@@ -163,7 +163,7 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 	private class RemoveAddressContactAction extends Action {
 		@Override
 		public void action() {
-			getObject().address = null;
+			getValue().address = null;
 			fireObjectChange();
 		}
 	};

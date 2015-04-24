@@ -22,8 +22,8 @@ public class RemoveEntriesListFormElement<T> extends ObjectPanelFormElement<List
 
 		@Override
 		public void action() {
-			getObject().remove(object);
-			setObject(getObject());
+			getValue().remove(object);
+			setValue(getValue());
 		}
 	}
 

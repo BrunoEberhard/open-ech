@@ -18,7 +18,7 @@ public class SecondPersonFormElement extends ObjectPanelFormElement<Relation> {
 	}
 	
 	public boolean hasPartner() {
-		Relation relation = getObject();
+		Relation relation = getValue();
 		return relation != null && relation.partner != null;
 	}
 

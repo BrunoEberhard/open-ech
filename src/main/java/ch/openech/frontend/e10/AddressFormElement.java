@@ -49,7 +49,7 @@ public class AddressFormElement extends ObjectPanelFormElement<Address> implemen
 	
 	@Override
 	public void mock() {
-		setObject(DataGenerator.address(true, true, false));
+		setValue(DataGenerator.address(true, true, false));
 	}
 
 	@Override

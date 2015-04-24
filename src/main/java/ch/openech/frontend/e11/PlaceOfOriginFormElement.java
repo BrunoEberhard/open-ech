@@ -88,7 +88,7 @@ public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceO
 		
 		@Override
 		public void action() {
-			getObject().remove(placeOfOrigin);
+			getValue().remove(placeOfOrigin);
 			fireObjectChange();
 		}
 	}
@@ -96,17 +96,17 @@ public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceO
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
-		if (!enabled && getObject() != null && getObject().size() > 0) {
-			getObject().clear();
+		if (!enabled && getValue() != null && getValue().size() > 0) {
+			getValue().clear();
 			fireObjectChange();
 		} 
 	}
 
 	@Override
 	public void mock() {
-		getObject().clear();
+		getValue().clear();
 		do {
-			getObject().add(DataGenerator.placeOfOrigin());
+			getValue().add(DataGenerator.placeOfOrigin());
 		} while (Math.random() < .4);
 		fireObjectChange();
 	}

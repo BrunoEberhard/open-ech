@@ -32,8 +32,8 @@ public class HeadquarterFormElement extends ObjectPanelFormElement<Headquarter> 
 	}
 
 	@Override
-	public void setObject(Headquarter object) {
-		super.setObject(object != null ? object : new Headquarter());
+	public void setValue(Headquarter object) {
+		super.setValue(object != null ? object : new Headquarter());
 	}
 
 	@Override
@@ -80,10 +80,10 @@ public class HeadquarterFormElement extends ObjectPanelFormElement<Headquarter> 
 
 		@Override
 		protected void save(Organisation organisation) {
-			if (getObject() == null) {
-				setObject(new Headquarter());
+			if (getValue() == null) {
+				setValue(new Headquarter());
 			}
-			getObject().identification = ViewUtil.view(organisation, new OrganisationIdentification());
+			getValue().identification = ViewUtil.view(organisation, new OrganisationIdentification());
 			fireObjectChange();
 		}
 

@@ -50,7 +50,7 @@ public class RelationFormElement extends ObjectPanelFormElement<List<Relation>> 
 		
 		@Override
 		public void action() {
-			getObject().remove(relation);
+			getValue().remove(relation);
 			fireObjectChange();
 		}
 	}

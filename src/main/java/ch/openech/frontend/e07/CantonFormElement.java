@@ -28,7 +28,7 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 	}
 
 	@Override
-	public Canton getObject() {
+	public Canton getValue() {
 		Canton canton = null;
 		if (!StringUtils.isEmpty(textField.getValue())) {
 			canton = Codes.findCode(Canton.class, textField.getValue());
@@ -37,7 +37,7 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 	}		
 	
 	@Override
-	public void setObject(Canton value) {
+	public void setValue(Canton value) {
 		if (value != null) {
 			textField.setValue(value.id);
 		} else {
@@ -47,7 +47,7 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 
 	@Override
 	public void mock() {
-		setObject(DataGenerator.canton());
+		setValue(DataGenerator.canton());
 	}
 
 	@Override

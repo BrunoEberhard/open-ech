@@ -46,7 +46,7 @@ public class PersonIdentificationFormElement extends ObjectPanelFormElement<Pers
 
 		@Override
 		protected void save(Person object) {
-			setObject(object.personIdentification());
+			setValue(object.personIdentification());
 		}
 		
 		@Override

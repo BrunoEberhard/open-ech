@@ -75,7 +75,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 	}
 
 	@Override
-	public void setObject(Place place) {
+	public void setValue(Place place) {
 		if (place == null) {
 			place = new Place();
 		}
@@ -92,7 +92,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 	}
 	
 	@Override
-	public Place getObject() {
+	public Place getValue() {
 		Place place = new Place();
 		place.countryIdentification = (CountryIdentification) comboBoxCountry.getValue();
 		
@@ -132,7 +132,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 			place.countryIdentification = countries.get(index);
 			place.foreignTown = MockName.officialName() + "Town";
 		}
-		setObject(place);
+		setValue(place);
 	}
 
 }

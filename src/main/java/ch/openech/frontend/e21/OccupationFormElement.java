@@ -28,7 +28,7 @@ public class OccupationFormElement extends ObjectPanelFormElement<List<Occupatio
 
 		@Override
 		protected void setPart(List<Occupation> object, Occupation p) {
-			List<Occupation> occupations = OccupationFormElement.this.getObject();
+			List<Occupation> occupations = OccupationFormElement.this.getValue();
 			occupations.add(p);
 			fireObjectChange();
 		}
@@ -48,7 +48,7 @@ public class OccupationFormElement extends ObjectPanelFormElement<List<Occupatio
 		
 		@Override
 		public void action() {
-			getObject().remove(occupation);
+			getValue().remove(occupation);
 			fireObjectChange();
 		}
 	}

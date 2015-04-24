@@ -42,13 +42,13 @@ public class DwellingAddressFormElement extends ObjectPanelFormElement<DwellingA
 			// Kollektivhaushalt oder ähnliches passt auch bei Unternehmen nicht wirklich
 			dwellingAddress.typeOfHousehold = null;
 		}
-		setObject(dwellingAddress);
+		setValue(dwellingAddress);
 	}
 
 	@Override
-	public void setObject(DwellingAddress object) {
+	public void setValue(DwellingAddress object) {
 		// TODO Auto-generated method stub
-		super.setObject(object);
+		super.setValue(object);
 	}
 	
 }

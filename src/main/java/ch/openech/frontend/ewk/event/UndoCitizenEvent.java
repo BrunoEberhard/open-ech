@@ -60,12 +60,12 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		}
 
 		@Override
-		public PlaceOfOrigin getObject() {
+		public PlaceOfOrigin getValue() {
 			return comboBox.getValue();
 		}
 
 		@Override
-		public void setObject(PlaceOfOrigin object) {
+		public void setValue(PlaceOfOrigin object) {
 			comboBox.setValue(object);
 		}
 	}

@@ -46,7 +46,7 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 
 		@Override
 		public void setPart(Residence residence, Residence value) {
-			setObject(value);
+			setValue(value);
 		}
 	}
 
@@ -62,13 +62,13 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 		@Override
 		public Residence load() {
 			Residence residence = new Residence();
-			residence.reportingMunicipality = ResidenceFormElement.this.getObject().reportingMunicipality;
+			residence.reportingMunicipality = ResidenceFormElement.this.getValue().reportingMunicipality;
 			return residence;
 		}
 
 		@Override
 		public Object save(Residence residence) {
-			ResidenceFormElement.this.getObject().secondary.add(new SecondaryResidence(residence.reportingMunicipality));
+			ResidenceFormElement.this.getValue().secondary.add(new SecondaryResidence(residence.reportingMunicipality));
 			fireObjectChange();
 			return SAVE_SUCCESSFUL;
 		}
@@ -77,7 +77,7 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 	private final class ResidenceRemoveSecondaryAction extends Action {
 		@Override
 		public void action() {
-			getObject().secondary.clear();
+			getValue().secondary.clear();
 			fireObjectChange();
 		}
 	}
@@ -116,7 +116,7 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 	
 	@Override
 	protected void showActions() {
-		if (getObject() == null) return;
+		if (getValue() == null) return;
 
 //		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
 //		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
@@ -131,7 +131,7 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 		addAction(new ResidenceMainEditor());
 		addAction(new ResidenceAddSecondaryEditor());
 
-		if (!getObject().secondary.isEmpty()) {
+		if (!getValue().secondary.isEmpty()) {
 			addAction(new ResidenceRemoveSecondaryAction());
 		}
 	}

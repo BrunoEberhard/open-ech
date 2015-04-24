@@ -64,7 +64,7 @@ public class ContactFormElement extends ObjectPanelFormElement<List<ContactEntry
 		
 		@Override
 		public void action() {
-			getObject().remove(contactEntry);
+			getValue().remove(contactEntry);
 			fireObjectChange();
 		}
     };

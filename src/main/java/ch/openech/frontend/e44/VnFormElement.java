@@ -25,7 +25,7 @@ public class VnFormElement extends FormatFormElement<Vn> {
 	}
 
 	@Override
-	public Vn getObject() {
+	public Vn getValue() {
 		Vn vn = new Vn();
 		vn.value = textField.getValue();
 		if (!StringUtils.isEmpty(vn.value)) {
@@ -35,7 +35,7 @@ public class VnFormElement extends FormatFormElement<Vn> {
 	}
 
 	@Override
-	public void setObject(Vn vn) {
+	public void setValue(Vn vn) {
 		if (vn != null) {
 			textField.setValue(vn.getFormattedValue());
 		} else {
@@ -47,7 +47,7 @@ public class VnFormElement extends FormatFormElement<Vn> {
 	public void mock() {
 		Vn vn = new Vn();
 		vn.mock();
-		setObject(vn);
+		setValue(vn);
 	}
 
 }

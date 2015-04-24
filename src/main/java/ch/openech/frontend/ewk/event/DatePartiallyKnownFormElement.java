@@ -19,7 +19,7 @@ public class DatePartiallyKnownFormElement extends FormatFormElement<DatePartial
 	public void mock() {
 		DatePartiallyKnown datePartiallyKnown = new DatePartiallyKnown();
 		datePartiallyKnown.value = MockDate.generateRandomDatePartiallyKnown();
-		setObject(datePartiallyKnown);
+		setValue(datePartiallyKnown);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class DatePartiallyKnownFormElement extends FormatFormElement<DatePartial
 	}
 
 	@Override
-	public DatePartiallyKnown getObject() {
+	public DatePartiallyKnown getValue() {
 		DatePartiallyKnown datePartiallyKnown = new DatePartiallyKnown();
 		datePartiallyKnown.value = DateUtils.parseCH(textField.getValue(), true);
 		if (StringUtils.isEmpty(datePartiallyKnown.value)) {
@@ -43,7 +43,7 @@ public class DatePartiallyKnownFormElement extends FormatFormElement<DatePartial
 	}
 
 	@Override
-	public void setObject(DatePartiallyKnown datePartiallyKnown) {
+	public void setValue(DatePartiallyKnown datePartiallyKnown) {
 		textField.setValue(datePartiallyKnown != null ? datePartiallyKnown.toString() : "");
 	}
 	
