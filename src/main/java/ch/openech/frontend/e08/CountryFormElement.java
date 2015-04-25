@@ -57,7 +57,7 @@ public class CountryFormElement extends AbstractFormElement<CountryIdentificatio
 
 	@Override
 	public void mock() {
-		int index = (int) (Math.random() * (double) countries.size());
+		int index = (int) (Math.random() * countries.size());
 		setValue(countries.get(index));
 	}
 

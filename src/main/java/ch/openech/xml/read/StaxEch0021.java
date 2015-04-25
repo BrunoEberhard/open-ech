@@ -74,7 +74,7 @@ public class StaxEch0021 {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(TYPE_OF_RELATIONSHIP) || startName.equals(PARTNERSHIP_TYPE_OF_RELATIONSHIP_TYPE)) {
 					relation = new Relation();
-					relation.typeOfRelationship = (TypeOfRelationship) StaxEch.enuum(TypeOfRelationship.class, token(xml));
+					relation.typeOfRelationship = StaxEch.enuum(TypeOfRelationship.class, token(xml));
 					if (relation.isParent()) relation.care = YesNo.Yes;
 					person.relation.add(relation);
 				}

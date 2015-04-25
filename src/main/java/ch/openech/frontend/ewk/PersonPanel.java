@@ -164,7 +164,7 @@ public class PersonPanel extends EchForm<Person>  {
 			String actualValue = person.officialName;
 			if (input != null && StringUtils.isEmpty(actualValue)) {
 				if (input.partner != null) {
-					return (String) input.partner.officialName;
+					return input.partner.officialName;
 				} else if (input.address != null) {
 					return input.address.lastName;
 				}

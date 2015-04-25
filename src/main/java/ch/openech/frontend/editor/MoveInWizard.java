@@ -322,7 +322,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 
 		@Override
 		public Person getValue() {
-			return (Person) comboBox.getValue();
+			return comboBox.getValue();
 		}
 		
 	}

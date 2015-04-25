@@ -46,7 +46,7 @@ public class CareEvent extends PersonEventEditor<Relation> {
 	@BusinessRule("Bei Änderung Sorgerecht müssen Eltern das richtige Geschlecht haben")
 	private void validateSex(Relation relation, List<ValidationMessage> resultList) {
 		if (relation.partner == null) return;
-		Sex sexOfPartner = (Sex) relation.partner.sex;
+		Sex sexOfPartner = relation.partner.sex;
 		if (sexOfPartner != null) {
 			TypeOfRelationship code = relation.typeOfRelationship;
 			if ((code == TypeOfRelationship.Mutter || code == TypeOfRelationship.Pflegemutter) && sexOfPartner != Sex.weiblich) {

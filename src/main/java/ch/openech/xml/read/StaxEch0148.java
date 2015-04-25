@@ -200,7 +200,7 @@ public class StaxEch0148 {
 		// des vorhandenen XML Elements klar, ob ein Wechsel des Typs stattfinden soll. Bei ChangeReporting muss
 		// das nicht gemacht werden, weil dort der Typ übertragen wird.
 		if (StringUtils.equals(eventName, CORRECT_REPORTING)) {
-			organisation.typeOfResidenceOrganisation = (TypeOfResidenceOrganisation) StaxEch.enuum(TypeOfResidenceOrganisation.class, startName);
+			organisation.typeOfResidenceOrganisation = StaxEch.enuum(TypeOfResidenceOrganisation.class, startName);
 		}
 	}
 

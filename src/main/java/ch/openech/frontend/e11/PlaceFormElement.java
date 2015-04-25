@@ -94,7 +94,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 	@Override
 	public Place getValue() {
 		Place place = new Place();
-		place.countryIdentification = (CountryIdentification) comboBoxCountry.getValue();
+		place.countryIdentification = comboBoxCountry.getValue();
 		
 		CountryIdentification country = comboBoxCountry.getValue();
 		if (country != null && !country.isSwiss()) {
@@ -125,10 +125,10 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		}
 		Place place = new Place();
 		if (Math.random() < 0.8) {
-			int index = (int)(Math.random() * (double)municipalityIdentifications.size());
+			int index = (int)(Math.random() * municipalityIdentifications.size());
 			place.municipalityIdentification = municipalityIdentifications.get(index);
 		} else {
-			int index = (int)(Math.random() * (double)countries.size());
+			int index = (int)(Math.random() * countries.size());
 			place.countryIdentification = countries.get(index);
 			place.foreignTown = MockName.officialName() + "Town";
 		}

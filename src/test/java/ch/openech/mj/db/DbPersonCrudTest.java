@@ -41,7 +41,7 @@ public class DbPersonCrudTest {
 		
 		Object id = addressTable.insert(address);
 		
-		Address readAddress = (Address)addressTable.read(id);
+		Address readAddress = addressTable.read(id);
 		
 		Assert.assertEquals(address.mrMrs, readAddress.mrMrs);
 		Assert.assertEquals(address.street, readAddress.street);
@@ -51,7 +51,7 @@ public class DbPersonCrudTest {
 		readAddress.houseNumber.houseNumber = "11";
 		addressTable.update(readAddress);
 
-		readAddress = (Address)addressTable.read(id);
+		readAddress = addressTable.read(id);
 		Assert.assertEquals("11", readAddress.houseNumber.houseNumber);
 	}
 	
@@ -66,7 +66,7 @@ public class DbPersonCrudTest {
 		
 		countryTable.insert(country);
 		
-		CountryIdentification readCountry = (CountryIdentification)countryTable.read(123);
+		CountryIdentification readCountry = countryTable.read(123);
 		
 		Assert.assertNotNull(readCountry);
 		Assert.assertEquals(country.id, readCountry.id);
@@ -91,7 +91,7 @@ public class DbPersonCrudTest {
 		
 		Object id = personTable.insert(person);
 		
-		Person readPerson = (Person)personTable.read(id);
+		Person readPerson = personTable.read(id);
 		
 		Assert.assertEquals(person.officialName, readPerson.officialName);
 		Assert.assertEquals(person.aliasName, readPerson.aliasName);
@@ -100,7 +100,7 @@ public class DbPersonCrudTest {
 		
 		personTable.update(readPerson);
 		
-		Person readPerson2 = (Person)personTable.read(id);
+		Person readPerson2 = personTable.read(id);
 		
 		Assert.assertEquals(readPerson.aliasName, readPerson2.aliasName);
 	}

@@ -92,7 +92,7 @@ public class WriterElement {
 
 	public void values(Object object) throws Exception {
 		Set<String> keys = FlatProperties.getProperties(object.getClass()).keySet();
-		values(object, (String[])keys.toArray(new String[keys.size()]));
+		values(object, keys.toArray(new String[keys.size()]));
 	}
 	
 	public void writeAttribute(String namespaceURI, String localName, String value) throws Exception {
