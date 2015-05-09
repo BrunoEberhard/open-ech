@@ -35,7 +35,8 @@ public class StaxEch0098 {
 	}
 
 	public static void residence(String startName, XMLEventReader xml, Organisation organisation) throws XMLStreamException {
-		organisation.typeOfResidenceOrganisation = StaxEch.enuum(TypeOfResidenceOrganisation.class, startName);
+		// hier muss kein code aufgelöst werden, sondern der Tag-Name ist auch der Value des enum. Daher wird nicht StaxEch.enuum(TypeOfResidenceOrganisation.class, startName) gemacht
+		organisation.typeOfResidenceOrganisation = TypeOfResidenceOrganisation.valueOf(startName);
 		residence(xml, organisation);
 	}
 	
