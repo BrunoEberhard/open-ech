@@ -3,9 +3,11 @@ package ch.openech.frontend.e44;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
@@ -14,7 +16,7 @@ import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonSearch;
 
-public class PersonFormElement extends ObjectPanelFormElement<Person> {
+public class PersonFormElement extends ObjectFormElement<Person> {
 
 	public PersonFormElement(PropertyInterface property) {
 		super(property);
@@ -31,16 +33,15 @@ public class PersonFormElement extends ObjectPanelFormElement<Person> {
 	}
 
 	@Override
-	protected void show(Person object) {
-		addText(object.toHtml());
+	protected void show(Person placeOfOrigin) {
+		add(placeOfOrigin, new RemoveObjectAction());
 	}
 
 	@Override
-	protected void showActions() {
-        addAction(new PersonSearchAction());
-        addAction(new RemoveObjectAction());
+	protected Action[] getActions() {
+		return new Action[] { new PersonSearchAction(), new EditorAction(new ObjectFormElementEditor()) };
 	}
-	
+
 	public class PersonSearchAction extends SearchDialogAction<PersonSearch> {
 		
 		public PersonSearchAction() {

@@ -2,9 +2,11 @@ package  ch.openech.model.common;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
@@ -14,7 +16,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.model.person.types.TypeOfHousehold;
 import ch.openech.xml.write.EchSchema;
 
-public class DwellingAddress implements Validation {
+public class DwellingAddress implements Validation, Rendering {
 
 	public static final DwellingAddress $ = Keys.of(DwellingAddress.class);
 	
@@ -30,6 +32,17 @@ public class DwellingAddress implements Validation {
 	public TypeOfHousehold typeOfHousehold; // not for organisation
 	public LocalDate movingDate;
 
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		return toHtml();
+	}
+
+	@Override
+	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
+		return RenderType.HMTL;
+	}
+	
+	@Deprecated
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);

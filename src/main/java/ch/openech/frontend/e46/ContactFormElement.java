@@ -2,15 +2,16 @@ package ch.openech.frontend.e46;
 
 import java.util.List;
 
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.contact.ContactEntry;
 import ch.openech.model.contact.ContactEntryType;
 
-public class ContactFormElement extends ObjectPanelFormElement<List<ContactEntry>> {
+public class ContactFormElement extends ListFormElement<ContactEntry> {
 	
 	public ContactFormElement(PropertyInterface property) {
 		this(property, true);
@@ -20,7 +21,7 @@ public class ContactFormElement extends ObjectPanelFormElement<List<ContactEntry
 		super(property, editable);
 	}
 	
-	public class AddContactEntryEditor extends ObjectFieldPartEditor<ContactEntry> {
+	public class AddContactEntryEditor extends AddListEntryEditor {
 		private final ContactEntryType type;
 		private final boolean person;
 		
@@ -40,7 +41,7 @@ public class ContactFormElement extends ObjectPanelFormElement<List<ContactEntry
 		}
 
 		@Override
-		protected ContactEntry getPart(List<ContactEntry> contacts) {
+		protected ContactEntry newInstance() {
 			ContactEntry contactEntry = new ContactEntry();
 			contactEntry.typeOfContact = type;
 			if ("I".equals(type)) {
@@ -50,8 +51,8 @@ public class ContactFormElement extends ObjectPanelFormElement<List<ContactEntry
 		}
 
 		@Override
-		protected void setPart(List<ContactEntry> contacts, ContactEntry p) {
-			contacts.add(p);
+		protected void addEntry(ContactEntry entry) {
+			getValue().add(entry);
 		}
     };
 
@@ -65,7 +66,7 @@ public class ContactFormElement extends ObjectPanelFormElement<List<ContactEntry
 		@Override
 		public void action() {
 			getValue().remove(contactEntry);
-			fireObjectChange();
+			handleChange();
 		}
     };
 	
@@ -78,22 +79,19 @@ public class ContactFormElement extends ObjectPanelFormElement<List<ContactEntry
 	}
 
 	@Override
-	protected void show(List<ContactEntry> contacts) {
-		for (ContactEntry contactEntry : contacts) {
-			addText(contactEntry.toHtml());
-			if (isEditable()) {
-				addAction(new RemoveContactEntryAction(contactEntry));
-			}
-			addGap();
-		}
+	protected void showEntry(ContactEntry entry) {
+		add(entry, new RemoveContactEntryAction(entry));
 	}
-	
+
 	@Override
-	protected void showActions() {
-		addAction(new AddContactEntryEditor(true), "AddAddressPerson");
-		addAction(new AddContactEntryEditor(false), "AddAddressOrganisation");
-		addAction(new AddContactEntryEditor(ContactEntryType.Email), "AddEmail");
-		addAction(new AddContactEntryEditor(ContactEntryType.Phone), "AddPhone");
-		addAction(new AddContactEntryEditor(ContactEntryType.Internet), "AddInternet");
+	protected Action[] getActions() {
+		return new Action[] {
+			new EditorAction(new AddContactEntryEditor(true), "AddAddressPerson"),
+			new EditorAction(new AddContactEntryEditor(false), "AddAddressOrganisation"),
+			new EditorAction(new AddContactEntryEditor(ContactEntryType.Email), "AddEmail"),
+			new EditorAction(new AddContactEntryEditor(ContactEntryType.Phone), "AddPhone"),
+			new EditorAction(new AddContactEntryEditor(ContactEntryType.Internet), "AddInternet")
+		};
 	}
+
 }

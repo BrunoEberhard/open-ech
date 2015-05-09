@@ -1,9 +1,11 @@
 package  ch.openech.model.common;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
@@ -17,7 +19,7 @@ import ch.openech.util.Plz;
 import ch.openech.util.PlzImport;
 
 @Sizes(EchFormats.class)
-public class Address implements Validation {
+public class Address implements Validation, Rendering {
 	
 	public static final Address $ = Keys.of(Address.class);
 
@@ -106,6 +108,17 @@ public class Address implements Validation {
 		return "CH".equals(country) || "LI".equals(country);
 	}
 	
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		return toHtml();
+	}
+
+	@Override
+	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
+		return RenderType.HMTL;
+	}
+	
+	@Deprecated
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);

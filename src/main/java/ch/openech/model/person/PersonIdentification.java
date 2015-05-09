@@ -1,6 +1,9 @@
 package  ch.openech.model.person;
 
+import java.util.Locale;
+
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.View;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
@@ -12,7 +15,7 @@ import ch.openech.model.common.TechnicalIds;
 import ch.openech.model.person.types.Vn;
 import ch.openech.model.types.Sex;
 
-public class PersonIdentification implements View<Person> {
+public class PersonIdentification implements View<Person>, Rendering {
 
 	public static final PersonIdentification $ = Keys.of(PersonIdentification.class);
 	
@@ -54,6 +57,7 @@ public class PersonIdentification implements View<Person> {
 		return toHtml();
 	}
 	
+	@Deprecated
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);
@@ -65,6 +69,16 @@ public class PersonIdentification implements View<Person> {
 		StringUtils.appendLine(s, dateOfBirth.toString());
 	}
 	
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		return toHtml();
+	}
+
+	@Override
+	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
+		return RenderType.HMTL;
+	}
+
 	public boolean isMale() {
 		return Sex.maennlich.equals(sex);
 	}

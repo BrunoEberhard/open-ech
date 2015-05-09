@@ -5,7 +5,8 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.model.properties.PropertyInterface;
@@ -18,7 +19,7 @@ import ch.openech.model.organisation.Organisation;
 import ch.openech.model.organisation.OrganisationIdentification;
 import ch.openech.xml.write.EchSchema;
 
-public class HeadquarterFormElement extends ObjectPanelFormElement<Headquarter> {
+public class HeadquarterFormElement extends ObjectFormElement<Headquarter> {
 
 	private final EchSchema echSchema;
 	
@@ -42,32 +43,34 @@ public class HeadquarterFormElement extends ObjectPanelFormElement<Headquarter> 
 	}
 
 	@Override
+	protected Action[] getActions() {
+		return new Action[] { new SelectHeadquarterAction() };
+		// TODO
+		// addAction(new SelectHeadquarterMunicipalityAction());
+		// addAction(new SelectHeadquarterAddressAction());
+	}
+
+	@Override
 	protected void show(Headquarter headquarter) {
 		if (isEditable()) {
 			if (headquarter.identification != null) {
-				addText(headquarter.identification.organisationName);
+				add(headquarter.identification.organisationName);
 			}
-			addAction(new SelectHeadquarterAction());
 			if (headquarter.reportingMunicipality != null) {
-				addText(headquarter.reportingMunicipality.municipalityName);
+				add(headquarter.reportingMunicipality.municipalityName);
 			}
-			// TODO
-			// addAction(new SelectHeadquarterMunicipalityAction());
 			if (headquarter.businessAddress != null) {
-				addText(headquarter.businessAddress.toHtml());
+				add(headquarter.businessAddress);
 			}
-			// TODO
-			// addAction(new SelectHeadquarterAddressAction());
-			
 		} else {
 			if (headquarter.identification != null) {
-				addAction(new OrganisationPage(echSchema, headquarter.identification.technicalIds.localId.personId), headquarter.identification.organisationName);
+				add(headquarter.identification.organisationName, new OrganisationPage(echSchema, headquarter.identification.id));
 			}
 			if (headquarter.reportingMunicipality != null) {
-				addText(headquarter.reportingMunicipality.municipalityName);
+				add(headquarter.reportingMunicipality.municipalityName);
 			}
 			if (headquarter.businessAddress != null) {
-				addText(headquarter.businessAddress.toHtml());
+				add(headquarter.businessAddress);
 			}
 		}
 	}
@@ -84,7 +87,7 @@ public class HeadquarterFormElement extends ObjectPanelFormElement<Headquarter> 
 				setValue(new Headquarter());
 			}
 			getValue().identification = ViewUtil.view(organisation, new OrganisationIdentification());
-			fireObjectChange();
+			handleChange();
 		}
 
 		@Override

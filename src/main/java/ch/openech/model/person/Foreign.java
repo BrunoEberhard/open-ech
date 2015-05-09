@@ -1,9 +1,11 @@
 package  ch.openech.model.person;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
@@ -11,7 +13,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.model.EchFormats;
 import ch.openech.model.code.ResidencePermit;
 
-public class Foreign {
+public class Foreign implements Rendering {
 	public static final Foreign $ = Keys.of(Foreign.class);
 	
 	public ResidencePermit residencePermit;
@@ -19,7 +21,18 @@ public class Foreign {
 	
 	@Size(EchFormats.baseName)
 	public String nameOnPassport;
+	
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		return toHtml();
+	}
 
+	@Override
+	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
+		return RenderType.HMTL;
+	}
+	
+	@Deprecated
 	public String toHtml() {
 		// Der residencePermitDetailed - Code hat mehr Möglichkeiten als
 		// der neuere "normale" Code, daher wird zum auflösen der ältere verwendet

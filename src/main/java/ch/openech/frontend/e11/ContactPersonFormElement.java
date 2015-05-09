@@ -3,9 +3,12 @@ package ch.openech.frontend.e11;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.editor.Editor;
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
+import org.minimalj.frontend.page.PageAction;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
@@ -23,7 +26,7 @@ import ch.openech.model.person.PersonSearch;
 import ch.openech.model.types.MrMrs;
 import ch.openech.xml.write.EchSchema;
 
-public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPerson> {
+public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 	
 	private final EchSchema echSchema;
 	
@@ -39,38 +42,37 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 	@Override
 	protected void show(ContactPerson contactPerson) {
 		if (contactPerson.person != null) {
-			addText("Kontaktperson");
-			addText(contactPerson.person.toHtml());
+			add("Kontaktperson");
 			if (isEditable()) {
-				addAction(new RemovePersonContactAction());
+				add(contactPerson.person, new RemovePersonContactAction());
 			} else {
-				addAction(new PersonPage(echSchema, contactPerson.person.id), "Person anzeigen");
+				add(contactPerson.person, new PageAction(new PersonPage(echSchema, contactPerson.person.id), "Person anzeigen"));
 			}
-			addGap();
 		}
+		
 		if (contactPerson.address != null) {
-			addText("Kontaktadresse");
-			addText(contactPerson.address.toHtml());
+			add("Kontaktadresse");
 			if (isEditable()) {
-				addAction(new RemoveAddressContactAction());
-			}		
-			addGap();
+				add(contactPerson.address, new RemoveAddressContactAction());
+			} else {
+				add(contactPerson.address);
+			}
 		}
 		if (contactPerson.validTill != null) {
-			addText("Gültig bis");
-			DateUtils.format(contactPerson.validTill);
-			addGap();
+			add("Gültig bis");
+			add(DateUtils.format(contactPerson.validTill));
 		}
 	}
 
 	@Override
-	protected void showActions() {
-		addAction(new SelectPersonContactEditor());
-		addAction(new EnterPersonContactEditor());
-		addGap();
-		
-        addAction(new AddAddressContactEditor(true), "AddAddressPerson");
-        addAction(new AddAddressContactEditor(false), "AddAddressOrganisation");
+	protected Action[] getActions() {
+		return new Action[] {
+			new SelectPersonContactEditor(),
+			new EditorAction(new EnterPersonContactEditor()),
+			// TODO gap
+			new EditorAction(new AddAddressContactEditor(true), "AddAddressPerson"),
+			new EditorAction(new AddAddressContactEditor(false), "AddAddressOrganisation"),
+		};
 	}
 
 	// Person suchen
@@ -97,7 +99,7 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 						if (person.isFemale()) contactPerson.address.mrMrs = MrMrs.Herr;
 					}
 				}
-				fireObjectChange();
+				handleChange();
 			}
 		}
 		
@@ -109,20 +111,22 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 	};
     
     // Identifikationen der Kontaktpersonen frei erfassen
-	public class EnterPersonContactEditor extends ObjectFieldPartEditor<PersonIdentification> {
+	public class EnterPersonContactEditor extends Editor<PersonIdentification> {
 		@Override
 		public Form<PersonIdentification> createForm() {
 			return new PersonIdentificationPanel();
 		}
 
 		@Override
-		protected PersonIdentification getPart(ContactPerson object) {
-			return object.person;
+		protected PersonIdentification load() {
+			return getValue().person;
 		}
 
 		@Override
-		protected void setPart(ContactPerson object, PersonIdentification personIdentification) {
-			object.person = personIdentification;
+		protected Object save(PersonIdentification personIdentification) {
+			getValue().person = personIdentification;
+			fireChange();
+			return Editor.SAVE_SUCCESSFUL;
 		}
     };
 
@@ -131,12 +135,12 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 		@Override
 		public void action() {
 			getValue().person = null;
-			fireObjectChange();
+			handleChange();
 		}
     };
 
     // Kontaktadresse bearbeiten (Person oder Adresse)
-	public class AddAddressContactEditor extends ObjectFieldPartEditor<Address> {
+	public class AddAddressContactEditor extends Editor<Address> {
 		private final boolean person;
 		
 		public AddAddressContactEditor(boolean person) {
@@ -149,13 +153,15 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 		}
 
 		@Override
-		protected Address getPart(ContactPerson object) {
-			return object.address;
+		protected Address load() {
+			return getValue().address;
 		}
 
 		@Override
-		protected void setPart(ContactPerson object, Address address) {
-			object.address = address;
+		protected Object save(Address address) {
+			getValue().address = address;
+			fireChange();
+			return Editor.SAVE_SUCCESSFUL;
 		}
     };
 
@@ -164,7 +170,7 @@ public class ContactPersonFormElement extends ObjectPanelFormElement<ContactPers
 		@Override
 		public void action() {
 			getValue().address = null;
-			fireObjectChange();
+			handleChange();
 		}
 	};
 	

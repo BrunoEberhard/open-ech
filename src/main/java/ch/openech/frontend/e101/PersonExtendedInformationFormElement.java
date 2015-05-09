@@ -2,12 +2,13 @@ package ch.openech.frontend.e101;
 
 import org.minimalj.backend.db.EmptyObjects;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
-import  ch.openech.model.person.PersonExtendedInformation;
+import ch.openech.model.person.PersonExtendedInformation;
 
-public class PersonExtendedInformationFormElement extends ObjectPanelFormElement<PersonExtendedInformation> {
+public class PersonExtendedInformationFormElement extends ObjectFormElement<PersonExtendedInformation> {
 
 	public PersonExtendedInformationFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
@@ -16,14 +17,13 @@ public class PersonExtendedInformationFormElement extends ObjectPanelFormElement
 	@Override
 	protected void show(PersonExtendedInformation information) {
 		if (!EmptyObjects.isEmpty(information)) {
-			addText(information.toHtml());
+			add(information, new RemoveObjectAction());
 		}
 	}
-
+	
 	@Override
-	protected void showActions() {
-		addAction(new ObjectFieldEditor());
-		addAction(new RemoveObjectAction());
+	protected Action[] getActions() {
+		return new Action[] { getEditorAction() };
 	}
 	
 	@Override

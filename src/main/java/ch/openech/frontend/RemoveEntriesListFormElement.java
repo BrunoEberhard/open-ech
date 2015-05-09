@@ -3,11 +3,11 @@ package ch.openech.frontend;
 import java.util.List;
 
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
-public class RemoveEntriesListFormElement<T> extends ObjectPanelFormElement<List<T>> {
+public class RemoveEntriesListFormElement<T> extends ListFormElement<T> {
 
 	public RemoveEntriesListFormElement(List<T> key) {
 		super(Keys.getProperty(key), true);
@@ -39,15 +39,9 @@ public class RemoveEntriesListFormElement<T> extends ObjectPanelFormElement<List
 		// not used
 		return null;
 	}
-
+	
 	@Override
-	protected void show(List<T> objects) {
-		for (T object : objects) {
-			addObject(object);
-			addAction(new RemoveThisObjectAction(object));
-		}
-//		addGap();
-//		addAction(new AddAllAction());
+	protected void showEntry(T entry) {
+		add(entry, new RemoveThisObjectAction(entry));
 	}
-
 }

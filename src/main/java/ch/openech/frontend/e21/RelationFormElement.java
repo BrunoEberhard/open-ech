@@ -2,8 +2,10 @@ package ch.openech.frontend.e21;
 
 import java.util.List;
 
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ListFormElement;
+import org.minimalj.frontend.page.PageAction;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
@@ -11,50 +13,52 @@ import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Relation;
 import ch.openech.xml.write.EchSchema;
 
-public class RelationFormElement extends ObjectPanelFormElement<List<Relation>> {
+public class RelationFormElement extends ListFormElement<Relation> {
 	private final EchSchema echNamespaceContext;
-	
+
 	public RelationFormElement(List<Relation> key, EchSchema echNamespaceContext, boolean editable) {
 		super(Keys.getProperty(key), editable);
 		this.echNamespaceContext = echNamespaceContext;
 	}
 
-	public class AddRelationEditor extends ObjectFieldPartEditor<Relation> {
+	public class AddRelationEditor extends AddListEntryEditor {
 
 		@Override
-		protected Relation getPart(List<Relation> object) {
+		protected Relation newInstance() {
 			return new Relation();
 		}
 
 		@Override
-		protected void setPart(List<Relation> object, Relation relation) {
-			// TODO ist das nötig?
-			if (!relation.isCareRelation()) relation.basedOnLaw = null;
-			if (!relation.isParent()) relation.care = null;
-
-			object.add(relation);
-		}
-		
-		@Override
 		public Form<Relation> createForm() {
 			return new RelationPanel(echNamespaceContext);
 		}
+
+		@Override
+		protected void addEntry(Relation relation) {
+			// TODO ist das nötig?
+			if (!relation.isCareRelation())
+				relation.basedOnLaw = null;
+			if (!relation.isParent())
+				relation.care = null;
+
+			getValue().add(relation);
+		}
 	}
-	
+
 	private class RemoveRelationAction extends Action {
 		private final Relation relation;
-		
+
 		private RemoveRelationAction(Relation relation) {
 			this.relation = relation;
 		}
-		
+
 		@Override
 		public void action() {
 			getValue().remove(relation);
-			fireObjectChange();
+			handleChange();
 		}
 	}
-	
+
 	@Override
 	public Form<List<Relation>> createFormPanel() {
 		// not used
@@ -62,21 +66,15 @@ public class RelationFormElement extends ObjectPanelFormElement<List<Relation>> 
 	}
 
 	@Override
-	protected void show(List<Relation> objects) {
+	protected void showEntry(Relation relation) {
 		if (isEditable()) {
-			for (Relation relation : objects) {
-				addText(relation.toHtml());
-				addAction(new RemoveRelationAction(relation));
-				addGap();
-			}
-			addAction(new AddRelationEditor());
+			add(relation, new RemoveRelationAction(relation));
 		} else {
-			for (Relation relation : objects) {
-				addText(relation.toHtml());
-				addAction(new PersonPage(echNamespaceContext, relation.partner.id), "Person anzeigen");
-				addGap();
-			}
+			add(relation, new PageAction(new PersonPage(echNamespaceContext, relation.partner.id), "Person anzeigen"));
 		}
 	}
 
+	protected Action[] getActions() {
+		return new Action[] { new EditorAction(new AddRelationEditor()) };
+	}
 }

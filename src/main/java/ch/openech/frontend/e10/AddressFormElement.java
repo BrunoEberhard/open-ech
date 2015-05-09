@@ -1,7 +1,7 @@
 package ch.openech.frontend.e10;
 
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.mock.Mocking;
@@ -9,7 +9,7 @@ import org.minimalj.util.mock.Mocking;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.common.Address;
 
-public class AddressFormElement extends ObjectPanelFormElement<Address> implements Mocking {
+public class AddressFormElement extends ObjectFormElement<Address> implements Mocking {
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;
@@ -59,17 +59,7 @@ public class AddressFormElement extends ObjectPanelFormElement<Address> implemen
 
 	@Override
 	public void show(Address address) {
-		if (enabled) {
-			addText(address.toHtml());
-		}
-	}
-
-	@Override
-	public void showActions() {
-		if (enabled) {
-			addAction(new ObjectFieldEditor());
-			addAction(new RemoveObjectAction());
-		}
+		add(address, getEditorAction(), new RemoveObjectAction());
 	}
 
 	@Override

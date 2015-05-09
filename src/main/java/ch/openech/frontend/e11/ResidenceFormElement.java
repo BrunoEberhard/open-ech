@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.frontend.editor.Editor;
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
@@ -16,19 +17,17 @@ import ch.openech.model.person.Residence;
 import ch.openech.model.person.SecondaryResidence;
 import ch.openech.model.types.TypeOfResidence;
 
-public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
+public class ResidenceFormElement extends ObjectFormElement<Residence> {
 
 	public ResidenceFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
 	}
 	
-	// 		setTitle(main ? "Hauptwohnsitz erfassen" : "Nebenwohnsitz erfassen");
-
 	// Als "Part" wird hier das ganze Objekt editiert. Das entsteht, weil eigentlich eine
 	// ComboBox im Hauptfeld angezeigt werden müsste, dies durch die Möglichkeit der
 	// Nebenwohnorte anzuzueigen aber nicht möglich ist.
 	// Möglich Lösung: Zweiteilung des Eingabefeldes
-	public final class ResidenceMainEditor extends ObjectFieldPartEditor<Residence> {
+	public final class ResidenceMainEditor extends Editor<Residence> {
 
 		@Override
 		public Form<Residence> createForm() {
@@ -38,15 +37,16 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 		}
 
 		@Override
-		public Residence getPart(Residence residence) {
+		public Residence newInstance() {
 			Residence residenceEdit = new Residence();
-			residenceEdit.reportingMunicipality = residence.reportingMunicipality;
+			residenceEdit.reportingMunicipality = getValue().reportingMunicipality;
 			return residenceEdit;
 		}
 
 		@Override
-		public void setPart(Residence residence, Residence value) {
-			setValue(value);
+		protected Object save(Residence entry) {
+			setValue(entry);
+			return Editor.SAVE_SUCCESSFUL;
 		}
 	}
 
@@ -69,7 +69,7 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 		@Override
 		public Object save(Residence residence) {
 			ResidenceFormElement.this.getValue().secondary.add(new SecondaryResidence(residence.reportingMunicipality));
-			fireObjectChange();
+			handleChange();
 			return SAVE_SUCCESSFUL;
 		}
 	}
@@ -78,7 +78,7 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 		@Override
 		public void action() {
 			getValue().secondary.clear();
-			fireObjectChange();
+			handleChange();
 		}
 	}
 	
@@ -104,9 +104,9 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 		} 
 		
 		if (hasResidence) {
-			addText(s.toString());
+			add(s.toString());
 		} else {
-			addText("Kein Wohnsitz");
+			add("Kein Wohnsitz");
 		}
 		
 		// Bei Nebenwohnsitz darf es nur einer sein, daher auch die Aktion nur bei leerer Liste anbieten
@@ -114,10 +114,9 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 	}
 	
 	
+	
 	@Override
-	protected void showActions() {
-		if (getValue() == null) return;
-
+	protected Action[] getActions() {
 //		boolean hasMainResidence = TypeOfResidence.hasMainResidence == typeOfResidence;
 //		boolean hasOtherResidence = TypeOfResidence.hasOtherResidence == typeOfResidence;
 //
@@ -128,12 +127,11 @@ public class ResidenceFormElement extends ObjectPanelFormElement<Residence> {
 //			addAction(new ResidenceAddSecondaryEditor());
 //		}
 
-		addAction(new ResidenceMainEditor());
-		addAction(new ResidenceAddSecondaryEditor());
-
-		if (!getValue().secondary.isEmpty()) {
-			addAction(new ResidenceRemoveSecondaryAction());
-		}
+		return new Action[] {
+				new EditorAction(new ResidenceMainEditor()),
+				new EditorAction(new ResidenceAddSecondaryEditor()),
+				new ResidenceRemoveSecondaryAction()
+		};
 	}
 
 	public static void fillWithMockupData(Residence residence, TypeOfResidence typeOfResidence) {

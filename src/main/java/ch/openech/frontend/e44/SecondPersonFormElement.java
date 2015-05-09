@@ -1,13 +1,13 @@
 package ch.openech.frontend.e44;
 
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 
-import  ch.openech.model.person.Relation;
+import ch.openech.model.person.Relation;
 
-public class SecondPersonFormElement extends ObjectPanelFormElement<Relation> {
+public class SecondPersonFormElement extends ObjectFormElement<Relation> {
 
 	public SecondPersonFormElement(Relation key) {
 		this(Keys.getProperty(key));
@@ -30,9 +30,9 @@ public class SecondPersonFormElement extends ObjectPanelFormElement<Relation> {
 	@Override
 	protected void show(Relation relation) {
 		if (!hasPartner()) {
-			addText("Kein Partner / Keine Partnerin vorhanden");
+			add("Kein Partner / Keine Partnerin vorhanden");
 		} else {
-			addText(relation.partner.toHtml());
+			add(relation);
 		}
 	}
 

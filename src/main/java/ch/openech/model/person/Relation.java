@@ -1,7 +1,10 @@
 package  ch.openech.model.person;
 
+import java.util.Locale;
+
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.annotation.Size;
@@ -13,7 +16,7 @@ import ch.openech.model.common.Address;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.types.YesNo;
 
-public class Relation implements Validatable {
+public class Relation implements Validatable, Rendering {
 
 	public static final Relation $ = Keys.of(Relation.class);
 	
@@ -63,13 +66,16 @@ public class Relation implements Validatable {
 		return partner != null && address != null;
 	}
 	
-	
-	public String identificationToHtml() {
-		StringBuilder s = new StringBuilder();
-		identificationToHtml(s);
-		return s.toString();
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		return toHtml();
 	}
-	
+
+	@Override
+	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
+		return RenderType.HMTL;
+	}
+
 	public void identificationToHtml(StringBuilder s) {
 		if (partner != null) {
 			partner.toHtml(s);
@@ -82,6 +88,7 @@ public class Relation implements Validatable {
 		}
 	}
 
+	@Deprecated
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 

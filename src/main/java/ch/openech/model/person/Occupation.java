@@ -2,9 +2,11 @@ package  ch.openech.model.person;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
 import org.minimalj.model.validation.EmptyValidator;
@@ -19,7 +21,7 @@ import ch.openech.model.person.types.KindOfEmployment;
 import ch.openech.xml.write.EchSchema;
 
 @Sizes(EchFormats.class)
-public class Occupation implements Validation {
+public class Occupation implements Validation, Rendering {
 
 	public static final Occupation $ = Keys.of(Occupation.class);
 	
@@ -42,7 +44,18 @@ public class Occupation implements Validation {
 	public Occupation(EchSchema echSchema) {
 		this.echSchema = echSchema;
 	}
+	
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		return toHtml();
+	}
 
+	@Override
+	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
+		return RenderType.HMTL;
+	}
+
+	@Deprecated
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		

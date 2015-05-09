@@ -2,8 +2,9 @@ package ch.openech.frontend.e11;
 
 import java.util.List;
 
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
@@ -13,7 +14,7 @@ import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.types.ReasonOfAcquisition;
 
-public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceOfOrigin>> implements Mocking {
+public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> implements Mocking {
 	public static final boolean WITHOUT_ADD_ON = false;
 	private final boolean withAddOn;
 	private boolean swiss = true;
@@ -32,14 +33,14 @@ public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceO
 		this.withAddOn = withAddOn;
 	}
 	
-	public class AddOriginEditor extends ObjectFieldPartEditor<PlaceOfOrigin> {
+	public class AddOriginEditor extends AddListEntryEditor {
 		@Override
 		public Form<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
 		}
 
 		@Override
-		protected PlaceOfOrigin getPart(List<PlaceOfOrigin> object) {
+		protected PlaceOfOrigin newInstance() {
 			PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 			// TODO Preference in PlaceOfOriginField
 //			PageContext context = PageContextHelper.findContext(visual);
@@ -50,32 +51,25 @@ public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceO
 		}
 
 		@Override
-		protected void setPart(List<PlaceOfOrigin> object, PlaceOfOrigin p) {
-			object.add(p);
+		protected void addEntry(PlaceOfOrigin p) {
+			PlaceOfOriginFormElement.this.getValue().add(p);
 		}
 	}
 
-	public class EditOriginEditor extends ObjectFieldPartEditor<PlaceOfOrigin> {
-		private final PlaceOfOrigin placeOfOrigin;
-		
+	public class EditOriginEditor extends EditListEntryEditor {
 		private EditOriginEditor(PlaceOfOrigin placeOfOrigin) {
-			this.placeOfOrigin = placeOfOrigin;
+			super(placeOfOrigin);
 		}
 
 		@Override
 		public Form<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
 		}
-
+		
 		@Override
-		protected PlaceOfOrigin getPart(List<PlaceOfOrigin> object) {
-			return placeOfOrigin;
-		}
-
-		@Override
-		protected void setPart(List<PlaceOfOrigin> object, PlaceOfOrigin p) {
-			object.set(object.indexOf(placeOfOrigin), p);
-			fireObjectChange();
+		protected void editEntry(PlaceOfOrigin placeOfOrigin, PlaceOfOrigin p) {
+			List<PlaceOfOrigin> placeOfOrigins = PlaceOfOriginFormElement.this.getValue();
+			placeOfOrigins.set(placeOfOrigins.indexOf(placeOfOrigin), p);
 		}
 	}
 
@@ -89,7 +83,7 @@ public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceO
 		@Override
 		public void action() {
 			getValue().remove(placeOfOrigin);
-			fireObjectChange();
+			handleChange();
 		}
 	}
 
@@ -98,7 +92,7 @@ public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceO
 		super.setEnabled(enabled);
 		if (!enabled && getValue() != null && getValue().size() > 0) {
 			getValue().clear();
-			fireObjectChange();
+			handleChange();
 		} 
 	}
 
@@ -108,7 +102,7 @@ public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceO
 		do {
 			getValue().add(DataGenerator.placeOfOrigin());
 		} while (Math.random() < .4);
-		fireObjectChange();
+		handleChange();
 	}
 
 	@Override
@@ -118,17 +112,16 @@ public class PlaceOfOriginFormElement extends ObjectPanelFormElement<List<PlaceO
 	}
 
 	@Override
-	protected void show(List<PlaceOfOrigin> objects) {
-		for (PlaceOfOrigin placeOfOrigin : objects) {
-			addText(placeOfOrigin.displayHtml());
-			if (isEditable()) {
-				addAction(new EditOriginEditor(placeOfOrigin));
-				addAction(new RemoveOriginAction(placeOfOrigin));
-				addGap();
-			}
-		}
-		if (isEditable()) {
-			addAction(new AddOriginEditor());
-		}
+	protected void showEntry(PlaceOfOrigin placeOfOrigin) {
+		add(placeOfOrigin,
+			new EditorAction(new EditOriginEditor(placeOfOrigin)),
+			new RemoveOriginAction(placeOfOrigin)
+		);
 	}
+
+	@Override
+	protected Action[] getActions() {
+		return new Action[] { new EditorAction(new AddOriginEditor()) };
+	}
+
 }

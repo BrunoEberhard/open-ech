@@ -1,15 +1,16 @@
 package ch.openech.frontend.e11;
 
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.mock.Mocking;
 
 import ch.openech.datagenerator.DataGenerator;
-import  ch.openech.model.common.DwellingAddress;
+import ch.openech.model.common.DwellingAddress;
 import ch.openech.xml.write.EchSchema;
 
-public class DwellingAddressFormElement extends ObjectPanelFormElement<DwellingAddress> implements Mocking {
+public class DwellingAddressFormElement extends ObjectFormElement<DwellingAddress> implements Mocking {
 	private final EchSchema echSchema;
 	
 	public DwellingAddressFormElement(PropertyInterface property, EchSchema echSchema, boolean editable) {
@@ -18,16 +19,15 @@ public class DwellingAddressFormElement extends ObjectPanelFormElement<DwellingA
 	}
 	
 	@Override
-	protected void show(DwellingAddress dwellingAddress) {
-		addText(dwellingAddress.toHtml());
+	protected Action[] getActions() {
+		return new Action[] { getEditorAction() };
 	}
 	
 	@Override
-	protected void showActions() {
-		addAction(new ObjectFieldEditor());
-		addAction(new RemoveObjectAction());
+	protected void show(DwellingAddress object) {
+		add(object, new RemoveObjectAction());
 	}
-	
+
 	@Override
 	public Form<DwellingAddress> createFormPanel() {
 		return new DwellingAddressPanel(echSchema);
@@ -45,10 +45,4 @@ public class DwellingAddressFormElement extends ObjectPanelFormElement<DwellingA
 		setValue(dwellingAddress);
 	}
 
-	@Override
-	public void setValue(DwellingAddress object) {
-		// TODO Auto-generated method stub
-		super.setValue(object);
-	}
-	
 }

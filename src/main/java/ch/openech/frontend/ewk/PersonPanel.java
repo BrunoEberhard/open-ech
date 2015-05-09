@@ -1,7 +1,9 @@
 package ch.openech.frontend.ewk;
 
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
+import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.MockName;
@@ -195,24 +197,19 @@ public class PersonPanel extends EchForm<Person>  {
 		ResidenceFormElement.fillWithMockupData(person.residence, person.typeOfResidence);
 	}
 
-	private class ParentFormElement extends ObjectPanelFormElement<Relation> {
+	private class ParentFormElement extends ObjectFormElement<Relation> {
 		
 		public ParentFormElement(Relation key) {
 			super(Keys.getProperty(key));
 		}
 
-		public class PartnerEditor extends ObjectFieldEditor {
+		public class PartnerEditor extends ObjectFormElementEditor {
 			// Benötigt, damit dir richige Resource verwendet wird
 		}
 		
 		@Override
-		protected void show(Relation relation) {
-			addText(relation.identificationToHtml());
-		}
-
-		@Override
-		protected void showActions() {
-			addAction(new PartnerEditor());
+		protected Action[] getActions() {
+			return new Action[] { new EditorAction(new PartnerEditor()) };
 		}
 		
 		@Override
@@ -221,6 +218,11 @@ public class PersonPanel extends EchForm<Person>  {
 			form.line(Relation.$.partner);
 			form.line(new AddressFormElement(Relation.$.address, true));
 			return form;
+		}
+
+		@Override
+		protected void show(Relation relation) {
+			add(relation);
 		}
 	}
 

@@ -2,9 +2,10 @@ package ch.openech.frontend.e44;
 
 import java.util.List;
 
+import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.ObjectLinkFormElement;
-import org.minimalj.frontend.form.element.ObjectPanelFormElement;
+import org.minimalj.frontend.form.element.ListFormElement;
+import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
@@ -13,7 +14,7 @@ import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.common.NamedId;
 import ch.openech.model.common.TechnicalIds;
 
-public class TechnicalIdsFormElement extends ObjectLinkFormElement<TechnicalIds> {
+public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 	public static final boolean WITH_EU_IDS = true;
 	public static final boolean WITHOUT_EU_IDS = false;
 	
@@ -32,22 +33,24 @@ public class TechnicalIdsFormElement extends ObjectLinkFormElement<TechnicalIds>
 		@Override
 		public void action() {
 			getValue().clear();
-			fireObjectChange();
+			handleChange();
 		}
 	}
 	
 	@Override
-	protected String display(TechnicalIds technicalIds) {
+	protected void show(TechnicalIds technicalIds) {
 		int maxLength = 25;
+		String text;
 		if (technicalIds.localId.personId != null) {
 			if (technicalIds.localId.personId.length() <= maxLength) {
-				return technicalIds.localId.personId;
+				text = technicalIds.localId.personId;
 			} else {
-				return technicalIds.localId.personId.substring(0, maxLength-1) + "...";
+				text = technicalIds.localId.personId.substring(0, maxLength-1) + "...";
 			}
 		} else {
-			return "-";
+			text = "-";
 		}
+		add(text, getEditorAction());
 	}
 
 	@Override
@@ -62,7 +65,7 @@ public class TechnicalIdsFormElement extends ObjectLinkFormElement<TechnicalIds>
 		return form;
 	}
 	
-	private static class OtherIdFormElement extends ObjectPanelFormElement<List<NamedId>> {
+	private static class OtherIdFormElement extends ListFormElement<NamedId> {
 
 		public OtherIdFormElement(List<NamedId> key, boolean editable) {
 			super(Keys.getProperty(key), editable);
@@ -73,34 +76,25 @@ public class TechnicalIdsFormElement extends ObjectLinkFormElement<TechnicalIds>
 			// not used
 			return null;
 		}
-
+		
 		@Override
-		protected void show(List<NamedId> object) {
-			for (NamedId id : object) {
-				addText(id.display());
-				addAction(new RemoveOtherIdAction(id));
-				addGap();
-			}
+		protected void showEntry(NamedId entry) {
+			add(entry, new RemoveOtherIdAction(entry));
 		}
 		
 		@Override
-		protected void showActions() {
-			addAction(new AddOtherIdAction());
+		protected Action[] getActions() {
+			return new Action[] { new EditorAction(new AddOtherIdAction()) };
 		}
 
-		private class AddOtherIdAction extends ObjectFieldPartEditor<NamedId> {
+		private class AddOtherIdAction extends AddListEntryEditor {
 			@Override
 			public Form<NamedId> createForm() {
 				return new NamedIdPanel();
 			}
 
 			@Override
-			protected NamedId getPart(List<NamedId> ids) {
-				return new NamedId();
-			}
-
-			@Override
-			protected void setPart(List<NamedId> ids, NamedId id) {
+			protected void addEntry(NamedId id) {
 				OtherIdFormElement.this.getValue().add(id);
 			}
 	    };
