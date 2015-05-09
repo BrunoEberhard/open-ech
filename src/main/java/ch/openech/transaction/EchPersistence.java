@@ -39,7 +39,10 @@ public class EchPersistence {
 			long id = Long.valueOf(organisationIdentification.technicalIds.localId.personId);
 			return backend.read(Organisation.class, id);
 		}
-		List<Organisation> organisations = backend.read(Organisation.class, Criteria.search(organisationIdentification.organisationName), 2);
+		List<Organisation> organisations = backend.read(Organisation.class, Criteria.equals(Organisation.$.uid.value, organisationIdentification.uid.value), 2);
+		if (organisations.isEmpty()) {
+			organisations = backend.read(Organisation.class, Criteria.equals(Organisation.$.organisationName, organisationIdentification.organisationName), 2);
+		}
 		if (!organisations.isEmpty()) {
 			return organisations.get(0);
 		} else {
