@@ -5,7 +5,9 @@ import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -16,6 +18,8 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.toolkit.ProgressListener;
+import org.minimalj.model.ViewUtil;
+import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.Event;
@@ -36,6 +40,7 @@ public class StaxEch0148 {
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
+		updateIdentifications(organisation);
 		changedOrganisation = backend.insert(organisation);
 	}
 	
@@ -126,12 +131,44 @@ public class StaxEch0148 {
 	//
 
 	public void simpleOrganisationEvent(String type, Organisation organisation) {
-		try {
-			organisation.event = e;
-			changedOrganisation = backend.update(organisation);
-		} catch (Exception e) {
-			e.printStackTrace();
+		organisation.event = e;
+		updateIdentifications(organisation);
+		changedOrganisation = backend.update(organisation);
+	}
+
+	private void updateIdentifications(Object object) {
+		if (object == null) return;
+		
+		if (object instanceof List<?>) {
+			List<?> list = (List<?>) object;
+			for (Object o : list) {
+				updateIdentifications(o);
+			}
+		} else {
+			try {
+				for (Field field : object.getClass().getDeclaredFields()) {
+					if (FieldUtils.isPublic(field) && !FieldUtils.isStatic(field) && !FieldUtils.isTransient(field) && !field.getName().equals("id") && !field.getName().equals("version")) {
+						if (FieldUtils.isAllowedPrimitive(field.getType())) continue;
+						Object value = field.get(object);
+						if (value instanceof OrganisationIdentification) {
+							OrganisationIdentification organisationIdentification = (OrganisationIdentification) value;
+							if (organisationIdentification.id == null) {
+								Organisation organisation = getOrganisation(organisationIdentification);
+								ViewUtil.view(organisation, organisationIdentification);
+							}
+						} else {
+							updateIdentifications(value);
+						}
+					}
+				}
+			} catch (Exception x) {
+				x.printStackTrace();
+			}
 		}
+	}
+	
+	public Organisation getOrganisation(OrganisationIdentification organisationIdentification) {
+		return EchPersistence.getByIdentification(backend, organisationIdentification);
 	}
 
 	//
