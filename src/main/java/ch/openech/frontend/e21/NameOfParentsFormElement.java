@@ -24,13 +24,17 @@ public class NameOfParentsFormElement extends ObjectFormElement<NameOfParents> {
 
 	@Override
 	protected void show(NameOfParents object) {
+		add("Vater");
 		if (!object.father.isEmpty()) {
-			add("Vater");
 			add(object.father, new EditorAction(new NameOfParentEditor(true), "EditNameOfFather"));
-		};
+		} else {
+			add(new EditorAction(new NameOfParentEditor(true), "EditNameOfFather"));
+		}
+		add("Mutter");
 		if (!object.mother.isEmpty()) {
-			add("Mutter");
-			add(object.mother, new EditorAction(new NameOfParentEditor(true), "EditNameOfMother"));
+			add(object.mother, new EditorAction(new NameOfParentEditor(false), "EditNameOfMother"));
+		} else {
+			add(new EditorAction(new NameOfParentEditor(false), "EditNameOfMother"));
 		}
 	}
 	
@@ -58,6 +62,7 @@ public class NameOfParentsFormElement extends ObjectFormElement<NameOfParents> {
 		@Override
 		protected Object save(NameOfParent nameOfParent) {
 			CloneHelper.deepCopy(nameOfParent, father ? getValue().father : getValue().mother);
+			handleChange();
 			return Editor.SAVE_SUCCESSFUL;
 		}
     }

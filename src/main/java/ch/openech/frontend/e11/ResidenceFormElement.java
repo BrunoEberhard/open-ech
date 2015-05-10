@@ -46,6 +46,7 @@ public class ResidenceFormElement extends ObjectFormElement<Residence> {
 		@Override
 		protected Object save(Residence entry) {
 			setValue(entry);
+			handleChange();
 			return Editor.SAVE_SUCCESSFUL;
 		}
 	}

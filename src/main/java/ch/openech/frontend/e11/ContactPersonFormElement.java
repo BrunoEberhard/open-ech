@@ -125,7 +125,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		@Override
 		protected Object save(PersonIdentification personIdentification) {
 			getValue().person = personIdentification;
-			fireChange();
+			handleChange();
 			return Editor.SAVE_SUCCESSFUL;
 		}
     };
@@ -160,7 +160,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		@Override
 		protected Object save(Address address) {
 			getValue().address = address;
-			fireChange();
+			handleChange();
 			return Editor.SAVE_SUCCESSFUL;
 		}
     };
