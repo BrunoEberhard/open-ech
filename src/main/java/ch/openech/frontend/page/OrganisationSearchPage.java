@@ -5,7 +5,7 @@ import static ch.openech.model.organisation.Organisation.*;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.page.AbstractSearchPage.AbstractSimpleSearchPage;
+import org.minimalj.frontend.page.AbstractSearchPage.SimpleSearchPage;
 import org.minimalj.frontend.page.ObjectPage;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.criteria.Criteria;
@@ -15,7 +15,7 @@ import ch.openech.model.EchSchema0148;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 
-public class OrganisationSearchPage extends AbstractSimpleSearchPage<Organisation> {
+public class OrganisationSearchPage extends SimpleSearchPage<Organisation> {
 
 	public static final Object[] FIELD_NAMES = {
 		$.technicalIds.localId.personId, // TODO move to invisible
