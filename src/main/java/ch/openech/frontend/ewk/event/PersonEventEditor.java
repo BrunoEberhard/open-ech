@@ -68,8 +68,4 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T, Person> implemen
 	
 	protected abstract List<String> getXml(Person person, T object, WriterEch0020 writerEch0020) throws Exception;
 
-	public boolean isEnabled() {
-		return person.isAlive();
-	}
-
 }
