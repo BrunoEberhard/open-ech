@@ -15,7 +15,7 @@ import ch.openech.transaction.GenerateDemoDataTransaction;
 import ch.openech.xml.write.EchSchema;
 
 
-public class GeneratePersonEditor extends Editor<GeneratePersonData> {
+public class GeneratePersonEditor extends Editor<GeneratePersonData, Void> {
 
 //	private final String ewkVersion;
 //	private final String orgVersion;
@@ -34,9 +34,9 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData> {
 	}
 
 	@Override
-	protected Object save(GeneratePersonData data) throws Exception {
+	protected Void save(GeneratePersonData data) {
 		Backend.getInstance().execute(new GenerateDemoDataTransaction(data.numberOfPersons != null ? data.numberOfPersons : 0, data.numberOfOrganisations != null ? data.numberOfOrganisations : 0));
-		return data;
+		return null;
 	}
 
 	public static class GeneratePersonData implements Validation {

@@ -39,7 +39,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 	}
 
 	@Override
-	public MoveOutData load() {
+	public MoveOutData createObject() {
 		return new MoveOutData();
 	}
 

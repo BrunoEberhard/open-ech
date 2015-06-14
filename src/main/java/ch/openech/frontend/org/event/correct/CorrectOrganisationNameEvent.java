@@ -24,7 +24,7 @@ public class CorrectOrganisationNameEvent extends OrganisationEventEditor<Organi
 	}
 
 	@Override
-	public Organisation load() {
+	public Organisation createObject() {
 		return getOrganisation();
 	}
 

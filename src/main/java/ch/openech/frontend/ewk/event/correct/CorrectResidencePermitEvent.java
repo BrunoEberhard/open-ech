@@ -28,7 +28,7 @@ public class CorrectResidencePermitEvent extends PersonEventEditor<Foreign> {
 	}
 
 	@Override
-	public Foreign load() {
+	public Foreign createObject() {
 		return getPerson().foreign;
 	}
 	

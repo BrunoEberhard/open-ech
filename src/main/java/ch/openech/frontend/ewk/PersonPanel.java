@@ -1,6 +1,5 @@
 package ch.openech.frontend.ewk;
 
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.toolkit.Action;
@@ -209,7 +208,7 @@ public class PersonPanel extends EchForm<Person>  {
 		
 		@Override
 		protected Action[] getActions() {
-			return new Action[] { new EditorAction(new PartnerEditor()) };
+			return new Action[] { new PartnerEditor() };
 		}
 		
 		@Override

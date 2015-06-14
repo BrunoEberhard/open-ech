@@ -58,7 +58,7 @@ public class CareEvent extends PersonEventEditor<Relation> {
 	}
 
 	@Override
-	public Relation load() {
+	public Relation createObject() {
 		return new Relation();
 	}
 

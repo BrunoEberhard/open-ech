@@ -129,7 +129,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	}
 	
 	@Override
-	public Partnership load() {
+	public Partnership createObject() {
 		Partnership partnershipActionData = new Partnership();
 		partnershipActionData.partner1 = getPerson();
 		return partnershipActionData;

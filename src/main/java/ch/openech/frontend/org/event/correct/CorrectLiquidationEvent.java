@@ -25,7 +25,7 @@ public class CorrectLiquidationEvent extends OrganisationEventEditor<Organisatio
 	}
 
 	@Override
-	public Organisation load() {
+	public Organisation createObject() {
 		return getOrganisation();
 	}
 

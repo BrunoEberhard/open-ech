@@ -16,7 +16,7 @@ import ch.openech.transaction.OrganisationTransaction;
 import ch.openech.xml.write.EchSchema;
 
 
-public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
+public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation, Organisation> implements XmlResult<Organisation> {
 	private final OpenEchPreferences preferences;
 
 	public BaseDeliveryOrganisationEditor(EchSchema ech, OpenEchPreferences preferences) {
@@ -30,15 +30,14 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation> impl
 	}
 
 	@Override
-	public Organisation newInstance() {
+	public Organisation createObject() {
 		return MoveInEditor.newInstance(preferences);
 	}
 	
 	@Override
-	public Object save(Organisation organisation) {
+	public Organisation save(Organisation organisation) {
 		String xml = getXml(organisation).get(0);
-		Object insertId = Backend.getInstance().execute(new OrganisationTransaction(xml));
-		return insertId;
+		return Backend.getInstance().execute(new OrganisationTransaction(xml));
 	}
 	
 	@Override

@@ -30,7 +30,7 @@ public class CorrectPersonEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public Person load() {
+	public Person createObject() {
 		return getPerson();
 	}
 

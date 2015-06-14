@@ -21,7 +21,7 @@ import ch.openech.xml.write.WriterEch0046;
 import ch.openech.xml.write.WriterEch0112;
 import ch.openech.xml.write.WriterElement;
 
-public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
+public class TpnMoveEditor extends XmlEditor<ThirdPartyMove, Void> {
 	private final MoveDirection direction;
 
 	public TpnMoveEditor(String direction) {
@@ -46,7 +46,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	}
 
 	@Override
-	public Object save(ThirdPartyMove tpm) {
+	public Void save(ThirdPartyMove tpm) {
 		String xml;
 		try {
 			WriterEch0112 writer = echSchema.getWriterEch0112();
@@ -54,11 +54,10 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 			saveContractor(tpm.contractor);
 			// MoveIn result = StaxEch0108.process(xml);
 			// new MoveInDAO(AbstractDAO.getCommonConnection()).insertMoveIn(1, 0, result);
-			return SAVE_SUCCESSFUL;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return SAVE_FAILED;
 		}
+		return null;
 	}
 
 	@Override
@@ -113,7 +112,7 @@ public class TpnMoveEditor extends XmlEditor<ThirdPartyMove> {
 	}
 
 	@Override
-	protected ThirdPartyMove newInstance() {
+	protected ThirdPartyMove createObject() {
 		ThirdPartyMove thirdPartyMove = new ThirdPartyMove();
 		thirdPartyMove.contractor.addAll(loadLastContractor().entries);
 

@@ -3,7 +3,6 @@ package ch.openech.frontend.e44;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
@@ -39,7 +38,7 @@ public class PersonFormElement extends ObjectFormElement<Person> {
 
 	@Override
 	protected Action[] getActions() {
-		return new Action[] { new PersonSearchAction(), new EditorAction(new ObjectFormElementEditor()) };
+		return new Action[] { new PersonSearchAction(), new ObjectFormElementEditor() };
 	}
 
 	public class PersonSearchAction extends SearchDialogAction<PersonSearch> {

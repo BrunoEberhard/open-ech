@@ -28,7 +28,7 @@ public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> 
 	}
 	
 	@Override
-	public Organisation load() {
+	public Organisation createObject() {
 		Organisation organisation = getOrganisation();
 		organisation.editMode = Organisation.EditMode.CHANGE_REPORTING;
 		return organisation;

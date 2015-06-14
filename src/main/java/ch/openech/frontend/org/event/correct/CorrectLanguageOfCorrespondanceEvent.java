@@ -25,7 +25,7 @@ public class CorrectLanguageOfCorrespondanceEvent extends OrganisationEventEdito
 	}
 
 	@Override
-	public Organisation load() {
+	public Organisation createObject() {
 		return getOrganisation();
 	}
 

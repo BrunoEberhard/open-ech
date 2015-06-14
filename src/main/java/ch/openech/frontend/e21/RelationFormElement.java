@@ -2,7 +2,6 @@ package ch.openech.frontend.e21;
 
 import java.util.List;
 
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.page.PageAction;
@@ -21,10 +20,10 @@ public class RelationFormElement extends ListFormElement<Relation> {
 		this.echNamespaceContext = echNamespaceContext;
 	}
 
-	public class AddRelationEditor extends AddListEntryEditor {
+	public class AddRelationEditor extends AddListEntryAction {
 
 		@Override
-		protected Relation newInstance() {
+		protected Relation createObject() {
 			return new Relation();
 		}
 
@@ -75,6 +74,6 @@ public class RelationFormElement extends ListFormElement<Relation> {
 	}
 
 	protected Action[] getActions() {
-		return new Action[] { new EditorAction(new AddRelationEditor()) };
+		return new Action[] { new AddRelationEditor() };
 	}
 }

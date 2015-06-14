@@ -11,7 +11,7 @@ import ch.openech.frontend.xmlpreview.XmlPreview;
 import ch.openech.xml.write.EchSchema;
 
 
-public abstract class XmlEditor<T> extends Editor<T> {
+public abstract class XmlEditor<T, RESULT> extends Editor<T, RESULT> {
 	public static final Logger logger = Logger.getLogger(XmlEditor.class.getName());
 	protected final EchSchema echSchema;
 	
@@ -33,12 +33,12 @@ public abstract class XmlEditor<T> extends Editor<T> {
 	}
 
 	@Override
-	public Action[] getActions() {
+	protected List<Action> createAdditionalActions() {
+		List<Action> actions = super.createAdditionalActions();
 		if (DevMode.isActive()) {
-			return new Action[]{demoAction, xmlAction, cancelAction, saveAction};
-		} else {
-			return new Action[]{cancelAction, saveAction};
+			actions.add(0, xmlAction);
 		}
+		return actions;
 	}
 
 	private class XmlAction extends Action {

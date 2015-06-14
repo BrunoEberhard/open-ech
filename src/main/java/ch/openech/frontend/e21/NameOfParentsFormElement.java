@@ -1,7 +1,6 @@
 package ch.openech.frontend.e21;
 
 import org.minimalj.frontend.editor.Editor;
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
@@ -26,22 +25,23 @@ public class NameOfParentsFormElement extends ObjectFormElement<NameOfParents> {
 	protected void show(NameOfParents object) {
 		add("Vater");
 		if (!object.father.isEmpty()) {
-			add(object.father, new EditorAction(new NameOfParentEditor(true), "EditNameOfFather"));
+			add(object.father, new NameOfParentEditor(true));
 		} else {
-			add(new EditorAction(new NameOfParentEditor(true), "EditNameOfFather"));
+			add(new NameOfParentEditor(true));
 		}
 		add("Mutter");
 		if (!object.mother.isEmpty()) {
-			add(object.mother, new EditorAction(new NameOfParentEditor(false), "EditNameOfMother"));
+			add(object.mother, new NameOfParentEditor(false));
 		} else {
-			add(new EditorAction(new NameOfParentEditor(false), "EditNameOfMother"));
+			add(new NameOfParentEditor(false));
 		}
 	}
 	
-	public class NameOfParentEditor extends Editor<NameOfParent> {
+	public class NameOfParentEditor extends Editor<NameOfParent, Void> {
 		private final boolean father;
 		
 		public NameOfParentEditor(boolean father) {
+			super(father ? "EditNameOfFather" : "EditNameOfMother");
 			this.father = father;
 		}
 
@@ -55,16 +55,20 @@ public class NameOfParentsFormElement extends ObjectFormElement<NameOfParents> {
 		}
 
 		@Override
-		protected NameOfParent load() {
+		protected NameOfParent createObject() {
 			return father ? getValue().father : getValue().mother;
 		}
 
 		@Override
-		protected Object save(NameOfParent nameOfParent) {
+		protected Void save(NameOfParent nameOfParent) {
 			CloneHelper.deepCopy(nameOfParent, father ? getValue().father : getValue().mother);
-			handleChange();
-			return Editor.SAVE_SUCCESSFUL;
+			return null;
 		}
+
+		@Override
+		protected void finished(Void result) {
+			handleChange();
+		}		
     }
 	
 	

@@ -47,7 +47,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 	}
 
 	@Override
-	public Person load() {
+	public Person createObject() {
 		return calculatePresets(getPerson(), preferences);
 	}
 

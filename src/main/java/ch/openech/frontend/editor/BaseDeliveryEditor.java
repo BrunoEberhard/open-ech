@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.util.LoggingRuntimeException;
 
 import ch.openech.frontend.XmlEditor;
@@ -17,7 +18,7 @@ import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
 
 
-public class BaseDeliveryEditor extends XmlEditor<Person> {
+public class BaseDeliveryEditor extends XmlEditor<Person, Person> {
 	private final OpenEchPreferences preferences;
 	
 	public BaseDeliveryEditor(EchSchema ech, OpenEchPreferences preferences) {
@@ -31,7 +32,7 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 	}
 
 	@Override
-	public Person newInstance() {
+	public Person createObject() {
 		Person person = new Person();
 		person.editMode = PersonEditMode.BASE_DELIVERY;
 		person.religion = preferences.preferencesDefaultsData.religion;
@@ -41,11 +42,16 @@ public class BaseDeliveryEditor extends XmlEditor<Person> {
 	}
 
     @Override
-    public Object save(Person person) {
+    public Person save(Person person) {
 		String xml = getXml(person).get(0);
 		Person savedPerson = Backend.getInstance().execute(new PersonTransaction(xml));
-		return new PersonPage(echSchema, savedPerson);
+		return savedPerson;
 	}
+    
+    @Override
+    protected void finished(Person result) {
+    	ClientToolkit.getToolkit().show(new PersonPage(echSchema, result));
+    }
 	
 	@Override
 	public List<String> getXml(Person person) {

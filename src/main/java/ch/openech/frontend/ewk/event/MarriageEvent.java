@@ -166,7 +166,7 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	}
 
 	@Override
-	public Marriage load() {
+	public Marriage createObject() {
 		Marriage marriageActionData = new Marriage();
 		marriageActionData.partner1 = getPerson();
 		marriageActionData.origin2.addAll(getPerson().placeOfOrigin);

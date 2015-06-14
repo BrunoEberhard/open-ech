@@ -4,7 +4,7 @@ import org.minimalj.application.ApplicationContext;
 import org.minimalj.frontend.editor.Editor;
 import org.minimalj.frontend.form.Form;
 
-public class PreferencesEditor extends Editor<OpenEchPreferences> {
+public class PreferencesEditor extends Editor<OpenEchPreferences, Void> {
 	private final ApplicationContext applicationContext;
 	
 	public PreferencesEditor(ApplicationContext applicationContext) {
@@ -17,14 +17,14 @@ public class PreferencesEditor extends Editor<OpenEchPreferences> {
 	}
 	
 	@Override
-	protected OpenEchPreferences load() {
+	protected OpenEchPreferences createObject() {
 		return (OpenEchPreferences) applicationContext.getPreferences();
 	}
 
 	@Override
-	protected Object save(OpenEchPreferences object) {
+	protected Void save(OpenEchPreferences object) {
 		applicationContext.savePreferences(object);
-		return SAVE_SUCCESSFUL;
+		return null;
 	}
 	
 }

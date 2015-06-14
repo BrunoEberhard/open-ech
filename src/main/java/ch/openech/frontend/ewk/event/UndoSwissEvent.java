@@ -32,7 +32,7 @@ public class UndoSwissEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public Person load() {
+	public Person createObject() {
 		return getPerson();
 	}
 

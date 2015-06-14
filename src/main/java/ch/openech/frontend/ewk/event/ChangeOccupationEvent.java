@@ -31,7 +31,7 @@ public class ChangeOccupationEvent extends PersonEventEditor<Occupation> {
 	}
 	
 	@Override
-	public Occupation load() {
+	public Occupation createObject() {
 		return new Occupation(echSchema);
 	}
 

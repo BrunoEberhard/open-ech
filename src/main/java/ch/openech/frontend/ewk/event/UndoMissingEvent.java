@@ -26,7 +26,7 @@ public class UndoMissingEvent extends PersonEventEditor<Object> {
 	}
 
 	@Override
-	public Object load() {
+	public Object createObject() {
 		return new Object();
 	}
 

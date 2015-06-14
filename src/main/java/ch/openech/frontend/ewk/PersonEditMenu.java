@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.frontend.editor.Editor;
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.toolkit.ClientToolkit;
@@ -71,18 +70,18 @@ public class PersonEditMenu {
 	
 	private final Page showHistory;
 
-	private final EditorAction marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
-	private final EditorAction naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality, changeResidencePermit, renewPermit, undoCitizen;
-	private final EditorAction changeOccupation;
-	private final EditorAction death, missing, undoMissing;
-	private final EditorAction care, gardianMeasure, undoGardian, changeGardian;
-	private final EditorAction move, moveOut;
-	private final EditorAction changeName, changeReligion, changeTypeOfResidence, changeRelation, contact;
-	private final EditorAction correctOrigin, correctResidencePermit;
-	private final EditorAction addressLock, paperLock;
-	private final EditorAction birthChild;
+	private final Editor marriage, separation, undoSeparation, divorce, undoMarriage, partnership, undoPartnership;
+	private final Editor naturalizeSwiss, naturalizeForeigner, undoSwiss, changeCitizen, changeNationality, changeResidencePermit, renewPermit, undoCitizen;
+	private final Editor changeOccupation;
+	private final Editor death, missing, undoMissing;
+	private final Editor care, gardianMeasure, undoGardian, changeGardian;
+	private final Editor move, moveOut;
+	private final Editor changeName, changeReligion, changeTypeOfResidence, changeRelation, contact;
+	private final Editor correctOrigin, correctResidencePermit;
+	private final Editor addressLock, paperLock;
+	private final Editor birthChild;
 	
-	private final List<EditorAction> correctEditors = new ArrayList<>();
+	private final List<Editor> correctEditors = new ArrayList<>();
 
 	public PersonEditMenu(EchSchema ech, Person person) {
 		this.echSchema = ech;
@@ -195,7 +194,7 @@ public class PersonEditMenu {
 
 		fillCorrectionActionList();
 		ActionGroup correct = menu.addGroup("ActionGroup.correction");
-		for (EditorAction action : correctEditors) {
+		for (Editor action : correctEditors) {
 			correct.add(action);
 		}
 
@@ -208,8 +207,8 @@ public class PersonEditMenu {
 		return menu;
 	}
 
-	private EditorAction editorAction(PersonEventEditor<?> editor) {
-		EditorAction action = new EditorAction(editor);
+	private Editor editorAction(PersonEventEditor<?> editor) {
+		Editor action = editor;
 		action.setEnabled(editor.isEnabled());
 		return action;
 	}
@@ -235,12 +234,7 @@ public class PersonEditMenu {
 		}
 	}
 
-	private void addCorrectAction(Editor<?> editor) {
-		correctEditors.add(new EditorAction(editor)); // always enbled
-	}
-
-	
-	private void addCorrectAction(EditorAction action) {
+	private void addCorrectAction(Editor action) {
 		correctEditors.add(action);
 	}
 
@@ -283,7 +277,7 @@ public class PersonEditMenu {
 		changeResidencePermit.setEnabled(isAlive && !isSwiss);
 		renewPermit.setEnabled(isAlive && !isSwiss);
 		changeRelation.setEnabled(isAlive);
-		for (EditorAction action : correctEditors) {
+		for (Editor action : correctEditors) {
 			action.setEnabled(isPerson);
 		}
 		correctOrigin.setEnabled(isPerson && isSwiss);

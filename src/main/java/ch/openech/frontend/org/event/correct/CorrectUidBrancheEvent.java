@@ -25,7 +25,7 @@ public class CorrectUidBrancheEvent extends OrganisationEventEditor<Organisation
 	}
 
 	@Override
-	public Organisation load() {
+	public Organisation createObject() {
 		return getOrganisation();
 	}
 	

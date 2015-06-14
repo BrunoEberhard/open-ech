@@ -16,7 +16,7 @@ public class ChangeLegalFormEvent extends OrganisationEventEditor<Organisation> 
 	}
 
 	@Override
-	protected Organisation load() {
+	protected Organisation createObject() {
 		return getOrganisation();
 	}
 

@@ -30,7 +30,7 @@ public class NaturalizeSwissEvent extends PersonEventEditor<PlaceOfOrigin> {
 	}
 
 	@Override
-	public PlaceOfOrigin load() {
+	public PlaceOfOrigin createObject() {
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 		placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Einbuergerung;
 		return placeOfOrigin;

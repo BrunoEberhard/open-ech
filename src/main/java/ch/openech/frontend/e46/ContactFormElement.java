@@ -2,7 +2,6 @@ package ch.openech.frontend.e46;
 
 import java.util.List;
 
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.toolkit.Action;
@@ -21,16 +20,18 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 		super(property, editable);
 	}
 	
-	public class AddContactEntryEditor extends AddListEntryEditor {
+	public class AddContactEntryEditor extends AddListEntryAction {
 		private final ContactEntryType type;
 		private final boolean person;
 		
-		public AddContactEntryEditor(boolean person) {
+		public AddContactEntryEditor(boolean person, String name) {
+			super(name);
 			this.type = ContactEntryType.Address;
 			this.person = person;
 		}
 
-		public AddContactEntryEditor(ContactEntryType type) {
+		public AddContactEntryEditor(ContactEntryType type, String name) {
+			super(name);
 			this.type = type;
 			this.person = true;
 		}
@@ -41,7 +42,7 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 		}
 
 		@Override
-		protected ContactEntry newInstance() {
+		protected ContactEntry createObject() {
 			ContactEntry contactEntry = new ContactEntry();
 			contactEntry.typeOfContact = type;
 			if ("I".equals(type)) {
@@ -86,11 +87,11 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 	@Override
 	protected Action[] getActions() {
 		return new Action[] {
-			new EditorAction(new AddContactEntryEditor(true), "AddAddressPerson"),
-			new EditorAction(new AddContactEntryEditor(false), "AddAddressOrganisation"),
-			new EditorAction(new AddContactEntryEditor(ContactEntryType.Email), "AddEmail"),
-			new EditorAction(new AddContactEntryEditor(ContactEntryType.Phone), "AddPhone"),
-			new EditorAction(new AddContactEntryEditor(ContactEntryType.Internet), "AddInternet")
+			new AddContactEntryEditor(true, "AddAddressPerson"),
+			new AddContactEntryEditor(false, "AddAddressOrganisation"),
+			new AddContactEntryEditor(ContactEntryType.Email, "AddEmail"),
+			new AddContactEntryEditor(ContactEntryType.Phone, "AddPhone"),
+			new AddContactEntryEditor(ContactEntryType.Internet, "AddInternet")
 		};
 	}
 

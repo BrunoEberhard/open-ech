@@ -22,7 +22,7 @@ public class CorrectLegalFormEvent extends OrganisationEventEditor<Organisation>
 	}
 
 	@Override
-	public Organisation load() {
+	public Organisation createObject() {
 		return getOrganisation();
 	}
 

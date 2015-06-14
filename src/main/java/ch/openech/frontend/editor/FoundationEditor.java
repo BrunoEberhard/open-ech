@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.page.Page;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.LoggingRuntimeException;
@@ -22,7 +22,7 @@ import ch.openech.transaction.OrganisationTransaction;
 import ch.openech.xml.write.EchSchema;
 
 
-public class FoundationEditor extends XmlEditor<Organisation> implements XmlResult<Organisation> {
+public class FoundationEditor extends XmlEditor<Organisation, Organisation> implements XmlResult<Organisation> {
 	
 	private final OpenEchPreferences preferences;
 
@@ -44,16 +44,20 @@ public class FoundationEditor extends XmlEditor<Organisation> implements XmlResu
 	}
 
 	@Override
-	public Organisation newInstance() {
+	public Organisation createObject() {
 		return MoveInEditor.newInstance(preferences);
 	}
 	
 	@Override
-	public Page save(Organisation organisation) {
+	public Organisation save(Organisation organisation) {
 		String xml = getXml(organisation).get(0);
-		Organisation saveOrganisation = Backend.getInstance().execute(new OrganisationTransaction(xml));
-		return new OrganisationPage(echSchema, saveOrganisation);
+		return Backend.getInstance().execute(new OrganisationTransaction(xml));
 	}
+	
+    @Override
+    protected void finished(Organisation result) {
+    	ClientToolkit.getToolkit().show(new OrganisationPage(echSchema, result));
+    }
 
 	@Override
 	public List<String> getXml(Organisation organisation) {

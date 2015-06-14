@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.frontend.editor.Editor;
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.toolkit.Action;
@@ -27,7 +26,7 @@ public class ResidenceFormElement extends ObjectFormElement<Residence> {
 	// ComboBox im Hauptfeld angezeigt werden müsste, dies durch die Möglichkeit der
 	// Nebenwohnorte anzuzueigen aber nicht möglich ist.
 	// Möglich Lösung: Zweiteilung des Eingabefeldes
-	public final class ResidenceMainEditor extends Editor<Residence> {
+	public final class ResidenceMainEditor extends Editor<Residence, Void> {
 
 		@Override
 		public Form<Residence> createForm() {
@@ -37,21 +36,25 @@ public class ResidenceFormElement extends ObjectFormElement<Residence> {
 		}
 
 		@Override
-		public Residence newInstance() {
+		public Residence createObject() {
 			Residence residenceEdit = new Residence();
 			residenceEdit.reportingMunicipality = getValue().reportingMunicipality;
 			return residenceEdit;
 		}
 
 		@Override
-		protected Object save(Residence entry) {
+		protected Void save(Residence entry) {
 			setValue(entry);
+			return null;
+		}
+		
+		@Override
+		protected void finished(Void result) {
 			handleChange();
-			return Editor.SAVE_SUCCESSFUL;
 		}
 	}
 
-	public final class ResidenceAddSecondaryEditor extends Editor<Residence> {
+	public final class ResidenceAddSecondaryEditor extends Editor<Residence, Void> {
 
 		@Override
 		public Form<Residence> createForm() {
@@ -61,17 +64,21 @@ public class ResidenceFormElement extends ObjectFormElement<Residence> {
 		}
 
 		@Override
-		public Residence load() {
+		public Residence createObject() {
 			Residence residence = new Residence();
 			residence.reportingMunicipality = ResidenceFormElement.this.getValue().reportingMunicipality;
 			return residence;
 		}
 
 		@Override
-		public Object save(Residence residence) {
+		public Void save(Residence residence) {
 			ResidenceFormElement.this.getValue().secondary.add(new SecondaryResidence(residence.reportingMunicipality));
+			return null;
+		}
+		
+		@Override
+		protected void finished(Void result) {
 			handleChange();
-			return SAVE_SUCCESSFUL;
 		}
 	}
 
@@ -129,8 +136,8 @@ public class ResidenceFormElement extends ObjectFormElement<Residence> {
 //		}
 
 		return new Action[] {
-				new EditorAction(new ResidenceMainEditor()),
-				new EditorAction(new ResidenceAddSecondaryEditor()),
+				new ResidenceMainEditor(),
+				new ResidenceAddSecondaryEditor(),
 				new ResidenceRemoveSecondaryAction()
 		};
 	}

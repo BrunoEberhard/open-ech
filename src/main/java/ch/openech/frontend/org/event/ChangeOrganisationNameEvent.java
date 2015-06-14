@@ -23,7 +23,7 @@ public class ChangeOrganisationNameEvent extends OrganisationEventEditor<Organis
 	}
 
 	@Override
-	public Organisation load() {
+	public Organisation createObject() {
 		return getOrganisation();
 	}
 

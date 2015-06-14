@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.minimalj.application.DevMode;
 import org.minimalj.frontend.editor.Wizard;
 import org.minimalj.frontend.editor.WizardStep;
 import org.minimalj.frontend.form.Form;
@@ -23,6 +22,7 @@ import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
 import ch.openech.frontend.ewk.event.moveIn.NextPersonHelper;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.xmlpreview.XmlPreview;
 import ch.openech.model.person.Person;
@@ -33,18 +33,25 @@ import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 
-public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
+public class MoveInWizard extends Wizard<Person> {
 
-	private final EchSchema echNamespaceContext;
+	private final EchSchema echSchema;
 	private final OpenEchPreferences preferences;
 	private final MoveInPersonWizardStep moveInPersonWizardStep;
 	private final MoveInNextPersonWizardStep moveInNextPersonWizardStep;
+	private MoveInEditorData wizardData;
 	
 	public MoveInWizard(EchSchema ech, OpenEchPreferences preferences) {
-		this.echNamespaceContext = ech;
+		this.echSchema = ech;
 		this.preferences = preferences;
 		this.moveInPersonWizardStep = new MoveInPersonWizardStep();
 		this.moveInNextPersonWizardStep = new MoveInNextPersonWizardStep();
+	}
+
+	public static class MoveInEditorData {
+		
+		public final List<Person> persons = new ArrayList<Person>();
+		public final List<MoveInNextPerson> nextPersons = new ArrayList<MoveInWizard.MoveInNextPerson>();
 	}
 
 	public static class MoveInNextPerson {
@@ -60,24 +67,23 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		public Person fosterMother, fosterFather;
 	}
 		
-	public static class MoveInEditorData {
-		public static final MoveInEditorData $ = Keys.of(MoveInEditorData.class);
-		
-		public final List<Person> persons = new ArrayList<Person>();
-		public final List<MoveInNextPerson> nextPersons = new ArrayList<MoveInWizard.MoveInNextPerson>();
-	}
-
 	@Override
-	protected WizardStep<?> getFirstStep() {
+	protected WizardStep getFirstStep() {
+		wizardData = new MoveInEditorData();
 		return moveInPersonWizardStep;
 	}
 	
+	@Override
+	protected boolean canFinish() {
+		return getStep() instanceof MoveInPersonWizardStep;
+	}
+	
 	private int getPersonIndex() {
-		return getCurrentStepIndex() / 2;
+		return getStepIndex() / 2;
 	}
 	
 	protected WriterEch0020 getWriterEch0020() {
-		return echNamespaceContext.getWriterEch0020();
+		return echSchema.getWriterEch0020();
 	}
 	
 	public void generateSedexOutput(Person person) throws Exception {
@@ -89,20 +95,11 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 //		}
 	}
 
-	@Override
-	public Action[] getActions() {
-		if (DevMode.isActive()) {
-			return new Action[]{demoAction, new XmlAction(), cancelAction, prevAction, nextAction, saveAction};
-		} else {
-			return new Action[]{cancelAction, prevAction, nextAction, saveAction};
-		}
-	}
-
-	private class MoveInPersonWizardStep extends WizardStep<Person> {
+	private class MoveInPersonWizardStep implements WizardStep<Person> {
 
 		@Override
-		protected Form<Person> createForm() {
-			return new PersonPanel(PersonEditMode.MOVE_IN, echNamespaceContext);
+		public Form<Person> createForm() {
+			return new PersonPanel(PersonEditMode.MOVE_IN, echSchema);
 		}
 
 		@Override
@@ -116,16 +113,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public String getMessage() {
-			return null;
-		}
-
-		@Override
-		public boolean canFinish() {
-			return true;
-		}
-
-		@Override
 		public WizardStep<?> getNextStep() {
 			return moveInNextPersonWizardStep;
 		}
@@ -136,13 +123,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 		
 		@Override
-		protected Person save(Person person) {
-			return person;
-		}
-
-		@Override
-		protected Person newInstance() {
-			MoveInEditorData wizardData = MoveInWizard.this.getObject();
+		public Person createObject() {
 			int personIndex = getPersonIndex();
 			if (wizardData.persons.size() <= personIndex) {
 				Person person;
@@ -158,18 +139,12 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			}
 			return wizardData.persons.get(personIndex);
 		}
-
-		@Override
-		public void fillWithDemoData() {
-			// TODO Auto-generated method stub
-			super.fillWithDemoData();
-		}
 	}
 	
-	private class MoveInNextPersonWizardStep extends WizardStep<MoveInNextPerson> {
+	private class MoveInNextPersonWizardStep implements WizardStep<MoveInNextPerson> {
 
 		@Override
-		protected Form<MoveInNextPerson> createForm() {
+		public Form<MoveInNextPerson> createForm() {
 			EchForm<MoveInNextPerson> form = new EchForm<MoveInNextPerson>(2);
 			
 			form.line(MoveInNextPerson.$.typeOfRelationshipInverted);
@@ -196,18 +171,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		}
 
 		@Override
-		public String getMessage() {
-			return null;
-		}
-
-		@Override
-		public boolean canFinish() {
-			return false;
-		}
-
-		@Override
-		protected MoveInNextPerson newInstance() {
-			MoveInEditorData wizardData = MoveInWizard.this.getObject();
+		public MoveInNextPerson createObject() {
 			int personIndex = getPersonIndex();
 			if (wizardData.nextPersons.size() <= personIndex) {
 				MoveInNextPerson moveInNextPerson = new MoveInNextPerson();
@@ -215,11 +179,6 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 				wizardData.nextPersons.add(moveInNextPerson);
 			}
 			return wizardData.nextPersons.get(personIndex);
-		}
-
-		@Override
-		protected Object save(MoveInNextPerson object) {
-			return SAVE_SUCCESSFUL;
 		}
 
 		@Override
@@ -248,15 +207,15 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 	}
 
 	@Override
-	protected Object save(MoveInEditorData object) {
+	protected Person save() {
 		// Personen, die mit man previous verlassen hat werden nicht mitgespeichert,
 		// da sie eventuell ungültig sein könnten
-		for (int i = object.persons.size() - 1; i > getPersonIndex(); i--) {
-			object.persons.remove(i);
+		for (int i = wizardData.persons.size() - 1; i > getPersonIndex(); i--) {
+			wizardData.persons.remove(i);
 		}
 		
 		List<String> xmlList = new ArrayList<String>();
-		for (Person person : object.persons) {
+		for (Person person : wizardData.persons) {
 			try {
 				xmlList.add(getWriterEch0020().moveIn(person));
 			} catch (Exception e) {
@@ -264,8 +223,13 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 				e.printStackTrace();
 			}
 		}
-		Object insertId = PersonEventEditor.send(xmlList);
-		return insertId;
+		Person firstSavedPerson = PersonEventEditor.send(xmlList);
+		return firstSavedPerson;
+	}
+	
+	@Override
+	protected void finished(Person result) {
+		ClientToolkit.getToolkit().show(new PersonPage(echSchema, result));
 	}
 
 	private class MoveInNextPersonFormElement extends AbstractFormElement<Person> {
@@ -282,7 +246,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 			
 			this.relation = relation;
 			
-			List<Person> possiblePersons = filter(MoveInWizard.this.getObject().persons);
+			List<Person> possiblePersons = filter(wizardData.persons);
 			comboBox = ClientToolkit.getToolkit().createComboBox(possiblePersons, listener());
 		}
 		
@@ -332,7 +296,7 @@ public class MoveInWizard extends Wizard<MoveInWizard.MoveInEditorData> {
 		public void action() {
 			try {
 				List<String> xmls = new ArrayList<String>();
-				for (Person person : getObject().persons) {
+				for (Person person : wizardData.persons) {
 					xmls.add(getWriterEch0020().moveIn(person));
 				}
 				XmlPreview.viewXml(xmls);

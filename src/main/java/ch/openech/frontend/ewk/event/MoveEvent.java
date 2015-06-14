@@ -38,7 +38,7 @@ public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 	}
 
 	@Override
-	public MoveEventData load() {
+	public MoveEventData createObject() {
 		MoveEventData data = new MoveEventData();
 		if (getPerson().dwellingAddress != null) {
 			DwellingAddress dwellingAddress = getPerson().dwellingAddress;

@@ -22,7 +22,7 @@ public class LiquidationEvent extends OrganisationEventEditor<Organisation> {
 	}
 
 	@Override
-	public Organisation load() {
+	public Organisation createObject() {
 		Organisation organisation = getOrganisation();
 		organisation.editMode = Organisation.EditMode.LIQUIDATION;
 		return organisation;

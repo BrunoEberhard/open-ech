@@ -2,7 +2,6 @@ package ch.openech.frontend.e44;
 
 import java.util.List;
 
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.form.element.ObjectFormElement;
@@ -84,10 +83,10 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		
 		@Override
 		protected Action[] getActions() {
-			return new Action[] { new EditorAction(new AddOtherIdAction()) };
+			return new Action[] { new AddOtherIdAction() };
 		}
 
-		private class AddOtherIdAction extends AddListEntryEditor {
+		private class AddOtherIdAction extends AddListEntryAction {
 			@Override
 			public Form<NamedId> createForm() {
 				return new NamedIdPanel();

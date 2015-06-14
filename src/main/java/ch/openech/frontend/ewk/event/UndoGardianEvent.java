@@ -26,7 +26,7 @@ public class UndoGardianEvent extends PersonEventEditor<Object> {
 	}
 
 	@Override
-	public Object load() {
+	public Object createObject() {
 		return null;
 	}
 

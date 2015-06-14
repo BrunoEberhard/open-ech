@@ -28,7 +28,7 @@ public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public Person load() {
+	public Person createObject() {
 		return getPerson();
 	}
 

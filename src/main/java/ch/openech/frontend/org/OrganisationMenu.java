@@ -3,7 +3,7 @@ package ch.openech.frontend.org;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.editor.EditorAction;
+import org.minimalj.frontend.editor.Editor;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.util.BusinessRule;
@@ -36,11 +36,11 @@ public class OrganisationMenu {
 	
 	private final OrganisationHistoryPage historyPage;
 
-	private final EditorAction moveOut, move;
-	private final EditorAction contact, changeOrganisationName, changeLegalForm, changeReporting;
-	private final EditorAction inLiquidation, liquidation;
+	private final Editor moveOut, move;
+	private final Editor contact, changeOrganisationName, changeLegalForm, changeReporting;
+	private final Editor inLiquidation, liquidation;
 	
-	private final List<EditorAction> correctEditors = new ArrayList<>();
+	private final List<Editor> correctEditors = new ArrayList<>();
 
 	public OrganisationMenu(EchSchema ech, Organisation organisation) {
 		this.ech = ech;
@@ -60,8 +60,8 @@ public class OrganisationMenu {
 		historyPage = new OrganisationHistoryPage(ech, organisation);
 	}
 
-	private EditorAction editorLink(OrganisationEventEditor<?> editor) {
-		return new EditorAction(editor);
+	private Editor editorLink(OrganisationEventEditor<?> editor) {
+		return editor;
 	}
 
 	public org.minimalj.frontend.page.ActionGroup getActions() {

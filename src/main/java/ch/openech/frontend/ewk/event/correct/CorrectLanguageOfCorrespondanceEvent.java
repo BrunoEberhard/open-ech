@@ -23,7 +23,7 @@ public class CorrectLanguageOfCorrespondanceEvent extends PersonEventEditor<Pers
 	}
 
 	@Override
-	public Person load() {
+	public Person createObject() {
 		return getPerson();
 	}
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.editor.Editor;
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
@@ -68,10 +67,10 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 	protected Action[] getActions() {
 		return new Action[] {
 			new SelectPersonContactEditor(),
-			new EditorAction(new EnterPersonContactEditor()),
+			new EnterPersonContactEditor(),
 			// TODO gap
-			new EditorAction(new AddAddressContactEditor(true), "AddAddressPerson"),
-			new EditorAction(new AddAddressContactEditor(false), "AddAddressOrganisation"),
+			new AddAddressContactEditor(true),
+			new AddAddressContactEditor(false),
 		};
 	}
 
@@ -111,22 +110,26 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 	};
     
     // Identifikationen der Kontaktpersonen frei erfassen
-	public class EnterPersonContactEditor extends Editor<PersonIdentification> {
+	public class EnterPersonContactEditor extends Editor<PersonIdentification, Void> {
 		@Override
 		public Form<PersonIdentification> createForm() {
 			return new PersonIdentificationPanel();
 		}
 
 		@Override
-		protected PersonIdentification load() {
+		protected PersonIdentification createObject() {
 			return getValue().person;
 		}
 
 		@Override
-		protected Object save(PersonIdentification personIdentification) {
+		protected Void save(PersonIdentification personIdentification) {
 			getValue().person = personIdentification;
+			return null;
+		}
+
+		@Override
+		protected void finished(Void result) {
 			handleChange();
-			return Editor.SAVE_SUCCESSFUL;
 		}
     };
 
@@ -140,10 +143,11 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
     };
 
     // Kontaktadresse bearbeiten (Person oder Adresse)
-	public class AddAddressContactEditor extends Editor<Address> {
+	public class AddAddressContactEditor extends Editor<Address, Void> {
 		private final boolean person;
 		
 		public AddAddressContactEditor(boolean person) {
+			super(person ? "AddAddressPerson" : "AddAddressOrganisation");
 			this.person = person;
 		}
 		
@@ -153,15 +157,19 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		}
 
 		@Override
-		protected Address load() {
+		protected Address createObject() {
 			return getValue().address;
 		}
 
 		@Override
-		protected Object save(Address address) {
+		protected Void save(Address address) {
 			getValue().address = address;
+			return null;
+		}
+		
+		@Override
+		protected void finished(Void result) {
 			handleChange();
-			return Editor.SAVE_SUCCESSFUL;
 		}
     };
 

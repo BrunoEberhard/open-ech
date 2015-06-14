@@ -25,7 +25,7 @@ public class CorrectOccupationEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public Person load() {
+	public Person createObject() {
 		return getPerson();
 	}
 

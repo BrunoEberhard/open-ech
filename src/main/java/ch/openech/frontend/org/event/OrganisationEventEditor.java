@@ -17,7 +17,7 @@ import ch.openech.transaction.OrganisationTransaction;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
-public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements XmlResult<T> {
+public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisation> implements XmlResult<T> {
 
 	private final Organisation organisation;
 	
@@ -54,10 +54,18 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T> implements
 	protected abstract List<String> getXml(Organisation organisation, T object, WriterEch0148 writerEch0148) throws Exception;
 
 	@Override
-	public Object save(T object) throws Exception {
-		List<String> xmls = getXml(object);
-		Organisation firstInsertOrganisation = Backend.getInstance().execute(new OrganisationTransaction(xmls));
-		return new OrganisationPage(echSchema, firstInsertOrganisation);
+	public Organisation save(T object)  {
+		try {
+			List<String> xmls = getXml(object);
+			return Backend.getInstance().execute(new OrganisationTransaction(xmls));
+		} catch (Exception x) {
+			throw new RuntimeException(x);
+		}
+	}
+
+	@Override
+	protected void finished(Organisation organisation) {
+		ClientToolkit.getToolkit().show(new OrganisationPage(echSchema, organisation));
 	}
 	
 }

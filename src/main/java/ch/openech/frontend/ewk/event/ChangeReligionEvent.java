@@ -23,7 +23,7 @@ public class ChangeReligionEvent extends PersonEventEditor<Person> {
 	}
 
 	@Override
-	public Person load() {
+	public Person createObject() {
 		return getPerson();
 	}
 

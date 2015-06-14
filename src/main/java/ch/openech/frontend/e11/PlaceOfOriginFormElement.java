@@ -2,7 +2,6 @@ package ch.openech.frontend.e11;
 
 import java.util.List;
 
-import org.minimalj.frontend.editor.EditorAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.toolkit.Action;
@@ -33,14 +32,14 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 		this.withAddOn = withAddOn;
 	}
 	
-	public class AddOriginEditor extends AddListEntryEditor {
+	public class AddOriginAction extends AddListEntryAction {
 		@Override
 		public Form<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
 		}
 
 		@Override
-		protected PlaceOfOrigin newInstance() {
+		protected PlaceOfOrigin createObject() {
 			PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 			// TODO Preference in PlaceOfOriginField
 //			PageContext context = PageContextHelper.findContext(visual);
@@ -56,8 +55,8 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 		}
 	}
 
-	public class EditOriginEditor extends EditListEntryEditor {
-		private EditOriginEditor(PlaceOfOrigin placeOfOrigin) {
+	public class EditOriginAction extends EditListEntryAction {
+		private EditOriginAction(PlaceOfOrigin placeOfOrigin) {
 			super(placeOfOrigin);
 		}
 
@@ -114,14 +113,14 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 	@Override
 	protected void showEntry(PlaceOfOrigin placeOfOrigin) {
 		add(placeOfOrigin,
-			new EditorAction(new EditOriginEditor(placeOfOrigin)),
+			new EditOriginAction(placeOfOrigin),
 			new RemoveOriginAction(placeOfOrigin)
 		);
 	}
 
 	@Override
 	protected Action[] getActions() {
-		return new Action[] { new EditorAction(new AddOriginEditor()) };
+		return new Action[] { new AddOriginAction() };
 	}
 
 }

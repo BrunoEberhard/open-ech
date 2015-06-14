@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.page.Page;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
@@ -20,7 +20,7 @@ import ch.openech.model.person.PersonEditMode;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
-public class BirthEvent extends XmlEditor<Person> {
+public class BirthEvent extends XmlEditor<Person, Person> {
 
 	private final OpenEchPreferences preferences;
 	
@@ -35,7 +35,7 @@ public class BirthEvent extends XmlEditor<Person> {
 	}
 
 	@Override
-	public Person newInstance() {
+	public Person createObject() {
 		return calculatePresets(preferences);
 	}
 
@@ -46,12 +46,20 @@ public class BirthEvent extends XmlEditor<Person> {
 	}
 	
 	@Override
-	public Page save(Person object) throws Exception {
-		List<String> xmls = getXml(object);
-		Person savedPerson = PersonEventEditor.send(xmls);
-		return new PersonPage(echSchema, savedPerson);
+	public Person save(Person object) {
+		try {
+			List<String> xmls = getXml(object);
+			return PersonEventEditor.send(xmls);
+		} catch (Exception x) {
+			throw new RuntimeException(x);
+		}
 	}
 
+	@Override
+	protected void finished(Person result) {
+		ClientToolkit.getToolkit().show(new PersonPage(echSchema, result));
+	}
+	
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
 		person.validate(resultList);
