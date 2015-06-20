@@ -15,20 +15,21 @@ import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
+import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.ewk.event.UndoCitizenEvent.UndoCitizenData;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 
 public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
-	private final Person person;
 
-	public UndoCitizenEvent(EchSchema ech, Person person) {
-		super(ech, person);
-		this.person = person;
+	private List<PlaceOfOrigin> existingPlaceOfOrigin;
+	
+	public UndoCitizenEvent(PersonPage personPage) {
+		super(personPage);
 	}
 	
 	@Override
@@ -36,7 +37,14 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 	    formPanel.line(new UndoCitizenField(UndoCitizenData.$.placeOfOrigin));
 	    formPanel.line(UndoCitizenData.$.expatriationDate);
 	}
-
+	
+	@Override
+	public Person getPerson() {
+		Person person = super.getPerson();
+		this.existingPlaceOfOrigin = CloneHelper.clone(person.placeOfOrigin);
+		return person;
+	}
+	
 	@Override
 	protected List<String> getXml(Person person, UndoCitizenData data, WriterEch0020 writerEch0020) throws Exception {
         return Collections.singletonList(writerEch0020.undoCitizen(person.personIdentification(), data.placeOfOrigin, data.expatriationDate));
@@ -47,7 +55,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		
 		public UndoCitizenField(PropertyInterface property) {
 			super(property);
-			comboBox = ClientToolkit.getToolkit().createComboBox(person.placeOfOrigin, listener());
+			comboBox = ClientToolkit.getToolkit().createComboBox(existingPlaceOfOrigin, listener());
 		}
 
 		public UndoCitizenField(PlaceOfOrigin key) {

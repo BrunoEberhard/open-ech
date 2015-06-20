@@ -7,14 +7,14 @@ import java.util.List;
 
 import org.minimalj.frontend.form.Form;
 
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class PaperLockEvent extends PersonEventEditor<Person> {
 
-	public PaperLockEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public PaperLockEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

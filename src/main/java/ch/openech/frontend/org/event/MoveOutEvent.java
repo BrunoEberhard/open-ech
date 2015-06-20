@@ -7,14 +7,14 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
-import  ch.openech.model.organisation.Organisation;
-import ch.openech.xml.write.EchSchema;
+import ch.openech.frontend.page.OrganisationPage;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.WriterEch0148;
 
 public class MoveOutEvent extends OrganisationEventEditor<Organisation> {
 	
-	public MoveOutEvent(EchSchema ech, Organisation organisation) {
-		super(ech, organisation);
+	public MoveOutEvent(OrganisationPage organisationPage) {
+		super(organisationPage);
 	}
 
 	@Override

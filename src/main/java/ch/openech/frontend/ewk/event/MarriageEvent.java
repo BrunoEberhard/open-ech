@@ -18,6 +18,7 @@ import org.minimalj.util.StringUtils;
 
 import ch.openech.frontend.RemoveEntriesListFormElement;
 import ch.openech.frontend.e44.PersonFormElement;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.EchFormats;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
@@ -25,13 +26,12 @@ import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.ReasonOfAcquisition;
 import ch.openech.model.person.types.TypeOfRelationship;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
-	public MarriageEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public MarriageEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

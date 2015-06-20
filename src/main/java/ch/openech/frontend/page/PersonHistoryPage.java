@@ -16,12 +16,12 @@ import ch.openech.xml.write.EchSchema;
 
 public class PersonHistoryPage extends HistoryPage<Person> {
 
-	private final EchSchema echNamespaceContext;
-	private final Person person;
+	private final EchSchema echSchema;
+	private final PersonPage personPage;
 
-	public PersonHistoryPage(EchSchema echNamespaceContext, Person person) {
-		this.echNamespaceContext = echNamespaceContext;
-		this.person = person;
+	public PersonHistoryPage(PersonPage personPage) {
+		this.echSchema = personPage.getEchSchema();
+		this.personPage = personPage;
 	}
 
 	@Override
@@ -31,6 +31,8 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 
 	@Override
 	protected List<HistoryVersion<Person>> loadVersions() {
+		Person person = personPage.load();
+		
 		List<Person> persons = Backend.getInstance().execute(new ReadHistoryTransaction<Person>(person));
 //		Collections.sort(times);
 //		Collections.reverse(times);
@@ -70,11 +72,7 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 
 	@Override
 	protected Page click(Person object, String version) {
-		if (version != null) {
-			return new PersonPage(echNamespaceContext, object, Integer.valueOf(version));
-		} else {
-			return new PersonPage(echNamespaceContext, object);
-		}
+		return new PersonPage(echSchema, object);
 	}
 	
 }

@@ -7,16 +7,16 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.e11.OriginPanel;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.types.ReasonOfAcquisition;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class NaturalizeSwissEvent extends PersonEventEditor<PlaceOfOrigin> {
 	
-	public NaturalizeSwissEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public NaturalizeSwissEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

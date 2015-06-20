@@ -9,15 +9,15 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 
 public class ChangeResidencePermitEvent extends PersonEventEditor<Person> {
 
-	public ChangeResidencePermitEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public ChangeResidencePermitEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 
 import ch.openech.frontend.ewk.event.PersonEventEditor;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.TypeOfRelationship;
@@ -19,8 +20,8 @@ import ch.openech.xml.write.WriterEch0020;
 
 public class CareEvent extends PersonEventEditor<Relation> {
 
-	public CareEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public CareEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

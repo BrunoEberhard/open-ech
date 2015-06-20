@@ -8,6 +8,7 @@ import org.minimalj.frontend.form.element.EnumFormElement;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.TypeOfRelationship;
@@ -16,8 +17,8 @@ import ch.openech.xml.write.WriterEch0020;
 
 public class GardianMeasureEvent extends PersonEventEditor<Relation> {
 
-	public GardianMeasureEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public GardianMeasureEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

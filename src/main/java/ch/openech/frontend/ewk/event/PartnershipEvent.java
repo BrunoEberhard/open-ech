@@ -16,12 +16,12 @@ import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.frontend.e44.PersonFormElement;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.EchFormats;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.TypeOfRelationship;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 
@@ -29,8 +29,8 @@ import ch.openech.xml.write.WriterEch0020;
 // "nur" der Allianzname nicht der "richtige" Name
 public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partnership> {
 
-	public PartnershipEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public PartnershipEvent(PersonPage personPage) {
+		super(personPage);
 	}
 		
 	public static class Partnership implements Validation {

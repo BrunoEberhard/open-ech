@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.util.LoggingRuntimeException;
 
 import ch.openech.frontend.XmlEditor;
@@ -13,18 +12,15 @@ import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.common.NamedId;
 import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public abstract class PersonEventEditor<T> extends XmlEditor<T, Person> implements XmlResult<T> {
 
-	private final Person person;
+	private final PersonPage personPage;
 	
-	protected PersonEventEditor(EchSchema ech, Person person) {
-		super(ech);
-		this.person = person;
-		this.person.personIdentification().technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
-		this.person.personIdentification().technicalIds.localId.personId = String.valueOf(person.id);
+	protected PersonEventEditor(PersonPage personPage) {
+		super(personPage.getEchSchema());
+		this.personPage = personPage;
 	}
 	
 	@Override
@@ -35,6 +31,9 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T, Person> implemen
 	}
 
 	public Person getPerson() {
+		Person person = personPage.load();
+		person.personIdentification().technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
+		person.personIdentification().technicalIds.localId.personId = String.valueOf(person.id);
 		return person;
 	}
 
@@ -49,7 +48,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T, Person> implemen
 	
 	@Override
 	protected void finished(Person person) {
-		ClientToolkit.getToolkit().show(new PersonPage(echSchema, person));
+		personPage.setObject(person);
 	}
 	
 	public static Person send(final List<String> xmls) {

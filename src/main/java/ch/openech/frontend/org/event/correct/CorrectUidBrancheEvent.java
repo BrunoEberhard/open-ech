@@ -8,14 +8,14 @@ import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.org.event.OrganisationEventEditor;
-import  ch.openech.model.organisation.Organisation;
-import ch.openech.xml.write.EchSchema;
+import ch.openech.frontend.page.OrganisationPage;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectUidBrancheEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectUidBrancheEvent(EchSchema ech, Organisation organisation) {
-		super(ech, organisation);
+	public CorrectUidBrancheEvent(OrganisationPage organisationPage) {
+		super(organisationPage);
 	}
 
 	@Override

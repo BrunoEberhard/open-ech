@@ -3,8 +3,8 @@ package ch.openech.frontend.ewk.event;
 import java.io.InputStream;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.Action;
+import org.minimalj.frontend.toolkit.ClientToolkit;
 
 import ch.openech.transaction.PersonImportStreamConsumer;
 

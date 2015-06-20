@@ -8,16 +8,16 @@ import org.minimalj.model.Keys;
 
 import ch.openech.frontend.e07.MunicipalityFormElement;
 import ch.openech.frontend.e10.AddressFormElement;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class MoveEvent extends PersonEventEditor<MoveEvent.MoveEventData> {
 	
-	public MoveEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public MoveEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	public static class MoveEventData {

@@ -7,14 +7,14 @@ import org.minimalj.frontend.form.Form;
 
 import ch.openech.frontend.org.OrganisationPanel;
 import ch.openech.frontend.org.event.OrganisationEventEditor;
+import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.model.organisation.Organisation;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectReportingEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectReportingEvent(EchSchema ech, Organisation organisation) {
-		super(ech, organisation);
+	public CorrectReportingEvent(OrganisationPage organisationPage) {
+		super(organisationPage);
 	}
 
 	@Override

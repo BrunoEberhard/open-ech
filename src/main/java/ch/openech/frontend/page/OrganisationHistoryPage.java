@@ -16,12 +16,12 @@ import ch.openech.xml.write.EchSchema;
 
 public class OrganisationHistoryPage extends HistoryPage<Organisation> {
 
-	private final EchSchema echNamespaceContext;
-	private final Organisation organisation;
+	private final EchSchema echSchema;
+	private final OrganisationPage organisationPage;
 
-	public OrganisationHistoryPage(EchSchema echNamespaceContext, Organisation organisation) {
-		this.echNamespaceContext = echNamespaceContext;
-		this.organisation = organisation;
+	public OrganisationHistoryPage(OrganisationPage organisationPage) {
+		this.echSchema = organisationPage.getEchSchema();
+		this.organisationPage = organisationPage;
 	}
 
 	@Override
@@ -31,6 +31,8 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> {
 
 	@Override
 	protected List<HistoryVersion<Organisation>> loadVersions() {
+		Organisation organisation = organisationPage.load();
+		
 		List<Organisation> organisations = Backend.getInstance().execute(new ReadHistoryTransaction<Organisation>(organisation));
 //		Collections.sort(times);
 //		Collections.reverse(times);
@@ -70,11 +72,7 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> {
 
 	@Override
 	protected Page click(Organisation object, String version) {
-		if (version != null) {
-			return new OrganisationPage(echNamespaceContext, object, Integer.valueOf(version));
-		} else {
-			return new OrganisationPage(echNamespaceContext, object);
-		}
+		return new OrganisationPage(echSchema, object);
 	}
 	
 }

@@ -6,9 +6,9 @@ import java.util.List;
 import org.minimalj.frontend.form.Form;
 
 import ch.openech.frontend.e21.OccupationPanel;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Occupation;
 import ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 
@@ -16,8 +16,8 @@ import ch.openech.xml.write.WriterEch0020;
 // Aber die Konvention ist, dass die Klasse gleich heisst wie die XML - Struktur
 public class ChangeOccupationEvent extends PersonEventEditor<Occupation> {
 	
-	public ChangeOccupationEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public ChangeOccupationEvent(PersonPage personPage) {
+		super(personPage);
 	}
 	
 	@Override

@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.minimalj.frontend.form.Form;
 
-import  ch.openech.model.organisation.Organisation;
-import ch.openech.xml.write.EchSchema;
+import ch.openech.frontend.page.OrganisationPage;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.WriterEch0148;
 
 public class ChangeReportingEvent extends OrganisationEventEditor<Organisation> {
 	
-	public ChangeReportingEvent(EchSchema ech, Organisation organisation) {
-		super(ech, organisation);
+	public ChangeReportingEvent(OrganisationPage organisationPage) {
+		super(organisationPage);
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.ewk.PersonPanel;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Place;
@@ -23,7 +24,6 @@ import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.Religion;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.types.YesNo;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 // Ein etwas spezieller Event, da er nicht die momentan gewählte Person betrifft,
@@ -31,8 +31,8 @@ import ch.openech.xml.write.WriterEch0020;
 public class BirthChildEvent extends PersonEventEditor<Person>  {
 	private final OpenEchPreferences preferences;
 	
-	public BirthChildEvent(EchSchema ech, Person person, OpenEchPreferences preferences) {
-		super(ech, person);
+	public BirthChildEvent(PersonPage personPage, OpenEchPreferences preferences) {
+		super(personPage);
 		this.preferences = preferences;
 	}
 

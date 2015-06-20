@@ -1,5 +1,6 @@
 package ch.openech.frontend.ewk.event;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,8 @@ import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 
-import java.time.LocalDate;
-
 import ch.openech.frontend.e44.SecondPersonFormElement;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.SecondaryResidence;
@@ -20,15 +20,14 @@ import ch.openech.model.person.types.MaritalStatus;
 import ch.openech.model.person.types.PartnerShipAbolition;
 import ch.openech.model.person.types.Separation;
 import ch.openech.model.person.types.TypeOfRelationship;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0093;
 
 public abstract class ChangeWithSecondPersonEvent extends
 		PersonEventEditor<ChangeWithSecondPersonEvent.ChangeWithSecondPersonEventData> {
 
-	public ChangeWithSecondPersonEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public ChangeWithSecondPersonEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	public static class ChangeWithSecondPersonEventData {
@@ -89,8 +88,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class DeathEvent extends ChangeWithSecondPersonEvent {
 
-		public DeathEvent(EchSchema ech, Person person) {
-			super(ech, person);
+		public DeathEvent(PersonPage personPage) {
+			super(personPage);
 		}
 
 		@Override
@@ -135,8 +134,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class MissingEvent extends ChangeWithSecondPersonEvent {
 
-		public MissingEvent(EchSchema ech, Person person) {
-			super(ech, person);
+		public MissingEvent(PersonPage personPage) {
+			super(personPage);
 		}
 
 		@Override
@@ -170,8 +169,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class SeparationEvent extends ChangeWithSecondPersonEvent {
 
-		public SeparationEvent(EchSchema ech, Person person) {
-			super(ech, person);
+		public SeparationEvent(PersonPage personPage) {
+			super(personPage);
 		}
 
 		@Override
@@ -201,8 +200,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoSeparationEvent extends ChangeWithSecondPersonEvent {
 
-		public UndoSeparationEvent(EchSchema ech, Person person) {
-			super(ech, person);
+		public UndoSeparationEvent(PersonPage personPage) {
+			super(personPage);
 		}
 
 		@Override
@@ -225,8 +224,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class DivorceEvent extends ChangeWithSecondPersonEvent {
 
-		public DivorceEvent(EchSchema ech, Person person) {
-			super(ech, person);
+		public DivorceEvent(PersonPage personPage) {
+			super(personPage);
 		}
 
 		@Override
@@ -255,8 +254,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoPartnershipEvent extends ChangeWithSecondPersonEvent {
 
-		public UndoPartnershipEvent(EchSchema ech, Person person) {
-			super(ech, person);
+		public UndoPartnershipEvent(PersonPage personPage) {
+			super(personPage);
 		}
 
 		@Override
@@ -287,8 +286,8 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class UndoMarriageEvent extends ChangeWithSecondPersonEvent  {
 
-		public UndoMarriageEvent(EchSchema ech, Person person) {
-			super(ech, person);
+		public UndoMarriageEvent(PersonPage personPage) {
+			super(personPage);
 		}
 
 		@Override

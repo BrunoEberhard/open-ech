@@ -8,14 +8,14 @@ import org.minimalj.frontend.form.Form;
 import ch.openech.frontend.e21.NameOfParentsFormElement;
 import ch.openech.frontend.e21.RelationFormElement;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
-import  ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
+import ch.openech.frontend.page.PersonPage;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.WriterEch0020;
 
 public class CorrectRelationshipEvent extends PersonEventEditor<Person> {
 
-	public CorrectRelationshipEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public CorrectRelationshipEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

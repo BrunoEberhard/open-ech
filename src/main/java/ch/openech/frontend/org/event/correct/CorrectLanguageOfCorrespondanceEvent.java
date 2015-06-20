@@ -8,15 +8,15 @@ import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.org.event.OrganisationEventEditor;
-import  ch.openech.model.organisation.Organisation;
-import ch.openech.xml.write.EchSchema;
+import ch.openech.frontend.page.OrganisationPage;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.WriterEch0148;
 
 // Der Typo kommt vom Schema
 public class CorrectLanguageOfCorrespondanceEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectLanguageOfCorrespondanceEvent(EchSchema ech, Organisation organisation) {
-		super(ech, organisation);
+	public CorrectLanguageOfCorrespondanceEvent(OrganisationPage organisationPage) {
+		super(organisationPage);
 	}
 
 	@Override

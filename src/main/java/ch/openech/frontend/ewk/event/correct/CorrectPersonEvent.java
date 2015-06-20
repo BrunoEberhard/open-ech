@@ -7,16 +7,16 @@ import org.minimalj.frontend.form.Form;
 
 import ch.openech.frontend.ewk.PersonPanel;
 import ch.openech.frontend.ewk.event.PersonEventEditor;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 // Dimension(900, 580);
 public class CorrectPersonEvent extends PersonEventEditor<Person> {
 
-	public CorrectPersonEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public CorrectPersonEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

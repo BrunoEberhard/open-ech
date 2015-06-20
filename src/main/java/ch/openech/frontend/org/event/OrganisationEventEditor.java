@@ -19,13 +19,11 @@ import ch.openech.xml.write.WriterEch0148;
 
 public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisation> implements XmlResult<T> {
 
-	private final Organisation organisation;
+	private final OrganisationPage organisationPage;
 	
-	protected OrganisationEventEditor(EchSchema echSchema, Organisation organisation) {
-		super(echSchema);
-		this.organisation = organisation;
-		this.organisation.technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
-		this.organisation.technicalIds.localId.personId = String.valueOf(organisation.id);
+	protected OrganisationEventEditor(OrganisationPage organisationPage) {
+		super(organisationPage.getEchSchema());
+		this.organisationPage = organisationPage;
 	}
 
 	protected static EchSchema getNamespaceContextOrg() {
@@ -43,6 +41,9 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisati
 	protected abstract void fillForm(Form<T> formPanel);
 
 	public Organisation getOrganisation() {
+		Organisation organisation = organisationPage.load();
+		organisation.technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
+		organisation.technicalIds.localId.personId = String.valueOf(organisation.id);
 		return organisation;
 	}
 	

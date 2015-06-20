@@ -6,14 +6,14 @@ import java.util.List;
 import org.minimalj.frontend.form.Form;
 
 import ch.openech.frontend.org.event.OrganisationEventEditor;
-import  ch.openech.model.organisation.Organisation;
-import ch.openech.xml.write.EchSchema;
+import ch.openech.frontend.page.OrganisationPage;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.WriterEch0148;
 
 public class CorrectContactEvent extends OrganisationEventEditor<Organisation> {
 	
-	public CorrectContactEvent(EchSchema ech, Organisation organisation) {
-		super(ech, organisation);
+	public CorrectContactEvent(OrganisationPage organisationPage) {
+		super(organisationPage);
 	}
 
 	@Override

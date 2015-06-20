@@ -3,15 +3,15 @@ package ch.openech.frontend.ewk.event;
 import java.util.Collections;
 import java.util.List;
 
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class NaturalizeForeignerEvent extends NaturalizeSwissEvent {
 
-	public NaturalizeForeignerEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public NaturalizeForeignerEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

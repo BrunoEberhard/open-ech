@@ -1,6 +1,6 @@
 package ch.openech.frontend.ewk.event.correct;
 
-import static  ch.openech.model.person.Foreign.*;
+import static ch.openech.model.person.Foreign.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,15 +10,15 @@ import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.ewk.event.PersonEventEditor;
-import  ch.openech.model.person.Foreign;
-import  ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
+import ch.openech.frontend.page.PersonPage;
+import ch.openech.model.person.Foreign;
+import ch.openech.model.person.Person;
 import ch.openech.xml.write.WriterEch0020;
 
 public class CorrectResidencePermitEvent extends PersonEventEditor<Foreign> {
 	
-	public CorrectResidencePermitEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public CorrectResidencePermitEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

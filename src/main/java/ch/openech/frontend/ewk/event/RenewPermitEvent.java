@@ -9,14 +9,14 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class RenewPermitEvent extends PersonEventEditor<Person> {
 	
-	public RenewPermitEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public RenewPermitEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

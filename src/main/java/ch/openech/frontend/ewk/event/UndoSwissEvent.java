@@ -8,15 +8,15 @@ import java.util.List;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Nationality;
 import ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class UndoSwissEvent extends PersonEventEditor<Person> {
 
-	public UndoSwissEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public UndoSwissEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

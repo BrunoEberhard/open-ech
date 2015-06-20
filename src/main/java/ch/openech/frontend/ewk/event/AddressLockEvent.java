@@ -7,15 +7,15 @@ import java.util.List;
 
 import org.minimalj.frontend.form.Form;
 
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 // in e20 wird das AddressLock genannt, überall sonst, z.B. e21 DataLock
 public class AddressLockEvent extends PersonEventEditor<Person> {
 
-	public AddressLockEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public AddressLockEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override

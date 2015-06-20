@@ -7,16 +7,16 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.frontend.ewk.PersonPanel;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 // return new Dimension(900, 550);
 public class ChangeTypeOfResidenceEvent extends PersonEventEditor<Person> {
 	
-	public ChangeTypeOfResidenceEvent(EchSchema ech, Person person) {
-		super(ech, person);
+	public ChangeTypeOfResidenceEvent(PersonPage personPage) {
+		super(personPage);
 	}
 
 	@Override
