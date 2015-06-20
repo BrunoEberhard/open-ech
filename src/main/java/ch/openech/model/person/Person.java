@@ -142,10 +142,6 @@ public class Person implements Validation {
 	
 	//
 	
-//	public boolean isPersisent() {
-//		return personIdentification != null;
-//	}
-	
 	public boolean isMale() {
 		return sex == Sex.maennlich;
 	}
