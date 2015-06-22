@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
-import org.minimalj.frontend.page.PageAction;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 
@@ -69,7 +68,8 @@ public class RelationFormElement extends ListFormElement<Relation> {
 		if (isEditable()) {
 			add(relation, new RemoveRelationAction(relation));
 		} else {
-			add(relation, new PageAction(new PersonPage(echNamespaceContext, relation.partner.id), "Person anzeigen"));
+			add(relation);
+			add("Person anzeigen", new PersonPage(echNamespaceContext, relation.partner.id));
 		}
 	}
 
