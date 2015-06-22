@@ -29,7 +29,7 @@ public class PlaceOfOrigin {
 	@Override
 	public String toString() {
 		String s = originName;
-		if (!originEndsWithCanton()) {
+		if (canton != null && !originEndsWithCanton()) {
 			s = s + " " + canton.id;
 		}
 		return s;
