@@ -26,6 +26,11 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData, Void> {
 	}
 
 	@Override
+	protected GeneratePersonData createObject() {
+		return new GeneratePersonData();
+	}
+
+	@Override
 	protected Form<GeneratePersonData> createForm() {
 		Form<GeneratePersonData> form = new Form<GeneratePersonData>();
 		form.line(GeneratePersonData.$.numberOfPersons);
