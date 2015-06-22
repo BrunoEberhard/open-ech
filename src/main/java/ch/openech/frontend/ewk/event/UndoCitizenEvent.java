@@ -33,6 +33,11 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 	}
 	
 	@Override
+	protected UndoCitizenData createObject() {
+		return new UndoCitizenData();
+	}
+	
+	@Override
 	protected void fillForm(Form<UndoCitizenData> formPanel) {
 	    formPanel.line(new UndoCitizenField(UndoCitizenData.$.placeOfOrigin));
 	    formPanel.line(UndoCitizenData.$.expatriationDate);
