@@ -3,8 +3,8 @@ package ch.openech.frontend.e10;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
+import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.frontend.toolkit.ClientToolkit.InputType;
-import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.EchFormats;
@@ -12,8 +12,8 @@ import ch.openech.model.common.HouseNumber;
 
 public class HouseNumberFormElement extends AbstractFormElement<HouseNumber> {
 	private HouseNumber houseNumber;
-	private final TextField houseNumberTextField;
-	private final TextField dwellingNumberTextField;
+	private final Input<String> houseNumberTextField;
+	private final Input<String> dwellingNumberTextField;
 	private final IComponent horizontalLayout;
 	
 	public HouseNumberFormElement(PropertyInterface property) {

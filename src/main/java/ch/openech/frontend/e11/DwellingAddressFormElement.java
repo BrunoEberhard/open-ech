@@ -29,6 +29,13 @@ public class DwellingAddressFormElement extends ObjectFormElement<DwellingAddres
 	}
 
 	@Override
+	protected DwellingAddress createObject() {
+		DwellingAddress dwellingAddress = super.createObject();
+		dwellingAddress.echSchema = echSchema;
+		return dwellingAddress;
+	}
+	
+	@Override
 	public Form<DwellingAddress> createFormPanel() {
 		return new DwellingAddressPanel(echSchema);
 	}

@@ -11,7 +11,6 @@ import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.frontend.toolkit.ClientToolkit.InputType;
 import org.minimalj.frontend.toolkit.ClientToolkit.Search;
-import org.minimalj.frontend.toolkit.TextField;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
@@ -29,7 +28,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 	private final Input<CountryIdentification> comboBoxCountry;
 
 	private final List<MunicipalityIdentification> municipalityIdentifications;
-	private final TextField textFieldMunicipality;
+	private final Input<String> textFieldMunicipality;
 	
 	private final IComponent horizontalLayout;
 

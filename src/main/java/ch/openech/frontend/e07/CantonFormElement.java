@@ -3,7 +3,7 @@ package ch.openech.frontend.e07;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.TextField;
+import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validatable;
 import org.minimalj.util.Codes;
@@ -15,7 +15,7 @@ import ch.openech.model.common.Canton;
 
 public class CantonFormElement extends AbstractFormElement<Canton> implements Mocking, Validatable {
 	
-	private TextField textField;
+	private Input<String> textField;
 
 	public CantonFormElement(PropertyInterface property) {
 		super(property);
