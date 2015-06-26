@@ -32,7 +32,7 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 		this.withAddOn = withAddOn;
 	}
 	
-	public class AddOriginAction extends AddListEntryAction {
+	public class AddOriginEditor extends AddListEntryEditor {
 		@Override
 		public Form<PlaceOfOrigin> createForm() {
 			return new OriginPanel(withAddOn, withAddOn);
@@ -120,7 +120,7 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 
 	@Override
 	protected Action[] getActions() {
-		return new Action[] { new AddOriginAction() };
+		return new Action[] { new AddOriginEditor() };
 	}
 
 }
