@@ -3,6 +3,7 @@ package ch.openech.frontend.e11;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import org.minimalj.frontend.form.element.AbstractFormElement;
@@ -10,7 +11,7 @@ import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
 import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.frontend.toolkit.ClientToolkit.InputType;
-import org.minimalj.frontend.toolkit.ClientToolkit.Search;
+import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
@@ -38,34 +39,18 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		municipalityIdentifications = Codes.get(MunicipalityIdentification.class);
 		
 		comboBoxCountry = ClientToolkit.getToolkit().createComboBox(countries, listener());
-		textFieldMunicipality = ClientToolkit.getToolkit().createTextField(100, null, InputType.FREE, new MunicipalityAutocomplete(), listener()); // TODO length
+		textFieldMunicipality = ClientToolkit.getToolkit().createTextField(100, null, InputType.FREE, munipalityNames(municipalityIdentifications), listener()); // TODO length
 		
 		horizontalLayout = ClientToolkit.getToolkit().createComponentGroup(comboBoxCountry, textFieldMunicipality);
 	}
 	
-	private class MunicipalityAutocomplete implements Search<String> {
-
-		@Override
-		public List<String> search(String query) {
-			if (StringUtils.isBlank(query)) {
-				return Collections.emptyList();
-			}
-			CountryIdentification country = comboBoxCountry.getValue();
-			if (country != null && !country.isSwiss()) {
-				return Collections.emptyList();
-			}
-			query = query.toLowerCase();
-			List<String> items = new ArrayList<String>();
-			for (MunicipalityIdentification municipality : municipalityIdentifications) {
-				if (municipality.municipalityName.toLowerCase().startsWith(query)) {
-					items.add(municipality.municipalityName);
-					if (items.size() == 20) {
-						return items;
-					}
-				}
-			}
-			return items;
+	private List<String> munipalityNames(List<MunicipalityIdentification> municipalityIdentifications) {
+		Collections.sort(municipalityIdentifications);
+		List<String> names = new ArrayList<>(municipalityIdentifications.size());
+		for (MunicipalityIdentification municipalityIdentification : municipalityIdentifications) {
+			names.add(municipalityIdentification.render(RenderType.PLAIN_TEXT, Locale.getDefault()));
 		}
+		return names;
 	}
 
 	@Override
