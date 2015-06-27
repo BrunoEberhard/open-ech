@@ -19,7 +19,7 @@ public class RelationFormElement extends ListFormElement<Relation> {
 		this.echNamespaceContext = echNamespaceContext;
 	}
 
-	public class AddRelationEditor extends AddListEntryAction {
+	public class AddRelationEditor extends AddListEntryEditor {
 
 		@Override
 		protected Relation createObject() {

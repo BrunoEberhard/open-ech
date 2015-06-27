@@ -47,9 +47,10 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 				text = technicalIds.localId.personId.substring(0, maxLength-1) + "...";
 			}
 		} else {
-			text = "-";
+			text = isEditable() ? "Id bearbeiten" : "-";
 		}
-		add(text, getEditorAction());
+		Action action = new ObjectFormElementEditor(text);
+		add(action);
 	}
 
 	@Override
@@ -83,10 +84,10 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		
 		@Override
 		protected Action[] getActions() {
-			return new Action[] { new AddOtherIdAction() };
+			return new Action[] { new AddOtherIdEditor() };
 		}
 
-		private class AddOtherIdAction extends AddListEntryAction {
+		private class AddOtherIdEditor extends AddListEntryEditor {
 			@Override
 			public Form<NamedId> createForm() {
 				return new NamedIdPanel();

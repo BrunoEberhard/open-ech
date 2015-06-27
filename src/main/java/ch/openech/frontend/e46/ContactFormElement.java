@@ -20,7 +20,7 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 		super(property, editable);
 	}
 	
-	public class AddContactEntryEditor extends AddListEntryAction {
+	public class AddContactEntryEditor extends AddListEntryEditor {
 		private final ContactEntryType type;
 		private final boolean person;
 		

@@ -19,7 +19,7 @@ public class OccupationFormElement extends ListFormElement<Occupation> {
 		this.echSchema = echSchema;
 	}
 
-	public class AddOccupationEditor extends AddListEntryAction {
+	public class AddOccupationEditor extends AddListEntryEditor {
 
 		@Override
 		protected Occupation createObject() {
