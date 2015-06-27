@@ -64,6 +64,16 @@ public class MunicipalityIdentification implements Code, Rendering, Comparable<M
 	@Override
 	public int compareTo(MunicipalityIdentification m) {
 		// Used in ComboBox
+		if (isFederalRegister()) {
+			if (m.isFederalRegister()) {
+				return -Integer.compare(id, m.id);
+			} else {
+				return -1;
+			}
+		} else if (m.isFederalRegister()) {
+			return 1;
+		}
+		
 		int result = municipalityName.compareTo(m.municipalityName);
 		if (result != 0) return result;
 		else return canton.compareTo(m.canton);
