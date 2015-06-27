@@ -102,6 +102,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		} else {
 			String m = textFieldMunicipality.getValue();
 			if (!StringUtils.isBlank(m)) {
+				m = m.toLowerCase();
 				for (MunicipalityIdentification municipality : municipalityIdentifications) {
 					if (municipality.municipalityName.toLowerCase().startsWith(m)) {
 						place.municipalityIdentification = municipality;
