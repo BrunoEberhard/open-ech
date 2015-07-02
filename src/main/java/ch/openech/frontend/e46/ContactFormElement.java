@@ -6,6 +6,7 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.contact.ContactEntry;
 import ch.openech.model.contact.ContactEntryType;
@@ -24,14 +25,14 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 		private final ContactEntryType type;
 		private final boolean person;
 		
-		public AddContactEntryEditor(boolean person, String name) {
-			super(name);
+		public AddContactEntryEditor(boolean person, String resourceName) {
+			super(Resources.getString(resourceName));
 			this.type = ContactEntryType.Address;
 			this.person = person;
 		}
 
-		public AddContactEntryEditor(ContactEntryType type, String name) {
-			super(name);
+		public AddContactEntryEditor(ContactEntryType type, String resourceName) {
+			super(Resources.getString(resourceName));
 			this.type = type;
 			this.person = true;
 		}

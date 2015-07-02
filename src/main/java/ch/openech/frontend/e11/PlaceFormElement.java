@@ -1,5 +1,6 @@
 package ch.openech.frontend.e11;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,15 +38,15 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		super(property);
 		countries = Codes.get(CountryIdentification.class);
 		municipalityIdentifications = Codes.get(MunicipalityIdentification.class);
+		Collections.sort(municipalityIdentifications);
 		
 		comboBoxCountry = ClientToolkit.getToolkit().createComboBox(countries, listener());
-		textFieldMunicipality = ClientToolkit.getToolkit().createTextField(100, null, InputType.FREE, munipalityNames(municipalityIdentifications), listener()); // TODO length
+		textFieldMunicipality = ClientToolkit.getToolkit().createTextField(100, null, InputType.FREE, new MunicipalityNames(), listener()); // TODO length
 		
 		horizontalLayout = ClientToolkit.getToolkit().createComponentGroup(comboBoxCountry, textFieldMunicipality);
 	}
 	
 	private List<String> munipalityNames(List<MunicipalityIdentification> municipalityIdentifications) {
-		Collections.sort(municipalityIdentifications);
 		List<String> names = new ArrayList<>(municipalityIdentifications.size());
 		for (MunicipalityIdentification municipalityIdentification : municipalityIdentifications) {
 			names.add(municipalityIdentification.render(RenderType.PLAIN_TEXT, Locale.getDefault()));
@@ -120,4 +121,27 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		setValue(place);
 	}
 
+	private class MunicipalityNames extends AbstractList<String> {
+
+		@Override
+		public String get(int index) {
+			CountryIdentification country = comboBoxCountry.getValue();
+			if (country != null && !country.isSwiss()) {
+				return null;
+			} else {
+				return municipalityIdentifications.get(index).render(RenderType.PLAIN_TEXT, Locale.getDefault());
+			}
+		}
+
+		@Override
+		public int size() {
+			CountryIdentification country = comboBoxCountry.getValue();
+			if (country != null && !country.isSwiss()) {
+				return 0;
+			} else {
+				return municipalityIdentifications.size();
+			}
+		}
+		
+	}
 }

@@ -12,6 +12,7 @@ import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.DateUtils;
+import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.e10.AddressPanel;
 import ch.openech.frontend.e44.PersonIdentificationPanel;
@@ -147,7 +148,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		private final boolean person;
 		
 		public AddAddressContactEditor(boolean person) {
-			super(person ? "AddAddressPerson" : "AddAddressOrganisation");
+			super(Resources.getString(person ? "AddAddressPerson" : "AddAddressOrganisation"));
 			this.person = person;
 		}
 		

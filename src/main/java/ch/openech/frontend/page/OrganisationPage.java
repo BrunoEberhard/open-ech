@@ -112,7 +112,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 		private final List<Action> correctEditors = new ArrayList<>();
 
 		public OrganisationActionGroup() {
-			super("Organisation");
+			super(Resources.getString("Organisation"));
 			
 			move = new MoveEvent(OrganisationPage.this);
 			moveOut = new MoveOutEvent(OrganisationPage.this);
@@ -143,7 +143,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 			addSeparator();
 
 			fillCorrectionActionList();
-			ActionGroup correct = addGroup("ActionGroup.correction");
+			ActionGroup correct = addGroup(Resources.getString("ActionGroup.correction"));
 			for (Action action : correctEditors) {
 				correct.add(action);
 			}
@@ -184,7 +184,6 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 //				action.setEnabled(isOrganisation);
 //			};
 		}
-
 	}
 
 }

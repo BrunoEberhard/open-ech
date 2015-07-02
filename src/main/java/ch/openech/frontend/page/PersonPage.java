@@ -173,7 +173,7 @@ public class PersonPage extends ObjectPage<Person> {
 		private final List<Action> correctActions = new ArrayList<>();
 
 		public PersonActionGroup() {
-			super("Person");
+			super(Resources.getString("Person"));
 			
 			marriage = new MarriageEvent(PersonPage.this);
 			
@@ -365,6 +365,10 @@ public class PersonPage extends ObjectPage<Person> {
 			contact.setEnabled(isPerson);
 		}
 
+		@Override
+		public ActionGroup addGroup(String name) {
+			return super.addGroup(Resources.getString(name));
+		}
 	}
 
 }

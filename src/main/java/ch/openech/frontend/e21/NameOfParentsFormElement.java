@@ -5,6 +5,7 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.util.CloneHelper;
+import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.person.NameOfParent;
 import ch.openech.model.person.NameOfParents;
@@ -41,7 +42,7 @@ public class NameOfParentsFormElement extends ObjectFormElement<NameOfParents> {
 		private final boolean father;
 		
 		public NameOfParentEditor(boolean father) {
-			super(father ? "EditNameOfFather" : "EditNameOfMother");
+			super(Resources.getString(father ? "EditNameOfFather" : "EditNameOfMother"));
 			this.father = father;
 		}
 
