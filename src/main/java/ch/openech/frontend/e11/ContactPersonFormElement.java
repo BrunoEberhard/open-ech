@@ -79,7 +79,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 	public class SelectPersonContactEditor extends SearchDialogAction<PersonSearch> {
 		
 		public SelectPersonContactEditor() {
-			super(PersonSearchPage.FIELD_NAMES);
+			super(PersonSearchPage.FIELDS);
 		}
 		
 		@Override

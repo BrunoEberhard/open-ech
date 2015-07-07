@@ -5,8 +5,8 @@ import static ch.openech.model.person.PersonSearch.*;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.page.AbstractSearchPage;
 import org.minimalj.frontend.page.ObjectPage;
+import org.minimalj.frontend.page.SearchPage;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.criteria.Criteria;
 
@@ -17,9 +17,9 @@ import ch.openech.model.person.PersonSearch;
 import ch.openech.xml.write.EchSchema;
 
 
-public class PersonSearchPage extends AbstractSearchPage<PersonSearch, Person> {
+public class PersonSearchPage extends SearchPage<PersonSearch, Person> {
 
-	public static final Object[] FIELD_NAMES = {
+	public static final Object[] FIELDS = {
 		$.firstName, //
 		$.officialName, //
 		$.dateOfBirth, //
@@ -29,8 +29,8 @@ public class PersonSearchPage extends AbstractSearchPage<PersonSearch, Person> {
 		$.vn.getFormattedValue(), //
 	};
 	
-	public PersonSearchPage() {
-		super(FIELD_NAMES);
+	public PersonSearchPage(String query) {
+		super(query, FIELDS);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class PersonSearchPage extends AbstractSearchPage<PersonSearch, Person> {
 	}
 
 	@Override
-	protected ObjectPage<Person> createPage(Person person) {
+	public ObjectPage<Person> createDetailPage(Person person) {
 		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
 		EchSchema0020 schema0020 = preferences.applicationSchemaData.schema20;
 		String version = schema0020.getVersion() + "." + schema0020.getMinorVersion();

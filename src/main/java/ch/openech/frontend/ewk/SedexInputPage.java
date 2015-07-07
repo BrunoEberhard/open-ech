@@ -20,7 +20,7 @@ import ch.openech.model.person.Person;
 import ch.openech.transaction.EchPersistence;
 import ch.openech.xml.write.EchSchema;
 
-public class SedexInputPage implements Page {
+public class SedexInputPage extends Page {
 
 	private final EchSchema echNamespaceContext;
 	private JPanel panel;

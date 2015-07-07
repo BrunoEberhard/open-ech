@@ -44,7 +44,7 @@ public class PersonFormElement extends ObjectFormElement<Person> {
 	public class PersonSearchAction extends SearchDialogAction<PersonSearch> {
 		
 		public PersonSearchAction() {
-			super(PersonSearchPage.FIELD_NAMES);
+			super(PersonSearchPage.FIELDS);
 		}
 
 		@Override

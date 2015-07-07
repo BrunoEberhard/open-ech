@@ -7,7 +7,6 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectPage;
-import org.minimalj.frontend.page.PageWithDetail;
 import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.persistence.ReadTransaction;
@@ -282,7 +281,7 @@ public class PersonPage extends ObjectPage<Person> {
 			add(birthChild); 
 			
 			addSeparator();
-			add(historyPage, (PageWithDetail) null); 
+			addDetail(historyPage); 
 			
 			refresh();
 		}

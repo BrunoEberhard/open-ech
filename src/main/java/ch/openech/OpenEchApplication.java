@@ -94,8 +94,10 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
-	public SearchPage[] getSearchPages() {
-		return new SearchPage[]{new PersonSearchPage(), new OrganisationSearchPage()};
+	public Page createSearchPage(String query) {
+		PersonSearchPage personSearchPage = new PersonSearchPage(query);
+		OrganisationSearchPage organisationSearchPage = new OrganisationSearchPage(query);
+		return SearchPage.handle(personSearchPage, organisationSearchPage);
 	}
 
 	@Override

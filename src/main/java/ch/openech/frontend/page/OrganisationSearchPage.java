@@ -5,8 +5,8 @@ import static ch.openech.model.organisation.Organisation.*;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.page.AbstractSearchPage.SimpleSearchPage;
 import org.minimalj.frontend.page.ObjectPage;
+import org.minimalj.frontend.page.SearchPage.SimpleSearchPage;
 import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.criteria.Criteria;
 
@@ -17,7 +17,7 @@ import ch.openech.xml.write.EchSchema;
 
 public class OrganisationSearchPage extends SimpleSearchPage<Organisation> {
 
-	public static final Object[] FIELD_NAMES = {
+	public static final Object[] FIELDS = {
 		$.technicalIds.localId.personId, // TODO move to invisible
 		$.organisationName, //
 		$.businessAddress.mailAddress.street, //
@@ -25,8 +25,8 @@ public class OrganisationSearchPage extends SimpleSearchPage<Organisation> {
 		$.businessAddress.mailAddress.town, //
 	};
 	
-	public OrganisationSearchPage() {
-		super(FIELD_NAMES);
+	public OrganisationSearchPage(String query) {
+		super(query, FIELDS);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class OrganisationSearchPage extends SimpleSearchPage<Organisation> {
 	}
 
 	@Override
-	protected ObjectPage<Organisation> createPage(Organisation organisation) {
+	public ObjectPage<Organisation> createDetailPage(Organisation organisation) {
 		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
 		EchSchema0148 schema0148 = preferences.applicationSchemaData.schema148;
 		String version = schema0148.getVersion() + "." + schema0148.getMinorVersion();

@@ -78,7 +78,7 @@ public class HeadquarterFormElement extends ObjectFormElement<Headquarter> {
 	public final class SelectHeadquarterAction extends SearchDialogAction<Organisation> {
 		
 		public SelectHeadquarterAction() {
-			super(OrganisationSearchPage.FIELD_NAMES);
+			super(OrganisationSearchPage.FIELDS);
 		}
 
 		@Override
