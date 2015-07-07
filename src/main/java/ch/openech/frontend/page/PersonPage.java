@@ -103,12 +103,12 @@ public class PersonPage extends ObjectPage<Person> {
 	}
 	
 	@Override
-	public ActionGroup getMenu() {
+	public List<Action> getActions() {
 		if (version == 0) {
 			if (actionGroup == null) {
 				actionGroup = new PersonActionGroup();
 			}
-			return actionGroup;
+			return actionGroup.getItems();
 		} else {
 			return null;
 		}

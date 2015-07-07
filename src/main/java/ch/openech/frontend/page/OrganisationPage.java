@@ -56,12 +56,12 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 	}
 
 	@Override
-	public ActionGroup getMenu() {
+	public List<Action> getActions() {
 		if (version == 0) {
 			if (actionGroup == null) {
 				actionGroup = new OrganisationActionGroup();
 			}
-			return actionGroup;
+			return actionGroup.getItems();
 		} else {
 			return null;
 		}
