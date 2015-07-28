@@ -1,7 +1,7 @@
 package ch.openech.frontend.org;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.toolkit.Action;
+import org.minimalj.frontend.action.Action;
 import org.minimalj.model.EnumUtils;
 
 import ch.openech.model.code.FederalRegister;

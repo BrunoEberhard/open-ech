@@ -2,8 +2,8 @@ package ch.openech.frontend.xmlpreview;
 
 import java.util.List;
 
+import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.model.Keys;
 
 import ch.openech.frontend.ewk.event.XmlTextFormFormElement;
@@ -11,9 +11,9 @@ import ch.openech.frontend.ewk.event.XmlTextFormFormElement;
 public class XmlPreview {
 
 	public static void viewXml(List<String> xmls) {
-//		if (ClientToolkit.getToolkit() instanceof SwingClientToolkit) {
-//			SwingClientToolkit swingClientToolkit = (SwingClientToolkit) ClientToolkit.getToolkit();
-//			XmlSwingFrame xmlFrame = new XmlSwingFrame(swingClientToolkit.get, xmls);
+//		if (Frontend.getInstance() instanceof SwingFrontend) {
+//			SwingFrontend swingFrontend = (SwingFrontend) Frontend.getInstance();
+//			XmlSwingFrame xmlFrame = new XmlSwingFrame(swingFrontend.get, xmls);
 //			xmlFrame.setVisible(true);
 //		} else if (context instanceof com.vaadin.ui.Component) {
 //			com.vaadin.ui.Component component = (com.vaadin.ui.Component) context;
@@ -35,7 +35,7 @@ public class XmlPreview {
 			XmlTextFormFormElement xmlTextFormField = new XmlTextFormFormElement(XmlPreviewValue.$.xmls);
 			form.line(xmlTextFormField);
 			xmlTextFormField.setValue(xmls);
-			ClientToolkit.getToolkit().showDialog("XML", form.getContent(), null, null);
+			Frontend.getBrowser().showDialog("XML", form.getContent(), null, null);
 //		}
 	}
 	

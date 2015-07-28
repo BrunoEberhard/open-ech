@@ -3,8 +3,8 @@ package ch.openech.frontend.ewk.event.birth;
 import java.util.Collections;
 import java.util.List;
 
+import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
@@ -57,7 +57,7 @@ public class BirthEvent extends XmlEditor<Person, Person> {
 
 	@Override
 	protected void finished(Person result) {
-		ClientToolkit.getToolkit().show(new PersonPage(echSchema, result));
+		Frontend.getBrowser().show(new PersonPage(echSchema, result));
 	}
 	
 	@Override

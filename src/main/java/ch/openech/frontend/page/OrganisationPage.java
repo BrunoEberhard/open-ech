@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.action.Action;
+import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectPage;
-import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.transaction.persistence.ReadTransaction;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.resources.Resources;

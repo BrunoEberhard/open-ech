@@ -3,12 +3,12 @@ package ch.openech.frontend.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.minimalj.application.Preferences;
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.action.Action;
+import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.page.ActionGroup;
 import org.minimalj.frontend.page.ObjectPage;
-import org.minimalj.frontend.toolkit.Action;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.transaction.persistence.ReadTransaction;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.resources.Resources;
@@ -218,7 +218,8 @@ public class PersonPage extends ObjectPage<Person> {
 			addressLock = new AddressLockEvent(PersonPage.this);
 			paperLock = new PaperLockEvent(PersonPage.this);
 			
-			birthChild = new BirthChildEvent(PersonPage.this, (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences());
+			OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
+			birthChild = new BirthChildEvent(PersonPage.this, preferences);
 
 			historyPage = new PersonHistoryPage(PersonPage.this);
 			

@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.LoggingRuntimeException;
 
@@ -55,7 +55,7 @@ public class MoveInEditor extends XmlEditor<Organisation, Organisation> implemen
 	
 	@Override
 	protected void finished(Organisation organisation) {
-		ClientToolkit.getToolkit().show(new OrganisationPage(echSchema, organisation));
+		Frontend.getBrowser().show(new OrganisationPage(echSchema, organisation));
 	}
 	
 	@Override

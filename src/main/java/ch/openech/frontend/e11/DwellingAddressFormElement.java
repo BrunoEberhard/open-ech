@@ -1,8 +1,8 @@
 package ch.openech.frontend.e11;
 
+import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
-import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.mock.Mocking;
 

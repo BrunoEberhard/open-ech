@@ -1,14 +1,12 @@
 package ch.openech.frontend.preferences;
 
-import org.minimalj.application.ApplicationContext;
+import org.minimalj.application.Preferences;
 import org.minimalj.frontend.editor.Editor;
 import org.minimalj.frontend.form.Form;
 
 public class PreferencesEditor extends Editor<OpenEchPreferences, Void> {
-	private final ApplicationContext applicationContext;
 	
-	public PreferencesEditor(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
+	public PreferencesEditor() {
 	}
 
 	@Override
@@ -18,12 +16,12 @@ public class PreferencesEditor extends Editor<OpenEchPreferences, Void> {
 	
 	@Override
 	protected OpenEchPreferences createObject() {
-		return (OpenEchPreferences) applicationContext.getPreferences();
+		return Preferences.getPreferences(OpenEchPreferences.class);
 	}
 
 	@Override
-	protected Void save(OpenEchPreferences object) {
-		applicationContext.savePreferences(object);
+	protected Void save(OpenEchPreferences preferences) {
+		Preferences.savePreferences(preferences);
 		return null;
 	}
 	

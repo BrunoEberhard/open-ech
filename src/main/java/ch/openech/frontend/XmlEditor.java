@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.minimalj.application.DevMode;
+import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.editor.Editor;
-import org.minimalj.frontend.toolkit.Action;
 
 import ch.openech.frontend.xmlpreview.XmlPreview;
 import ch.openech.xml.write.EchSchema;

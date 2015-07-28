@@ -2,9 +2,10 @@ package ch.openech.frontend.org.event;
 
 import java.util.List;
 
+import org.minimalj.application.Preferences;
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
@@ -27,7 +28,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisati
 	}
 
 	protected static EchSchema getNamespaceContextOrg() {
-		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
+		OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
 		return EchSchema.getNamespaceContext(preferences.applicationSchemaData.schema148);
 	}
 
@@ -66,7 +67,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisati
 
 	@Override
 	protected void finished(Organisation organisation) {
-		ClientToolkit.getToolkit().show(new OrganisationPage(echSchema, organisation));
+		Frontend.getBrowser().show(new OrganisationPage(echSchema, organisation));
 	}
 	
 }

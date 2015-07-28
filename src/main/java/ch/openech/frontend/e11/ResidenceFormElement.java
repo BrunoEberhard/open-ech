@@ -3,10 +3,10 @@ package ch.openech.frontend.e11;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.editor.Editor;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
-import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.datagenerator.DataGenerator;

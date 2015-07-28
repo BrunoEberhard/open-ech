@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import org.minimalj.frontend.Frontend;
+import org.minimalj.frontend.Frontend.IComponent;
+import org.minimalj.frontend.Frontend.Input;
+import org.minimalj.frontend.Frontend.InputType;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ClientToolkit.Input;
-import org.minimalj.frontend.toolkit.ClientToolkit.InputType;
 import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
@@ -40,10 +40,10 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		municipalityIdentifications = Codes.get(MunicipalityIdentification.class);
 		Collections.sort(municipalityIdentifications);
 		
-		comboBoxCountry = ClientToolkit.getToolkit().createComboBox(countries, listener());
-		textFieldMunicipality = ClientToolkit.getToolkit().createTextField(100, null, InputType.FREE, new MunicipalityNames(), listener()); // TODO length
+		comboBoxCountry = Frontend.getInstance().createComboBox(countries, listener());
+		textFieldMunicipality = Frontend.getInstance().createTextField(100, null, InputType.FREE, new MunicipalityNames(), listener()); // TODO length
 		
-		horizontalLayout = ClientToolkit.getToolkit().createComponentGroup(comboBoxCountry, textFieldMunicipality);
+		horizontalLayout = Frontend.getInstance().createComponentGroup(comboBoxCountry, textFieldMunicipality);
 	}
 	
 	private List<String> munipalityNames(List<MunicipalityIdentification> municipalityIdentifications) {

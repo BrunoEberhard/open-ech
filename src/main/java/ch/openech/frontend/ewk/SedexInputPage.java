@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.Frontend.IContent;
 import org.minimalj.frontend.page.Page;
-import org.minimalj.frontend.toolkit.ClientToolkit.IContent;
 
 import ch.openech.model.SedexMessageInformation;
 import ch.openech.model.person.Person;
@@ -139,7 +139,7 @@ public class SedexInputPage extends Page {
 //				// TODO showDeathPage öffnen des Tod - Dialoges richtig kapseln
 //				Editor<?> editor = new ChangeWithSecondPersonEvent.DeathEvent(echNamespaceContext);
 //				FormVisual<?> form = editor.startEditor();
-//				ClientToolkit.getToolkit().openDialog(getPanel(), form, "TODO");
+//				Frontend.getBrowser().openDialog(getPanel(), form, "TODO");
 //			}
 //		} else {
 //			JOptionPane.showMessageDialog(null, "Person mit entsprechender Identifikation nicht vorhanden");

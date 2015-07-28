@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.minimalj.frontend.Frontend;
+import org.minimalj.frontend.Frontend.IComponent;
+import org.minimalj.frontend.Frontend.Input;
+import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.editor.Wizard;
 import org.minimalj.frontend.editor.WizardStep;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.frontend.toolkit.Action;
-import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.properties.PropertyInterface;
@@ -229,7 +229,7 @@ public class MoveInWizard extends Wizard<Person> {
 	
 	@Override
 	protected void finished(Person result) {
-		ClientToolkit.getToolkit().show(new PersonPage(echSchema, result));
+		Frontend.getBrowser().show(new PersonPage(echSchema, result));
 	}
 
 	private class MoveInNextPersonFormElement extends AbstractFormElement<Person> {
@@ -247,7 +247,7 @@ public class MoveInWizard extends Wizard<Person> {
 			this.relation = relation;
 			
 			List<Person> possiblePersons = filter(wizardData.persons);
-			comboBox = ClientToolkit.getToolkit().createComboBox(possiblePersons, listener());
+			comboBox = Frontend.getInstance().createComboBox(possiblePersons, listener());
 		}
 		
 		private List<Person> filter(List<Person> persons) {
@@ -301,7 +301,7 @@ public class MoveInWizard extends Wizard<Person> {
 				}
 				XmlPreview.viewXml(xmls);
 			} catch (Exception x) {
-				ClientToolkit.getToolkit().showMessage("XML Preview fehlgeschlagen");
+				Frontend.getBrowser().showMessage("XML Preview fehlgeschlagen");
 				Logger.getLogger(XmlAction.class.getName()).log(Level.SEVERE, "XML Preview fehlgeschlagen", x);
 			}
 		}

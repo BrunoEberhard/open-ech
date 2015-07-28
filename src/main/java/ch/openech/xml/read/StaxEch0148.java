@@ -17,7 +17,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.toolkit.ProgressListener;
+import org.minimalj.frontend.page.ProgressListener;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;

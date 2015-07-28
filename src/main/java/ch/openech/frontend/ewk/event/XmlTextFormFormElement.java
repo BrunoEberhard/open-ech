@@ -5,10 +5,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
+import org.minimalj.frontend.Frontend;
+import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
-import org.minimalj.frontend.toolkit.Action;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.model.Keys;
 
 import ch.openech.model.EchSchemaValidation;
@@ -29,7 +29,7 @@ public class XmlTextFormFormElement extends ListFormElement<String> {
 		@Override
 		public void action() {
 			String message = EchSchemaValidation.validate(xml);
-			ClientToolkit.getToolkit().showMessage(message);
+			Frontend.getBrowser().showMessage(message);
 		}
 	}
 

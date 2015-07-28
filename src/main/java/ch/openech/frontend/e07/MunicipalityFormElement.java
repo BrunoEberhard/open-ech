@@ -3,10 +3,10 @@ package ch.openech.frontend.e07;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.minimalj.frontend.Frontend;
+import org.minimalj.frontend.Frontend.IComponent;
+import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
@@ -37,7 +37,7 @@ public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIde
 		}
 		items.addAll(municipalities);
 		
-		comboBox = ClientToolkit.getToolkit().createComboBox(items, listener());
+		comboBox = Frontend.getInstance().createComboBox(items, listener());
 	}
 	
 	@Override

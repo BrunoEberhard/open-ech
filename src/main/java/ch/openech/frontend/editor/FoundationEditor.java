@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.LoggingRuntimeException;
@@ -56,7 +56,7 @@ public class FoundationEditor extends XmlEditor<Organisation, Organisation> impl
 	
     @Override
     protected void finished(Organisation result) {
-    	ClientToolkit.getToolkit().show(new OrganisationPage(echSchema, result));
+    	Frontend.getBrowser().show(new OrganisationPage(echSchema, result));
     }
 
 	@Override

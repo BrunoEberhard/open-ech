@@ -1,10 +1,10 @@
 package ch.openech.frontend.e10;
 
+import org.minimalj.frontend.Frontend;
+import org.minimalj.frontend.Frontend.IComponent;
+import org.minimalj.frontend.Frontend.Input;
+import org.minimalj.frontend.Frontend.InputType;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ClientToolkit.Input;
-import org.minimalj.frontend.toolkit.ClientToolkit.InputType;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.model.EchFormats;
@@ -19,10 +19,10 @@ public class HouseNumberFormElement extends AbstractFormElement<HouseNumber> {
 	public HouseNumberFormElement(PropertyInterface property) {
 		super(property);
 		
-		houseNumberTextField = ClientToolkit.getToolkit().createTextField(EchFormats.houseNumber, null, InputType.FREE, null, listener());
-		dwellingNumberTextField = ClientToolkit.getToolkit().createTextField(EchFormats.dwellingNumber, null, InputType.FREE, null, listener());
+		houseNumberTextField = Frontend.getInstance().createTextField(EchFormats.houseNumber, null, InputType.FREE, null, listener());
+		dwellingNumberTextField = Frontend.getInstance().createTextField(EchFormats.dwellingNumber, null, InputType.FREE, null, listener());
 
-		horizontalLayout = ClientToolkit.getToolkit().createComponentGroup(houseNumberTextField, dwellingNumberTextField);
+		horizontalLayout = Frontend.getInstance().createComponentGroup(houseNumberTextField, dwellingNumberTextField);
 	}
 	
 	@Override

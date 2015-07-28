@@ -1,8 +1,8 @@
 package ch.openech.frontend.ewk;
 
+import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
-import org.minimalj.frontend.toolkit.Action;
 import org.minimalj.model.Keys;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.MockName;

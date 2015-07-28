@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 import org.minimalj.util.LoggingRuntimeException;
 
 import ch.openech.frontend.XmlEditor;
@@ -50,7 +50,7 @@ public class BaseDeliveryEditor extends XmlEditor<Person, Person> {
     
     @Override
     protected void finished(Person result) {
-    	ClientToolkit.getToolkit().show(new PersonPage(echSchema, result));
+    	Frontend.getBrowser().show(new PersonPage(echSchema, result));
     }
 	
 	@Override

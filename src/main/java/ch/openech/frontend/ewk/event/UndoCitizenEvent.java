@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
+import org.minimalj.frontend.Frontend;
+import org.minimalj.frontend.Frontend.IComponent;
+import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Required;
 import org.minimalj.model.properties.PropertyInterface;
@@ -60,7 +60,7 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		
 		public UndoCitizenField(PropertyInterface property) {
 			super(property);
-			comboBox = ClientToolkit.getToolkit().createComboBox(existingPlaceOfOrigin, listener());
+			comboBox = Frontend.getInstance().createComboBox(existingPlaceOfOrigin, listener());
 		}
 
 		public UndoCitizenField(PlaceOfOrigin key) {

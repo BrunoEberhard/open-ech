@@ -1,9 +1,9 @@
 package ch.openech.frontend.e07;
 
+import org.minimalj.frontend.Frontend;
+import org.minimalj.frontend.Frontend.IComponent;
+import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validatable;
 import org.minimalj.util.Codes;
@@ -19,7 +19,7 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 
 	public CantonFormElement(PropertyInterface property) {
 		super(property);
-		textField = ClientToolkit.getToolkit().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, null, listener());
+		textField = Frontend.getInstance().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, null, listener());
 	}
 	
 	@Override

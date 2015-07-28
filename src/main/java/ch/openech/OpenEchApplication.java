@@ -24,12 +24,12 @@ import java.util.ResourceBundle;
 
 import org.minimalj.application.Application;
 import org.minimalj.application.DevMode;
-import org.minimalj.frontend.page.ActionGroup;
+import org.minimalj.application.Preferences;
+import org.minimalj.frontend.action.Action;
+import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.page.EmptyPage;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.SearchPage;
-import org.minimalj.frontend.toolkit.Action;
-import org.minimalj.frontend.toolkit.ClientToolkit;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.frontend.editor.BaseDeliveryEditor;
@@ -89,11 +89,6 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
-	public Class<?> getPreferencesClass() {
-		return OpenEchPreferences.class;
-	}
-
-	@Override
 	public Page createSearchPage(String query) {
 		PersonSearchPage personSearchPage = new PersonSearchPage(query);
 		OrganisationSearchPage organisationSearchPage = new OrganisationSearchPage(query);
@@ -103,7 +98,7 @@ public class OpenEchApplication extends Application {
 	@Override
 	public List<Action> getMenu() {
 		List<Action> actions = new ArrayList<>();
-		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
+		OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
 		updateEwkNamespaceContext();
 		
 		if (ewkSchema != null) {
@@ -152,7 +147,7 @@ public class OpenEchApplication extends Application {
 		actions.add(actionGroupExport);
 
 		ActionGroup actionGroupSettings = new ActionGroup("Einstellungen");
-		actionGroupSettings.add(new PreferencesEditor(ClientToolkit.getToolkit().getApplicationContext()));
+		actionGroupSettings.add(new PreferencesEditor());
 		actions.add(actionGroupSettings);
 		
 		return actions;
@@ -170,7 +165,7 @@ public class OpenEchApplication extends Application {
 	}
 
 	private void updateEwkNamespaceContext() {
-		OpenEchPreferences preferences = (OpenEchPreferences) ClientToolkit.getToolkit().getApplicationContext().getPreferences();
+		OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
 		ApplicationSchemaData applicationData = preferences.applicationSchemaData;
 		if (applicationData.schema20 != null) {
 			if (ewkSchema == null || !applicationData.schema20.equals(ewkSchema.getVersion())) {

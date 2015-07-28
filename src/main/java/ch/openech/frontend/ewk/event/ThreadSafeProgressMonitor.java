@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingUtilities;
 
-import org.minimalj.frontend.toolkit.ProgressListener;
+import org.minimalj.frontend.page.ProgressListener;
 
 
 // Swing Bug: ProgressMontior cannot be modal

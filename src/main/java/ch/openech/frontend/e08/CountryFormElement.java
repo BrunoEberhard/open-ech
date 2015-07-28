@@ -3,10 +3,10 @@ package ch.openech.frontend.e08;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.minimalj.frontend.Frontend;
+import org.minimalj.frontend.Frontend.IComponent;
+import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.frontend.toolkit.ClientToolkit;
-import org.minimalj.frontend.toolkit.ClientToolkit.IComponent;
-import org.minimalj.frontend.toolkit.ClientToolkit.Input;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
@@ -25,7 +25,7 @@ public class CountryFormElement extends AbstractFormElement<CountryIdentificatio
 	public CountryFormElement(PropertyInterface property) {
 		super(property);
 		countries = Codes.get(CountryIdentification.class);
-		comboBox = ClientToolkit.getToolkit().createComboBox(countries, listener());
+		comboBox = Frontend.getInstance().createComboBox(countries, listener());
 	}
 	
 	@Override
