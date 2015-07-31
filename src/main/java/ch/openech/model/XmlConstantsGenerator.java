@@ -35,9 +35,9 @@ public class XmlConstantsGenerator {
 	
 	public void print() {
 		for (String name : names) {
-			System.out.print("public static String ");
+			System.out.print("public static final String ");
 			System.out.print(StringUtils.toConstant(name));
-			System.out.print("=\""); System.out.print(name); System.out.println("\";");
+			System.out.print(" = \""); System.out.print(name); System.out.println("\";");
 		}
 	}
 	
