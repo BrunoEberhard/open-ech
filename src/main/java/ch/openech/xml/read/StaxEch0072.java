@@ -4,7 +4,6 @@ import static ch.openech.model.XmlConstants.*;
 import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +44,7 @@ public class StaxEch0072 {
 		return countriesUnmodifiable;
 	}
 
-	private void country(XMLEventReader xml) throws XMLStreamException, SQLException {
+	private void country(XMLEventReader xml) throws XMLStreamException {
 		CountryIdentification countryIdentification = new CountryIdentification();
 		
 		while (true) {
@@ -64,7 +63,7 @@ public class StaxEch0072 {
 		}
 	}
 	
-	private void countries(XMLEventReader xml) throws XMLStreamException, SQLException {
+	private void countries(XMLEventReader xml) throws XMLStreamException {
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -78,7 +77,7 @@ public class StaxEch0072 {
 		}
 	}
 	
-	private void process(InputStream inputStream) throws XMLStreamException, SQLException {
+	private void process(InputStream inputStream) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 
