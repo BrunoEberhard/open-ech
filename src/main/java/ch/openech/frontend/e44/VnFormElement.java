@@ -25,9 +25,9 @@ public class VnFormElement extends FormatFormElement<Vn> {
 	}
 
 	@Override
-	public Vn getValue() {
+	public Vn parse(String string) {
 		Vn vn = new Vn();
-		vn.value = textField.getValue();
+		vn.value = string;
 		if (!StringUtils.isEmpty(vn.value)) {
 			vn.value = vn.value.replace(".", "");
 		}
@@ -35,11 +35,11 @@ public class VnFormElement extends FormatFormElement<Vn> {
 	}
 
 	@Override
-	public void setValue(Vn vn) {
+	public String render(Vn vn) {
 		if (vn != null) {
-			textField.setValue(vn.getFormattedValue());
+			return vn.getFormattedValue();
 		} else {
-			textField.setValue(null);
+			return null;
 		}
 	}
 

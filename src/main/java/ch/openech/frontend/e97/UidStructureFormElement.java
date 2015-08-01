@@ -23,18 +23,18 @@ public class UidStructureFormElement extends FormatFormElement<UidStructure> {
 	}
 
 	@Override
-	public UidStructure getValue() {
+	public UidStructure parse(String string) {
 		UidStructure uid = new UidStructure();
-		uid.value = textField.getValue();
+		uid.value = string;
 		return uid;
 	}
 
 	@Override
-	public void setValue(UidStructure uid) {
+	public String render(UidStructure uid) {
 		if (uid != null) {
-			textField.setValue(uid.value);
+			return uid.value;
 		} else {
-			textField.setValue(null);
+			return null;
 		}
 	}
 
