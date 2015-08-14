@@ -149,7 +149,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 			}
 			
 			addSeparator();
-			add(historyPage); 
+			addDetail(historyPage); 
 			
 			update(getObject());
 		}
