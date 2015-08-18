@@ -45,14 +45,6 @@ public class PersonIdentification implements View<Person>, Rendering {
 		return StringUtils.isBlank(firstName) && StringUtils.isBlank(officialName);
 	}
 	
-	public String getId() {
-		if (technicalIds.localId.openEch()) {
-			return technicalIds.localId.personId;
-		} else {
-			return null;
-		}
-	}
-	
 	public String display() {
 		return toHtml();
 	}
