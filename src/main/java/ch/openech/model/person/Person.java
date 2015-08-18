@@ -14,7 +14,6 @@ import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
-import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
 
@@ -353,10 +352,6 @@ public class Person implements Validation {
 		if (validationMessage != null) {
 			resultList.add(new ValidationMessage($.residence, validationMessage));
 		}
-	}
-
-	public String getId() {
-		return IdUtils.getIdString(this);
 	}
 
 	public String toHtml() {
