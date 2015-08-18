@@ -1,21 +1,19 @@
 package ch.openech.test.server;
 
+import java.time.LocalDate;
 import java.util.List;
-
-import junit.framework.Assert;
 
 import org.junit.Test;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.Criteria;
-import java.time.LocalDate;
 
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.person.Person;
-import ch.openech.model.person.PersonIdentification;
 import ch.openech.model.person.types.TypeOfHousehold;
 import ch.openech.model.types.Sex;
 import ch.openech.model.types.TypeOfResidence;
+import junit.framework.Assert;
 
 public class MoveInTest extends AbstractServerTest {
 
@@ -23,9 +21,9 @@ public class MoveInTest extends AbstractServerTest {
 	public void moveIn() throws Exception {
 		processFile("samples/eCH-0020/moveIn/data_ordipro-moveIn-21.xml");
 		
-		List<PersonIdentification> identifications = Backend.getInstance().read(PersonIdentification.class, Criteria.search("BERNALUSKOVSKI"), 2);
-		Assert.assertEquals(1, identifications.size());
-		Person person = Backend.getInstance().read(Person.class, identifications.get(0).id);
+		List<Person> persons = Backend.getInstance().read(Person.class, Criteria.search("BERNALUSKOVSKI"), 2);
+		Assert.assertEquals(1, persons.size());
+		Person person = Backend.getInstance().read(Person.class, persons.get(0).id);
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals("BERNALUSKOVSKI", person.officialName);
