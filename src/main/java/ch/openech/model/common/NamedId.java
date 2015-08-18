@@ -10,7 +10,7 @@ import  ch.openech.model.EchFormats;
 public class NamedId {
 
 	public static final NamedId $ = Keys.of(NamedId.class);
-	public static final String OPEN_ECH_ID_CATEGORY = "OPENECH.LOC";
+	public static final String OPEN_ECH_ID_CATEGORY = "LOC.OPENECH";
 	
 	public String personIdCategory;
 	
