@@ -83,8 +83,4 @@ public class PersonIdentification implements View<Person>, Rendering {
 		return partner != null && StringUtils.equals(partner.vn.value, vn.value);
 	}
 
-	public String idAsString() {
-		return "" + id;
-	}
-
 }
