@@ -18,7 +18,6 @@ import ch.openech.xml.write.EchSchema;
 public class OrganisationSearchPage extends SimpleSearchPage<Organisation> {
 
 	public static final Object[] FIELDS = {
-		$.technicalIds.localId.personId, // TODO move to invisible
 		$.organisationName, //
 		$.businessAddress.mailAddress.street, //
 		$.businessAddress.mailAddress.houseNumber.houseNumber, //
@@ -39,7 +38,7 @@ public class OrganisationSearchPage extends SimpleSearchPage<Organisation> {
 		OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
 		EchSchema0148 schema0148 = preferences.applicationSchemaData.schema148;
 		String version = schema0148.getVersion() + "." + schema0148.getMinorVersion();
-		EchSchema schema = EchSchema.getNamespaceContext(20, version);
+		EchSchema schema = EchSchema.getNamespaceContext(148, version);
 
 		return new OrganisationPage(schema, organisation);
 	}
