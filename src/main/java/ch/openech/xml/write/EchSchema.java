@@ -351,4 +351,10 @@ public class EchSchema {
 		return rootNumber == 148;
 	}
 	
+	/*
+	 * personId darf ab eCH 44 Version 4.0 36 Zeichen lang sein (vorher 20)
+	 */
+	public int lengthOfPersonId() {
+		return getNamespaceVersion(44) >= 4 ? 36 : 20;
+	}
 }
