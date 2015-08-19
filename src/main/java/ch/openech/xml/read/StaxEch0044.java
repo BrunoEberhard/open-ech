@@ -48,9 +48,6 @@ public class StaxEch0044 {
 				}
 				else skip(xml);
 			} else if (event.isEndElement()) {
-				if (personIdentification.technicalIds.localId.openEch()) {
-					personIdentification.id = Long.valueOf(personIdentification.technicalIds.localId.personId);
-				}
 				return;
 			} // else skip
 		}

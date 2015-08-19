@@ -4,6 +4,7 @@ import static ch.openech.model.XmlConstants.*;
 
 import java.util.List;
 
+import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.XmlConstants;
@@ -14,9 +15,12 @@ import ch.openech.model.person.PersonIdentification;
 public class WriterEch0044 {
 
 	public final String URI;
+	private final int lengthOfPersonId;
 	
-	public WriterEch0044(EchSchema context) {
-		URI = context.getNamespaceURI(44);
+	public WriterEch0044(EchSchema schema) {
+		URI = schema.getNamespaceURI(44);
+		
+		lengthOfPersonId = schema.lengthOfPersonId();
 	}
 
 	public void personIdentification(WriterElement parent, PersonIdentification values) throws Exception {
@@ -27,7 +31,9 @@ public class WriterEch0044 {
 		WriterElement personIdentification = parent.create(URI, tagName);
 
 		personIdentification.textIfSet(XmlConstants.VN, values.vn.value);
-		namedId(personIdentification, values.technicalIds.localId, XmlConstants.LOCAL_PERSON_ID);
+		// namedId(personIdentification, values.technicalIds.localId, XmlConstants.LOCAL_PERSON_ID);
+		// hier wird die interne id verwendet
+		localID(personIdentification, IdUtils.getCompactIdString(values));
     	NamedId(personIdentification, values.technicalIds.otherId, _OTHER_PERSON_ID); // VERSION
     	NamedId(personIdentification, values.technicalIds.euId, "EuPersonId"); // VERSION
 		personIdentification.values(values, OFFICIAL_NAME, FIRST_NAME);
@@ -64,6 +70,18 @@ public class WriterEch0044 {
 		for (NamedId namedPersonId : namedIds) {
 			namedId(parent, namedPersonId, name);
 		}
+	}
+	
+	public void localID(WriterElement parent, String id) throws Exception {
+		if (id == null) return;
+		if (id.length() > lengthOfPersonId) {
+			id = id.substring(0, lengthOfPersonId);
+		}
+		
+		WriterElement personIdentification = parent.create(URI, LOCAL_PERSON_ID);
+		
+		personIdentification.text(PERSON_ID_CATEGORY, NamedId.OPEN_ECH_ID_CATEGORY);
+		personIdentification.text(PERSON_ID, id);
 	}
 	
 	public void namedId(WriterElement parent, NamedId namedId, String name) throws Exception {

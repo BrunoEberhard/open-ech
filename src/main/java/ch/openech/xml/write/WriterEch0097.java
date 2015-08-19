@@ -5,6 +5,7 @@ import static ch.openech.model.XmlConstants.*;
 import java.util.List;
 
 import org.minimalj.model.ViewUtil;
+import org.minimalj.util.IdUtils;
 
 import ch.openech.model.common.NamedId;
 import ch.openech.model.organisation.Organisation;
@@ -33,8 +34,9 @@ public class WriterEch0097 {
 		WriterElement element = parent.create(URI, tagName);
 
 		uidStructure(element, UID, values.uid);
-		// localOrganisationId(element, values.technicalIds.id);
-		namedId(element, values.technicalIds.localId, LOCAL_ORGANISATION_ID);
+		// hier wird die interne id verwendet
+		// namedId(element, values.technicalIds.localId, LOCAL_ORGANISATION_ID);
+		localID(element, IdUtils.getCompactIdString(values));
 		namedId(element, values.technicalIds.otherId, _OTHER_ORGANISATION_ID); // VERSION
 		element.values(values, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME);
 		legalForm(element, values.legalForm);
@@ -61,6 +63,20 @@ public class WriterEch0097 {
 		element.text(ORGANISATION_ID, namedId.personId);
 	}
 
+	public void localID(WriterElement parent, String id) throws Exception {
+		if (id == null) return;
+		// Die Länge der id von Personen wurde unterdessen (ech44, Version 4) auf 36 erhöht. Bei den
+		// Firmen ist das bei den momentanen Standards leider noch nicht gemacht
+		if (id.length() > 20) {
+			id = id.substring(0, 20);
+		}
+		
+		WriterElement element = parent.create(URI, LOCAL_ORGANISATION_ID);
+		
+		element.text(ORGANISATION_ID_CATEGORY, NamedId.OPEN_ECH_ID_CATEGORY);
+		element.text(ORGANISATION_ID, id);
+	}
+	
 	private void legalForm(WriterElement parent, LegalForm legalForm) throws Exception {
 		if (legalForm != null) {
 			parent.text(LEGAL_FORM, legalForm.id);

@@ -9,7 +9,6 @@ import org.minimalj.util.LoggingRuntimeException;
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
 import ch.openech.frontend.page.PersonPage;
-import ch.openech.model.common.NamedId;
 import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.WriterEch0020;
@@ -32,8 +31,6 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T, Person> implemen
 
 	public Person getPerson() {
 		Person person = personPage.load();
-		person.personIdentification().technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
-		person.personIdentification().technicalIds.localId.personId = String.valueOf(person.id);
 		return person;
 	}
 
