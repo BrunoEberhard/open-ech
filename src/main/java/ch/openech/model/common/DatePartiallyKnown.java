@@ -37,8 +37,13 @@ public class DatePartiallyKnown implements Validatable, Comparable<DatePartially
 		}
 	}
 	
+	@Override
 	public String toString() {
 		return DateUtils.format(value);
+	}
+	
+	public boolean isEmpty() {
+		return StringUtils.isEmpty(value);
 	}
 
 	@Override
