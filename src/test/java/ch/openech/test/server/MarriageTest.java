@@ -1,14 +1,14 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
-
 import java.time.LocalDate;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import  ch.openech.model.person.Person;
 import  ch.openech.model.person.Relation;
 import  ch.openech.model.person.types.TypeOfRelationship;
+import junit.framework.Assert;
 
 public class MarriageTest extends AbstractServerTest {
 
@@ -41,14 +41,16 @@ public class MarriageTest extends AbstractServerTest {
 		Assert.assertTrue(person1.maritalStatus.isVerheiratet());
 		Relation relation1 = person1.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation1.typeOfRelationship);
-		Assert.assertEquals(person2.id, relation1.partner.id);
+		Assert.assertNotNull(relation1.partner.person);
+		Assert.assertEquals(person2.id, relation1.partner.person.id);
 		
 		Assert.assertNotNull(person2);
 		Assert.assertTrue(person2.maritalStatus.isVerheiratet());
 		Assert.assertEquals("Ogi Villiger", person2.officialName);
 		Relation relation2 = person2.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation2.typeOfRelationship);
-		Assert.assertEquals(person1.id, relation2.partner.id);
+		Assert.assertNotNull(relation2.partner.person);
+		Assert.assertEquals(person1.id, relation2.partner.person.id);
 	}
 	
 	@Test

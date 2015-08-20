@@ -11,6 +11,7 @@ import ch.openech.model.XmlConstants;
 import ch.openech.model.common.DatePartiallyKnown;
 import ch.openech.model.common.NamedId;
 import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PersonIdentificationLight;
 
 public class WriterEch0044 {
 
@@ -33,7 +34,7 @@ public class WriterEch0044 {
 		personIdentification.textIfSet(XmlConstants.VN, values.vn.value);
 		// namedId(personIdentification, values.technicalIds.localId, XmlConstants.LOCAL_PERSON_ID);
 		// hier wird die interne id verwendet
-		localID(personIdentification, IdUtils.getCompactIdString(values));
+		localID(personIdentification, values.id != null ? IdUtils.getCompactIdString(values) : "");
     	NamedId(personIdentification, values.technicalIds.otherId, _OTHER_PERSON_ID); // VERSION
     	NamedId(personIdentification, values.technicalIds.euId, "EuPersonId"); // VERSION
 		personIdentification.values(values, OFFICIAL_NAME, FIRST_NAME);
@@ -41,6 +42,22 @@ public class WriterEch0044 {
     	datePartiallyKnownType(personIdentification, DATE_OF_BIRTH, values.dateOfBirth);
     }
 
+	// gleich wie personIdentification ausser leere localId kein EuPersonId. sex, dateOfBirth optional
+	public void personIdentificationPartner(WriterElement parent, PersonIdentificationLight values) throws Exception {
+		WriterElement personIdentification = parent.create(URI, PERSON_IDENTIFICATION_PARTNER);
+
+		personIdentification.textIfSet(XmlConstants.VN, values.vn.value);
+		localID(personIdentification, "");
+    	NamedId(personIdentification, values.otherId, _OTHER_PERSON_ID); // VERSION
+    	personIdentification.values(values, OFFICIAL_NAME, FIRST_NAME);
+    	if (values.sex != null) {
+    		personIdentification.text(XmlConstants.SEX, values.sex);
+    	}
+    	if (!values.dateOfBirth.isEmpty()) {
+    		datePartiallyKnownType(personIdentification, DATE_OF_BIRTH, values.dateOfBirth);
+    	}
+    }
+	
 	public void datePartiallyKnownType(WriterElement parent, String tagName, DatePartiallyKnown object) throws Exception {
 		datePartiallyKnownType(parent, URI, tagName, object);
 	}

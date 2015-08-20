@@ -18,6 +18,9 @@ public class EchPersistence {
 		String localId = null;
 		if (personIdentification.technicalIds.localId.openEch()) {
 			localId = personIdentification.technicalIds.localId.personId;
+			if (StringUtils.isBlank(localId)) {
+				localId = null;
+			}
 			if (localId != null && localId.length() == 36) {
 				Person person = backend.read(Person.class, localId);
 				if (person != null) {
@@ -54,6 +57,9 @@ public class EchPersistence {
 		String localId = null;
 		if (organisationIdentification.technicalIds.localId.openEch()) {
 			localId = organisationIdentification.technicalIds.localId.personId;
+			if (StringUtils.isBlank(localId)) {
+				localId = null;
+			}
 			if (localId != null && localId.length() == 36) {
 				Organisation organisation = backend.read(Organisation.class, localId);
 				if (organisation != null) {

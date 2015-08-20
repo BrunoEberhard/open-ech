@@ -167,8 +167,12 @@ public class WriterEch0020 extends DeliveryWriter {
 	private void partner(WriterElement parentElement, Relation relation) throws Exception {
 		if (relation != null) {
 			WriterElement element = parentElement.create(URI, PARTNER);
-			if (relation.partner != null) {
-				ech44.personIdentification(element, relation.partner);
+			if (relation.partner.person != null) {
+				ech44.personIdentification(element, relation.partner.person.personIdentification());
+			} else if (relation.partner.personIdentification != null) {
+				throw new RuntimeException("TODO");
+			} else if (relation.partner.organisation != null) {
+				throw new RuntimeException("TODO");
 			}
 			if (relation.address != null) {
 				ech10.address(element, ADDRESS, relation.address);
@@ -502,8 +506,11 @@ public class WriterEch0020 extends DeliveryWriter {
         WriterElement event = delivery().create(URI, CHANGE_RESIDENCE_TYPE);
         changeResidenceTypePerson(event, personIdentification, person);
         changeResidenceTypeReportingMunicipality(event, person);
+        // TODO ab Version 3.0 gibt es ein Tag residenceTypeValidFrom
+        
+        // TODO ab Version 3.0 diese wurden diese (wirklich nicht hierher gehörenden) Tags entfernt
         addParentNames(event, person);
-        // Version der Name RelationshipType im Schema 20 sollte wohl eher relation heissen
+        // Das Tag 'RelationshipType' im Schema 20 sollte wohl eher relation heissen
         for (Relation relation: person.relation) ech21.relation(event, _RELATIONSHIP_TYPE, relation);
         for (Occupation occupation : person.occupation) ech21.occupation(event, occupation);
         

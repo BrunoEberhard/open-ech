@@ -15,7 +15,6 @@ import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.types.Sex;
-import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class CareEvent extends PersonEventEditor<Relation> {
@@ -47,7 +46,7 @@ public class CareEvent extends PersonEventEditor<Relation> {
 	@BusinessRule("Bei Änderung Sorgerecht müssen Eltern das richtige Geschlecht haben")
 	private void validateSex(Relation relation, List<ValidationMessage> resultList) {
 		if (relation.partner == null) return;
-		Sex sexOfPartner = relation.partner.sex;
+		Sex sexOfPartner = relation.partner.sex();
 		if (sexOfPartner != null) {
 			TypeOfRelationship code = relation.typeOfRelationship;
 			if ((code == TypeOfRelationship.Mutter || code == TypeOfRelationship.Pflegemutter) && sexOfPartner != Sex.weiblich) {

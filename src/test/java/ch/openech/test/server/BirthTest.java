@@ -1,16 +1,16 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
+import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.util.Codes;
-import java.time.LocalDate;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Canton;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
+import junit.framework.Assert;
 
 public class BirthTest extends AbstractServerTest {
 
@@ -44,9 +44,11 @@ public class BirthTest extends AbstractServerTest {
 		Assert.assertTrue(child.nationality.isSwiss());
 
 		Relation motherRelation = child.getMother();
-		Assert.assertEquals(mother.id, motherRelation.partner.id);
+		Assert.assertNotNull(motherRelation.partner.person);
+		Assert.assertEquals(mother.id, motherRelation.partner.person.id);
 		Relation fatherRelation = child.getFather();
-		Assert.assertEquals(father.id, fatherRelation.partner.id);
+		Assert.assertNotNull(fatherRelation.partner.person);
+		Assert.assertEquals(father.id, fatherRelation.partner.person.id);
 	}
 	
 	

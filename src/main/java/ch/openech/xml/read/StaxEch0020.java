@@ -27,6 +27,7 @@ import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PersonIdentificationLight;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.ReasonOfAcquisition;
@@ -75,6 +76,7 @@ public class StaxEch0020 {
 
 	//
 	
+	@Deprecated // dies sollte ersetzt werden
 	private void updateIdentifications(Object object) {
 		if (object == null) return;
 		
@@ -105,7 +107,7 @@ public class StaxEch0020 {
 			}
 		}
 	}
-
+	
 	private void removePartner(Person changedPerson) {
 		for (int i = changedPerson.relation.size()-1; i>= 0; i--) {
 			Relation relation = changedPerson.relation.get(i);
@@ -308,7 +310,7 @@ public class StaxEch0020 {
 			// TODO was macht man hier? Einfach so entstehen ungültige Daten, da eine Person einen Meldeort haben muss
 			return;
 		}
-		Person parent = getPerson(relation.partner);
+		Person parent = relation.partner.person;
 		if (parent == null) return;
 		person.typeOfResidence = parent.typeOfResidence;
 		person.residence.reportingMunicipality = parent.residence.reportingMunicipality;
@@ -345,9 +347,20 @@ public class StaxEch0020 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(PERSON_IDENTIFICATION) || //
-						startName.equals(PERSON_IDENTIFICATION_PARTNER)) relation.partner = StaxEch0044.personIdentification(xml);
-				else if (startName.equals(ADDRESS)) relation.address = StaxEch0010.address(xml) ;
+				if (startName.equals(PERSON_IDENTIFICATION)) {
+					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
+					Person person = EchPersistence.getByIdentification(backend, personIdentification);
+					if (person != null) {
+						relation.partner.person = person;
+					} else {
+						relation.partner.setValue(personIdentification);
+					}
+				} else if (startName.equals(PERSON_IDENTIFICATION_PARTNER)) {
+					relation.partner.personIdentification = new PersonIdentificationLight();
+					StaxEch0044.personIdentificationPartner(xml, relation.partner.personIdentification);
+				} else if (startName.equals(ADDRESS)) {
+					relation.address = StaxEch0010.address(xml);
+				}
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;

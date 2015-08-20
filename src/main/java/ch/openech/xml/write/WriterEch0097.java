@@ -36,7 +36,7 @@ public class WriterEch0097 {
 		uidStructure(element, UID, values.uid);
 		// hier wird die interne id verwendet
 		// namedId(element, values.technicalIds.localId, LOCAL_ORGANISATION_ID);
-		localID(element, IdUtils.getCompactIdString(values));
+		localID(element, values.id != null ? IdUtils.getCompactIdString(values) : "");
 		namedId(element, values.technicalIds.otherId, _OTHER_ORGANISATION_ID); // VERSION
 		element.values(values, ORGANISATION_NAME, ORGANISATION_LEGAL_NAME, ORGANISATION_ADDITIONAL_NAME);
 		legalForm(element, values.legalForm);

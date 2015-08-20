@@ -21,7 +21,6 @@ import ch.openech.frontend.e44.PersonFormElement;
 import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.EchFormats;
 import ch.openech.model.person.Person;
-import ch.openech.model.person.PersonIdentification;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.ReasonOfAcquisition;
@@ -179,9 +178,9 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 
 		// Die Reihenfolge der Events ist wichtig, da nach einer Namensänderung
 		// die ursprüngliche Bezeichnung des Partners schon nicht mehr die aktuelle ist
-		xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner1.personIdentification(), data.partner2.personIdentification()));
+		xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner1, data.partner2));
 		if (Boolean.TRUE.equals(data.registerPartner2)) {
-			xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner2.personIdentification(), data.partner1.personIdentification()));
+			xmls.add(marriage(writerEch0020, data.dateOfMaritalStatus, data.partner2, data.partner1));
 		}
 
 		// Die Einbürgerungen müssen vor dem Namenswechsel erfolgen, sonst passen
@@ -200,11 +199,11 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		return xmls;
 	}
 	
-	private String marriage(WriterEch0020 writerEch0020, LocalDate dateOfMaritalStatus, PersonIdentification partner1, PersonIdentification partner2) throws Exception {
+	private String marriage(WriterEch0020 writerEch0020, LocalDate dateOfMaritalStatus, Person partner1, Person partner2) throws Exception {
 		Relation relation = new Relation();
 		relation.typeOfRelationship = TypeOfRelationship.Ehepartner;
-		relation.partner = partner2;
-		return writerEch0020.marriage(partner1, relation, dateOfMaritalStatus);
+		relation.partner.setValue(partner2);
+		return writerEch0020.marriage(partner1.personIdentification(), relation, dateOfMaritalStatus);
 	}
 	
 	private String changeName(WriterEch0020 writerEch0020, Person person, String officialName) throws Exception {

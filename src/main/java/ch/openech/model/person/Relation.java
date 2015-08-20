@@ -29,20 +29,10 @@ public class Relation implements Validatable, Rendering {
 	@Size(100)
 	public String basedOnLawAddOn;
 	public YesNo care = YesNo.No;
-	@Required
-	public PersonIdentification partner;
+
+	public final PartnerIdentification partner = new PartnerIdentification();
 	
 	public Address address;
-	
-	// 
-	
-	public void clear() {
-		typeOfRelationship = null;
-		basedOnLaw = null;
-		care = YesNo.No;
-		partner = new PersonIdentification();
-		address = null;
-	}
 	
 	//
 	

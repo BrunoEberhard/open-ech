@@ -7,6 +7,7 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.model.Keys;
 
+import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Relation;
 import ch.openech.xml.write.EchSchema;
@@ -69,10 +70,15 @@ public class RelationFormElement extends ListFormElement<Relation> {
 			add(relation, new RemoveRelationAction(relation));
 		} else {
 			add(relation);
-			add("Person anzeigen", new PersonPage(echNamespaceContext, relation.partner.id));
+			if (relation.partner.person != null) {
+				add("Person anzeigen", new PersonPage(echNamespaceContext, relation.partner.person.id));
+			} else if (relation.partner.organisation != null) {
+				add("Person anzeigen", new OrganisationPage(echNamespaceContext, relation.partner.organisation.id));
+			}
 		}
 	}
 
+	@Override
 	protected Action[] getActions() {
 		return new Action[] { new AddRelationEditor() };
 	}

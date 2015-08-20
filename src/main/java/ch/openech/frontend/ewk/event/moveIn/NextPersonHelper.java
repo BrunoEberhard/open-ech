@@ -35,10 +35,10 @@ public class NextPersonHelper {
 		nextPerson.comesFrom = partner.comesFrom;
 		nextPerson.dwellingAddress = partner.dwellingAddress;
 	
-		relation.partner = nextPerson.personIdentification();
+		relation.partner.setValue(nextPerson);
 		partner.relation.add(relation);
 	
-		relation2.partner = partner.personIdentification();
+		relation2.partner.setValue(partner);
 		nextPerson.relation.add(relation2);
 		return nextPerson;
 	}
@@ -76,7 +76,7 @@ public class NextPersonHelper {
 	public static Relation createChildRelation(TypeOfRelationship typeOfRelationship, Person person) {
 		Relation relation = new Relation();
 		relation.typeOfRelationship = typeOfRelationship;
-		relation.partner = person.personIdentification();
+		relation.partner.setValue(person);
 		return relation;
 	}
 	

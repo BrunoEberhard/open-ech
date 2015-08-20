@@ -23,6 +23,7 @@ import ch.openech.frontend.e11.PlaceFormElement;
 import ch.openech.frontend.e11.PlaceOfOriginFormElement;
 import ch.openech.frontend.e11.ResidenceFormElement;
 import ch.openech.frontend.e21.OccupationFormElement;
+import ch.openech.frontend.e44.PartnerIdentificationFormElement;
 import ch.openech.frontend.e44.PersonFormElement;
 import ch.openech.frontend.e44.PersonIdentificationFormElement;
 import ch.openech.frontend.e44.VnFormElement;
@@ -42,6 +43,7 @@ import ch.openech.model.person.ContactPerson;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Nationality;
 import ch.openech.model.person.Occupation;
+import ch.openech.model.person.PartnerIdentification;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonExtendedInformation;
 import ch.openech.model.person.PersonIdentification;
@@ -84,6 +86,8 @@ public class EchForm<T> extends Form<T> {
 			return new DatePartiallyKnownFormElement(property, editable);
 		} else if (type == PersonIdentification.class) {
 			return new PersonIdentificationFormElement(property);
+		} else if (type == PartnerIdentification.class) {
+			return new PartnerIdentificationFormElement(property);
 		} else if (type == Person.class) {
 			return new PersonFormElement(property);
 		} else if (type == Nationality.class) {

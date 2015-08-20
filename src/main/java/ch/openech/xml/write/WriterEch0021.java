@@ -51,7 +51,15 @@ public class WriterEch0021 {
 			relationElement.values(relation, TYPE_OF_RELATIONSHIP, BASED_ON_LAW, CARE);
 
 			WriterElement partnerElement = relationElement.create(URI, PARTNER);
-			ech44.personIdentification(partnerElement, relation.partner);
+
+			if (relation.partner.person != null) {
+				ech44.personIdentification(partnerElement, relation.partner.person.personIdentification());
+			} else if (relation.partner.personIdentification != null) {
+				ech44.personIdentificationPartner(partnerElement, relation.partner.personIdentification);
+			} else if (relation.partner.organisation != null) {
+				throw new RuntimeException("TODO");
+			}
+
 			if (relation.address != null) {
 				ech10.address(partnerElement, ADDRESS, relation.address);
 			}

@@ -1,7 +1,5 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -9,6 +7,7 @@ import  ch.openech.model.code.BasedOnLaw;
 import  ch.openech.model.person.Person;
 import  ch.openech.model.person.Relation;
 import  ch.openech.model.person.types.TypeOfRelationship;
+import junit.framework.Assert;
 
 public class GardianTest extends AbstractServerTest {
 
@@ -29,14 +28,15 @@ public class GardianTest extends AbstractServerTest {
 		Relation relation = new Relation();
 		relation.typeOfRelationship = TypeOfRelationship.Vormund;
 		relation.basedOnLaw = BasedOnLaw._368;
-		relation.partner = personGardian.personIdentification();
+		relation.partner.setValue(personGardian);
 		person.relation.add(relation);
 		process(writer().gardianMeasure(person.personIdentification(), relation));
 		
 		person = reload(p);
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Vormund);
-		Assert.assertEquals(personGardian.id, gardian.partner.id);
+		Assert.assertNotNull(gardian.partner.person);
+		Assert.assertEquals(personGardian.id, gardian.partner.person.id);
 		Assert.assertEquals(BasedOnLaw._368, gardian.basedOnLaw);
 	}
 
@@ -48,14 +48,15 @@ public class GardianTest extends AbstractServerTest {
 		Relation relation = new Relation();
 		relation.typeOfRelationship = TypeOfRelationship.Beistand;
 		relation.basedOnLaw = BasedOnLaw._369;
-		relation.partner = personGardian.personIdentification();
+		relation.partner.setValue(personGardian);
 		person.relation.add(relation);
 		process(writer().changeGardian(person.personIdentification(), relation));
 
 		person = reload(p);
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Beistand);
-		Assert.assertEquals(reload(gardianP).id, gardian.partner.id);
+		Assert.assertNotNull(gardian.partner.person);
+		Assert.assertEquals(reload(gardianP).id, gardian.partner.person.id);
 		Assert.assertEquals(BasedOnLaw._369, gardian.basedOnLaw);
 
 		Assert.assertNull(person.getRelation(TypeOfRelationship.Vormund));

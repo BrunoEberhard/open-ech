@@ -11,7 +11,6 @@ import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
 
-import ch.openech.frontend.e44.SecondPersonFormElement;
 import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
@@ -37,7 +36,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		public Separation separation;
 		public PartnerShipAbolition cancelationReason;
 		public Boolean registerPartner = Boolean.FALSE;
-		public Relation relationPartner;
+		public Person partnerPerson;
 		
 		public boolean registerPartner() {
 			return Boolean.TRUE.equals(registerPartner);
@@ -51,7 +50,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 		createSpecificForm(formPanel);
 		if (getPerson().getPartner() != null) {
 			formPanel.line(ChangeWithSecondPersonEventData.$.registerPartner);
-			formPanel.line(new SecondPersonFormElement(ChangeWithSecondPersonEventData.$.relationPartner));
+			formPanel.line(ChangeWithSecondPersonEventData.$.partnerPerson);
 		} else {
 			formPanel.text("(Person ohne Partner)");
 		}
@@ -60,15 +59,17 @@ public abstract class ChangeWithSecondPersonEvent extends
 	@Override
 	public ChangeWithSecondPersonEventData createObject() {
 		ChangeWithSecondPersonEventData data = new ChangeWithSecondPersonEventData();
-		if (getPerson().getPartner() != null) {
-			data.relationPartner = getPerson().getPartner();
+		Relation partnerRelation = getPerson().getPartner();
+		if (partnerRelation != null && partnerRelation.partner.person != null) {
+			data.partnerPerson = partnerRelation.partner.person;
 			data.registerPartner = Boolean.TRUE;
 		}
 		return data;
 	}
 
+	@Override
 	public void validate(ChangeWithSecondPersonEventData data, List<ValidationMessage> validationMessages) {
-		if (data.registerPartner() && data.relationPartner == null) {
+		if (data.registerPartner() && data.partnerPerson == null) {
 			validationMessages.add(new ValidationMessage(ChangeWithSecondPersonEventData.$.registerPartner,
 					"Für Partnereintrag ist vorhandener Partner bei Person erforderlich"));
 		}
@@ -105,9 +106,9 @@ public abstract class ChangeWithSecondPersonEvent extends
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				if (TypeOfRelationship.Ehepartner == relation.typeOfRelationship) {
-					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, MaritalStatus.verwitwet, data.date, null));
+					xmls.add(writerEch0020.maritalStatusPartner(data.partnerPerson.personIdentification(), MaritalStatus.verwitwet, data.date, null));
 				} else if (TypeOfRelationship.Partner == relation.typeOfRelationship) {
-					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, MaritalStatus.aufgeloeste_partnerschaft, data.date, PartnerShipAbolition.tod));
+					xmls.add(writerEch0020.maritalStatusPartner(data.partnerPerson.personIdentification(), MaritalStatus.aufgeloeste_partnerschaft, data.date, PartnerShipAbolition.tod));
 				}
 			}
 			return xmls;
@@ -151,10 +152,10 @@ public abstract class ChangeWithSecondPersonEvent extends
 			if (data.registerPartner()) {
 				Relation relation = person.getPartner();
 				if (relation.typeOfRelationship == TypeOfRelationship.Ehepartner) {
-					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, MaritalStatus.verwitwet, data.date, null));
+					xmls.add(writerEch0020.maritalStatusPartner(data.partnerPerson.personIdentification(), MaritalStatus.verwitwet, data.date, null));
 				} else if (relation.typeOfRelationship == TypeOfRelationship.Partner) {
 					// Eingetragene Partnerschaft
-					xmls.add(writerEch0020.maritalStatusPartner(relation.partner, MaritalStatus.aufgeloeste_partnerschaft, data.date, PartnerShipAbolition.tod));
+					xmls.add(writerEch0020.maritalStatusPartner(data.partnerPerson.personIdentification(), MaritalStatus.aufgeloeste_partnerschaft, data.date, PartnerShipAbolition.tod));
 				}
 			}
 			return xmls;
@@ -191,8 +192,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			xmls.add(writerEch0020.separation(person.personIdentification(), data.separation, data.date));
 
 			if (data.registerPartner()) {
-				Relation relation = person.getPartner();
-				xmls.add(writerEch0020.separation(relation.partner, data.separation, data.date));
+				xmls.add(writerEch0020.separation(data.partnerPerson.personIdentification(), data.separation, data.date));
 			}
 			return xmls;
 		}
@@ -215,8 +215,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			xmls.add(writerEch0020.undoSeparation(person.personIdentification()));
 
 			if (data.registerPartner()) {
-				Relation relation = person.getPartner();
-				xmls.add(writerEch0020.undoSeparation(relation.partner));
+				xmls.add(writerEch0020.undoSeparation(data.partnerPerson.personIdentification()));
 			}
 			return xmls;
 		}
@@ -245,8 +244,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			xmls.add(writerEch0020.divorce(person.personIdentification(), data.date));
 
 			if (data.registerPartner()) {
-				Relation relation = person.getPartner();
-				xmls.add(writerEch0020.divorce(relation.partner, data.date));
+				xmls.add(writerEch0020.divorce(data.partnerPerson.personIdentification(), data.date));
 			}
 			return xmls;
 		}
@@ -277,8 +275,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			xmls.add(writerEch0020.undoPartnership(person.personIdentification(), data.date, data.cancelationReason));
 
 			if (data.registerPartner()) {
-				Relation relation = person.getPartner();
-				xmls.add(writerEch0020.undoPartnership(relation.partner, data.date, data.cancelationReason));
+				xmls.add(writerEch0020.undoPartnership(data.partnerPerson.personIdentification(), data.date, data.cancelationReason));
 			}
 			return xmls;
 		}
@@ -307,8 +304,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 			xmls.add(writerEch0020.undoMarriage(person.personIdentification(), data.date));
 
 			if (data.registerPartner()) {
-				Relation relation = person.getPartner();
-				xmls.add(writerEch0020.undoMarriage(relation.partner, data.date));
+				xmls.add(writerEch0020.undoMarriage(data.partnerPerson.personIdentification(), data.date));
 			}
 			return xmls;
 		}

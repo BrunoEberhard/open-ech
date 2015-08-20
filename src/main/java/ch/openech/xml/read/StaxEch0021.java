@@ -10,17 +10,21 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.minimalj.backend.Backend;
 import org.minimalj.util.EqualsHelper;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.person.NameOfParent;
 import ch.openech.model.person.Occupation;
+import ch.openech.model.person.PartnerIdentification;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PersonIdentificationLight;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.types.YesNo;
+import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0021 {
 
@@ -45,21 +49,33 @@ public class StaxEch0021 {
 		}
 	}
 	
-	// partner meint immer "Identifikation der anderen Person einer Beziehung"
-	public static PersonIdentification partner(XMLEventReader xml) throws XMLStreamException {
-		PersonIdentification personIdentification = null;
-		
+	// TODO ev mit dem birthEvent aus StaxEch0020 vereinen. Aber dort kann auch
+	// eine Adresse im Element sein, darum braucht es dort die Relation als parameter
+	public static void partner(XMLEventReader xml, PartnerIdentification partnerIdentification) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (startName.equals(PERSON_IDENTIFICATION) || //
-						startName.equals(PERSON_IDENTIFICATION_PARTNER) ||
-						startName.equals(PARTNER_ID_ORGANISATION)) personIdentification = StaxEch0044.personIdentification(xml);
-				else skip(xml);
+				if (startName.equals(PERSON_IDENTIFICATION)) {
+					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
+					// TODO ist es ok hier Backend.getInstance() zu verwenden?
+					// -> entweder die backend variable auch aus StaxEch0020 entfernen, oder ein traversel für die partnerIdentifications machen
+					Person person = EchPersistence.getByIdentification(Backend.getInstance(), personIdentification);
+					if (person != null) {
+						partnerIdentification.person = person;
+					} else {
+						partnerIdentification.setValue(personIdentification);
+					}
+				} else if (startName.equals(PERSON_IDENTIFICATION_PARTNER)) {
+					partnerIdentification.personIdentification = new PersonIdentificationLight();
+					StaxEch0044.personIdentificationPartner(xml, partnerIdentification.personIdentification);
+				} else if (startName.equals(PARTNER_ID_ORGANISATION)) {
+					// TODO die Organisation hier einlesen
+					throw new RuntimeException("TODO");
+				} else skip(xml);
 			} else if (event.isEndElement()) {
-				return personIdentification;
+				return;
 			} // else skip
 		}
 	}
@@ -81,7 +97,7 @@ public class StaxEch0021 {
 				else if (startName.equals(BASED_ON_LAW)) enuum(xml, relation, Relation.$.basedOnLaw); 
 				else if (startName.equals(BASED_ON_LAW_ADD_ON)) relation.basedOnLawAddOn = token(xml);
 				else if (startName.equals(CARE)) enuum(xml, relation, Relation.$.care);
-				else if (startName.equals(PARTNER)) relation.partner = partner(xml);
+				else if (startName.equals(PARTNER)) partner(xml, relation.partner);
 				else if (startName.equals(ADDRESS)) relation.address = StaxEch0010.address(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {

@@ -1,11 +1,10 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import  ch.openech.model.person.Person;
+import junit.framework.Assert;
 
 public class CorrectRelationTest extends AbstractServerTest {
 
@@ -25,7 +24,8 @@ public class CorrectRelationTest extends AbstractServerTest {
 		child = reload(child);
 		mother = reload(mother);
 
-		Assert.assertEquals(mother.id, child.getMother().partner.id);
+		Assert.assertNotNull(child.getMother().partner.person);
+		Assert.assertEquals(mother.id, child.getMother().partner.person.id);
 		Assert.assertEquals("Bernacchi", child.officialName);
 	}
 	

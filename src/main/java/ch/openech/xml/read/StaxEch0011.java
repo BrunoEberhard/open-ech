@@ -214,6 +214,7 @@ public class StaxEch0011 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
+				// TODO so wie bei birthPartner hier PartnerIdentification verwenden
 				if (startName.equals(PERSON_IDENTIFICATION) || //
 						startName.equals(PERSON_IDENTIFICATION_PARTNER) || //
 						startName.equals(PARTNER_ID_ORGNISATION)) person.contactPerson.person = StaxEch0044.personIdentification(xml);

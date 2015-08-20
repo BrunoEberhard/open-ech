@@ -14,6 +14,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.model.common.NamedId;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PersonIdentificationLight;
 
 public class StaxEch0044 {
 
@@ -83,6 +84,35 @@ public class StaxEch0044 {
 		}
 	}
 
+	public static void personIdentificationPartner(XMLEventReader xml, PersonIdentificationLight personIdentification) throws XMLStreamException {
+		while (true) {
+			XMLEvent event = xml.nextEvent();
+			if (event.isStartElement()) {
+				StartElement startElement = event.asStartElement();
+				String startName = startElement.getName().getLocalPart();
+
+				if (startName.equals(LOCAL_PERSON_ID)) {
+					// Wird ignoriert. Wenn der Client eine solche id übermitteln will
+					// sollte er die normale PersonIdentification verwenden
+					skip(xml);
+				} else if (StringUtils.equals(startName, OTHER_PERSON_ID, OTHER_PERSON_ID)) {
+					personIdentification.otherId.add(namedId(xml));
+				} else if (StringUtils.equals(startName, OFFICIAL_NAME, FIRST_NAME)) {
+					FlatProperties.set(personIdentification, startName, token(xml));
+				} else if (StringUtils.equals(startName, VN)) {
+					personIdentification.vn.value = token(xml);
+				} else if (StringUtils.equals(startName, SEX)) {
+					StaxEch.enuum(xml, personIdentification, PersonIdentification.$.sex);
+				} else if (startName.equals(DATE_OF_BIRTH)) {
+					personIdentification.dateOfBirth.value = datePartiallyKnown(xml);
+				} else
+					skip(xml);
+			} else if (event.isEndElement()) {
+				return;
+			} // else skip
+		}
+	}
+	
 	public static NamedId namedId(XMLEventReader xml) throws XMLStreamException {
 		NamedId namedId = new NamedId();
 		namedId(xml, namedId);

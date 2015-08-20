@@ -296,7 +296,7 @@ public class Person implements Validation {
 		if (localDateOfBirth == null) return true;
 		if (relation == null) return true;
 		if (relation.partner == null) return true;
-		LocalDate localDateOfBirthPartner = relation.partner.dateOfBirth.toLocalDate();
+		LocalDate localDateOfBirthPartner = relation.partner.dateOfBirth();
 		if (localDateOfBirthPartner == null) return true;
 		// strange: isAfter can compare with PartialDate, but is not on PartialDate
 		return localDateOfBirth.isAfter(localDateOfBirthPartner); 
@@ -310,8 +310,8 @@ public class Person implements Validation {
 	@BusinessRule("Mutter muss weiblich sein")
 	private void validateMotherIsFemale(List<ValidationMessage> resultList) {
 		Relation relation = getMother();
-		if (relation == null || relation.partner == null || relation.partner.sex == null) return;
-		if (relation.partner.sex != Sex.weiblich) {
+		if (relation == null || relation.partner == null || relation.partner.sex() == null) return;
+		if (relation.partner.sex() != Sex.weiblich) {
 			resultList.add(new ValidationMessage(Person.$.getMother(), "Mutter muss weiblich sein"));
 		}
 	}
@@ -319,8 +319,8 @@ public class Person implements Validation {
 	@BusinessRule("Vater muss männlich sein")
 	private void validateFatherIsMale(List<ValidationMessage> resultList) {
 		Relation relation = getFather();
-		if (relation == null || relation.partner == null || relation.partner.sex == null) return;
-		if (relation.partner.sex != Sex.maennlich) {
+		if (relation == null || relation.partner == null || relation.partner.sex() == null) return;
+		if (relation.partner.sex() != Sex.maennlich) {
 			resultList.add(new ValidationMessage(Person.$.getFather(), "Vater muss männlich sein"));
 		}
 	}
@@ -369,6 +369,12 @@ public class Person implements Validation {
 		PersonIdentification personIdentification = new PersonIdentification();
 		ViewUtil.view(this, personIdentification);
 		return personIdentification;
+	}
+	
+	public PartnerIdentification partnerIdentification() {
+		PartnerIdentification partnerIdentification = new PartnerIdentification();
+		partnerIdentification.person = this;
+		return partnerIdentification;
 	}
 
 }
