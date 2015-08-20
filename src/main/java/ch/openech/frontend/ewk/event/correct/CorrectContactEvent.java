@@ -34,7 +34,7 @@ public class CorrectContactEvent extends PersonEventEditor<Person> {
 	@Override
 	@BusinessRule("Bei Korrektur an der Zustelladresse / Kontaktadresse muss die Adresse gesetzt sein oder der Kontakt muss ganz gelöscht werden")
 	public void validate(Person person, List<ValidationMessage> resultList) {
-		if (person.contactPerson.address == null && person.contactPerson.person != null) {
+		if (person.contactPerson.address == null && !person.contactPerson.partner.isEmpty()) {
 			resultList.add(new ValidationMessage("contactPerson", "Kontaktadresse muss gesetzt sein, falls eine Person gewählt ist."));
 		}
 	}

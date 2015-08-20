@@ -10,6 +10,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.model.XmlConstants;
 import ch.openech.model.common.DatePartiallyKnown;
 import ch.openech.model.common.NamedId;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.PersonIdentification;
 import ch.openech.model.person.PersonIdentificationLight;
 
@@ -17,11 +18,13 @@ public class WriterEch0044 {
 
 	public final String URI;
 	private final int lengthOfPersonId;
+	private final boolean personIdsLowerCase;
 	
 	public WriterEch0044(EchSchema schema) {
 		URI = schema.getNamespaceURI(44);
 		
 		lengthOfPersonId = schema.lengthOfPersonId();
+		personIdsLowerCase = schema.personIdslowerCaseEch44();
 	}
 
 	public void personIdentification(WriterElement parent, PersonIdentification values) throws Exception {
@@ -35,8 +38,8 @@ public class WriterEch0044 {
 		// namedId(personIdentification, values.technicalIds.localId, XmlConstants.LOCAL_PERSON_ID);
 		// hier wird die interne id verwendet
 		localID(personIdentification, values.id != null ? IdUtils.getCompactIdString(values) : "");
-    	NamedId(personIdentification, values.technicalIds.otherId, _OTHER_PERSON_ID); // VERSION
-    	NamedId(personIdentification, values.technicalIds.euId, "EuPersonId"); // VERSION
+    	namedId(personIdentification, values.technicalIds.otherId, personIdsLowerCase ? OTHER_PERSON_ID : _OTHER_PERSON_ID);
+    	namedId(personIdentification, values.technicalIds.euId, personIdsLowerCase ? EU_PERSON_ID : "EuPersonId");
 		personIdentification.values(values, OFFICIAL_NAME, FIRST_NAME);
 		personIdentification.text(XmlConstants.SEX, values.sex);
     	datePartiallyKnownType(personIdentification, DATE_OF_BIRTH, values.dateOfBirth);
@@ -48,7 +51,7 @@ public class WriterEch0044 {
 
 		personIdentification.textIfSet(XmlConstants.VN, values.vn.value);
 		localID(personIdentification, "");
-    	NamedId(personIdentification, values.otherId, _OTHER_PERSON_ID); // VERSION
+    	namedId(personIdentification, values.otherId, personIdsLowerCase ? OTHER_PERSON_ID : _OTHER_PERSON_ID);
     	personIdentification.values(values, OFFICIAL_NAME, FIRST_NAME);
     	if (values.sex != null) {
     		personIdentification.text(XmlConstants.SEX, values.sex);
@@ -57,6 +60,12 @@ public class WriterEch0044 {
     		datePartiallyKnownType(personIdentification, DATE_OF_BIRTH, values.dateOfBirth);
     	}
     }
+	
+	public void partnerIdOrganisation(WriterElement parent, Organisation organisation) throws Exception {
+		WriterElement element = parent.create(URI, PARTNER_ID_ORGANISATION);
+		localID(element, IdUtils.getCompactIdString(organisation.id));
+		namedId(element, organisation.technicalIds.otherId, personIdsLowerCase ? OTHER_PERSON_ID : _OTHER_PERSON_ID);
+	}
 	
 	public void datePartiallyKnownType(WriterElement parent, String tagName, DatePartiallyKnown object) throws Exception {
 		datePartiallyKnownType(parent, URI, tagName, object);
@@ -83,7 +92,7 @@ public class WriterEch0044 {
     	date.text(typeName, text);
 	}
 	
-	private void NamedId(WriterElement parent, List<NamedId> namedIds, String name) throws Exception {
+	public void namedId(WriterElement parent, List<NamedId> namedIds, String name) throws Exception {
 		for (NamedId namedPersonId : namedIds) {
 			namedId(parent, namedPersonId, name);
 		}

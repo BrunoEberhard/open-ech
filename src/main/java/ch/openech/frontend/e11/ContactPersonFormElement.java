@@ -1,6 +1,7 @@
 package ch.openech.frontend.e11;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.action.Action;
@@ -9,19 +10,21 @@ import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.page.PageAction;
+import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.e10.AddressPanel;
-import ch.openech.frontend.e44.PersonIdentificationPanel;
+import ch.openech.frontend.e44.PersonIdentificationLightPanel;
+import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.model.common.Address;
 import ch.openech.model.person.ContactPerson;
 import ch.openech.model.person.Person;
-import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PersonIdentificationLight;
 import ch.openech.model.person.PersonSearch;
 import ch.openech.model.types.MrMrs;
 import ch.openech.xml.write.EchSchema;
@@ -41,12 +44,22 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 	
 	@Override
 	protected void show(ContactPerson contactPerson) {
-		if (contactPerson.person != null) {
+		if (contactPerson.partner.person != null) {
 			add("Kontaktperson");
 			if (isEditable()) {
-				add(contactPerson.person, new RemovePersonContactAction());
+				add(contactPerson.partner.person.toHtml(), new RemovePersonContactAction());
 			} else {
-				add(contactPerson.person, new PageAction(new PersonPage(echSchema, contactPerson.person.id), "Person anzeigen"));
+				add(contactPerson.partner.person.toHtml(), new PageAction(new PersonPage(echSchema, contactPerson.partner.person.id), "Person anzeigen"));
+				add("Person anzeigen", new PersonPage(echSchema, contactPerson.partner.person.id));
+			}
+		} else if (contactPerson.partner.personIdentification != null) {
+			add(contactPerson.partner.personIdentification.render(RenderType.PLAIN_TEXT, Locale.getDefault()), new RemovePersonContactAction());
+		} else if (contactPerson.partner.organisation != null) {
+			if (isEditable()) {
+				add(contactPerson.partner.organisation.organisationName, new RemovePersonContactAction());
+			} else {
+				add(contactPerson.partner.organisation.organisationName);
+				add("Firma anzeigen", new OrganisationPage(echSchema, contactPerson.partner.organisation.id));
 			}
 		}
 		
@@ -68,8 +81,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 	protected Action[] getActions() {
 		return new Action[] {
 			new SelectPersonContactEditor(),
-			new EnterPersonContactEditor(),
-			// TODO gap
+			new PersonIdentificationLightEditor(),
 			new AddAddressContactEditor(true),
 			new AddAddressContactEditor(false),
 		};
@@ -85,11 +97,13 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		@Override
 		protected void save(PersonSearch personSearch) {
 			if (personSearch != null) {
-				Person person = Backend.getInstance().read(Person.class, personSearch.id);
-				
 				ContactPerson contactPerson = ContactPersonFormElement.this.getValue();
+
+				Person person = Backend.getInstance().read(Person.class, personSearch.id);
+				ContactPersonFormElement.this.getValue().partner.person = person;
 				
-				contactPerson.person = person.personIdentification();
+				contactPerson.partner.person = person;
+				
 				if (person.dwellingAddress != null) {
 					contactPerson.address = person.dwellingAddress.mailAddress;
 					if (contactPerson.address != null) {
@@ -111,34 +125,38 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 	};
     
     // Identifikationen der Kontaktpersonen frei erfassen
-	public class EnterPersonContactEditor extends Editor<PersonIdentification, Void> {
+	public class PersonIdentificationLightEditor extends Editor<PersonIdentificationLight, Void> {
 		@Override
-		public Form<PersonIdentification> createForm() {
-			return new PersonIdentificationPanel();
+		public Form<PersonIdentificationLight> createForm() {
+			return new PersonIdentificationLightPanel();
 		}
 
 		@Override
-		protected PersonIdentification createObject() {
-			return getValue().person;
+		public PersonIdentificationLight createObject() {
+			if (getValue().partner.personIdentification != null) {
+				return getValue().partner.personIdentification;
+			} else {
+				return new PersonIdentificationLight();
+			}
 		}
 
 		@Override
-		protected Void save(PersonIdentification personIdentification) {
-			getValue().person = personIdentification;
+		public Void save(PersonIdentificationLight edited) {
+			getValue().partner.personIdentification = edited;
 			return null;
 		}
-
+		
 		@Override
 		protected void finished(Void result) {
 			handleChange();
 		}
-    };
+	}
 
     // Kontaktperson entfernen
 	private class RemovePersonContactAction extends Action {
 		@Override
 		public void action() {
-			getValue().person = null;
+			getValue().partner.clear();
 			handleChange();
 		}
     };

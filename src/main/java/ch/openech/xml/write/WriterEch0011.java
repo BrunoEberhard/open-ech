@@ -10,6 +10,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.DwellingAddress;
 import ch.openech.model.common.Place;
+import ch.openech.model.person.ContactPerson;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Nationality;
 import ch.openech.model.person.Person;
@@ -152,16 +153,20 @@ public class WriterEch0011 {
 	}
 	
 	public void contact(WriterElement parent, String uri, Person person, boolean withValidTill) throws Exception {
-		if (person.contactPerson.person == null && (person.contactPerson.address == null || person.contactPerson.address.isEmpty())) return;
+		ContactPerson contactPerson = person.contactPerson;
+		if (contactPerson.partner.isEmpty() && (contactPerson.address == null || contactPerson.address.isEmpty())) return;
 			
 		WriterElement contactElement = parent.create(uri, CONTACT);
-		// Hier würden 3 verschieden Identifikationsarten unterstützt:
-		// eCH-0011:partnerIdOrganisationType
-		// eCH-0044:personIdentificationPartnerType
-		// eCH-0044:personIdentificationType
-		if (person.contactPerson.person != null) ech44.personIdentification(contactElement, person.contactPerson.person);
-		ech10.address(contactElement, CONTACT_ADDRESS, person.contactPerson.address);
-		if (withValidTill && person.contactPerson.validTill != null) contactElement.text(CONTACT_VALID_TILL, person.contactPerson.validTill);
+		if (contactPerson.partner.person != null) {
+			ech44.personIdentification(contactElement, contactPerson.partner.person.personIdentification());
+		} else if (contactPerson.partner.personIdentification != null) {
+			ech44.personIdentificationPartner(contactElement, contactPerson.partner.personIdentification);
+		} else if (contactPerson.partner.organisation != null) {
+			ech44.partnerIdOrganisation(contactElement,  contactPerson.partner.organisation);
+		}
+		
+		ech10.address(contactElement, CONTACT_ADDRESS, contactPerson.address);
+		if (withValidTill && contactPerson.validTill != null) contactElement.text(CONTACT_VALID_TILL, contactPerson.validTill);
 	}
 
 	public void residence(WriterElement message, Person values) throws Exception {

@@ -321,7 +321,21 @@ public class EchSchema {
 	public boolean extensionAvailable() {
 		return getNamespaceVersion(20) > 1 || getNamespaceMinorVersion(20) > 0;
 	}
+	
+	/* 
+	 * Vor Version 8 war das Element OtherPersonId noch falsch geschrieben
+	 */
+	public boolean personIdslowerCaseEch11() {
+		return getNamespaceVersion(11) >= 8;
+	}
 
+	/* 
+	 * Vor Version 2 waren die Elemente OtherPersonId und EuPersonId noch falsch geschrieben
+	 */
+	public boolean personIdslowerCaseEch44() {
+		return getNamespaceVersion(44) >= 2;
+	}
+	
 	/* 
 	 * separationTill in maritalData existiert erst ab der 5. Version von eCH 11
 	 */

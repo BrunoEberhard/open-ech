@@ -8,6 +8,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.minimalj.backend.Backend;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.Codes;
@@ -21,8 +22,11 @@ import ch.openech.model.common.Place;
 import ch.openech.model.person.Foreign;
 import ch.openech.model.person.Nationality;
 import ch.openech.model.person.Person;
+import ch.openech.model.person.PersonIdentification;
+import ch.openech.model.person.PersonIdentificationLight;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.SecondaryResidence;
+import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0011 {
 
@@ -213,11 +217,21 @@ public class StaxEch0011 {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
-				String startName = startElement.getName().getLocalPart();
-				// TODO so wie bei birthPartner hier PartnerIdentification verwenden
-				if (startName.equals(PERSON_IDENTIFICATION) || //
-						startName.equals(PERSON_IDENTIFICATION_PARTNER) || //
-						startName.equals(PARTNER_ID_ORGNISATION)) person.contactPerson.person = StaxEch0044.personIdentification(xml);
+				String startName = startElement.getName().getLocalPart();			
+				if (startName.equals(PERSON_IDENTIFICATION)) {
+					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
+					Person completePerson = EchPersistence.getByIdentification(Backend.getInstance(), personIdentification);
+					if (completePerson != null) {
+						person.contactPerson.partner.person = completePerson;
+					} else {
+						person.contactPerson.partner.setValue(personIdentification);
+					}
+				} else if (startName.equals(PERSON_IDENTIFICATION_PARTNER)) {
+					person.contactPerson.partner.personIdentification = new PersonIdentificationLight();
+					StaxEch0044.personIdentificationPartner(xml, person.contactPerson.partner.personIdentification);
+				} else if (startName.equals(PARTNER_ID_ORGNISATION)) {
+					throw new RuntimeException("TODO");
+				}
 				else if (startName.equals(CONTACT_ADDRESS)) person.contactPerson.address = StaxEch0010.address(xml);
 				else if (startName.equals(CONTACT_VALID_TILL)) person.contactPerson.validTill = date(xml);
 				else skip(xml);

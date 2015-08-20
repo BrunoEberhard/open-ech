@@ -5,9 +5,7 @@ import static ch.openech.xml.read.StaxEch.*;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.swing.ProgressMonitor;
 import javax.xml.stream.XMLEventReader;
@@ -18,7 +16,6 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.ProgressListener;
-import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.Event;
@@ -78,34 +75,34 @@ public class StaxEch0020 {
 	
 	@Deprecated // dies sollte ersetzt werden
 	private void updateIdentifications(Object object) {
-		if (object == null) return;
-		
-		if (object instanceof List<?>) {
-			List<?> list = (List<?>) object;
-			for (Object o : list) {
-				updateIdentifications(o);
-			}
-		} else {
-			try {
-				for (Field field : object.getClass().getDeclaredFields()) {
-					if (FieldUtils.isPublic(field) && !FieldUtils.isStatic(field) && !FieldUtils.isTransient(field) && !field.getName().equals("id") && !field.getName().equals("version")) {
-						if (FieldUtils.isAllowedPrimitive(field.getType())) continue;
-						Object value = field.get(object);
-						if (value instanceof PersonIdentification) {
-							PersonIdentification personIdentification = (PersonIdentification) value;
-							if (personIdentification.id == null) {
-								personIdentification = getPerson(personIdentification).personIdentification();
-								field.set(object, personIdentification);
-							}
-						} else {
-							updateIdentifications(value);
-						}
-					}
-				}
-			} catch (Exception x) {
-				x.printStackTrace();
-			}
-		}
+//		if (object == null) return;
+//		
+//		if (object instanceof List<?>) {
+//			List<?> list = (List<?>) object;
+//			for (Object o : list) {
+//				updateIdentifications(o);
+//			}
+//		} else {
+//			try {
+//				for (Field field : object.getClass().getDeclaredFields()) {
+//					if (FieldUtils.isPublic(field) && !FieldUtils.isStatic(field) && !FieldUtils.isTransient(field) && !field.getName().equals("id") && !field.getName().equals("version")) {
+//						if (FieldUtils.isAllowedPrimitive(field.getType())) continue;
+//						Object value = field.get(object);
+//						if (value instanceof PersonIdentification) {
+//							PersonIdentification personIdentification = (PersonIdentification) value;
+//							if (personIdentification.id == null) {
+//								personIdentification = getPerson(personIdentification).personIdentification();
+//								field.set(object, personIdentification);
+//							}
+//						} else {
+//							updateIdentifications(value);
+//						}
+//					}
+//				}
+//			} catch (Exception x) {
+//				x.printStackTrace();
+//			}
+//		}
 	}
 	
 	private void removePartner(Person changedPerson) {
@@ -533,7 +530,7 @@ public class StaxEch0020 {
 						personToChange.separation.separation = null; personToChange.separation.separationTill = null; personToChange.separation.dateOfSeparation = null;
 					}
 					if (CORRECT_CONTACT.equals(eventName)) {
-						personToChange.contactPerson.address = null; personToChange.contactPerson.person = null; personToChange.contactPerson.validTill = null;
+						personToChange.contactPerson.address = null; personToChange.contactPerson.partner.clear(); personToChange.contactPerson.validTill = null;
 					}
 					if (CORRECT_REPORTING.equals(eventName)) personToChange.residence.secondary.clear();
 				}

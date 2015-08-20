@@ -170,9 +170,9 @@ public class WriterEch0020 extends DeliveryWriter {
 			if (relation.partner.person != null) {
 				ech44.personIdentification(element, relation.partner.person.personIdentification());
 			} else if (relation.partner.personIdentification != null) {
-				throw new RuntimeException("TODO");
+				ech44.personIdentificationPartner(element, relation.partner.personIdentification);
 			} else if (relation.partner.organisation != null) {
-				throw new RuntimeException("TODO");
+				ech44.partnerIdOrganisation(element,  relation.partner.organisation);
 			}
 			if (relation.address != null) {
 				ech10.address(element, ADDRESS, relation.address);

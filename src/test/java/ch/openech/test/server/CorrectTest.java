@@ -3,8 +3,6 @@ package ch.openech.test.server;
 import java.time.LocalDate;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
@@ -23,6 +21,7 @@ import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.types.Religion;
 import ch.openech.model.types.Language;
+import junit.framework.Assert;
 
 /*
  * Diese Sammlung von Tests betrifft die bei Schema - Version 2.2. neu
@@ -100,7 +99,7 @@ public class CorrectTest extends AbstractServerTest {
 	@Test
 	public void correctContact_Address() throws Exception {
 		Person person = reload(p);
-		person.contactPerson.person = null;
+		person.contactPerson.partner.clear();
 		person.contactPerson.address = new Address();
 		person.contactPerson.address.lastName = "Kontaktnachname";
 		person.contactPerson.address.street = "Kontaktstrasse";
@@ -109,7 +108,7 @@ public class CorrectTest extends AbstractServerTest {
 		process(writer().correctContact(person));
 		
 		person = reload(p);
-		Assert.assertNull(person.contactPerson.person);
+		Assert.assertTrue(person.contactPerson.partner.isEmpty());
 		Assert.assertNotNull(person.contactPerson.address);
 		Assert.assertEquals("Kontaktnachname", person.contactPerson.address.lastName);
 		Assert.assertEquals("Kontaktstrasse", person.contactPerson.address.street);
@@ -120,7 +119,7 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctContact_Person() throws Exception {
 		Person person = reload(p);
 		Person person2 = reload(foreignP);
-		person.contactPerson.person = person2.personIdentification();
+		person.contactPerson.partner.setValue(person2);
 		person.contactPerson.address = person2.dwellingAddress.mailAddress;
 		person.contactPerson.address.lastName = person2.officialName;
 		
@@ -128,7 +127,7 @@ public class CorrectTest extends AbstractServerTest {
 		
 		person = reload(p);
 		Assert.assertNotNull(person.contactPerson);
-		Assert.assertEquals(person2.id, person.contactPerson.person.id);
+		Assert.assertEquals(person2.id, person.contactPerson.partner.person.id);
 	}
 
 	
