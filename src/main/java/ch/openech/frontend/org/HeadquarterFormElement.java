@@ -92,7 +92,7 @@ public class HeadquarterFormElement extends ObjectFormElement<Headquarter> {
 
 		@Override
 		public List<Organisation> search(String searchText) {
-			return Backend.getInstance().read(Organisation.class, Criteria.search(searchText), 100);
+			return Backend.persistence().read(Organisation.class, Criteria.search(searchText), 100);
 		}
 	}
 

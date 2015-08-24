@@ -49,7 +49,7 @@ public abstract class AbstractServerTest {
 	}
 
 	protected Person insertPerson(String vn) throws Exception {
-		List<Person> persons = Backend.getInstance().read(Person.class, Criteria.search(vn, Person.SEARCH_BY_VN), 2);
+		List<Person> persons = Backend.persistence().read(Person.class, Criteria.search(vn, Person.SEARCH_BY_VN), 2);
 		if (persons.size() == 1) {
 			return persons.get(0);
 		} else if (persons.isEmpty()){
@@ -92,7 +92,7 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static Person reload(Person person) {
-		return Backend.getInstance().read(Person.class, person.id);
+		return Backend.persistence().read(Person.class, person.id);
 	}
 	
 	public static WriterEch0020 writer() {

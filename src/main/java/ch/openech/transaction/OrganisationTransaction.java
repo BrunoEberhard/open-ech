@@ -3,7 +3,7 @@ package ch.openech.transaction;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.backend.Backend;
+import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.Transaction;
 
 import ch.openech.model.organisation.Organisation;
@@ -23,9 +23,9 @@ public class OrganisationTransaction implements Transaction<Organisation> {
 	}
 
 	@Override
-	public Organisation execute(Backend backend) {
+	public Organisation execute(Persistence persistence) {
 		Organisation changedOrganisation = null;
-		StaxEch0148 stax = new StaxEch0148(backend);
+		StaxEch0148 stax = new StaxEch0148(persistence);
 		for (String xml : xmls) {
 			try {
 				stax.process(xml);

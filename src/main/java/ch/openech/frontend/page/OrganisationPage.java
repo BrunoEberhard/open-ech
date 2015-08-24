@@ -71,7 +71,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 	public Organisation load() {
 		Organisation organisation;
 		if (version == 0) {
-			organisation = Backend.getInstance().read(Organisation.class, getObjectId());
+			organisation = Backend.persistence().read(Organisation.class, getObjectId());
 		} else {
 			organisation = Backend.getInstance().execute(new ReadTransaction<Organisation>(Organisation.class, getObjectId(), version));
 		}

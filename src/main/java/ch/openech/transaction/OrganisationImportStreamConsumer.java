@@ -2,7 +2,7 @@ package ch.openech.transaction;
 
 import java.io.InputStream;
 
-import org.minimalj.backend.Backend;
+import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.StreamConsumer;
 
 import ch.openech.xml.read.StaxEch0148;
@@ -11,9 +11,9 @@ public class OrganisationImportStreamConsumer implements StreamConsumer<Integer>
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Integer consume(Backend backend, InputStream stream) {
+	public Integer consume(Persistence persistence, InputStream stream) {
 		try {
-			StaxEch0148 stax = new StaxEch0148(backend);
+			StaxEch0148 stax = new StaxEch0148(persistence);
 			stax.process(stream, null);
 			return 0; // count
 		} catch (Exception x) {

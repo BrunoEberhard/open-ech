@@ -14,7 +14,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.minimalj.backend.Backend;
+import org.minimalj.backend.Persistence;
 import org.minimalj.frontend.page.ProgressListener;
 import org.minimalj.util.StringUtils;
 
@@ -33,7 +33,7 @@ import ch.openech.model.types.YesNo;
 import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0020 {
-	private final Backend backend;
+	private final Persistence persistence;
 	
 	// hack: Globale Variable als 2. Rückgabewert von simplePersonEventPerson and simplePersonEvent
 	// Dies ist notwendige, weil changeNamePersonType einerseits die Identifikation der zu ändernden
@@ -42,8 +42,8 @@ public class StaxEch0020 {
 	private Event e;
 	private Person changedPerson = null;
 	
-	public StaxEch0020(Backend backend) {
-		this.backend = backend;
+	public StaxEch0020(Persistence persistence) {
+		this.persistence = persistence;
 	}
 	
 	// Persistence
@@ -51,7 +51,8 @@ public class StaxEch0020 {
 	public void insertPerson(Person person) {
 		person.event = e;
 		updateIdentifications(person);
-		changedPerson = backend.insert(person);
+		Object newId = persistence.insert(person);
+		changedPerson = persistence.read(Person.class, newId);
 	}
 
 	public Person getChangedPerson() {
@@ -68,7 +69,7 @@ public class StaxEch0020 {
 			person.technicalIds.localId.clear();
 		}
 		updateIdentifications(person);
-		changedPerson = backend.update(person);
+		changedPerson = persistence.update(person);
 	}
 
 	//
@@ -113,7 +114,7 @@ public class StaxEch0020 {
 	}
 	
 	public Person getPerson(PersonIdentification personIdentification) {
-		return EchPersistence.getByIdentification(backend, personIdentification);
+		return EchPersistence.getByIdentification(persistence, personIdentification);
 	}
 	
 	//
@@ -346,7 +347,7 @@ public class StaxEch0020 {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(PERSON_IDENTIFICATION)) {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
-					Person person = EchPersistence.getByIdentification(backend, personIdentification);
+					Person person = EchPersistence.getByIdentification(persistence, personIdentification);
 					if (person != null) {
 						relation.partner.person = person;
 					} else {

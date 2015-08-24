@@ -48,7 +48,7 @@ public class PersonIdentificationFormElement extends ObjectFormElement<PersonIde
 		
 		@Override
 		public List<Person> search(String searchText) {
-			return Backend.getInstance().read(Person.class, Criteria.search(searchText), 100);
+			return Backend.persistence().read(Person.class, Criteria.search(searchText), 100);
 		}
 	}
 	

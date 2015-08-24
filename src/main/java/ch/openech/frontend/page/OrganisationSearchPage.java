@@ -30,7 +30,7 @@ public class OrganisationSearchPage extends SimpleSearchPage<Organisation> {
 
 	@Override
 	protected List<Organisation> load(String query) {
-		return Backend.getInstance().read(Organisation.class, Criteria.search(query), 100);
+		return Backend.persistence().read(Organisation.class, Criteria.search(query), 100);
 	}
 
 	@Override

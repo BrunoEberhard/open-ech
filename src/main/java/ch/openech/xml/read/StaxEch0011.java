@@ -220,7 +220,7 @@ public class StaxEch0011 {
 				String startName = startElement.getName().getLocalPart();			
 				if (startName.equals(PERSON_IDENTIFICATION)) {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
-					Person completePerson = EchPersistence.getByIdentification(Backend.getInstance(), personIdentification);
+					Person completePerson = EchPersistence.getByIdentification(Backend.persistence(), personIdentification);
 					if (completePerson != null) {
 						person.contactPerson.partner.person = completePerson;
 					} else {

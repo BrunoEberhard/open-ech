@@ -36,12 +36,12 @@ public class PersonSearchPage extends SearchPage<PersonSearch, Person> {
 
 	@Override
 	protected List<PersonSearch> load(String query) {
-		return Backend.getInstance().read(PersonSearch.class, Criteria.search(query), 100);
+		return Backend.persistence().read(PersonSearch.class, Criteria.search(query), 100);
 	}
 
 	@Override
 	protected Person load(PersonSearch personSearch) {
-		return Backend.getInstance().read(Person.class, personSearch.id);
+		return Backend.persistence().read(Person.class, personSearch.id);
 	}
 
 	@Override

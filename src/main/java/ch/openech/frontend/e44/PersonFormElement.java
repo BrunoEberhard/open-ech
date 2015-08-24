@@ -49,13 +49,13 @@ public class PersonFormElement extends ObjectFormElement<Person> {
 
 		@Override
 		protected void save(PersonSearch object) {
-			Person person = Backend.getInstance().read(Person.class, object.id);
+			Person person = Backend.persistence().read(Person.class, object.id);
 			setValue(person);
 		}
 
 		@Override
 		public List<PersonSearch> search(String searchText) {
-			return Backend.getInstance().read(PersonSearch.class, Criteria.search(searchText), 100);
+			return Backend.persistence().read(PersonSearch.class, Criteria.search(searchText), 100);
 		}
 
 	}

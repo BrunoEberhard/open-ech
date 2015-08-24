@@ -5,7 +5,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -110,7 +109,7 @@ public class SedexInputPage extends Page {
 //		}
 	}
 
-	private void showMoveOutPage(SedexMessageInformation envelope) throws SQLException {
+	private void showMoveOutPage(SedexMessageInformation envelope) {
 		// TODO
 
 //		Person person = searchPerson(envelope);
@@ -126,7 +125,7 @@ public class SedexInputPage extends Page {
 //		}
 	}
 
-	private void showDeathPage(SedexMessageInformation envelope) throws SQLException {
+	private void showDeathPage(SedexMessageInformation envelope) {
 		// TODO
 		
 //		Person person = searchPerson(envelope);
@@ -151,8 +150,8 @@ public class SedexInputPage extends Page {
 		return answer;
 	}
 
-	private Person searchPerson(SedexMessageInformation envelope) throws SQLException {
-		return EchPersistence.getByIdentification(Backend.getInstance(), envelope.personIdentification);
+	private Person searchPerson(SedexMessageInformation envelope) {
+		return EchPersistence.getByIdentification(Backend.persistence(), envelope.personIdentification);
 	}
 	
 }

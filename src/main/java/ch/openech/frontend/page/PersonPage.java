@@ -118,7 +118,7 @@ public class PersonPage extends ObjectPage<Person> {
 	public Person load() {
 		Person person;
 		if (version == 0) {
-			person = Backend.getInstance().read(Person.class, getObjectId());
+			person = Backend.persistence().read(Person.class, getObjectId());
 		} else {
 			person = Backend.getInstance().execute(new ReadTransaction<Person>(Person.class, getObjectId(), version));
 		}

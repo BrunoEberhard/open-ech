@@ -3,7 +3,7 @@ package ch.openech.transaction;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import org.minimalj.backend.Backend;
+import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.Role;
 import org.minimalj.transaction.StreamProducer;
 
@@ -25,10 +25,10 @@ public class PersonExportStreamProducer implements StreamProducer<Integer> {
 	}
 	
 	@Override
-	public Integer produce(Backend backend, OutputStream stream) {
+	public Integer produce(Persistence persistence, OutputStream stream) {
 		int count = 0;
 		try {
-			int maxId = backend.executeStatement(Integer.class, "MaxPerson");
+			int maxId = persistence.executeStatement(Integer.class, "MaxPerson");
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream, "UTF-8");
 			
@@ -38,7 +38,7 @@ public class PersonExportStreamProducer implements StreamProducer<Integer> {
 			WriterElement baseDelivery = complete ? writer.baseDelivery(delivery, maxId) : writer.keyDelivery(delivery, maxId);
 
 			for (long id = 1; id<=maxId; id++) {
-				Person person = backend.read(Person.class, id);
+				Person person = persistence.read(Person.class, id);
 
 				if (person != null) {
 					if (complete) {

@@ -1,9 +1,5 @@
 package ch.openech.mj.db;
 
-import java.sql.SQLException;
-
-import junit.framework.Assert;
-
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,20 +12,21 @@ import ch.openech.model.person.Occupation;
 import ch.openech.model.person.Person;
 import ch.openech.model.types.MrMrs;
 import ch.openech.model.types.Sex;
+import junit.framework.Assert;
 
 public class DbPersonCrudTest {
 
 	private static DbPersistence persistence;
 
 	@BeforeClass
-	public static void setupDb() throws SQLException {
+	public static void setupDb() {
 		persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Person.class);
 		persistence.insert(CountryIdentification.createSwiss());
 	}
 
 	@Test
 	@Ignore("Nicht mehr möglich, da Adresse kein Identifiable")
-	public void testCrud() throws SQLException {
+	public void testCrud() {
 		Table<Address> addressTable = persistence.getTable(Address.class);
 		
 		Address address = new Address();
@@ -56,7 +53,7 @@ public class DbPersonCrudTest {
 	}
 	
 	@Test
-	public void testCrudCountry() throws SQLException {
+	public void testCrudCountry() {
 		Table<CountryIdentification> countryTable = persistence.getTable(CountryIdentification.class);
 		
 		CountryIdentification country = new CountryIdentification();
@@ -77,7 +74,7 @@ public class DbPersonCrudTest {
 	}
 	
 	@Test
-	public void testCrudPerson() throws SQLException {
+	public void testCrudPerson() {
 		Table<Person> personTable = persistence.getTable(Person.class);
 		
 		Person person = new Person();
@@ -106,7 +103,7 @@ public class DbPersonCrudTest {
 	}
 	
 	@Test
-	public void testInsertPerson2() throws SQLException {
+	public void testInsertPerson2() {
 		Table<Person> personTable = persistence.getTable(Person.class);
 
 		Person person = new Person();
@@ -147,7 +144,7 @@ public class DbPersonCrudTest {
 	}
 
 	@Test
-	public void testUpdatePerson() throws SQLException {
+	public void testUpdatePerson() {
 		Table<Person> personTable = persistence.getTable(Person.class);
 
 		Person person = new Person();
@@ -186,7 +183,7 @@ public class DbPersonCrudTest {
 
 	
 	@Test
-	public void testUpdateSubTable() throws SQLException {
+	public void testUpdateSubTable() {
 		Table<Person> personTable = persistence.getTable(Person.class);
 
 		Person person = new Person();
@@ -224,7 +221,7 @@ public class DbPersonCrudTest {
 	}
 	
 	@Test
-	public void testChangePersonIdentification() throws SQLException {
+	public void testChangePersonIdentification() {
 		Table<Person> personTable = persistence.getTable(Person.class);
 
 		Person person = new Person();
@@ -250,7 +247,7 @@ public class DbPersonCrudTest {
 	}
 	
 //	@Test @Ignore("Not possible as long as id an UUID")
-//	public void testMaxPerson() throws SQLException {
+//	public void testMaxPerson() {
 //		int startMaxId = persistence.execute(Integer.class, "select max(id) from Person");
 //		Table<Person> personTable = persistence.getTable(Person.class);
 //		

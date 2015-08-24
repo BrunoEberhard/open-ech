@@ -5,7 +5,7 @@ import static ch.openech.model.XmlConstants.*;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import org.minimalj.backend.Backend;
+import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.StreamProducer;
 
 import ch.openech.model.organisation.Organisation;
@@ -27,10 +27,10 @@ public class OrganisationExportStreamProducer implements StreamProducer<Integer>
 	}
 	
 	@Override
-	public Integer produce(Backend backend, OutputStream stream) {
+	public Integer produce(Persistence persistence, OutputStream stream) {
 		int numberOfOrganisations = 0;
 		try {
-			int maxId = backend.executeStatement(Integer.class, "MaxOrganisation");
+			int maxId = persistence.executeStatement(Integer.class, "MaxOrganisation");
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream, "UTF-8");
 			
@@ -42,7 +42,7 @@ public class OrganisationExportStreamProducer implements StreamProducer<Integer>
 			WriterElement baseDelivery = complete ? writer148.organisationBaseDelivery(delivery) : writer148.keyExchange(delivery);
 
 			for (long id = 1; id<=maxId; id++) {
-				Organisation organisation = backend.read(Organisation.class, id);
+				Organisation organisation = persistence.read(Organisation.class, id);
 
 				if (organisation != null) {
 					if (complete) {

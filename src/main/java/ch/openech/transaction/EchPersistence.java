@@ -2,7 +2,7 @@ package ch.openech.transaction;
 
 import java.util.List;
 
-import org.minimalj.backend.Backend;
+import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
@@ -14,7 +14,7 @@ import ch.openech.model.person.PersonIdentification;
 
 public class EchPersistence {
 
-	public static Person getByIdentification(Backend backend, PersonIdentification personIdentification) {
+	public static Person getByIdentification(Persistence persistence, PersonIdentification personIdentification) {
 		String localId = null;
 		if (personIdentification.technicalIds.localId.openEch()) {
 			localId = personIdentification.technicalIds.localId.personId;
@@ -22,14 +22,14 @@ public class EchPersistence {
 				localId = null;
 			}
 			if (localId != null && localId.length() == 36) {
-				Person person = backend.read(Person.class, localId);
+				Person person = persistence.read(Person.class, localId);
 				if (person != null) {
 					return person;
 				}
 			}
 		}
 		if (personIdentification.vn != null) {
-			List<Person> persons = backend.read(Person.class, Criteria.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
+			List<Person> persons = persistence.read(Person.class, Criteria.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
 			if (localId != null) {
 				for (Person person : persons) {
 					if (IdUtils.getCompactIdString(person).startsWith(localId)) {
@@ -40,12 +40,12 @@ public class EchPersistence {
 				if (!persons.isEmpty()) return persons.get(0);
 			}
 		} 
-		List<Person> persons = backend.read(Person.class, Criteria.search(personIdentification.officialName), 500);
+		List<Person> persons = persistence.read(Person.class, Criteria.search(personIdentification.officialName), 500);
 		for (Person person : persons) {
 			if (localId == null || IdUtils.getCompactIdString(person).startsWith(localId)) {
 				if (StringUtils.equals(person.firstName, personIdentification.firstName)) {
 					if (StringUtils.equals(person.officialName, personIdentification.officialName)) {
-						return backend.read(Person.class, person.id);
+						return persistence.read(Person.class, person.id);
 					}
 				}
 			}
@@ -53,7 +53,7 @@ public class EchPersistence {
 		return null;
 	}
 	
-	public static Organisation getByIdentification(Backend backend, OrganisationIdentification organisationIdentification) {
+	public static Organisation getByIdentification(Persistence persistence, OrganisationIdentification organisationIdentification) {
 		String localId = null;
 		if (organisationIdentification.technicalIds.localId.openEch()) {
 			localId = organisationIdentification.technicalIds.localId.personId;
@@ -61,15 +61,15 @@ public class EchPersistence {
 				localId = null;
 			}
 			if (localId != null && localId.length() == 36) {
-				Organisation organisation = backend.read(Organisation.class, localId);
+				Organisation organisation = persistence.read(Organisation.class, localId);
 				if (organisation != null) {
 					return organisation;
 				}
 			}
 		}
-		List<Organisation> organisations = backend.read(Organisation.class, Criteria.equals(Organisation.$.uid.value, organisationIdentification.uid.value), 2);
+		List<Organisation> organisations = persistence.read(Organisation.class, Criteria.equals(Organisation.$.uid.value, organisationIdentification.uid.value), 2);
 		if (organisations.isEmpty()) {
-			organisations = backend.read(Organisation.class, Criteria.equals(Organisation.$.organisationName, organisationIdentification.organisationName), 2);
+			organisations = persistence.read(Organisation.class, Criteria.equals(Organisation.$.organisationName, organisationIdentification.organisationName), 2);
 		}
 		for (Organisation organisation : organisations) {
 			if (localId == null || IdUtils.getCompactIdString(organisation).startsWith(localId)) {

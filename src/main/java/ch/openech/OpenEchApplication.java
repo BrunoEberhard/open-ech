@@ -25,11 +25,13 @@ import java.util.ResourceBundle;
 import org.minimalj.application.Application;
 import org.minimalj.application.DevMode;
 import org.minimalj.application.Preferences;
+import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.page.EmptyPage;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.SearchPage;
+import org.minimalj.security.MjUser;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.frontend.editor.BaseDeliveryEditor;
@@ -98,6 +100,12 @@ public class OpenEchApplication extends Application {
 	@Override
 	public List<Action> getMenu() {
 		List<Action> actions = new ArrayList<>();
+		
+		MjUser user = Frontend.getBrowser() != null ? Frontend.getBrowser().getUser() : null;
+		if (user == null) {
+			return actions;
+		}
+		
 		OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
 		updateEwkNamespaceContext();
 		
@@ -156,7 +164,7 @@ public class OpenEchApplication extends Application {
 	@Override
 	public Page createDefaultPage() {
 		return new EmptyPage();
-//		List<PersonSearch> persons = Backend.getInstance().read(PersonSearch.class, Criteria.search("Müller"), 1);
+//		List<PersonSearch> persons = Backend.persistence().read(PersonSearch.class, Criteria.search("Müller"), 1);
 //		return new PersonPage(EchSchema.getNamespaceContext(20, "2.2"), persons.get(0).id);
 
 //		PersonSearchPage searchPage = new PersonSearchPage();

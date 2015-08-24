@@ -16,7 +16,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.minimalj.backend.Backend;
+import org.minimalj.backend.Persistence;
 import org.minimalj.frontend.page.ProgressListener;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.util.FieldUtils;
@@ -29,19 +29,20 @@ import ch.openech.model.organisation.OrganisationIdentification;
 import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0148 {
-	private final Backend backend;
+	private final Persistence persistence;
 	
 	private Event e;
 	private Organisation changedOrganisation = null;
 	
-	public StaxEch0148(Backend backend) {
-		this.backend = backend;
+	public StaxEch0148(Persistence persistence) {
+		this.persistence = persistence;
 	}
 	
 	public void insertOrganisation(Organisation organisation) {
 		organisation.event = e;
 		updateIdentifications(organisation);
-		changedOrganisation = backend.insert(organisation);
+		Object newId = persistence.insert(organisation);
+		changedOrganisation = persistence.read(Organisation.class, newId);
 	}
 	
 	public Organisation getChangedOrganisation() {
@@ -133,7 +134,7 @@ public class StaxEch0148 {
 	public void simpleOrganisationEvent(String type, Organisation organisation) {
 		organisation.event = e;
 		updateIdentifications(organisation);
-		changedOrganisation = backend.update(organisation);
+		changedOrganisation = persistence.update(organisation);
 	}
 
 	private void updateIdentifications(Object object) {
@@ -168,7 +169,7 @@ public class StaxEch0148 {
 	}
 	
 	public Organisation getOrganisation(OrganisationIdentification organisationIdentification) {
-		return EchPersistence.getByIdentification(backend, organisationIdentification);
+		return EchPersistence.getByIdentification(persistence, organisationIdentification);
 	}
 
 	//
@@ -202,7 +203,7 @@ public class StaxEch0148 {
 				String startName = startElement.getName().getLocalPart();
 				if (StringUtils.equals(startName, ORGANISATION_IDENTIFICATION)) {
 					OrganisationIdentification organisationIdentification = StaxEch0097.organisationIdentification(xml);
-					organisation = EchPersistence.getByIdentification(backend, organisationIdentification);
+					organisation = EchPersistence.getByIdentification(persistence, organisationIdentification);
 					if (StringUtils.equals(eventName, CORRECT_LIQUIDATION)) {
 						organisation.liquidationEntryDate = null;
 						organisation.liquidationDate.value = null;
