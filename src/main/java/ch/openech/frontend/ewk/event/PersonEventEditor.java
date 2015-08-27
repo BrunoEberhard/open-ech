@@ -30,8 +30,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T, Person> implemen
 	}
 
 	public Person getPerson() {
-		Person person = personPage.load();
-		return person;
+		return personPage.getObject();
 	}
 
 	protected abstract void fillForm(Form<T> formPanel);

@@ -42,7 +42,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisati
 	protected abstract void fillForm(Form<T> formPanel);
 
 	public Organisation getOrganisation() {
-		Organisation organisation = organisationPage.load();
+		Organisation organisation = organisationPage.getObject();
 		organisation.technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
 		organisation.technicalIds.localId.personId = String.valueOf(organisation.id);
 		return organisation;
