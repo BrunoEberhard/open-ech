@@ -24,7 +24,7 @@ public class ExportAllOrganisationAction extends Action {
 	}
 
 	protected void export(OutputStream outputStream) {
-		Backend.getInstance().execute(new OrganisationExportStreamProducer(orgVersion, true), outputStream);
+		Backend.getInstance().execute(new OrganisationExportStreamProducer(orgVersion, true, outputStream));
 	}
 
 }

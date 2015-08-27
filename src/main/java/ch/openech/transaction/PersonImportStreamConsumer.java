@@ -7,14 +7,18 @@ import org.minimalj.transaction.StreamConsumer;
 
 import ch.openech.xml.read.StaxEch0020;
 
-public class PersonImportStreamConsumer implements StreamConsumer<Integer> {
+public class PersonImportStreamConsumer extends StreamConsumer<Integer> {
 	private static final long serialVersionUID = 1L;
+	
+	public PersonImportStreamConsumer(InputStream inputStream) {
+		super(inputStream);
+	}
 
 	@Override
-	public Integer consume(Persistence persistence, InputStream stream) {
+	public Integer execute(Persistence persistence) {
 		try {
 			StaxEch0020 stax = new StaxEch0020(persistence);
-			stax.process(stream, null);
+			stax.process(getStream(), null);
 			return 0; // count
 		} catch (Exception x) {
 			x.printStackTrace();

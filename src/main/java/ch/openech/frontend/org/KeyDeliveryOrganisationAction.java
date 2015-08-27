@@ -12,8 +12,9 @@ public class KeyDeliveryOrganisationAction extends ExportAllOrganisationAction {
 		super(orgVersion);
 	}
 	
+	@Override
 	protected void export(OutputStream outputStream) {
-		Backend.getInstance().execute(new OrganisationExportStreamProducer(orgVersion, false), outputStream);
+		Backend.getInstance().execute(new OrganisationExportStreamProducer(orgVersion, false, outputStream));
 	}
 	
 }

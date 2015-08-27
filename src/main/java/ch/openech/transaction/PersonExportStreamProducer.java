@@ -13,24 +13,25 @@ import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
 
 @Role("Superuser")
-public class PersonExportStreamProducer implements StreamProducer<Integer> {
+public class PersonExportStreamProducer extends StreamProducer<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	private final String ewkVersion;
 	private final boolean complete;
 	
-	public PersonExportStreamProducer(String ewkVersion, boolean complete) {
+	public PersonExportStreamProducer(String ewkVersion, boolean complete, OutputStream outputStream) {
+		super(outputStream);
 		this.complete = complete;
 		this.ewkVersion = ewkVersion;
 	}
 	
 	@Override
-	public Integer produce(Persistence persistence, OutputStream stream) {
+	public Integer execute(Persistence persistence) {
 		int count = 0;
 		try {
 			int maxId = persistence.executeStatement(Integer.class, "MaxPerson");
 			
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream, "UTF-8");
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
 			
 			EchSchema schema = EchSchema.getNamespaceContext(20, ewkVersion);
 			WriterEch0020 writer = new WriterEch0020(schema);
@@ -54,7 +55,7 @@ public class PersonExportStreamProducer implements StreamProducer<Integer> {
 
 			writer.endDocument();
 			outputStreamWriter.close();
-			stream.close();
+			getStream().close();
 		} catch (Exception x) {
 			x.printStackTrace();
 		}

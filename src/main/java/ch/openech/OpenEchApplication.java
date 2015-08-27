@@ -31,7 +31,7 @@ import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.page.EmptyPage;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.SearchPage;
-import org.minimalj.security.MjUser;
+import org.minimalj.security.Subject;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.frontend.editor.BaseDeliveryEditor;
@@ -101,7 +101,7 @@ public class OpenEchApplication extends Application {
 	public List<Action> getMenu() {
 		List<Action> actions = new ArrayList<>();
 		
-		MjUser user = Frontend.getBrowser() != null ? Frontend.getBrowser().getUser() : null;
+		Subject user = Frontend.getBrowser() != null ? Frontend.getBrowser().getSubject() : null;
 		if (user == null) {
 			return actions;
 		}

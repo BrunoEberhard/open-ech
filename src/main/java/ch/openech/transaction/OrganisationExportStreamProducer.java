@@ -15,24 +15,25 @@ import ch.openech.xml.write.WriterEch0098;
 import ch.openech.xml.write.WriterEch0148;
 import ch.openech.xml.write.WriterElement;
 
-public class OrganisationExportStreamProducer implements StreamProducer<Integer> {
+public class OrganisationExportStreamProducer extends StreamProducer<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	private final String ewkVersion;
 	private final boolean complete;
 	
-	public OrganisationExportStreamProducer(String ewkVersion, boolean complete) {
+	public OrganisationExportStreamProducer(String ewkVersion, boolean complete, OutputStream outputStream) {
+		super(outputStream);
 		this.complete = complete;
 		this.ewkVersion = ewkVersion;
 	}
 	
 	@Override
-	public Integer produce(Persistence persistence, OutputStream stream) {
+	public Integer execute(Persistence persistence) {
 		int numberOfOrganisations = 0;
 		try {
 			int maxId = persistence.executeStatement(Integer.class, "MaxOrganisation");
 			
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream, "UTF-8");
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
 			
 			EchSchema schema = EchSchema.getNamespaceContext(20, ewkVersion);
 			WriterEch0148 writer148 = new WriterEch0148(schema);
@@ -61,7 +62,7 @@ public class OrganisationExportStreamProducer implements StreamProducer<Integer>
 			writer148.result();
 			
 			outputStreamWriter.close();
-			stream.close();
+			getStream().close();
 		} catch (Exception x) {
 			x.printStackTrace();
 		}

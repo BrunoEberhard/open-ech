@@ -26,6 +26,6 @@ public class ExportAllPersonAction extends Action {
 	}
 
 	protected void export(OutputStream outputStream) {
-		Backend.getInstance().execute(new PersonExportStreamProducer(ewkVersion, true), outputStream);
+		Backend.getInstance().execute(new PersonExportStreamProducer(ewkVersion, true, outputStream));
 	}
 }

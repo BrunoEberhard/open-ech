@@ -17,7 +17,7 @@ public class ImportAllOrganisationAction extends Action {
 	public void action() {
 		InputStream inputStream = Frontend.getBrowser().load("Datei wählen");
 		if (inputStream != null) {
-			Backend.getInstance().execute(new OrganisationImportStreamConsumer(), inputStream);
+			Backend.getInstance().execute(new OrganisationImportStreamConsumer(inputStream));
 		}
 	}
 	

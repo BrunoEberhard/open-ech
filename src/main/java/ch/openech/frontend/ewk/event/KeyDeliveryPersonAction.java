@@ -14,7 +14,7 @@ public class KeyDeliveryPersonAction extends ExportAllPersonAction {
 	
 	@Override
 	protected void export(OutputStream outputStream) {
-		Backend.getInstance().execute(new PersonExportStreamProducer(ewkVersion, false), outputStream);
+		Backend.getInstance().execute(new PersonExportStreamProducer(ewkVersion, false, outputStream));
 	}
 
 }

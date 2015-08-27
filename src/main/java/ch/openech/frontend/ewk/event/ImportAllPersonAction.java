@@ -14,7 +14,7 @@ public class ImportAllPersonAction extends Action {
 	public void action() {
 		InputStream inputStream = Frontend.getBrowser().load("Datei wählen");
 		if (inputStream != null) {
-			Backend.getInstance().execute(new PersonImportStreamConsumer(), inputStream);
+			Backend.getInstance().execute(new PersonImportStreamConsumer(inputStream));
 		}
 	}
 	
