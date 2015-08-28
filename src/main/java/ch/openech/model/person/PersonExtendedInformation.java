@@ -1,6 +1,9 @@
 package  ch.openech.model.person;
 
+import java.util.Locale;
+
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
@@ -8,7 +11,7 @@ import ch.openech.model.EchFormats;
 import ch.openech.model.common.Address;
 import ch.openech.model.types.YesNo;
 
-public class PersonExtendedInformation {
+public class PersonExtendedInformation implements Rendering {
 
 	public static final PersonExtendedInformation $ = Keys.of(PersonExtendedInformation.class);
 	
@@ -39,12 +42,19 @@ public class PersonExtendedInformation {
 		return true;
 	}
 	
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		return toHtml();
+	}
+	
+	@Deprecated
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);
 		return s.toString();
 	}
 
+	@Deprecated
 	public void toHtml(StringBuilder s) {
 		yesNoToHtml(s, "Militärdienstpflicht", armedForcesService);
 		yesNoToHtml(s, "Militärersatzpflicht", armedForcesLiability);
