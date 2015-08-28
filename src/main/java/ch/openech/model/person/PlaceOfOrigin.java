@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
@@ -18,7 +18,7 @@ public class PlaceOfOrigin {
 	public static final PlaceOfOrigin $ = Keys.of(PlaceOfOrigin.class);
 	
 	// 11: placeOfOriginType
-	@Required @Size(EchFormats.municipalityName)
+	@NotEmpty @Size(EchFormats.municipalityName)
 	public String originName;
 	public Canton canton;
 	

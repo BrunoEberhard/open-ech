@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
@@ -31,7 +31,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 	public static class ChangeWithSecondPersonEventData {
 		public static final ChangeWithSecondPersonEventData $ = Keys.of(ChangeWithSecondPersonEventData.class);
-		@Required
+		@NotEmpty
 		public LocalDate date;
 		public Separation separation;
 		public PartnerShipAbolition cancelationReason;

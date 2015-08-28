@@ -10,7 +10,7 @@ import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
@@ -87,9 +87,9 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		public static final UndoCitizenData $ = Keys.of(UndoCitizenData.class);
 		
 		public Person person;
-		@Required
+		@NotEmpty
 		public PlaceOfOrigin placeOfOrigin;
-		@Required
+		@NotEmpty
 		public LocalDate expatriationDate;
 		
 		@Override

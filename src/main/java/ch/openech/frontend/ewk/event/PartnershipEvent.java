@@ -7,7 +7,7 @@ import java.util.List;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Enabled;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
@@ -35,7 +35,7 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	public static class Partnership implements Validation {
 		public static final Partnership $ = Keys.of(Partnership.class);
 		
-		@Required
+		@NotEmpty
 		public LocalDate dateOfMaritalStatus;
 		public Boolean registerPartner2 = Boolean.TRUE;
 		public Person partner1, partner2;

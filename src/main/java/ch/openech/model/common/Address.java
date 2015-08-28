@@ -6,7 +6,7 @@ import java.util.Locale;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
 import org.minimalj.model.validation.Validation;
@@ -48,7 +48,7 @@ public class Address implements Validation, Rendering {
 	public String zip;
 	@Size(4)
 	public Integer swissZipCodeId;
-	@Required
+	@NotEmpty
 	public String town;
 	
 	public String getSwissZipCode() {

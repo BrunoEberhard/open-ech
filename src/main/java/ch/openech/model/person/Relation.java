@@ -6,7 +6,7 @@ import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Enabled;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validatable;
 import org.minimalj.util.StringUtils;
@@ -20,7 +20,7 @@ public class Relation implements Validatable, Rendering {
 
 	public static final Relation $ = Keys.of(Relation.class);
 	
-	@Required
+	@NotEmpty
 	public TypeOfRelationship typeOfRelationship;
 	// TODO hier sind am 2.3 mehrere Auswahlen möglich. Die Persistenzschicht
 	// sollte mit einer Liste von enums umgehen können ebenso das EditField.

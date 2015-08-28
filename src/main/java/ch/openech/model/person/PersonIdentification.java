@@ -5,7 +5,7 @@ import java.util.Locale;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.View;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
@@ -27,13 +27,13 @@ public class PersonIdentification implements View<Person>, Rendering {
 
 	public final Vn vn = new Vn();
 	
-	@Required @Size(EchFormats.baseName)
+	@NotEmpty @Size(EchFormats.baseName)
 	public String firstName, officialName;
 	
-	@Required 
+	@NotEmpty 
 	public Sex sex;
 	
-	@Required 
+	@NotEmpty 
 	public final DatePartiallyKnown dateOfBirth = new DatePartiallyKnown();
 	
 	//

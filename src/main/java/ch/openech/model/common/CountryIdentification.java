@@ -5,7 +5,7 @@ import java.util.Locale;
 import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
 import org.minimalj.util.StringUtils;
@@ -23,7 +23,7 @@ public class CountryIdentification implements Code, Rendering, Comparable<Countr
 	@Size(4)
 	public Integer id;
 	public String countryIdISO2;
-	@Required
+	@NotEmpty
 	public String countryNameShort;
 
 	public String toStringReadable() {

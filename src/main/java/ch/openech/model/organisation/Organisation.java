@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Enabled;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.properties.FlatProperties;
@@ -56,7 +56,7 @@ public class Organisation implements Validation {
 	
 	public final TechnicalIds technicalIds = new TechnicalIds();
 	
-	@Required @Size(EchFormats.organisationName) @Searched
+	@NotEmpty @Size(EchFormats.organisationName) @Searched
 	public String organisationName; 
 	@Size(EchFormats.organisationName)
 	public String organisationLegalName, organisationAdditionalName;
@@ -69,7 +69,7 @@ public class Organisation implements Validation {
 	@Size(6) // TODO
 	public String nogaCode; // 00 - 999999
 	
-	@Required
+	@NotEmpty
 	public final DatePartiallyKnown foundationDate = new DatePartiallyKnown();
 	public FoundationReason foundationReason;
 	
@@ -105,9 +105,9 @@ public class Organisation implements Validation {
 	public TypeOfResidenceOrganisation typeOfResidenceOrganisation = TypeOfResidenceOrganisation.hasMainResidence;
 	// Achtung: Im Gegensatz zu einer Person kann eine Organisation nur einen primary, secondary oder other Eintrag haben
 	//          Die folgenden Felder sind dabei bei allen 3 Möglichkeiten *genau* gleich.
-	@Required
+	@NotEmpty
 	public MunicipalityIdentification reportingMunicipality;
-	@Required
+	@NotEmpty
 	public LocalDate arrivalDate;
 	public Place comesFrom;
 	public DwellingAddress businessAddress;

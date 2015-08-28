@@ -7,7 +7,7 @@ import java.util.List;
 import org.minimalj.model.Keys;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.model.annotation.Enabled;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.EmptyValidator;
@@ -54,13 +54,13 @@ public class Person implements Validation {
 	public Object id;
 	public int version;
 	
-	@Required @Size(EchFormats.baseName) @Searched
+	@NotEmpty @Size(EchFormats.baseName) @Searched
 	public String firstName, officialName;
 	
-	@Required 
+	@NotEmpty 
 	public Sex sex;
 	
-	@Required @Searched
+	@NotEmpty @Searched
 	public final DatePartiallyKnown dateOfBirth = new DatePartiallyKnown();
 
 	public final TechnicalIds technicalIds = new TechnicalIds();
@@ -81,7 +81,7 @@ public class Person implements Validation {
 	public ContactPerson contactPerson = new ContactPerson();
 	
 	public Language languageOfCorrespondance = Language.de;
-	@Required
+	@NotEmpty
 	public Religion religion = Religion.unbekannt;
 	@Enabled("!isSwiss")
 	public final Foreign foreign = new Foreign();

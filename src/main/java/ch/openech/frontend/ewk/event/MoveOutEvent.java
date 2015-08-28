@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.Keys;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 
 import ch.openech.frontend.e07.MunicipalityFormElement;
 import ch.openech.frontend.ewk.event.MoveOutEvent.MoveOutData;
@@ -24,7 +24,7 @@ public class MoveOutEvent extends PersonEventEditor<MoveOutData> {
 	}
 
 	public static class MoveOutData {
-		@Required
+		@NotEmpty
 		public LocalDate departureDate;
 		public MunicipalityIdentification reportingMunicipality;
 		public Place goesTo;

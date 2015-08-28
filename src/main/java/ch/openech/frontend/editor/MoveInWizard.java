@@ -14,7 +14,7 @@ import org.minimalj.frontend.editor.WizardStep;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.annotation.Required;
+import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.CloneHelper;
 
@@ -57,9 +57,9 @@ public class MoveInWizard extends Wizard<Person> {
 	public static class MoveInNextPerson {
 		public static final MoveInNextPerson $ = Keys.of(MoveInNextPerson.class);
 		
-		@Required
+		@NotEmpty
 		public TypeOfRelationshipInverted typeOfRelationshipInverted = TypeOfRelationshipInverted.Kind;
-		@Required // @Depends("typeOfRelationshipInverted")
+		@NotEmpty // @Depends("typeOfRelationshipInverted")
 		public Person basePerson;
 		// @Depends("typeOfRelationshipInverted")
 		public Person mother, father;
