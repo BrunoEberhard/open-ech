@@ -2,10 +2,12 @@ package  ch.openech.model.contact;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;
@@ -18,7 +20,7 @@ import ch.openech.model.common.Address;
 import ch.openech.model.types.ContactCategory;
 import ch.openech.model.types.PhoneCategory;
 
-public class ContactEntry implements Validation {
+public class ContactEntry implements Validation, Rendering {
 
 	public static ContactEntry $ = Keys.of(ContactEntry.class);
 	
@@ -66,6 +68,17 @@ public class ContactEntry implements Validation {
 		return typeOfContact == ContactEntryType.Internet;
 	}
 	
+	@Override
+	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
+		return RenderType.HMTL;
+	}
+
+	@Override
+	public String render(RenderType renderType, Locale locale) {
+		return toHtml();
+	}
+	
+	@Deprecated
 	public String toHtml() {
 		StringBuilder s = new StringBuilder();
 		if (typeOfContact != null) {
