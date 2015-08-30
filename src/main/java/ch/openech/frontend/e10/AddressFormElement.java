@@ -13,7 +13,6 @@ public class AddressFormElement extends ObjectFormElement<Address> implements Mo
 	private final boolean swiss;
 	private final boolean person;
 	private final boolean organisation;
-	private boolean enabled = true;
 
 	public AddressFormElement(Address key, boolean editable) {
 		this(Keys.getProperty(key), editable, false, false, false);
@@ -41,10 +40,6 @@ public class AddressFormElement extends ObjectFormElement<Address> implements Mo
 
 	public Form<Address> createEditFrame() {
 		return new AddressPanel(swiss, person, organisation);
-	}
-	
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 	
 	@Override
