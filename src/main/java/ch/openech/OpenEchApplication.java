@@ -19,8 +19,9 @@
 package ch.openech;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.minimalj.application.Application;
 import org.minimalj.application.DevMode;
@@ -86,8 +87,8 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
-	public ResourceBundle getResourceBundle() {
-		return ResourceBundle.getBundle("ch.openech.resources.OpenEch");
+	protected Set<String> getResourceBundleNames() {
+		return Collections.singleton("ch.openech.resources.OpenEch");
 	}
 
 	@Override

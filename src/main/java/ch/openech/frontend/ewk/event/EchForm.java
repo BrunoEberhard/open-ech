@@ -7,7 +7,6 @@ import org.minimalj.frontend.form.element.FormElement;
 import org.minimalj.frontend.form.element.TextFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.GenericUtils;
-import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.e07.CantonFormElement;
 import ch.openech.frontend.e07.MunicipalityFormElement;
@@ -68,12 +67,12 @@ public class EchForm<T> extends Form<T> {
 	}
 	
 	public EchForm(EchSchema echSchema, int columns) {
-		super(Resources.getResourceBundle(), true, columns);
+		super(true, columns);
 		this.echSchema = echSchema;
 	}
 
 	protected EchForm(EchSchema echSchema, boolean editable, int columns) {
-		super(Resources.getResourceBundle(), editable, columns);
+		super(editable, columns);
 		this.echSchema = echSchema;
 	}
 	
