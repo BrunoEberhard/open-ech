@@ -1,7 +1,6 @@
 package ch.openech.model.person;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.annotation.Reference;
@@ -53,7 +52,7 @@ public class PartnerIdentification {
 		if (person != null) {
 			person.toHtml(s);
 		} else if (personIdentification != null) {
-			s.append(personIdentification.render(RenderType.HMTL, Locale.getDefault()));
+			s.append(personIdentification.render(RenderType.HMTL));
 		} else if (organisation != null) {
 			// TODO organisation.toString();
 		}

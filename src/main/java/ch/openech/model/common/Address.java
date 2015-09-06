@@ -1,7 +1,6 @@
 package  ch.openech.model.common;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
@@ -109,7 +108,7 @@ public class Address implements Validation, Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		return toHtml();
 	}
 

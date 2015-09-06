@@ -31,7 +31,7 @@ public class Place implements Rendering {
 	}
 
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		if (isSwiss()) {
 			return municipalityIdentification != null ? municipalityIdentification.toString() : "-";
 		} else if (isForeign()) {

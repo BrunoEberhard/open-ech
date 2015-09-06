@@ -34,7 +34,7 @@ public class Canton implements Code, Rendering, Comparable<Canton> {
 	}
 
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		return id;
 	}
 

@@ -43,7 +43,7 @@ public class PersonIdentificationLight implements Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);
 		return s.toString().replace("<br>", "\n");

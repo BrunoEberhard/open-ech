@@ -1,7 +1,5 @@
 package  ch.openech.model.common;
 
-import java.util.Locale;
-
 import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
@@ -47,7 +45,7 @@ public class MunicipalityIdentification implements Code, Rendering, Comparable<M
 	}
 	
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		return formatMunicipality(municipalityName, canton);
 	}
 
@@ -126,7 +124,7 @@ public class MunicipalityIdentification implements Code, Rendering, Comparable<M
 
 	@Override
 	public String toString() {
-		return render(RenderType.PLAIN_TEXT, Locale.getDefault());
+		return render(RenderType.PLAIN_TEXT);
 	}
 
 }

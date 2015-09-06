@@ -53,7 +53,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 				add("Person anzeigen", new PersonPage(echSchema, contactPerson.partner.person.id));
 			}
 		} else if (contactPerson.partner.personIdentification != null) {
-			add(contactPerson.partner.personIdentification.render(RenderType.PLAIN_TEXT, Locale.getDefault()), new RemovePersonContactAction());
+			add(contactPerson.partner.personIdentification.render(RenderType.PLAIN_TEXT), new RemovePersonContactAction());
 		} else if (contactPerson.partner.organisation != null) {
 			if (isEditable()) {
 				add(contactPerson.partner.organisation.organisationName, new RemovePersonContactAction());

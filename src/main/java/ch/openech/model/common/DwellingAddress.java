@@ -33,7 +33,7 @@ public class DwellingAddress implements Validation, Rendering {
 	public LocalDate movingDate;
 
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		return toHtml();
 	}
 

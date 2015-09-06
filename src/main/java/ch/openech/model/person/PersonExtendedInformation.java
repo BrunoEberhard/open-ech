@@ -43,7 +43,7 @@ public class PersonExtendedInformation implements Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		return toHtml();
 	}
 	

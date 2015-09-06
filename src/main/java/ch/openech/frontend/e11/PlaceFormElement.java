@@ -49,7 +49,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 	private List<String> munipalityNames(List<MunicipalityIdentification> municipalityIdentifications) {
 		List<String> names = new ArrayList<>(municipalityIdentifications.size());
 		for (MunicipalityIdentification municipalityIdentification : municipalityIdentifications) {
-			names.add(municipalityIdentification.render(RenderType.PLAIN_TEXT, Locale.getDefault()));
+			names.add(municipalityIdentification.render(RenderType.PLAIN_TEXT));
 		}
 		return names;
 	}
@@ -129,7 +129,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 			if (country != null && !country.isSwiss()) {
 				return null;
 			} else {
-				return municipalityIdentifications.get(index).render(RenderType.PLAIN_TEXT, Locale.getDefault());
+				return municipalityIdentifications.get(index).render(RenderType.PLAIN_TEXT);
 			}
 		}
 

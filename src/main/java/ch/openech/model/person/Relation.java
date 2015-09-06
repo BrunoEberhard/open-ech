@@ -57,7 +57,7 @@ public class Relation implements Validatable, Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		return toHtml();
 	}
 

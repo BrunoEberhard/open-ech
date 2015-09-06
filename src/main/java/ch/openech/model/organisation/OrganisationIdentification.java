@@ -26,7 +26,7 @@ public class OrganisationIdentification implements View<Organisation>, Rendering
 	public LegalForm legalForm;
 	
 	@Override
-	public String render(RenderType renderType, Locale locale) {
+	public String render(RenderType renderType) {
 		return organisationName;
 	}
 }
