@@ -1,16 +1,15 @@
 package ch.openech.frontend.e11;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.Frontend.InputType;
+import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
@@ -41,7 +40,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		Collections.sort(municipalityIdentifications);
 		
 		comboBoxCountry = Frontend.getInstance().createComboBox(countries, listener());
-		textFieldMunicipality = Frontend.getInstance().createTextField(100, null, InputType.FREE, new MunicipalityNames(), listener()); // TODO length
+		textFieldMunicipality = Frontend.getInstance().createTextField(100, null, InputType.FREE, new MunicipalitySearch(), listener()); // TODO length
 		
 		horizontalLayout = Frontend.getInstance().createComponentGroup(comboBoxCountry, textFieldMunicipality);
 	}
@@ -87,16 +86,16 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 			place.foreignTown = textFieldMunicipality.getValue();
 		} else {
 			String m = textFieldMunicipality.getValue();
+			place.municipalityIdentification = null;
 			if (!StringUtils.isBlank(m)) {
 				m = m.toLowerCase();
 				for (MunicipalityIdentification municipality : municipalityIdentifications) {
-					if (municipality.municipalityName.toLowerCase().startsWith(m)) {
+					if (municipality.municipalityName.toLowerCase().equals(m)) {
+						// da kommt teilweise noch der Kanton mit!
 						place.municipalityIdentification = municipality;
 						break;
 					}
 				}
-			} else {
-				place.municipalityIdentification = null;
 			}
 			place.foreignTown = null;
 		}
@@ -121,27 +120,24 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		setValue(place);
 	}
 
-	private class MunicipalityNames extends AbstractList<String> {
+	private class MunicipalitySearch implements Search<String> {
 
 		@Override
-		public String get(int index) {
+		public List<String> search(String query) {
 			CountryIdentification country = comboBoxCountry.getValue();
-			if (country != null && !country.isSwiss()) {
-				return null;
+			if (country != null && !country.isSwiss() || query == null || query.length() < 1) {
+				return Collections.emptyList();
 			} else {
-				return municipalityIdentifications.get(index).render(RenderType.PLAIN_TEXT);
+				query = query.toLowerCase();
+				List<String> names = new ArrayList<>();
+				for (MunicipalityIdentification m : municipalityIdentifications) {
+					if (m.municipalityName.toLowerCase().startsWith(query)) {
+						names.add(m.municipalityName);
+					}
+				}
+				return names;
 			}
 		}
 
-		@Override
-		public int size() {
-			CountryIdentification country = comboBoxCountry.getValue();
-			if (country != null && !country.isSwiss()) {
-				return 0;
-			} else {
-				return municipalityIdentifications.size();
-			}
-		}
-		
 	}
 }
