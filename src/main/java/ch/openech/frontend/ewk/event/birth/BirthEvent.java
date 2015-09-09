@@ -3,6 +3,7 @@ package ch.openech.frontend.ewk.event.birth;
 import java.util.Collections;
 import java.util.List;
 
+import org.minimalj.backend.db.EmptyObjects;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
@@ -68,8 +69,13 @@ public class BirthEvent extends XmlEditor<Person, Person> {
 
 	@BusinessRule("Geburtsort muss bei Erfassung einer Geburt angegeben werden")
 	public void validatePlaceOfBirth(Person person, List<ValidationMessage> resultList) {
-		if (echSchema.birthPlaceMustNotBeUnknown() && (person.placeOfBirth == null || person.placeOfBirth.isUnknown())) {
-			resultList.add(new ValidationMessage(Person.$.placeOfBirth, "Geburtsort fehlt"));
+		if (echSchema.birthPlaceMustNotBeUnknown()) {
+			if (person.placeOfBirth == null || EmptyObjects.isEmpty(person.placeOfBirth.countryIdentification)) {
+				resultList.add(new ValidationMessage(Person.$.placeOfBirth, "Geburtsland fehlt"));
+			}
+			if (person.placeOfBirth != null && person.placeOfBirth.isSwiss() && person.placeOfBirth.municipalityIdentification == null) {
+				resultList.add(new ValidationMessage(Person.$.placeOfBirth, "Für Geburtsland Schweiz muss ein gültiger Ort eingetragen werden"));
+			}
 		}
 	}
 	
