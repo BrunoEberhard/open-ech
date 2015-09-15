@@ -12,6 +12,12 @@
 					<include>**</include>
 				</includes>
 			</resource>
+			<resource>
+				<directory>src/main/xml</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
 		</resources>
 	 <plugins>
 	  <plugin>
@@ -37,7 +43,7 @@
 		<dependency>
 			<groupId>org.minimalj</groupId>
 			<artifactId>minimalj</artifactId>
-			<version>0.4.0.0-SNAPSHOT</version>
+			<version>0.6.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.derby</groupId>
@@ -50,10 +56,15 @@
 			<version>10.11.1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin</artifactId>
-			<version>6.8.15</version>
-		</dependency>
+	        <groupId>org.nanohttpd</groupId>
+	        <artifactId>nanohttpd</artifactId>
+	        <version>2.2.0-SNAPSHOT</version>
+	    </dependency>
+		<dependency>
+	        <groupId>org.nanohttpd</groupId>
+	        <artifactId>nanohttpd-websocket</artifactId>
+	        <version>2.2.0-SNAPSHOT</version>
+	    </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -70,5 +81,13 @@
 			<artifactId>lanterna</artifactId>
 			<version>2.1.6</version>
 		</dependency>
+		<!--
+		<dependency>
+			<groupId>net.sourceforge.htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
+			<version>2.18</version>
+			<scope>test</scope>
+		</dependency>
+		-->
 	</dependencies>
 </project>
