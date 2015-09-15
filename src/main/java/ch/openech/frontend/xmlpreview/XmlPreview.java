@@ -15,16 +15,6 @@ public class XmlPreview {
 //			SwingFrontend swingFrontend = (SwingFrontend) Frontend.getInstance();
 //			XmlSwingFrame xmlFrame = new XmlSwingFrame(swingFrontend.get, xmls);
 //			xmlFrame.setVisible(true);
-//		} else if (context instanceof com.vaadin.ui.Component) {
-//			com.vaadin.ui.Component component = (com.vaadin.ui.Component) context;
-//			XmlVaadinFrame xmlFrame = new XmlVaadinFrame(xmls);
-//			Window window = component.getWindow();
-//			while (window.getParent() != null) {
-//				window = window.getParent();
-//			}
-//			window.addWindow(xmlFrame);
-//			xmlFrame.setPositionY(0);
-//			xmlFrame.setVisible(true);
 //		} else {
 			Form<XmlPreviewValue> form = new Form<XmlPreviewValue>(false) {
 				@Override
