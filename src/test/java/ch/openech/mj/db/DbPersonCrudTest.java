@@ -5,6 +5,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.minimalj.backend.db.DbPersistence;
 import org.minimalj.backend.db.Table;
+import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.common.Address;
 import ch.openech.model.common.CountryIdentification;
@@ -20,6 +21,7 @@ public class DbPersonCrudTest {
 
 	@BeforeClass
 	public static void setupDb() {
+		Resources.addResourceBundleName("ch.openech.resources.OpenEch");
 		persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Person.class);
 		persistence.insert(CountryIdentification.createSwiss());
 	}
