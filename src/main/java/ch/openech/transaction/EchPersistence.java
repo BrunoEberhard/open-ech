@@ -28,7 +28,7 @@ public class EchPersistence {
 				}
 			}
 		}
-		if (personIdentification.vn != null) {
+		if (personIdentification.vn != null && personIdentification.vn.value != null) {
 			List<Person> persons = persistence.read(Person.class, Criteria.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
 			if (localId != null) {
 				for (Person person : persons) {
