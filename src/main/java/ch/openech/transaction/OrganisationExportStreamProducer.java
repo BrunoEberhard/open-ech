@@ -32,7 +32,8 @@ public class OrganisationExportStreamProducer extends StreamProducer<Integer> {
 	public Integer execute(Persistence persistence) {
 		int numberOfOrganisations = 0;
 		try {
-			int maxId = persistence.execute(Integer.class, "SELECT COUNT(ID) FROM " + ((DbPersistence) persistence).name(Organisation.class));
+			DbPersistence db = (DbPersistence) persistence;
+			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Organisation.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
 			
