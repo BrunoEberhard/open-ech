@@ -3,8 +3,8 @@ package ch.openech.mj.db;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.minimalj.backend.db.DbPersistence;
-import org.minimalj.backend.db.Table;
+import org.minimalj.backend.sql.SqlPersistence;
+import org.minimalj.backend.sql.Table;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.common.Address;
@@ -15,14 +15,14 @@ import ch.openech.model.types.MrMrs;
 import ch.openech.model.types.Sex;
 import junit.framework.Assert;
 
-public class DbPersonCrudTest {
+public class SqlPersonCrudTest {
 
-	private static DbPersistence persistence;
+	private static SqlPersistence persistence;
 
 	@BeforeClass
-	public static void setupDb() {
+	public static void setupPersistence() {
 		Resources.addResourceBundleName("ch.openech.resources.OpenEch");
-		persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Person.class);
+		persistence = new SqlPersistence(SqlPersistence.embeddedDataSource(), Person.class);
 		persistence.insert(CountryIdentification.createSwiss());
 	}
 

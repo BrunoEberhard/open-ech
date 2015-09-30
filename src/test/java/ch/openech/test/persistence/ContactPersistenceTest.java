@@ -3,8 +3,8 @@ package ch.openech.test.persistence;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.minimalj.backend.db.DbPersistence;
-import org.minimalj.backend.db.Table;
+import org.minimalj.backend.sql.SqlPersistence;
+import org.minimalj.backend.sql.Table;
 
 import ch.openech.model.contact.Contact;
 import ch.openech.model.contact.ContactEntry;
@@ -14,7 +14,7 @@ import ch.openech.model.types.ContactCategory;
 
 public class ContactPersistenceTest {
 
-	private static DbPersistence persistence = new DbPersistence(DbPersistence.embeddedDataSource(), Contact.class);
+	private static SqlPersistence persistence = new SqlPersistence(SqlPersistence.embeddedDataSource(), Contact.class);
 	private static Table<Contact> table = persistence.getTable(Contact.class);
 	
 	@Test

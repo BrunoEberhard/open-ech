@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Persistence;
-import org.minimalj.backend.db.DbPersistence;
+import org.minimalj.backend.sql.SqlPersistence;
 import org.minimalj.transaction.StreamProducer;
 
 import ch.openech.model.organisation.Organisation;
@@ -32,7 +32,7 @@ public class OrganisationExportStreamProducer extends StreamProducer<Integer> {
 	public Integer execute(Persistence persistence) {
 		int numberOfOrganisations = 0;
 		try {
-			DbPersistence db = (DbPersistence) persistence;
+			SqlPersistence db = (SqlPersistence) persistence;
 			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Organisation.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");

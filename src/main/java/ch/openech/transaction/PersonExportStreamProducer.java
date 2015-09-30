@@ -4,7 +4,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Persistence;
-import org.minimalj.backend.db.DbPersistence;
+import org.minimalj.backend.sql.SqlPersistence;
 import org.minimalj.transaction.Role;
 import org.minimalj.transaction.StreamProducer;
 
@@ -30,7 +30,7 @@ public class PersonExportStreamProducer extends StreamProducer<Integer> {
 	public Integer execute(Persistence persistence) {
 		int count = 0;
 		try {
-			DbPersistence db = (DbPersistence) persistence;
+			SqlPersistence db = (SqlPersistence) persistence;
 			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Person.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");

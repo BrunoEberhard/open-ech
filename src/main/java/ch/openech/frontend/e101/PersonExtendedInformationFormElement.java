@@ -1,6 +1,6 @@
 package ch.openech.frontend.e101;
 
-import org.minimalj.backend.db.EmptyObjects;
+import org.minimalj.backend.sql.EmptyObjects;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
