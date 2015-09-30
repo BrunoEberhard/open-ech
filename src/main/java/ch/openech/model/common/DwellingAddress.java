@@ -2,8 +2,6 @@ package  ch.openech.model.common;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
-
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;

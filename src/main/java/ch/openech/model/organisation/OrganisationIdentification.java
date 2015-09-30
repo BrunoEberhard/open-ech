@@ -1,7 +1,5 @@
 package  ch.openech.model.organisation;
 
-import java.util.Locale;
-
 import org.minimalj.model.Rendering;
 import org.minimalj.model.View;
 import org.minimalj.model.annotation.NotEmpty;

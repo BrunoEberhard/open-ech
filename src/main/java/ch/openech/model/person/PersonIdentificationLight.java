@@ -2,8 +2,6 @@ package ch.openech.model.person;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.NotEmpty;

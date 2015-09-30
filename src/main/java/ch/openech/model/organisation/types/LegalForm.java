@@ -1,7 +1,5 @@
 package ch.openech.model.organisation.types;
 
-import java.util.Locale;
-
 import org.minimalj.model.Code;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;

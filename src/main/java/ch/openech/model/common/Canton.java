@@ -1,7 +1,5 @@
 package  ch.openech.model.common;
 
-import java.util.Locale;
-
 import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;

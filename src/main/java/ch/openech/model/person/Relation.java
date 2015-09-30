@@ -1,7 +1,5 @@
 package  ch.openech.model.person;
 
-import java.util.Locale;
-
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
