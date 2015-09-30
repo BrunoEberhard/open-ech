@@ -25,6 +25,7 @@ public enum ReasonOfAcquisition implements EchCode {
 		this.value = String.valueOf(value);
 	}
 
+	@Override
 	public String getValue() {
 		return value;
 	}
