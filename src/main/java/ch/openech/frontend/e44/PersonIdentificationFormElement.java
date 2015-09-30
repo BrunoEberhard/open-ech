@@ -8,7 +8,7 @@ import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.transaction.predicate.By;
 
 import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.model.person.Person;
@@ -47,8 +47,8 @@ public class PersonIdentificationFormElement extends ObjectFormElement<PersonIde
 		}
 		
 		@Override
-		public List<Person> search(String searchText) {
-			return Backend.persistence().read(Person.class, Criteria.search(searchText), 100);
+		public List<Person> search(String query) {
+			return Backend.persistence().read(Person.class, By.search(query), 100);
 		}
 	}
 	

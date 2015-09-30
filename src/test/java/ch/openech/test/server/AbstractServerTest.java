@@ -6,13 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.BeforeClass;
 import org.minimalj.application.Application;
 import org.minimalj.backend.Backend;
-import org.minimalj.transaction.criteria.Criteria;
 import org.minimalj.transaction.persistence.DeleteAllTransaction;
+import org.minimalj.transaction.predicate.By;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;
@@ -22,6 +20,7 @@ import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
+import junit.framework.Assert;
 
 public abstract class AbstractServerTest {
 
@@ -49,7 +48,7 @@ public abstract class AbstractServerTest {
 	}
 
 	protected Person insertPerson(String vn) throws Exception {
-		List<Person> persons = Backend.persistence().read(Person.class, Criteria.search(vn, Person.SEARCH_BY_VN), 2);
+		List<Person> persons = Backend.persistence().read(Person.class, By.search(vn, Person.SEARCH_BY_VN), 2);
 		if (persons.size() == 1) {
 			return persons.get(0);
 		} else if (persons.isEmpty()){

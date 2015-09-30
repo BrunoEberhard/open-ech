@@ -7,7 +7,7 @@ import java.util.List;
 import org.minimalj.application.Preferences;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.SearchPage;
-import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.transaction.predicate.By;
 
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.EchSchema0020;
@@ -34,7 +34,7 @@ public class PersonSearchPage extends SearchPage<PersonSearch, PersonPage> {
 
 	@Override
 	protected List<PersonSearch> load(String query) {
-		return Backend.persistence().read(PersonSearch.class, Criteria.search(query), 100);
+		return Backend.persistence().read(PersonSearch.class, By.search(query), 100);
 	}
 
 	private Person load(PersonSearch personSearch) {

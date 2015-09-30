@@ -3,7 +3,7 @@ package ch.openech.transaction;
 import java.util.List;
 
 import org.minimalj.backend.Persistence;
-import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.transaction.predicate.By;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 
@@ -29,7 +29,7 @@ public class EchPersistence {
 			}
 		}
 		if (personIdentification.vn != null && personIdentification.vn.value != null) {
-			List<Person> persons = persistence.read(Person.class, Criteria.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
+			List<Person> persons = persistence.read(Person.class, By.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
 			if (localId != null) {
 				for (Person person : persons) {
 					if (IdUtils.getCompactIdString(person).startsWith(localId)) {
@@ -40,7 +40,7 @@ public class EchPersistence {
 				if (!persons.isEmpty()) return persons.get(0);
 			}
 		} 
-		List<Person> persons = persistence.read(Person.class, Criteria.search(personIdentification.officialName), 500);
+		List<Person> persons = persistence.read(Person.class, By.search(personIdentification.officialName), 500);
 		for (Person person : persons) {
 			if (localId == null || IdUtils.getCompactIdString(person).startsWith(localId)) {
 				if (StringUtils.equals(person.firstName, personIdentification.firstName)) {
@@ -67,9 +67,9 @@ public class EchPersistence {
 				}
 			}
 		}
-		List<Organisation> organisations = persistence.read(Organisation.class, Criteria.equals(Organisation.$.uid.value, organisationIdentification.uid.value), 2);
+		List<Organisation> organisations = persistence.read(Organisation.class, By.field(Organisation.$.uid.value, organisationIdentification.uid.value), 2);
 		if (organisations.isEmpty()) {
-			organisations = persistence.read(Organisation.class, Criteria.equals(Organisation.$.organisationName, organisationIdentification.organisationName), 2);
+			organisations = persistence.read(Organisation.class, By.field(Organisation.$.organisationName, organisationIdentification.organisationName), 2);
 		}
 		for (Organisation organisation : organisations) {
 			if (localId == null || IdUtils.getCompactIdString(organisation).startsWith(localId)) {

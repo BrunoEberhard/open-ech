@@ -1,7 +1,6 @@
 package ch.openech.frontend.e11;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.action.Action;
@@ -12,7 +11,7 @@ import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.page.PageAction;
 import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.transaction.predicate.By;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.resources.Resources;
 
@@ -119,7 +118,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		
 		@Override
 		public List<PersonSearch> search(String query) {
-			return Backend.persistence().read(PersonSearch.class, Criteria.search(query), 100);
+			return Backend.persistence().read(PersonSearch.class, By.search(query), 100);
 		}
 
 	};

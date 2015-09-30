@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Persistence;
+import org.minimalj.backend.db.DbPersistence;
 import org.minimalj.transaction.Role;
 import org.minimalj.transaction.StreamProducer;
 
@@ -29,7 +30,7 @@ public class PersonExportStreamProducer extends StreamProducer<Integer> {
 	public Integer execute(Persistence persistence) {
 		int count = 0;
 		try {
-			int maxId = persistence.executeStatement(Integer.class, "MaxPerson");
+			int maxId = persistence.execute(Integer.class, "SELECT COUNT(ID) FROM " + ((DbPersistence) persistence).name(Person.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
 			

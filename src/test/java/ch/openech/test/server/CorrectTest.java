@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
-import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.transaction.predicate.By;
 import org.minimalj.util.Codes;
 
 import ch.openech.model.code.NationalityStatus;
@@ -225,7 +225,7 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctPlaceOfBirth_Foreign() throws Exception {
 		Person person = reload(p);
 		
-		List<CountryIdentification> countries = Backend.persistence().read(CountryIdentification.class, Criteria.all(), 1000);
+		List<CountryIdentification> countries = Backend.persistence().read(CountryIdentification.class, By.all(), 1000);
 		CountryIdentification c10 = countries.get(10);
 		person.placeOfBirth = new Place();
 		person.placeOfBirth.countryIdentification = c10;

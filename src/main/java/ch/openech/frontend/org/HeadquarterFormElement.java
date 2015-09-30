@@ -10,7 +10,7 @@ import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.transaction.predicate.By;
 
 import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.page.OrganisationSearchPage;
@@ -91,8 +91,8 @@ public class HeadquarterFormElement extends ObjectFormElement<Headquarter> {
 		}
 
 		@Override
-		public List<Organisation> search(String searchText) {
-			return Backend.persistence().read(Organisation.class, Criteria.search(searchText), 100);
+		public List<Organisation> search(String query) {
+			return Backend.persistence().read(Organisation.class, By.search(query), 100);
 		}
 	}
 

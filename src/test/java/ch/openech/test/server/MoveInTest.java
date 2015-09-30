@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.minimalj.backend.Backend;
-import org.minimalj.transaction.criteria.Criteria;
+import org.minimalj.transaction.predicate.By;
 
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.code.NationalityStatus;
@@ -21,7 +21,7 @@ public class MoveInTest extends AbstractServerTest {
 	public void moveIn() throws Exception {
 		processFile("samples/eCH-0020/moveIn/data_ordipro-moveIn-21.xml");
 		
-		List<Person> persons = Backend.persistence().read(Person.class, Criteria.search("BERNALUSKOVSKI"), 2);
+		List<Person> persons = Backend.persistence().read(Person.class, By.search("BERNALUSKOVSKI"), 2);
 		Assert.assertEquals(1, persons.size());
 		Person person = Backend.persistence().read(Person.class, persons.get(0).id);
 		
