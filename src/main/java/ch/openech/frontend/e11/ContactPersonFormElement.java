@@ -11,7 +11,7 @@ import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.page.PageAction;
 import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.transaction.predicate.By;
+import org.minimalj.transaction.criteria.By;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.resources.Resources;
 

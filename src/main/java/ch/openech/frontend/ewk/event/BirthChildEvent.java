@@ -7,7 +7,7 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.transaction.predicate.By;
+import org.minimalj.transaction.criteria.By;
 import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 

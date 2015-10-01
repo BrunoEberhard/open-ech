@@ -8,7 +8,7 @@ import org.minimalj.application.Preferences;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.ObjectPage;
 import org.minimalj.frontend.page.SearchPage.SimpleSearchPage;
-import org.minimalj.transaction.predicate.By;
+import org.minimalj.transaction.criteria.By;
 
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.EchSchema0148;

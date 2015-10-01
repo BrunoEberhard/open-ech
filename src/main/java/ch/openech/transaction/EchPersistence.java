@@ -3,7 +3,7 @@ package ch.openech.transaction;
 import java.util.List;
 
 import org.minimalj.backend.Persistence;
-import org.minimalj.transaction.predicate.By;
+import org.minimalj.transaction.criteria.By;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 
