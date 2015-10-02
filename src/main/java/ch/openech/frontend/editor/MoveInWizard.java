@@ -299,7 +299,7 @@ public class MoveInWizard extends Wizard<Person> {
 				for (Person person : wizardData.persons) {
 					xmls.add(getWriterEch0020().moveIn(person));
 				}
-				XmlPreview.viewXml(xmls);
+				new XmlPreview(xmls);
 			} catch (Exception x) {
 				Frontend.getBrowser().showMessage("XML Preview fehlgeschlagen");
 				Logger.getLogger(XmlAction.class.getName()).log(Level.SEVERE, "XML Preview fehlgeschlagen", x);

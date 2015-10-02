@@ -47,7 +47,7 @@ public abstract class XmlEditor<T, RESULT> extends Editor<T, RESULT> {
 		public void action() {
 			try {
 				List<String> xmls = getXml(getObject());
-				XmlPreview.viewXml(xmls);
+				new XmlPreview(xmls);
 			} catch (Exception x) {
 				throw new RuntimeException("XML Preview fehlgeschlagen", x);
 			}
