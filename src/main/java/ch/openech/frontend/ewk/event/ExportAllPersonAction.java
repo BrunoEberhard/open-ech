@@ -1,16 +1,17 @@
 package ch.openech.frontend.ewk.event;
 
 import java.io.OutputStream;
+import java.util.function.Consumer;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.transaction.Role;
 
-import ch.openech.transaction.PersonExportStreamProducer;
+import ch.openech.transaction.PersonExportTransaction;
 
 @Role("su")
-public class ExportAllPersonAction extends Action {
+public class ExportAllPersonAction extends Action implements Consumer<OutputStream> {
 	protected final String ewkVersion;
 	
 	public ExportAllPersonAction(String ewkVersion) {
@@ -19,13 +20,16 @@ public class ExportAllPersonAction extends Action {
 	
 	@Override
 	public void action() {
-		OutputStream outputStream = Frontend.getBrowser().store("Export");
-		if (outputStream != null) {
-			export(outputStream);
-		}
+		Frontend.getBrowser().showOutputDialog("Personendaten exportieren", this);
 	}
 
-	protected void export(OutputStream outputStream) {
-		Backend.getInstance().execute(new PersonExportStreamProducer(ewkVersion, true, outputStream));
+	@Override
+	public void accept(OutputStream outputStream) {
+		Integer exportCount = Backend.getInstance().execute(new PersonExportTransaction(ewkVersion, exportCompletePerson(), outputStream));
+		Frontend.getBrowser().showMessage(exportCount + " Person(en) exportiert");
+	}
+	
+	protected boolean exportCompletePerson() {
+		return true;
 	}
 }

@@ -3,21 +3,21 @@ package ch.openech.transaction;
 import java.io.InputStream;
 
 import org.minimalj.backend.Persistence;
-import org.minimalj.transaction.StreamConsumer;
+import org.minimalj.transaction.InputStreamTransaction;
 
-import ch.openech.xml.read.StaxEch0020;
+import ch.openech.xml.read.StaxEch0148;
 
-public class PersonImportStreamConsumer extends StreamConsumer<Integer> {
+public class OrganisationImportTransaction extends InputStreamTransaction<Integer> {
 	private static final long serialVersionUID = 1L;
-	
-	public PersonImportStreamConsumer(InputStream inputStream) {
+
+	public OrganisationImportTransaction(InputStream inputStream) {
 		super(inputStream);
 	}
 
 	@Override
 	public Integer execute(Persistence persistence) {
 		try {
-			StaxEch0020 stax = new StaxEch0020(persistence);
+			StaxEch0148 stax = new StaxEch0148(persistence);
 			stax.process(getStream(), null);
 			return 0; // count
 		} catch (Exception x) {
