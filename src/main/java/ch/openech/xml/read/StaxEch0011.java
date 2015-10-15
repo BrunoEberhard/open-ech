@@ -8,7 +8,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.minimalj.backend.Backend;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.Codes;
@@ -220,7 +219,7 @@ public class StaxEch0011 {
 				String startName = startElement.getName().getLocalPart();			
 				if (startName.equals(PERSON_IDENTIFICATION)) {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
-					Person completePerson = EchPersistence.getByIdentification(Backend.persistence(), personIdentification);
+					Person completePerson = EchPersistence.getByIdentification(personIdentification);
 					if (completePerson != null) {
 						person.contactPerson.partner.person = completePerson;
 					} else {

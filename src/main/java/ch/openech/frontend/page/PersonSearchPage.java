@@ -34,11 +34,11 @@ public class PersonSearchPage extends SearchPage<PersonSearch, PersonPage> {
 
 	@Override
 	protected List<PersonSearch> load(String query) {
-		return Backend.persistence().read(PersonSearch.class, By.search(query), 100);
+		return Backend.read(PersonSearch.class, By.search(query), 100);
 	}
 
 	private Person load(PersonSearch personSearch) {
-		return Backend.persistence().read(Person.class, personSearch.id);
+		return Backend.read(Person.class, personSearch.id);
 	}
 
 	@Override

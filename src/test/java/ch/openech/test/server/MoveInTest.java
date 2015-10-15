@@ -21,9 +21,9 @@ public class MoveInTest extends AbstractServerTest {
 	public void moveIn() throws Exception {
 		processFile("samples/eCH-0020/moveIn/data_ordipro-moveIn-21.xml");
 		
-		List<Person> persons = Backend.persistence().read(Person.class, By.search("BERNALUSKOVSKI"), 2);
+		List<Person> persons = Backend.read(Person.class, By.search("BERNALUSKOVSKI"), 2);
 		Assert.assertEquals(1, persons.size());
-		Person person = Backend.persistence().read(Person.class, persons.get(0).id);
+		Person person = Backend.read(Person.class, persons.get(0).id);
 		
 		Assert.assertNotNull(person);
 		Assert.assertEquals("BERNALUSKOVSKI", person.officialName);

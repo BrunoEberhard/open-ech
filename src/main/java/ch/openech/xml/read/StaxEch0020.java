@@ -114,7 +114,7 @@ public class StaxEch0020 {
 	}
 	
 	public Person getPerson(PersonIdentification personIdentification) {
-		return EchPersistence.getByIdentification(persistence, personIdentification);
+		return EchPersistence.getByIdentification(personIdentification);
 	}
 	
 	//
@@ -347,7 +347,7 @@ public class StaxEch0020 {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(PERSON_IDENTIFICATION)) {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
-					Person person = EchPersistence.getByIdentification(persistence, personIdentification);
+					Person person = EchPersistence.getByIdentification(personIdentification);
 					if (person != null) {
 						relation.partner.person = person;
 					} else {

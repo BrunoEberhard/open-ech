@@ -4,10 +4,11 @@ import java.io.InputStream;
 
 import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.InputStreamTransaction;
+import org.minimalj.transaction.PersistenceTransaction;
 
 import ch.openech.xml.read.StaxEch0148;
 
-public class OrganisationImportTransaction extends InputStreamTransaction<Integer> {
+public class OrganisationImportTransaction extends InputStreamTransaction<Integer> implements PersistenceTransaction<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	public OrganisationImportTransaction(InputStream inputStream) {

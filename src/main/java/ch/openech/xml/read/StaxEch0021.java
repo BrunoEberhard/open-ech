@@ -10,7 +10,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.minimalj.backend.Backend;
 import org.minimalj.util.EqualsHelper;
 import org.minimalj.util.StringUtils;
 
@@ -61,7 +60,7 @@ public class StaxEch0021 {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
 					// TODO ist es ok hier Backend.getInstance() zu verwenden?
 					// -> entweder die backend variable auch aus StaxEch0020 entfernen, oder ein traversel für die partnerIdentifications machen
-					Person person = EchPersistence.getByIdentification(Backend.persistence(), personIdentification);
+					Person person = EchPersistence.getByIdentification(personIdentification);
 					if (person != null) {
 						partnerIdentification.person = person;
 					} else {

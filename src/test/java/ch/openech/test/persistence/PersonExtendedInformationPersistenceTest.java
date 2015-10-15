@@ -18,8 +18,8 @@ public class PersonExtendedInformationPersistenceTest extends AbstractServerTest
 		person.personExtendedInformation = new PersonExtendedInformation();
 		person.personExtendedInformation.armedForcesLiability = YesNo.Yes;
 		
-		Object newId = Backend.persistence().insert(person);
-		Person readPerson = Backend.persistence().read(Person.class, newId);
+		Object newId = Backend.insert(person);
+		Person readPerson = Backend.read(Person.class, newId);
 		Assert.assertEquals(YesNo.Yes, readPerson.personExtendedInformation.armedForcesLiability);
 	}
 
@@ -29,12 +29,12 @@ public class PersonExtendedInformationPersistenceTest extends AbstractServerTest
 		person.personExtendedInformation = new PersonExtendedInformation();
 		person.personExtendedInformation.armedForcesLiability = YesNo.Yes;
 		
-		Object newId = Backend.persistence().insert(person);
-		Person readPerson = Backend.persistence().read(Person.class, newId);
+		Object newId = Backend.insert(person);
+		Person readPerson = Backend.read(Person.class, newId);
 		Assert.assertEquals(YesNo.Yes, readPerson.personExtendedInformation.armedForcesLiability);
 		
 		readPerson.personExtendedInformation.armedForcesService = YesNo.No;
-		Person readPerson2 = Backend.persistence().update(readPerson);
+		Person readPerson2 = Backend.update(readPerson);
 		
 		Assert.assertEquals(YesNo.No, readPerson2.personExtendedInformation.armedForcesService);
 	}

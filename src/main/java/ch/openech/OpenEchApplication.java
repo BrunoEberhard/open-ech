@@ -29,6 +29,7 @@ import org.minimalj.application.Preferences;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
+import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
 import org.minimalj.frontend.page.EmptyPage;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.SearchPage;
@@ -128,33 +129,40 @@ public class OpenEchApplication extends Application {
 ////				actions.add(new EditorDialogAction(new TpnMoveEditor(MoveDirection.IN.toString())));
 //			}
 		
-		ActionGroup actionGroupImport = new ActionGroup("Import");
-		if (ewkSchema != null) {
-			actionGroupImport.add(new ImportAllPersonAction());
+		boolean importExportAvailable = Frontend.getInstance() instanceof SwingFrontend;
+		if (importExportAvailable) {
+			ActionGroup actionGroupImport = new ActionGroup("Import");
+			if (ewkSchema != null) {
+				actionGroupImport.add(new ImportAllPersonAction());
+			}
+			if (orgSchema != null) {
+				actionGroupImport.add(new ImportAllOrganisationAction());
+			}
+			actionGroupImport.add(new ImportSwissDataAction());
+			
+			actions.add(actionGroupImport);
+			
+			ActionGroup actionGroupExport = new ActionGroup("Export");
+			if (ewkSchema != null) {
+				actionGroupExport.add(new ExportAllPersonAction(ewkSchema.getVersion()));
+				if (ewkSchema.keyDeliveryPossible()) {
+					actionGroupExport.add(new KeyDeliveryPersonAction(ewkSchema.getVersion()));
+				}
+			}
+			if (orgSchema != null) {
+				actionGroupExport.add(new ExportAllOrganisationAction(orgSchema.getVersion()));
+				actionGroupExport.add(new KeyDeliveryOrganisationAction(orgSchema.getVersion()));
+			}
+			actions.add(actionGroupExport);
 		}
-		if (orgSchema != null) {
-			actionGroupImport.add(new ImportAllOrganisationAction());
-		}
-		actionGroupImport.add(new ImportSwissDataAction());
+
 		boolean isDevMode = DevMode.isActive();
 		if (isDevMode && (ewkSchema != null || orgSchema != null)) {
-			actionGroupImport.add(new GeneratePersonEditor(ewkSchema, orgSchema));
+			ActionGroup actionGroupDev = new ActionGroup("Development");
+			actionGroupDev.add(new GeneratePersonEditor(ewkSchema, orgSchema));
+			actions.add(actionGroupDev);
 		}
-		actions.add(actionGroupImport);
 		
-		ActionGroup actionGroupExport = new ActionGroup("Export");
-		if (ewkSchema != null) {
-			actionGroupExport.add(new ExportAllPersonAction(ewkSchema.getVersion()));
-			if (ewkSchema.keyDeliveryPossible()) {
-				actionGroupExport.add(new KeyDeliveryPersonAction(ewkSchema.getVersion()));
-			}
-		}
-		if (orgSchema != null) {
-			actionGroupExport.add(new ExportAllOrganisationAction(orgSchema.getVersion()));
-			actionGroupExport.add(new KeyDeliveryOrganisationAction(orgSchema.getVersion()));
-		}
-		actions.add(actionGroupExport);
-
 		ActionGroup actionGroupSettings = new ActionGroup("Einstellungen");
 		actionGroupSettings.add(new PreferencesEditor());
 		actions.add(actionGroupSettings);
@@ -165,7 +173,7 @@ public class OpenEchApplication extends Application {
 	@Override
 	public Page createDefaultPage() {
 		return new EmptyPage();
-//		List<PersonSearch> persons = Backend.persistence().read(PersonSearch.class, Criteria.search("Müller"), 1);
+//		List<PersonSearch> persons = Backend.read(PersonSearch.class, Criteria.search("Müller"), 1);
 //		return new PersonPage(EchSchema.getNamespaceContext(20, "2.2"), persons.get(0).id);
 
 //		PersonSearchPage searchPage = new PersonSearchPage();

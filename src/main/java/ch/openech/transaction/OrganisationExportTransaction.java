@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import org.minimalj.backend.Persistence;
 import org.minimalj.backend.sql.SqlPersistence;
 import org.minimalj.transaction.OutputStreamTransaction;
+import org.minimalj.transaction.PersistenceTransaction;
 
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
@@ -16,7 +17,7 @@ import ch.openech.xml.write.WriterEch0098;
 import ch.openech.xml.write.WriterEch0148;
 import ch.openech.xml.write.WriterElement;
 
-public class OrganisationExportTransaction extends OutputStreamTransaction<Integer> {
+public class OrganisationExportTransaction extends OutputStreamTransaction<Integer> implements PersistenceTransaction<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	private final String ewkVersion;

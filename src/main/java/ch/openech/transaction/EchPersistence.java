@@ -2,6 +2,7 @@ package ch.openech.transaction;
 
 import java.util.List;
 
+import org.minimalj.backend.Backend;
 import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.criteria.By;
 import org.minimalj.util.IdUtils;
@@ -14,7 +15,7 @@ import ch.openech.model.person.PersonIdentification;
 
 public class EchPersistence {
 
-	public static Person getByIdentification(Persistence persistence, PersonIdentification personIdentification) {
+	public static Person getByIdentification(PersonIdentification personIdentification) {
 		String localId = null;
 		if (personIdentification.technicalIds.localId.openEch()) {
 			localId = personIdentification.technicalIds.localId.personId;
@@ -22,14 +23,14 @@ public class EchPersistence {
 				localId = null;
 			}
 			if (localId != null && localId.length() == 36) {
-				Person person = persistence.read(Person.class, localId);
+				Person person = Backend.read(Person.class, localId);
 				if (person != null) {
 					return person;
 				}
 			}
 		}
 		if (personIdentification.vn != null && personIdentification.vn.value != null) {
-			List<Person> persons = persistence.read(Person.class, By.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
+			List<Person> persons = Backend.read(Person.class, By.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
 			if (localId != null) {
 				for (Person person : persons) {
 					if (IdUtils.getCompactIdString(person).startsWith(localId)) {
@@ -40,12 +41,12 @@ public class EchPersistence {
 				if (!persons.isEmpty()) return persons.get(0);
 			}
 		} 
-		List<Person> persons = persistence.read(Person.class, By.search(personIdentification.officialName), 500);
+		List<Person> persons = Backend.read(Person.class, By.search(personIdentification.officialName), 500);
 		for (Person person : persons) {
 			if (localId == null || IdUtils.getCompactIdString(person).startsWith(localId)) {
 				if (StringUtils.equals(person.firstName, personIdentification.firstName)) {
 					if (StringUtils.equals(person.officialName, personIdentification.officialName)) {
-						return persistence.read(Person.class, person.id);
+						return Backend.read(Person.class, person.id);
 					}
 				}
 			}

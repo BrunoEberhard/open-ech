@@ -4,12 +4,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.backend.Persistence;
-import org.minimalj.transaction.Transaction;
+import org.minimalj.transaction.PersistenceTransaction;
 
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.read.StaxEch0148;
 
-public class OrganisationTransaction implements Transaction<Organisation> {
+public class OrganisationTransaction implements PersistenceTransaction<Organisation> {
 	private static final long serialVersionUID = 1L;
 
 	private final List<String> xmls;

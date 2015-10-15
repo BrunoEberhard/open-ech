@@ -19,15 +19,15 @@ public class ImportSwissDataAction extends Action {
 	@Override
 	public void action() {
 		for (CountryIdentification country : StaxEch0072.getInstance().getCountryIdentifications()) {
-			Backend.persistence().insert(country);
+			Backend.insert(country);
 		}
 		
 		for (Canton canton : StaxEch0071.getInstance().getCantons()) {
-			Backend.persistence().insert(canton);
+			Backend.insert(canton);
 		}
 
 		for (MunicipalityIdentification municipality : StaxEch0071.getInstance().getMunicipalityIdentifications()) {
-			Backend.persistence().insert(municipality);
+			Backend.insert(municipality);
 		}
 		
 		int pos = 0;
@@ -35,7 +35,7 @@ public class ImportSwissDataAction extends Action {
 			MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
 			municipalityIdentification.id = --pos;
 			municipalityIdentification.municipalityName = EnumUtils.getText(federalRegister);
-			Backend.persistence().insert(municipalityIdentification);
+			Backend.insert(municipalityIdentification);
 		}
 	}
 	

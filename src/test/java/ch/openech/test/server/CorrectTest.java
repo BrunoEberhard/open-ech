@@ -225,7 +225,7 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctPlaceOfBirth_Foreign() throws Exception {
 		Person person = reload(p);
 		
-		List<CountryIdentification> countries = Backend.persistence().read(CountryIdentification.class, By.all(), 1000);
+		List<CountryIdentification> countries = Backend.read(CountryIdentification.class, By.all(), 1000);
 		CountryIdentification c10 = countries.get(10);
 		person.placeOfBirth = new Place();
 		person.placeOfBirth.countryIdentification = c10;

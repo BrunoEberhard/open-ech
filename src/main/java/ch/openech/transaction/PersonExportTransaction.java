@@ -5,8 +5,9 @@ import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Persistence;
 import org.minimalj.backend.sql.SqlPersistence;
-import org.minimalj.transaction.Role;
 import org.minimalj.transaction.OutputStreamTransaction;
+import org.minimalj.transaction.PersistenceTransaction;
+import org.minimalj.transaction.Role;
 
 import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
@@ -14,7 +15,7 @@ import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
 
 @Role("Superuser")
-public class PersonExportTransaction extends OutputStreamTransaction<Integer> {
+public class PersonExportTransaction extends OutputStreamTransaction<Integer> implements PersistenceTransaction<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	private final String ewkVersion;

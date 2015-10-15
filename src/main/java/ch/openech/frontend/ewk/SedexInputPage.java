@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import org.minimalj.backend.Backend;
 import org.minimalj.frontend.Frontend.IContent;
 import org.minimalj.frontend.page.Page;
 
@@ -151,7 +150,7 @@ public class SedexInputPage extends Page {
 	}
 
 	private Person searchPerson(SedexMessageInformation envelope) {
-		return EchPersistence.getByIdentification(Backend.persistence(), envelope.personIdentification);
+		return EchPersistence.getByIdentification(envelope.personIdentification);
 	}
 	
 }

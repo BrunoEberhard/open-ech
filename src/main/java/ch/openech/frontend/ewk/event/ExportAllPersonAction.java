@@ -1,17 +1,19 @@
 package ch.openech.frontend.ewk.event;
 
-import java.io.OutputStream;
-import java.util.function.Consumer;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
+import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
 import org.minimalj.transaction.Role;
 
 import ch.openech.transaction.PersonExportTransaction;
 
 @Role("su")
-public class ExportAllPersonAction extends Action implements Consumer<OutputStream> {
+public class ExportAllPersonAction extends Action {
 	protected final String ewkVersion;
 	
 	public ExportAllPersonAction(String ewkVersion) {
@@ -20,15 +22,24 @@ public class ExportAllPersonAction extends Action implements Consumer<OutputStre
 	
 	@Override
 	public void action() {
-		Frontend.getBrowser().showOutputDialog("Personendaten exportieren", this);
+		if (Frontend.getInstance() instanceof SwingFrontend) {
+			SwingFrontend swingFrontend = (SwingFrontend) Frontend.getInstance();
+			File file = swingFrontend.showFileDialog("Personendaten exportieren", "Export");
+			if (file != null) {
+				try (FileOutputStream fos = new FileOutputStream(file)) {
+					Integer exportCount = Backend.getInstance().execute(new PersonExportTransaction(ewkVersion, exportCompletePerson(), fos));
+					Frontend.getBrowser().showMessage(exportCount + " Person(en) exportiert");
+				} catch (IOException e) {
+					Frontend.getBrowser().showError("Export nicht möglich\n" + e.getLocalizedMessage());
+					e.printStackTrace();
+				}
+			}
+		} else {
+			// sollte nie vorkommen, da die Action nur beim richtigen Frontend angeboten werden
+			Frontend.getBrowser().showError("Nur bei lokaler Installation möglich");
+		}
 	}
 
-	@Override
-	public void accept(OutputStream outputStream) {
-		Integer exportCount = Backend.getInstance().execute(new PersonExportTransaction(ewkVersion, exportCompletePerson(), outputStream));
-		Frontend.getBrowser().showMessage(exportCount + " Person(en) exportiert");
-	}
-	
 	protected boolean exportCompletePerson() {
 		return true;
 	}

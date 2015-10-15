@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.minimalj.backend.Persistence;
+import org.minimalj.transaction.PersistenceTransaction;
 import org.minimalj.transaction.Role;
-import org.minimalj.transaction.Transaction;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.xml.write.EchSchema;
@@ -13,7 +13,7 @@ import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0148;
 
 @Role("su")
-public class GenerateDemoDataTransaction implements Transaction<Serializable> {
+public class GenerateDemoDataTransaction implements PersistenceTransaction<Serializable> {
 	private static final long serialVersionUID = 1L;
 	
 	private final int personCount;

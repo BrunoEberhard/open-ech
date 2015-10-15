@@ -1,23 +1,35 @@
 package ch.openech.frontend.ewk.event;
 
-import java.io.InputStream;
-import java.util.function.Consumer;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
+import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
 
 import ch.openech.transaction.PersonImportTransaction;
 
-public class ImportAllPersonAction extends Action implements Consumer<InputStream> {
+public class ImportAllPersonAction extends Action {
 
 	@Override
 	public void action() {
-		Frontend.getBrowser().showInputDialog("Personendaten importieren", this);
-	}
-
-	@Override
-	public void accept(InputStream inputStream) {
-		Backend.getInstance().execute(new PersonImportTransaction(inputStream));
+		if (Frontend.getInstance() instanceof SwingFrontend) {
+			SwingFrontend swingFrontend = (SwingFrontend) Frontend.getInstance();
+			File file = swingFrontend.showFileDialog("Personendaten importieren", "Import");
+			if (file != null) {
+				try (FileInputStream fis = new FileInputStream(file)) {
+					Backend.getInstance().execute(new PersonImportTransaction(fis));
+					Frontend.getBrowser().showMessage("Import erfolgreich");
+				} catch (IOException e) {
+					Frontend.getBrowser().showError("Import nicht möglich\n" + e.getLocalizedMessage());
+					e.printStackTrace();
+				}
+			}
+		} else {
+			// sollte nie vorkommen, da die Action nur beim richtigen Frontend angeboten werden
+			Frontend.getBrowser().showError("Nur bei lokaler Installation möglich");
+		}
 	}
 }

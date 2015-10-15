@@ -98,7 +98,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 			if (personSearch != null) {
 				ContactPerson contactPerson = ContactPersonFormElement.this.getValue();
 
-				Person person = Backend.persistence().read(Person.class, personSearch.id);
+				Person person = Backend.read(Person.class, personSearch.id);
 				ContactPersonFormElement.this.getValue().partner.person = person;
 				
 				contactPerson.partner.person = person;
@@ -118,7 +118,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		
 		@Override
 		public List<PersonSearch> search(String query) {
-			return Backend.persistence().read(PersonSearch.class, By.search(query), 100);
+			return Backend.read(PersonSearch.class, By.search(query), 100);
 		}
 
 	};

@@ -84,9 +84,9 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 		
 		Relation partnerRelation = parentPerson.getPartner();
 		if (partnerRelation != null && partnerRelation.partner.vn() != null) { 
-			List<PersonIdentification> partnerOfVisiblePersons = Backend.persistence().read(PersonIdentification.class, By.search(partnerRelation.partner.vn().value, Person.SEARCH_BY_VN), 2);
+			List<PersonIdentification> partnerOfVisiblePersons = Backend.read(PersonIdentification.class, By.search(partnerRelation.partner.vn().value, Person.SEARCH_BY_VN), 2);
 			if (partnerOfVisiblePersons.size() == 1) {
-				Person partnerOfVisiblePerson = Backend.persistence().read(Person.class, partnerOfVisiblePersons.get(0).id);
+				Person partnerOfVisiblePerson = Backend.read(Person.class, partnerOfVisiblePersons.get(0).id);
 				if (partnerOfVisiblePerson.isMale())
 					father = partnerOfVisiblePerson;
 				else

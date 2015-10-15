@@ -70,14 +70,14 @@ public class PartnerIdentificationFormElement extends ObjectFormElement<PartnerI
 
 		@Override
 		protected void save(PersonSearch object) {
-			Person person = Backend.persistence().read(Person.class, object.id);
+			Person person = Backend.read(Person.class, object.id);
 			PartnerIdentificationFormElement.this.getValue().person = person;
 			handleChange();
 		}
 
 		@Override
 		public List<PersonSearch> search(String searchText) {
-			return Backend.persistence().read(PersonSearch.class, By.search(searchText), 100);
+			return Backend.read(PersonSearch.class, By.search(searchText), 100);
 		}
 	}
 	
