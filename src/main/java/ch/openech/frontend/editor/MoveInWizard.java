@@ -288,9 +288,15 @@ public class MoveInWizard extends Wizard<Person> {
 		public Person getValue() {
 			return comboBox.getValue();
 		}
-		
 	}
 
+	@Override
+	protected List<Action> createAdditionalActions() {
+		List<Action> actions = super.createAdditionalActions();
+		actions.add(0,  new XmlAction());
+		return actions;
+	}
+	
 	private class XmlAction extends Action {
 		@Override
 		public void action() {
