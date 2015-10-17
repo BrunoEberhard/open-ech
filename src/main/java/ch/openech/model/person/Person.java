@@ -362,7 +362,9 @@ public class Person implements Validation {
 	
 	public void toHtml(StringBuilder s) {
 		StringUtils.appendLine(s, firstName, officialName);
-		StringUtils.appendLine(s, dateOfBirth.value);
+		if (dateOfBirth != null) {
+			StringUtils.appendLine(s, dateOfBirth.toString());
+		}
 	}
 	
 	public PersonIdentification personIdentification() {
