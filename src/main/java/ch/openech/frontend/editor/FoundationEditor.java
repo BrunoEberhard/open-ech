@@ -56,7 +56,7 @@ public class FoundationEditor extends XmlEditor<Organisation, Organisation> impl
 	
     @Override
     protected void finished(Organisation result) {
-    	Frontend.getBrowser().show(new OrganisationPage(echSchema, result));
+    	Frontend.show(new OrganisationPage(echSchema, result));
     }
 
 	@Override

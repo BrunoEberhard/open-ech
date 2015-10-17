@@ -29,7 +29,7 @@ public class XmlTextFormFormElement extends ListFormElement<String> {
 		@Override
 		public void action() {
 			String message = EchSchemaValidation.validate(xml);
-			Frontend.getBrowser().showMessage(message);
+			Frontend.showMessage(message);
 		}
 	}
 

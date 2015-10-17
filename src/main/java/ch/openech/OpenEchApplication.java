@@ -103,8 +103,8 @@ public class OpenEchApplication extends Application {
 	public List<Action> getMenu() {
 		List<Action> actions = new ArrayList<>();
 		
-		Subject user = Frontend.getBrowser() != null ? Frontend.getBrowser().getSubject() : null;
-		if (user == null) {
+		Subject user = Frontend.getInstance().getSubject();
+		if (user == null || !user.isValid()) {
 			return actions;
 		}
 		

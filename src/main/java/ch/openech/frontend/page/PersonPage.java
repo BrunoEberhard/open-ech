@@ -282,7 +282,7 @@ public class PersonPage extends ObjectPage<Person> {
 			add(birthChild); 
 			
 			addSeparator();
-			addDetail(historyPage); 
+			addDetail(PersonPage.this, historyPage); 
 			
 			refresh();
 		}

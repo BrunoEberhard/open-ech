@@ -229,7 +229,7 @@ public class MoveInWizard extends Wizard<Person> {
 	
 	@Override
 	protected void finished(Person result) {
-		Frontend.getBrowser().show(new PersonPage(echSchema, result));
+		Frontend.show(new PersonPage(echSchema, result));
 	}
 
 	private class MoveInNextPersonFormElement extends AbstractFormElement<Person> {
@@ -301,7 +301,7 @@ public class MoveInWizard extends Wizard<Person> {
 				}
 				new XmlPreview(xmls);
 			} catch (Exception x) {
-				Frontend.getBrowser().showMessage("XML Preview fehlgeschlagen");
+				Frontend.showMessage("XML Preview fehlgeschlagen");
 				Logger.getLogger(XmlAction.class.getName()).log(Level.SEVERE, "XML Preview fehlgeschlagen", x);
 			}
 		}

@@ -26,15 +26,15 @@ public class ExportAllOrganisationAction extends Action {
 			if (file != null) {
 				try (FileOutputStream fos = new FileOutputStream(file)) {
 					Backend.getInstance().execute(new OrganisationExportTransaction(orgVersion, exportCompleteOrganisation(), fos));
-					Frontend.getBrowser().showMessage("Export erfolgreich");
+					Frontend.showMessage("Export erfolgreich");
 				} catch (IOException e) {
-					Frontend.getBrowser().showError("Export nicht möglich\n" + e.getLocalizedMessage());
+					Frontend.showError("Export nicht möglich\n" + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 			}
 		} else {
 			// sollte nie vorkommen, da die Action nur beim richtigen Frontend angeboten werden
-			Frontend.getBrowser().showError("Nur bei lokaler Installation möglich");
+			Frontend.showError("Nur bei lokaler Installation möglich");
 		}
 	}
 	

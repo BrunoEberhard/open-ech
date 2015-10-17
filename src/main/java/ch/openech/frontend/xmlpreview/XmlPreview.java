@@ -32,7 +32,7 @@ public class XmlPreview {
 				dialog.closeDialog();
 			}
 		};
-		dialog = Frontend.getBrowser().showDialog("XML", form.getContent(), null, closeAction, closeAction);
+		dialog = Frontend.showDialog("XML", form.getContent(), null, closeAction, closeAction);
 	}
 	
 	public static class XmlPreviewValue {

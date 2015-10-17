@@ -28,15 +28,15 @@ public class ExportAllPersonAction extends Action {
 			if (file != null) {
 				try (FileOutputStream fos = new FileOutputStream(file)) {
 					Integer exportCount = Backend.getInstance().execute(new PersonExportTransaction(ewkVersion, exportCompletePerson(), fos));
-					Frontend.getBrowser().showMessage(exportCount + " Person(en) exportiert");
+					Frontend.showMessage(exportCount + " Person(en) exportiert");
 				} catch (IOException e) {
-					Frontend.getBrowser().showError("Export nicht möglich\n" + e.getLocalizedMessage());
+					Frontend.showError("Export nicht möglich\n" + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 			}
 		} else {
 			// sollte nie vorkommen, da die Action nur beim richtigen Frontend angeboten werden
-			Frontend.getBrowser().showError("Nur bei lokaler Installation möglich");
+			Frontend.showError("Nur bei lokaler Installation möglich");
 		}
 	}
 

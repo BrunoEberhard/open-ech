@@ -58,7 +58,7 @@ public class BirthEvent extends XmlEditor<Person, Person> {
 
 	@Override
 	protected void finished(Person result) {
-		Frontend.getBrowser().show(new PersonPage(echSchema, result));
+		Frontend.show(new PersonPage(echSchema, result));
 	}
 	
 	@Override

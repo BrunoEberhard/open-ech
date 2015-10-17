@@ -67,7 +67,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisati
 
 	@Override
 	protected void finished(Organisation organisation) {
-		Frontend.getBrowser().show(new OrganisationPage(echSchema, organisation));
+		Frontend.show(new OrganisationPage(echSchema, organisation));
 	}
 	
 }

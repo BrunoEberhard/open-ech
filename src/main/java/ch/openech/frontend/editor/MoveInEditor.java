@@ -55,7 +55,7 @@ public class MoveInEditor extends XmlEditor<Organisation, Organisation> implemen
 	
 	@Override
 	protected void finished(Organisation organisation) {
-		Frontend.getBrowser().show(new OrganisationPage(echSchema, organisation));
+		Frontend.show(new OrganisationPage(echSchema, organisation));
 	}
 	
 	@Override

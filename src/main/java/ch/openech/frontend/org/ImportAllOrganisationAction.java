@@ -21,15 +21,15 @@ public class ImportAllOrganisationAction extends Action {
 			if (file != null) {
 				try (FileInputStream fis = new FileInputStream(file)) {
 					Backend.getInstance().execute(new OrganisationImportTransaction(fis));
-					Frontend.getBrowser().showMessage("Import erfolgreich");
+					Frontend.showMessage("Import erfolgreich");
 				} catch (IOException e) {
-					Frontend.getBrowser().showError("Import nicht möglich\n" + e.getLocalizedMessage());
+					Frontend.showError("Import nicht möglich\n" + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 			}
 		} else {
 			// sollte nie vorkommen, da die Action nur beim richtigen Frontend angeboten werden
-			Frontend.getBrowser().showError("Nur bei lokaler Installation möglich");
+			Frontend.showError("Nur bei lokaler Installation möglich");
 		}
 	}
 }

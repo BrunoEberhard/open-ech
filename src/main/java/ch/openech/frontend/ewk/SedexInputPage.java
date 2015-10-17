@@ -137,7 +137,7 @@ public class SedexInputPage extends Page {
 //				// TODO showDeathPage öffnen des Tod - Dialoges richtig kapseln
 //				Editor<?> editor = new ChangeWithSecondPersonEvent.DeathEvent(echNamespaceContext);
 //				FormVisual<?> form = editor.startEditor();
-//				Frontend.getBrowser().openDialog(getPanel(), form, "TODO");
+//				Frontend.openDialog(getPanel(), form, "TODO");
 //			}
 //		} else {
 //			JOptionPane.showMessageDialog(null, "Person mit entsprechender Identifikation nicht vorhanden");
