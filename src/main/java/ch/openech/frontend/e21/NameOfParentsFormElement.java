@@ -24,17 +24,28 @@ public class NameOfParentsFormElement extends ObjectFormElement<NameOfParents> {
 
 	@Override
 	protected void show(NameOfParents object) {
-		add("Vater");
-		if (!object.father.isEmpty()) {
-			add(object.father, new NameOfParentEditor(true));
+		if (isEditable()) {
+			add("Vater");
+			if (!object.father.isEmpty()) {
+				add(object.father, new NameOfParentEditor(true));
+			} else {
+				add(new NameOfParentEditor(true));
+			}
+			add("Mutter");
+			if (!object.mother.isEmpty()) {
+				add(object.mother, new NameOfParentEditor(false));
+			} else {
+				add(new NameOfParentEditor(false));
+			}
 		} else {
-			add(new NameOfParentEditor(true));
-		}
-		add("Mutter");
-		if (!object.mother.isEmpty()) {
-			add(object.mother, new NameOfParentEditor(false));
-		} else {
-			add(new NameOfParentEditor(false));
+			if (!object.father.isEmpty()) {
+				add("Vater");
+				add(object.father);
+			}
+			if (!object.mother.isEmpty()) {
+				add("Mutter");
+				add(object.mother);
+			}
 		}
 	}
 	
