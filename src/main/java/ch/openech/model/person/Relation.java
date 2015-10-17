@@ -67,12 +67,10 @@ public class Relation implements Validatable, Rendering {
 	public void identificationToHtml(StringBuilder s) {
 		if (partner != null) {
 			partner.toHtml(s);
-			s.append("&nbsp<BR>");
 		}
 		
 		if (address != null && !address.isEmpty()) {
 			address.toHtml(s);
-			s.append("<BR>");
 		}
 	}
 
