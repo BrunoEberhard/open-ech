@@ -49,8 +49,11 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		} else {
 			text = isEditable() ? "Id bearbeiten" : "-";
 		}
-		Action action = new ObjectFormElementEditor(text);
-		add(action);
+		if (isEditable()) {
+			add(new ObjectFormElementEditor(text));
+		} else {
+			add(text);
+		}
 	}
 
 	@Override
