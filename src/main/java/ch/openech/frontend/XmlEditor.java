@@ -49,7 +49,7 @@ public abstract class XmlEditor<T, RESULT> extends Editor<T, RESULT> {
 				List<String> xmls = getXml(getObject());
 				new XmlPreview(xmls);
 			} catch (Exception x) {
-				throw new RuntimeException("XML Preview fehlgeschlagen", x);
+				throw new RuntimeException("XML Preview fehlgeschlagen: " +  x.getLocalizedMessage(), x);
 			}
 		}
 		
