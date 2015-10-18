@@ -1,5 +1,6 @@
 package ch.openech.frontend.e10;
 
+import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
@@ -53,8 +54,13 @@ public class AddressFormElement extends ObjectFormElement<Address> implements Mo
 	}
 
 	@Override
+	protected Action[] getActions() {
+		return new Action[] { getEditorAction() };
+	}
+
+	@Override
 	public void show(Address address) {
-		add(address, getEditorAction(), new RemoveObjectAction());
+		add(address, new RemoveObjectAction());
 	}
 
 	@Override
