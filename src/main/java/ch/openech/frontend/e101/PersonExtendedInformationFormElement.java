@@ -17,7 +17,11 @@ public class PersonExtendedInformationFormElement extends ObjectFormElement<Pers
 	@Override
 	protected void show(PersonExtendedInformation information) {
 		if (!EmptyObjects.isEmpty(information)) {
-			add(information, new RemoveObjectAction());
+			if (isEditable()) {
+				add(information, new RemoveObjectAction());
+			} else {
+				add(information);
+			}
 		}
 	}
 	

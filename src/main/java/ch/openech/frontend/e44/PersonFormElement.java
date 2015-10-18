@@ -33,7 +33,11 @@ public class PersonFormElement extends ObjectFormElement<Person> {
 
 	@Override
 	protected void show(Person placeOfOrigin) {
-		add(placeOfOrigin, new RemoveObjectAction());
+		if (isEditable()) {
+			add(placeOfOrigin, new RemoveObjectAction());
+		} else {
+			add(placeOfOrigin);
+		}
 	}
 
 	@Override

@@ -27,7 +27,11 @@ public class PersonIdentificationFormElement extends ObjectFormElement<PersonIde
 	
 	@Override
 	protected void show(PersonIdentification placeOfOrigin) {
-		add(placeOfOrigin, new RemoveObjectAction());
+		if (isEditable()) {
+			add(placeOfOrigin, new RemoveObjectAction());
+		} else {
+			add(placeOfOrigin);
+		}
 	}
 
 	@Override

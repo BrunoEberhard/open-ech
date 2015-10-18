@@ -42,6 +42,10 @@ public class RemoveEntriesListFormElement<T> extends ListFormElement<T> {
 	
 	@Override
 	protected void showEntry(T entry) {
-		add(entry, new RemoveThisObjectAction(entry));
+		if (isEditable()) {
+			add(entry, new RemoveThisObjectAction(entry));
+		} else {
+			add(entry);
+		}
 	}
 }

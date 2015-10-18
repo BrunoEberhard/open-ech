@@ -25,7 +25,11 @@ public class DwellingAddressFormElement extends ObjectFormElement<DwellingAddres
 	
 	@Override
 	protected void show(DwellingAddress object) {
-		add(object, new RemoveObjectAction());
+		if (isEditable()) {
+			add(object, new RemoveObjectAction());
+		} else {
+			add(object);
+		}
 	}
 
 	@Override

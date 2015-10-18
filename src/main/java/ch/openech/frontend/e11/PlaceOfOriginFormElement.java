@@ -112,10 +112,14 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 
 	@Override
 	protected void showEntry(PlaceOfOrigin placeOfOrigin) {
-		add(placeOfOrigin,
-			new EditOriginAction(placeOfOrigin),
-			new RemoveOriginAction(placeOfOrigin)
-		);
+		if (isEditable()) {
+			add(placeOfOrigin,
+					new EditOriginAction(placeOfOrigin),
+					new RemoveOriginAction(placeOfOrigin)
+					);
+		} else {
+			add(placeOfOrigin);
+		}
 	}
 
 	@Override

@@ -60,7 +60,11 @@ public class OccupationFormElement extends ListFormElement<Occupation> {
 
 	@Override
 	protected void showEntry(Occupation occupation) {
-		add(occupation, new RemoveOccupationAction(occupation));
+		if (isEditable()) {
+			add(occupation, new RemoveOccupationAction(occupation));
+		} else {
+			add(occupation);
+		}
 	}
 
 	@Override

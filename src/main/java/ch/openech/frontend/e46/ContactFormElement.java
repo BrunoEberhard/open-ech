@@ -82,7 +82,11 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 
 	@Override
 	protected void showEntry(ContactEntry entry) {
-		add(entry, new RemoveContactEntryAction(entry));
+		if (isEditable()) {
+			add(entry, new RemoveContactEntryAction(entry));
+		} else {
+			add(entry);
+		}
 	}
 
 	@Override

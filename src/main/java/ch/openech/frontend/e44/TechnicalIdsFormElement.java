@@ -82,7 +82,11 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		
 		@Override
 		protected void showEntry(NamedId entry) {
-			add(entry, new RemoveOtherIdAction(entry));
+			if (isEditable()) {
+				add(entry, new RemoveOtherIdAction(entry));
+			} else {
+				add(entry);
+			}
 		}
 		
 		@Override

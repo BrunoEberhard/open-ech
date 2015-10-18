@@ -52,7 +52,11 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 				add("Person anzeigen", new PersonPage(echSchema, contactPerson.partner.person.id));
 			}
 		} else if (contactPerson.partner.personIdentification != null) {
-			add(contactPerson.partner.personIdentification.render(RenderType.PLAIN_TEXT), new RemovePersonContactAction());
+			if (isEditable()) {
+				add(contactPerson.partner.personIdentification.render(RenderType.PLAIN_TEXT), new RemovePersonContactAction());
+			} else {
+				add(contactPerson.partner.personIdentification.render(RenderType.PLAIN_TEXT));
+			}
 		} else if (contactPerson.partner.organisation != null) {
 			if (isEditable()) {
 				add(contactPerson.partner.organisation.organisationName, new RemovePersonContactAction());
