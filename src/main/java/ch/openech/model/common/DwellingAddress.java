@@ -2,6 +2,7 @@ package  ch.openech.model.common;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
@@ -49,28 +50,27 @@ public class DwellingAddress implements Validation, Rendering {
 		
 	public void toHtml(StringBuilder s) {
 		if (mailAddress != null) {
-			mailAddress.toHtml(s); s.append("<BR>");
+			mailAddress.toHtml(s);
 		}
 		if (!StringUtils.isBlank(EGID)) {
-			s.append("EGID: " );
-			s.append(EGID); 
+			s.append("EGID: " ).append(EGID).append("<BR>");
 		}
 		if (!StringUtils.isBlank(EWID)) {
-			s.append("<BR>EWID: ");
-			s.append(EWID);
+			s.append("EWID: ").append(EWID);
 		}
 		
 		if (!StringUtils.isBlank(householdID)) {
-			s.append("<BR>Haushalt ID: ");
-			s.append(householdID);
+			s.append("Haushalt ID: ");
+			s.append(householdID).append(EWID);
 		}
-		s.append("<BR>");
 		if (typeOfHousehold != null) {
-			s.append(EnumUtils.getText(typeOfHousehold));
+			s.append("<BR>").append(EnumUtils.getText(typeOfHousehold)).append("<BR>");
 		}
-		s.append("<BR>");
 		if (movingDate != null) {
-			s.append("Umzugsdatum: " ); s.append(DateUtils.format(movingDate));
+			s.append("<BR>").append("Umzugsdatum: " ); s.append(DateUtils.format(movingDate)).append("<BR>");
+		}
+		if (s.toString().toLowerCase().endsWith("<br>")) {
+			s.delete(s.length() - 4, s.length());
 		}
 	}
 	
