@@ -26,13 +26,13 @@ public class PartnerIdentificationFormElement extends ObjectFormElement<PartnerI
 	@Override
 	protected void show(PartnerIdentification partnerIdentification) {
 		if (!partnerIdentification.isEmpty()) {
-			add(partnerIdentification.toHtml());
+			add(partnerIdentification, new ClearPartnerIdentificationObjectAction());
 		}
 	}
 
 	@Override
 	protected Action[] getActions() {
-		return new Action[] { new PersonSearchAction(), new PersonIdentificationLightEditor(), new ClearPartnerIdentificationObjectAction() };
+		return new Action[] { new PersonSearchAction(), new PersonIdentificationLightEditor() };
 	}
 	
 	public class PersonIdentificationLightEditor extends Editor<PersonIdentificationLight, Void> {
