@@ -8,6 +8,7 @@ import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.util.StringUtils;
 
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.common.NamedId;
@@ -40,7 +41,7 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 	protected void show(TechnicalIds technicalIds) {
 		int maxLength = 25;
 		String text;
-		if (technicalIds.localId.personId != null) {
+		if (!StringUtils.isBlank(technicalIds.localId.personId)) {
 			if (technicalIds.localId.personId.length() <= maxLength) {
 				text = technicalIds.localId.personId;
 			} else {
