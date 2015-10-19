@@ -24,6 +24,11 @@ public class RelationPanel extends EchForm<Relation> {
 		line(Relation.$.care);
 	}
 
+	@Override
+	protected int getColumnWidthPercentage() {
+		return 2 * super.getColumnWidthPercentage();
+	}
+	
 	private class BasedOnLawFormElement extends EnumFormElement<BasedOnLaw> {
 		
 		public BasedOnLawFormElement() {
