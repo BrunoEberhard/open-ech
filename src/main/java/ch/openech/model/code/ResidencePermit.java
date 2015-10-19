@@ -4,7 +4,6 @@ import  ch.openech.model.types.EchCode;
 
 public enum ResidencePermit implements EchCode {
 
-	Test("11"),
 	Saisonarbeiter("01"), Saisonarbeiter_nicht_eu_efta_abkommen("0102"),
 	Aufenthalter("02"), Aufenthalter_nach_eu_efta_abkommen("0201");
 
