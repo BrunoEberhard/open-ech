@@ -26,10 +26,10 @@ public class Vn implements Validatable, Mocking {
 			// silent
 		}
 		if (vn < 7560000000001L || vn > 7569999999999L) {
-			return "Wert muss zw 7560000000001 und 7569999999999 liegen " + vn;
+			return "Wert muss zw 7560000000001 und 7569999999999 liegen";
 		}
 		if (!isValidEAN13(value)) {
-			return "Checksumme falsch";
+			return "Ungültige Eingabe (Checksumme falsch)";
 		}
 		return null;
 	}
