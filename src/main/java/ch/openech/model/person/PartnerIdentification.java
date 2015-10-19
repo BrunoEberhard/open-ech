@@ -2,7 +2,7 @@ package ch.openech.model.person;
 
 import java.time.LocalDate;
 
-import org.minimalj.model.Rendering.RenderType;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Reference;
 
 import ch.openech.model.organisation.Organisation;
@@ -20,7 +20,7 @@ import ch.openech.model.types.Sex;
  * </UL>
  * 
  */
-public class PartnerIdentification {
+public class PartnerIdentification implements Rendering {
 
 	@Reference
 	public Person person;
@@ -39,6 +39,16 @@ public class PartnerIdentification {
 		person = null;
 		personIdentification = null;
 		organisation = null;
+	}
+	
+	@Override
+	public String render(RenderType renderType) {
+		return toHtml();
+	}
+	
+	@Override
+	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
+		return RenderType.HMTL;
 	}
 	
 	@Deprecated
