@@ -9,7 +9,6 @@ import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.page.PageAction;
-import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.transaction.criteria.By;
 import org.minimalj.util.DateUtils;
@@ -46,16 +45,16 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		if (contactPerson.partner.person != null) {
 			add("Kontaktperson");
 			if (isEditable()) {
-				add(contactPerson.partner.person.toHtml(), new RemovePersonContactAction());
+				add(contactPerson.partner.person, new RemovePersonContactAction());
 			} else {
-				add(contactPerson.partner.person.toHtml(), new PageAction(new PersonPage(echSchema, contactPerson.partner.person.id), "Person anzeigen"));
+				add(contactPerson.partner.person, new PageAction(new PersonPage(echSchema, contactPerson.partner.person.id), "Person anzeigen"));
 				add("Person anzeigen", new PersonPage(echSchema, contactPerson.partner.person.id));
 			}
 		} else if (contactPerson.partner.personIdentification != null) {
 			if (isEditable()) {
-				add(contactPerson.partner.personIdentification.render(RenderType.PLAIN_TEXT), new RemovePersonContactAction());
+				add(contactPerson.partner.personIdentification, new RemovePersonContactAction());
 			} else {
-				add(contactPerson.partner.personIdentification.render(RenderType.PLAIN_TEXT));
+				add(contactPerson.partner.personIdentification);
 			}
 		} else if (contactPerson.partner.organisation != null) {
 			if (isEditable()) {

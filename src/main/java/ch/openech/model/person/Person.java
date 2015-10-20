@@ -14,6 +14,7 @@ import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.BusinessRule;
+import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
 
@@ -209,7 +210,7 @@ public class Person implements Validation {
 	
 	@Override
 	public String toString() {
-		return firstName + " " + officialName + ", " + dateOfBirth.value;
+		return firstName + " " + officialName + ", " + DateUtils.format(dateOfBirth.value);
 	}
 	
 	public String toHtmlMultiLine() {
