@@ -1,20 +1,21 @@
 package ch.openech.frontend.e07;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.minimalj.backend.sql.EmptyObjects;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
 
 import ch.openech.datagenerator.DataGenerator;
-import ch.openech.model.code.FederalRegister;
 import ch.openech.model.common.MunicipalityIdentification;
 
 public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIdentification> implements Mocking {
@@ -29,14 +30,14 @@ public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIde
 		super(property);
 		
 		municipalities = Codes.get(MunicipalityIdentification.class);
-		List<MunicipalityIdentification> items = new ArrayList<MunicipalityIdentification>(municipalities.size() + 5);
-		if (allowFederalRegister) {
-			for (FederalRegister federalRegister : FederalRegister.values()) {
-				items.add(new FederalRegisterMunicipality(federalRegister));
-        	}
+		Collections.sort(municipalities);
+		List<MunicipalityIdentification> items;
+		if (!allowFederalRegister) {
+			items = municipalities.stream().filter((municipalityIdentification) -> (municipalityIdentification.id > 0)).collect(Collectors.toList());
+		} else {
+			items = new ArrayList<>(municipalities);
 		}
-		items.addAll(municipalities);
-		
+		Collections.sort(items);
 		comboBox = Frontend.getInstance().createComboBox(items, listener());
 	}
 	
@@ -47,8 +48,8 @@ public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIde
 
 	@Override
 	public void setValue(MunicipalityIdentification object) {
-		if (object == null) { 
-			object = new MunicipalityIdentification();
+		if (EmptyObjects.isEmpty(object)) { 
+			object = null;
 		}
 		comboBox.setValue(object);
 	}
@@ -63,31 +64,6 @@ public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIde
 	}
 	
 	// 
-
-	private static class FederalRegisterMunicipality extends MunicipalityIdentification {
-		private static final long serialVersionUID = 1L;
-		
-		private final FederalRegister federalRegister;
-
-		private FederalRegisterMunicipality(FederalRegister federalRegister) {
-			this.federalRegister = federalRegister;
-			this.id = - federalRegister.ordinal() - 1;
-		}
-		
-		@Override
-		public String toString() {
-			return "Bundesregister: " + EnumUtils.getText(federalRegister);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (obj == null || !(obj instanceof FederalRegisterMunicipality)) {
-				return false;
-			}
-			FederalRegisterMunicipality other = (FederalRegisterMunicipality) obj;
-			return federalRegister == other.federalRegister;
-		}
-	}
 
 	@Override
 	public void mock() {
