@@ -15,17 +15,15 @@ import ch.openech.frontend.org.OrganisationPanel;
 import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.organisation.Organisation;
+import ch.openech.transaction.EchPersistence;
 import ch.openech.transaction.OrganisationTransaction;
 import ch.openech.xml.write.EchSchema;
 
 
 public class MoveInEditor extends XmlEditor<Organisation, Organisation> implements XmlResult<Organisation> {
 
-	private final OpenEchPreferences preferences;
-	
-	public MoveInEditor(EchSchema ech, OpenEchPreferences preferences) {
+	public MoveInEditor(EchSchema ech) {
 		super(ech);
-		this.preferences = preferences;
 	}
 
 	@Override
@@ -35,12 +33,13 @@ public class MoveInEditor extends XmlEditor<Organisation, Organisation> implemen
 
 	@Override
 	public Organisation createObject() {
-		return newInstance(preferences);
+		return newInstance();
 	}
 
-	static Organisation newInstance(OpenEchPreferences preferences) {
+	static Organisation newInstance() {
+		OpenEchPreferences preferences = EchPersistence.getPreferences();
+
 		Organisation organisation = new Organisation();
-		
 		organisation.languageOfCorrespondance = preferences.preferencesDefaultsData.language;
 		organisation.reportingMunicipality = CloneHelper.clone(preferences.preferencesDefaultsData.residence);
 		

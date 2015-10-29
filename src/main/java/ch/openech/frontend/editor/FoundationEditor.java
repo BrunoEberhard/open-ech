@@ -16,7 +16,6 @@ import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
 import ch.openech.frontend.org.OrganisationPanel;
 import ch.openech.frontend.page.OrganisationPage;
-import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.transaction.OrganisationTransaction;
 import ch.openech.xml.write.EchSchema;
@@ -24,11 +23,8 @@ import ch.openech.xml.write.EchSchema;
 
 public class FoundationEditor extends XmlEditor<Organisation, Organisation> implements XmlResult<Organisation> {
 	
-	private final OpenEchPreferences preferences;
-
-	public FoundationEditor(EchSchema ech, OpenEchPreferences preferences) {
+	public FoundationEditor(EchSchema ech) {
 		super(ech);
-		this.preferences = preferences;
 	}
 
 	@Override
@@ -45,7 +41,7 @@ public class FoundationEditor extends XmlEditor<Organisation, Organisation> impl
 
 	@Override
 	public Organisation createObject() {
-		return MoveInEditor.newInstance(preferences);
+		return MoveInEditor.newInstance();
 	}
 	
 	@Override

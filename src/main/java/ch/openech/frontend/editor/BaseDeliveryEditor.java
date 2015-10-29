@@ -14,16 +14,15 @@ import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
+import ch.openech.transaction.EchPersistence;
 import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
 
 
 public class BaseDeliveryEditor extends XmlEditor<Person, Person> {
-	private final OpenEchPreferences preferences;
 	
-	public BaseDeliveryEditor(EchSchema ech, OpenEchPreferences preferences) {
+	public BaseDeliveryEditor(EchSchema ech) {
 		super(ech);
-		this.preferences = preferences;
 	}
 	
 	@Override
@@ -33,6 +32,8 @@ public class BaseDeliveryEditor extends XmlEditor<Person, Person> {
 
 	@Override
 	public Person createObject() {
+		OpenEchPreferences preferences = EchPersistence.getPreferences();
+
 		Person person = new Person();
 		person.editMode = PersonEditMode.BASE_DELIVERY;
 		person.religion = preferences.preferencesDefaultsData.religion;

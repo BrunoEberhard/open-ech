@@ -18,6 +18,11 @@ import ch.openech.model.types.Language;
 public class OpenEchPreferences implements Validation {
 	public static final OpenEchPreferences $ = Keys.of(OpenEchPreferences.class);
 	
+	public Object id;
+	
+	@Size(255) @NotEmpty
+	public String user;
+	
 	public final ApplicationSchemaData applicationSchemaData = new ApplicationSchemaData();
 	public final PreferencesDefaultsData preferencesDefaultsData = new PreferencesDefaultsData();
 	

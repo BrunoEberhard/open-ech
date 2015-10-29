@@ -25,7 +25,6 @@ import java.util.Set;
 
 import org.minimalj.application.Application;
 import org.minimalj.application.DevMode;
-import org.minimalj.application.Preferences;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
@@ -56,6 +55,7 @@ import ch.openech.frontend.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.frontend.preferences.PreferencesEditor;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Person;
+import ch.openech.transaction.EchPersistence;
 import ch.openech.xml.write.EchSchema;
 
 public class OpenEchApplication extends Application {
@@ -108,21 +108,20 @@ public class OpenEchApplication extends Application {
 			return actions;
 		}
 		
-		OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
 		updateEwkNamespaceContext();
 		
 		if (ewkSchema != null) {
 			ActionGroup actionGroupPerson = new ActionGroup("Person");
-			actionGroupPerson.add(new MoveInWizard(ewkSchema, preferences));
-			actionGroupPerson.add(new BirthEvent(ewkSchema, preferences));
-			actionGroupPerson.add(new BaseDeliveryEditor(ewkSchema, preferences));
+			actionGroupPerson.add(new MoveInWizard(ewkSchema));
+			actionGroupPerson.add(new BirthEvent(ewkSchema));
+			actionGroupPerson.add(new BaseDeliveryEditor(ewkSchema));
 			actions.add(actionGroupPerson);
 		}
 		if (orgSchema != null) {
 			ActionGroup actionGroupOrganisation = new ActionGroup("Firma");
-			actionGroupOrganisation.add(new FoundationEditor(orgSchema, preferences));
-			actionGroupOrganisation.add(new MoveInEditor(orgSchema, preferences));
-			actionGroupOrganisation.add(new BaseDeliveryOrganisationEditor(orgSchema, preferences));
+			actionGroupOrganisation.add(new FoundationEditor(orgSchema));
+			actionGroupOrganisation.add(new MoveInEditor(orgSchema));
+			actionGroupOrganisation.add(new BaseDeliveryOrganisationEditor(orgSchema));
 			actions.add(actionGroupOrganisation);
 		}
 //			if (tpnSchema != null) {
@@ -182,7 +181,7 @@ public class OpenEchApplication extends Application {
 	}
 
 	private void updateEwkNamespaceContext() {
-		OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
+		OpenEchPreferences preferences = EchPersistence.getPreferences();
 		ApplicationSchemaData applicationData = preferences.applicationSchemaData;
 		if (applicationData.schema20 != null) {
 			if (ewkSchema == null || !applicationData.schema20.equals(ewkSchema.getVersion())) {
@@ -211,7 +210,7 @@ public class OpenEchApplication extends Application {
 
 	@Override
 	public Class<?>[] getEntityClasses() {
-		return new Class<?>[]{Person.class, Organisation.class};
+		return new Class<?>[]{Person.class, Organisation.class, OpenEchPreferences.class};
 	}
 	
 }

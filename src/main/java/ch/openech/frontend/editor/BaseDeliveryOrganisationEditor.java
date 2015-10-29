@@ -10,18 +10,15 @@ import org.minimalj.util.LoggingRuntimeException;
 import ch.openech.frontend.XmlEditor;
 import ch.openech.frontend.ewk.XmlResult;
 import ch.openech.frontend.org.OrganisationPanel;
-import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.transaction.OrganisationTransaction;
 import ch.openech.xml.write.EchSchema;
 
 
 public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation, Organisation> implements XmlResult<Organisation> {
-	private final OpenEchPreferences preferences;
 
-	public BaseDeliveryOrganisationEditor(EchSchema ech, OpenEchPreferences preferences) {
+	public BaseDeliveryOrganisationEditor(EchSchema ech) {
 		super(ech);
-		this.preferences = preferences;
 	}
 
 	@Override
@@ -31,7 +28,7 @@ public class BaseDeliveryOrganisationEditor extends XmlEditor<Organisation, Orga
 
 	@Override
 	public Organisation createObject() {
-		return MoveInEditor.newInstance(preferences);
+		return MoveInEditor.newInstance();
 	}
 	
 	@Override

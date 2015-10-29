@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.backend.Persistence;
+import org.minimalj.security.Subject;
 import org.minimalj.transaction.criteria.By;
+import org.minimalj.util.CloneHelper;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 
+import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.organisation.OrganisationIdentification;
 import ch.openech.model.person.Person;
@@ -78,6 +81,26 @@ public class EchPersistence {
 			}
 		}
 		return null;
+	}
+	
+	public static OpenEchPreferences getPreferences() {
+		List<OpenEchPreferences> preferences = Backend.read(OpenEchPreferences.class, By.field(OpenEchPreferences.$.user, Subject.getSubject().getName()), 2);
+		if (preferences.size() > 1) {
+			throw new IllegalStateException("Too many preference rows for " + Subject.getSubject().getName());
+		} else if (preferences.size() == 1) {
+			return preferences.get(0);
+		} else {
+			return CloneHelper.newInstance(OpenEchPreferences.class);
+		}
+	}
+	
+	public static void savePreferences(OpenEchPreferences preferences) {
+		preferences.user = Subject.getSubject().getName();
+		if (preferences.id != null) {
+			Backend.update(preferences);
+		} else {
+			Backend.insert(preferences);
+		}
 	}
 		
 }

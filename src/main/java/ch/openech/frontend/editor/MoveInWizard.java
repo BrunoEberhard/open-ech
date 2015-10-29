@@ -29,6 +29,7 @@ import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.person.types.TypeOfRelationshipInverted;
+import ch.openech.transaction.EchPersistence;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
@@ -36,14 +37,12 @@ import ch.openech.xml.write.WriterEch0020;
 public class MoveInWizard extends Wizard<Person> {
 
 	private final EchSchema echSchema;
-	private final OpenEchPreferences preferences;
 	private final MoveInPersonWizardStep moveInPersonWizardStep;
 	private final MoveInNextPersonWizardStep moveInNextPersonWizardStep;
 	private MoveInEditorData wizardData;
 	
-	public MoveInWizard(EchSchema ech, OpenEchPreferences preferences) {
+	public MoveInWizard(EchSchema ech) {
 		this.echSchema = ech;
-		this.preferences = preferences;
 		this.moveInPersonWizardStep = new MoveInPersonWizardStep();
 		this.moveInNextPersonWizardStep = new MoveInNextPersonWizardStep();
 	}
@@ -130,6 +129,7 @@ public class MoveInWizard extends Wizard<Person> {
 				if (personIndex > 0) {
 					person = createNextPerson(wizardData.nextPersons.get(personIndex-1));
 				} else {
+					OpenEchPreferences preferences = EchPersistence.getPreferences();
 					person = new Person();
 					person.languageOfCorrespondance = preferences.preferencesDefaultsData.language;
 					person.religion = preferences.preferencesDefaultsData.religion;

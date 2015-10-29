@@ -18,16 +18,14 @@ import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.common.Place;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
+import ch.openech.transaction.EchPersistence;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 
 public class BirthEvent extends XmlEditor<Person, Person> {
 
-	private final OpenEchPreferences preferences;
-	
-	public BirthEvent(EchSchema ech, OpenEchPreferences preferences) {
+	public BirthEvent(EchSchema ech) {
 		super(ech);
-		this.preferences = preferences;
 	}
 
 	@Override
@@ -37,7 +35,7 @@ public class BirthEvent extends XmlEditor<Person, Person> {
 
 	@Override
 	public Person createObject() {
-		return calculatePresets(preferences);
+		return calculatePresets();
 	}
 
 	@Override
@@ -81,10 +79,11 @@ public class BirthEvent extends XmlEditor<Person, Person> {
 	
 	//
 	
-	private static Person calculatePresets(OpenEchPreferences preferences) {
+	private static Person calculatePresets() {
 		Person person = new Person();
 		person.editMode = PersonEditMode.BIRTH;
 		
+		OpenEchPreferences preferences = EchPersistence.getPreferences();
 		if (preferences.preferencesDefaultsData.residence != null) {
 			person.placeOfBirth = new Place();
 			person.placeOfBirth.municipalityIdentification = CloneHelper.clone(preferences.preferencesDefaultsData.residence);

@@ -3,7 +3,6 @@ package ch.openech.frontend.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.application.Preferences;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
@@ -65,6 +64,7 @@ import ch.openech.frontend.ewk.event.correct.CorrectResidencePermitEvent;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
+import ch.openech.transaction.EchPersistence;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonPage extends ObjectPage<Person> {
@@ -218,7 +218,7 @@ public class PersonPage extends ObjectPage<Person> {
 			addressLock = new AddressLockEvent(PersonPage.this);
 			paperLock = new PaperLockEvent(PersonPage.this);
 			
-			OpenEchPreferences preferences = Preferences.getPreferences(OpenEchPreferences.class);
+			OpenEchPreferences preferences = EchPersistence.getPreferences();
 			birthChild = new BirthChildEvent(PersonPage.this, preferences);
 
 			historyPage = new PersonHistoryPage(PersonPage.this);
