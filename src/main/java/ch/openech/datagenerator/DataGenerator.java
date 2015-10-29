@@ -8,9 +8,9 @@ import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.MockDate;
-import org.minimalj.util.mock.MockPrename;
 import org.minimalj.util.mock.MockName;
 import org.minimalj.util.mock.MockOrganisation;
+import org.minimalj.util.mock.MockPrename;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Address;
@@ -147,8 +147,7 @@ public class DataGenerator {
 		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
 		placeOfOrigin.naturalizationDate = MockDate.generateRandomDate();
 		
-		List<MunicipalityIdentification> municipalities = Codes.get(MunicipalityIdentification.class);
-		MunicipalityIdentification municipalityIdentification = municipalities.get((int)(Math.random() * municipalities.size()));
+		MunicipalityIdentification municipalityIdentification = municipalityIdentification();
 		placeOfOrigin.originName = municipalityIdentification.municipalityName;
 		placeOfOrigin.canton = municipalityIdentification.canton;
 		
@@ -157,7 +156,11 @@ public class DataGenerator {
 	
 	public static MunicipalityIdentification municipalityIdentification() {
 		List<MunicipalityIdentification> municipalities = Codes.get(MunicipalityIdentification.class);
-		return municipalities.get((int)(Math.random() * municipalities.size()));
+		MunicipalityIdentification municipalityIdentification;
+		do {
+			municipalityIdentification = municipalities.get((int)(Math.random() * municipalities.size()));
+		} while (municipalityIdentification.canton == null);
+		return municipalityIdentification;
 	}
 
 	public static CountryIdentification countryIdentification() {
