@@ -100,7 +100,7 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
-	public List<Action> getMenu() {
+	public List<Action> getNavigation() {
 		List<Action> actions = new ArrayList<>();
 		
 		Subject user = Frontend.getInstance().getSubject();
