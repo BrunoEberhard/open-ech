@@ -134,7 +134,8 @@ public class StaxEch0148 {
 	public void simpleOrganisationEvent(String type, Organisation organisation) {
 		organisation.event = e;
 		updateIdentifications(organisation);
-		changedOrganisation = persistence.update(organisation);
+		persistence.update(organisation);
+		changedOrganisation = persistence.read(Organisation.class, organisation.id);
 	}
 
 	private void updateIdentifications(Object object) {

@@ -69,7 +69,8 @@ public class StaxEch0020 {
 			person.technicalIds.localId.clear();
 		}
 		updateIdentifications(person);
-		changedPerson = persistence.update(person);
+		persistence.update(person);
+		changedPerson = persistence.read(Person.class, person.id);
 	}
 
 	//
