@@ -3,7 +3,7 @@ package ch.openech.model.person;
 import java.time.LocalDate;
 
 import org.minimalj.model.Rendering;
-import org.minimalj.model.annotation.Reference;
+import org.minimalj.model.annotation.ViewReference;
 
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.types.Vn;
@@ -22,13 +22,13 @@ import ch.openech.model.types.Sex;
  */
 public class PartnerIdentification implements Rendering {
 
-	@Reference
+	@ViewReference
 	public Person person;
 	
-	@Reference
+	@ViewReference
 	public PersonIdentificationLight personIdentification;
 
-	@Reference
+	@ViewReference
 	public Organisation organisation;
 
 	public boolean isEmpty() {
