@@ -5,10 +5,11 @@
 		<xs:documentation xml:lang="de">SSK eSteuerauszug</xs:documentation>
 		<xs:documentation xml:lang="fr"/>
 	</xs:annotation>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0007/6"/>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0008/3"/>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0010/6"/>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/2"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0007/6" schemaLocation="http://www.ech.ch/xmlns/eCH-0007/6/eCH-0007-6-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0008/3" schemaLocation="http://www.ech.ch/xmlns/eCH-0008/3/eCH-0008-3-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0010/6" schemaLocation="http://www.ech.ch/xmlns/eCH-0010/6/eCH-0010-6-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/2" schemaLocation="http://www.ech.ch/xmlns/eCH-0097/2/eCH-0097-2-0.xsd"/>
+	
 	<xs:element name="taxStatement">
 		<xs:annotation>
 			<xs:documentation xml:lang="de">Basiselement des Steuerauszug.</xs:documentation>
