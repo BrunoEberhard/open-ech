@@ -75,7 +75,7 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 	//
 	
 	@Override
-	public Form<List<ContactEntry>> createFormPanel() {
+	public Form<List<ContactEntry>> createForm() {
 		// unused
 		return null;
 	}

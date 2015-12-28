@@ -27,7 +27,7 @@ public class ForeignFormElement extends ObjectFormElement<Foreign> {
 	}
 	
 	@Override
-	public Form<Foreign> createFormPanel() {
+	public Form<Foreign> createForm() {
 		return new ForeignPanel(echSchema);
 	}
 

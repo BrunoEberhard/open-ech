@@ -17,7 +17,7 @@ public class NameOfParentsFormElement extends ObjectFormElement<NameOfParents> {
 	}
 
 	@Override
-	protected Form<NameOfParents> createFormPanel() {
+	protected Form<NameOfParents> createForm() {
 		// not used
 		return null;
 	}

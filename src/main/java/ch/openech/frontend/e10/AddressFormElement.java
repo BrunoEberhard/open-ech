@@ -49,7 +49,7 @@ public class AddressFormElement extends ObjectFormElement<Address> implements Mo
 	}
 
 	@Override
-	public Form<Address> createFormPanel() {
+	public Form<Address> createForm() {
 		return new AddressPanel(swiss, person, organisation);
 	}
 

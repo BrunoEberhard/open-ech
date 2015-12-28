@@ -38,7 +38,7 @@ public class HeadquarterFormElement extends ObjectFormElement<Headquarter> {
 	}
 
 	@Override
-	protected Form<Headquarter> createFormPanel() {
+	protected Form<Headquarter> createForm() {
 		return null;
 	}
 

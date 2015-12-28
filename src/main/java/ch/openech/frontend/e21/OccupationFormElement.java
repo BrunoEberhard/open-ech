@@ -53,7 +53,7 @@ public class OccupationFormElement extends ListFormElement<Occupation> {
 	}
 	
 	@Override
-	public Form<List<Occupation>> createFormPanel() {
+	public Form<List<Occupation>> createForm() {
 		// not used
 		return null;
 	}

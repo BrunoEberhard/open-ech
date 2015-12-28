@@ -59,7 +59,7 @@ public class RelationFormElement extends ListFormElement<Relation> {
 	}
 
 	@Override
-	public Form<List<Relation>> createFormPanel() {
+	public Form<List<Relation>> createForm() {
 		// not used
 		return null;
 	}

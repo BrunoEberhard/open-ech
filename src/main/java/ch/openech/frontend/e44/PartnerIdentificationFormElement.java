@@ -90,7 +90,7 @@ public class PartnerIdentificationFormElement extends ObjectFormElement<PartnerI
 	}
 
 	@Override
-	protected Form<PartnerIdentification> createFormPanel() {
+	protected Form<PartnerIdentification> createForm() {
 		// not used directly
 		return null;
 	}

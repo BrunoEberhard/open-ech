@@ -40,7 +40,7 @@ public class DwellingAddressFormElement extends ObjectFormElement<DwellingAddres
 	}
 	
 	@Override
-	public Form<DwellingAddress> createFormPanel() {
+	public Form<DwellingAddress> createForm() {
 		return new DwellingAddressPanel(echSchema);
 	}
 	

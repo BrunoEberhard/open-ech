@@ -31,7 +31,7 @@ public class PersonExtendedInformationFormElement extends ObjectFormElement<Pers
 	}
 	
 	@Override
-	public Form<PersonExtendedInformation> createFormPanel() {
+	public Form<PersonExtendedInformation> createForm() {
 		return new PersonExtendedInformationPanel();
 	}
 

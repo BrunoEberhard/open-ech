@@ -212,7 +212,7 @@ public class PersonPanel extends EchForm<Person>  {
 		}
 		
 		@Override
-		public Form<Relation> createFormPanel() {
+		public Form<Relation> createForm() {
 			EchForm<Relation> form = new EchForm<>();
 			form.line(Relation.$.partner);
 			form.line(new AddressFormElement(Relation.$.address, true));

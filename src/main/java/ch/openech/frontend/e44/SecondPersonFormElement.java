@@ -23,7 +23,7 @@ public class SecondPersonFormElement extends ObjectFormElement<Relation> {
 	}
 
 	@Override
-	protected Form<Relation> createFormPanel() {
+	protected Form<Relation> createForm() {
 		return null;
 	}
 

@@ -58,7 +58,7 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 	}
 
 	@Override
-	public Form<TechnicalIds> createFormPanel() {
+	public Form<TechnicalIds> createForm() {
 		EchForm<TechnicalIds> form = new EchForm<TechnicalIds>();
 		form.line(TechnicalIds.$.localId.personIdCategory);
 		form.line(TechnicalIds.$.localId.personId);
@@ -76,7 +76,7 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		}
 
 		@Override
-		protected Form<List<NamedId>> createFormPanel() {
+		protected Form<List<NamedId>> createForm() {
 			// not used
 			return null;
 		}

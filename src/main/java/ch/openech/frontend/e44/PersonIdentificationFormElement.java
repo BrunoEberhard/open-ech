@@ -21,7 +21,7 @@ public class PersonIdentificationFormElement extends ObjectFormElement<PersonIde
 	}
 	
 	@Override
-	public Form<PersonIdentification> createFormPanel() {
+	public Form<PersonIdentification> createForm() {
 		return new PersonIdentificationPanel();
 	}
 	

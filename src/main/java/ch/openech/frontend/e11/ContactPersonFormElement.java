@@ -215,7 +215,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 //	}
 
 	@Override
-	public Form<ContactPerson> createFormPanel() {
+	public Form<ContactPerson> createForm() {
 		// not used
 		return null;
 	}

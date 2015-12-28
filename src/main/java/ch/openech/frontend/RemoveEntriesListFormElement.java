@@ -35,7 +35,7 @@ public class RemoveEntriesListFormElement<T> extends ListFormElement<T> {
 //	}
 
 	@Override
-	protected Form<List<T>> createFormPanel() {
+	protected Form<List<T>> createForm() {
 		// not used
 		return null;
 	}

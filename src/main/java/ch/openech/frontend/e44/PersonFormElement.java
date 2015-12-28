@@ -26,7 +26,7 @@ public class PersonFormElement extends ObjectFormElement<Person> {
 	}
 	
 	@Override
-	public Form<Person> createFormPanel() {
+	public Form<Person> createForm() {
 		// not used
 		return null;
 	}

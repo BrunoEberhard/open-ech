@@ -168,7 +168,7 @@ public class ResidenceFormElement extends ObjectFormElement<Residence> {
 	}
 
 	@Override
-	public Form<Residence> createFormPanel() {
+	public Form<Residence> createForm() {
 		// not used
 		return null;
 	}
