@@ -55,8 +55,8 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 		}
 	}
 
-	public class EditOriginAction extends EditListEntryAction {
-		private EditOriginAction(PlaceOfOrigin placeOfOrigin) {
+	public class OriginEditor extends ListEntryEditor {
+		private OriginEditor(PlaceOfOrigin placeOfOrigin) {
 			super(placeOfOrigin);
 		}
 
@@ -114,7 +114,7 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 	protected void showEntry(PlaceOfOrigin placeOfOrigin) {
 		if (isEditable()) {
 			add(placeOfOrigin,
-					new EditOriginAction(placeOfOrigin),
+					new OriginEditor(placeOfOrigin),
 					new RemoveOriginAction(placeOfOrigin)
 					);
 		} else {
