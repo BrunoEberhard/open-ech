@@ -67,13 +67,4 @@ public class AddressFormElement extends ObjectFormElement<Address> implements Mo
 		}
 	}
 
-	@Override
-	protected Address newInstance() {
-		Address address = new Address();
-		// Was war hier gemeint? Einen default value aus den Preferences auslesen?
-		// context.getApplicationContext();
-		return address;
-	}
-	
-	
 }
