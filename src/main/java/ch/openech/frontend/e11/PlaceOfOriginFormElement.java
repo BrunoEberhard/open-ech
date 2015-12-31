@@ -105,7 +105,7 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 	}
 
 	@Override
-	public Form<List<PlaceOfOrigin>> createForm() {
+	public Form<PlaceOfOrigin> createForm(boolean edit) {
 		// unused
 		return null;
 	}

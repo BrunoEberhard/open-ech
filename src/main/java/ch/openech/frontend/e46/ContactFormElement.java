@@ -1,7 +1,5 @@
 package ch.openech.frontend.e46;
 
-import java.util.List;
-
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
@@ -51,11 +49,6 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 			}
 			return contactEntry;
 		}
-
-		@Override
-		protected void addEntry(ContactEntry entry) {
-			getValue().add(entry);
-		}
     };
 
 	private class RemoveContactEntryAction extends Action {
@@ -75,7 +68,7 @@ public class ContactFormElement extends ListFormElement<ContactEntry> {
 	//
 	
 	@Override
-	public Form<List<ContactEntry>> createForm() {
+	public Form<ContactEntry> createForm(boolean edit) {
 		// unused
 		return null;
 	}

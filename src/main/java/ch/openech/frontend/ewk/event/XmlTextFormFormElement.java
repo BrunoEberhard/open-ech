@@ -31,7 +31,7 @@ public class XmlTextFormFormElement extends ListFormElement<String> {
 	}
 
 	@Override
-	protected Form<List<String>> createForm() {
+	protected Form<String> createForm(boolean edit) {
 		// not udes
 		return null;
 	}

@@ -59,7 +59,7 @@ public class RelationFormElement extends ListFormElement<Relation> {
 	}
 
 	@Override
-	public Form<List<Relation>> createForm() {
+	public Form<Relation> createForm(boolean edit) {
 		// not used
 		return null;
 	}
