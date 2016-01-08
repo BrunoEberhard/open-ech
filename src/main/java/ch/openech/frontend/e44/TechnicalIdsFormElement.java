@@ -9,6 +9,7 @@ import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.StringUtils;
+import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.common.NamedId;
@@ -74,12 +75,6 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		public OtherIdFormElement(List<NamedId> key, boolean editable) {
 			super(Keys.getProperty(key), editable);
 		}
-
-		@Override
-		protected Form<List<NamedId>> createForm() {
-			// not used
-			return null;
-		}
 		
 		@Override
 		protected void showEntry(NamedId entry) {
@@ -92,20 +87,13 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		
 		@Override
 		protected Action[] getActions() {
-			return new Action[] { new AddOtherIdEditor() };
+			return new Action[] { new AddListEntryEditor(Resources.getString("AddOtherIdEditor")) };
 		}
 
-		private class AddOtherIdEditor extends AddListEntryEditor {
-			@Override
-			public Form<NamedId> createForm() {
-				return new NamedIdPanel();
-			}
-
-			@Override
-			protected void addEntry(NamedId id) {
-				OtherIdFormElement.this.getValue().add(id);
-			}
-	    };
+		@Override
+		protected Form<NamedId> createForm(boolean edit) {
+			return new NamedIdPanel();
+		}
 		
 		private class RemoveOtherIdAction extends Action {
 			private final NamedId id;

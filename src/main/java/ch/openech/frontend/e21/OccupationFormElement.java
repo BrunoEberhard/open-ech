@@ -1,7 +1,5 @@
 package ch.openech.frontend.e21;
 
-import java.util.List;
-
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
@@ -18,26 +16,15 @@ public class OccupationFormElement extends ListFormElement<Occupation> {
 		super(property, editable);
 		this.echSchema = echSchema;
 	}
-
+	
 	public class AddOccupationEditor extends AddListEntryEditor {
 
 		@Override
 		protected Occupation createObject() {
 			return new Occupation(echSchema);
 		}
-
-		@Override
-		public Form<Occupation> createForm() {
-			return new OccupationPanel(echSchema);
-		}
-
-		@Override
-		protected void addEntry(Occupation occupation) {
-			List<Occupation> occupations = OccupationFormElement.this.getValue();
-			occupations.add(occupation);
-		}
 	}
-	
+
 	private class RemoveOccupationAction extends Action {
 		private final Occupation occupation;
 		
@@ -53,9 +40,8 @@ public class OccupationFormElement extends ListFormElement<Occupation> {
 	}
 	
 	@Override
-	public Form<List<Occupation>> createForm() {
-		// not used
-		return null;
+	public Form<Occupation> createForm(boolean edit) {
+		return new OccupationPanel(echSchema);
 	}
 
 	@Override
