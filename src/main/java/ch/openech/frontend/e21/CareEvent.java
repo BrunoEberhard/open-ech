@@ -7,7 +7,6 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.EnumFormElement;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.util.BusinessRule;
 
 import ch.openech.frontend.ewk.event.PersonEventEditor;
 import ch.openech.frontend.page.PersonPage;
@@ -15,6 +14,7 @@ import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.types.Sex;
+import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.WriterEch0020;
 
 public class CareEvent extends PersonEventEditor<Relation> {

@@ -7,7 +7,6 @@ import org.minimalj.backend.sql.EmptyObjects;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.XmlEditor;
@@ -19,6 +18,7 @@ import ch.openech.model.common.Place;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
 import ch.openech.transaction.EchPersistence;
+import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 

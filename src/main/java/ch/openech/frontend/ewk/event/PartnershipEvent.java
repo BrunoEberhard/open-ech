@@ -11,7 +11,6 @@ import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
 
@@ -21,6 +20,7 @@ import ch.openech.model.EchFormats;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.WriterEch0020;
 
 

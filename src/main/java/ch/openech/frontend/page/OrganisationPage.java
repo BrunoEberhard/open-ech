@@ -9,7 +9,6 @@ import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.ObjectPage;
 import org.minimalj.transaction.persistence.ReadTransaction;
-import org.minimalj.util.BusinessRule;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.org.OrganisationPanel;
@@ -31,6 +30,7 @@ import ch.openech.frontend.org.event.correct.CorrectOrganisationNameEvent;
 import ch.openech.frontend.org.event.correct.CorrectReportingEvent;
 import ch.openech.frontend.org.event.correct.CorrectUidBrancheEvent;
 import ch.openech.model.organisation.Organisation;
+import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 
 public class OrganisationPage extends ObjectPage<Organisation> {

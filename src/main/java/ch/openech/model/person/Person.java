@@ -13,7 +13,6 @@ import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.util.BusinessRule;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
@@ -36,6 +35,7 @@ import ch.openech.model.person.types.Vn;
 import ch.openech.model.types.Language;
 import ch.openech.model.types.Sex;
 import ch.openech.model.types.TypeOfResidence;
+import ch.openech.util.BusinessRule;
 
 
 public class Person implements Validation {

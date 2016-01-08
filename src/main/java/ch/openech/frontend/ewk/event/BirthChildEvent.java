@@ -8,7 +8,6 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.transaction.criteria.By;
-import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.ewk.PersonPanel;
@@ -24,6 +23,7 @@ import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.Religion;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.types.YesNo;
+import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.WriterEch0020;
 
 // Ein etwas spezieller Event, da er nicht die momentan gewählte Person betrifft,

@@ -9,7 +9,6 @@ import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.ObjectPage;
 import org.minimalj.transaction.persistence.ReadTransaction;
-import org.minimalj.util.BusinessRule;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.e21.CareEvent;
@@ -65,6 +64,7 @@ import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
 import ch.openech.transaction.EchPersistence;
+import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 
 public class PersonPage extends ObjectPage<Person> {

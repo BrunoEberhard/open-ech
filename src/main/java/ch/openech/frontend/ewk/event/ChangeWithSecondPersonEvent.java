@@ -9,7 +9,6 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.util.BusinessRule;
 
 import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
@@ -19,6 +18,7 @@ import ch.openech.model.person.types.MaritalStatus;
 import ch.openech.model.person.types.PartnerShipAbolition;
 import ch.openech.model.person.types.Separation;
 import ch.openech.model.person.types.TypeOfRelationship;
+import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0093;
 

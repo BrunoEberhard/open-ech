@@ -14,13 +14,13 @@ import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.util.BusinessRule;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.ewk.event.UndoCitizenEvent.UndoCitizenData;
 import ch.openech.frontend.page.PersonPage;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
+import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.WriterEch0020;
 
 

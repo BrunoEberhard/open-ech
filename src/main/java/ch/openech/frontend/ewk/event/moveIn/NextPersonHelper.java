@@ -1,12 +1,11 @@
 package ch.openech.frontend.ewk.event.moveIn;
 
-import org.minimalj.util.BusinessRule;
-
 import ch.openech.frontend.editor.MoveInWizard.MoveInNextPerson;
 import  ch.openech.model.person.Person;
 import  ch.openech.model.person.Relation;
 import  ch.openech.model.person.types.TypeOfRelationship;
 import  ch.openech.model.types.Sex;
+import ch.openech.util.BusinessRule;
 
 public class NextPersonHelper {
 
