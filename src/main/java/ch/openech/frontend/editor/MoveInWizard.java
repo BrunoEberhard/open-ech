@@ -107,11 +107,6 @@ public class MoveInWizard extends Wizard<Person> {
 		}
 
 		@Override
-		public String getDescription() {
-			return null;
-		}
-
-		@Override
 		public WizardStep<?> getNextStep() {
 			return moveInNextPersonWizardStep;
 		}
@@ -163,11 +158,6 @@ public class MoveInWizard extends Wizard<Person> {
 		@Override
 		public String getTitle() {
 			return "Weitere Person erfassen";
-		}
-
-		@Override
-		public String getDescription() {
-			return null;
 		}
 
 		@Override
