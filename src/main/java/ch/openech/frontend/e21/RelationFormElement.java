@@ -23,16 +23,6 @@ public class RelationFormElement extends ListFormElement<Relation> {
 	public class AddRelationEditor extends AddListEntryEditor {
 
 		@Override
-		protected Relation createObject() {
-			return new Relation();
-		}
-
-		@Override
-		public Form<Relation> createForm() {
-			return new RelationPanel(echNamespaceContext);
-		}
-
-		@Override
 		protected void addEntry(Relation relation) {
 			// TODO ist das nötig?
 			if (!relation.isCareRelation())
@@ -40,7 +30,7 @@ public class RelationFormElement extends ListFormElement<Relation> {
 			if (!relation.isParent())
 				relation.care = null;
 
-			getValue().add(relation);
+			super.addEntry(relation);
 		}
 	}
 
@@ -60,8 +50,7 @@ public class RelationFormElement extends ListFormElement<Relation> {
 
 	@Override
 	public Form<Relation> createForm(boolean edit) {
-		// not used
-		return null;
+		return new RelationPanel(echNamespaceContext);
 	}
 
 	@Override

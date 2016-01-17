@@ -9,7 +9,6 @@ import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.StringUtils;
-import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.common.NamedId;
@@ -87,7 +86,7 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		
 		@Override
 		protected Action[] getActions() {
-			return new Action[] { new AddListEntryEditor(Resources.getString("AddOtherIdEditor")) };
+			return new Action[] { new AddListEntryEditor() };
 		}
 
 		@Override

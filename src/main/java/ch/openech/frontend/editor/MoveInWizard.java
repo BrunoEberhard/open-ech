@@ -288,6 +288,11 @@ public class MoveInWizard extends Wizard<Person> {
 	}
 	
 	private class XmlAction extends Action {
+		
+		public XmlAction() {
+			super("Vorschau XML");
+		}
+		
 		@Override
 		public void action() {
 			try {
@@ -300,16 +305,6 @@ public class MoveInWizard extends Wizard<Person> {
 				Frontend.showMessage("XML Preview fehlgeschlagen");
 				Logger.getLogger(XmlAction.class.getName()).log(Level.SEVERE, "XML Preview fehlgeschlagen", x);
 			}
-		}
-
-		@Override
-		public String getName() {
-			return "Vorschau XML";
-		}
-
-		@Override
-		public String getDescription() {
-			return null;
 		}
 
 		@Override
