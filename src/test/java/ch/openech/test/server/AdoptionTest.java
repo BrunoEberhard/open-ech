@@ -3,6 +3,7 @@ package ch.openech.test.server;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.util.Codes;
+import org.minimalj.util.IdUtils;
 
 import ch.openech.model.common.Canton;
 import ch.openech.model.person.Person;
@@ -43,11 +44,11 @@ public class AdoptionTest extends AbstractServerTest {
 		
 		Relation motherRelation = child.getMother();
 		Assert.assertNotNull(motherRelation.partner.person);
-		Assert.assertEquals(mother.id, motherRelation.partner.person.id);
+		Assert.assertTrue(IdUtils.equals(mother, motherRelation.partner.person));
 		
 		Relation fatherRelation = child.getFather();
 		Assert.assertNotNull(fatherRelation.partner.person);
-		Assert.assertEquals(father.id, fatherRelation.partner.person.id);
+		Assert.assertTrue(IdUtils.equals(father, fatherRelation.partner.person));
 	}
 	
 }

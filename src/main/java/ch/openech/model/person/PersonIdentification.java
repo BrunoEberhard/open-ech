@@ -2,7 +2,6 @@ package  ch.openech.model.person;
 
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
-import org.minimalj.model.View;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
@@ -13,7 +12,7 @@ import ch.openech.model.common.TechnicalIds;
 import ch.openech.model.person.types.Vn;
 import ch.openech.model.types.Sex;
 
-public class PersonIdentification implements View<Person>, Rendering {
+public class PersonIdentification implements Rendering {
 
 	public static final PersonIdentification $ = Keys.of(PersonIdentification.class);
 	

@@ -2,6 +2,7 @@ package ch.openech.test.server;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.minimalj.util.IdUtils;
 
 import  ch.openech.model.code.BasedOnLaw;
 import  ch.openech.model.person.Person;
@@ -36,7 +37,7 @@ public class GardianTest extends AbstractServerTest {
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Vormund);
 		Assert.assertNotNull(gardian.partner.person);
-		Assert.assertEquals(personGardian.id, gardian.partner.person.id);
+		Assert.assertTrue(IdUtils.equals(personGardian, gardian.partner.person));
 		Assert.assertEquals(BasedOnLaw._368, gardian.basedOnLaw);
 	}
 
@@ -56,7 +57,7 @@ public class GardianTest extends AbstractServerTest {
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Beistand);
 		Assert.assertNotNull(gardian.partner.person);
-		Assert.assertEquals(reload(gardianP).id, gardian.partner.person.id);
+		Assert.assertTrue(IdUtils.equals(reload(gardianP), gardian.partner.person));
 		Assert.assertEquals(BasedOnLaw._369, gardian.basedOnLaw);
 
 		Assert.assertNull(person.getRelation(TypeOfRelationship.Vormund));

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.minimalj.util.IdUtils;
 
 import  ch.openech.model.person.Person;
 import  ch.openech.model.person.Relation;
@@ -42,7 +43,7 @@ public class MarriageTest extends AbstractServerTest {
 		Relation relation1 = person1.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation1.typeOfRelationship);
 		Assert.assertNotNull(relation1.partner.person);
-		Assert.assertEquals(person2.id, relation1.partner.person.id);
+		Assert.assertTrue(IdUtils.equals(person2, relation1.partner.person));
 		
 		Assert.assertNotNull(person2);
 		Assert.assertTrue(person2.maritalStatus.isVerheiratet());
@@ -50,7 +51,7 @@ public class MarriageTest extends AbstractServerTest {
 		Relation relation2 = person2.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation2.typeOfRelationship);
 		Assert.assertNotNull(relation2.partner.person);
-		Assert.assertEquals(person1.id, relation2.partner.person.id);
+		Assert.assertTrue(IdUtils.equals(person1, relation2.partner.person));
 	}
 	
 	@Test

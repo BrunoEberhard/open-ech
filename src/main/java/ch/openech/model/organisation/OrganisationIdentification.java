@@ -1,7 +1,6 @@
 package  ch.openech.model.organisation;
 
 import org.minimalj.model.Rendering;
-import org.minimalj.model.View;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 
@@ -9,7 +8,7 @@ import ch.openech.model.EchFormats;
 import ch.openech.model.common.TechnicalIds;
 import ch.openech.model.organisation.types.LegalForm;
 
-public class OrganisationIdentification implements View<Organisation>, Rendering {
+public class OrganisationIdentification implements Rendering {
 
 	public Object id;
 	

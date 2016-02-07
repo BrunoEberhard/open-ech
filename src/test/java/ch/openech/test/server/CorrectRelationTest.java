@@ -2,6 +2,7 @@ package ch.openech.test.server;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.minimalj.util.IdUtils;
 
 import  ch.openech.model.person.Person;
 import junit.framework.Assert;
@@ -25,7 +26,7 @@ public class CorrectRelationTest extends AbstractServerTest {
 		mother = reload(mother);
 
 		Assert.assertNotNull(child.getMother().partner.person);
-		Assert.assertEquals(mother.id, child.getMother().partner.person.id);
+		Assert.assertTrue(IdUtils.equals(mother, child.getMother().partner.person));
 		Assert.assertEquals("Bernacchi", child.officialName);
 	}
 	

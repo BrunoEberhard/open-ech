@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.By;
 import org.minimalj.util.Codes;
+import org.minimalj.util.IdUtils;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.code.ResidencePermit;
@@ -127,7 +128,7 @@ public class CorrectTest extends AbstractServerTest {
 		
 		person = reload(p);
 		Assert.assertNotNull(person.contactPerson);
-		Assert.assertEquals(person2.id, person.contactPerson.partner.person.id);
+		Assert.assertTrue(IdUtils.equals(person2, person.contactPerson.partner.person));
 	}
 
 	

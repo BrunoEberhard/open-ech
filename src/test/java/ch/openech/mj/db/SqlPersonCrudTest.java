@@ -9,6 +9,7 @@ import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.common.Address;
 import ch.openech.model.common.CountryIdentification;
+import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Occupation;
 import ch.openech.model.person.Person;
 import ch.openech.model.types.MrMrs;
@@ -22,7 +23,7 @@ public class SqlPersonCrudTest {
 	@BeforeClass
 	public static void setupPersistence() {
 		Resources.addResourceBundleName("ch.openech.resources.OpenEch");
-		persistence = new SqlPersistence(SqlPersistence.embeddedDataSource(), Person.class);
+		persistence = new SqlPersistence(SqlPersistence.embeddedDataSource(), Person.class, Organisation.class);
 		persistence.insert(CountryIdentification.createSwiss());
 	}
 
