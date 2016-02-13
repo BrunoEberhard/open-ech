@@ -60,19 +60,19 @@ public class PlaceOfOrigin {
 
 		boolean reasonOfAcquisitionAvailable = reasonOfAcquisition != null;
 		if (reasonOfAcquisitionAvailable) {
-			s.append("\n"); s.append("Erwerbsgrund: ");
+			s.append("\n").append("Erwerbsgrund: ");
 			s.append(EnumUtils.getText(reasonOfAcquisition));
 		}
 
 		boolean naturalizationDateAvailable = naturalizationDate != null;
 		if (naturalizationDateAvailable) {
-			s.append("\n"); s.append("Erwerbsdatum: ");
+			s.append("\n").append("Erwerbsdatum: ");
 			s.append(DateUtils.format(naturalizationDate));
 		}
 
 		boolean expatriationDateAvailable = expatriationDate != null;
 		if (expatriationDateAvailable) {
-			s.append("\n"); s.append("Entlassungsdatum: ");
+			s.append("\n").append("Entlassungsdatum: ");
 			s.append(DateUtils.format(expatriationDate));
 		}
 		
@@ -93,19 +93,19 @@ public class PlaceOfOrigin {
 
 		boolean reasonOfAcquisitionAvailable = reasonOfAcquisition != null;
 		if (reasonOfAcquisitionAvailable) {
-			s.append("<BR>"); s.append("Erwerbsgrund: ");
+			s.append("<BR>").append("Erwerbsgrund: ");
 			s.append(EnumUtils.getText(reasonOfAcquisition));
 		}
 
 		boolean naturalizationDateAvailable = naturalizationDate != null;
 		if (naturalizationDateAvailable) {
-			s.append("<BR>"); s.append("Erwerbsdatum: ");
+			s.append("<BR>").append("Erwerbsdatum: ");
 			s.append(DateUtils.format(naturalizationDate));
 		}
 
 		boolean expatriationDateAvailable = expatriationDate != null;
 		if (expatriationDateAvailable) {
-			s.append("<BR>"); s.append("Entlassungsdatum: ");
+			s.append("<BR>").append("Entlassungsdatum: ");
 			s.append(DateUtils.format(expatriationDate));
 		}
 		
@@ -121,19 +121,19 @@ public class PlaceOfOrigin {
 
 		boolean reasonOfAcquisitionAvailable = reasonOfAcquisition != null;
 		if (reasonOfAcquisitionAvailable) {
-			s.append(", "); s.append("Erwerbsgrund: ");
+			s.append(", ").append("Erwerbsgrund: ");
 			s.append(EnumUtils.getText(reasonOfAcquisition));
 		}
 
 		boolean naturalizationDateAvailable = naturalizationDate != null;
 		if (naturalizationDateAvailable) {
-			s.append(", "); s.append("Erwerbsdatum: ");
+			s.append(", ").append("Erwerbsdatum: ");
 			s.append(DateUtils.format(naturalizationDate));
 		}
 
 		boolean expatriationDateAvailable = expatriationDate != null;
 		if (expatriationDateAvailable) {
-			s.append(", "); s.append("Entlassungsdatum: ");
+			s.append(", ").append("Entlassungsdatum: ");
 			s.append(DateUtils.format(expatriationDate));
 		}
 	}

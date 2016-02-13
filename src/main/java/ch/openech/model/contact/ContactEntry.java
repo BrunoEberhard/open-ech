@@ -108,7 +108,7 @@ public class ContactEntry implements Validation, Rendering {
 			s.append(DateUtils.format(dateFrom)); 
 			s.append("<BR>");
 		} else if (dateTo != null) {
-			s.append("Gültig bis "); s.append(DateUtils.format(dateTo));
+			s.append("Gültig bis ").append(DateUtils.format(dateTo));
 			s.append("<BR>");
 		}
 		s.append("</SMALL>");

@@ -80,7 +80,7 @@ public class Occupation implements Validation, Rendering {
 		}
 		
 		if (occupationValidTill != null) {
-			s.append("Gültig bis "); s.append(DateUtils.format(occupationValidTill));
+			s.append("Gültig bis ").append(DateUtils.format(occupationValidTill));
 		}
 		
 		return s.toString();
