@@ -8,6 +8,7 @@ public class XmlConstants {
 	public static final String _OTHER_PERSON_ID = "OtherPersonId";
 	public static final String _RELATIONSHIP = "Relationship";
 	public static final String _RELATIONSHIP_TYPE = "RelationshipType";
+	public static final String ACCOMPANYING_LETTER = "accompanyingLetter";
 	public static final String ACKNOWLEDGEMENT = "acknowledgement";
 	public static final String ACKNOWLEDGEMENT_PERSON = "acknowledgementPerson";
 	public static final String ACTION = "action";
@@ -33,6 +34,7 @@ public class XmlConstants {
 	public static final String ARMED_FORCES_SERVICE = "armedForcesService";
 	public static final String ARRIVAL_DATE = "arrivalDate";
 	public static final String ATTACHMENT = "attachment";
+	public static final String BANK_ACCOUNT = "bankAccount";
 	public static final String BASE_DELIVERY = "baseDelivery";
 	public static final String BASE_DELIVERY_PERSON = "baseDeliveryPerson";
 	public static final String BASED_ON_LAW = "basedOnLaw";
@@ -80,6 +82,7 @@ public class XmlConstants {
 	public static final String CHILD_RELATIONSHIP_PERSON = "childRelationshipPerson";
 	public static final String CITIZENSHIP_DISCHARGE_PERSON = "citizenshipDischargePerson";
 	public static final String CIVIL_DEFENSE = "civilDefense";
+	public static final String CLIENT = "client";
 	public static final String CODE = "code";
 	public static final String COMES_FROM = "comesFrom";
 	public static final String COMMENT = "comment";
@@ -162,8 +165,10 @@ public class XmlConstants {
 	public static final String DELIVERY_ADDRESS = "deliveryAddress";
 	public static final String DELIVERY_HEADER = "deliveryHeader";
 	public static final String DEPARTURE_DATE = "departureDate";
+	public static final String DEPOT = "depot";
 	public static final String DESTINATION_ADDRESS = "destinationAddress";
 	public static final String DESTINATION_MUNICIPALITY = "destinationMunicipality";
+	public static final String DISPOSITION = "disposition";
 	public static final String DISTRICT = "district";
 	public static final String DISTRICT_ABOLITION_DATE = "districtAbolitionDate";
 	public static final String DISTRICT_ABOLITION_MODE = "districtAbolitionMode";
@@ -200,6 +205,7 @@ public class XmlConstants {
 	public static final String EVENT_NAME = "eventName";
 	public static final String EVENT_REPORT = "eventReport";
 	public static final String EXPATRIATION_DATE = "expatriationDate";
+	public static final String EXPENSE = "expense";
 	public static final String EXTENSION = "extension";
 	public static final String FATHER = "father";
 	public static final String FATHER_INFORMATION = "fatherInformation";
@@ -237,6 +243,7 @@ public class XmlConstants {
 	public static final String ID = "id";
 	public static final String INITIAL_MESSAGE_DATE = "initialMessageDate";
 	public static final String INLIQUIDATION = "inliquidation";
+	public static final String INSTITUTION = "institution";
 	public static final String INSURANCE = "insurance";
 	public static final String INSURANCE_ADDRESS = "insuranceAddress";
 	public static final String INSURANCE_NAME = "insuranceName";
@@ -254,10 +261,16 @@ public class XmlConstants {
 	public static final String LAST_NAME = "lastName";
 	public static final String LEADING_DOCUMENT = "leadingDocument";
 	public static final String LEGAL_FORM = "legalForm";
+	public static final String LIABILITY_ACCOUNT = "liabilityAccount";
 	public static final String LIQUIDATION = "liquidation";
 	public static final String LIQUIDATION_DATE = "liquidationDate";
 	public static final String LIQUIDATION_ENTRY_DATE = "liquidationEntryDate";
 	public static final String LIQUIDATION_REASON = "liquidationReason";
+	public static final String LIST_OF_BANK_ACCOUNTS = "listOfBankAccounts";
+	public static final String LIST_OF_EXPENSES = "listOfExpenses";
+	public static final String LIST_OF_LIABILITIES = "listOfLiabilities";
+	public static final String LIST_OF_LUMP_SUM_TAX_CREDIT = "listOfLumpSumTaxCredit";
+	public static final String LIST_OF_SECURITIES = "listOfSecurities";
 	public static final String LOCAL_I_D = "localID";
 	public static final String LOCAL_ORGANISATION_ID = "localOrganisationId";
 	public static final String LOCAL_PERSON_ID = "localPersonId";
@@ -382,6 +395,7 @@ public class XmlConstants {
 	public static final String PARTNERSHIP_RELATIONSHIP = "partnershipRelationship";
 	public static final String PARTNERSHIP_TYPE_OF_RELATIONSHIP_TYPE = "partnershipTypeOfRelationshipType";
 	public static final String PATH_FILE_NAME = "pathFileName";
+	public static final String PAYMENT = "payment";
 	public static final String PERSON = "person";
 	public static final String PERSON_ADDON = "personAddon";
 	public static final String PERSON_ADDON_ROOT = "personAddonRoot";
@@ -414,6 +428,7 @@ public class XmlConstants {
 	public static final String POSTAL_ADDRESS = "postalAddress";
 	public static final String PRODUCT = "product";
 	public static final String PRODUCT_VERSION = "productVersion";
+	public static final String PURCHASE = "purchase";
 	public static final String REASON_OF_ACQUISITION = "reasonOfAcquisition";
 	public static final String RECEIPT = "receipt";
 	public static final String RECIPIENT_ID = "recipientId";
@@ -442,6 +457,7 @@ public class XmlConstants {
 	public static final String SECONDARY_RESIDENCE = "secondaryResidence";
 	public static final String SECONDARY_RESIDENCE_ADDRESS = "secondaryResidenceAddress";
 	public static final String SECONDARY_RESIDENCE_INFORMATION = "secondaryResidenceInformation";
+	public static final String SECURITY = "security";
 	public static final String SENDER_ID = "senderId";
 	public static final String SENDING_APPLICATION = "sendingApplication";
 	public static final String SEPARATION = "separation";
@@ -456,6 +472,7 @@ public class XmlConstants {
 	public static final String STATE = "state";
 	public static final String STATUS_CODE = "statusCode";
 	public static final String STATUS_INFO = "statusInfo";
+	public static final String STOCK = "stock";
 	public static final String STREET = "street";
 	public static final String SUB_MESSAGE_TYPE = "subMessageType";
 	public static final String SUBJECT = "subject";
@@ -467,6 +484,8 @@ public class XmlConstants {
 	public static final String SWISS_ZIP_CODE = "swissZipCode";
 	public static final String SWISS_ZIP_CODE_ADD_ON = "swissZipCodeAddOn";
 	public static final String SWISS_ZIP_CODE_ID = "swissZipCodeId";
+	public static final String TAX_STATEMENT = "taxStatement";
+	public static final String TAX_VALUE = "taxValue";
 	public static final String TEST_DATA = "testData";
 	public static final String TEST_DELIVERY_FLAG = "testDeliveryFlag";
 	public static final String TEXT_ENGLISH = "textEnglish";
