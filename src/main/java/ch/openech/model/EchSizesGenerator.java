@@ -165,6 +165,7 @@ public class EchSizesGenerator {
 	}
 	
 	private void imprt(StartElement startElement) throws XMLStreamException, IOException {
+		// 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0011/8" schemaLocation="http://www.ech.ch/xmlns/eCH-0011/8/eCH-0011-8-1.xsd"/>
 		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
 		logger.fine("Found Import " + schemaLocation);
 		read(schemaLocation);
@@ -213,11 +214,10 @@ public class EchSizesGenerator {
 				}  else if (startName.equals("enumeration")) {
 					String value = startElement.getAttributeByName(new QName("value")).getValue();
 					size = Math.max(size, value.length());
+				} else if (startName.equals("maxInclusive")) {
+					String value = startElement.getAttributeByName(new QName("value")).getValue();
+					size = Math.max(size, value.length());
 				}
-//				} else if (startName.equals("maxInclusive")) {
-//					String value = startElement.getAttributeByName(new QName(VALUE)).getValue();
-//					size = Math.max(size, value.length());
-//				}
 				skip(xml);
 			} else if (event.isEndElement()) {
 				if (size > 0) {
@@ -235,6 +235,7 @@ public class EchSizesGenerator {
 		new EchSizesGenerator(20, "2.3");
 		new EchSizesGenerator(21, "4.0");
 		new EchSizesGenerator(78, "3.0");
+		new EchSizesGenerator(196, "1.0");
 		
 		for (String line : lines) {
 			System.out.println(line);
