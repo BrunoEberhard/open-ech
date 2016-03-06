@@ -18,12 +18,14 @@ import ch.openech.model.common.CountryIdentification;
 
 public class StaxEch0072 {
 
-	private static StaxEch0072 instance;
 	private final List<CountryIdentification> countryIdentifications = new ArrayList<CountryIdentification>(300);
 	private final List<CountryIdentification> countriesUnmodifiable;
 	
-	private StaxEch0072() {
-		InputStream inputStream = this.getClass().getResourceAsStream("eCH0072.xml");
+	public StaxEch0072() {
+		this(StaxEch0072.class.getClassLoader().getResourceAsStream("ch/ech/data/eCH0072.xml"));
+	}
+	
+	private StaxEch0072(InputStream inputStream) {
 		try {
 			process(inputStream);
 		} catch (Exception x) {
@@ -31,13 +33,6 @@ public class StaxEch0072 {
 		}
 		
 		countriesUnmodifiable = Collections.unmodifiableList(countryIdentifications);
-	}
-	
-	public static synchronized StaxEch0072 getInstance() {
-		if (instance == null) {
-			instance = new StaxEch0072();
-		}
-		return instance;
 	}
 	
 	public List<CountryIdentification> getCountryIdentifications() {

@@ -18,15 +18,17 @@ public class ImportSwissDataAction extends Action {
 
 	@Override
 	public void action() {
-		for (CountryIdentification country : StaxEch0072.getInstance().getCountryIdentifications()) {
+		StaxEch0072 staxEch0072 = new StaxEch0072();
+		for (CountryIdentification country : staxEch0072.getCountryIdentifications()) {
 			Backend.insert(country);
 		}
 		
-		for (Canton canton : StaxEch0071.getInstance().getCantons()) {
+		StaxEch0071 staxEch0071 = new StaxEch0071();
+		for (Canton canton : staxEch0071.getCantons()) {
 			Backend.insert(canton);
 		}
 
-		for (MunicipalityIdentification municipality : StaxEch0071.getInstance().getMunicipalityIdentifications()) {
+		for (MunicipalityIdentification municipality : staxEch0071.getMunicipalityIdentifications()) {
 			Backend.insert(municipality);
 		}
 		

@@ -23,12 +23,14 @@ import ch.openech.model.common.MunicipalityIdentification;
 
 public class StaxEch0071 {
 
-	private static StaxEch0071 instance;
 	private final List<MunicipalityIdentification> municipalities = new ArrayList<MunicipalityIdentification>(10000);
 	private final List<Canton> cantons = new ArrayList<Canton>(30);
 	
-	private StaxEch0071() {
-		InputStream inputStream = this.getClass().getResourceAsStream("eCH0071.xml");
+	public StaxEch0071() {
+		this(StaxEch0071.class.getClassLoader().getResourceAsStream("ch/ech/data/eCH0071.xml"));
+	}
+	
+	public StaxEch0071(InputStream inputStream) {
 		try {
 			process(inputStream);
 		} catch (XMLStreamException x) {
@@ -38,13 +40,6 @@ public class StaxEch0071 {
 		Collections.sort(municipalities);
 	}
 
-	public static synchronized StaxEch0071 getInstance() {
-		if (instance == null) {
-			instance = new StaxEch0071();
-		}
-		return instance;
-	}
-	
 	public List<Canton> getCantons() {
 		return cantons;
 	}
