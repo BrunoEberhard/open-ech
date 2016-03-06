@@ -4,6 +4,7 @@ import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
+import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.Validatable;
 import org.minimalj.util.Codes;
@@ -17,6 +18,10 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 	
 	private Input<String> textField;
 
+	public CantonFormElement(Object key) {
+		this(Keys.getProperty(key));
+	}
+	
 	public CantonFormElement(PropertyInterface property) {
 		super(property);
 		textField = Frontend.getInstance().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, null, listener());

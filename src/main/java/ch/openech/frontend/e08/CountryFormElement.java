@@ -7,6 +7,7 @@ import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
+import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
@@ -21,6 +22,10 @@ public class CountryFormElement extends AbstractFormElement<CountryIdentificatio
 
 	private final Input<CountryIdentification> comboBox;
 	private final List<CountryIdentification> countries;
+	
+	public CountryFormElement(Object key) {
+		this(Keys.getProperty(key));
+	}
 	
 	public CountryFormElement(PropertyInterface property) {
 		super(property);
