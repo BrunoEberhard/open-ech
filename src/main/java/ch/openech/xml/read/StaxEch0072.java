@@ -25,7 +25,7 @@ public class StaxEch0072 {
 		this(StaxEch0072.class.getClassLoader().getResourceAsStream("ch/ech/data/eCH0072.xml"));
 	}
 	
-	private StaxEch0072(InputStream inputStream) {
+	public StaxEch0072(InputStream inputStream) {
 		try {
 			process(inputStream);
 		} catch (Exception x) {
