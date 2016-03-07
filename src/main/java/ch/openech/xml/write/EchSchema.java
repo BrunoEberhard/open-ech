@@ -129,6 +129,9 @@ public class EchSchema {
 		} catch (Exception e) {
 			// this could happen in SBB ;)
 			InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation);
+			if (stream == null) {
+				throw new RuntimeException("Could not find " + namespaceLocation + " remote or local");
+			}
 			xml = inputFactory.createXMLEventReader(stream);
 			process(xml);
 		}
