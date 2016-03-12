@@ -1,0 +1,4 @@
+Admin = zqx+dRy8dxN+Xl5hFE8LodytVyaZ3yif, TlZYQsTL+JajhiplGJqOczk2AOuq2b7n, administrate, importExport, modify, view
+Superuser = DTgGMRuiL0/WmJL7qv36OMzN9AptaJE/, oSdlvjr8dhdNTNssrbpH7g0npmiTHs0/, importExport, modify, view
+User = kzj/hwQ2SBCl16Hu4sYgOcy/wQXUGI2k, Pm0BVAKTL1ip37dGXm1xNhd+FPknNKSV, modify, view
+Guest = PcVK8ixS2wngxqbNOZAnulonWM3EX7wP, X6BY0covbLqzdxsLS7Sww9LYoaofCKVy, view
