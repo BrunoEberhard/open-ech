@@ -84,10 +84,11 @@ public class EchPersistence {
 	}
 	
 	public static OpenEchPreferences getPreferences() {
-		if (Subject.getSubject() != null) {
-			List<OpenEchPreferences> preferences = Backend.read(OpenEchPreferences.class, By.field(OpenEchPreferences.$.user, Subject.getSubject().getName()), 2);
+		Subject subject = Subject.getSubject();
+		if (subject != null && !StringUtils.isEmpty(subject.getName())) {
+			List<OpenEchPreferences> preferences = Backend.read(OpenEchPreferences.class, By.field(OpenEchPreferences.$.user, subject.getName()), 2);
 			if (preferences.size() > 1) {
-				throw new IllegalStateException("Too many preference rows for " + Subject.getSubject().getName());
+				throw new IllegalStateException("Too many preference rows for " + subject.getName());
 			} else if (preferences.size() == 1) {
 				return preferences.get(0);
 			}
