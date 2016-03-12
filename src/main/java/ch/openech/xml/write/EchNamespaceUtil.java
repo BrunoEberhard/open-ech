@@ -83,12 +83,7 @@ public class EchNamespaceUtil {
 	public static String schemaLocation(String namespaceURI, String minor) {
 		int major = extractSchemaMajorVersion(namespaceURI);
 		String fileNamePart = namespaceURI.substring(ECH_NS_BASE.length() - 4, ECH_NS_BASE.length() + 4);
-		if (major != 196) {
-			return namespaceURI + "/" + fileNamePart + "-" + major + "-" + minor + ".xsd";
-		} else {
-			// bei 196 scheint das Verzeichnis auf dem eCH server einen anderen Namen bekommen zu haben
-			return namespaceURI + "." + minor + "/" + fileNamePart + "-" + major + "-" + minor + ".xsd";
-		}
+		return namespaceURI + "/" + fileNamePart + "-" + major + "-" + minor + ".xsd";
 	}
 	
 	// 112, 1, 0 -> http://www.ech.ch/xmlns/eCH-0112/1/eCH-0112-1-0.xsd
