@@ -32,7 +32,6 @@ import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
 import org.minimalj.frontend.page.EmptyPage;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.SearchPage;
-import org.minimalj.security.Subject;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.frontend.editor.BaseDeliveryEditor;
@@ -102,11 +101,12 @@ public class OpenEchApplication extends Application {
 	@Override
 	public List<Action> getNavigation() {
 		List<Action> actions = new ArrayList<>();
-		
-		Subject user = Frontend.getInstance().getSubject();
-		if (user == null || !user.isValid()) {
-			return actions;
-		}
+
+//		Deactivated authorization
+//		Subject user = Frontend.getInstance().getSubject();
+//		if (user == null || !user.isValid()) {
+//			return actions;
+//		}
 		
 		updateEwkNamespaceContext();
 		
