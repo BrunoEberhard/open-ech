@@ -83,11 +83,10 @@ public class OpenEchApplication extends Application {
 	public List<Action> getNavigation() {
 		List<Action> actions = new ArrayList<>();
 
-//		Deactivated authorization
-//		Subject user = Frontend.getInstance().getSubject();
-//		if (user == null || !user.isValid()) {
-//			return actions;
-//		}
+		Subject subject = Subject.getSubject();
+		if (subject == null || !subject.isValid()) {
+			return actions;
+		}
 		
 		updateEwkNamespaceContext();
 		
