@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.minimalj.application.Application;
-import org.minimalj.application.DevMode;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
@@ -32,6 +31,7 @@ import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
 import org.minimalj.frontend.page.EmptyPage;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.SearchPage;
+import org.minimalj.security.Subject;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.frontend.editor.BaseDeliveryEditor;
@@ -64,26 +64,7 @@ public class OpenEchApplication extends Application {
 	private EchSchema tpnSchema;
 	
 	public OpenEchApplication() {
-//		final String demoPersons = System.getProperty("DemoPerson");
-//
-//		if (!StringUtils.isEmpty(demoPersons)) {
-//			new Thread(new Runnable() {
-//				@Override
-//				public void run() {
-//					try {
-//						int count = Integer.parseInt(demoPersons);
-//						ewkSchema = EchSchema.getNamespaceContext(EchSchema0020._2_2);
-//						WriterEch0020 writerEch0020 = new WriterEch0020(ewkSchema);
-//						for (int i = 0; i<count; i++) {
-//							DataGenerator.generatePerson(writerEch0020);
-//						}
-//					} catch (Exception x) {
-//						System.err.println("Could not generate DemoPerson");
-//						x.printStackTrace();
-//					}
-//				}
-//			}).start();
-//		}
+		// empty
 	}
 
 	@Override
@@ -124,12 +105,10 @@ public class OpenEchApplication extends Application {
 			actionGroupOrganisation.add(new BaseDeliveryOrganisationEditor(orgSchema));
 			actions.add(actionGroupOrganisation);
 		}
-//			if (tpnSchema != null) {
-////				actions.add(new EditorDialogAction(new TpnMoveEditor(MoveDirection.IN.toString())));
-//			}
 		
 		boolean importExportAvailable = Frontend.getInstance() instanceof SwingFrontend;
-		if (importExportAvailable) {
+		boolean importExportRole = Subject.hasRole(OpenEchRoles.importExport);
+		if (importExportAvailable && importExportRole) {
 			ActionGroup actionGroupImport = new ActionGroup("Import");
 			if (ewkSchema != null) {
 				actionGroupImport.add(new ImportAllPersonAction());
@@ -137,8 +116,6 @@ public class OpenEchApplication extends Application {
 			if (orgSchema != null) {
 				actionGroupImport.add(new ImportAllOrganisationAction());
 			}
-			actionGroupImport.add(new ImportSwissDataAction());
-			
 			actions.add(actionGroupImport);
 			
 			ActionGroup actionGroupExport = new ActionGroup("Export");
@@ -155,11 +132,14 @@ public class OpenEchApplication extends Application {
 			actions.add(actionGroupExport);
 		}
 
-		boolean isDevMode = DevMode.isActive();
-		if (isDevMode && (ewkSchema != null || orgSchema != null)) {
-			ActionGroup actionGroupDev = new ActionGroup("Development");
-			actionGroupDev.add(new GeneratePersonEditor(ewkSchema, orgSchema));
-			actions.add(actionGroupDev);
+		boolean administrateRole = Subject.hasRole(OpenEchRoles.administrate);
+		if (administrateRole) {
+			ActionGroup actionGroup = new ActionGroup("Database Setup");
+			actionGroup.add(new ImportSwissDataAction());
+			if (ewkSchema != null || orgSchema != null) {
+				actionGroup.add(new GeneratePersonEditor(ewkSchema, orgSchema));
+			}
+			actions.add(actionGroup);
 		}
 		
 		ActionGroup actionGroupSettings = new ActionGroup("Einstellungen");
@@ -172,12 +152,6 @@ public class OpenEchApplication extends Application {
 	@Override
 	public Page createDefaultPage() {
 		return new EmptyPage();
-//		List<PersonSearch> persons = Backend.read(PersonSearch.class, Criteria.search("Müller"), 1);
-//		return new PersonPage(EchSchema.getNamespaceContext(20, "2.2"), persons.get(0).id);
-
-//		PersonSearchPage searchPage = new PersonSearchPage();
-//		searchPage.setQuery("Müller");
-//		return searchPage;
 	}
 
 	private void updateEwkNamespaceContext() {

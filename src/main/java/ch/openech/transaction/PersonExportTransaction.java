@@ -9,12 +9,13 @@ import org.minimalj.transaction.OutputStreamTransaction;
 import org.minimalj.transaction.PersistenceTransaction;
 import org.minimalj.transaction.Role;
 
+import ch.openech.OpenEchRoles;
 import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
 
-@Role("Superuser")
+@Role(OpenEchRoles.importExport)
 public class PersonExportTransaction extends OutputStreamTransaction<Integer> implements PersistenceTransaction<Integer> {
 	private static final long serialVersionUID = 1L;
 

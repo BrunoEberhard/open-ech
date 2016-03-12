@@ -7,12 +7,13 @@ import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.PersistenceTransaction;
 import org.minimalj.transaction.Role;
 
+import ch.openech.OpenEchRoles;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0148;
 
-@Role("su")
+@Role(OpenEchRoles.importExport)
 public class GenerateDemoDataTransaction implements PersistenceTransaction<Serializable> {
 	private static final long serialVersionUID = 1L;
 	

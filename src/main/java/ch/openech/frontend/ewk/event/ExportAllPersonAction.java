@@ -10,9 +10,10 @@ import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
 import org.minimalj.transaction.Role;
 
+import ch.openech.OpenEchRoles;
 import ch.openech.transaction.PersonExportTransaction;
 
-@Role("su")
+@Role(OpenEchRoles.importExport)
 public class ExportAllPersonAction extends Action {
 	protected final String ewkVersion;
 	
