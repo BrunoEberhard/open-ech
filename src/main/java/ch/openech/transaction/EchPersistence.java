@@ -84,22 +84,25 @@ public class EchPersistence {
 	}
 	
 	public static OpenEchPreferences getPreferences() {
-		List<OpenEchPreferences> preferences = Backend.read(OpenEchPreferences.class, By.field(OpenEchPreferences.$.user, Subject.getSubject().getName()), 2);
-		if (preferences.size() > 1) {
-			throw new IllegalStateException("Too many preference rows for " + Subject.getSubject().getName());
-		} else if (preferences.size() == 1) {
-			return preferences.get(0);
-		} else {
-			return CloneHelper.newInstance(OpenEchPreferences.class);
+		if (Subject.getSubject() != null) {
+			List<OpenEchPreferences> preferences = Backend.read(OpenEchPreferences.class, By.field(OpenEchPreferences.$.user, Subject.getSubject().getName()), 2);
+			if (preferences.size() > 1) {
+				throw new IllegalStateException("Too many preference rows for " + Subject.getSubject().getName());
+			} else if (preferences.size() == 1) {
+				return preferences.get(0);
+			}
 		}
+		return CloneHelper.newInstance(OpenEchPreferences.class);
 	}
 	
 	public static void savePreferences(OpenEchPreferences preferences) {
-		preferences.user = Subject.getSubject().getName();
-		if (preferences.id != null) {
-			Backend.update(preferences);
-		} else {
-			Backend.insert(preferences);
+		if (Subject.getSubject() != null) {
+			preferences.user = Subject.getSubject().getName();
+			if (preferences.id != null) {
+				Backend.update(preferences);
+			} else {
+				Backend.insert(preferences);
+			}
 		}
 	}
 		
