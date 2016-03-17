@@ -55,4 +55,27 @@ public class DatePartiallyKnown implements Validatable, Comparable<DatePartially
 			return value.compareTo(o.value);
 		}
 	}
+	
+	public void mock() {
+		int year = (int) (Math.random() * 80) + 1930;
+		if (Math.random() > 0.98) {
+			value = "" + year;
+			return;
+		}
+		int month = (int) (Math.random() * 12) + 1;
+		if (Math.random() > 0.98) {
+			value = year + "-" + month;
+			return;
+		}
+		int day;
+		if (month == 4 || month == 6 || month == 9 || month == 11) {
+			day = (int) (Math.random() * 30) + 1;
+		} else if (month == 2) {
+			day = (int) (Math.random() * 28) + 1;
+		} else {
+			day = (int) (Math.random() * 31) + 1;
+		}
+		value = year + "-" + month + "-" + day;
+	}
+
 }

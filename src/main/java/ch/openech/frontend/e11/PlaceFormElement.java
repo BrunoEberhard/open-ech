@@ -15,9 +15,9 @@ import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
-import org.minimalj.util.mock.MockName;
 import org.minimalj.util.mock.Mocking;
 
+import ch.openech.datagenerator.MockName;
 import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.Place;

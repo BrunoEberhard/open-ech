@@ -8,9 +8,6 @@ import org.minimalj.model.EnumUtils;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.MockDate;
-import org.minimalj.util.mock.MockName;
-import org.minimalj.util.mock.MockOrganisation;
-import org.minimalj.util.mock.MockPrename;
 
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Address;
@@ -45,7 +42,7 @@ public class DataGenerator {
 		boolean male = Math.random() > .5;
 		person.firstName = MockPrename.getFirstName(male);
 		person.sex = male ? Sex.maennlich : Sex.weiblich;
-		person.dateOfBirth.value = MockDate.generateRandomDatePartiallyKnown();
+		person.dateOfBirth.mock();
 		if (Math.random() > .9) {
 			person.dateOfDeath = MockDate.generateRandomDate();
 		}
@@ -215,7 +212,7 @@ public class DataGenerator {
 			organisation.organisationName = organisation.organisationName.substring(0, 60);
 		}
 		organisation.uid.value = "ADM323423421";
-		organisation.foundationDate.value = MockDate.generateRandomDatePartiallyKnown();
+		organisation.foundationDate.mock();
 		organisation.arrivalDate = MockDate.generateRandomDate();
 		organisation.reportingMunicipality = createJona();
 		organisation.businessAddress = dwellingAddress();

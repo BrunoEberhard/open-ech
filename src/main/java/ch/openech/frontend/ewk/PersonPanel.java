@@ -5,10 +5,10 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.util.StringUtils;
-import org.minimalj.util.mock.MockName;
-import org.minimalj.util.mock.MockPrename;
-import org.minimalj.util.mock.MockPrename.NameWithFrequency;
 
+import ch.openech.datagenerator.MockName;
+import ch.openech.datagenerator.MockPrename;
+import ch.openech.datagenerator.MockPrename.NameWithFrequency;
 import ch.openech.frontend.e10.AddressFormElement;
 import ch.openech.frontend.e11.PlaceOfOriginFormElement;
 import ch.openech.frontend.e11.ResidenceFormElement;

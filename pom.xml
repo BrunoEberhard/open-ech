@@ -18,6 +18,12 @@
 					<include>**</include>
 				</includes>
 			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -87,7 +93,7 @@
 		<dependency>
 			<groupId>org.minimalj</groupId>
 			<artifactId>minimalj</artifactId>
-			<version>0.10.2.0</version>
+			<version>0.10.2.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
