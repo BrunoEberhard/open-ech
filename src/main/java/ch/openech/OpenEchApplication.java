@@ -81,6 +81,10 @@ public class OpenEchApplication extends Application {
 
 	@Override
 	public List<Action> getNavigation() {
+		boolean administrateRole = Subject.hasRole(OpenEchRoles.administrate);
+		boolean importExportAvailable = Frontend.getInstance() instanceof SwingFrontend;
+		boolean importExportRole = Subject.hasRole(OpenEchRoles.importExport);
+
 		List<Action> actions = new ArrayList<>();
 
 		Subject subject = Subject.getSubject();
@@ -94,19 +98,21 @@ public class OpenEchApplication extends Application {
 			ActionGroup actionGroupPerson = new ActionGroup("Person");
 			actionGroupPerson.add(new MoveInWizard(ewkSchema));
 			actionGroupPerson.add(new BirthEvent(ewkSchema));
-			actionGroupPerson.add(new BaseDeliveryEditor(ewkSchema));
+			if (importExportRole) {
+				actionGroupPerson.add(new BaseDeliveryEditor(ewkSchema));
+			}
 			actions.add(actionGroupPerson);
 		}
 		if (orgSchema != null) {
 			ActionGroup actionGroupOrganisation = new ActionGroup("Firma");
 			actionGroupOrganisation.add(new FoundationEditor(orgSchema));
 			actionGroupOrganisation.add(new MoveInEditor(orgSchema));
-			actionGroupOrganisation.add(new BaseDeliveryOrganisationEditor(orgSchema));
+			if (importExportRole) {
+				actionGroupOrganisation.add(new BaseDeliveryOrganisationEditor(orgSchema));
+			}
 			actions.add(actionGroupOrganisation);
 		}
 		
-		boolean importExportAvailable = Frontend.getInstance() instanceof SwingFrontend;
-		boolean importExportRole = Subject.hasRole(OpenEchRoles.importExport);
 		if (importExportAvailable && importExportRole) {
 			ActionGroup actionGroupImport = new ActionGroup("Import");
 			if (ewkSchema != null) {
@@ -131,7 +137,6 @@ public class OpenEchApplication extends Application {
 			actions.add(actionGroupExport);
 		}
 
-		boolean administrateRole = Subject.hasRole(OpenEchRoles.administrate);
 		if (administrateRole) {
 			ActionGroup actionGroup = new ActionGroup("Database Setup");
 			actionGroup.add(new ImportSwissDataAction());
