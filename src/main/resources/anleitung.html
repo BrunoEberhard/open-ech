@@ -1,0 +1,125 @@
+<!DOCTYPE HTML SYSTEM>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Open eCH - Register</title>
+</head>
+<body>
+
+<h1>Open eCH - Register</h1>
+<p>Mit dieser Applikation können Personen und Firmen erfasst und bearbeitet werden. Es werden dabei
+die Meldegründe der eCH Standards 21 und 148 berücksichtigt.</p>
+
+<h2>Navigation</h2>
+<p>In der linken Seite des Browser befindet sich das Navigationsmenu. Es kann über das Kreuz in ihrer Titelleiste geschlossen werden. Über das Symbol der drei Linien oben links
+kann es bei Bedarf wieder angezeigt werden. Dieses Menu stellt den Einstiegspunkt für eine neue Bearbeitung dar. Die aktuelle Anzeige eines Steuerauszugs wird dabei
+komplett ausgetauscht. Das Menu kann jederzeit benutzt werden ausser es ist gerade ein Dialog geöffnet.<p>
+
+<p>Wie gewohnt kann zudem mit den Vor- und Zurück Knöpfen des Browser im Verlauf geblättert werden.<p>
+
+<h2>Anwendungsfälle</h2>
+
+<p>Die Applikation beschäftigt sich mit der Erfassung und Mutation von Personendaten. Personen können
+auf drei Arten erfasst werden:</p>
+<ul>
+<li>Eine Person kann als Zuzug erfasst werden</li>
+<li>Eine Geburt kann erfasst werden</li>
+<li>Die Daten können von einer bestehenden Applikation übernommen werden (Basislieferung, nur möglich mit entsprechender Berechtigung)</li>
+</ul>
+
+<p>Umgekehrt kann eine Person die Verwaltung auf folgende Art verlassen:</p>
+<ul>
+<li>Der Wegzug der Person kann erfasst werden</li>
+<li>Die Person kann gestorben sein</li>
+<li>Die Person kann als verschollen gemeldet werden (das kann als einziges rückgängig gemacht werden)</li>
+</ul>
+<p>Alle anderen fachlichen Anwendungsfälle beziehen sich auf einen Meldegrund. Anwendungsfälle ohne Meldegründe sind 
+Korrekturen (also Behebungen von Fehlern).</p>
+
+<h3>Zuzug</h3>
+
+<p>Ein Zuzug kann mehrere Personen auf einmal betreffen. Wenn ein Ehepaar mit Kindern zuzieht, <i>so
+sollten zuerst die Eltern und danach die Kinder erfasst werden</i>. Damit werden die Beziehungsdaten
+automatisch richtig erstellt.</p>
+
+<p>Bei einer Beziehung zwischen Kind/Eltern wird jeweils nur die Eltern - Beziehung erfasst. Das heisst,
+es exisitieren keine Eintragungen bei den Eltern.</p>
+
+<p>Nach Abschluss der Eingabe der ersten Person des Zuzugs wird nachgefragt, ob eine weitere Person
+erfasst werden soll. Dabei muss unterschieden werden zwischen (Ehe-)Partner und Kindern:</p>
+<ul>
+<li>Ein (Ehe-)Partner kann nur erfasst werden, wenn der Zivilstand der bereits erfassten Person
+den nötigen Eintrag hat. Da bei einem (Ehe-)Partner die Beziehungsdaten gegenseitig eingetragen
+werden, wird (im Hintergrund) mit der definitven Speichern der 1. Person zugewartet, bis auch
+die 2. Person abgeschlossen wird. Dieser Vorgang ist in der Regel für den Benutzer transparent,
+nur im Fehlerfall kann es sein, dass sich ein Fehler auf die scheinbar schon gespeicherte 1. Person
+bezieht. Ausserdem ist die 1. Person erst suchbar, wenn sie zusammen mit der 2. gespeichert wurde.</li>
+<li>Bei Kindern wird eine Mutter- und eine Vaterbeziehung vorgeschlagen. Die Werte werden dabei von
+der ersten Person (links im Dialog) übernommen. Daher kann es sinnvoll sein, Mutter und Vater zu tauschen,
+vorgeschlagen wird aber die Mutter als Vorlage.</li>
+</ul>
+
+<h3>Geburt</h3>
+
+<p>Am einfachsten kann eine Geburt erfasst werden, wenn gerade ein Elternteil des Kindes angezeigt
+wird. In diesem Fall werden einige Angaben (z.B. Familiennamen etc.) auf die Eingabemaske übernommen.
+Ist eine Beziehung zu einem Ehepartner / einer Ehepartnerin vorhanden so werden auch diese Angaben
+übernommen.<p>
+
+<h2>Weitere Funktionen</h2>
+
+<h3>Suchen</h3>
+
+<p>Die Suche wird jeweils als Einstieg bei jedem neuen Tab angeboten. Das Resultat der Suche wird
+tabellarisch angezeigt.</p>
+
+<h3>Versionen einer Person</h3>
+
+<p>Es können die verschiedenen Versionen einer Person angezeigt werden. Dies bei der Anzeige einer
+Person über den Menupunkt "Verlauf anzeigen". Durch Anwählen eines Eintrages in der
+Tabelle kann der jeweilige Stand der Daten bis und <i>mit</i> dem gewählten Eintrag angezeigt werden.</p>
+
+<p>Hinweis: Verändert werden kann nur die aktuellste Version der Person, daher sind die Änderungsmenus
+im Fall von älteren Versionen deaktiviert.</p>
+
+<h3>Links bei Beziehungen</h3>
+
+<p>Wird bei einer angezeigten Person eine Beziehung angezeigt oder ein Kontakt zu einer anderen
+Person so kann durch ein Mausklick auf die Beziehung oder den Kontakt zur betreffenden Person
+navigiert werden.</p>
+
+<h3>Datumsfelder</h3>
+
+<p>Ein Datumsfeld enthält die Angaben zu Tag, Monat und Jahr. Bei Geburtstagen kann der Monat und der Tag weggelassen werden,
+falls diese Angaben nicht bekannt sind. Die Eingabe wird
+so gut wie möglich ergänzt. Die Übersetzung geschieht wie folgt:</p>
+<ul>
+<li>030607 wird zu 03.06.2007 also dem 3. Juni im Jahr 2010</li>
+<li>2.2.02 wird zu 02.02.2002 also dem 2. Februar 2002</li>
+<li>1.1.99 wird zu 01.01.1999 Zweistellige Jahreszahlen werden bis 20 als 20xx, ab 21 als 19xx interpretiert</li>
+</ul>
+<p>Zusätzlich kann mit den Cursor/Pfeil - Tasten das Datum geändert werden. Mit Pfeil runter wird der folgende Tag gewählt,
+mit Pfeil rauf der vorhergehende. Mit der Umschalttaste wird das Jahr gewechselt, mit der Alt-Taste der Monat.</p>
+
+<h3>Login / Authorization</h3>
+<p>Mit dem Pfeil Symbol oben links kann man sich als neuen Benutzer anmelden. In der öffentlichen
+Installation wird auch dem anonymen Benutzer alle Möglichkeiten zur Erfassung und Bearbeitung von Personen
+gewährt, damit zu Beginn kein Login notwendig ist.
+Geschützt sind nur die administrativen Funktionen wie Import-/Export und Systemkonfiguration.</p>
+
+<h3>Schemaversionen</h3>
+
+<p>Bei der Einwohnerkontrolle (EWK) werden verschiedene Versionen der Spezifikation von Ech
+unterstützt. Die technische Spezifikation besteht dabei aus einem sogenannten XML - Schema. Die
+Version des Schema wird dabei bei jeder Anpassung von Ech hochgezählt.</p>
+
+<p>Jede neue Version bietet neue Möglichkeiten. Das bedeutet meistens mehr Felder auf einer
+Eingabemaske. Im Normalfall kann mit dem neusten Schema gearbeitet werden. Ältere Schemas
+sind nur für technisch Interessierte gedacht, die damit z.B. die Kompatibilität zu früherer
+Software überprüfen möchten.</p>
+
+<p>Jedes Fenster verwendet genau eine Schemaversion. Um ein Fenster zu öffen, das mit einer anderen
+Version arbeitet wählen Sie den Menupunkt "Datei/Neues Fenster mit..".</p>
+
+</body>
+</html>

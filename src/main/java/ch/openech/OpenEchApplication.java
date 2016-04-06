@@ -28,7 +28,7 @@ import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
-import org.minimalj.frontend.page.EmptyPage;
+import org.minimalj.frontend.page.HtmlPage;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.SearchPage;
 import org.minimalj.security.Subject;
@@ -66,12 +66,17 @@ public class OpenEchApplication extends Application {
 	public OpenEchApplication() {
 		// empty
 	}
-
+	
 	@Override
 	protected Set<String> getResourceBundleNames() {
 		return Collections.singleton("ch.openech.resources.OpenEch");
 	}
 
+	@Override
+	public Page createDefaultPage() {
+		return new HtmlPage("anleitung.html", "Open eCH - Register");
+	}
+	
 	@Override
 	public Page createSearchPage(String query) {
 		PersonSearchPage personSearchPage = new PersonSearchPage(query);
@@ -81,17 +86,16 @@ public class OpenEchApplication extends Application {
 
 	@Override
 	public List<Action> getNavigation() {
+		List<Action> actions = new ArrayList<>();
+		boolean modifyRole = Subject.hasRole(OpenEchRoles.modify);
 		boolean administrateRole = Subject.hasRole(OpenEchRoles.administrate);
 		boolean importExportAvailable = Frontend.getInstance() instanceof SwingFrontend;
 		boolean importExportRole = Subject.hasRole(OpenEchRoles.importExport);
-
-		List<Action> actions = new ArrayList<>();
-
-		Subject subject = Subject.getSubject();
-		if (subject == null || !subject.isValid()) {
+		
+		if (!modifyRole) {
 			return actions;
 		}
-		
+
 		updateEwkNamespaceContext();
 		
 		if (ewkSchema != null) {
@@ -151,11 +155,6 @@ public class OpenEchApplication extends Application {
 		actions.add(actionGroupSettings);
 		
 		return actions;
-	}
-
-	@Override
-	public Page createDefaultPage() {
-		return new EmptyPage();
 	}
 
 	private void updateEwkNamespaceContext() {
