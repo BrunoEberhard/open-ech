@@ -63,7 +63,8 @@
 	    <repository>
 	        <id>oss-sonatype</id>
 	        <name>oss-sonatype</name>
-	        <url>https://oss.sonatype.org/</url>
+	        <url>https://oss.sonatype.org/content/repositories/releases/</url>
+	        <releases>true</releases>
 	    </repository>
 	</repositories>
 	<dependencies>
