@@ -3,10 +3,10 @@ package ch.openech.transaction;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import org.minimalj.backend.Backend;
 import org.minimalj.backend.Persistence;
 import org.minimalj.backend.sql.SqlPersistence;
 import org.minimalj.transaction.OutputStreamTransaction;
-import org.minimalj.transaction.PersistenceTransaction;
 import org.minimalj.transaction.Role;
 
 import ch.openech.OpenEchRoles;
@@ -16,7 +16,7 @@ import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterElement;
 
 @Role(OpenEchRoles.importExport)
-public class PersonExportTransaction extends OutputStreamTransaction<Integer> implements PersistenceTransaction<Integer> {
+public class PersonExportTransaction extends OutputStreamTransaction<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	private final String ewkVersion;
@@ -29,10 +29,10 @@ public class PersonExportTransaction extends OutputStreamTransaction<Integer> im
 	}
 	
 	@Override
-	public Integer execute(Persistence persistence) {
+	public Integer execute() {
 		int count = 0;
 		try {
-			SqlPersistence db = (SqlPersistence) persistence;
+			SqlPersistence db = (SqlPersistence) Persistence.getInstance();
 			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Person.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
@@ -43,7 +43,7 @@ public class PersonExportTransaction extends OutputStreamTransaction<Integer> im
 			WriterElement baseDelivery = complete ? writer.baseDelivery(delivery, maxId) : writer.keyDelivery(delivery, maxId);
 
 			for (long id = 1; id<=maxId; id++) {
-				Person person = persistence.read(Person.class, id);
+				Person person = Backend.read(Person.class, id);
 
 				if (person != null) {
 					if (complete) {

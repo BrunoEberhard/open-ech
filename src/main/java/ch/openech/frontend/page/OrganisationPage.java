@@ -9,7 +9,7 @@ import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.ObjectPage;
 import org.minimalj.security.Subject;
-import org.minimalj.transaction.persistence.ReadTransaction;
+import org.minimalj.transaction.persistence.ReadEntityTransaction;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.OpenEchRoles;
@@ -75,7 +75,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 		if (version == 0) {
 			organisation = Backend.read(Organisation.class, getObjectId());
 		} else {
-			organisation = Backend.getInstance().execute(new ReadTransaction<Organisation>(Organisation.class, getObjectId(), version));
+			organisation = Backend.getInstance().execute(new ReadEntityTransaction<Organisation>(Organisation.class, getObjectId(), version));
 		}
 		return organisation;
 	}

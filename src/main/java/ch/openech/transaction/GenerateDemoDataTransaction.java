@@ -3,9 +3,8 @@ package ch.openech.transaction;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.minimalj.backend.Persistence;
-import org.minimalj.transaction.PersistenceTransaction;
 import org.minimalj.transaction.Role;
+import org.minimalj.transaction.Transaction;
 
 import ch.openech.OpenEchRoles;
 import ch.openech.datagenerator.DataGenerator;
@@ -14,7 +13,7 @@ import ch.openech.xml.write.WriterEch0020;
 import ch.openech.xml.write.WriterEch0148;
 
 @Role(OpenEchRoles.importExport)
-public class GenerateDemoDataTransaction implements PersistenceTransaction<Serializable> {
+public class GenerateDemoDataTransaction implements Transaction<Serializable> {
 	private static final long serialVersionUID = 1L;
 	
 	private final int personCount;
@@ -26,13 +25,13 @@ public class GenerateDemoDataTransaction implements PersistenceTransaction<Seria
 	}
 
 	@Override
-	public Serializable execute(Persistence persistence) {
-		generateDemoPersons(persistence, personCount);
-		generateDemoOrganisations(persistence, organisationCount);
+	public Serializable execute() {
+		generateDemoPersons(personCount);
+		generateDemoOrganisations(organisationCount);
 		return null;
 	}
 
-	private void generateDemoPersons(final Persistence persistence, final int number) {
+	private void generateDemoPersons(final int number) {
 		final EchSchema ewkNamespaceContext = EchSchema.getNamespaceContext(20, "2.2");
 		
 		final int parallel = 10;
@@ -45,7 +44,7 @@ public class GenerateDemoDataTransaction implements PersistenceTransaction<Seria
 					for (int saveProgress = 0; saveProgress<number / parallel; saveProgress++) {
 						try {
 							String xml = writerEch0020.moveIn(DataGenerator.person());
-							new PersonTransaction(xml).execute(persistence);
+							new PersonTransaction(xml).execute();
 							int value = success.addAndGet(1);
 							if (value % 10 == 0) {
 								System.out.println(success);
@@ -61,13 +60,13 @@ public class GenerateDemoDataTransaction implements PersistenceTransaction<Seria
 		}
 	}
 	
-	private void generateDemoOrganisations(final Persistence persistence, int number) {
+	private void generateDemoOrganisations(int number) {
 		final EchSchema echSchema = EchSchema.getNamespaceContext(148, "1.0");
 		final WriterEch0148 writer = new WriterEch0148(echSchema);
 		for (int i = 0; i<number; i++) {
 			try {
 				String xml = writer.moveIn(DataGenerator.organisation());
-				new OrganisationTransaction(xml).execute(persistence);
+				new OrganisationTransaction(xml).execute();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

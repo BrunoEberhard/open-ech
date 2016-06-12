@@ -2,13 +2,11 @@ package ch.openech.transaction;
 
 import java.io.InputStream;
 
-import org.minimalj.backend.Persistence;
 import org.minimalj.transaction.InputStreamTransaction;
-import org.minimalj.transaction.PersistenceTransaction;
 
 import ch.openech.xml.read.StaxEch0020;
 
-public class PersonImportTransaction extends InputStreamTransaction<Integer> implements PersistenceTransaction<Integer> {
+public class PersonImportTransaction extends InputStreamTransaction<Integer> {
 	private static final long serialVersionUID = 1L;
 	
 	public PersonImportTransaction(InputStream inputStream) {
@@ -16,9 +14,9 @@ public class PersonImportTransaction extends InputStreamTransaction<Integer> imp
 	}
 
 	@Override
-	public Integer execute(Persistence persistence) {
+	public Integer execute() {
 		try {
-			StaxEch0020 stax = new StaxEch0020(persistence);
+			StaxEch0020 stax = new StaxEch0020();
 			stax.process(getStream(), null);
 			return 0; // count
 		} catch (Exception x) {

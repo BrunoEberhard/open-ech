@@ -3,13 +3,12 @@ package ch.openech.transaction;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.backend.Persistence;
-import org.minimalj.transaction.PersistenceTransaction;
+import org.minimalj.transaction.Transaction;
 
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.read.StaxEch0148;
 
-public class OrganisationTransaction implements PersistenceTransaction<Organisation> {
+public class OrganisationTransaction implements Transaction<Organisation> {
 	private static final long serialVersionUID = 1L;
 
 	private final List<String> xmls;
@@ -23,9 +22,9 @@ public class OrganisationTransaction implements PersistenceTransaction<Organisat
 	}
 
 	@Override
-	public Organisation execute(Persistence persistence) {
+	public Organisation execute() {
 		Organisation changedOrganisation = null;
-		StaxEch0148 stax = new StaxEch0148(persistence);
+		StaxEch0148 stax = new StaxEch0148();
 		for (String xml : xmls) {
 			try {
 				stax.process(xml);

@@ -3,13 +3,12 @@ package ch.openech.transaction;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.backend.Persistence;
-import org.minimalj.transaction.PersistenceTransaction;
+import org.minimalj.transaction.Transaction;
 
 import ch.openech.model.person.Person;
 import ch.openech.xml.read.StaxEch0020;
 
-public class PersonTransaction implements PersistenceTransaction<Person> {
+public class PersonTransaction implements Transaction<Person> {
 	private static final long serialVersionUID = 1L;
 
 	private final List<String> xmls;
@@ -23,14 +22,9 @@ public class PersonTransaction implements PersistenceTransaction<Person> {
 	}
 	
 	@Override
-	public Class<?> getEntityClazz() {
-		return Person.class;
-	}
-	
-	@Override
-	public Person execute(Persistence persistence) {
+	public Person execute() {
 		Person changedPerson = null;
-		StaxEch0020 stax = new StaxEch0020(persistence);
+		StaxEch0020 stax = new StaxEch0020();
 		for (String xml : xmls) {
 			try {
 				stax.process(xml);

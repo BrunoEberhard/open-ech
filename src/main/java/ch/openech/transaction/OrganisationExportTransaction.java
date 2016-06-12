@@ -5,10 +5,10 @@ import static ch.openech.model.XmlConstants.*;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import org.minimalj.backend.Backend;
 import org.minimalj.backend.Persistence;
 import org.minimalj.backend.sql.SqlPersistence;
 import org.minimalj.transaction.OutputStreamTransaction;
-import org.minimalj.transaction.PersistenceTransaction;
 
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
@@ -17,7 +17,7 @@ import ch.openech.xml.write.WriterEch0098;
 import ch.openech.xml.write.WriterEch0148;
 import ch.openech.xml.write.WriterElement;
 
-public class OrganisationExportTransaction extends OutputStreamTransaction<Integer> implements PersistenceTransaction<Integer> {
+public class OrganisationExportTransaction extends OutputStreamTransaction<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	private final String ewkVersion;
@@ -30,10 +30,10 @@ public class OrganisationExportTransaction extends OutputStreamTransaction<Integ
 	}
 	
 	@Override
-	public Integer execute(Persistence persistence) {
+	public Integer execute() {
 		int numberOfOrganisations = 0;
 		try {
-			SqlPersistence db = (SqlPersistence) persistence;
+			SqlPersistence db = (SqlPersistence) Persistence.getInstance();
 			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Organisation.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
@@ -46,7 +46,7 @@ public class OrganisationExportTransaction extends OutputStreamTransaction<Integ
 			WriterElement baseDelivery = complete ? writer148.organisationBaseDelivery(delivery) : writer148.keyExchange(delivery);
 
 			for (long id = 1; id<=maxId; id++) {
-				Organisation organisation = persistence.read(Organisation.class, id);
+				Organisation organisation = Backend.read(Organisation.class, id);
 
 				if (organisation != null) {
 					if (complete) {
