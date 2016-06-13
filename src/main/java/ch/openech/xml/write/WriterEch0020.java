@@ -167,10 +167,10 @@ public class WriterEch0020 extends DeliveryWriter {
 	private void partner(WriterElement parentElement, Relation relation) throws Exception {
 		if (relation != null) {
 			WriterElement element = parentElement.create(URI, PARTNER);
-			if (relation.partner.person != null) {
-				ech44.personIdentification(element, relation.partner.person.personIdentification());
-			} else if (relation.partner.personIdentification != null) {
-				ech44.personIdentificationPartner(element, relation.partner.personIdentification);
+			if (relation.partner.personIdentification != null) {
+				ech44.personIdentification(element, relation.partner.personIdentification);
+			} else if (relation.partner.personIdentificationLight != null) {
+				ech44.personIdentificationPartner(element, relation.partner.personIdentificationLight);
 			} else if (relation.partner.organisation != null) {
 				ech44.partnerIdOrganisation(element,  relation.partner.organisation);
 			}

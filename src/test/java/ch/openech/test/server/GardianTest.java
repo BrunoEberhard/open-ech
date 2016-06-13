@@ -36,8 +36,8 @@ public class GardianTest extends AbstractServerTest {
 		person = reload(p);
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Vormund);
-		Assert.assertNotNull(gardian.partner.person);
-		Assert.assertTrue(IdUtils.equals(personGardian, gardian.partner.person));
+		Assert.assertNotNull(gardian.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(personGardian, gardian.partner.personIdentification));
 		Assert.assertEquals(BasedOnLaw._368, gardian.basedOnLaw);
 	}
 
@@ -56,8 +56,8 @@ public class GardianTest extends AbstractServerTest {
 		person = reload(p);
 		Assert.assertNotNull(person);
 		Relation gardian = person.getRelation(TypeOfRelationship.Beistand);
-		Assert.assertNotNull(gardian.partner.person);
-		Assert.assertTrue(IdUtils.equals(reload(gardianP), gardian.partner.person));
+		Assert.assertNotNull(gardian.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(reload(gardianP), gardian.partner.personIdentification));
 		Assert.assertEquals(BasedOnLaw._369, gardian.basedOnLaw);
 
 		Assert.assertNull(person.getRelation(TypeOfRelationship.Vormund));

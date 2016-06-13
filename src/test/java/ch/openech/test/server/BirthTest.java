@@ -45,11 +45,11 @@ public class BirthTest extends AbstractServerTest {
 		Assert.assertTrue(child.nationality.isSwiss());
 
 		Relation motherRelation = child.getMother();
-		Assert.assertNotNull(motherRelation.partner.person);
-		Assert.assertTrue(IdUtils.equals(mother, motherRelation.partner.person));
+		Assert.assertNotNull(motherRelation.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(mother, motherRelation.partner.personIdentification));
 		Relation fatherRelation = child.getFather();
-		Assert.assertNotNull(fatherRelation.partner.person);
-		Assert.assertTrue(IdUtils.equals(father, fatherRelation.partner.person));
+		Assert.assertNotNull(fatherRelation.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(father, fatherRelation.partner.personIdentification));
 	}
 	
 	

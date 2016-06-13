@@ -52,10 +52,10 @@ public class WriterEch0021 {
 
 			WriterElement partnerElement = relationElement.create(URI, PARTNER);
 
-			if (relation.partner.person != null) {
-				ech44.personIdentification(partnerElement, relation.partner.person.personIdentification());
-			} else if (relation.partner.personIdentification != null) {
-				ech44.personIdentificationPartner(partnerElement, relation.partner.personIdentification);
+			if (relation.partner.personIdentification != null) {
+				ech44.personIdentification(partnerElement, relation.partner.personIdentification);
+			} else if (relation.partner.personIdentificationLight != null) {
+				ech44.personIdentificationPartner(partnerElement, relation.partner.personIdentificationLight);
 			} else if (relation.partner.organisation != null) {
 				throw new RuntimeException("TODO");
 			}

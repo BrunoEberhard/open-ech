@@ -43,12 +43,12 @@ public class AdoptionTest extends AbstractServerTest {
 		Assert.assertEquals(Codes.findCode(Canton.class, "FR"), child.placeOfBirth.municipalityIdentification.canton);
 		
 		Relation motherRelation = child.getMother();
-		Assert.assertNotNull(motherRelation.partner.person);
-		Assert.assertTrue(IdUtils.equals(mother, motherRelation.partner.person));
+		Assert.assertNotNull(motherRelation.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(mother, motherRelation.partner.personIdentification));
 		
 		Relation fatherRelation = child.getFather();
-		Assert.assertNotNull(fatherRelation.partner.person);
-		Assert.assertTrue(IdUtils.equals(father, fatherRelation.partner.person));
+		Assert.assertNotNull(fatherRelation.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(father, fatherRelation.partner.personIdentification));
 	}
 	
 }

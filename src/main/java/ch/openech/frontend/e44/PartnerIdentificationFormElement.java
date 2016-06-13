@@ -43,8 +43,8 @@ public class PartnerIdentificationFormElement extends ObjectFormElement<PartnerI
 
 		@Override
 		public PersonIdentificationLight createObject() {
-			if (getValue().personIdentification != null) {
-				return getValue().personIdentification;
+			if (getValue().personIdentificationLight != null) {
+				return getValue().personIdentificationLight;
 			} else {
 				return new PersonIdentificationLight();
 			}
@@ -52,7 +52,7 @@ public class PartnerIdentificationFormElement extends ObjectFormElement<PartnerI
 
 		@Override
 		public Void save(PersonIdentificationLight edited) {
-			getValue().personIdentification = edited;
+			getValue().personIdentificationLight = edited;
 			return null;
 		}
 		
@@ -71,7 +71,7 @@ public class PartnerIdentificationFormElement extends ObjectFormElement<PartnerI
 		@Override
 		protected void save(PersonSearch object) {
 			Person person = Backend.read(Person.class, object.id);
-			PartnerIdentificationFormElement.this.getValue().person = person;
+			PartnerIdentificationFormElement.this.getValue().personIdentification = person.personIdentification();
 			handleChange();
 		}
 

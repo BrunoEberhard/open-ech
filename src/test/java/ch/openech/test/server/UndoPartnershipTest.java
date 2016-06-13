@@ -34,15 +34,15 @@ public class UndoPartnershipTest extends AbstractServerTest {
 		Assert.assertEquals(MaritalStatus.partnerschaft, person1.maritalStatus.maritalStatus);
 		Relation relation1 = person1.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Partner, relation1.typeOfRelationship);
-		Assert.assertNotNull(relation1.partner.person);
-		Assert.assertTrue(IdUtils.equals(person2, relation1.partner.person));
+		Assert.assertNotNull(relation1.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(person2, relation1.partner.personIdentification));
 		
 		Assert.assertNotNull(person2);
 		Assert.assertEquals(MaritalStatus.partnerschaft, person2.maritalStatus.maritalStatus);
 		Relation relation2 = person2.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Partner, relation2.typeOfRelationship);
-		Assert.assertNotNull(relation2.partner.person);
-		Assert.assertTrue(IdUtils.equals(person1, relation2.partner.person));
+		Assert.assertNotNull(relation2.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(person1, relation2.partner.personIdentification));
 	}
 	
 	@Test

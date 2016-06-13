@@ -42,16 +42,16 @@ public class MarriageTest extends AbstractServerTest {
 		Assert.assertTrue(person1.maritalStatus.isVerheiratet());
 		Relation relation1 = person1.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation1.typeOfRelationship);
-		Assert.assertNotNull(relation1.partner.person);
-		Assert.assertTrue(IdUtils.equals(person2, relation1.partner.person));
+		Assert.assertNotNull(relation1.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(person2, relation1.partner.personIdentification));
 		
 		Assert.assertNotNull(person2);
 		Assert.assertTrue(person2.maritalStatus.isVerheiratet());
 		Assert.assertEquals("Ogi Villiger", person2.officialName);
 		Relation relation2 = person2.getPartner();
 		Assert.assertEquals(TypeOfRelationship.Ehepartner, relation2.typeOfRelationship);
-		Assert.assertNotNull(relation2.partner.person);
-		Assert.assertTrue(IdUtils.equals(person1, relation2.partner.person));
+		Assert.assertNotNull(relation2.partner.personIdentification);
+		Assert.assertTrue(IdUtils.equals(person1, relation2.partner.personIdentification));
 	}
 	
 	@Test

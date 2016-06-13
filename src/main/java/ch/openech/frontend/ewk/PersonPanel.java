@@ -164,8 +164,8 @@ public class PersonPanel extends EchForm<Person>  {
 		public String update(Relation input, Person person) {
 			String actualValue = person.officialName;
 			if (input != null && StringUtils.isEmpty(actualValue)) {
-				if (input.partner.person != null) {
-					return input.partner.person.officialName;
+				if (input.partner.personIdentification != null) {
+					return input.partner.personIdentification.officialName;
 				} else if (input.address != null) {
 					return input.address.lastName;
 				}

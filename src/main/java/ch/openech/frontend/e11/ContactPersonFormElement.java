@@ -42,19 +42,19 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 	
 	@Override
 	protected void show(ContactPerson contactPerson) {
-		if (contactPerson.partner.person != null) {
+		if (contactPerson.partner.personIdentification != null) {
 			add("Kontaktperson");
-			if (isEditable()) {
-				add(contactPerson.partner.person, new RemovePersonContactAction());
-			} else {
-				add(contactPerson.partner.person, new PageAction(new PersonPage(echSchema, contactPerson.partner.person.id), "Person anzeigen"));
-				add("Person anzeigen", new PersonPage(echSchema, contactPerson.partner.person.id));
-			}
-		} else if (contactPerson.partner.personIdentification != null) {
 			if (isEditable()) {
 				add(contactPerson.partner.personIdentification, new RemovePersonContactAction());
 			} else {
-				add(contactPerson.partner.personIdentification);
+				add(contactPerson.partner.personIdentification, new PageAction(new PersonPage(echSchema, contactPerson.partner.personIdentification.id), "Person anzeigen"));
+				add("Person anzeigen", new PersonPage(echSchema, contactPerson.partner.personIdentification.id));
+			}
+		} else if (contactPerson.partner.personIdentificationLight != null) {
+			if (isEditable()) {
+				add(contactPerson.partner.personIdentificationLight, new RemovePersonContactAction());
+			} else {
+				add(contactPerson.partner.personIdentificationLight);
 			}
 		} else if (contactPerson.partner.organisation != null) {
 			if (isEditable()) {
@@ -102,9 +102,9 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 				ContactPerson contactPerson = ContactPersonFormElement.this.getValue();
 
 				Person person = Backend.read(Person.class, personSearch.id);
-				ContactPersonFormElement.this.getValue().partner.person = person;
+				ContactPersonFormElement.this.getValue().partner.personIdentification = person.personIdentification();
 				
-				contactPerson.partner.person = person;
+				contactPerson.partner.personIdentification = person.personIdentification();
 				
 				if (person.dwellingAddress != null) {
 					contactPerson.address = person.dwellingAddress.mailAddress;
@@ -135,8 +135,8 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 
 		@Override
 		public PersonIdentificationLight createObject() {
-			if (getValue().partner.personIdentification != null) {
-				return getValue().partner.personIdentification;
+			if (getValue().partner.personIdentificationLight != null) {
+				return getValue().partner.personIdentificationLight;
 			} else {
 				return new PersonIdentificationLight();
 			}
@@ -144,7 +144,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 
 		@Override
 		public Void save(PersonIdentificationLight edited) {
-			getValue().partner.personIdentification = edited;
+			getValue().partner.personIdentificationLight = edited;
 			return null;
 		}
 		

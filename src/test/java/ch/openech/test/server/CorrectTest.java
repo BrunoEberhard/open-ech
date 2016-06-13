@@ -128,7 +128,7 @@ public class CorrectTest extends AbstractServerTest {
 		
 		person = reload(p);
 		Assert.assertNotNull(person.contactPerson);
-		Assert.assertTrue(IdUtils.equals(person2, person.contactPerson.partner.person));
+		Assert.assertTrue(IdUtils.equals(person2, person.contactPerson.partner.personIdentification));
 	}
 
 	

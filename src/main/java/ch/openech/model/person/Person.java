@@ -376,7 +376,7 @@ public class Person implements Validation {
 	
 	public PartnerIdentification partnerIdentification() {
 		PartnerIdentification partnerIdentification = new PartnerIdentification();
-		partnerIdentification.person = this;
+		partnerIdentification.personIdentification = personIdentification();
 		return partnerIdentification;
 	}
 

@@ -22,17 +22,17 @@ import ch.openech.model.types.Sex;
 public class PartnerIdentification implements Rendering {
 
 	// only one is set
-	public Person person;
-	public PersonIdentificationLight personIdentification;
+	public PersonIdentification personIdentification;
+	public PersonIdentificationLight personIdentificationLight;
 	public Organisation organisation;
 
 	public boolean isEmpty() {
-		return person == null && personIdentification == null && organisation == null;
+		return personIdentification == null && personIdentificationLight == null && organisation == null;
 	}
 	
 	public void clear() {
-		person = null;
 		personIdentification = null;
+		personIdentificationLight = null;
 		organisation = null;
 	}
 	
@@ -54,10 +54,10 @@ public class PartnerIdentification implements Rendering {
 	}
 	
 	public void toHtml(StringBuilder s) {
-		if (person != null) {
-			person.toHtml(s);
-		} else if (personIdentification != null) {
-			s.append(personIdentification.render(RenderType.HMTL));
+		if (personIdentification != null) {
+			personIdentification.toHtml(s);
+		} else if (personIdentificationLight != null) {
+			s.append(personIdentificationLight.render(RenderType.HMTL));
 		} else if (organisation != null) {
 			// TODO organisation.toString();
 		}
@@ -65,45 +65,34 @@ public class PartnerIdentification implements Rendering {
 
 	public void setValue(Person person) {
 		clear();
-		this.person = person;
-	}
-	
-	public void setValue(PersonIdentification personIdentification) {
-		clear();
-		this.personIdentification = new PersonIdentificationLight();
-		this.personIdentification.otherId.addAll(personIdentification.technicalIds.otherId);
-		this.personIdentification.vn.value = personIdentification.vn.value;
-		this.personIdentification.firstName = personIdentification.firstName;
-		this.personIdentification.officialName = personIdentification.officialName;
-		this.personIdentification.sex = personIdentification.sex;
-		this.personIdentification.dateOfBirth.value = personIdentification.dateOfBirth.value;
+		this.personIdentification = person.personIdentification();
 	}
 	
 	public LocalDate dateOfBirth() {
-		if (person != null) {
-			return person.dateOfBirth.toLocalDate();
-		} else if (personIdentification != null) {
+		if (personIdentification != null) {
 			return personIdentification.dateOfBirth.toLocalDate();
+		} else if (personIdentificationLight != null) {
+			return personIdentificationLight.dateOfBirth.toLocalDate();
 		} else {
 			return null;
 		}
 	}
 
 	public Sex sex() {
-		if (person != null) {
-			return person.sex;
-		} else if (personIdentification != null) {
+		if (personIdentification != null) {
 			return personIdentification.sex;
+		} else if (personIdentificationLight != null) {
+			return personIdentificationLight.sex;
 		} else {
 			return null;
 		}
 	}
 
 	public Vn vn() {
-		if (person != null) {
-			return person.vn;
-		} else if (personIdentification != null) {
+		if (personIdentification != null) {
 			return personIdentification.vn;
+		} else if (personIdentificationLight != null) {
+			return personIdentificationLight.vn;
 		} else {
 			return null;
 		}

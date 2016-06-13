@@ -59,8 +59,8 @@ public class RelationFormElement extends ListFormElement<Relation> {
 			add(relation, new RemoveRelationAction(relation));
 		} else {
 			add(relation);
-			if (relation.partner.person != null) {
-				add("Person anzeigen", new PersonPage(echNamespaceContext, relation.partner.person.id));
+			if (relation.partner.personIdentification != null) {
+				add("Person anzeigen", new PersonPage(echNamespaceContext, relation.partner.personIdentification.id));
 			} else if (relation.partner.organisation != null) {
 				add("Person anzeigen", new OrganisationPage(echNamespaceContext, relation.partner.organisation.id));
 			}

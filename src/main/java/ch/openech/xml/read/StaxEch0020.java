@@ -14,7 +14,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.minimalj.backend.Persistence;
+import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.ProgressListener;
 import org.minimalj.util.StringUtils;
 
@@ -33,8 +33,6 @@ import ch.openech.model.types.YesNo;
 import ch.openech.transaction.EchPersistence;
 
 public class StaxEch0020 {
-	private final Persistence persistence;
-	
 	// hack: Globale Variable als 2. Rückgabewert von simplePersonEventPerson and simplePersonEvent
 	// Dies ist notwendige, weil changeNamePersonType einerseits die Identifikation der zu ändernden
 	// Person enthält, andererseits aber schon einen Teil (!) der neuen Werte.
@@ -42,8 +40,7 @@ public class StaxEch0020 {
 	private Event e;
 	private Person changedPerson = null;
 	
-	public StaxEch0020(Persistence persistence) {
-		this.persistence = persistence;
+	public StaxEch0020() {
 	}
 	
 	// Persistence
@@ -51,8 +48,7 @@ public class StaxEch0020 {
 	public void insertPerson(Person person) {
 		person.event = e;
 		updateIdentifications(person);
-		Object newId = persistence.insert(person);
-		changedPerson = persistence.read(Person.class, newId);
+		changedPerson = Backend.save(person);
 	}
 
 	public Person getChangedPerson() {
@@ -69,8 +65,7 @@ public class StaxEch0020 {
 			person.technicalIds.localId.clear();
 		}
 		updateIdentifications(person);
-		persistence.update(person);
-		changedPerson = persistence.read(Person.class, person.id);
+		changedPerson = Backend.save(person);
 	}
 
 	//
@@ -309,8 +304,9 @@ public class StaxEch0020 {
 			// TODO was macht man hier? Einfach so entstehen ungültige Daten, da eine Person einen Meldeort haben muss
 			return;
 		}
-		Person parent = relation.partner.person;
-		if (parent == null) return;
+		PersonIdentification parentIdentification = relation.partner.personIdentification;
+		if (parentIdentification == null) return;
+		Person parent = EchPersistence.getByIdentification(parentIdentification);
 		person.typeOfResidence = parent.typeOfResidence;
 		person.residence.reportingMunicipality = parent.residence.reportingMunicipality;
 		person.residence.setSecondary(parent.residence.secondary);
@@ -350,13 +346,13 @@ public class StaxEch0020 {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
 					Person person = EchPersistence.getByIdentification(personIdentification);
 					if (person != null) {
-						relation.partner.person = person;
+						relation.partner.personIdentification = person.personIdentification();
 					} else {
-						relation.partner.setValue(personIdentification);
+						relation.partner.personIdentification = personIdentification;
 					}
 				} else if (startName.equals(PERSON_IDENTIFICATION_PARTNER)) {
-					relation.partner.personIdentification = new PersonIdentificationLight();
-					StaxEch0044.personIdentificationPartner(xml, relation.partner.personIdentification);
+					relation.partner.personIdentificationLight = new PersonIdentificationLight();
+					StaxEch0044.personIdentificationPartner(xml, relation.partner.personIdentificationLight);
 				} else if (startName.equals(ADDRESS)) {
 					relation.address = StaxEch0010.address(xml);
 				}

@@ -58,17 +58,15 @@ public class StaxEch0021 {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(PERSON_IDENTIFICATION)) {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
-					// TODO ist es ok hier Backend.getInstance() zu verwenden?
-					// -> entweder die backend variable auch aus StaxEch0020 entfernen, oder ein traversel für die partnerIdentifications machen
 					Person person = EchPersistence.getByIdentification(personIdentification);
 					if (person != null) {
-						partnerIdentification.person = person;
+						partnerIdentification.personIdentification = person.personIdentification();
 					} else {
-						partnerIdentification.setValue(personIdentification);
+						partnerIdentification.personIdentification = personIdentification;
 					}
 				} else if (startName.equals(PERSON_IDENTIFICATION_PARTNER)) {
-					partnerIdentification.personIdentification = new PersonIdentificationLight();
-					StaxEch0044.personIdentificationPartner(xml, partnerIdentification.personIdentification);
+					partnerIdentification.personIdentificationLight = new PersonIdentificationLight();
+					StaxEch0044.personIdentificationPartner(xml, partnerIdentification.personIdentificationLight);
 				} else if (startName.equals(PARTNER_ID_ORGANISATION)) {
 					// TODO die Organisation hier einlesen
 					throw new RuntimeException("TODO");

@@ -157,10 +157,10 @@ public class WriterEch0011 {
 		if (contactPerson.partner.isEmpty() && (contactPerson.address == null || contactPerson.address.isEmpty())) return;
 			
 		WriterElement contactElement = parent.create(uri, CONTACT);
-		if (contactPerson.partner.person != null) {
-			ech44.personIdentification(contactElement, contactPerson.partner.person.personIdentification());
-		} else if (contactPerson.partner.personIdentification != null) {
-			ech44.personIdentificationPartner(contactElement, contactPerson.partner.personIdentification);
+		if (contactPerson.partner.personIdentification != null) {
+			ech44.personIdentification(contactElement, contactPerson.partner.personIdentification);
+		} else if (contactPerson.partner.personIdentificationLight != null) {
+			ech44.personIdentificationPartner(contactElement, contactPerson.partner.personIdentificationLight);
 		} else if (contactPerson.partner.organisation != null) {
 			ech44.partnerIdOrganisation(contactElement,  contactPerson.partner.organisation);
 		}

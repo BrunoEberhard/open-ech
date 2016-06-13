@@ -221,13 +221,13 @@ public class StaxEch0011 {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
 					Person completePerson = EchPersistence.getByIdentification(personIdentification);
 					if (completePerson != null) {
-						person.contactPerson.partner.person = completePerson;
+						person.contactPerson.partner.personIdentification = completePerson.personIdentification();
 					} else {
-						person.contactPerson.partner.setValue(personIdentification);
+						person.contactPerson.partner.personIdentification = personIdentification;
 					}
 				} else if (startName.equals(PERSON_IDENTIFICATION_PARTNER)) {
-					person.contactPerson.partner.personIdentification = new PersonIdentificationLight();
-					StaxEch0044.personIdentificationPartner(xml, person.contactPerson.partner.personIdentification);
+					person.contactPerson.partner.personIdentificationLight = new PersonIdentificationLight();
+					StaxEch0044.personIdentificationPartner(xml, person.contactPerson.partner.personIdentificationLight);
 				} else if (startName.equals(PARTNER_ID_ORGNISATION)) {
 					throw new RuntimeException("TODO");
 				}
