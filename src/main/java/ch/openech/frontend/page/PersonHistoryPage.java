@@ -33,7 +33,7 @@ public class PersonHistoryPage extends HistoryPage<Person> {
 	protected List<HistoryVersion<Person>> loadVersions() {
 		Person person = personPage.load();
 		
-		List<Person> persons = Backend.getInstance().execute(new ReadHistoryTransaction<Person>(person));
+		List<Person> persons = Backend.execute(new ReadHistoryTransaction<Person>(person));
 //		Collections.sort(times);
 //		Collections.reverse(times);
 

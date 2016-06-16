@@ -40,7 +40,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData, Void> {
 
 	@Override
 	protected Void save(GeneratePersonData data) {
-		Backend.getInstance().execute(new GenerateDemoDataTransaction(data.numberOfPersons != null ? data.numberOfPersons : 0, data.numberOfOrganisations != null ? data.numberOfOrganisations : 0));
+		Backend.execute(new GenerateDemoDataTransaction(data.numberOfPersons != null ? data.numberOfPersons : 0, data.numberOfOrganisations != null ? data.numberOfOrganisations : 0));
 		return null;
 	}
 

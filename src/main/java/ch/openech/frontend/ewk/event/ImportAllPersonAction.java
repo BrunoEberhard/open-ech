@@ -20,7 +20,7 @@ public class ImportAllPersonAction extends Action {
 			File file = swingFrontend.showFileDialog("Personendaten importieren", "Import");
 			if (file != null) {
 				try (FileInputStream fis = new FileInputStream(file)) {
-					Backend.getInstance().execute(new PersonImportTransaction(fis));
+					Backend.execute(new PersonImportTransaction(fis));
 					Frontend.showMessage("Import erfolgreich");
 				} catch (IOException e) {
 					Frontend.showError("Import nicht möglich\n" + e.getLocalizedMessage());

@@ -20,7 +20,7 @@ public class ImportAllOrganisationAction extends Action {
 			File file = swingFrontend.showFileDialog("Firmendaten importieren", "Import");
 			if (file != null) {
 				try (FileInputStream fis = new FileInputStream(file)) {
-					Backend.getInstance().execute(new OrganisationImportTransaction(fis));
+					Backend.execute(new OrganisationImportTransaction(fis));
 					Frontend.showMessage("Import erfolgreich");
 				} catch (IOException e) {
 					Frontend.showError("Import nicht möglich\n" + e.getLocalizedMessage());

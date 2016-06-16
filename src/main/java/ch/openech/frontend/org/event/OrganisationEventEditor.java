@@ -59,7 +59,7 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisati
 	public Organisation save(T object)  {
 		try {
 			List<String> xmls = getXml(object);
-			return Backend.getInstance().execute(new OrganisationTransaction(xmls));
+			return Backend.execute(new OrganisationTransaction(xmls));
 		} catch (Exception x) {
 			throw new RuntimeException(x);
 		}

@@ -33,7 +33,7 @@ public class OrganisationHistoryPage extends HistoryPage<Organisation> {
 	protected List<HistoryVersion<Organisation>> loadVersions() {
 		Organisation organisation = organisationPage.load();
 		
-		List<Organisation> organisations = Backend.getInstance().execute(new ReadHistoryTransaction<Organisation>(organisation));
+		List<Organisation> organisations = Backend.execute(new ReadHistoryTransaction<Organisation>(organisation));
 //		Collections.sort(times);
 //		Collections.reverse(times);
 

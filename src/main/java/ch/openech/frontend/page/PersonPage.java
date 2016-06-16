@@ -122,7 +122,7 @@ public class PersonPage extends ObjectPage<Person> {
 		if (version == 0) {
 			person = Backend.read(Person.class, getObjectId());
 		} else {
-			person = Backend.getInstance().execute(new ReadEntityTransaction<Person>(Person.class, getObjectId(), version));
+			person = Backend.execute(new ReadEntityTransaction<Person>(Person.class, getObjectId(), version));
 		}
 		return person;
 	}

@@ -48,7 +48,7 @@ public abstract class PersonEventEditor<T> extends XmlEditor<T, Person> implemen
 	}
 	
 	public static Person send(final List<String> xmls) {
-		Person changedPerson = Backend.getInstance().execute(new PersonTransaction(xmls));
+		Person changedPerson = Backend.execute(new PersonTransaction(xmls));
 		return changedPerson;
 	}
 	

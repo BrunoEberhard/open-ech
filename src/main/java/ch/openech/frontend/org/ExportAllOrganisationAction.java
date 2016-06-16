@@ -25,7 +25,7 @@ public class ExportAllOrganisationAction extends Action {
 			File file = swingFrontend.showFileDialog("Firmendaten exportieren", "Export");
 			if (file != null) {
 				try (FileOutputStream fos = new FileOutputStream(file)) {
-					Backend.getInstance().execute(new OrganisationExportTransaction(orgVersion, exportCompleteOrganisation(), fos));
+					Backend.execute(new OrganisationExportTransaction(orgVersion, exportCompleteOrganisation(), fos));
 					Frontend.showMessage("Export erfolgreich");
 				} catch (IOException e) {
 					Frontend.showError("Export nicht möglich\n" + e.getLocalizedMessage());

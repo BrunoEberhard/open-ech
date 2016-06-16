@@ -49,7 +49,7 @@ public class MoveInEditor extends XmlEditor<Organisation, Organisation> implemen
 	@Override
 	public Organisation save(Organisation organisation) {
 		String xml = getXml(organisation).get(0);
-		return Backend.getInstance().execute(new OrganisationTransaction(xml));
+		return Backend.execute(new OrganisationTransaction(xml));
 	}
 	
 	@Override

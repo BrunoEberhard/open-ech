@@ -45,7 +45,7 @@ public class BaseDeliveryEditor extends XmlEditor<Person, Person> {
     @Override
     public Person save(Person person) {
 		String xml = getXml(person).get(0);
-		Person savedPerson = Backend.getInstance().execute(new PersonTransaction(xml));
+		Person savedPerson = Backend.execute(new PersonTransaction(xml));
 		return savedPerson;
 	}
     

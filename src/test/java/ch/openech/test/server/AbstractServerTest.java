@@ -43,8 +43,8 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static void clear() {
-		Backend.getInstance().execute(new DeleteAllTransaction(Person.class));
-		Backend.getInstance().execute(new DeleteAllTransaction(Organisation.class));
+		Backend.execute(new DeleteAllTransaction(Person.class));
+		Backend.execute(new DeleteAllTransaction(Organisation.class));
 	}
 
 	protected Person insertPerson(String vn) throws Exception {
@@ -62,7 +62,7 @@ public abstract class AbstractServerTest {
 	public static Person processFile(String relativFileName) throws IOException {
 		InputStream inputStream = AbstractServerTest.class.getResourceAsStream(relativFileName);
 		String xml = convertStreamToString(inputStream);
-		return Backend.getInstance().execute(new PersonTransaction(xml));
+		return Backend.execute(new PersonTransaction(xml));
 	}
 	
 	public static Object process(String string) throws IOException {
@@ -72,7 +72,7 @@ public abstract class AbstractServerTest {
 			System.out.println(string);
 			Assert.fail(validationMessage);
 		}
-		return Backend.getInstance().execute(new PersonTransaction(string));
+		return Backend.execute(new PersonTransaction(string));
 	}
 	
 	public static String convertStreamToString(InputStream is) throws IOException {

@@ -28,7 +28,7 @@ public class ExportAllPersonAction extends Action {
 			File file = swingFrontend.showFileDialog("Personendaten exportieren", "Export");
 			if (file != null) {
 				try (FileOutputStream fos = new FileOutputStream(file)) {
-					Integer exportCount = Backend.getInstance().execute(new PersonExportTransaction(ewkVersion, exportCompletePerson(), fos));
+					Integer exportCount = Backend.execute(new PersonExportTransaction(ewkVersion, exportCompletePerson(), fos));
 					Frontend.showMessage(exportCount + " Person(en) exportiert");
 				} catch (IOException e) {
 					Frontend.showError("Export nicht möglich\n" + e.getLocalizedMessage());

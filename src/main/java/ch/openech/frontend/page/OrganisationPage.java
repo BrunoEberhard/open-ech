@@ -75,7 +75,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 		if (version == 0) {
 			organisation = Backend.read(Organisation.class, getObjectId());
 		} else {
-			organisation = Backend.getInstance().execute(new ReadEntityTransaction<Organisation>(Organisation.class, getObjectId(), version));
+			organisation = Backend.execute(new ReadEntityTransaction<Organisation>(Organisation.class, getObjectId(), version));
 		}
 		return organisation;
 	}
