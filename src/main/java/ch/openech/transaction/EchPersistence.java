@@ -85,7 +85,7 @@ public class EchPersistence {
 	}
 	
 	public static OpenEchPreferences getPreferences() {
-		Subject subject = Subject.getSubject();
+		Subject subject = Subject.getCurrent();
 		if (subject != null && !StringUtils.isEmpty(subject.getName())) {
 			List<OpenEchPreferences> preferences = Backend.read(OpenEchPreferences.class, By.field(OpenEchPreferences.$.user, subject.getName()), 2);
 			if (preferences.size() > 1) {
@@ -98,8 +98,8 @@ public class EchPersistence {
 	}
 	
 	public static void savePreferences(OpenEchPreferences preferences) {
-		if (Subject.getSubject() != null) {
-			preferences.user = Subject.getSubject().getName();
+		if (Subject.getCurrent() != null) {
+			preferences.user = Subject.getCurrent().getName();
 			if (preferences.id != null) {
 				Backend.update(preferences);
 			} else {
