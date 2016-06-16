@@ -32,7 +32,7 @@ public class PersonExportTransaction extends OutputStreamTransaction<Integer> {
 	public Integer execute() {
 		int count = 0;
 		try {
-			SqlPersistence db = (SqlPersistence) Persistence.getInstance();
+			SqlPersistence db = (SqlPersistence) Persistence.getCurrent();
 			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Person.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");

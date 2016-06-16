@@ -58,7 +58,7 @@ public class EchPersistence {
 	}
 	
 	public static Organisation getByIdentification(OrganisationIdentification organisationIdentification) {
-		Persistence persistence = Persistence.getInstance();
+		Persistence persistence = Persistence.getCurrent();
 		String localId = null;
 		if (organisationIdentification.technicalIds.localId.openEch()) {
 			localId = organisationIdentification.technicalIds.localId.personId;
