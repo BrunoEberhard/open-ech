@@ -85,6 +85,11 @@ public class OpenEchApplication extends Application {
 	}
 
 	@Override
+	public boolean isLoginRequired() {
+		return true;
+	}
+	
+	@Override
 	public List<Action> getNavigation() {
 		List<Action> actions = new ArrayList<>();
 		boolean modifyRole = Subject.hasRole(OpenEchRoles.modify);
