@@ -7,13 +7,13 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import org.junit.BeforeClass;
-import org.minimalj.application.Application;
 import org.minimalj.backend.Backend;
+import org.minimalj.backend.sql.SqlPersistence;
 import org.minimalj.transaction.criteria.By;
 import org.minimalj.transaction.persistence.DeleteAllTransaction;
 
-import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;
+import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.EchSchemaValidation;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Person;
@@ -31,8 +31,10 @@ public abstract class AbstractServerTest {
 	public static void startup() throws Exception {
 		if (!started) {
 			started = true;
-			Application.setApplication(new OpenEchApplication());
 			
+			Class<?>[] entityClasses = new Class<?>[]{Person.class, Organisation.class, OpenEchPreferences.class};
+			Backend.setPersistence(new SqlPersistence(SqlPersistence.embeddedDataSource(null), true, entityClasses));
+
 			initCodes();
 		}
 		clear();
