@@ -92,10 +92,15 @@ public class OpenEchApplication extends Application {
 	@Override
 	public List<Action> getNavigation() {
 		List<Action> actions = new ArrayList<>();
-		boolean modifyRole = Subject.hasRole(OpenEchRoles.modify);
-		boolean administrateRole = Subject.hasRole(OpenEchRoles.administrate);
+		Subject subject = Subject.getCurrent();
+		if (subject == null) {
+			return actions;
+		}
+		
+		boolean modifyRole = subject.hasRole(OpenEchRoles.modify);
+		boolean administrateRole = subject.hasRole(OpenEchRoles.administrate);
 		boolean importExportAvailable = Frontend.getInstance() instanceof SwingFrontend;
-		boolean importExportRole = Subject.hasRole(OpenEchRoles.importExport);
+		boolean importExportRole = subject.hasRole(OpenEchRoles.importExport);
 		
 		if (!modifyRole) {
 			return actions;
