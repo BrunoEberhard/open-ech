@@ -3,7 +3,6 @@ package ch.openech.transaction;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.backend.Persistence;
 import org.minimalj.security.Subject;
 import org.minimalj.transaction.criteria.By;
 import org.minimalj.util.CloneHelper;
@@ -58,7 +57,6 @@ public class EchPersistence {
 	}
 	
 	public static Organisation getByIdentification(OrganisationIdentification organisationIdentification) {
-		Persistence persistence = Persistence.getCurrent();
 		String localId = null;
 		if (organisationIdentification.technicalIds.localId.openEch()) {
 			localId = organisationIdentification.technicalIds.localId.personId;
@@ -66,15 +64,15 @@ public class EchPersistence {
 				localId = null;
 			}
 			if (localId != null && localId.length() == 36) {
-				Organisation organisation = persistence.read(Organisation.class, localId);
+				Organisation organisation = Backend.read(Organisation.class, localId);
 				if (organisation != null) {
 					return organisation;
 				}
 			}
 		}
-		List<Organisation> organisations = persistence.read(Organisation.class, By.field(Organisation.$.uid.value, organisationIdentification.uid.value), 2);
+		List<Organisation> organisations = Backend.read(Organisation.class, By.field(Organisation.$.uid.value, organisationIdentification.uid.value), 2);
 		if (organisations.isEmpty()) {
-			organisations = persistence.read(Organisation.class, By.field(Organisation.$.organisationName, organisationIdentification.organisationName), 2);
+			organisations = Backend.read(Organisation.class, By.field(Organisation.$.organisationName, organisationIdentification.organisationName), 2);
 		}
 		for (Organisation organisation : organisations) {
 			if (localId == null || IdUtils.getCompactIdString(organisation).startsWith(localId)) {

@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.backend.Persistence;
 import org.minimalj.backend.sql.SqlPersistence;
 import org.minimalj.transaction.OutputStreamTransaction;
 
@@ -33,8 +32,8 @@ public class OrganisationExportTransaction extends OutputStreamTransaction<Integ
 	public Integer execute() {
 		int numberOfOrganisations = 0;
 		try {
-			SqlPersistence db = (SqlPersistence) Persistence.getCurrent();
-			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Organisation.class));
+			SqlPersistence sqlPersistence = (SqlPersistence) Backend.getPersistence();
+			int maxId = sqlPersistence.execute(Integer.class, "SELECT COUNT(ID) FROM " + sqlPersistence.name(Organisation.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
 			
