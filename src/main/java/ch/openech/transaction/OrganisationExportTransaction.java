@@ -32,7 +32,7 @@ public class OrganisationExportTransaction extends OutputStreamTransaction<Integ
 	public Integer execute() {
 		int numberOfOrganisations = 0;
 		try {
-			SqlPersistence sqlPersistence = (SqlPersistence) Backend.getPersistence();
+			SqlPersistence sqlPersistence = (SqlPersistence) Backend.getInstance().getPersistence();
 			int maxId = sqlPersistence.execute(Integer.class, "SELECT COUNT(ID) FROM " + sqlPersistence.name(Organisation.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
