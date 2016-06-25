@@ -1,6 +1,6 @@
 package ch.openech.test.server;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.util.IdUtils;
 
@@ -14,8 +14,8 @@ public class GardianTest extends AbstractServerTest {
 
 	private static Person p, gardianP;
 	
-	@BeforeClass
-	public static void createPerson() throws Exception {
+	@Before
+	public void createPerson() throws Exception {
 		p = processFile("testPerson/gardian/person.xml");
 		
 		gardianP = processFile("testPerson/gardian/personGardian.xml");

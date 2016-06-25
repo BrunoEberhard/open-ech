@@ -20,8 +20,6 @@ public class AdoptionTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
-		clear();
-		
 		mother = insertPerson(VN_MOTHER);
 		father = insertPerson(VN_FATHER);
 		child = insertPerson(VN_CHILD);

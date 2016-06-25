@@ -6,16 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.minimalj.application.Application;
 import org.minimalj.backend.Backend;
 import org.minimalj.transaction.criteria.By;
-import org.minimalj.transaction.persistence.DeleteAllTransaction;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;
 import ch.openech.model.EchSchemaValidation;
-import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
@@ -24,29 +22,20 @@ import junit.framework.Assert;
 
 public abstract class AbstractServerTest {
 
-	private static boolean started = false;
 	private static WriterEch0020 writer;
 	
-	@BeforeClass
-	public static void startup() throws Exception {
-		if (!started) {
-			started = true;
-			Application.setInstance(new OpenEchApplication());
-			
-			initCodes();
-		}
-		clear();
+	@Before
+	public void startup() throws Exception {
+		Application.setThreadInstance(new OpenEchApplication());
+		
+		initCodes();
 	}
 
 	protected static void initCodes() {
+		// TODO use small amount of codes to speed up tests again
 		new ImportSwissDataAction().action();
 	}
 	
-	public static void clear() {
-		Backend.execute(new DeleteAllTransaction(Person.class));
-		Backend.execute(new DeleteAllTransaction(Organisation.class));
-	}
-
 	protected Person insertPerson(String vn) throws Exception {
 		List<Person> persons = Backend.read(Person.class, By.search(vn, Person.SEARCH_BY_VN), 2);
 		if (persons.size() == 1) {

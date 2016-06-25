@@ -19,8 +19,6 @@ public class MarriageTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
-		clear();
-		
 		p1 = processFile("testPerson/mariage/person_" + vn1 + ".xml");
 		p2 = processFile("testPerson/mariage/person_" + vn2 + ".xml");
 	}

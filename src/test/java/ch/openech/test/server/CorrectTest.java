@@ -37,8 +37,6 @@ public class CorrectTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
-		clear();
-		
 		p = insertPerson(vn);
 		foreignP = insertPerson(FOREGIN_VN);
 	}

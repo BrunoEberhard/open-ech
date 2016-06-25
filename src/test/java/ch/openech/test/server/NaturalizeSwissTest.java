@@ -1,7 +1,5 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.util.Codes;
@@ -11,6 +9,7 @@ import ch.openech.model.code.ResidencePermit;
 import ch.openech.model.common.Canton;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
+import junit.framework.Assert;
 
 public class NaturalizeSwissTest extends AbstractServerTest {
 
@@ -18,8 +17,6 @@ public class NaturalizeSwissTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
-		clear();
-		
 		p = processFile("testPerson/naturalizeSwiss/person.xml");
 	}
 	

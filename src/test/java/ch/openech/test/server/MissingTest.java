@@ -1,19 +1,19 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
-
 import java.time.LocalDate;
-import org.junit.BeforeClass;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import  ch.openech.model.person.Person;
+import junit.framework.Assert;
 
 public class MissingTest extends AbstractServerTest {
 
 	private static Person p;
 	
-	@BeforeClass
-	public static void createPerson() throws Exception {
+	@Before
+	public void createPerson() throws Exception {
 		p = processFile("testPerson/missing/person.xml");
 	}
 	

@@ -1,13 +1,13 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
+import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
-import java.time.LocalDate;
 
 import ch.openech.model.person.Person;
 import ch.openech.model.person.types.Separation;
+import junit.framework.Assert;
 
 public class SeparationTest extends AbstractServerTest {
 
@@ -15,8 +15,6 @@ public class SeparationTest extends AbstractServerTest {
 	
 	@Before
 	public void createPerson() throws Exception {
-		clear();
-		
 		p = processFile("testPerson/separation/person.xml");
 	}
 	
