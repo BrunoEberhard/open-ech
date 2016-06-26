@@ -20,6 +20,7 @@ public class PlaceOfOrigin {
 	// 11: placeOfOriginType
 	@NotEmpty @Size(EchFormats.municipalityName)
 	public String originName;
+	@NotEmpty
 	public Canton canton;
 	
 	// 21:placeOfOriginAddonType
