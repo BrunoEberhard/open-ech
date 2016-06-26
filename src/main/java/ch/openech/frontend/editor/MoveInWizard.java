@@ -209,8 +209,7 @@ public class MoveInWizard extends Wizard<Person> {
 			try {
 				xmlList.add(getWriterEch0020().moveIn(person));
 			} catch (Exception e) {
-				// TODO
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 		Person firstSavedPerson = PersonEventEditor.send(xmlList);
