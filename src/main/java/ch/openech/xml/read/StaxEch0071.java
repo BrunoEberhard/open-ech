@@ -27,7 +27,7 @@ public class StaxEch0071 {
 	private final List<Canton> cantons = new ArrayList<Canton>(30);
 	
 	public StaxEch0071() {
-		this(StaxEch0071.class.getClassLoader().getResourceAsStream("ch/ech/data/eCH0071.xml"));
+		this(StaxEch0071.class.getResourceAsStream("/ch/ech/data/eCH0071.xml"));
 	}
 	
 	public StaxEch0071(InputStream inputStream) {

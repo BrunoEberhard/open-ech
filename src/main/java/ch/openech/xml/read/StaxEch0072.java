@@ -22,7 +22,7 @@ public class StaxEch0072 {
 	private final List<CountryIdentification> countriesUnmodifiable;
 	
 	public StaxEch0072() {
-		this(StaxEch0072.class.getClassLoader().getResourceAsStream("ch/ech/data/eCH0072.xml"));
+		this(StaxEch0072.class.getResourceAsStream("/ch/ech/data/eCH0072.xml"));
 	}
 	
 	public StaxEch0072(InputStream inputStream) {
