@@ -2,13 +2,16 @@ package ch.openech.xml.write;
 
 import static ch.openech.model.XmlConstants.*;
 
-import org.minimalj.util.resources.Resources;
+import org.minimalj.application.Application;
+import org.minimalj.util.StringUtils;
 
 import ch.openech.model.Envelope;
 
 
 public class WriterEch0058 {
 
+	private static final String VERSION = getVersion();
+	
 	public final String URI;
 	
 	public WriterEch0058(EchSchema context) {
@@ -19,11 +22,19 @@ public class WriterEch0058 {
     	
 		WriterElement sendingApplication = parent.create(URI, SENDING_APPLICATION);
     	
-		sendingApplication.text(MANUFACTURER, Resources.getString(Resources.APPLICATION_VENDOR));
-		sendingApplication.text(PRODUCT, Resources.getString(Resources.APPLICATION_TITLE));
-		sendingApplication.text(PRODUCT_VERSION, Resources.getString(Resources.APPLICATION_VERSION));
+		sendingApplication.text(MANUFACTURER, "Open-eCH");
+		sendingApplication.text(PRODUCT, "Open-eCH");
+		sendingApplication.text(PRODUCT_VERSION, VERSION);
     }
     
+	private static String getVersion() {
+		String version = Application.getInstance().getClass().getPackage().getImplementationVersion();
+		if (StringUtils.isEmpty(version)) {
+			version = "DEV";
+		}
+		return version;
+	}
+	
 	public void testDeliveryFlag(WriterElement parent) throws Exception {
 		parent.text(TEST_DELIVERY_FLAG, "true");
     }
