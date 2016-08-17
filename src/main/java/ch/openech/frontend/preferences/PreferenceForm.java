@@ -17,7 +17,7 @@ public class PreferenceForm extends EchForm<OpenEchPreferences> {
 		line(OpenEchPreferences.$.preferencesDefaultsData.canton);
 		line(OpenEchPreferences.$.preferencesDefaultsData.language, OpenEchPreferences.$.preferencesDefaultsData.religion);
 
-		text("<b>Hinweis:</b> Die Einstellungen werden erst bei neu geöffneten Ansichten aktiv");
+		text("<html><b>Hinweis:</b> Die Einstellungen werden erst bei neu geöffneten Ansichten aktiv</html>");
 	}
 	
 }
