@@ -8,7 +8,7 @@ import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.transaction.criteria.By;
+import org.minimalj.persistence.criteria.By;
 
 import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.model.person.Person;

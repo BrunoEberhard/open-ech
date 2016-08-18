@@ -3,8 +3,8 @@ package ch.openech.mj.db;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.minimalj.backend.sql.SqlPersistence;
-import org.minimalj.backend.sql.Table;
+import org.minimalj.persistence.sql.SqlPersistence;
+import org.minimalj.persistence.sql.Table;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.common.Address;

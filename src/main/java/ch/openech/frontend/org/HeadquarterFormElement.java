@@ -10,7 +10,7 @@ import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.transaction.criteria.By;
+import org.minimalj.persistence.criteria.By;
 
 import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.page.OrganisationSearchPage;

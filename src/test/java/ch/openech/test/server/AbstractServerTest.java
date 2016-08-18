@@ -9,8 +9,8 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.minimalj.application.Application;
 import org.minimalj.backend.Backend;
-import org.minimalj.transaction.criteria.By;
-import org.minimalj.transaction.persistence.DeleteAllTransaction;
+import org.minimalj.backend.persistence.DeleteAllTransaction;
+import org.minimalj.persistence.criteria.By;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;

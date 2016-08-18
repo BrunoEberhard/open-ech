@@ -3,10 +3,10 @@ package ch.openech.frontend.ewk.event.birth;
 import java.util.Collections;
 import java.util.List;
 
-import org.minimalj.backend.sql.EmptyObjects;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
+import org.minimalj.persistence.sql.EmptyObjects;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.XmlEditor;

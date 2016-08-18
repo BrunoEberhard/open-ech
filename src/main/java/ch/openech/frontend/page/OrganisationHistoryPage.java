@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.transaction.persistence.ReadHistoryTransaction;
+import org.minimalj.backend.persistence.ReadHistoryTransaction;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
 

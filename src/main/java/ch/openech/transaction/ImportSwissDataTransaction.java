@@ -2,8 +2,8 @@ package ch.openech.transaction;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.model.EnumUtils;
+import org.minimalj.persistence.criteria.By;
 import org.minimalj.transaction.Transaction;
-import org.minimalj.transaction.criteria.By;
 
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.common.Canton;

@@ -4,7 +4,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.backend.sql.SqlPersistence;
+import org.minimalj.persistence.sql.SqlPersistence;
 import org.minimalj.transaction.OutputStreamTransaction;
 import org.minimalj.transaction.Role;
 

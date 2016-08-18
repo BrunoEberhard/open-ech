@@ -3,8 +3,8 @@ package ch.openech.transaction;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.persistence.criteria.By;
 import org.minimalj.security.Subject;
-import org.minimalj.transaction.criteria.By;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;

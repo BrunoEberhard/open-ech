@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
-import org.minimalj.transaction.criteria.By;
+import org.minimalj.persistence.criteria.By;
 import org.minimalj.util.Codes;
 import org.minimalj.util.IdUtils;
 

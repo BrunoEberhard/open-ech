@@ -3,8 +3,8 @@ package ch.openech.test.persistence;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.minimalj.backend.sql.SqlPersistence;
-import org.minimalj.backend.sql.Table;
+import org.minimalj.persistence.sql.SqlPersistence;
+import org.minimalj.persistence.sql.Table;
 
 import ch.openech.model.contact.Contact;
 import ch.openech.model.contact.ContactEntry;
