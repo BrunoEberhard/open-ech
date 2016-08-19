@@ -2,7 +2,7 @@ package ch.openech.test.detail;
 
 import java.io.InputStream;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 import java.time.LocalDateTime;

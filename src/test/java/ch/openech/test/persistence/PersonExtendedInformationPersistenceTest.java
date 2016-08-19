@@ -1,5 +1,6 @@
 package ch.openech.test.persistence;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
 
@@ -8,7 +9,6 @@ import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonExtendedInformation;
 import ch.openech.model.types.YesNo;
 import ch.openech.test.server.AbstractServerTest;
-import junit.framework.Assert;
 
 public class PersonExtendedInformationPersistenceTest extends AbstractServerTest {
 

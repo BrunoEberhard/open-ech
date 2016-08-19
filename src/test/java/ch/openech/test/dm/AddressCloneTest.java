@@ -1,7 +1,6 @@
 package ch.openech.test.dm;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.util.CloneHelper;
 

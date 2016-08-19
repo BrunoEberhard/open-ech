@@ -1,7 +1,6 @@
 package ch.openech.test.persistence;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.persistence.sql.SqlPersistence;
 import org.minimalj.persistence.sql.Table;

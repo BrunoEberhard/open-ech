@@ -1,6 +1,6 @@
 package org.minimalj.swing;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.BeforeClass;

@@ -1,8 +1,8 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
-
 import java.time.LocalDate;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

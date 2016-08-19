@@ -1,7 +1,6 @@
 package ch.openech.test.detail;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import ch.openech.xml.write.EchNamespaceUtil;

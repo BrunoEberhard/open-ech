@@ -1,10 +1,10 @@
 package ch.openech.test.server;
 
-import junit.framework.Assert;
+import java.time.LocalDate;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import java.time.LocalDate;
 
 import ch.openech.model.person.Person;
 import ch.openech.model.person.types.DataLock;

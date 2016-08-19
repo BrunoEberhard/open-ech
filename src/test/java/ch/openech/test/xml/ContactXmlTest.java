@@ -1,10 +1,10 @@
 package ch.openech.test.xml;
 
-import junit.framework.Assert;
+import java.time.LocalDate;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.util.EqualsHelper;
-import java.time.LocalDate;
 
 import ch.openech.model.EchSchemaValidation;
 import ch.openech.model.common.Address;

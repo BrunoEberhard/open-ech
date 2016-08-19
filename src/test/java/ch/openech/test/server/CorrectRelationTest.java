@@ -1,11 +1,11 @@
 package ch.openech.test.server;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.util.IdUtils;
 
 import  ch.openech.model.person.Person;
-import junit.framework.Assert;
 
 public class CorrectRelationTest extends AbstractServerTest {
 

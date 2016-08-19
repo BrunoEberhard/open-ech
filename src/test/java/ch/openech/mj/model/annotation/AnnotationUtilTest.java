@@ -1,7 +1,6 @@
 package ch.openech.mj.model.annotation;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.AnnotationUtil;

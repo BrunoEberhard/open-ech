@@ -1,12 +1,12 @@
 package ch.openech.test.server;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.util.IdUtils;
 
 import  ch.openech.model.person.Person;
 import  ch.openech.model.person.Relation;
 import  ch.openech.model.person.types.TypeOfRelationship;
-import junit.framework.Assert;
 
 public class PartnershipTest extends AbstractServerTest {
 

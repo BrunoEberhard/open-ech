@@ -3,6 +3,7 @@ package ch.openech.test.server;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
@@ -22,7 +23,6 @@ import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.types.Religion;
 import ch.openech.model.types.Language;
-import junit.framework.Assert;
 
 /*
  * Diese Sammlung von Tests betrifft die bei Schema - Version 2.2. neu

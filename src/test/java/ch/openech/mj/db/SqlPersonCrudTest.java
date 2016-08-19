@@ -1,5 +1,6 @@
 package ch.openech.mj.db;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,7 +15,6 @@ import ch.openech.model.person.Occupation;
 import ch.openech.model.person.Person;
 import ch.openech.model.types.MrMrs;
 import ch.openech.model.types.Sex;
-import junit.framework.Assert;
 
 public class SqlPersonCrudTest {
 

@@ -2,6 +2,7 @@ package ch.openech.test.server;
 
 import java.time.LocalDate;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.util.IdUtils;
@@ -9,7 +10,6 @@ import org.minimalj.util.IdUtils;
 import  ch.openech.model.person.Person;
 import  ch.openech.model.person.Relation;
 import  ch.openech.model.person.types.TypeOfRelationship;
-import junit.framework.Assert;
 
 public class MarriageTest extends AbstractServerTest {
 

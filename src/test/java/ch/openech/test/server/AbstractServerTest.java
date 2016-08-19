@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.minimalj.application.Application;
 import org.minimalj.backend.Backend;
@@ -20,7 +21,6 @@ import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
-import junit.framework.Assert;
 
 public abstract class AbstractServerTest {
 

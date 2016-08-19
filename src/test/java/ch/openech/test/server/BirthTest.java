@@ -2,6 +2,7 @@ package ch.openech.test.server;
 
 import java.time.LocalDate;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.util.Codes;
@@ -11,7 +12,6 @@ import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.common.Canton;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.Relation;
-import junit.framework.Assert;
 
 public class BirthTest extends AbstractServerTest {
 
