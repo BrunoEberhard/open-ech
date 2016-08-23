@@ -45,15 +45,12 @@ public class Person implements Validation {
 	
 	public transient PersonEditMode editMode;
 
-	// Der eCH - Event, mit dem die aktuelle Version der Person erstellt oder
-	// verändert wurde
-	
-	public Event event;
-	
-	//
-
 	public Object id;
 	public int version;
+	
+	// Der eCH - Event, mit dem die aktuelle Version der Person erstellt oder
+	// verändert wurde
+	public Event event;
 	
 	@NotEmpty @Size(EchFormats.baseName) @Searched
 	public String firstName, officialName;
@@ -242,6 +239,7 @@ public class Person implements Validation {
 
 	// validation
 	
+	@Override
 	public void validate(List<ValidationMessage> resultList) {
 		validateBirthAfterParents(resultList);
 		validateRelations(resultList);
