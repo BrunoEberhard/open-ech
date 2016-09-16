@@ -124,7 +124,7 @@ public class MunicipalityIdentification implements Code, Rendering, Comparable<M
 
 	@Override
 	public String toString() {
-		return render(RenderType.PLAIN_TEXT);
+		return "Municipality: id = " + id + " name = " + municipalityName;
 	}
 
 }

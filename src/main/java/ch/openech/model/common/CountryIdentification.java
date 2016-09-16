@@ -24,14 +24,6 @@ public class CountryIdentification implements Code, Rendering, Comparable<Countr
 	@NotEmpty
 	public String countryNameShort;
 
-	public String toStringReadable() {
-		StringBuilder s = new StringBuilder();
-		s.append("Name Land = " + countryNameShort);
-		s.append(", Iso Code = " + countryIdISO2);
-		s.append(", Id = " + id);
-		return s.toString();
-	}
-
 	public boolean isEmpty() {
 		return id == null || id == 0;
 	}
@@ -114,6 +106,6 @@ public class CountryIdentification implements Code, Rendering, Comparable<Countr
 
 	@Override
 	public String toString() {
-		return render(RenderType.PLAIN_TEXT);
+		return "Country: id = " + id + ", Name = "+ countryNameShort + ", Iso Code = " + countryIdISO2;
 	}
 }
