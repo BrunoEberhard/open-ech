@@ -7,6 +7,7 @@ import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.editor.Editor;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
+import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.openech.datagenerator.DataGenerator;
@@ -95,7 +96,7 @@ public class ResidenceFormElement extends ObjectFormElement<Residence> {
 		StringBuilder s = new StringBuilder();
 		boolean hasResidence = false;
 		if (residence.reportingMunicipality != null && !residence.reportingMunicipality.isEmpty()) {
-			s.append(residence.reportingMunicipality.toString());
+			s.append(residence.reportingMunicipality.render(RenderType.PLAIN_TEXT));
 			hasResidence = true;
 		} else {
 			s.append("Kein Hauptwohnsitz");
@@ -104,7 +105,7 @@ public class ResidenceFormElement extends ObjectFormElement<Residence> {
 		if (residence.secondary != null && !residence.secondary.isEmpty()) {
 			s.append(", Nebenwohnsitz: ");
 			for (SecondaryResidence secondaryResidence : residence.secondary) {
-				s.append(secondaryResidence.municipalityIdentification);
+				s.append(secondaryResidence.municipalityIdentification.render(RenderType.PLAIN_TEXT));
 				s.append(", ");
 			}
 			s.delete(s.length() - 2, s.length()); // cut last ", "
