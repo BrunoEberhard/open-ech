@@ -13,9 +13,7 @@ public class DomainClassTest {
 	public void testOpenEchDomainClasses() {
 		ModelTest test = new ModelTest(Person.class, Organisation.class); // ThirdPartyMove.class
 		if (!test.getProblems().isEmpty()) {
-			for (String s : test.getProblems()) {
-				System.err.println(s);
-			}
+			test.logProblems();
 			Assert.fail();
 		}
 	}
