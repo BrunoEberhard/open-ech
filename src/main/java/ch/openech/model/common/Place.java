@@ -31,9 +31,9 @@ public class Place implements Rendering {
 	@Override
 	public String render(RenderType renderType) {
 		if (isSwiss()) {
-			return municipalityIdentification != null ? municipalityIdentification.toString() : "-";
+			return municipalityIdentification != null ? municipalityIdentification.municipalityName : "-";
 		} else if (isForeign()) {
-			String text = countryIdentification != null ? countryIdentification.toString() : "";
+			String text = countryIdentification != null ? countryIdentification.countryNameShort : "";
 			if (foreignTown != null) {
 				text = text + ", " + foreignTown;
 			}
