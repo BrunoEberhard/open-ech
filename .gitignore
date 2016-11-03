@@ -7,3 +7,5 @@ derby.log
 /bin/
 /export_taxstatement.jardesc
 /OpenEch.db/
+/.externalToolBuilders/
+/.settings/
