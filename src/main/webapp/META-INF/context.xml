@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+	<Parameter name="MjDevMode" value="true" override="true" />
+
+	<Parameter name="MjSqlDatabase" value="openech" override="true" />
+
+	<Parameter name="MjUserFile" value="users.txt" override="true" />
+
+</Context>
