@@ -8,6 +8,7 @@ import org.minimalj.util.Codes;
 import ch.openech.model.code.NationalityStatus;
 import ch.openech.model.code.ResidencePermit;
 import ch.openech.model.common.Canton;
+import ch.openech.model.common.CountryIdentification;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PlaceOfOrigin;
 
@@ -44,6 +45,7 @@ public class NaturalizeSwissTest extends AbstractServerTest {
 	@Test
 	public void undoSwiss() throws Exception {
 		Person person = reload(p);
+		person.nationality.nationalityCountry = new CountryIdentification();
 		person.nationality.nationalityCountry.id = 8345;
 		person.nationality.nationalityCountry.countryIdISO2 = "SN";
 		person.nationality.nationalityCountry.countryNameShort = "Senegal";
