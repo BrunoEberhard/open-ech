@@ -91,11 +91,16 @@
 			<artifactId>mariadb-java-client</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		<!-- <dependency> <groupId>net.sourceforge.htmlunit</groupId> <artifactId>htmlunit</artifactId> 
-			<version>2.18</version> <scope>test</scope> </dependency> -->
+		<!-- 
 		<dependency>
 			<groupId>org.minimalj</groupId>
-			<artifactId>minimalj_vaadin</artifactId>
+			<artifactId>minimalj_vaadin_servlet</artifactId>
+			<version>[0.0.0.1,)</version>
+		</dependency>
+		 -->
+		<dependency>
+			<groupId>org.minimalj</groupId>
+			<artifactId>minimalj_vaadin_springboot</artifactId>
 			<version>[0.0.0.1,)</version>
 		</dependency>
 	</dependencies>
