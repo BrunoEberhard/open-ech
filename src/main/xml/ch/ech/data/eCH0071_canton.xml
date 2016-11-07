@@ -6,131 +6,191 @@
 		<cantonId>1</cantonId>
 		<cantonAbbreviation>ZH</cantonAbbreviation>
 		<cantonLongName>Zürich</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>2</cantonId>
 		<cantonAbbreviation>BE</cantonAbbreviation>
 		<cantonLongName>Bern / Berne</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>3</cantonId>
 		<cantonAbbreviation>LU</cantonAbbreviation>
 		<cantonLongName>Luzern</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>4</cantonId>
 		<cantonAbbreviation>UR</cantonAbbreviation>
 		<cantonLongName>Uri</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>5</cantonId>
 		<cantonAbbreviation>SZ</cantonAbbreviation>
 		<cantonLongName>Schwyz</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>6</cantonId>
 		<cantonAbbreviation>OW</cantonAbbreviation>
 		<cantonLongName>Obwalden</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>7</cantonId>
 		<cantonAbbreviation>NW</cantonAbbreviation>
 		<cantonLongName>Nidwalden</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>8</cantonId>
 		<cantonAbbreviation>GL</cantonAbbreviation>
 		<cantonLongName>Glarus</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>9</cantonId>
 		<cantonAbbreviation>ZG</cantonAbbreviation>
 		<cantonLongName>Zug</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>10</cantonId>
 		<cantonAbbreviation>FR</cantonAbbreviation>
 		<cantonLongName>Fribourg / Freiburg</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>11</cantonId>
 		<cantonAbbreviation>SO</cantonAbbreviation>
 		<cantonLongName>Solothurn</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>12</cantonId>
 		<cantonAbbreviation>BS</cantonAbbreviation>
 		<cantonLongName>Basel-Stadt</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>13</cantonId>
 		<cantonAbbreviation>BL</cantonAbbreviation>
 		<cantonLongName>Basel-Landschaft</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>14</cantonId>
 		<cantonAbbreviation>SH</cantonAbbreviation>
 		<cantonLongName>Schaffhausen</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>15</cantonId>
 		<cantonAbbreviation>AR</cantonAbbreviation>
 		<cantonLongName>Appenzell Ausserrhoden</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>16</cantonId>
 		<cantonAbbreviation>AI</cantonAbbreviation>
 		<cantonLongName>Appenzell Innerrhoden</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>17</cantonId>
 		<cantonAbbreviation>SG</cantonAbbreviation>
 		<cantonLongName>St. Gallen</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>18</cantonId>
 		<cantonAbbreviation>GR</cantonAbbreviation>
 		<cantonLongName>Graubünden / Grigioni / Grischun</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>19</cantonId>
 		<cantonAbbreviation>AG</cantonAbbreviation>
 		<cantonLongName>Aargau</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>20</cantonId>
 		<cantonAbbreviation>TG</cantonAbbreviation>
 		<cantonLongName>Thurgau</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>21</cantonId>
 		<cantonAbbreviation>TI</cantonAbbreviation>
 		<cantonLongName>Ticino</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>22</cantonId>
 		<cantonAbbreviation>VD</cantonAbbreviation>
 		<cantonLongName>Vaud</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>23</cantonId>
 		<cantonAbbreviation>VS</cantonAbbreviation>
 		<cantonLongName>Valais / Wallis</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>24</cantonId>
 		<cantonAbbreviation>NE</cantonAbbreviation>
 		<cantonLongName>Neuchâtel</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>25</cantonId>
 		<cantonAbbreviation>GE</cantonAbbreviation>
 		<cantonLongName>Genève</cantonLongName>
+		<cantonDateOfChange>1960-01-01</cantonDateOfChange>
 	</canton>
 	<canton>
 		<cantonId>26</cantonId>
 		<cantonAbbreviation>JU</cantonAbbreviation>
 		<cantonLongName>Jura</cantonLongName>
+		<cantonDateOfChange>1979-01-01</cantonDateOfChange>
 	</canton>
 </cantons>
+<!-- Provide one district and municipality to make document valid -->
+<districts>
+	<district>
+		<districtHistId>10001</districtHistId>
+		<cantonId>20</cantonId>
+		<districtId>2001</districtId>
+		<districtLongName>Bezirk Arbon</districtLongName>
+		<districtShortName>Arbon</districtShortName>
+		<districtEntryMode>15</districtEntryMode>
+		<districtAdmissionNumber>100</districtAdmissionNumber>
+		<districtAdmissionMode>20</districtAdmissionMode>
+		<districtAdmissionDate>1960-01-01</districtAdmissionDate>
+		<districtDateOfChange>1960-01-01</districtDateOfChange>
+	</district>
+</districts>
+<municipalities>
+	<municipality>
+		<historyMunicipalityId>10001</historyMunicipalityId>
+		<districtHistId>10189</districtHistId>
+		<cantonAbbreviation>GR</cantonAbbreviation>
+		<municipalityId>3501</municipalityId>
+		<municipalityLongName>Alvaschein</municipalityLongName>
+		<municipalityShortName>Alvaschein</municipalityShortName>
+		<municipalityEntryMode>11</municipalityEntryMode>
+		<municipalityStatus>1</municipalityStatus>
+		<municipalityAdmissionNumber>1000</municipalityAdmissionNumber>
+		<municipalityAdmissionMode>20</municipalityAdmissionMode>
+		<municipalityAdmissionDate>1960-01-01</municipalityAdmissionDate>
+		<municipalityAbolitionNumber>1944</municipalityAbolitionNumber>
+		<municipalityAbolitionMode>24</municipalityAbolitionMode>
+		<municipalityAbolitionDate>2000-12-31</municipalityAbolitionDate>
+		<municipalityDateOfChange>2000-12-31</municipalityDateOfChange>
+	</municipality>
+</municipalities>
 </eCH-0071:nomenclature>
