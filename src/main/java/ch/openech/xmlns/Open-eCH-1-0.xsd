@@ -6,11 +6,10 @@
 	xmlns:eCH-0046="http://www.ech.ch/xmlns/eCH-0046/1" 
 	targetNamespace="http://www.open-ech.ch/xmlns/open-eCH/1"
  	elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
- 	
 	<xs:annotation>
 		<xs:documentation>Ausgabedatum: 27.05.2014</xs:documentation>
 	</xs:annotation>
-	
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0101/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0101/1/eCH-0101-1-0.xsd"/>
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0046/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0046/1/eCH-0046-1-0.xsd"/>
 		
 	<xs:complexType name="openEchPersonExtensionType">
