@@ -58,7 +58,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 	
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
-		person.validate(resultList);
+		resultList.addAll(person.validateNullSafe());
 		validatePlaceOfBirth(person, resultList);
 	}
 

@@ -1,5 +1,6 @@
 package  ch.openech.model.common;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.model.EnumUtils;
@@ -167,10 +168,12 @@ public class Address implements Validation, Rendering {
 	}
 
 	@Override
-	public void validate(List<ValidationMessage> validationResult) {
+	public List<ValidationMessage> validate() {
 		String message = validateZip();
 		if (message != null) {
-			validationResult.add(new ValidationMessage($.zip, message));
+			return Validation.message($.zip, message);
+		} else {
+			return null;
 		}
 	}
 

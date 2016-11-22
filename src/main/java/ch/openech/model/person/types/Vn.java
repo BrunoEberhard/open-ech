@@ -1,21 +1,25 @@
 package  ch.openech.model.person.types;
 
+import java.util.List;
+
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
-import org.minimalj.model.validation.Validatable;
+import org.minimalj.model.validation.Validation;
+import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
 import ch.openech.model.EchFormats;
 
-public class Vn implements Validatable, Mocking {
-
+public class Vn implements Validation, Mocking {
+	public static final Vn $ = Keys.of(Vn.class);
+	
 	@Size(EchFormats.vn) @Searched
 	public String value;
 	
 	@Override
-	public String validate() {
+	public List<ValidationMessage> validate() {
 		if (StringUtils.isEmpty(value))
 			return null;
 
@@ -26,10 +30,10 @@ public class Vn implements Validatable, Mocking {
 			// silent
 		}
 		if (vn < 7560000000001L || vn > 7569999999999L) {
-			return "Wert muss zw 7560000000001 und 7569999999999 liegen";
+			return Validation.message($.value, "Wert muss zw 7560000000001 und 7569999999999 liegen");
 		}
 		if (!isValidEAN13(value)) {
-			return "Ungültige Eingabe (Checksumme falsch)";
+			return Validation.message($.value, "Ungültige Eingabe (Checksumme falsch)");
 		}
 		return null;
 	}

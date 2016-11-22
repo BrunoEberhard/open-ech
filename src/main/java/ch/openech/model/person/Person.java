@@ -240,7 +240,8 @@ public class Person implements Validation {
 	// validation
 	
 	@Override
-	public void validate(List<ValidationMessage> resultList) {
+	public List<ValidationMessage> validate() {
+		List<ValidationMessage> resultList = new ArrayList<>();
 		validateBirthAfterParents(resultList);
 		validateRelations(resultList);
 		validateDeathNotBeforeBirth(resultList);
@@ -258,6 +259,7 @@ public class Person implements Validation {
 		if (editMode != PersonEditMode.BIRTH) {
 			validateResidence(resultList);
 		}
+		return resultList;
 	}
 
 	private void validateForeign(List<ValidationMessage> resultList) {

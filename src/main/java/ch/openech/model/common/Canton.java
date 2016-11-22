@@ -1,14 +1,19 @@
 package  ch.openech.model.common;
 
+import java.util.List;
+
 import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;
+import org.minimalj.model.validation.Validation;
+import org.minimalj.model.validation.ValidationMessage;
+import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.EchFormats;
 
-public class Canton implements Code, Rendering, Comparable<Canton> {
+public class Canton implements Code, Rendering, Comparable<Canton>, Validation {
 
 	public static final Canton $ = Keys.of(Canton.class);
 
@@ -64,16 +69,15 @@ public class Canton implements Code, Rendering, Comparable<Canton> {
 		return false;
 	}
 
-//	@Override
-//	public String validate() {
-//		if (canton == null || canton.length() < 2) {
-//			return "Es sind mindestens 2 Buchstaben erforderlich";
-//		}
-//		List<Canton> cantons = StaxEch0071.getInstance().getCantons();
-//		for (Canton canton : cantons) {
-//			if (StringUtils.equals(canton.canton.cantonAbbreviation, this.canton)) return null;
-//		}
-//		return "Kein gültiger Kanton";
-//	}
-
+	@Override
+	public List<ValidationMessage> validate() {
+		if (!StringUtils.isEmpty(id)) {
+			Canton canton = Codes.findCode(Canton.class, id);
+			if (canton == null) {
+				return Validation.message($.id, "Ungültige Eingabe");
+			}
+		}
+		return null;
+	}
+	
 }

@@ -64,9 +64,11 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 		}
 
 		@Override
-		public void validate(List<ValidationMessage> resultList) {
-			validate(resultList, partner1, partner2);
-			validateNamesNotBlank(resultList);
+		public List<ValidationMessage> validate() {
+			List<ValidationMessage> validationMessages = new ArrayList<ValidationMessage>();
+			validate(validationMessages, partner1, partner2);
+			validateNamesNotBlank(validationMessages);
+			return validationMessages;
 		}
 		
 		private static void validate(List<ValidationMessage> validationMessages, Person person1, Person person2) {

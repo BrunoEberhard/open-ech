@@ -61,7 +61,7 @@ public class BirthEvent extends XmlEditor<Person, Person> {
 	
 	@Override
 	public void validate(Person person, List<ValidationMessage> resultList) {
-		person.validate(resultList);
+		resultList.addAll(person.validateNullSafe());
 		validatePlaceOfBirth(person, resultList);
 	}
 

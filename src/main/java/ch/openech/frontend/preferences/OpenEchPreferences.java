@@ -47,9 +47,11 @@ public class OpenEchPreferences implements Validation {
 	}
 	
 	@Override
-	public void validate(List<ValidationMessage> resultList) {
+	public List<ValidationMessage> validate() {
 		if (applicationSchemaData.schema20 == null && applicationSchemaData.schema93 == null && applicationSchemaData.schema148 == null) {
-			resultList.add(new ValidationMessage(ApplicationSchemaData.APPLICATION_SCHEMA_DATA.schema20, "Mindestens ein Schema ist erforderlich"));
+			return Validation.message(ApplicationSchemaData.APPLICATION_SCHEMA_DATA.schema20, "Mindestens ein Schema ist erforderlich");
+		} else {
+			return null;
 		}
 	}
 

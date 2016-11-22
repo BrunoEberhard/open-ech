@@ -3,27 +3,32 @@ package ch.openech.model.common;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
+import java.util.List;
 
+import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.InvalidValues;
-import org.minimalj.model.validation.Validatable;
+import org.minimalj.model.validation.Validation;
+import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
 
-public class DatePartiallyKnown implements Validatable, Comparable<DatePartiallyKnown> {
-
+public class DatePartiallyKnown implements Validation, Comparable<DatePartiallyKnown> {
+	public static final DatePartiallyKnown $ = Keys.of(DatePartiallyKnown.class);
+	
 	@Size(10)
 	public String value;
 	
 	@Override
-	public String validate() {
+	public List<ValidationMessage> validate() {
 		if (InvalidValues.isInvalid(value)) {
-			return "Kein gültiges Datum";
+			return Validation.message($.value, "Kein gültiges Datum");
 		} else {
 			return null;
 		}
 	}
-
+	
 	public LocalDate toLocalDate() {
 		if (!StringUtils.isEmpty(value)) {
 			try {

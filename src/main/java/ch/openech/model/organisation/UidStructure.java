@@ -1,12 +1,15 @@
 package  ch.openech.model.organisation;
 
+import java.util.List;
+
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
-import org.minimalj.model.validation.Validatable;
+import org.minimalj.model.validation.Validation;
+import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
-public class UidStructure implements Validatable, Mocking {
+public class UidStructure implements Validation, Mocking {
 
 	public static final UidStructure $ = Keys.of(UidStructure.class);
 	private static final int[] mult = {5, 4, 3, 2, 7, 6, 5, 4};
@@ -19,21 +22,21 @@ public class UidStructure implements Validatable, Mocking {
 
 	
 	@Override
-	public String validate() {
+	public List<ValidationMessage> validate() {
 		if (value == null || value.length() < LENGTH) {
-			return "Es sind 3 Buchstaben und 9 Ziffern erforderlich";
+			return Validation.message($.value, "Es sind 3 Buchstaben und 9 Ziffern erforderlich");
 		}
 		String organisationIdCategory = value.substring(0, 3);
 		if (!StringUtils.equals(organisationIdCategory, "ADM", "CHE")) {
-			return "Die ersten drei Buchstaben müssen ADM oder CHE lauten";
+			return Validation.message($.value, "Die ersten drei Buchstaben müssen ADM oder CHE lauten");
 		}
 		for (int i = 3; i<value.length(); i++) {
 			if (!Character.isDigit(value.charAt(i))) {
-				return "Die Eingabe muss ausser den ersten drei Buchstaben aus Ziffern bestehen";
+				return Validation.message($.value, "Die Eingabe muss ausser den ersten drei Buchstaben aus Ziffern bestehen");
 			}
 		}
 		if (!checksum(value)) {
-			return "Checksumme ungültig";
+			return Validation.message($.value, "Checksumme ungültig");
 		}
 		return null;
 	};

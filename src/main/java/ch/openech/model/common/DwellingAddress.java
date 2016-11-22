@@ -1,6 +1,7 @@
 package  ch.openech.model.common;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.model.EnumUtils;
@@ -94,21 +95,23 @@ public class DwellingAddress implements Validation, Rendering {
 	}
 	
 	@Override
-	public void validate(List<ValidationMessage> resultList) {
-		if (!echSchema.addressesAreBusiness()) {
+	public List<ValidationMessage> validate() {
+		List<ValidationMessage> validationMessages = new ArrayList<ValidationMessage>();
+		if (echSchema != null && !echSchema.addressesAreBusiness()) {
 			if (!StringUtils.isBlank(EGID)) {
 				if (!StringUtils.isBlank(EWID) && !StringUtils.isBlank(householdID)) {
-					resultList.add(new ValidationMessage($.householdID, "Bei gesetzter EGID können nicht EWID und Haushalt ID gesetzt sein"));
+					validationMessages.add(new ValidationMessage($.householdID, "Bei gesetzter EGID können nicht EWID und Haushalt ID gesetzt sein"));
 				}
 			} else {
 				if (StringUtils.isBlank(householdID)) {
-					resultList.add(new ValidationMessage($.householdID, "Bei fehlender EGID muss die Haushalt ID gesetzt sein"));
+					validationMessages.add(new ValidationMessage($.householdID, "Bei fehlender EGID muss die Haushalt ID gesetzt sein"));
 				}
 			}
 		}
 		if (mailAddress == null || mailAddress.isEmpty()) {
-			resultList.add(new ValidationMessage($.mailAddress, "Postadresse erforderlich"));
+			validationMessages.add(new ValidationMessage($.mailAddress, "Postadresse erforderlich"));
 		}
+		return validationMessages;
 	}
 
 }

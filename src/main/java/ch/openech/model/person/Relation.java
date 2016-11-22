@@ -1,12 +1,15 @@
 package  ch.openech.model.person;
 
+import java.util.List;
+
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
-import org.minimalj.model.validation.Validatable;
+import org.minimalj.model.validation.Validation;
+import org.minimalj.model.validation.ValidationMessage;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.model.code.BasedOnLaw;
@@ -14,7 +17,7 @@ import ch.openech.model.common.Address;
 import ch.openech.model.person.types.TypeOfRelationship;
 import ch.openech.model.types.YesNo;
 
-public class Relation implements Validatable, Rendering {
+public class Relation implements Validation, Rendering {
 
 	public static final Relation $ = Keys.of(Relation.class);
 	
@@ -117,12 +120,12 @@ public class Relation implements Validatable, Rendering {
 	}
 
 	@Override
-	public String validate() {
+	public List<ValidationMessage> validate() {
 		if (partner == null) {
 			if (!isParent()) {
-				return "Person muss gesetzt sein";
+				return Validation.message($.partner, "Person muss gesetzt sein");
 			} else if (address != null) {
-				return "Adresse darf nur gesetzt sein, wenn Person gesetzt ist";
+				return Validation.message($.address, "Adresse darf nur gesetzt sein, wenn Person gesetzt ist");
 			}
 		}
 		return null;

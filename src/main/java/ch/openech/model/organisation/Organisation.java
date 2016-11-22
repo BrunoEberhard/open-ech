@@ -146,7 +146,8 @@ public class Organisation implements Validation {
 	//
 	
 	@Override
-	public void validate(List<ValidationMessage> resultList) {
+	public List<ValidationMessage> validate() {
+		List<ValidationMessage> resultList = new ArrayList<>();
 		if (editMode == EditMode.IN_LIQUIDATION || editMode == EditMode.LIQUIDATION) {
 			EmptyValidator.validate(resultList, this, Organisation.$.liquidationReason);
 			if (editMode == EditMode.IN_LIQUIDATION) {
@@ -162,6 +163,7 @@ public class Organisation implements Validation {
 				EmptyValidator.validate(resultList, this, Organisation.$.arrivalDate);
 			}
 		}
+		return resultList;
 	}
 
 	public String getId() {

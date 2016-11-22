@@ -1,6 +1,7 @@
 package  ch.openech.model.person;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
@@ -114,9 +115,13 @@ public class Occupation implements Validation, Rendering {
 	}
 
 	@Override
-	public void validate(List<ValidationMessage> resultList) {
+	public List<ValidationMessage> validate() {
 		if (echSchema.kindOfEmploymentMandatory()) {
+			List<ValidationMessage> resultList = new ArrayList<>();
 			EmptyValidator.validate(resultList, this, $.kindOfEmployment);
+			return resultList;
+		} else {
+			return null;
 		}
 	}
 	

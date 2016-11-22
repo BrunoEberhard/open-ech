@@ -6,7 +6,6 @@ import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.model.validation.Validatable;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
@@ -14,7 +13,7 @@ import org.minimalj.util.mock.Mocking;
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.common.Canton;
 
-public class CantonFormElement extends AbstractFormElement<Canton> implements Mocking, Validatable {
+public class CantonFormElement extends AbstractFormElement<Canton> implements Mocking {
 	
 	private Input<String> textField;
 
@@ -34,11 +33,17 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 
 	@Override
 	public Canton getValue() {
-		Canton canton = null;
-		if (!StringUtils.isEmpty(textField.getValue())) {
-			canton = Codes.findCode(Canton.class, textField.getValue());
+		String text = textField.getValue();
+		if (!StringUtils.isEmpty(text)) {
+			Canton canton = Codes.findCode(Canton.class, textField.getValue());
+			if (canton == null) {
+				canton = new Canton();
+				canton.id = textField.getValue();
+			}
+			return canton;
+		} else {
+			return null;
 		}
-		return canton;
 	}		
 	
 	@Override
@@ -55,13 +60,13 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 		setValue(DataGenerator.canton());
 	}
 
-	@Override
-	public String validate() {
-		if (!StringUtils.isEmpty(textField.getValue())) {
-			Canton canton = Codes.findCode(Canton.class, textField.getValue());
-			if (canton == null) return "Ungültige Eingabe";
-		}
-		return null;
-	}
+//	@Override
+//	public String validate() {
+//		if (!StringUtils.isEmpty(textField.getValue())) {
+//			Canton canton = Codes.findCode(Canton.class, textField.getValue());
+//			if (canton == null) return "Ungültige Eingabe";
+//		}
+//		return null;
+//	}
 
 }

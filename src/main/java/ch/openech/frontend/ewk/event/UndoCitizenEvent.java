@@ -1,6 +1,7 @@
 package ch.openech.frontend.ewk.event;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -93,9 +94,11 @@ public class UndoCitizenEvent extends PersonEventEditor<UndoCitizenData> {
 		public LocalDate expatriationDate;
 		
 		@Override
-		public void validate(List<ValidationMessage> resultList) {
+		public List<ValidationMessage> validate() {
+			List<ValidationMessage> resultList = new ArrayList<>();
 			Person.validateEventNotBeforeBirth(resultList, person, expatriationDate, PlaceOfOrigin.$.expatriationDate);
 			validateExpatriationNotBeforeNaturalization(placeOfOrigin, resultList);
+			return resultList;
 		}
 		
 		@BusinessRule("Datum Bürgerrechtsentlassung kann nicht vor dem Datum der Einbürgerung sein")

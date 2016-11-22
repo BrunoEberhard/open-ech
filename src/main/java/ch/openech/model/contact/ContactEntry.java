@@ -1,6 +1,7 @@
 package  ch.openech.model.contact;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -128,7 +129,8 @@ public class ContactEntry implements Validation, Rendering {
 	}
 
 	@Override
-	public void validate(List<ValidationMessage> validationMessages) {
+	public List<ValidationMessage> validate() {
+		List<ValidationMessage> validationMessages = new ArrayList<ValidationMessage>();
 		if (dateFrom != null && dateTo != null) {
 			if (dateFrom.isAfter(dateTo)) {
 				validationMessages.add(new ValidationMessage($.dateTo, "Zeitraum ungültig"));
@@ -160,6 +162,7 @@ public class ContactEntry implements Validation, Rendering {
 				}
 			}
 		}
+		return validationMessages;
 	}
 	
 }

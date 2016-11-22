@@ -1,5 +1,6 @@
 package ch.openech.datagenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
@@ -54,17 +55,19 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData, Void> {
 		public Integer numberOfOrganisations;
 
 		@Override
-		public void validate(List<ValidationMessage> resultList) {
+		public List<ValidationMessage> validate() {
+			List<ValidationMessage> validationMessages = new ArrayList<ValidationMessage>();
 			boolean person = numberOfPersons != null && numberOfPersons > 0;
 			boolean organisation = numberOfOrganisations  != null && numberOfOrganisations > 0;
 			
 			if (!person && !organisation) {
-				resultList.add(new ValidationMessage(GeneratePersonData.$.numberOfPersons, "Anzahl Personen oder Unternehmen wählen"));
+				validationMessages.add(new ValidationMessage(GeneratePersonData.$.numberOfPersons, "Anzahl Personen oder Unternehmen wählen"));
 			}
 			
 			if (organisation && numberOfOrganisations > 110) {
-				resultList.add(new ValidationMessage(GeneratePersonData.$.numberOfOrganisations, "So viele Testdatensätze existieren nicht"));
+				validationMessages.add(new ValidationMessage(GeneratePersonData.$.numberOfOrganisations, "So viele Testdatensätze existieren nicht"));
 			}
+			return validationMessages;
 		}
 	}
 

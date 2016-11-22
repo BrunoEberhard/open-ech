@@ -60,9 +60,11 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 		}
 		
 		@Override
-		public void validate(List<ValidationMessage> resultList) {
+		public List<ValidationMessage> validate() {
+			List<ValidationMessage> resultList = new ArrayList<>();
 			validate(resultList, partner1, partner2);
 			validateNamesNotBlank(resultList);
+			return resultList;
 		}
 		
 		private static void validate(List<ValidationMessage> validationMessages, Person person1, Person person2) {
