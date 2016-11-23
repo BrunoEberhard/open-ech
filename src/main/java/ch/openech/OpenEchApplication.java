@@ -19,18 +19,23 @@
 package ch.openech;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.minimalj.application.Application;
+import org.minimalj.application.DevMode;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
 import org.minimalj.frontend.page.HtmlPage;
 import org.minimalj.frontend.page.Page;
+import org.minimalj.frontend.page.PageAction;
 import org.minimalj.frontend.page.SearchPage;
+import org.minimalj.metamodel.model.MjModel;
+import org.minimalj.metamodel.page.EntityTablePage;
 import org.minimalj.security.Subject;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
@@ -69,7 +74,7 @@ public class OpenEchApplication extends Application {
 	
 	@Override
 	protected Set<String> getResourceBundleNames() {
-		return Collections.singleton("ch.openech.resources.OpenEch");
+		return new TreeSet<String>(Arrays.asList("ch.openech.resources.OpenEch", "MjModel"));
 	}
 
 	@Override
@@ -163,6 +168,13 @@ public class OpenEchApplication extends Application {
 		ActionGroup actionGroupSettings = new ActionGroup("Einstellungen");
 		actionGroupSettings.add(new PreferencesEditor());
 		actions.add(actionGroupSettings);
+
+		if (DevMode.isActive()) {
+			ActionGroup actionGroup = new ActionGroup("Development");
+			MjModel model = new MjModel(Person.class, Organisation.class);
+			actionGroup.add(new PageAction(new EntityTablePage(model)));
+			actions.add(actionGroup);
+		}
 		
 		return actions;
 	}
