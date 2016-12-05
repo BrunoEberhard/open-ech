@@ -1,6 +1,7 @@
 package  ch.openech.model.person;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
+import org.minimalj.model.annotation.TechnicalField;
+import org.minimalj.model.annotation.TechnicalField.TechnicalFieldType;
 import org.minimalj.model.validation.EmptyValidator;
 import org.minimalj.model.validation.Validation;
 import org.minimalj.model.validation.ValidationMessage;
@@ -47,7 +50,20 @@ public class Person implements Validation {
 
 	public Object id;
 	public int version;
+	public boolean historized;
 	
+	@TechnicalField(TechnicalFieldType.EDIT_USER) @Size(255)
+	public String editUser;
+
+	@TechnicalField(TechnicalFieldType.CREATE_USER) @Size(255)
+	public String createUser;
+
+	@TechnicalField(TechnicalFieldType.EDIT_DATE)
+	public LocalDateTime editDate;
+
+	@TechnicalField(TechnicalFieldType.CREATE_DATE)
+	public LocalDateTime createDate;
+
 	// Der eCH - Event, mit dem die aktuelle Version der Person erstellt oder
 	// verändert wurde
 	public Event event;

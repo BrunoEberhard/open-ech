@@ -50,7 +50,8 @@ public class Organisation implements Validation {
 	
 	public Object id;
 	public int version;
-	
+	public boolean historized;
+
 	// 97 : Identification
 	public final UidStructure uid = new UidStructure(); 
 	
