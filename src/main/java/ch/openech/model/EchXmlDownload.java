@@ -57,6 +57,7 @@ public class EchXmlDownload {
 		if (locations.contains(rootNamespaceLocation)) {
 			return false;
 		}
+		locations.add(rootNamespaceLocation);
 		
 		try {
 			return download(rootNamespaceLocation);
@@ -69,17 +70,15 @@ public class EchXmlDownload {
 	private boolean download(String namespaceLocation) throws XMLStreamException, IOException {
 		String fileName = namespaceLocation.substring(namespaceLocation.lastIndexOf("/"));
 		File file = new File("src/main/xml/ch/ech/xmlns" + fileName);
-		if (file.exists()) {
-			return true;
-		}
-		
-		URL url = new URL(namespaceLocation);
-		try (ReadableByteChannel rbc = Channels.newChannel(url.openStream())) {
-			try (FileOutputStream fos = new FileOutputStream(file)) {
-				fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+		if (!file.exists()) {
+			URL url = new URL(namespaceLocation);
+			try (ReadableByteChannel rbc = Channels.newChannel(url.openStream())) {
+				try (FileOutputStream fos = new FileOutputStream(file)) {
+					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+				}
+			} catch (FileNotFoundException f) {
+				return false;
 			}
-		} catch (FileNotFoundException f) {
-			return false;
 		}
 		
 		process(file);
@@ -128,7 +127,8 @@ public class EchXmlDownload {
 	private void imprt(StartElement startElement) throws XMLStreamException, IOException {
 		// 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0011/8" schemaLocation="http://www.ech.ch/xmlns/eCH-0011/8/eCH-0011-8-1.xsd"/>
 		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
-		download(schemaLocation);
+		int schema = EchNamespaceUtil.extractSchemaNumber(schemaLocation);
+		download(schema);
 	}
 
 	public static void main(String... args) {
