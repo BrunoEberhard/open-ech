@@ -36,13 +36,8 @@ public class PersonHistoryPage extends EchEventTablePage<Person, PersonPage> {
 //		Collections.reverse(times);
 
 		List<EchEvent<Person>> versions = new ArrayList<>();
-		EchEvent<Person> version = new EchEvent<Person>();
-		version.object = person;
-		version.time = getTime(person);
-		version.description = getDescription(person);
-		versions.add(version);
 		for (Person p : persons) {
-			version = new EchEvent<Person>();
+			EchEvent<Person> version = new EchEvent<>();
 			version.object = p;
 			version.version = "" + p.version;
 			version.time = getTime(p);

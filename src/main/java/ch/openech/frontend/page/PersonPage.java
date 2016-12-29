@@ -73,6 +73,7 @@ public class PersonPage extends ObjectPage<Person> {
 
 	private final EchSchema echSchema;
 	private int version;
+	private boolean historized;
 	private transient PersonActionGroup actionGroup;
 	private transient PersonHistoryPage historyPage;
 	
@@ -80,18 +81,21 @@ public class PersonPage extends ObjectPage<Person> {
 		super(person);
 		this.echSchema = echSchema;
 		this.version = person.version;
+		this.historized = person.historized;
 	}
 
 	public PersonPage(EchSchema echSchema, Object personId) {
 		super(Person.class, personId);
 		this.echSchema = echSchema;
 		this.version = 0;
+		this.historized = false;
 	}
 	
 	@Override
 	public void setObject(Person person) {
 		super.setObject(person);
 		this.version = person.version;
+		this.historized = person.historized;
 		if (actionGroup != null) {
 			actionGroup.refresh();
 		}
@@ -106,7 +110,7 @@ public class PersonPage extends ObjectPage<Person> {
 	
 	@Override
 	public List<Action> getActions() {
-		if (version == 0 && Subject.getCurrent().hasRole(OpenEchRoles.modify)) {
+		if (!historized && Subject.getCurrent().hasRole(OpenEchRoles.modify)) {
 			if (actionGroup == null) {
 				actionGroup = new PersonActionGroup();
 			}
@@ -119,7 +123,7 @@ public class PersonPage extends ObjectPage<Person> {
 	@Override
 	public Person load() {
 		Person person;
-		if (version == 0) {
+		if (!historized) {
 			person = Backend.read(Person.class, getObjectId());
 		} else {
 			person = Backend.execute(new ReadEntityTransaction<Person>(Person.class, getObjectId(), version));
@@ -319,8 +323,7 @@ public class PersonPage extends ObjectPage<Person> {
 		public void refresh() {
 			Person person = PersonPage.this.getObject();
 			
-			boolean isHistorical = person.version != 0;
-			boolean isPerson = person != null && !isHistorical;
+			boolean isPerson = person != null && !person.historized;
 			
 			boolean isAlive = isPerson && person.isAlive();
 			boolean isMarried = isPerson && person.isMarried();

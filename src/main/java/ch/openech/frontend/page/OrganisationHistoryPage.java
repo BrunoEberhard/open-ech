@@ -36,13 +36,8 @@ public class OrganisationHistoryPage extends EchEventTablePage<Organisation, Org
 //		Collections.reverse(times);
 
 		List<EchEvent<Organisation>> versions = new ArrayList<>();
-		EchEvent<Organisation> version = new EchEvent<Organisation>();
-		version.object = organisation;
-		version.time = getTime(organisation);
-		version.description = getDescription(organisation);
-		versions.add(version);
 		for (Organisation p : organisations) {
-			version = new EchEvent<Organisation>();
+			EchEvent<Organisation> version = new EchEvent<>();
 			version.object = p;
 			version.version = "" + p.version;
 			version.time = getTime(p);

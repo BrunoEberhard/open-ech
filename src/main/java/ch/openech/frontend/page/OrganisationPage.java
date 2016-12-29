@@ -38,19 +38,22 @@ import ch.openech.xml.write.EchSchema;
 public class OrganisationPage extends ObjectPage<Organisation> {
 
 	private final EchSchema echSchema;
-	private int version;
+	private final int version;
+	private final boolean historized;
 	private transient OrganisationActionGroup actionGroup;
 
 	public OrganisationPage(EchSchema echSchema, Organisation organisation) {
 		super(organisation);
 		this.echSchema = echSchema;
 		this.version = organisation.version;
+		this.historized = organisation.historized;
 	}
 
 	public OrganisationPage(EchSchema echSchema, Object organisationId) {
 		super(Organisation.class, organisationId);
 		this.echSchema = echSchema;
 		this.version = 0;
+		this.historized = false;
 	}
 	
 	public EchSchema getEchSchema() {
@@ -72,7 +75,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 	@Override
 	public Organisation load() {
 		Organisation organisation;
-		if (version == 0) {
+		if (!historized) {
 			organisation = Backend.read(Organisation.class, getObjectId());
 		} else {
 			organisation = Backend.execute(new ReadEntityTransaction<Organisation>(Organisation.class, getObjectId(), version));
@@ -173,8 +176,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 
 		@BusinessRule("Welche Aktion in welchem Zustand von Unternehmen ausgeführt werden darf")
 		public void update(Organisation organisation) {
-			boolean isHistorical = organisation.version != 0;
-			boolean isOrganisation = organisation != null && !isHistorical;
+			boolean isOrganisation = organisation != null && !historized;
 
 //			boolean isAlive = isOrganisation && organisation.isAlive();
 	//
