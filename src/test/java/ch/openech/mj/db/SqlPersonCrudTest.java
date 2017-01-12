@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.minimalj.persistence.sql.SqlPersistence;
+import org.minimalj.persistence.sql.SqlRepository;
 import org.minimalj.persistence.sql.Table;
 import org.minimalj.util.resources.Resources;
 
@@ -18,19 +18,19 @@ import ch.openech.model.types.Sex;
 
 public class SqlPersonCrudTest {
 
-	private static SqlPersistence persistence;
+	private static SqlRepository repository;
 
 	@BeforeClass
 	public static void setupPersistence() {
 		Resources.addResourceBundleName("ch.openech.resources.OpenEch");
-		persistence = new SqlPersistence(SqlPersistence.embeddedDataSource(), Person.class, Organisation.class);
-		persistence.insert(CountryIdentification.createSwiss());
+		repository = new SqlRepository(SqlRepository.embeddedDataSource(), Person.class, Organisation.class);
+		repository.insert(CountryIdentification.createSwiss());
 	}
 
 	@Test
 	@Ignore("Nicht mehr möglich, da Adresse kein Identifiable")
 	public void testCrud() {
-		Table<Address> addressTable = persistence.getTable(Address.class);
+		Table<Address> addressTable = repository.getTable(Address.class);
 		
 		Address address = new Address();
 		address.street = "Grütstrasse";
@@ -57,7 +57,7 @@ public class SqlPersonCrudTest {
 	
 	@Test
 	public void testCrudCountry() {
-		Table<CountryIdentification> countryTable = persistence.getTable(CountryIdentification.class);
+		Table<CountryIdentification> countryTable = repository.getTable(CountryIdentification.class);
 		
 		CountryIdentification country = new CountryIdentification();
 		country.id = 123;
@@ -78,7 +78,7 @@ public class SqlPersonCrudTest {
 	
 	@Test
 	public void testCrudPerson() {
-		Table<Person> personTable = persistence.getTable(Person.class);
+		Table<Person> personTable = repository.getTable(Person.class);
 		
 		Person person = new Person();
 		person.officialName = "Eberhard";
@@ -107,7 +107,7 @@ public class SqlPersonCrudTest {
 	
 	@Test
 	public void testInsertPerson2() {
-		Table<Person> personTable = persistence.getTable(Person.class);
+		Table<Person> personTable = repository.getTable(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";
@@ -148,7 +148,7 @@ public class SqlPersonCrudTest {
 
 	@Test
 	public void testUpdatePerson() {
-		Table<Person> personTable = persistence.getTable(Person.class);
+		Table<Person> personTable = repository.getTable(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";
@@ -187,7 +187,7 @@ public class SqlPersonCrudTest {
 	
 	@Test
 	public void testUpdateSubTable() {
-		Table<Person> personTable = persistence.getTable(Person.class);
+		Table<Person> personTable = repository.getTable(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";
@@ -225,7 +225,7 @@ public class SqlPersonCrudTest {
 	
 	@Test
 	public void testChangePersonIdentification() {
-		Table<Person> personTable = persistence.getTable(Person.class);
+		Table<Person> personTable = repository.getTable(Person.class);
 
 		Person person = new Person();
 		person.officialName = "Eberhard";

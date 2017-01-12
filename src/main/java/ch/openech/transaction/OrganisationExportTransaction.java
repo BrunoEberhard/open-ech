@@ -1,12 +1,12 @@
 package ch.openech.transaction;
 
-import static ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.REPORTED_ORGANISATION;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.persistence.sql.SqlPersistence;
+import org.minimalj.persistence.sql.SqlRepository;
 import org.minimalj.transaction.OutputStreamTransaction;
 
 import ch.openech.model.organisation.Organisation;
@@ -32,8 +32,8 @@ public class OrganisationExportTransaction extends OutputStreamTransaction<Integ
 	public Integer execute() {
 		int numberOfOrganisations = 0;
 		try {
-			SqlPersistence sqlPersistence = (SqlPersistence) Backend.getInstance().getPersistence();
-			int maxId = sqlPersistence.execute(Integer.class, "SELECT COUNT(ID) FROM " + sqlPersistence.name(Organisation.class));
+			SqlRepository sqlRepository = (SqlRepository) Backend.getInstance().getRepository();
+			int maxId = sqlRepository.execute(Integer.class, "SELECT COUNT(ID) FROM " + sqlRepository.name(Organisation.class));
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
 			

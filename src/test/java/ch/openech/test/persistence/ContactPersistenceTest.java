@@ -2,7 +2,7 @@ package ch.openech.test.persistence;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.minimalj.persistence.sql.SqlPersistence;
+import org.minimalj.persistence.sql.SqlRepository;
 import org.minimalj.persistence.sql.Table;
 
 import ch.openech.model.contact.Contact;
@@ -13,8 +13,8 @@ import ch.openech.model.types.ContactCategory;
 
 public class ContactPersistenceTest {
 
-	private static SqlPersistence persistence = new SqlPersistence(SqlPersistence.embeddedDataSource(), Contact.class);
-	private static Table<Contact> table = persistence.getTable(Contact.class);
+	private static SqlRepository repository = new SqlRepository(SqlRepository.embeddedDataSource(), Contact.class);
+	private static Table<Contact> table = repository.getTable(Contact.class);
 	
 	@Test
 	public void insertContactWithoutEntriesTest() throws Exception {
