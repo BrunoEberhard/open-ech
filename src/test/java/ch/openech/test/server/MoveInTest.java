@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
-import org.minimalj.persistence.criteria.By;
+import org.minimalj.repository.criteria.By;
 
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.code.NationalityStatus;

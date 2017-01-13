@@ -6,7 +6,7 @@ import java.util.List;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.persistence.sql.EmptyObjects;
+import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.XmlEditor;
@@ -17,7 +17,7 @@ import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.common.Place;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0020;
@@ -83,7 +83,7 @@ public class BirthEvent extends XmlEditor<Person, Person> {
 		Person person = new Person();
 		person.editMode = PersonEditMode.BIRTH;
 		
-		OpenEchPreferences preferences = EchPersistence.getPreferences();
+		OpenEchPreferences preferences = EchRepository.getPreferences();
 		if (preferences.preferencesDefaultsData.residence != null) {
 			person.placeOfBirth = new Place();
 			person.placeOfBirth.municipalityIdentification = CloneHelper.clone(preferences.preferencesDefaultsData.residence);

@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
-import org.minimalj.persistence.criteria.By;
+import org.minimalj.repository.criteria.By;
 import org.minimalj.util.Codes;
 import org.minimalj.util.IdUtils;
 

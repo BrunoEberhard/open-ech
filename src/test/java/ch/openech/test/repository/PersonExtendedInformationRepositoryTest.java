@@ -1,4 +1,4 @@
-package ch.openech.test.persistence;
+package ch.openech.test.repository;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import ch.openech.model.person.PersonExtendedInformation;
 import ch.openech.model.types.YesNo;
 import ch.openech.test.server.AbstractServerTest;
 
-public class PersonExtendedInformationPersistenceTest extends AbstractServerTest {
+public class PersonExtendedInformationRepositoryTest extends AbstractServerTest {
 
 	@Test
 	public void insertInformationTest() throws Exception {

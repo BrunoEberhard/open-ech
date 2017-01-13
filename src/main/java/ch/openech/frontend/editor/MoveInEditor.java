@@ -15,7 +15,7 @@ import ch.openech.frontend.org.OrganisationPanel;
 import ch.openech.frontend.page.OrganisationPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.organisation.Organisation;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 import ch.openech.transaction.OrganisationTransaction;
 import ch.openech.xml.write.EchSchema;
 
@@ -37,7 +37,7 @@ public class MoveInEditor extends XmlEditor<Organisation, Organisation> implemen
 	}
 
 	static Organisation newInstance() {
-		OpenEchPreferences preferences = EchPersistence.getPreferences();
+		OpenEchPreferences preferences = EchRepository.getPreferences();
 
 		Organisation organisation = new Organisation();
 		organisation.languageOfCorrespondance = preferences.preferencesDefaultsData.language;

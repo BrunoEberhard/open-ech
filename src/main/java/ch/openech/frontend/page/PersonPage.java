@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.backend.persistence.ReadEntityTransaction;
+import org.minimalj.backend.repository.ReadEntityTransaction;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
@@ -65,7 +65,7 @@ import ch.openech.frontend.ewk.event.correct.CorrectResidencePermitEvent;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonEditMode;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 import ch.openech.util.BusinessRule;
 import ch.openech.xml.write.EchSchema;
 
@@ -224,7 +224,7 @@ public class PersonPage extends ObjectPage<Person> {
 			addressLock = new AddressLockEvent(PersonPage.this);
 			paperLock = new PaperLockEvent(PersonPage.this);
 			
-			OpenEchPreferences preferences = EchPersistence.getPreferences();
+			OpenEchPreferences preferences = EchRepository.getPreferences();
 			birthChild = new BirthChildEvent(PersonPage.this, preferences);
 
 			historyPage = new PersonHistoryPage(PersonPage.this);

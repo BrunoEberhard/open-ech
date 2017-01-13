@@ -2,7 +2,7 @@ package ch.openech.transaction;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.model.EnumUtils;
-import org.minimalj.persistence.criteria.By;
+import org.minimalj.repository.criteria.By;
 import org.minimalj.transaction.Transaction;
 
 import ch.openech.model.code.FederalRegister;

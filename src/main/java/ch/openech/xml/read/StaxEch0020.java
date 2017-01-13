@@ -1,7 +1,9 @@
 package ch.openech.xml.read;
 
 import static ch.openech.model.XmlConstants.*;
-import static ch.openech.xml.read.StaxEch.*;
+import static ch.openech.xml.read.StaxEch.enuum;
+import static ch.openech.xml.read.StaxEch.skip;
+import static ch.openech.xml.read.StaxEch.token;
 
 import java.io.InputStream;
 import java.io.StringReader;
@@ -30,7 +32,7 @@ import ch.openech.model.person.Relation;
 import ch.openech.model.person.types.ReasonOfAcquisition;
 import ch.openech.model.types.TypeOfResidence;
 import ch.openech.model.types.YesNo;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 
 public class StaxEch0020 {
 	// hack: Globale Variable als 2. Rückgabewert von simplePersonEventPerson and simplePersonEvent
@@ -43,7 +45,7 @@ public class StaxEch0020 {
 	public StaxEch0020() {
 	}
 	
-	// Persistence
+	// Repository
 	
 	public void insertPerson(Person person) {
 		person.event = e;
@@ -110,7 +112,7 @@ public class StaxEch0020 {
 	}
 	
 	public Person getPerson(PersonIdentification personIdentification) {
-		return EchPersistence.getByIdentification(personIdentification);
+		return EchRepository.getByIdentification(personIdentification);
 	}
 	
 	//
@@ -306,7 +308,7 @@ public class StaxEch0020 {
 		}
 		PersonIdentification parentIdentification = relation.partner.personIdentification;
 		if (parentIdentification == null) return;
-		Person parent = EchPersistence.getByIdentification(parentIdentification);
+		Person parent = EchRepository.getByIdentification(parentIdentification);
 		person.typeOfResidence = parent.typeOfResidence;
 		person.residence.reportingMunicipality = parent.residence.reportingMunicipality;
 		person.residence.setSecondary(parent.residence.secondary);
@@ -344,7 +346,7 @@ public class StaxEch0020 {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals(PERSON_IDENTIFICATION)) {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
-					Person person = EchPersistence.getByIdentification(personIdentification);
+					Person person = EchRepository.getByIdentification(personIdentification);
 					if (person != null) {
 						relation.partner.personIdentification = person.personIdentification();
 					} else {

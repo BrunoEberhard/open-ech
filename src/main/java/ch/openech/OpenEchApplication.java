@@ -59,7 +59,7 @@ import ch.openech.frontend.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.frontend.preferences.PreferencesEditor;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Person;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 import ch.openech.xml.write.EchSchema;
 
 public class OpenEchApplication extends Application {
@@ -180,7 +180,7 @@ public class OpenEchApplication extends Application {
 	}
 
 	private void updateEwkNamespaceContext() {
-		OpenEchPreferences preferences = EchPersistence.getPreferences();
+		OpenEchPreferences preferences = EchRepository.getPreferences();
 		ApplicationSchemaData applicationData = preferences.applicationSchemaData;
 		if (applicationData.schema20 != null) {
 			if (ewkSchema == null || !applicationData.schema20.equals(ewkSchema.getVersion())) {

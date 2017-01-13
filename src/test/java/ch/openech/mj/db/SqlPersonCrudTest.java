@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.minimalj.persistence.sql.SqlRepository;
-import org.minimalj.persistence.sql.Table;
+import org.minimalj.repository.sql.SqlRepository;
+import org.minimalj.repository.sql.Table;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.common.Address;
@@ -21,7 +21,7 @@ public class SqlPersonCrudTest {
 	private static SqlRepository repository;
 
 	@BeforeClass
-	public static void setupPersistence() {
+	public static void setupRepository() {
 		Resources.addResourceBundleName("ch.openech.resources.OpenEch");
 		repository = new SqlRepository(SqlRepository.embeddedDataSource(), Person.class, Organisation.class);
 		repository.insert(CountryIdentification.createSwiss());
@@ -251,8 +251,8 @@ public class SqlPersonCrudTest {
 	
 //	@Test @Ignore("Not possible as long as id an UUID")
 //	public void testMaxPerson() {
-//		int startMaxId = persistence.execute(Integer.class, "select max(id) from Person");
-//		Table<Person> personTable = persistence.getTable(Person.class);
+//		int startMaxId = repository.execute(Integer.class, "select max(id) from Person");
+//		Table<Person> personTable = repository.getTable(Person.class);
 //		
 //		Person person = new Person();
 //		person.officialName = "Eberhard";
@@ -265,7 +265,7 @@ public class SqlPersonCrudTest {
 //		
 //		personTable.insert(person);
 //		
-//		int afterInsertMaxId = persistence.execute(Integer.class, "select max(id) from Person");
+//		int afterInsertMaxId = repository.execute(Integer.class, "select max(id) from Person");
 //		Assert.assertEquals(startMaxId + 1, afterInsertMaxId);
 //	}
 }

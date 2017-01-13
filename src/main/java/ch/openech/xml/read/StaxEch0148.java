@@ -26,7 +26,7 @@ import ch.openech.model.Event;
 import ch.openech.model.code.TypeOfResidenceOrganisation;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.organisation.OrganisationIdentification;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 
 public class StaxEch0148 {
 	private Event e;
@@ -167,7 +167,7 @@ public class StaxEch0148 {
 	}
 	
 	public Organisation getOrganisation(OrganisationIdentification organisationIdentification) {
-		return EchPersistence.getByIdentification(organisationIdentification);
+		return EchRepository.getByIdentification(organisationIdentification);
 	}
 
 	//
@@ -201,7 +201,7 @@ public class StaxEch0148 {
 				String startName = startElement.getName().getLocalPart();
 				if (StringUtils.equals(startName, ORGANISATION_IDENTIFICATION)) {
 					OrganisationIdentification organisationIdentification = StaxEch0097.organisationIdentification(xml);
-					organisation = EchPersistence.getByIdentification(organisationIdentification);
+					organisation = EchRepository.getByIdentification(organisationIdentification);
 					if (StringUtils.equals(eventName, CORRECT_LIQUIDATION)) {
 						organisation.liquidationEntryDate = null;
 						organisation.liquidationDate.value = null;

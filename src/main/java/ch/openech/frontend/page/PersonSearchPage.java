@@ -6,13 +6,13 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.SearchPage;
-import org.minimalj.persistence.criteria.By;
+import org.minimalj.repository.criteria.By;
 
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.EchSchema0020;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonSearch;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 import ch.openech.xml.write.EchSchema;
 
 
@@ -44,7 +44,7 @@ public class PersonSearchPage extends SearchPage<PersonSearch, PersonPage> {
 	@Override
 	public PersonPage createDetailPage(PersonSearch personSearch) {
 		Person person = load(personSearch); 
-		OpenEchPreferences preferences = EchPersistence.getPreferences();
+		OpenEchPreferences preferences = EchRepository.getPreferences();
 		EchSchema0020 schema0020 = preferences.applicationSchemaData.schema20;
 		String version = schema0020.getVersion() + "." + schema0020.getMinorVersion();
 		EchSchema schema = EchSchema.getNamespaceContext(20, version);

@@ -8,7 +8,7 @@ import ch.openech.model.EchFormats;
 
 public class LocalPersonId {
 
-	// Wird von der Persistence verwaltet
+	// Wird vom Repository verwaltet
 	public Object id;
 
 	@Size(EchFormats.baseName)

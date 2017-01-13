@@ -3,7 +3,7 @@ package ch.openech.transaction;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.persistence.criteria.By;
+import org.minimalj.repository.criteria.By;
 import org.minimalj.security.Subject;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.IdUtils;
@@ -15,7 +15,7 @@ import ch.openech.model.organisation.OrganisationIdentification;
 import ch.openech.model.person.Person;
 import ch.openech.model.person.PersonIdentification;
 
-public class EchPersistence {
+public class EchRepository {
 
 	public static Person getByIdentification(PersonIdentification personIdentification) {
 		String localId = null;

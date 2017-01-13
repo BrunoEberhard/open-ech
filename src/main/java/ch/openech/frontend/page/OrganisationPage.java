@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.backend.persistence.ReadEntityTransaction;
+import org.minimalj.backend.repository.ReadEntityTransaction;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;

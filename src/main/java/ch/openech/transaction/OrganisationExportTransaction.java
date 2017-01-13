@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.persistence.sql.SqlRepository;
+import org.minimalj.repository.sql.SqlRepository;
 import org.minimalj.transaction.OutputStreamTransaction;
 
 import ch.openech.model.organisation.Organisation;

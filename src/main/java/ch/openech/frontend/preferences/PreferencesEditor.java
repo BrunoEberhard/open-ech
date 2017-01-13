@@ -3,7 +3,7 @@ package ch.openech.frontend.preferences;
 import org.minimalj.frontend.editor.Editor;
 import org.minimalj.frontend.form.Form;
 
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 
 public class PreferencesEditor extends Editor<OpenEchPreferences, Void> {
 	
@@ -17,12 +17,12 @@ public class PreferencesEditor extends Editor<OpenEchPreferences, Void> {
 	
 	@Override
 	protected OpenEchPreferences createObject() {
-		return EchPersistence.getPreferences();
+		return EchRepository.getPreferences();
 	}
 
 	@Override
 	protected Void save(OpenEchPreferences preferences) {
-		EchPersistence.savePreferences(preferences);
+		EchRepository.savePreferences(preferences);
 		return null;
 	}
 	

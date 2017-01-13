@@ -10,7 +10,7 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.page.PageAction;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.persistence.criteria.By;
+import org.minimalj.repository.criteria.By;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.resources.Resources;
 

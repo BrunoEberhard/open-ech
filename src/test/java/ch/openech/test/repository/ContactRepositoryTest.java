@@ -1,9 +1,9 @@
-package ch.openech.test.persistence;
+package ch.openech.test.repository;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.minimalj.persistence.sql.SqlRepository;
-import org.minimalj.persistence.sql.Table;
+import org.minimalj.repository.sql.SqlRepository;
+import org.minimalj.repository.sql.Table;
 
 import ch.openech.model.contact.Contact;
 import ch.openech.model.contact.ContactEntry;
@@ -11,7 +11,7 @@ import ch.openech.model.contact.ContactEntryType;
 import ch.openech.model.types.ContactCategory;
 
 
-public class ContactPersistenceTest {
+public class ContactRepositoryTest {
 
 	private static SqlRepository repository = new SqlRepository(SqlRepository.embeddedDataSource(), Contact.class);
 	private static Table<Contact> table = repository.getTable(Contact.class);

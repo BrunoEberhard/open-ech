@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="OpenEch">
+    <wb-module deploy-name="openech">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/xml"/>
-        <dependent-module archiveName="derby-10.10.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="mariadb-java-client-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/bruno/.m2/repository/org/jumpmind/symmetric/jdbc/mariadb-java-client/1.1.1/mariadb-java-client-1.1.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/Minimal-J/Minimal-J">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <property name="context-root" value="OpenEch"/>
-        <property name="java-output-path" value="/OpenEch/classes"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <property name="context-root" value="openech"/>
+        <property name="java-output-path" value="/openech/target/classes"/>
     </wb-module>
 </project-modules>

@@ -15,7 +15,7 @@ import org.minimalj.frontend.page.Page;
 
 import ch.openech.model.SedexMessageInformation;
 import ch.openech.model.person.Person;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 import ch.openech.xml.write.EchSchema;
 
 public class SedexInputPage extends Page {
@@ -150,7 +150,7 @@ public class SedexInputPage extends Page {
 	}
 
 	private Person searchPerson(SedexMessageInformation envelope) {
-		return EchPersistence.getByIdentification(envelope.personIdentification);
+		return EchRepository.getByIdentification(envelope.personIdentification);
 	}
 	
 }

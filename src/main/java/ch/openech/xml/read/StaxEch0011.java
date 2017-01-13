@@ -25,7 +25,7 @@ import ch.openech.model.person.PersonIdentification;
 import ch.openech.model.person.PersonIdentificationLight;
 import ch.openech.model.person.PlaceOfOrigin;
 import ch.openech.model.person.SecondaryResidence;
-import ch.openech.transaction.EchPersistence;
+import ch.openech.transaction.EchRepository;
 
 public class StaxEch0011 {
 
@@ -219,7 +219,7 @@ public class StaxEch0011 {
 				String startName = startElement.getName().getLocalPart();			
 				if (startName.equals(PERSON_IDENTIFICATION)) {
 					PersonIdentification personIdentification = StaxEch0044.personIdentification(xml);
-					Person completePerson = EchPersistence.getByIdentification(personIdentification);
+					Person completePerson = EchRepository.getByIdentification(personIdentification);
 					if (completePerson != null) {
 						person.contactPerson.partner.personIdentification = completePerson.personIdentification();
 					} else {

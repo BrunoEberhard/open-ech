@@ -27,7 +27,7 @@ public class CatalogGenerator {
 			System.out.print(name.substring(0, 8));
 			System.out.print("/");
 			System.out.print(name.substring(9, 10));
-			System.out.print("\" uri=\"platform:/resource/OpenEch/src/main/xml/ch/ech/xmlns/");
+			System.out.print("\" uri=\"platform:/resource/openech/src/main/xml/ch/ech/xmlns/");
 			System.out.print(name);
 			System.out.println("\"/>");
 		}
@@ -45,7 +45,7 @@ public class CatalogGenerator {
 			System.out.print(name.substring(9, 10));
 			System.out.print("/");
 			System.out.print(name);
-			System.out.print("\" uri=\"platform:/resource/OpenEch/src/main/xml/ch/ech/xmlns/");
+			System.out.print("\" uri=\"platform:/resource/openech/src/main/xml/ch/ech/xmlns/");
 			System.out.print(name);
 			System.out.println("\"/>");
 		}

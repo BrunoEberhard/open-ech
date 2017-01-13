@@ -10,8 +10,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.minimalj.application.Application;
 import org.minimalj.backend.Backend;
-import org.minimalj.backend.persistence.DeleteAllTransaction;
-import org.minimalj.persistence.criteria.By;
+import org.minimalj.backend.repository.DeleteAllTransaction;
+import org.minimalj.repository.criteria.By;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;
