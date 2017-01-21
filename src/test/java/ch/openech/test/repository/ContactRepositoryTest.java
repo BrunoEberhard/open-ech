@@ -2,6 +2,7 @@ package ch.openech.test.repository;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.minimalj.repository.DataSourceFactory;
 import org.minimalj.repository.sql.SqlRepository;
 import org.minimalj.repository.sql.Table;
 
@@ -13,7 +14,7 @@ import ch.openech.model.types.ContactCategory;
 
 public class ContactRepositoryTest {
 
-	private static SqlRepository repository = new SqlRepository(SqlRepository.embeddedDataSource(), Contact.class);
+	private static SqlRepository repository = new SqlRepository(DataSourceFactory.embeddedDataSource(), Contact.class);
 	private static Table<Contact> table = repository.getTable(Contact.class);
 	
 	@Test

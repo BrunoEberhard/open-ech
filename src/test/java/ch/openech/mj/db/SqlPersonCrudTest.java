@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.minimalj.repository.DataSourceFactory;
 import org.minimalj.repository.sql.SqlRepository;
 import org.minimalj.repository.sql.Table;
 import org.minimalj.util.resources.Resources;
@@ -23,7 +24,7 @@ public class SqlPersonCrudTest {
 	@BeforeClass
 	public static void setupRepository() {
 		Resources.addResourceBundleName("ch.openech.resources.OpenEch");
-		repository = new SqlRepository(SqlRepository.embeddedDataSource(), Person.class, Organisation.class);
+		repository = new SqlRepository(DataSourceFactory.embeddedDataSource(), Person.class, Organisation.class);
 		repository.insert(CountryIdentification.createSwiss());
 	}
 
