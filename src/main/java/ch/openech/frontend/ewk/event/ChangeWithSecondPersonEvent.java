@@ -177,7 +177,7 @@ public abstract class ChangeWithSecondPersonEvent extends
 
 		@Override
 		protected void createSpecificForm(Form<ChangeWithSecondPersonEventData> formPanel) {
-			formPanel.line(Person.$.separation);
+			formPanel.line(ChangeWithSecondPersonEventData.$.separation);
 			formPanel.line(ChangeWithSecondPersonEventData.$.date);
 		}
 
