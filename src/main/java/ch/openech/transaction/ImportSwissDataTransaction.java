@@ -2,7 +2,7 @@ package ch.openech.transaction;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.model.EnumUtils;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 import org.minimalj.transaction.Transaction;
 
 import ch.openech.model.code.FederalRegister;
@@ -20,7 +20,7 @@ public class ImportSwissDataTransaction implements Transaction<Void> {
 
 	@Override
 	public Void execute() {
-		if (!Backend.read(CountryIdentification.class, By.all(), 1).isEmpty()) {
+		if (!Backend.find(CountryIdentification.class, By.limit(1)).isEmpty()) {
 			return null;
 		}
 		

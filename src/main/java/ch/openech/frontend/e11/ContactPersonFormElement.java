@@ -10,7 +10,7 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.frontend.page.PageAction;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.resources.Resources;
 
@@ -121,7 +121,7 @@ public class ContactPersonFormElement extends ObjectFormElement<ContactPerson> {
 		
 		@Override
 		public List<PersonSearch> search(String query) {
-			return Backend.read(PersonSearch.class, By.search(query), 100);
+			return Backend.find(PersonSearch.class, By.search(query).limit(100));
 		}
 
 	};

@@ -11,7 +11,7 @@ import org.junit.BeforeClass;
 import org.minimalj.application.Application;
 import org.minimalj.backend.Backend;
 import org.minimalj.backend.repository.DeleteAllTransaction;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;
@@ -48,7 +48,7 @@ public abstract class AbstractServerTest {
 	}
 
 	protected Person insertPerson(String vn) throws Exception {
-		List<Person> persons = Backend.read(Person.class, By.search(vn, Person.SEARCH_BY_VN), 2);
+		List<Person> persons = Backend.find(Person.class, By.search(vn, Person.SEARCH_BY_VN).limit(2));
 		if (persons.size() == 1) {
 			return persons.get(0);
 		} else if (persons.isEmpty()){

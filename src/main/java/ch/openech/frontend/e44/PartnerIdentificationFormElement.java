@@ -9,7 +9,7 @@ import org.minimalj.frontend.editor.SearchDialogAction;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 
 import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.model.person.PartnerIdentification;
@@ -77,7 +77,7 @@ public class PartnerIdentificationFormElement extends ObjectFormElement<PartnerI
 
 		@Override
 		public List<PersonSearch> search(String searchText) {
-			return Backend.read(PersonSearch.class, By.search(searchText), 100);
+			return Backend.find(PersonSearch.class, By.search(searchText));
 		}
 	}
 	

@@ -1,12 +1,12 @@
 package ch.openech.frontend.page;
 
-import static ch.openech.model.person.PersonSearch.*;
+import static ch.openech.model.person.PersonSearch.$;
 
 import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.page.SearchPage;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.model.EchSchema0020;
@@ -16,7 +16,7 @@ import ch.openech.transaction.EchRepository;
 import ch.openech.xml.write.EchSchema;
 
 
-public class PersonSearchPage extends SearchPage<PersonSearch, PersonPage> {
+public class PersonSearchPage extends SearchPage<PersonSearch> {
 
 	public static final Object[] FIELDS = {
 		$.firstName, //
@@ -34,7 +34,7 @@ public class PersonSearchPage extends SearchPage<PersonSearch, PersonPage> {
 
 	@Override
 	protected List<PersonSearch> load(String query) {
-		return Backend.read(PersonSearch.class, By.search(query), 100);
+		return Backend.find(PersonSearch.class, By.search(query));
 	}
 
 	private Person load(PersonSearch personSearch) {
@@ -52,10 +52,4 @@ public class PersonSearchPage extends SearchPage<PersonSearch, PersonPage> {
 		return new PersonPage(schema, person);
 	}
 
-	@Override
-	protected PersonPage updateDetailPage(PersonPage detailPage, PersonSearch personSearch) {
-		Person person = load(personSearch); 
-		detailPage.setObject(person);
-		return detailPage;
-	}
 }

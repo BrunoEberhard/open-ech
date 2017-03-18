@@ -32,10 +32,7 @@ import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.impl.swing.toolkit.SwingFrontend;
 import org.minimalj.frontend.page.HtmlPage;
 import org.minimalj.frontend.page.Page;
-import org.minimalj.frontend.page.PageAction;
 import org.minimalj.frontend.page.SearchPage;
-import org.minimalj.metamodel.model.MjModel;
-import org.minimalj.metamodel.page.EntityTablePage;
 import org.minimalj.security.Subject;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
@@ -74,7 +71,7 @@ public class OpenEchApplication extends Application {
 	
 	@Override
 	protected Set<String> getResourceBundleNames() {
-		return new TreeSet<String>(Arrays.asList("ch.openech.resources.OpenEch", "MjModel"));
+		return new TreeSet<String>(Arrays.asList("ch.openech.resources.OpenEch"));
 	}
 
 	@Override
@@ -171,8 +168,8 @@ public class OpenEchApplication extends Application {
 
 		if (DevMode.isActive()) {
 			ActionGroup actionGroup = new ActionGroup("Development");
-			MjModel model = new MjModel(Person.class, Organisation.class);
-			actionGroup.add(new PageAction(new EntityTablePage(model)));
+//			MjModel model = new MjModel(Person.class, Organisation.class);
+//			actionGroup.add(new PageAction(new EntityTablePage(model)));
 			actions.add(actionGroup);
 		}
 		

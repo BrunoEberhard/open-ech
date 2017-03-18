@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 import org.minimalj.util.Codes;
 import org.minimalj.util.IdUtils;
 
@@ -226,7 +226,7 @@ public class CorrectTest extends AbstractServerTest {
 	public void correctPlaceOfBirth_Foreign() throws Exception {
 		Person person = reload(p);
 		
-		List<CountryIdentification> countries = Backend.read(CountryIdentification.class, By.all(), 1000);
+		List<CountryIdentification> countries = Backend.find(CountryIdentification.class, By.all());
 		CountryIdentification c10 = countries.get(10);
 		person.placeOfBirth = new Place();
 		person.placeOfBirth.countryIdentification = c10;

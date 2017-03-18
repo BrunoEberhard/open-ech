@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.backend.Backend;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 
 import ch.openech.model.code.FederalRegister;
 import ch.openech.model.code.NationalityStatus;
@@ -21,7 +21,7 @@ public class MoveInTest extends AbstractServerTest {
 	public void moveIn() throws Exception {
 		processFile("samples/eCH-0020/moveIn/data_ordipro-moveIn-21.xml");
 		
-		List<Person> persons = Backend.read(Person.class, By.search("BERNALUSKOVSKI"), 2);
+		List<Person> persons = Backend.find(Person.class, By.search("BERNALUSKOVSKI").limit(2));
 		Assert.assertEquals(1, persons.size());
 		Person person = Backend.read(Person.class, persons.get(0).id);
 		

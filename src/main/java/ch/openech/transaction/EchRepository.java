@@ -3,7 +3,7 @@ package ch.openech.transaction;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 import org.minimalj.security.Subject;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.IdUtils;
@@ -32,7 +32,7 @@ public class EchRepository {
 			}
 		}
 		if (personIdentification.vn != null && personIdentification.vn.value != null) {
-			List<Person> persons = Backend.read(Person.class, By.search(personIdentification.vn.value, Person.SEARCH_BY_VN) , 1);
+			List<Person> persons = Backend.find(Person.class, By.search(personIdentification.vn.value, Person.SEARCH_BY_VN).limit(1));
 			if (localId != null) {
 				for (Person person : persons) {
 					if (IdUtils.getCompactIdString(person).startsWith(localId)) {
@@ -43,7 +43,7 @@ public class EchRepository {
 				if (!persons.isEmpty()) return persons.get(0);
 			}
 		} 
-		List<Person> persons = Backend.read(Person.class, By.search(personIdentification.officialName), 500);
+		List<Person> persons = Backend.find(Person.class, By.search(personIdentification.officialName).limit(500));
 		for (Person person : persons) {
 			if (localId == null || IdUtils.getCompactIdString(person).startsWith(localId)) {
 				if (StringUtils.equals(person.firstName, personIdentification.firstName)) {
@@ -70,9 +70,9 @@ public class EchRepository {
 				}
 			}
 		}
-		List<Organisation> organisations = Backend.read(Organisation.class, By.field(Organisation.$.uid.value, organisationIdentification.uid.value), 2);
+		List<Organisation> organisations = Backend.find(Organisation.class, By.field(Organisation.$.uid.value, organisationIdentification.uid.value).limit(2));
 		if (organisations.isEmpty()) {
-			organisations = Backend.read(Organisation.class, By.field(Organisation.$.organisationName, organisationIdentification.organisationName), 2);
+			organisations = Backend.find(Organisation.class, By.field(Organisation.$.organisationName, organisationIdentification.organisationName).limit(2));
 		}
 		for (Organisation organisation : organisations) {
 			if (localId == null || IdUtils.getCompactIdString(organisation).startsWith(localId)) {
@@ -85,7 +85,7 @@ public class EchRepository {
 	public static OpenEchPreferences getPreferences() {
 		Subject subject = Subject.getCurrent();
 		if (subject != null && !StringUtils.isEmpty(subject.getName())) {
-			List<OpenEchPreferences> preferences = Backend.read(OpenEchPreferences.class, By.field(OpenEchPreferences.$.user, subject.getName()), 2);
+			List<OpenEchPreferences> preferences = Backend.find(OpenEchPreferences.class, By.field(OpenEchPreferences.$.user, subject.getName()).limit(2));
 			if (preferences.size() > 1) {
 				throw new IllegalStateException("Too many preference rows for " + subject.getName());
 			} else if (preferences.size() == 1) {

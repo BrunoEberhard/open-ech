@@ -4,6 +4,7 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.View;
 import org.minimalj.model.annotation.NotEmpty;
+import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
 
 import ch.openech.model.EchFormats;
@@ -22,7 +23,7 @@ public class PersonSearch implements View<Person>, Rendering {
 	
 	public final Vn vn = new Vn();
 	
-	@NotEmpty @Size(EchFormats.baseName)
+	@NotEmpty @Size(EchFormats.baseName) @Searched
 	public String firstName, officialName;
 	
 	@NotEmpty 

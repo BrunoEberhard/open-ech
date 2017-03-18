@@ -7,7 +7,7 @@ import java.util.List;
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.model.validation.ValidationMessage;
-import org.minimalj.repository.criteria.By;
+import org.minimalj.repository.query.By;
 import org.minimalj.util.CloneHelper;
 
 import ch.openech.frontend.ewk.PersonPanel;
@@ -84,7 +84,7 @@ public class BirthChildEvent extends PersonEventEditor<Person>  {
 		
 		Relation partnerRelation = parentPerson.getPartner();
 		if (partnerRelation != null && partnerRelation.partner.vn() != null) { 
-			List<PersonIdentification> partnerOfVisiblePersons = Backend.read(PersonIdentification.class, By.search(partnerRelation.partner.vn().value, Person.SEARCH_BY_VN), 2);
+			List<PersonIdentification> partnerOfVisiblePersons = Backend.find(PersonIdentification.class, By.search(partnerRelation.partner.vn().value, Person.SEARCH_BY_VN).limit(2));
 			if (partnerOfVisiblePersons.size() == 1) {
 				Person partnerOfVisiblePerson = Backend.read(Person.class, partnerOfVisiblePersons.get(0).id);
 				if (partnerOfVisiblePerson.isMale())
