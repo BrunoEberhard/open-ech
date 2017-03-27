@@ -126,7 +126,7 @@ public class Person implements Validation {
 	//	
 	
 	public Relation getFather() {
-		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "father", Relation.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "father");
 		return getRelation(TypeOfRelationship.Vater);
 	}
 	
@@ -135,7 +135,7 @@ public class Person implements Validation {
 	}
 
 	public Relation getMother() {
-		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "mother", Relation.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "mother");
 		return getRelation(TypeOfRelationship.Mutter);
 	}
 	

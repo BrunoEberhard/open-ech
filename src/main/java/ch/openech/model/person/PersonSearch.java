@@ -43,7 +43,7 @@ public class PersonSearch implements View<Person>, Rendering {
 	}
 
 	public String getStreet() {
-		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "street", String.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "street");
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.street;
 		} else {
@@ -52,7 +52,7 @@ public class PersonSearch implements View<Person>, Rendering {
 	}
 
 	public String getStreetNumber() {
-		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "streetNumber", String.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "streetNumber");
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.houseNumber.houseNumber;
 		} else {
@@ -61,7 +61,7 @@ public class PersonSearch implements View<Person>, Rendering {
 	}
 
 	public String getTown() {
-		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "town", String.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "town");
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			return dwellingAddress.mailAddress.town;
 		} else {

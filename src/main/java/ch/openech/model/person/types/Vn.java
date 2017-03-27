@@ -39,7 +39,7 @@ public class Vn implements Validation, Mocking {
 	}
 	
 	public String getFormattedValue() {
-		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "formattedValue", String.class);
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "formattedValue");
 		
 		if (value != null && value.length() == 13) {
 			 return value.substring(0,3) + "." + value.substring(3,7) + "." + value.substring(7,11) + "." + value.substring(11,13);
