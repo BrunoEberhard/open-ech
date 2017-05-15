@@ -23,7 +23,7 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 	
 	public CantonFormElement(PropertyInterface property) {
 		super(property);
-		textField = Frontend.getInstance().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, null, listener());
+		textField = Frontend.getInstance().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, listener());
 	}
 	
 	@Override

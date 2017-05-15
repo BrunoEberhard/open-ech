@@ -68,17 +68,21 @@
 		        <enabled>true</enabled>
 	        </releases>
 	    </repository>
+		<repository>
+			<id>vaadin-addons</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>	    
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>10.11.1.1</version>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>1.4.193</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbyclient</artifactId>
-			<version>10.11.1.1</version>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>1.5.9</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -86,27 +90,28 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.jumpmind.symmetric.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
-			<version>1.1.1</version>
-		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.minimalj</groupId>
 			<artifactId>minimalj</artifactId>
-			<version>[1.5.0.0,)</version>
+			<version>[1.6.0.0,)</version>
 		</dependency>
-		<!-- 
+
+		<dependency>
+			<groupId>org.minimalj</groupId>
+			<artifactId>memory</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>		
 		<dependency>
 			<groupId>org.minimalj</groupId>
 			<artifactId>minimalj_vaadin_servlet</artifactId>
 			<version>[0.0.0.1,)</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.minimalj</groupId>
 			<artifactId>minimalj_vaadin_springboot</artifactId>
-			<version>[0.0.0.1,)</version>
+			<version>0.1.0.6-SNAPSHOT</version>
 		</dependency>
-		 -->
 	</dependencies>
 </project>

@@ -3,7 +3,6 @@ package ch.openech.frontend.e10;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
-import org.minimalj.frontend.Frontend.InputType;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 
@@ -19,8 +18,8 @@ public class HouseNumberFormElement extends AbstractFormElement<HouseNumber> {
 	public HouseNumberFormElement(PropertyInterface property) {
 		super(property);
 		
-		houseNumberTextField = Frontend.getInstance().createTextField(EchFormats.houseNumber, null, InputType.FREE, null, listener());
-		dwellingNumberTextField = Frontend.getInstance().createTextField(EchFormats.dwellingNumber, null, InputType.FREE, null, listener());
+		houseNumberTextField = Frontend.getInstance().createTextField(EchFormats.houseNumber, null, null, listener());
+		dwellingNumberTextField = Frontend.getInstance().createTextField(EchFormats.dwellingNumber, null, null, listener());
 
 		horizontalLayout = Frontend.getInstance().createComponentGroup(houseNumberTextField, dwellingNumberTextField);
 	}

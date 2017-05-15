@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
-import org.minimalj.frontend.Frontend.InputType;
 import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Rendering.RenderType;
@@ -40,7 +39,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		Collections.sort(municipalityIdentifications);
 		
 		comboBoxCountry = Frontend.getInstance().createComboBox(countries, listener());
-		textFieldMunicipality = Frontend.getInstance().createTextField(100, null, InputType.FREE, new MunicipalitySearch(), listener()); // TODO length
+		textFieldMunicipality = Frontend.getInstance().createTextField(100, null, new MunicipalitySearch(), listener()); // TODO length
 		
 		horizontalLayout = Frontend.getInstance().createComponentGroup(comboBoxCountry, textFieldMunicipality);
 	}
