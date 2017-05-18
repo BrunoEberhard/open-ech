@@ -62,7 +62,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 
 	@Override
 	public List<Action> getActions() {
-		if (version == 0 && Subject.getCurrent().hasRole(OpenEchRoles.modify)) {
+		if (version == 0 && Subject.currentHasRole(OpenEchRoles.modify)) {
 			if (actionGroup == null) {
 				actionGroup = new OrganisationActionGroup();
 			}

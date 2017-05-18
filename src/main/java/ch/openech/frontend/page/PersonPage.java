@@ -110,7 +110,7 @@ public class PersonPage extends ObjectPage<Person> {
 	
 	@Override
 	public List<Action> getActions() {
-		if (!historized && Subject.getCurrent().hasRole(OpenEchRoles.modify)) {
+		if (!historized && Subject.currentHasRole(OpenEchRoles.modify)) {
 			if (actionGroup == null) {
 				actionGroup = new PersonActionGroup();
 			}
