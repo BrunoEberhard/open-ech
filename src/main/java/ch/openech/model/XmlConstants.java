@@ -8,10 +8,13 @@ public class XmlConstants {
 	public static final String _OTHER_PERSON_ID = "OtherPersonId";
 	public static final String _RELATIONSHIP = "Relationship";
 	public static final String _RELATIONSHIP_TYPE = "RelationshipType";
+	public static final String _V_A_T_DECLARATION = "VATDeclaration";
 	public static final String ACCOMPANYING_LETTER = "accompanyingLetter";
 	public static final String ACKNOWLEDGEMENT = "acknowledgement";
 	public static final String ACKNOWLEDGEMENT_PERSON = "acknowledgementPerson";
+	public static final String ACQUISITION_TAX = "acquisitionTax";
 	public static final String ACTION = "action";
+	public static final String ACTIVITY = "activity";
 	public static final String ADD_PARENT = "addParent";
 	public static final String ADDRESS = "address";
 	public static final String ADDRESS_CATEGORY = "addressCategory";
@@ -27,6 +30,7 @@ public class XmlConstants {
 	public static final String ADOPTION_PERSON = "adoptionPerson";
 	public static final String ALIAS_NAME = "aliasName";
 	public static final String ALLIANCE_PARTNERSHIP_NAME = "alliancePartnershipName";
+	public static final String AMOUNT_VARIOUS_DEDUCTION = "amountVariousDeduction";
 	public static final String ANY_PERSON = "anyPerson";
 	public static final String AREA_STATE = "areaState";
 	public static final String ARMED_FORCES = "armedForces";
@@ -44,6 +48,7 @@ public class XmlConstants {
 	public static final String BIRTH_PERSON = "birthPerson";
 	public static final String BUILDING = "building";
 	public static final String BUSINESS_ADDRESS = "businessAddress";
+	public static final String BUSINESS_REFERENCE_ID = "businessReferenceId";
 	public static final String CALL_NAME = "callName";
 	public static final String CANCELATION_REASON = "cancelationReason";
 	public static final String CANTON = "canton";
@@ -92,6 +97,10 @@ public class XmlConstants {
 	public static final String COMMERCIAL_REGISTER_LIQUIDATION_DATE = "commercialRegisterLiquidationDate";
 	public static final String COMMERCIAL_REGISTER_NAME_TRANSLATION = "commercialRegisterNameTranslation";
 	public static final String COMMERCIAL_REGISTER_STATUS = "commercialRegisterStatus";
+	public static final String COMPENSATION_EXPORT = "compensationExport";
+	public static final String COMPILATION_COMPENSATION_EXPORT = "compilationCompensationExport";
+	public static final String COMPILATION_DEEMED_INPUT_TAX_DEDUCTION = "compilationDeemedInputTaxDeduction";
+	public static final String COMPILATION_MARGIN_TAXATION = "compilationMarginTaxation";
 	public static final String CONTACT = "contact";
 	public static final String CONTACT_ADDRESS = "contactAddress";
 	public static final String CONTACT_ADDRESS_PERSON = "contactAddressPerson";
@@ -161,11 +170,13 @@ public class XmlConstants {
 	public static final String DECISION_AUTHORITY = "decisionAuthority";
 	public static final String DECISION_DATE = "decisionDate";
 	public static final String DECLARATION_LOCAL_REFERENCE = "declarationLocalReference";
+	public static final String DEEMED_INPUT_TAX_DEDUCTION = "deemedInputTaxDeduction";
 	public static final String DELIVERY = "delivery";
 	public static final String DELIVERY_ADDRESS = "deliveryAddress";
 	public static final String DELIVERY_HEADER = "deliveryHeader";
 	public static final String DEPARTURE_DATE = "departureDate";
 	public static final String DEPOT = "depot";
+	public static final String DESCRIPTION_VARIOUS_DEDUCTION = "descriptionVariousDeduction";
 	public static final String DESTINATION_ADDRESS = "destinationAddress";
 	public static final String DESTINATION_MUNICIPALITY = "destinationMunicipality";
 	public static final String DISPOSITION = "disposition";
@@ -186,9 +197,11 @@ public class XmlConstants {
 	public static final String DIVORCE = "divorce";
 	public static final String DIVORCE_PERSON = "divorcePerson";
 	public static final String DOCUMENT_TYPE = "documentType";
+	public static final String DONATIONS = "donations";
 	public static final String DWELLING = "dwelling";
 	public static final String DWELLING_ADDRESS = "dwellingAddress";
 	public static final String DWELLING_NUMBER = "dwellingNumber";
+	public static final String EFFECTIVE_REPORTING_METHOD = "effectiveReportingMethod";
 	public static final String EMAIL = "email";
 	public static final String EMAIL_ADDRESS = "emailAddress";
 	public static final String EMAIL_CATEGORY = "emailCategory";
@@ -214,20 +227,25 @@ public class XmlConstants {
 	public static final String FIRE_SERVICE_LIABILITY = "fireServiceLiability";
 	public static final String FIRST_NAME = "firstName";
 	public static final String FIRST_NAME_ONLY = "firstNameOnly";
+	public static final String FLAT_TAX_RATE_METHOD = "flatTaxRateMethod";
 	public static final String FLOOR = "floor";
 	public static final String FOREIGN_BIRTH_TOWN = "foreignBirthTown";
 	public static final String FOREIGN_COUNTRY = "foreignCountry";
 	public static final String FOREIGN_HEADQUARTER = "foreignHeadquarter";
 	public static final String FOREIGN_ZIP_CODE = "foreignZipCode";
 	public static final String FOREIGNER = "foreigner";
+	public static final String FORM_OF_REPORTING = "formOfReporting";
 	public static final String FOUNDATION = "foundation";
 	public static final String FOUNDATION_DATE = "foundationDate";
 	public static final String FOUNDATION_REASON = "foundationReason";
 	public static final String GARDIAN_MEASURE = "gardianMeasure";
 	public static final String GARDIAN_MEASURE_PERSON = "gardianMeasurePerson";
 	public static final String GENERAL_ERROR = "generalError";
+	public static final String GENERAL_INFORMATION = "generalInformation";
 	public static final String GENERAL_RESPONSE = "generalResponse";
+	public static final String GENERATION_TIME = "generationTime";
 	public static final String GOES_TO = "goesTo";
+	public static final String GROSS_OR_NET = "grossOrNet";
 	public static final String HAS_MAIN_RESIDENCE = "hasMainResidence";
 	public static final String HAS_OTHER_RESIDENCE = "hasOtherResidence";
 	public static final String HAS_SECONDARY_RESIDENCE = "hasSecondaryResidence";
@@ -243,6 +261,10 @@ public class XmlConstants {
 	public static final String ID = "id";
 	public static final String INITIAL_MESSAGE_DATE = "initialMessageDate";
 	public static final String INLIQUIDATION = "inliquidation";
+	public static final String INPUT_TAX_CORRECTIONS = "inputTaxCorrections";
+	public static final String INPUT_TAX_INVESTMENTS = "inputTaxInvestments";
+	public static final String INPUT_TAX_MATERIAL_AND_SERVICES = "inputTaxMaterialAndServices";
+	public static final String INPUT_TAX_REDUCTIONS = "inputTaxReductions";
 	public static final String INSTITUTION = "institution";
 	public static final String INSURANCE = "insurance";
 	public static final String INSURANCE_ADDRESS = "insuranceAddress";
@@ -250,6 +272,8 @@ public class XmlConstants {
 	public static final String INTERNET = "internet";
 	public static final String INTERNET_ADDRESS = "internetAddress";
 	public static final String INTERNET_CATEGORY = "internetCategory";
+	public static final String INVOICE_DATE = "invoiceDate";
+	public static final String INVOICE_NUMBER = "invoiceNumber";
 	public static final String ISO2_ID = "iso2Id";
 	public static final String ISO3_ID = "iso3Id";
 	public static final String JOB_TITLE = "jobTitle";
@@ -280,6 +304,8 @@ public class XmlConstants {
 	public static final String MAIN_RESIDENCE = "mainResidence";
 	public static final String MAIN_RESIDENCE_ADDRESS = "mainResidenceAddress";
 	public static final String MANUFACTURER = "manufacturer";
+	public static final String MARGIN_AND_TAX_RATE = "marginAndTaxRate";
+	public static final String MARGIN_TAXATION = "marginTaxation";
 	public static final String MARITAL_DATA = "maritalData";
 	public static final String MARITAL_STATUS = "maritalStatus";
 	public static final String MARITAL_STATUS_PARTNER = "maritalStatusPartner";
@@ -341,6 +367,7 @@ public class XmlConstants {
 	public static final String NATURALIZE_FOREIGNER = "naturalizeForeigner";
 	public static final String NATURALIZE_SWISS = "naturalizeSwiss";
 	public static final String NEGATIVE_REPORT = "negativeReport";
+	public static final String NET_TAX_RATE_METHOD = "netTaxRateMethod";
 	public static final String NOGA_CODE = "nogaCode";
 	public static final String NOMENCLATURE = "nomenclature";
 	public static final String NUMBER_OF_ACTUAL_PACKAGE = "numberOfActualPackage";
@@ -355,6 +382,7 @@ public class XmlConstants {
 	public static final String OFFICIAL_NAME_FR = "officialNameFr";
 	public static final String OFFICIAL_NAME_IT = "officialNameIt";
 	public static final String OFFICIAL_NAME_ONLY = "officialNameOnly";
+	public static final String OPTED = "opted";
 	public static final String ORGANISATION = "organisation";
 	public static final String ORGANISATION_ADDITIONAL_NAME = "organisationAdditionalName";
 	public static final String ORGANISATION_BASE_DELIVERY = "organisationBaseDelivery";
@@ -376,6 +404,7 @@ public class XmlConstants {
 	public static final String ORIGINAL_SENDER_ID = "originalSenderId";
 	public static final String OTHER_ADDRESS_CATEGORY = "otherAddressCategory";
 	public static final String OTHER_EMAIL_CATEGORY = "otherEmailCategory";
+	public static final String OTHER_FLOWS_OF_FUNDS = "otherFlowsOfFunds";
 	public static final String OTHER_INTERNET_CATEGORY = "otherInternetCategory";
 	public static final String OTHER_NAME = "otherName";
 	public static final String OTHER_PERSON_ID = "otherPersonId";
@@ -395,6 +424,7 @@ public class XmlConstants {
 	public static final String PARTNERSHIP_RELATIONSHIP = "partnershipRelationship";
 	public static final String PARTNERSHIP_TYPE_OF_RELATIONSHIP_TYPE = "partnershipTypeOfRelationshipType";
 	public static final String PATH_FILE_NAME = "pathFileName";
+	public static final String PAYABLE_TAX = "payableTax";
 	public static final String PAYMENT = "payment";
 	public static final String PERSON = "person";
 	public static final String PERSON_ADDON = "personAddon";
@@ -434,6 +464,7 @@ public class XmlConstants {
 	public static final String RECIPIENT_ID = "recipientId";
 	public static final String RECOGNIZED_CH = "recognizedCh";
 	public static final String RECOGNIZED_DATE = "recognizedDate";
+	public static final String REDUCTION_OF_CONSIDERATION = "reductionOfConsideration";
 	public static final String REFERENCE_MESSAGE_ID = "referenceMessageId";
 	public static final String REGION = "region";
 	public static final String RELATIONSHIP = "relationship";
@@ -449,6 +480,8 @@ public class XmlConstants {
 	public static final String REPORTED_ORGANISATION = "reportedOrganisation";
 	public static final String REPORTET_PERSON = "reportetPerson";
 	public static final String REPORTING_MUNICIPALITY = "reportingMunicipality";
+	public static final String REPORTING_PERIOD_FROM = "reportingPeriodFrom";
+	public static final String REPORTING_PERIOD_TILL = "reportingPeriodTill";
 	public static final String REQUEST_PERSON_IDENTIFICATION = "requestPersonIdentification";
 	public static final String RESIDENCE_PERMIT = "residencePermit";
 	public static final String RESIDENCE_PERMIT_TILL = "residencePermitTill";
@@ -476,6 +509,12 @@ public class XmlConstants {
 	public static final String STREET = "street";
 	public static final String SUB_MESSAGE_TYPE = "subMessageType";
 	public static final String SUBJECT = "subject";
+	public static final String SUBSEQUENT_INPUT_TAX_DEDUCTION = "subsequentInputTaxDeduction";
+	public static final String SUBSIDIES = "subsidies";
+	public static final String SUPPLIES_ABROAD = "suppliesAbroad";
+	public static final String SUPPLIES_EXEMPT_FROM_TAX = "suppliesExemptFromTax";
+	public static final String SUPPLIES_PER_TAX_RATE = "suppliesPerTaxRate";
+	public static final String SUPPLIES_TO_FOREIGN_COUNTRIES = "suppliesToForeignCountries";
 	public static final String SWISS = "swiss";
 	public static final String SWISS_AND_FL_MUNICIPALITY = "swissAndFlMunicipality";
 	public static final String SWISS_HEADQUARTER = "swissHeadquarter";
@@ -484,6 +523,7 @@ public class XmlConstants {
 	public static final String SWISS_ZIP_CODE = "swissZipCode";
 	public static final String SWISS_ZIP_CODE_ADD_ON = "swissZipCodeAddOn";
 	public static final String SWISS_ZIP_CODE_ID = "swissZipCodeId";
+	public static final String TAX_RATE = "taxRate";
 	public static final String TAX_STATEMENT = "taxStatement";
 	public static final String TAX_VALUE = "taxValue";
 	public static final String TEST_DATA = "testData";
@@ -493,11 +533,18 @@ public class XmlConstants {
 	public static final String TEXT_GERMAN = "textGerman";
 	public static final String TEXT_ITALIAN = "textItalian";
 	public static final String TITLE = "title";
+	public static final String TOTAL_CONSIDERATION = "totalConsideration";
 	public static final String TOTAL_NUMBER_OF_PACKAGES = "totalNumberOfPackages";
 	public static final String TOWN = "town";
+	public static final String TRANSFER_NOTIFICATION_PROCEDURE = "transferNotificationProcedure";
+	public static final String TURNOVER = "turnover";
+	public static final String TURNOVER_AND_TAX_RATE = "turnoverAndTaxRate";
+	public static final String TURNOVER_COMPUTATION = "turnoverComputation";
 	public static final String TYP_OF_RESIDENCE = "typOfResidence";
 	public static final String TYPE_OF_HOUSEHOLD = "typeOfHousehold";
 	public static final String TYPE_OF_RELATIONSHIP = "typeOfRelationship";
+	public static final String TYPE_OF_SERVICE = "typeOfService";
+	public static final String TYPE_OF_SUBMISSION = "typeOfSubmission";
 	public static final String UID = "uid";
 	public static final String UID_BRANCHE_TEXT = "uidBrancheText";
 	public static final String UID_ORGANISATION_ID = "uidOrganisationId";
@@ -531,16 +578,21 @@ public class XmlConstants {
 	public static final String VALID_FROM = "validFrom";
 	public static final String VALIDITY = "validity";
 	public static final String VALUE = "value";
+	public static final String VARIOUS_DEDUCTION = "variousDeduction";
 	public static final String VAT_ENTRY_DATE = "vatEntryDate";
 	public static final String VAT_ENTRY_STATUS = "vatEntryStatus";
 	public static final String VAT_LIQUIDATION_DATE = "vatLiquidationDate";
 	public static final String VAT_REGISTER_INFORMATION = "vatRegisterInformation";
 	public static final String VAT_STATUS = "vatStatus";
+	public static final String VERIFICATION_COMPENSATION_EXPORT = "verificationCompensationExport";
+	public static final String VERIFICATION_DEEMED_INPUT_TAX_DEDUCTION = "verificationDeemedInputTaxDeduction";
+	public static final String VERIFICATION_MARGIN_TAXATION = "verificationMarginTaxation";
 	public static final String VN = "vn";
 	public static final String WITHOUT_E_G_I_D = "withoutEGID";
 	public static final String YEAR = "year";
 	public static final String YEAR_MONTH = "yearMonth";
 	public static final String YEAR_MONTH_DAY = "yearMonthDay";
 	public static final String YOUR_BUSINESS_REFERENCE_ID = "yourBusinessReferenceId";
+
 
 }
