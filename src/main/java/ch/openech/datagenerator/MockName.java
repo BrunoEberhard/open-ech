@@ -1,30 +1,38 @@
 package ch.openech.datagenerator;
 
-public class MockName {
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-	// http://www.adp-gmbh.ch/misc/tel_book_ch.html
-	
-	private enum OfficialName {
-		Müller(0.0082), Meier(0.0053), Schmid(0.0047), Keller(0.0036), Weber(0.0036),
-		Huber(0.0029), Schneider(0.0029), Meyer(0.0028), Steiner(0.0025), Fischer(0.0023),
-		Gerber(0.0023), Brunner(0.0023), Baumann(0.0022), Frei(0.0022), Zimmermann(0.0022),
-		Moser(0.0021), Widmer(0.0021), Wyss(0.0018), Graf(0.0019), Roth(0.0018);
+// http://www.genealogienetz.de/reg/CH/surcom-m.htm
+public class MockName {
 		
-		private double percentage;
-		
-		private OfficialName(double percentage) {
-			this.percentage = percentage;
-		}
-	}
-	
 	public static String officialName() {
-		while (true) {
-			double r = Math.random();
-			
-			for (OfficialName name : OfficialName.values()) {
-				if (r < name.percentage) return name.name();
-				else r = r - name.percentage;
-			}
+		if (names.isEmpty()) {
+			readNames();
+		}
+		return names.get(random.nextInt(names.size()));
+	}
+
+	private static Random random = new Random();
+	private static List<String> names = new ArrayList<>(200);
+	
+	private static synchronized void readNames() {
+		try (InputStreamReader r = new InputStreamReader(MockName.class.getResourceAsStream("officialnames.txt"), StandardCharsets.UTF_8)) {
+	        try (BufferedReader reader = new BufferedReader(r)) {
+	            names = new ArrayList<>();
+	            while (true) {
+	                String line = reader.readLine();
+	                if (line == null)
+	                    break;
+	                names.add(line);
+	            }
+	        }
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
