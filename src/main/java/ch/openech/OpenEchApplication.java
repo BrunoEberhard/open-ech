@@ -156,7 +156,7 @@ public class OpenEchApplication extends Application {
 		if (administrateRole) {
 			ActionGroup actionGroup = new ActionGroup("Database Setup");
 			actionGroup.add(new ImportSwissDataAction());
-			if (ewkSchema != null || orgSchema != null) {
+			if (importExportRole && (ewkSchema != null || orgSchema != null)) {
 				actionGroup.add(new GeneratePersonEditor(ewkSchema, orgSchema));
 			}
 			actions.add(actionGroup);
