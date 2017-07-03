@@ -1,91 +1,74 @@
 package ch.openech.datagenerator;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Random;
 import java.util.logging.Logger;
 
-// http://www.heise.de/ct/ftp/07/17/182/
+import org.minimalj.util.CsvReader;
+
+/**
+ * <OL>
+ * <LI>Download from https://www.bfs.admin.ch/bfs/de/home/statistiken/bevoelkerung/geburten-todesfaelle/vornamen-schweiz.assetdetail.1360749.html</LI>
+ * <LI>Remove header and footer and save it as .csv
+ * <LI>Use PreNameFilter to filter the less common names and replace * with 0
+ * </OL>
+ *
+ */
 public class MockPrename {
 	public static final Logger LOG = Logger.getLogger(MockPrename.class.getName());
 	
-	public static class NameWithFrequency {
-		public int frequency;
+	public static class NameWithCount {
 		public String name;
-		public String callName;
-		
-		// eclipse
-		
-		@Override
-		public String toString() {
-			return "NameWithFrequency [callName=" + callName + ", frequency=" + frequency + ", name=" + name + "]";
-		}
+		public Integer countW, countM;
 	}
 	
-	private static List<NameWithFrequency> males = new ArrayList<NameWithFrequency>(2000);
-	private static List<NameWithFrequency> femals = new ArrayList<NameWithFrequency>(2000);
+	private static Random random = new Random();
+	private static List<NameWithCount> males = new ArrayList<>(5000);
+	private static List<NameWithCount> femals = new ArrayList<>(5000);
+	private static int countW, countM;
 	
 	public static String getFirstName(boolean male) {
 		return getName(male).name;
 	}
 	
-	public static NameWithFrequency getName() {
+	public static NameWithCount getName() {
 		return getName(Math.random() < .5);
 	}
 	
-	public static NameWithFrequency getName(boolean male) {
+	public static NameWithCount getName(boolean male) {
 		if (males.isEmpty()) readNames();
-		return choose(male ? males : femals);
-	}
-	
-	private static NameWithFrequency choose(List<NameWithFrequency> list) {
-		Collections.shuffle(list);
-		for (NameWithFrequency name : list) {
-			if (Math.random() > (0.95 / name.frequency)) return name;
+		int position = random.nextInt(male ? countM : countW);
+		for (NameWithCount name : male ? males : femals) {
+			int count = male ? name.countM : name.countW;
+			if (count < position) {
+				position -= count;
+			} else {
+				return name;
+			}
 		}
-		return null;
- 	}
+		throw new IllegalStateException();
+	}
 	
 	private static synchronized void readNames() {
 		try {
 			if (!males.isEmpty()) return; // other thread already read the names
-			InputStream inputStream = MockPrename.class.getResourceAsStream("./prenames.txt");
-			if (inputStream != null) {
-				readNames(inputStream);
-			} else {
-				LOG.warning("vornamen.txt not available. Maybe test/resources folder is not included in build path");
+
+			CsvReader reader = new CsvReader(PreNameFilter.class.getResourceAsStream("vornamen.csv"));
+			List<NameWithCount> names = reader.readValues(NameWithCount.class);
+			
+			for (NameWithCount name : names) {
+				if (name.countM > 0) {
+					males.add(name);
+					countM += name.countM;
+				} else if (name.countW > 0) {
+					femals.add(name);
+					countW += name.countW;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private static void readNames(InputStream fis) throws Exception {
-		Scanner scanner = new Scanner(fis, "ISO-8859-1");
-		scanner.useDelimiter("\n");
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-			if (line.charAt(0) == '#') continue;
-			char frequency = line.charAt(44); // 44 -> Schweiz
-			if (Character.isWhitespace(frequency)) continue;
-			String type = line.substring(0, 3);
-			NameWithFrequency nameWithFrequency = new NameWithFrequency();
-			String name = line.substring(3, 29).trim();
-			int pos = name.indexOf(' ');
-			if (pos < 0) {
-				nameWithFrequency.name = name;
-			} else {
-				nameWithFrequency.name = name.substring(pos + 1);
-				nameWithFrequency.callName = name.substring(0, pos);
-			}
-			if (Character.isDigit(frequency)) nameWithFrequency.frequency = frequency - '0';
-			else nameWithFrequency.frequency = frequency - 'A' + 10;
-			if (!type.contains("M")) femals.add(nameWithFrequency);
-			if (!type.contains("F")) males.add(nameWithFrequency);
-		}
-		scanner.close();
 	}
 	
 }

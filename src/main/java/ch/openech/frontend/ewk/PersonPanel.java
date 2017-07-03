@@ -8,7 +8,6 @@ import org.minimalj.util.StringUtils;
 
 import ch.openech.datagenerator.MockName;
 import ch.openech.datagenerator.MockPrename;
-import ch.openech.datagenerator.MockPrename.NameWithFrequency;
 import ch.openech.frontend.e10.AddressFormElement;
 import ch.openech.frontend.e11.PlaceOfOriginFormElement;
 import ch.openech.frontend.e11.ResidenceFormElement;
@@ -187,8 +186,7 @@ public class PersonPanel extends EchForm<Person>  {
 		super.fillWithDemoData(person);
 		
 		boolean male = Math.random() < .5;
-		NameWithFrequency generatedName = MockPrename.getName(male);
-		person.firstName = generatedName.name;
+		person.firstName = MockPrename.getFirstName(male);
 		person.sex = male ? Sex.maennlich : Sex.weiblich;
 		person.callName = "Lorem Ipsum";
 		person.officialName = MockName.officialName();
