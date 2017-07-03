@@ -1,6 +1,7 @@
 package ch.openech.xml.write;
 
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -139,7 +140,13 @@ public class WriterElement {
 		for (String key : keys) {
 			Object value = FlatProperties.getValue(object, key);
 			if (value instanceof EchCode) {
-				text(key, (EchCode)value);
+				text(key, (EchCode) value);
+			} else if (value instanceof LocalDate) {
+				text(key, (LocalDate) value);
+			} else if (value instanceof LocalDateTime) {
+				text(key, (LocalDateTime) value);
+			} else if (value instanceof BigDecimal) {
+				text(key, ((BigDecimal) value).toPlainString());
 			} else if (value != null) {
 				String string = value.toString();
 				if (!StringUtils.isBlank(string)) {
