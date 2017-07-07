@@ -9,10 +9,8 @@ import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.ObjectPage;
-import org.minimalj.security.Subject;
 import org.minimalj.util.resources.Resources;
 
-import ch.openech.OpenEchRoles;
 import ch.openech.frontend.org.OrganisationPanel;
 import ch.openech.frontend.org.event.ChangeLegalFormEvent;
 import ch.openech.frontend.org.event.ChangeOrganisationNameEvent;
@@ -62,7 +60,7 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 
 	@Override
 	public List<Action> getActions() {
-		if (version == 0 && Subject.currentHasRole(OpenEchRoles.modify)) {
+		if (version == 0 /* && Subject.currentHasRole(OpenEchRoles.modify) */) {
 			if (actionGroup == null) {
 				actionGroup = new OrganisationActionGroup();
 			}
