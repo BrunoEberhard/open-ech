@@ -25,7 +25,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.minimalj.application.Application;
-import org.minimalj.application.DevMode;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
@@ -166,12 +165,12 @@ public class OpenEchApplication extends Application {
 		actionGroupSettings.add(new PreferencesEditor());
 		actions.add(actionGroupSettings);
 
-		if (DevMode.isActive()) {
-			ActionGroup actionGroup = new ActionGroup("Development");
+//		if (DevMode.isActive()) {
+//			ActionGroup actionGroup = new ActionGroup("Development");
 //			MjModel model = new MjModel(Person.class, Organisation.class);
 //			actionGroup.add(new PageAction(new EntityTablePage(model)));
-			actions.add(actionGroup);
-		}
+//			actions.add(actionGroup);
+//		}
 		
 		return actions;
 	}
