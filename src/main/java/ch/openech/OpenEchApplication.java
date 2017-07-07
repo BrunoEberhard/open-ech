@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.minimalj.application.Application;
+import org.minimalj.application.Configuration;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
@@ -87,26 +88,17 @@ public class OpenEchApplication extends Application {
 
 	@Override
 	public boolean isLoginRequired() {
-		return true;
+		return !"false".equals(Configuration.get("loginRequired", "true"));
 	}
 	
 	@Override
 	public List<Action> getNavigation() {
-		List<Action> actions = new ArrayList<>();
-		Subject subject = Subject.getCurrent();
-		if (subject == null) {
-			return actions;
-		}
-		
-		boolean modifyRole = subject.hasRole(OpenEchRoles.modify);
-		boolean administrateRole = subject.hasRole(OpenEchRoles.administrate);
+		boolean administrateRole = Subject.currentHasRole(OpenEchRoles.administrate);
 		boolean importExportAvailable = Frontend.getInstance() instanceof SwingFrontend;
-		boolean importExportRole = subject.hasRole(OpenEchRoles.importExport);
+		boolean importExportRole = Subject.currentHasRole(OpenEchRoles.importExport);
 		
-		if (!modifyRole) {
-			return actions;
-		}
-
+		List<Action> actions = new ArrayList<>();
+		
 		updateEwkNamespaceContext();
 		
 		if (ewkSchema != null) {
