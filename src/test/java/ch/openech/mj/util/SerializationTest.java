@@ -2,18 +2,17 @@ package ch.openech.mj.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-
 import org.junit.Test;
+import org.minimalj.util.EntityReader;
+import org.minimalj.util.EntityWriter;
 import org.minimalj.util.EqualsHelper;
-import org.minimalj.util.SerializationInputStream;
-import org.minimalj.util.SerializationOutputStream;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import ch.openech.datagenerator.DataGenerator;
 import ch.openech.model.person.Person;
@@ -58,13 +57,13 @@ public class SerializationTest extends AbstractServerTest {
 	@SuppressWarnings("unchecked")
 	private <T> T serialize(Class<T> clazz, T object) throws Exception {
 		try (ByteArrayOutputStream s = new ByteArrayOutputStream()) {
-			SerializationOutputStream sos = new SerializationOutputStream(s);
-			sos.write(object);
+			EntityWriter writer = new EntityWriter(s);
+			writer.write(object);
 			s.flush();
 			byte[] bytes = s.toByteArray();
 			try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
-				SerializationInputStream sis = new SerializationInputStream(in);
-				return (T) sis.read(clazz);
+				EntityReader reader = new EntityReader(in);
+				return (T) reader.read(clazz);
 			}
 		}
 	}
@@ -72,14 +71,14 @@ public class SerializationTest extends AbstractServerTest {
 	@SuppressWarnings("unchecked")
 	private <T> T serializeAsArgument(T object) throws Exception {
 		try (ByteArrayOutputStream s = new ByteArrayOutputStream()) {
-			SerializationOutputStream sos = new SerializationOutputStream(s);
-			sos.writeArgument(object);
+			EntityWriter writer = new EntityWriter(s);
+			writer.writeArgument(object);
 			s.flush();
 			byte[] bytes = s.toByteArray();
 			
 			try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
-				SerializationInputStream sis = new SerializationInputStream(in);
-				return (T) sis.readArgument();
+				EntityReader reader = new EntityReader(in);
+				return (T) reader.readArgument();
 			}
 		}
 	}
