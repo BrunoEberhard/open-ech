@@ -43,8 +43,8 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static void clear() {
-		Backend.execute(new DeleteAllTransaction(Person.class));
-		Backend.execute(new DeleteAllTransaction(Organisation.class));
+		Backend.execute(new DeleteAllTransaction<>(Person.class));
+		Backend.execute(new DeleteAllTransaction<>(Organisation.class));
 	}
 
 	protected Person insertPerson(String vn) throws Exception {
