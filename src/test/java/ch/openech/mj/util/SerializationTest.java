@@ -37,48 +37,28 @@ public class SerializationTest extends AbstractServerTest {
 		object1.list.add(objectInList);
 		object1.b = Boolean.TRUE;
 		object1.b2 = false;
-		SerializationTestClass1 object2 = serialize(SerializationTestClass1.class, object1);
+		SerializationTestClass1 object2 = serialize(object1);
 		Assert.assertTrue(EqualsHelper.equals(object1, object2));
-	}
-	
-	@Test
-	public void serializePerson() throws Exception {
-		Person person = DataGenerator.person();
-		serialize(Person.class, person);
 	}
 
 	@Test
-	public void serializePersonAsArgument() throws Exception {
+	public void serializePerson() throws Exception {
 		Person person = DataGenerator.person();
-		serializeAsArgument(person);
+		serialize(person);
 	}
 	
 
 	@SuppressWarnings("unchecked")
-	private <T> T serialize(Class<T> clazz, T object) throws Exception {
+	private <T> T serialize(T object) throws Exception {
 		try (ByteArrayOutputStream s = new ByteArrayOutputStream()) {
 			EntityWriter writer = new EntityWriter(s);
 			writer.write(object);
 			s.flush();
 			byte[] bytes = s.toByteArray();
-			try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
-				EntityReader reader = new EntityReader(in);
-				return (T) reader.read(clazz);
-			}
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T> T serializeAsArgument(T object) throws Exception {
-		try (ByteArrayOutputStream s = new ByteArrayOutputStream()) {
-			EntityWriter writer = new EntityWriter(s);
-			writer.writeArgument(object);
-			s.flush();
-			byte[] bytes = s.toByteArray();
 			
 			try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
 				EntityReader reader = new EntityReader(in);
-				return (T) reader.readArgument();
+				return (T) reader.read();
 			}
 		}
 	}
