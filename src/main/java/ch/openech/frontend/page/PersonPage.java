@@ -9,6 +9,7 @@ import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.ObjectPage;
+import org.minimalj.util.IdUtils;
 import org.minimalj.util.resources.Resources;
 
 import ch.openech.frontend.e21.CareEvent;
@@ -87,6 +88,18 @@ public class PersonPage extends ObjectPage<Person> {
 		this.echSchema = echSchema;
 		this.version = 0;
 		this.historized = false;
+	}
+	
+	public PersonPage(String personId, String schema) {
+		super(Person.class, IdUtils.parseId(Person.class, personId));
+		this.echSchema = EchSchema.getNamespaceContext(20, schema);
+		this.version = 0;
+		this.historized = false;
+	}
+	
+	@Override
+	public String getRoute() {
+		return "person/" + getObjectId() + "/" + echSchema.getVersion();
 	}
 	
 	@Override
