@@ -62,7 +62,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 		if (place == null) {
 			place = new Place();
 		}
-		if (!place.countryIdentification.isEmpty()) {
+		if (place.countryIdentification != null && !place.countryIdentification.isEmpty()) {
 			comboBoxCountry.setValue(place.countryIdentification);
 		} else {
 			comboBoxCountry.setValue(null);
