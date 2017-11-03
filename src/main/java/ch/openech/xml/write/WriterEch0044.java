@@ -13,6 +13,7 @@ import ch.openech.model.common.NamedId;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.PersonIdentification;
 import ch.openech.model.person.PersonIdentificationLight;
+import ch.openech.transaction.EchRepository;
 
 public class WriterEch0044 {
 
@@ -37,7 +38,7 @@ public class WriterEch0044 {
 		personIdentification.textIfSet(XmlConstants.VN, values.vn.value);
 		// namedId(personIdentification, values.technicalIds.localId, XmlConstants.LOCAL_PERSON_ID);
 		// hier wird die interne id verwendet
-		localID(personIdentification, values.id != null ? IdUtils.getCompactIdString(values) : "");
+		localID(personIdentification, values.id != null ? EchRepository.getCompactIdString(values) : "");
     	namedId(personIdentification, values.technicalIds.otherId, personIdsLowerCase ? OTHER_PERSON_ID : _OTHER_PERSON_ID);
     	namedId(personIdentification, values.technicalIds.euId, personIdsLowerCase ? EU_PERSON_ID : "EuPersonId");
 		personIdentification.values(values, OFFICIAL_NAME, FIRST_NAME);
@@ -63,7 +64,7 @@ public class WriterEch0044 {
 	
 	public void partnerIdOrganisation(WriterElement parent, Organisation organisation) throws Exception {
 		WriterElement element = parent.create(URI, PARTNER_ID_ORGANISATION);
-		localID(element, IdUtils.getCompactIdString(organisation.id));
+		localID(element, EchRepository.getCompactIdString(organisation));
 		namedId(element, organisation.technicalIds.otherId, personIdsLowerCase ? OTHER_PERSON_ID : _OTHER_PERSON_ID);
 	}
 	

@@ -35,7 +35,7 @@ public class EchRepository {
 			List<Person> persons = Backend.find(Person.class, By.search(personIdentification.vn.value, Person.SEARCH_BY_VN).limit(1));
 			if (localId != null) {
 				for (Person person : persons) {
-					if (IdUtils.getCompactIdString(person).startsWith(localId)) {
+					if (getCompactIdString(person).startsWith(localId)) {
 						return person;
 					}
 				}
@@ -45,7 +45,7 @@ public class EchRepository {
 		} 
 		List<Person> persons = Backend.find(Person.class, By.search(personIdentification.officialName).limit(500));
 		for (Person person : persons) {
-			if (localId == null || IdUtils.getCompactIdString(person).startsWith(localId)) {
+			if (localId == null || getCompactIdString(person).startsWith(localId)) {
 				if (StringUtils.equals(person.firstName, personIdentification.firstName)) {
 					if (StringUtils.equals(person.officialName, personIdentification.officialName)) {
 						return Backend.read(Person.class, person.id);
@@ -75,7 +75,7 @@ public class EchRepository {
 			organisations = Backend.find(Organisation.class, By.field(Organisation.$.organisationName, organisationIdentification.organisationName).limit(2));
 		}
 		for (Organisation organisation : organisations) {
-			if (localId == null || IdUtils.getCompactIdString(organisation).startsWith(localId)) {
+			if (localId == null || getCompactIdString(organisation).startsWith(localId)) {
 				return organisation;
 			}
 		}
@@ -104,6 +104,18 @@ public class EchRepository {
 				Backend.insert(preferences);
 			}
 		}
+	}
+	
+	/**
+	 * Get the value of the <code>id</code> field as String.
+	 * Leaves out all 'filler' characters. For an UUID this would
+	 * be the '-' characters
+	 * 
+	 * @param object object containing the id. Must not be <code>null</code>
+	 * @return the value of the <code>id</code> field as String
+	 */
+	public static String getCompactIdString(Object object) {
+		return IdUtils.getIdString(object).replace("-", "");
 	}
 		
 }
