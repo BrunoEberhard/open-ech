@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.minimalj.repository.DataSourceFactory;
 import org.minimalj.repository.sql.SqlRepository;
 import org.minimalj.repository.sql.Table;
-import org.minimalj.util.resources.Resources;
 
 import ch.openech.model.common.Address;
 import ch.openech.model.common.CountryIdentification;
@@ -23,7 +22,6 @@ public class SqlPersonCrudTest {
 
 	@BeforeClass
 	public static void setupRepository() {
-		Resources.addResourceBundleName("ch.openech.resources.OpenEch");
 		repository = new SqlRepository(DataSourceFactory.embeddedDataSource(), Person.class, Organisation.class);
 		repository.insert(CountryIdentification.createSwiss());
 	}
@@ -31,8 +29,6 @@ public class SqlPersonCrudTest {
 	@Test
 	@Ignore("Nicht mehr möglich, da Adresse kein Identifiable")
 	public void testCrud() {
-		Table<Address> addressTable = repository.getTable(Address.class);
-		
 		Address address = new Address();
 		address.street = "Grütstrasse";
 		address.mrMrs = MrMrs.Herr;
@@ -40,9 +36,9 @@ public class SqlPersonCrudTest {
 		address.town = "Jona";
 		address.country = "CH";
 		
-		Object id = addressTable.insert(address);
+		Object id = repository.insert(address);
 		
-		Address readAddress = addressTable.read(id);
+		Address readAddress = repository.read(Address.class, id);
 		
 		Assert.assertEquals(address.mrMrs, readAddress.mrMrs);
 		Assert.assertEquals(address.street, readAddress.street);
@@ -50,37 +46,33 @@ public class SqlPersonCrudTest {
 		Assert.assertEquals(address.country, readAddress.country);
 		
 		readAddress.houseNumber.houseNumber = "11";
-		addressTable.update(readAddress);
+		repository.update(readAddress);
 
-		readAddress = addressTable.read(id);
+		readAddress = repository.read(Address.class, id);
 		Assert.assertEquals("11", readAddress.houseNumber.houseNumber);
 	}
 	
 	@Test
 	public void testCrudCountry() {
-		Table<CountryIdentification> countryTable = repository.getTable(CountryIdentification.class);
-		
 		CountryIdentification country = new CountryIdentification();
 		country.id = 123;
 		country.countryIdISO2 = "DE";
 		country.countryNameShort = "Deutschland";
 		
-		countryTable.insert(country);
+		repository.insert(country);
 		
-		CountryIdentification readCountry = countryTable.read(123);
+		CountryIdentification readCountry = repository.read(CountryIdentification.class, 123);
 		
 		Assert.assertNotNull(readCountry);
 		Assert.assertEquals(country.id, readCountry.id);
 		Assert.assertEquals(country.countryIdISO2, readCountry.countryIdISO2);
 		Assert.assertEquals(country.countryNameShort, readCountry.countryNameShort);
 	
-		countryTable.update(country);
+		repository.update(country);
 	}
 	
 	@Test
 	public void testCrudPerson() {
-		Table<Person> personTable = repository.getTable(Person.class);
-		
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
@@ -90,26 +82,24 @@ public class SqlPersonCrudTest {
 		
 		person.aliasName = "Biwi";
 		
-		Object id = personTable.insert(person);
+		Object id = repository.insert(person);
 		
-		Person readPerson = personTable.read(id);
+		Person readPerson = repository.read(Person.class, id);
 		
 		Assert.assertEquals(person.officialName, readPerson.officialName);
 		Assert.assertEquals(person.aliasName, readPerson.aliasName);
 		
 		readPerson.aliasName = "Biwidus";
 		
-		personTable.update(readPerson);
+		repository.update(readPerson);
 		
-		Person readPerson2 = personTable.read(id);
+		Person readPerson2 = repository.read(Person.class, id);
 		
 		Assert.assertEquals(readPerson.aliasName, readPerson2.aliasName);
 	}
 	
 	@Test
 	public void testInsertPerson2() {
-		Table<Person> personTable = repository.getTable(Person.class);
-
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
@@ -132,9 +122,9 @@ public class SqlPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		Object id = personTable.insert(person);
+		Object id = repository.insert(person);
 		
-		Person readPerson = personTable.read(id);
+		Person readPerson = repository.read(Person.class, id);
 		
 		Assert.assertEquals(2, readPerson.occupation.size());
 		
@@ -149,8 +139,6 @@ public class SqlPersonCrudTest {
 
 	@Test
 	public void testUpdatePerson() {
-		Table<Person> personTable = repository.getTable(Person.class);
-
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
@@ -173,14 +161,14 @@ public class SqlPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		Object id = personTable.insert(person);
+		Object id = repository.insert(person);
 		
-		Person readPerson = personTable.read(id);
+		Person readPerson = repository.read(Person.class, id);
 		readPerson.aliasName = "biwi";
 		readPerson.occupation.remove(1);
-		personTable.update(readPerson);
+		repository.update(readPerson);
 
-		Person readPerson2 = personTable.read(id);
+		Person readPerson2 = repository.read(Person.class, id);
 		Assert.assertEquals("biwi", readPerson2.aliasName);
 		Assert.assertEquals(1, readPerson2.occupation.size());
 	}
@@ -188,8 +176,6 @@ public class SqlPersonCrudTest {
 	
 	@Test
 	public void testUpdateSubTable() {
-		Table<Person> personTable = repository.getTable(Person.class);
-
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
@@ -212,22 +198,20 @@ public class SqlPersonCrudTest {
 		
 		person.occupation.add(occupation2);
 		
-		Object id = personTable.insert(person);
+		Object id = repository.insert(person);
 		
-		Person readPerson = personTable.read(id);
+		Person readPerson = repository.read(Person.class, id);
 		Occupation readOccupation2 = readPerson.occupation.get(1);
 		readOccupation2.placeOfEmployer.addressLine1 = "Ne andere Line";
 		
-		personTable.update(readPerson);
+		repository.update(readPerson);
 
-		Person readPerson2 = personTable.read(id);
+		Person readPerson2 = repository.read(Person.class, id);
 		Assert.assertEquals(readOccupation2.placeOfEmployer.addressLine1, readPerson2.occupation.get(1).placeOfEmployer.addressLine1);
 	}
 	
 	@Test
 	public void testChangePersonIdentification() {
-		Table<Person> personTable = repository.getTable(Person.class);
-
 		Person person = new Person();
 		person.officialName = "Eberhard";
 		person.firstName = "Bruno";
@@ -235,18 +219,18 @@ public class SqlPersonCrudTest {
 		person.vn.value = "123";
 		person.sex = Sex.maennlich;
 
-		Object id = personTable.insert(person);
+		Object id = repository.insert(person);
 		
-		Person readPerson = personTable.read(id);
+		Person readPerson = repository.read(Person.class, id);
 		readPerson.officialName = "Äberhard";
-		personTable.update(readPerson);
+		repository.update(readPerson);
 		
-		Person readPerson2 = personTable.read(id);
+		Person readPerson2 = repository.read(Person.class, id);
 		Assert.assertEquals(readPerson.officialName, readPerson2.officialName);
 		readPerson2.officialName = "Eberhardt";
-		personTable.update(readPerson2);
+		repository.update(readPerson2);
 		
-		Person readPerson3 = personTable.read(id);
+		Person readPerson3 = repository.read(Person.class, id);
 		Assert.assertEquals(readPerson2.officialName, readPerson3.officialName);
 	}
 	

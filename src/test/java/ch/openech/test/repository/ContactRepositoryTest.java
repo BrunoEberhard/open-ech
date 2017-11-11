@@ -3,6 +3,7 @@ package ch.openech.test.repository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.repository.DataSourceFactory;
+import org.minimalj.repository.Repository;
 import org.minimalj.repository.sql.SqlRepository;
 import org.minimalj.repository.sql.Table;
 
@@ -14,15 +15,14 @@ import ch.openech.model.types.ContactCategory;
 
 public class ContactRepositoryTest {
 
-	private static SqlRepository repository = new SqlRepository(DataSourceFactory.embeddedDataSource(), Contact.class);
-	private static Table<Contact> table = repository.getTable(Contact.class);
+	private static Repository repository = new SqlRepository(DataSourceFactory.embeddedDataSource(), Contact.class);
 	
 	@Test
 	public void insertContactWithoutEntriesTest() throws Exception {
 		Contact contact = new Contact();
 		contact.stringId = "3";
 		
-		table.insert(contact);
+		repository.insert(contact);
 	}
 	
 	@Test
@@ -36,9 +36,9 @@ public class ContactRepositoryTest {
 
 		contact.entries.add(entry);
 		
-		Object id = table.insert(contact);
+		Object id = repository.insert(contact);
 		
-		Contact readContact = table.read(id); 
+		Contact readContact = repository.read(Contact.class, id); 
 		
 		Assert.assertNotSame(contact, readContact);
 		Assert.assertEquals(contact.stringId, readContact.stringId);
