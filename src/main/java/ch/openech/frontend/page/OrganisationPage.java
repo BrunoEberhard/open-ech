@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.backend.repository.ReadEntityTransaction;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
@@ -76,7 +75,8 @@ public class OrganisationPage extends ObjectPage<Organisation> {
 		if (!historized) {
 			organisation = Backend.read(Organisation.class, getObjectId());
 		} else {
-			organisation = Backend.execute(new ReadEntityTransaction<Organisation>(Organisation.class, getObjectId(), version));
+			throw new RuntimeException();
+			//			organisation = Backend.execute(new ReadHistorizedEntityTransaction<Organisation>(Organisation.class, getObjectId(), version));
 		}
 		return organisation;
 	}
