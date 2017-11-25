@@ -42,7 +42,7 @@ public class EchXmlDownload {
 				}
 				minor++;
 			}
-			if (minor == 0) {
+			if (minor == 0 && major > 3) {
 				break MAJOR;
 			}
 			major++;
@@ -133,7 +133,6 @@ public class EchXmlDownload {
 
 	public static void main(String... args) {
 		EchXmlDownload download = new EchXmlDownload();
-		download.download(20);
 		download.download(46);
 		download.download(21);
 		download.download(78);
