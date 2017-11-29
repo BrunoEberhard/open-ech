@@ -3,7 +3,7 @@ package ch.openech.frontend;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.minimalj.application.DevMode;
+import org.minimalj.application.Configuration;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.editor.Editor;
 
@@ -35,7 +35,7 @@ public abstract class XmlEditor<T, RESULT> extends Editor<T, RESULT> {
 	@Override
 	protected List<Action> createAdditionalActions() {
 		List<Action> actions = super.createAdditionalActions();
-		if (DevMode.isActive()) {
+		if (Configuration.isDevModeActive()) {
 			actions.add(0, xmlAction);
 		}
 		return actions;
