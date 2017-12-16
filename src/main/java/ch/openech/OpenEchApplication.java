@@ -19,10 +19,9 @@
 package ch.openech;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.minimalj.application.Application;
 import org.minimalj.application.Configuration;
@@ -70,8 +69,8 @@ public class OpenEchApplication extends Application {
 	}
 	
 	@Override
-	protected Set<String> getResourceBundleNames() {
-		return new TreeSet<String>(Arrays.asList("ch.openech.resources.OpenEch"));
+	public ResourceBundle getResourceBundle(Locale locale) {
+		return ResourceBundle.getBundle("ch.openech.resources.OpenEch", locale);
 	}
 
 	@Override

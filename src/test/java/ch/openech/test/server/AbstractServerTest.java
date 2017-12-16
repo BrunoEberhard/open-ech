@@ -19,6 +19,7 @@ import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;
 import ch.openech.model.EchSchemaValidation;
 import ch.openech.model.organisation.Organisation;
+import ch.openech.model.person.ContactPerson;
 import ch.openech.model.person.Person;
 import ch.openech.transaction.PersonTransaction;
 import ch.openech.xml.write.EchSchema;
@@ -46,6 +47,7 @@ public abstract class AbstractServerTest {
 	}
 	
 	public static void clear() {
+		Backend.execute(new DeleteAllTransaction<>(ContactPerson.class));
 		Backend.execute(new DeleteAllTransaction<>(Person.class));
 		Backend.execute(new DeleteAllTransaction<>(Organisation.class));
 	}
