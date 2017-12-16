@@ -9,9 +9,11 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.minimalj.application.Application;
+import org.minimalj.application.Configuration;
 import org.minimalj.backend.Backend;
 import org.minimalj.backend.repository.DeleteAllTransaction;
 import org.minimalj.repository.query.By;
+import org.minimalj.repository.sql.SqlHistorizedRepository;
 
 import ch.openech.OpenEchApplication;
 import ch.openech.frontend.org.ImportSwissDataAction;
@@ -29,6 +31,7 @@ public abstract class AbstractServerTest {
 	
 	@BeforeClass
 	public static void startup() throws Exception {
+		Configuration.set("MjRepository", SqlHistorizedRepository.class.getName());
 		if (!started) {
 			started = true;
 			Application.setInstance(new OpenEchApplication());
