@@ -22,9 +22,8 @@ public class PersonSearchPage extends SearchPage<PersonSearch> {
 		$.firstName, //
 		$.officialName, //
 		$.dateOfBirth, //
-		$.getStreet(), // PERSON::getStreet()S
-		$.getStreetNumber(), //
-		$.getTown(), //
+		$.streetAndHouseNumber,
+		$.town, //
 		$.vn.getFormattedValue(), //
 	};
 	

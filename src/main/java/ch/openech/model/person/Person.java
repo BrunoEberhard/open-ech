@@ -124,6 +124,33 @@ public class Person implements Validation {
 	public final List<ContactEntry> contacts = new ArrayList<ContactEntry>();
 	
 	//	
+
+	@Searched @Size(EchFormats.street + 1 + EchFormats.houseNumber)
+	public String getStreetAndHouseNumber() {
+		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
+			String result = dwellingAddress.mailAddress.street;
+			if (dwellingAddress.mailAddress.houseNumber.houseNumber != null) {
+				if (result != null) {
+					result = result + " ";
+				}
+				result = result + dwellingAddress.mailAddress.houseNumber.houseNumber;
+			}
+			return result;
+		} else {
+			return null;
+		}
+	}
+
+	@Searched @Size(EchFormats.town)
+	public String getTown() {
+		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
+			return dwellingAddress.mailAddress.town;
+		} else {
+			return null;
+		}
+	}
+	
+	//
 	
 	public Relation getFather() {
 		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "father");
