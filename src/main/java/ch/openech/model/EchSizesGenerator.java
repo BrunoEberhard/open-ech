@@ -1,6 +1,6 @@
 package  ch.openech.model;
 
-import static ch.openech.xml.read.StaxEch.*;
+import static ch.openech.xml.read.StaxEch.skip;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -189,6 +189,7 @@ public class EchSizesGenerator {
 							restriction(name, xml, false);
 						} else {
 							logger.warning("Skip restriction for " + name + " based on " + baseAttribute);
+							skip(xml);
 						}
 					}
 				}
@@ -235,7 +236,9 @@ public class EchSizesGenerator {
 		new EchSizesGenerator(20, "2.3");
 		new EchSizesGenerator(21, "4.0");
 		new EchSizesGenerator(78, "3.0");
+		new EchSizesGenerator(129, "4.0");
 		new EchSizesGenerator(196, "1.0");
+		new EchSizesGenerator(217, "1.0");
 		
 		for (String line : lines) {
 			System.out.println(line);
