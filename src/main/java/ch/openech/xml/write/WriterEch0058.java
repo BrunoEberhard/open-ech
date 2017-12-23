@@ -14,7 +14,6 @@ import static ch.openech.model.XmlConstants.SENDING_APPLICATION;
 import static ch.openech.model.XmlConstants.TEST_DELIVERY_FLAG;
 
 import org.minimalj.application.Application;
-import org.minimalj.util.StringUtils;
 
 import ch.openech.model.Envelope;
 import ch.openech.model.SendingApplication;
@@ -23,9 +22,11 @@ import ch.openech.model.SendingApplication;
 public class WriterEch0058 {
 
 	public final String URI;
+	public final int version;
 	
 	public WriterEch0058(EchSchema context) {
 		URI = context.getNamespaceURI(58);
+		version = context.getNamespaceVersion(58);
 	}
 	
 	public void sendingApplication(WriterElement parent) throws Exception {
@@ -43,9 +44,11 @@ public class WriterEch0058 {
 	}
 	
 	private static String getVersion() {
-		String version = Application.getInstance().getClass().getPackage().getImplementationVersion();
-		if (StringUtils.isEmpty(version)) {
-			version = "DEV";
+		String version = "DEV";
+		try {
+			version = Application.getInstance().getClass().getPackage().getImplementationVersion();
+		} catch (IllegalStateException x) {
+			// do nothing
 		}
 		return version;
 	}
@@ -66,7 +69,12 @@ public class WriterEch0058 {
     	
     	sendingApplication(header);
 
-    	header.text(EVENT_DATE, envelope.eventDate);
+    	if (version >= 4) {
+    		// ab version 4 von eCH 58 ist eventDate nur noch ein Date ohne Time
+    		header.text(EVENT_DATE, envelope.eventDate.toLocalDate());
+    	} else {
+    		header.text(EVENT_DATE, envelope.eventDate);
+    	}
     	header.text(ACTION, "1");
     }
 
