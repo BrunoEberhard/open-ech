@@ -91,7 +91,7 @@ public abstract class DeliveryWriter {
 		} else if (context.getNamespaceURI(78) != null) {
 			WriterEch0078 ech78 = new WriterEch0078(context);
 			ech78.header(rootElement, getEnvelope());
-		} else if (context.getNamespaceURI(58) != null) {
+		} else if (context.getNamespaceURI(58) != null || context.getNamespaceURI(211) != null) {
 			WriterEch0058 ech58 = new WriterEch0058(context);
 			ech58.header(rootElement, getEnvelope());
 		}
@@ -136,14 +136,26 @@ public abstract class DeliveryWriter {
 	private void setPrefixs(EchSchema namespaceContext, List<Integer> namespaceNumbers) throws XMLStreamException {
 		xmlStreamWriter.setPrefix("xsi", XMLSchema_URI);
 		for (int number : namespaceNumbers) {
-			xmlStreamWriter.setPrefix("e" + number, namespaceContext.getNamespaceURI(number));
+			if (number != 147) {
+				xmlStreamWriter.setPrefix("e" + number, namespaceContext.getNamespaceURI(number));
+			} else {
+				xmlStreamWriter.setPrefix("e147T0", WriterEch0147.URI0);
+				xmlStreamWriter.setPrefix("e147T1", WriterEch0147.URI1);
+				xmlStreamWriter.setPrefix("e147T2", WriterEch0147.URI2);
+			}
 		}
 	}
 	
 	private void writeNamespaces(EchSchema namespaceContext, List<Integer> namespaceNumbers) throws XMLStreamException {
 		xmlStreamWriter.writeNamespace("xsi", XMLSchema_URI);
 		for (int number : namespaceNumbers) {
-			xmlStreamWriter.writeNamespace("e" + number, namespaceContext.getNamespaceURI(number));
+			if (number != 147) {
+				xmlStreamWriter.writeNamespace("e" + number, namespaceContext.getNamespaceURI(number));
+			} else {
+				xmlStreamWriter.writeNamespace("e147T0", "http://www.ech.ch/xmlns/eCH-0147/T0/1");
+				xmlStreamWriter.writeNamespace("e147T1", "http://www.ech.ch/xmlns/eCH-0147/T1/1");
+				xmlStreamWriter.writeNamespace("e147T2", "http://www.ech.ch/xmlns/eCH-0147/T2/1");
+			}
 		}
 		if (namespaceContext.getOpenEchNamespaceLocation() != null) {
 			xmlStreamWriter.writeNamespace("openEch", namespaceContext.getOpenEchNamespaceLocation());

@@ -1,6 +1,6 @@
 package ch.openech.xml.write;
 
-import static ch.openech.xml.read.StaxEch.*;
+import static ch.openech.xml.read.StaxEch.skip;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -109,10 +109,17 @@ public class EchSchema {
 		return openEchNamespaceLocation;
 	}
 	
-	private void read(String namespaceLocation) throws XMLStreamException, IOException {
-		if (namespaceLocations.containsValue(namespaceLocation)) return;
-		registerLocation(namespaceLocation);
-		process(namespaceLocation);
+	private void read(String schemaLocation) throws XMLStreamException, IOException {
+		if (namespaceLocations.containsValue(schemaLocation)) return;
+		registerLocation(schemaLocation);
+		process(schemaLocation);
+	}
+	
+	private void read(String namespaceURI, String schemaLocation) throws XMLStreamException, IOException {
+		int number = EchNamespaceUtil.extractSchemaNumber(namespaceURI);
+		if (namespaceURIs.containsKey(number)) return;
+		registerLocation(namespaceURI, schemaLocation);
+		process(schemaLocation);
 	}
 	
 	private void readOpenEch(String openEchNamespaceLocation) throws XMLStreamException, IOException {
@@ -136,14 +143,27 @@ public class EchSchema {
 			process(xml);
 		}
 	}
+
+	private void registerLocation(String schemaLocation) {
+		String namespaceURI = EchNamespaceUtil.schemaURI(schemaLocation);
+		registerLocation(namespaceURI, schemaLocation);
+	}
 	
-	private void registerLocation(String namespaceLocation) {
-		int namespaceNumber = EchNamespaceUtil.extractSchemaNumber(namespaceLocation);
-		String namespaceURI = EchNamespaceUtil.schemaURI(namespaceLocation);
-		int namespaceVersion = EchNamespaceUtil.extractSchemaMajorVersion(namespaceLocation);
-		int namespaceMinorVersion = EchNamespaceUtil.extractSchemaMinorVersion(namespaceLocation);
+	private void registerLocation(String namespaceURI, String schemaLocation) {
+		if (namespaceURI.contains("eCH-0147")) {
+			// eCH 0147 hat spezielles Namensschema, sodass hier Version nicht unterstützt wird.
+			namespaceURIs.put(147, "http://www.ech.ch/xmlns/eCH-0147/T0/1");
+			namespaceLocations.put(147, "http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T0.xsd");
+			namespaceVersions.put(147, 1);
+			namespaceMinorVersions.put(147, 0);
+			return;
+		}
+
+		int namespaceNumber = EchNamespaceUtil.extractSchemaNumber(schemaLocation);
+		int namespaceVersion = EchNamespaceUtil.extractSchemaMajorVersion(schemaLocation);
+		int namespaceMinorVersion = EchNamespaceUtil.extractSchemaMinorVersion(schemaLocation);
 		namespaceURIs.put(namespaceNumber, namespaceURI);
-		namespaceLocations.put(namespaceNumber, namespaceLocation);
+		namespaceLocations.put(namespaceNumber, schemaLocation);
 		namespaceVersions.put(namespaceNumber, namespaceVersion);
 		namespaceMinorVersions.put(namespaceNumber, namespaceMinorVersion);
 	}
@@ -180,8 +200,9 @@ public class EchSchema {
 	}
 	
 	private void imprt(StartElement startElement) throws XMLStreamException, IOException {
+		String namespaceURI = startElement.getAttributeByName(new QName("namespace")).getValue();
 		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
-		read(schemaLocation);
+		read(namespaceURI, schemaLocation);
 	}
 
 	//
