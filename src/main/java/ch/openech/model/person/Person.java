@@ -130,10 +130,7 @@ public class Person implements Validation {
 		if (dwellingAddress != null && dwellingAddress.mailAddress != null) {
 			String result = dwellingAddress.mailAddress.street;
 			if (dwellingAddress.mailAddress.houseNumber.houseNumber != null) {
-				if (result != null) {
-					result = result + " ";
-				}
-				result = result + dwellingAddress.mailAddress.houseNumber.houseNumber;
+				result = result + " " + dwellingAddress.mailAddress.houseNumber.houseNumber;
 			}
 			return result;
 		} else {
