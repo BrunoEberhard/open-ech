@@ -1,6 +1,8 @@
 package ch.openech.xml.write;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Some calculations between namespace URIs, Locations and Version. Ech convention specific.
@@ -11,13 +13,26 @@ public class EchNamespaceUtil {
 
 	private static final String ECH_NS_BASE = "http://www.ech.ch/xmlns/eCH-";
 
+	private static Map<String, String> LOCAL_COPIES = new HashMap<>();
+	
+	static {
+		LOCAL_COPIES.put("http://www.open-ech.ch/xmlns/open-eCH/1", "/ch/openech/xmlns/Open-eCH-1-0.xsd");
+		LOCAL_COPIES.put("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T0.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T0.xsd");
+		LOCAL_COPIES.put("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T1.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T1.xsd");
+		LOCAL_COPIES.put("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T2.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T2.xsd");
+		LOCAL_COPIES.put("eCH-0147T0.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T0.xsd");
+		LOCAL_COPIES.put("eCH-0147T1.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T1.xsd");
+		LOCAL_COPIES.put("eCH-0147T2.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T2.xsd");
+	}
+	
 	public static InputStream getLocalCopyOfSchema(String namespaceLocation) {
+		System.out.println(namespaceLocation);
 		String fileName;
-		if (!WriterOpenEch.URI.equals(namespaceLocation)) {
+		if (!LOCAL_COPIES.containsKey(namespaceLocation)) {
 			int pos = namespaceLocation.lastIndexOf("/");
 			fileName = "/ch/ech/xmlns" + namespaceLocation.substring(pos);
 		} else {
-			fileName = "/ch/openech/xmlns/Open-eCH-1-0.xsd";
+			fileName = LOCAL_COPIES.get(namespaceLocation);
 		}
 		return EchNamespaceUtil.class.getResourceAsStream(fileName);
 	}
