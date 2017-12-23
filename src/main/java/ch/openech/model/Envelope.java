@@ -11,7 +11,7 @@ public class Envelope {
 	public String referenceMessageId;
 	public String senderId;
 	public String recipientId;
-	public LocalDateTime eventDate;
+	public LocalDateTime eventDate; // ab V4 nur LocalDate
 	public LocalDateTime messageDate;
 	public String loopback;
 	public String authorise;
