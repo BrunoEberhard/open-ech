@@ -124,8 +124,8 @@ public class StaxEch0044 {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
-				if (startElement.getName().getLocalPart().equals(PERSON_ID_CATEGORY)) namedId.personIdCategory = token(xml);
-				else if (startElement.getName().getLocalPart().equals(PERSON_ID)) namedId.personId = token(xml);
+				if (startElement.getName().getLocalPart().equals(PERSON_ID_CATEGORY)) namedId.IdCategory = token(xml);
+				else if (startElement.getName().getLocalPart().equals(PERSON_ID)) namedId.Id = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;

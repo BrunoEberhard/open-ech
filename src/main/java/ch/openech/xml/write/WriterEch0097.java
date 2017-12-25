@@ -60,8 +60,8 @@ public class WriterEch0097 {
 	private void namedId(WriterElement parent, NamedId namedId, String name) throws Exception {
 		WriterElement element = parent.create(URI, name);
 		
-		element.text(ORGANISATION_ID_CATEGORY, namedId.personIdCategory);
-		element.text(ORGANISATION_ID, namedId.personId);
+		element.text(ORGANISATION_ID_CATEGORY, namedId.IdCategory);
+		element.text(ORGANISATION_ID, namedId.Id);
 	}
 
 	public void localID(WriterElement parent, String id) throws Exception {

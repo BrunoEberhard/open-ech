@@ -20,7 +20,7 @@ public class EchRepository {
 	public static Person getByIdentification(PersonIdentification personIdentification) {
 		String localId = null;
 		if (personIdentification.technicalIds.localId.openEch()) {
-			localId = personIdentification.technicalIds.localId.personId;
+			localId = personIdentification.technicalIds.localId.Id;
 			if (StringUtils.isBlank(localId)) {
 				localId = null;
 			}
@@ -59,7 +59,7 @@ public class EchRepository {
 	public static Organisation getByIdentification(OrganisationIdentification organisationIdentification) {
 		String localId = null;
 		if (organisationIdentification.technicalIds.localId.openEch()) {
-			localId = organisationIdentification.technicalIds.localId.personId;
+			localId = organisationIdentification.technicalIds.localId.Id;
 			if (StringUtils.isBlank(localId)) {
 				localId = null;
 			}

@@ -62,7 +62,7 @@ public class StaxEch0020 {
 
 		person.event = e;
 
-		if (person.technicalIds.localId.personId != null) {
+		if (person.technicalIds.localId.Id != null) {
 			System.out.println("Person hat id noch immer gesetzt. Das sollte nicht sein");
 			person.technicalIds.localId.clear();
 		}

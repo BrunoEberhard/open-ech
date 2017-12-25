@@ -114,8 +114,8 @@ public class WriterEch0044 {
 	public void namedId(WriterElement parent, NamedId namedId, String name) throws Exception {
 		WriterElement personIdentification = parent.create(URI, name);
 		
-		personIdentification.text(PERSON_ID_CATEGORY, namedId.personIdCategory);
-		personIdentification.text(PERSON_ID, namedId.personId);
+		personIdentification.text(PERSON_ID_CATEGORY, namedId.IdCategory);
+		personIdentification.text(PERSON_ID, namedId.Id);
 	}
 
 }

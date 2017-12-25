@@ -68,8 +68,8 @@ public class WriterEch0046 extends DeliveryWriter {
 	private void localID(WriterElement parent, String id) throws Exception {
 		if (id == null) return;
 		NamedId namedPersonId = new NamedId();
-		namedPersonId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
-		namedPersonId.personId = id;
+		namedPersonId.IdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
+		namedPersonId.Id = id;
 		ech44.namedId(parent, namedPersonId, LOCAL_I_D);
 	}
 

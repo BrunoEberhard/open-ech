@@ -78,7 +78,7 @@ public class StaxEch0046 {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				
-				if (startName.equals(LOCAL_I_D)) contact.stringId = StaxEch0044.namedId(xml).personId;
+				if (startName.equals(LOCAL_I_D)) contact.stringId = StaxEch0044.namedId(xml).Id;
 				else if (startName.equals(ADDRESS)) addContactEntry(contact, xml, ContactEntryType.Address);
 				else if (startName.equals(EMAIL)) addContactEntry(contact, xml, ContactEntryType.Email);
 				else if (startName.equals(PHONE)) addContactEntry(contact, xml, ContactEntryType.Phone);

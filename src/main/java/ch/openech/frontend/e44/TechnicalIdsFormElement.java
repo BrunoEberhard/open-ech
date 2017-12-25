@@ -41,11 +41,11 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 	protected void show(TechnicalIds technicalIds) {
 		int maxLength = 25;
 		String text;
-		if (!StringUtils.isBlank(technicalIds.localId.personId)) {
-			if (technicalIds.localId.personId.length() <= maxLength) {
-				text = technicalIds.localId.personId;
+		if (!StringUtils.isBlank(technicalIds.localId.Id)) {
+			if (technicalIds.localId.Id.length() <= maxLength) {
+				text = technicalIds.localId.Id;
 			} else {
-				text = technicalIds.localId.personId.substring(0, maxLength-1) + "...";
+				text = technicalIds.localId.Id.substring(0, maxLength-1) + "...";
 			}
 		} else {
 			text = isEditable() ? "Id bearbeiten" : "-";
@@ -60,8 +60,8 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 	@Override
 	public Form<TechnicalIds> createForm() {
 		EchForm<TechnicalIds> form = new EchForm<TechnicalIds>();
-		form.line(TechnicalIds.$.localId.personIdCategory);
-		form.line(TechnicalIds.$.localId.personId);
+		form.line(TechnicalIds.$.localId.IdCategory);
+		form.line(TechnicalIds.$.localId.Id);
 		form.line(new OtherIdFormElement(TechnicalIds.$.otherId, isEditable()));
 		if (hasSpecialEuIds) {
 			form.line(new OtherIdFormElement(TechnicalIds.$.euId, isEditable()));

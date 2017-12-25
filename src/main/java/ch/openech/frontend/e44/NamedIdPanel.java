@@ -6,8 +6,8 @@ import  ch.openech.model.common.NamedId;
 public class NamedIdPanel extends EchForm<NamedId> {
 	
 	public NamedIdPanel() {
-		line(NamedId.$.personIdCategory);
-		line(NamedId.$.personId);
+		line(NamedId.$.IdCategory);
+		line(NamedId.$.Id);
 	}
 
 }

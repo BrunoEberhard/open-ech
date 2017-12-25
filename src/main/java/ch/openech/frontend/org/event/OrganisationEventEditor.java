@@ -43,8 +43,8 @@ public abstract class OrganisationEventEditor<T> extends XmlEditor<T, Organisati
 
 	public Organisation getOrganisation() {
 		Organisation organisation = organisationPage.getObject();
-		organisation.technicalIds.localId.personIdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
-		organisation.technicalIds.localId.personId = String.valueOf(organisation.id);
+		organisation.technicalIds.localId.IdCategory = NamedId.OPEN_ECH_ID_CATEGORY;
+		organisation.technicalIds.localId.Id = String.valueOf(organisation.id);
 		return organisation;
 	}
 	

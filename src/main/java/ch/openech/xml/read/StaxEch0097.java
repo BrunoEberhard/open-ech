@@ -37,8 +37,8 @@ public class StaxEch0097 {
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
-				if (StringUtils.equals(startName, ORGANISATION_ID_CATEGORY)) namedId.personIdCategory = token(xml);
-				else if (startElement.getName().getLocalPart().equals(ORGANISATION_ID)) namedId.personId = token(xml);
+				if (StringUtils.equals(startName, ORGANISATION_ID_CATEGORY)) namedId.IdCategory = token(xml);
+				else if (startElement.getName().getLocalPart().equals(ORGANISATION_ID)) namedId.Id = token(xml);
 				else skip(xml);
 			} else if (event.isEndElement()) {
 				return;
