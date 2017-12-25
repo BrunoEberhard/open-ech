@@ -1,11 +1,30 @@
 package ch.openech.model.estate;
 
+import java.util.List;
+
+import org.minimalj.model.Keys;
+import org.minimalj.model.validation.Validation;
+import org.minimalj.model.validation.ValidationMessage;
+import org.minimalj.util.DateUtils;
+import org.minimalj.util.StringUtils;
+
 import ch.openech.model.common.DatePartiallyKnown;
 
-public class BuildingDate /* implements Validatable */ {
+public class BuildingDate implements Validation {
 
+	public static final BuildingDate $ = Keys.of(BuildingDate.class);
+	
 	public DatePartiallyKnown date;
 	public PeriodOfConstruction periodOfConstruction;
+	
+	@Override
+	public List<ValidationMessage> validate() {
+		if (date != null && StringUtils.isEmpty(DateUtils.parseCH(date.value, true))) {
+			return Validation.message(BuildingDate.$.date, "Ungültige Eingabe");
+		} else {
+			return null;
+		}
+	}
 	
 	/*
 	 <xs:choice>
