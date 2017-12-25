@@ -2,6 +2,7 @@ package ch.openech.model.estate;
 
 import java.util.List;
 
+import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
@@ -13,6 +14,10 @@ import ch.openech.model.types.EchCode;
 @Sizes(EchFormats.class)
 public class Street {
 
+	public static final Street $ = Keys.of(Street.class);
+	
+	public Object id;
+	
 	public String ESID;
 	public Boolean isOfficialDescriptionType;
 	public String officialStreetNumber;

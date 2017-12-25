@@ -2,7 +2,9 @@ package ch.openech.model.estate;
 
 import java.time.LocalDate;
 
+import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
+import org.minimalj.model.annotation.Size;
 
 /**
  * Anweisung: Basiskomponente zur Abbildung von Bearbeitungsanweisungen an den
@@ -16,8 +18,12 @@ import org.minimalj.model.annotation.NotEmpty;
  */
 public class Directive {
 
+	public static final Directive $ = Keys.of(Directive.class);
+	
+	public Object id;
+
 	// UUID: Universally Unique Identifier der Anweisung. Referenz des Objekts, nicht der Nachricht.
-	@NotEmpty
+	@NotEmpty @Size(36)
 	public String uuid;
 
 	// eCH-0039:directiveInstruction
@@ -33,6 +39,7 @@ public class Directive {
 	public LocalDate deadline;
 	
 	// Leistungsidentifikation: Identifikation der Leistung gemäss eCH-0070 Leistungsinventar eGov CH.
+	@Size(255) // Grösse in eCH unbekannt
 	public String serviceId;
 	
 	/*

@@ -3,14 +3,32 @@ package ch.openech.model.estate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.minimalj.model.Keys;
+import org.minimalj.model.View;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 
+import ch.openech.model.EchFormats;
 import ch.openech.model.common.NamedMetaData;
 
 public class Realestate {
 
-	public RealestateIdentification realestateIdentification;
+	public static final Realestate $ = Keys.of(Realestate.class);
+	
+	public Object id;
+	
+	@Size(EchFormats.EGRID)
+	public String EGRID;
+	@Size(12) @NotEmpty
+	public String number;
+	@Size(12)
+	public String numberSuffix;
+	@Size(15)
+	public String subDistrict;
+	@Size(15)
+	public String lot;
+
+	//
 	
 	public RealestateType realestateType;
 
@@ -34,9 +52,13 @@ public class Realestate {
 		</xs:sequence>	 
 	 
 	 */
-	
-	public static class RealestateIdentification {
 
+	
+	public static class RealestateIdentification implements View<Realestate> {
+
+		public Object id;
+		
+		@Size(EchFormats.EGRID)
 		public String EGRID;
 		@Size(12) @NotEmpty
 		public String number;

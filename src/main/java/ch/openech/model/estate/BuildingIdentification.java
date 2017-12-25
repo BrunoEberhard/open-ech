@@ -2,6 +2,7 @@ package ch.openech.model.estate;
 
 import java.util.List;
 
+import org.minimalj.model.View;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
@@ -11,23 +12,21 @@ import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.NamedId;
 
 @Sizes(EchFormats.class)
-public class BuildingIdentification {
+public class BuildingIdentification implements View<Building> {
 
+	public Object id;
+	
 	// einer von a, b, c
-	
 	// a)
-	
 	public Integer EGID;
 	
 	// b)
-	
 	public String street, houseNumber;
 	public Integer zipCode;
 	@NotEmpty // min size 3
 	public String nameOfBuilding;
 	
 	// c)
-	
 	public String EGRID;
 	@Size(255) // missing size in 0129
 	public String cadasterAreaNumber;
@@ -35,9 +34,7 @@ public class BuildingIdentification {
 	public String number;
 	public RealestateType realestateType;
 	@Size(12)
-	public String officialBuildingNoType;
-	
-	// 
+	public String officialBuildingNo;
 	
 	public List<NamedId> localId;
 	public MunicipalityIdentification municipality;

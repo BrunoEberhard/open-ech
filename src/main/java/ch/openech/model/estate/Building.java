@@ -4,12 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.common.DatePartiallyKnown;
+import ch.openech.model.common.MunicipalityIdentification;
 import ch.openech.model.common.NamedId;
 import ch.openech.model.common.NamedMetaData;
 import ch.openech.model.types.EchCode;
@@ -17,9 +19,34 @@ import ch.openech.model.types.EchCode;
 @Sizes(EchFormats.class)
 public class Building {
 
-	public BuildingIdentification buildingIdentification;
-	public String EGID;
-	public String officialBuildingNo;
+	public static final Building $ = Keys.of(Building.class);
+
+	public Object id;
+	
+	// einer von a, b, c
+	// a)
+	public Integer EGID; // ist in xsd V4 auf identification und objekt
+	
+	// b)
+	public String street, houseNumber;
+	public Integer zipCode;
+	public String nameOfBuilding;
+	
+	// c)
+	public String EGRID;
+	@Size(255) // missing size in 0129
+	public String cadasterAreaNumber;
+	@Size(12)
+	public String number;
+	public RealestateType realestateType;
+	@Size(12)
+	public String officialBuildingNo; // ist in xsd V4 auf identification und objekt
+	
+	public List<NamedId> localId;
+	public MunicipalityIdentification municipality;
+	
+	//
+	
 	@Size(EchFormats.nameOfBuilding)
 	public String name;
 	public BuildingDate dateOfConstruction, dateOfRenovation;

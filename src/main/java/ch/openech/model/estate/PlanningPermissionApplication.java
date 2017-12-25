@@ -4,19 +4,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 
 import ch.openech.model.common.Address;
 import ch.openech.model.common.MunicipalityIdentification;
+import ch.openech.model.common.NamedId;
 import ch.openech.model.common.NamedMetaData;
 import ch.openech.model.organisation.OrganisationIdentification;
 
 public class PlanningPermissionApplication {
 
-	// 
+	public static final PlanningPermissionApplication $ = Keys.of(PlanningPermissionApplication.class);
 	
-	public final PlanningPermissionApplicationIdentification planningPermissionApplicationIdentification = new PlanningPermissionApplicationIdentification();
+	public Object id;
+	
+	// identification
+	public List<NamedId> localID;
+	public List<NamedId> otherID;
+	//
 	
 	@NotEmpty @Size(255)
 	public String description;

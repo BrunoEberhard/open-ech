@@ -2,6 +2,7 @@ package ch.openech.model.estate;
 
 import java.util.List;
 
+import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Sizes;
 
 import ch.openech.model.EchFormats;
@@ -10,6 +11,10 @@ import ch.openech.model.common.NamedId;
 
 @Sizes(EchFormats.class)
 public class Dwelling {
+
+	public static final Dwelling $ = Keys.of(Dwelling.class);
+	
+	public Object id;
 
 	public List<NamedId> localID;
 	public String administrativeDwellingNo;
