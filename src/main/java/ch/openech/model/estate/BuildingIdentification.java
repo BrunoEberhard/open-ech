@@ -36,7 +36,7 @@ public class BuildingIdentification implements View<Building> {
 	@Size(12)
 	public String officialBuildingNo;
 	
-	public List<NamedId> localId;
+	public List<NamedId> localID;
 	public MunicipalityIdentification municipality;
 	
 	/*

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
@@ -22,27 +23,49 @@ public class Building {
 	public static final Building $ = Keys.of(Building.class);
 
 	public Object id;
+
+	public transient BuildingIdentificationType identificationType = BuildingIdentificationType.EGID;
+	public static enum BuildingIdentificationType {
+		EGID, ADDRESS, EGRID, CADASTER;
+	}
 	
+	public boolean hasADDRESSIdentification() {
+		return identificationType == BuildingIdentificationType.ADDRESS;
+	}
+
+	public boolean hasEGRIDIdentification() {
+		return identificationType == BuildingIdentificationType.EGRID;
+	}
+
+	public boolean hasCADASTERIdentification() {
+		return identificationType == BuildingIdentificationType.CADASTER;
+	}
+
 	// einer von a, b, c
 	// a)
-	public Integer EGID; // ist in xsd V4 auf identification und objekt
+	public Integer EGID; // ist in xsd V4 auf identification und objekt (daher kein @Enabled)
 	
 	// b)
-	public String street, houseNumber;
+	@Enabled("hasADDRESSIdentification")
+	public String street, houseNumber, nameOfBuilding;
+	@Enabled("hasADDRESSIdentification")
 	public Integer zipCode;
-	public String nameOfBuilding;
 	
 	// c)
+	@Enabled("hasEGRIDIdentification")
 	public String EGRID;
+	@Enabled("hasCADASTERIdentification")
 	@Size(255) // missing size in 0129
 	public String cadasterAreaNumber;
+	@Enabled("hasCADASTERIdentification")
 	@Size(12)
 	public String number;
+	@Enabled("hasCADASTERIdentification")
 	public RealestateType realestateType;
 	@Size(12)
-	public String officialBuildingNo; // ist in xsd V4 auf identification und objekt
+	public String officialBuildingNo; // ist in xsd V4 auf identification und objekt (daher kein @Enabled)
 	
-	public List<NamedId> localId;
+	public List<NamedId> localID = new ArrayList<>();
 	public MunicipalityIdentification municipality;
 	
 	//
