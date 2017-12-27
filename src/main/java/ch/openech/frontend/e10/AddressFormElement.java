@@ -60,7 +60,8 @@ public class AddressFormElement extends ObjectFormElement<Address> implements Mo
 
 	@Override
 	public void show(Address address) {
-		if (isEditable()) {
+		boolean removeable = !getProperty().isFinal();
+		if (isEditable() && removeable) {
 			add(address, new RemoveObjectAction());
 		} else {
 			add(address);
