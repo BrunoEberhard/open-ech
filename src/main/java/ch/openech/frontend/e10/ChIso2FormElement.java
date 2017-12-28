@@ -11,7 +11,11 @@ public class ChIso2FormElement extends AbstractFormElement<String> {
 	private final Input<String> textField;
 
 	public ChIso2FormElement() {
-		super(Address.$.country);
+		this(Address.$.country);
+	}
+	
+	public ChIso2FormElement(Object key) {
+		super(key);
 
 		textField = Frontend.getInstance().createReadOnlyTextField();
 		textField.setValue("CH");
