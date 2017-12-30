@@ -6,6 +6,7 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
+import org.minimalj.util.StringUtils;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.common.NamedId;
@@ -29,6 +30,13 @@ public class Street {
 	public String ESTRID;
 	@Size(255) // undefined in eCH
 	public String streetGeometry;
+	
+	public String getDescriptions() {
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "descriptions");
+		
+		String[] descriptions = description.stream().map(d -> d.getTableText()).toArray(String[]::new);
+		return String.join(", ", descriptions);
+	}
 	
 	/*
 		<xs:sequence>
@@ -63,6 +71,14 @@ public class Street {
 		public String descriptionShort;
 		@Size(EchFormats.localisationIndexName)
 		public String descriptionIndex;
+		
+		public String getTableText() {
+			if (!StringUtils.isEmpty(descriptionShort)) {
+				return descriptionShort;
+			} else {
+				return descriptionLong;
+			}
+		}
 	}
 	
 	public static enum LocalisationStatus implements EchCode {

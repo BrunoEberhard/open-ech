@@ -6,4 +6,6 @@ public class OpenEchRoles {
 	public static final String importExport = "importExport";
 	public static final String modify = "modify";
 	public static final String view = "view";
+	
+	public static final String estate = "estate";
 }

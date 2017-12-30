@@ -24,10 +24,14 @@ public class BuildingDateFormElement extends AbstractFormElement<BuildingDate> {
 	private final Map<String, PeriodOfConstruction> names = new HashMap<>();
 	private final List<String> nameList = new ArrayList<>();
 	
-	public BuildingDateFormElement(BuildingDate key) {
+	public BuildingDateFormElement(BuildingDate key, boolean editable) {
 		super(key);
 		initializePeriods();
-		textField = Frontend.getInstance().createTextField(13, null, new BuildingDateSuggestion(), listener());
+		if (editable) {
+			textField = Frontend.getInstance().createTextField(13, null, new BuildingDateSuggestion(), listener());
+		} else {
+			textField = Frontend.getInstance().createReadOnlyTextField();
+		}
 	}
 	
 	private void initializePeriods() {

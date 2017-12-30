@@ -4,11 +4,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
+import org.minimalj.model.View;
 import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.annotation.Sizes;
+import org.minimalj.repository.sql.EmptyObjects;
+import org.minimalj.util.StringUtils;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.common.DatePartiallyKnown;
@@ -40,6 +45,20 @@ public class Building {
 	public boolean hasCADASTERIdentification() {
 		return identificationType == BuildingIdentificationType.CADASTER;
 	}
+	
+	public BuildingIdentificationType identificationType() {
+		if (!EmptyObjects.isEmpty(EGID)) {
+			return BuildingIdentificationType.EGID;
+		} else if (!EmptyObjects.isEmpty(street)) {
+			return BuildingIdentificationType.ADDRESS;
+		} else if (!EmptyObjects.isEmpty(EGRID)) {
+			return BuildingIdentificationType.EGRID;
+		} else if (!EmptyObjects.isEmpty(cadasterAreaNumber)) {
+			return BuildingIdentificationType.CADASTER;
+		} else {
+			return null;
+		}
+	}
 
 	// einer von a, b, c
 	// a)
@@ -66,6 +85,7 @@ public class Building {
 	public String officialBuildingNo; // ist in xsd V4 auf identification und objekt (daher kein @Enabled)
 	
 	public List<NamedId> localID = new ArrayList<>();
+	@NotEmpty
 	public MunicipalityIdentification municipality;
 	
 	//
@@ -74,7 +94,7 @@ public class Building {
 	public String name;
 	public BuildingDate dateOfConstruction, dateOfRenovation;
 	public DatePartiallyKnown dateOfDemolition;
-	public Integer numberOfFloor, numberOfSeparateHabitableRooms;
+	public Integer numberOfFloors, numberOfSeparateHabitableRooms;
 	public Integer surfaceAreaOfBuilding, subSurfaceAreaOfBuilding;
 	@Size(EchFormats.surfaceAreaOfBuildingSingleObject) // typo ech
 	public Integer surfaceAreaOfBuildingSignaleObject;
@@ -89,9 +109,13 @@ public class Building {
 	public Boolean thermoTechnicalDeviceYesNo;
 	public final BuildingVolume volume = new BuildingVolume();
 	public List<NamedMetaData> namedMetaData = new ArrayList<NamedMetaData>();
-	public ThermotechnicalDevice thermotechnicalDevice1;
-	public ThermotechnicalDevice thermotechnicalDevice2;
-	public List<BuildingEntrance> buildingEntrance;
+	public final List<ThermotechnicalDevice> thermotechnicalDevice = new ArrayList<>();
+
+	// Die Eingänge werden direkt auf dem Gebäude gehalten
+	public final List<BuildingEntrance> buildingEntrance = new ArrayList<>();
+	
+	// nicht bei eCH / View
+	public List<Dwelling> dwelling = new ArrayList<>();
 	
 	/*
 	<xs:element name="buildingIdentification" type="eCH-0129:buildingIdentificationType" minOccurs="0"/>
@@ -123,6 +147,29 @@ public class Building {
 	<xs:element name="namedMetaData" type="eCH-0129:namedMetaDataType" minOccurs="0" maxOccurs="unbounded"/>
 	*/
 	
+
+	public String getStreetAndHouseNumber() {
+		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "streetAndHouseNumber");
+		
+		if (!StringUtils.isEmpty(street)) {
+			return street + " " + houseNumber;
+		} else {
+			return null;
+		}
+	}
+	
+	
+	public enum BuildingStatus implements EchCode {
+
+		_1001, _1002, _1003, _1004, _1005, _1007, _1008;
+
+		@Override
+		public String getValue() {
+			return name().substring(1);
+		}
+	}
+
+	
 	public static class BuildingVolume {
 		@Size(7)
 		public Integer volume;
@@ -149,15 +196,26 @@ public class Building {
 		}
 	}
 
-	public static class ThermotechnicalDevice {
+	public static class ThermotechnicalDevice implements Rendering {
+		public static final ThermotechnicalDevice $ = Keys.of(ThermotechnicalDevice.class);
+		
 		@NotEmpty
 		public ThermotechnicalHeatGenerator heatGenerator;
 		public ThermotechnicalDeviceHeatingType heatingType;
 		public ThermotechnicalDeviceInformationSource informationSource;
 		public LocalDate revisionDate;
-		@NotEmpty
-		public Boolean heatForHeating, heatForWarmwater;
+		public Boolean heatForHeating = false;
+		public Boolean heatForWarmwater = false;
 		public ThermotechnicalDeviceEnergySource energySource;
+
+		@Override
+		public String render(RenderType renderType) {
+			String text = EnumUtils.getText(heatGenerator);
+			if (energySource != null) {
+				text += " (" + EnumUtils.getText(energySource) + ")";
+			}
+			return text;
+		}
 		
 	}
 
@@ -197,16 +255,23 @@ public class Building {
 		}
 	}
 	
-	public static class BuildingEntrance {
+	public static class BuildingEntrance implements Rendering {
+		public static final BuildingEntrance $ = Keys.of(BuildingEntrance.class);
+		
 		public String EGAID, EDID, buildingEntranceNo;
 		public EntranceStatus status;
 		public Coordinates coordinates;
-		public NamedId localId;
+		public final NamedId localId = new NamedId();
 		public Boolean isMainAddress, isOfficial;
 		@NotEmpty
 		public Locality locality;
-		@NotEmpty
+		// @NotEmpty // TODO
 		public Street street;
+		
+		@Override
+		public String render(RenderType renderType) {
+			return "Todostrasse 2, " + locality.render(RenderType.PLAIN_TEXT);
+		}
 	}
 	
 	public static enum EntranceStatus implements EchCode {
@@ -216,5 +281,53 @@ public class Building {
 		public String getValue() {
 			return name().substring(1);
 		}
+	}
+	
+	public static class BuildingView implements View<Building> {
+		
+		public static final Building $ = Keys.of(Building.class);
+
+		public Object id;
+
+		// einer von a, b, c
+		// a)
+		public Integer EGID; // ist in xsd V4 auf identification und objekt (daher kein @Enabled)
+		
+		// b)
+		public String street, houseNumber, nameOfBuilding;
+		public Integer zipCode;
+		
+		// c)
+		public String EGRID;
+		public String cadasterAreaNumber;
+		public String number;
+		public RealestateType realestateType;
+		public String officialBuildingNo; // ist in xsd V4 auf identification und objekt (daher kein @Enabled)
+		
+		public List<NamedId> localID = new ArrayList<>();
+		public MunicipalityIdentification municipality;
+		
+		//
+		
+		public String name;
+		public BuildingDate dateOfConstruction, dateOfRenovation;
+		public DatePartiallyKnown dateOfDemolition;
+		public Integer numberOfFloors, numberOfSeparateHabitableRooms;
+		public Integer surfaceAreaOfBuilding, subSurfaceAreaOfBuilding;
+		public Integer surfaceAreaOfBuildingSignaleObject;
+		public BuildingCategory buildingCategory;
+		// public BuildingClass buildingClass; // TODO EUROSTAT
+		public BuildingStatus status;
+		public List<NamedId> otherID;
+		public Boolean civilDefenseShelter;
+		public Coordinates coordinates;
+		public Integer quartersCode;
+		public Integer energyRelevantSurface;
+		public Boolean thermoTechnicalDeviceYesNo;
+		public final BuildingVolume volume = new BuildingVolume();
+		public List<NamedMetaData> namedMetaData = new ArrayList<NamedMetaData>();
+		public final List<ThermotechnicalDevice> thermotechnicalDevice = new ArrayList<>();
+
+		public final List<BuildingEntrance> buildingEntrance = new ArrayList<>();
 	}
 }

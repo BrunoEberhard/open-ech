@@ -1,23 +1,31 @@
 package ch.openech.model.estate;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.View;
+import org.minimalj.model.annotation.Decimal;
 import org.minimalj.model.annotation.NotEmpty;
+import org.minimalj.model.annotation.Searched;
 import org.minimalj.model.annotation.Size;
+import org.minimalj.model.annotation.Sizes;
 
 import ch.openech.model.EchFormats;
 import ch.openech.model.common.NamedMetaData;
+import ch.openech.model.types.EchCode;
 
-public class Realestate {
+@Sizes(EchFormats.class)
+public class Realestate implements Rendering {
 
 	public static final Realestate $ = Keys.of(Realestate.class);
 	
 	public Object id;
 	
-	@Size(EchFormats.EGRID)
+	@Size(EchFormats.EGRID) @Searched
 	public String EGRID;
 	@Size(12) @NotEmpty
 	public String number;
@@ -30,10 +38,27 @@ public class Realestate {
 
 	//
 	
+	public String authority;
+	public LocalDate date;
 	public RealestateType realestateType;
-
+	public String cantonalSubKind;
+	public RealestateStatus status;
+	@Size(EchFormats.realestateMutnumber)
+	public String mutnumber;
+	public String identDN;
+	@Size(10) @Decimal(1)
+	public BigDecimal squareMeasure;
+	public Boolean realestateIncomplete;
+	public Coordinates coordinates;
 	public List<NamedMetaData> namedMetaData = new ArrayList<NamedMetaData>();
 
+	// nicht bei eCH / View
+	public List<Building> building = new ArrayList<>();
+	
+	@Override
+	public String render(RenderType renderType) {
+		return EGRID;
+	}
 	
 	/*
 		<xs:sequence>
@@ -68,6 +93,87 @@ public class Realestate {
 		public String subDistrict;
 		@Size(15)
 		public String lot;
+		
+		/*
+		 <xs:sequence>
+			<xs:element name="EGRID" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="eCH-0129:EGRIDType"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="number">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="numberSuffix" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="subDistrict" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="lot" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		
+		 */
+	}
+	
+	public static enum RealestateStatus implements EchCode {
+		_0, _1;
+		
+		@Override
+		public String getValue() {
+			return String.valueOf(ordinal() + 1);
+		}
+	}
+	
+	public class RealestateView implements View<Realestate>, Rendering {
+		
+		public Object id;
+		public String EGRID;
+		public String number;
+		public String numberSuffix;
+		public String subDistrict;
+		public String lot;
+
+		//
+		
+		public String authority;
+		public LocalDate date;
+		public RealestateType realestateType;
+		public String cantonalSubKind;
+		public RealestateStatus status;
+		public String mutnumber;
+		public String identDN;
+		public BigDecimal squareMeasure;
+		public Boolean realestateIncomplete;
+		public Coordinates coordinates;
+		public List<NamedMetaData> namedMetaData = new ArrayList<NamedMetaData>();
+
+		@Override
+		public String render(RenderType renderType) {
+			return EGRID;
+		}
 	}
 	
 }

@@ -33,6 +33,7 @@ import org.minimalj.frontend.page.HtmlPage;
 import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.SearchPage;
 import org.minimalj.security.Subject;
+import org.minimalj.util.resources.MultiResourceBundle;
 
 import ch.openech.datagenerator.GeneratePersonEditor;
 import ch.openech.frontend.editor.BaseDeliveryEditor;
@@ -53,9 +54,11 @@ import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.preferences.OpenEchPreferences.ApplicationSchemaData;
 import ch.openech.frontend.preferences.PreferencesEditor;
+import ch.openech.model.estate.PlanningPermissionApplication;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.model.person.Person;
 import ch.openech.transaction.EchRepository;
+import ch.openech.transaction.ImportSwissDataTransaction;
 import ch.openech.xml.write.EchSchema;
 
 public class OpenEchApplication extends Application {
@@ -65,12 +68,17 @@ public class OpenEchApplication extends Application {
 	private EchSchema tpnSchema;
 	
 	public OpenEchApplication() {
-		// empty
+		if (!Configuration.available("MjInit")) {
+			Configuration.set("MjInit", ImportSwissDataTransaction.class.getName());
+		}
 	}
 	
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundle.getBundle("ch.openech.resources.OpenEch", locale);
+		// return ResourceBundle.getBundle("ch.openech.resources.OpenEch", locale);
+
+		return new MultiResourceBundle(locale, "ch.openech.resources.OpenEch", "ch.openech.model.estate.0129",
+				"ch.openech.model.estate.0211", "ch.openech.resources.Estate");
 	}
 
 	@Override
@@ -92,6 +100,11 @@ public class OpenEchApplication extends Application {
 	
 	@Override
 	public List<Action> getNavigation() {
+		if (Subject.currentHasRole(OpenEchRoles.estate)) {
+			// Das Objektwesen ist noch hinter einer speziellen Rolle versteckt
+			return new EstateApplication().getNavigation();
+		}
+		
 		boolean administrateRole = Subject.currentHasRole(OpenEchRoles.administrate);
 		boolean importExportAvailable = Frontend.getInstance() instanceof SwingFrontend;
 		boolean importExportRole = Subject.currentHasRole(OpenEchRoles.importExport);
@@ -170,25 +183,19 @@ public class OpenEchApplication extends Application {
 		OpenEchPreferences preferences = EchRepository.getPreferences();
 		ApplicationSchemaData applicationData = preferences.applicationSchemaData;
 		if (applicationData.schema20 != null) {
-			if (ewkSchema == null || !applicationData.schema20.equals(ewkSchema.getVersion())) {
-				ewkSchema = EchSchema.getNamespaceContext(applicationData.schema20);
-			}
+			ewkSchema = EchSchema.getNamespaceContext(applicationData.schema20);
 		} else {
 			ewkSchema = null;
 		}
 		
 		if (applicationData.schema93 != null) {
-			if (tpnSchema == null || !applicationData.schema93.equals(tpnSchema.getVersion())) {
-				tpnSchema = EchSchema.getNamespaceContext(applicationData.schema93);
-			}
+			tpnSchema = EchSchema.getNamespaceContext(applicationData.schema93);
 		} else {
 			tpnSchema = null;
 		}
 		
 		if (applicationData.schema148 != null) {
-			if (orgSchema == null || !applicationData.schema148.equals(orgSchema.getVersion())) {
-				orgSchema = EchSchema.getNamespaceContext(applicationData.schema148);
-			}
+			orgSchema = EchSchema.getNamespaceContext(applicationData.schema148);
 		} else {
 			orgSchema = null;
 		}
@@ -196,7 +203,7 @@ public class OpenEchApplication extends Application {
 
 	@Override
 	public Class<?>[] getEntityClasses() {
-		return new Class<?>[]{Person.class, Organisation.class, OpenEchPreferences.class};
+		return new Class<?>[]{Person.class, Organisation.class, PlanningPermissionApplication.class, OpenEchPreferences.class};
 	}
 	
 }
