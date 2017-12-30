@@ -1,6 +1,26 @@
 package ch.openech.xml.write;
 
-import static ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.ABBREVIATED_DESIGNATION;
+import static ch.openech.model.XmlConstants.APPLICATION_TYPE;
+import static ch.openech.model.XmlConstants.DESCRIPTION;
+import static ch.openech.model.XmlConstants.EVENT_SUBMIT_PLANNING_PERMISSION_APPLICATION;
+import static ch.openech.model.XmlConstants.LOCAL_I_D;
+import static ch.openech.model.XmlConstants.LOCATION_ADDRESS;
+import static ch.openech.model.XmlConstants.MUNICIPALITY;
+import static ch.openech.model.XmlConstants.OFFICIAL_GAZETTE;
+import static ch.openech.model.XmlConstants.OTHER_I_D;
+import static ch.openech.model.XmlConstants.PLANNING_PERMISSION_APPLICATION;
+import static ch.openech.model.XmlConstants.PLANNING_PERMISSION_APPLICATION_IDENTIFICATION;
+import static ch.openech.model.XmlConstants.PROCEEDING_TYPE;
+import static ch.openech.model.XmlConstants.PUBLICATION;
+import static ch.openech.model.XmlConstants.PUBLICATION_DATE;
+import static ch.openech.model.XmlConstants.PUBLICATION_TEXT;
+import static ch.openech.model.XmlConstants.PUBLICATION_TILL;
+import static ch.openech.model.XmlConstants.REALESTATE_INFORMATION;
+import static ch.openech.model.XmlConstants.REMARK;
+import static ch.openech.model.XmlConstants.ZONE;
+import static ch.openech.model.XmlConstants.ZONE_DESIGNATION;
+import static ch.openech.model.XmlConstants.ZONE_TYPE;
 
 import ch.openech.model.estate.Building;
 import ch.openech.model.estate.PlanningPermissionApplication;
@@ -112,17 +132,11 @@ public class WriterEch0211 extends DeliveryWriter {
         return event;
 	}
 	
-	
 	public String submitPlanningPermissionApplication(SubmitPlanningPermissionApplication application) throws Exception {
 		WriterElement event = event(EVENT_SUBMIT_PLANNING_PERMISSION_APPLICATION);
 		planningPermissionApplication(event, application.planningPermissionApplication);
         return result();
 	}
-	
-	public static void main(String[] args) throws Exception {
-		final EchSchema echSchema = EchSchema.getNamespaceContext(211, "1.0");
-		final WriterEch0211 writer = new WriterEch0211(echSchema);
-		System.out.println(writer.submitPlanningPermissionApplication(null));
-	}
+
 	
 }
