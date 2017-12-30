@@ -129,21 +129,17 @@ public class EchSchema {
 	}
 	
 	private void process(String namespaceLocation) throws XMLStreamException, IOException {
-		System.out.println("Process: " + namespaceLocation);
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		XMLEventReader xml = null;
 		try {
 			xml = inputFactory.createXMLEventReader(new URL(namespaceLocation).openStream());
 		} catch (Exception e) {
-			System.out.println("Use local copy for: " + namespaceLocation);
 
 			InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation);
 			try {
 				xml = inputFactory.createXMLEventReader(stream);
 			} catch (Exception e2) {
-				System.out.println("Failed: " + namespaceLocation);
-
-				// 
+				e2.printStackTrace();
 			}
 		}
 		if (xml != null) {
