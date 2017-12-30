@@ -13,8 +13,6 @@ import org.minimalj.repository.query.By;
 
 import ch.openech.frontend.estate.event.SubmitPlanningPermissionApplicationEditor;
 import ch.openech.model.estate.PlanningPermissionApplication;
-import ch.openech.xml.write.EchSchema;
-import ch.openech.xml.write.WriterEch0211;
 
 public class PlanningPermissionApplicationTablePage extends SimpleTablePageWithDetail<PlanningPermissionApplication> {
 
@@ -27,9 +25,6 @@ public class PlanningPermissionApplicationTablePage extends SimpleTablePageWithD
 	
 	public PlanningPermissionApplicationTablePage() {
 		super(COLUMNS);
-		
-		EchSchema schema = EchSchema.getNamespaceContext(211, "1.0");
-		WriterEch0211 writer = new WriterEch0211(schema);
 	}
 	
 //	@Override
