@@ -28,9 +28,6 @@ public class SubmitPlanningPermissionApplicationEditor extends PlanningPermissio
 
 	@Override
 	protected SubmitPlanningPermissionApplication createObject() {
-		EchSchema schema = EchSchema.getNamespaceContext(211, "1.0");
-		WriterEch0211 writer = new WriterEch0211(schema);
-		
 		SubmitPlanningPermissionApplication object = new SubmitPlanningPermissionApplication();
 		object.eventType = SubmitEventType.submit;
 		object.planningPermissionApplication = this.application;
