@@ -2,7 +2,7 @@ package  ch.openech.model;
 
 import org.minimalj.model.Rendering;
 
-public interface EchSchema extends Rendering {
+public interface EchSchemaVersion extends Rendering {
 
 	public int getSchemaNumber();
 	

@@ -1,6 +1,6 @@
 package  ch.openech.model;
 
-public enum EchSchema0020 implements EchSchema {
+public enum EchSchema0020 implements EchSchemaVersion {
 
 	_1_0, _1_1, _2_0, _2_1, _2_2, _2_3;
 	
