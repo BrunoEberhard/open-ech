@@ -108,7 +108,7 @@ public class EchForm<T> extends Form<T> {
 		} else if (type == PersonExtendedInformation.class) {
 			return new PersonExtendedInformationFormElement(property, editable);
 		} else if (type == HouseNumber.class) {
-			return new HouseNumberFormElement(property);
+			return new HouseNumberFormElement(property, editable);
 		} else if (type == CountryIdentification.class) {
 			return editable ? new CountryFormElement(property) : new TextFormElement(property);
 		} else if (type == MunicipalityIdentification.class) {

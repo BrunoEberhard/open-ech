@@ -15,11 +15,16 @@ public class HouseNumberFormElement extends AbstractFormElement<HouseNumber> {
 	private final Input<String> dwellingNumberTextField;
 	private final IComponent horizontalLayout;
 	
-	public HouseNumberFormElement(PropertyInterface property) {
+	public HouseNumberFormElement(PropertyInterface property, boolean editable) {
 		super(property);
 		
-		houseNumberTextField = Frontend.getInstance().createTextField(EchFormats.houseNumber, null, null, listener());
-		dwellingNumberTextField = Frontend.getInstance().createTextField(EchFormats.dwellingNumber, null, null, listener());
+		if (editable) {
+			houseNumberTextField = Frontend.getInstance().createTextField(EchFormats.houseNumber, null, null, listener());
+			dwellingNumberTextField = Frontend.getInstance().createTextField(EchFormats.dwellingNumber, null, null, listener());
+		} else {
+			houseNumberTextField = Frontend.getInstance().createReadOnlyTextField();
+			dwellingNumberTextField = Frontend.getInstance().createReadOnlyTextField();
+		}
 
 		horizontalLayout = Frontend.getInstance().createComponentGroup(houseNumberTextField, dwellingNumberTextField);
 	}
