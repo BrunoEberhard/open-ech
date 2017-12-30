@@ -23,10 +23,10 @@ public class EchNamespaceUtil {
 		LOCAL_COPIES.put("eCH-0147T0.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T0.xsd");
 		LOCAL_COPIES.put("eCH-0147T1.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T1.xsd");
 		LOCAL_COPIES.put("eCH-0147T2.xsd", "/ch/ech/xmlns/eCH-0147_V1.2_T2.xsd");
+		LOCAL_COPIES.put("http://www.ech.ch/xmlns/eCH-0211/1/eCH-0211-1-0.xsd", "/ch/ech/xmlns/eCH-0211-1-0.xsd");
 	}
 	
 	public static InputStream getLocalCopyOfSchema(String namespaceLocation) {
-		System.out.println(namespaceLocation);
 		String fileName;
 		if (!LOCAL_COPIES.containsKey(namespaceLocation)) {
 			int pos = namespaceLocation.lastIndexOf("/");
