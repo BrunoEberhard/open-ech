@@ -29,6 +29,7 @@ public class EchSchema {
 	private WriterEch0020 writerEch0020;
 	private WriterEch0112 writerEch0112;
 	private WriterEch0148 writerEch0148;
+	private WriterEch0211 writerEch0211;
 
 	public EchSchema() {
 		this.rootNumber = 0;
@@ -56,7 +57,7 @@ public class EchSchema {
 		return contexts.get(location);
 	}
 
-	public static EchSchema getNamespaceContext( ch.openech.model.EchSchema schema) {
+	public static EchSchema getNamespaceContext( ch.openech.model.EchSchemaVersion schema) {
 		return getNamespaceContext(schema.getSchemaNumber(), schema.getVersion() + "." + schema.getMinorVersion());
 	}
 	
@@ -111,7 +112,7 @@ public class EchSchema {
 	
 	private void read(String schemaLocation) throws XMLStreamException, IOException {
 		if (namespaceLocations.containsValue(schemaLocation)) return;
-		registerLocation(schemaLocation);
+		registerLocation(null, schemaLocation);
 		process(schemaLocation);
 	}
 	
@@ -132,25 +133,21 @@ public class EchSchema {
 		XMLEventReader xml = null;
 		try {
 			xml = inputFactory.createXMLEventReader(new URL(namespaceLocation).openStream());
-			process(xml);
 		} catch (Exception e) {
-			// this could happen in SBB ;)
 			InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation);
-			if (stream == null) {
-				throw new RuntimeException("Could not find " + namespaceLocation + " remote or local");
+			try {
+				xml = inputFactory.createXMLEventReader(stream);
+			} catch (Exception e2) {
+				// 
 			}
-			xml = inputFactory.createXMLEventReader(stream);
+		}
+		if (xml != null) {
 			process(xml);
 		}
 	}
 
-	private void registerLocation(String schemaLocation) {
-		String namespaceURI = EchNamespaceUtil.schemaURI(schemaLocation);
-		registerLocation(namespaceURI, schemaLocation);
-	}
-	
 	private void registerLocation(String namespaceURI, String schemaLocation) {
-		if (namespaceURI.contains("eCH-0147")) {
+		if (schemaLocation.contains("0147")) {
 			// eCH 0147 hat spezielles Namensschema, sodass hier Version nicht unterstützt wird.
 			namespaceURIs.put(147, "http://www.ech.ch/xmlns/eCH-0147/T0/1");
 			namespaceLocations.put(147, "http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T0.xsd");
@@ -158,7 +155,10 @@ public class EchSchema {
 			namespaceMinorVersions.put(147, 0);
 			return;
 		}
-
+		if (namespaceURI == null) {
+			namespaceURI = EchNamespaceUtil.schemaURI(schemaLocation);
+		}
+		
 		int namespaceNumber = EchNamespaceUtil.extractSchemaNumber(schemaLocation);
 		int namespaceVersion = EchNamespaceUtil.extractSchemaMajorVersion(schemaLocation);
 		int namespaceMinorVersion = EchNamespaceUtil.extractSchemaMinorVersion(schemaLocation);
@@ -227,7 +227,14 @@ public class EchSchema {
 		}
 		return writerEch0148;
 	}
-	
+
+	public WriterEch0211 getWriterEch0211() {
+		if (writerEch0211 == null) {
+			writerEch0211 = new WriterEch0211(this); // 1100 - 1400ms
+		}
+		return writerEch0211;
+	}
+
 	//
 	
 	/* In den alten Versionen war es möglich, dass der Geburtsort bei
