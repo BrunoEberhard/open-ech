@@ -10,9 +10,11 @@ public class EchFormats {
 	public static final int ESID = 8;
 	public static final int ESTRID = 7;
 	public static final int EWID = 3;
+	public static final int action = 2;
 	public static final int addressCategory = 1;
 	public static final int addressLine = 60;
 	public static final int administrativeDwellingNo = 12;
+	public static final int applicationType = 100;
 	public static final int areaDescription = 100;
 	public static final int areaDescriptionCode = 2;
 	public static final int areaType = 1;
@@ -27,12 +29,14 @@ public class EchFormats {
 	public static final int buildingStatus = 4;
 	public static final int buildingVolumeInformationSource = 3;
 	public static final int buildingVolumeNorm = 3;
+	public static final int businessProcessId = 128;
 	public static final int businessReferenceId = 50;
 	public static final int cantonAbbreviation = 2;
 	public static final int cantonFlAbbreviation = 2;
 	public static final int cantonalSubKind = 60;
 	public static final int careTypeOfRelationship = 1;
 	public static final int changeReason = 4;
+	public static final int classification = 12;
 	public static final int clientNumber = 40;
 	public static final int comment = 250;
 	public static final int commercialRegisterEntryStatus = 1;
@@ -48,6 +52,9 @@ public class EchFormats {
 	public static final int decisionAuthority = 100;
 	public static final int declarationLocalReference = 100;
 	public static final int depotNumber = 30;
+	public static final int directiveInstruction = 16;
+	public static final int documentStatus = 11;
+	public static final int dossierStatus = 12;
 	public static final int durationOfConstructionPhase = 3;
 	public static final int dwellingInformationSource = 4;
 	public static final int dwellingNumber = 10;
@@ -57,9 +64,11 @@ public class EchFormats {
 	public static final int emailCategory = 1;
 	public static final int energyRelevantSurface = 6;
 	public static final int entranceStatus = 4;
+	public static final int errorKind = 20;
 	public static final int estimationDescription = 1000;
 	public static final int estimationReasonText = 30;
 	public static final int estimationVolume = 7;
+	public static final int eventType = 40;
 	public static final int eventTypes = 2;
 	public static final int extensionOfOfficialConstructionProjectFileNo = 2;
 	public static final int federalRegister = 1;
@@ -114,6 +123,7 @@ public class EchFormats {
 	public static final int newDwellingsTotal = 4;
 	public static final int noOfHabitableRooms = 2;
 	public static final int nogaCode = 6;
+	public static final int numberOfActualPackage = 4;
 	public static final int numberOfFloors = 2;
 	public static final int numberOfSeparateHabitableRooms = 3;
 	public static final int numbering = 4;
@@ -122,6 +132,7 @@ public class EchFormats {
 	public static final int officialConstructionProjectFileNo = 15;
 	public static final int officialFirstName = 100;
 	public static final int officialStreetNumber = 12;
+	public static final int openToThePublic = 10;
 	public static final int organisationIdCategory = 20;
 	public static final int organisationName = 255;
 	public static final int originOfCoordinates = 3;
@@ -135,8 +146,10 @@ public class EchFormats {
 	public static final int phoneNumber = 20;
 	public static final int physicalDwellingNo = 12;
 	public static final int placeNameType = 1;
+	public static final int planningPermissionApplicationStatus = 24;
 	public static final int postOfficeBoxNumber = 8;
 	public static final int postOfficeBoxText = 15;
+	public static final int priority = 9;
 	public static final int projectStatus = 4;
 	public static final int quartersCode = 7;
 	public static final int quotationType = 7;
@@ -145,6 +158,7 @@ public class EchFormats {
 	public static final int realestateType = 1;
 	public static final int reasonOfAcquisition = 2;
 	public static final int remarkType = 1;
+	public static final int reportAction = 2;
 	public static final int residencePermit = 6;
 	public static final int residencePermitBorder = 2;
 	public static final int residencePermitCategory = 2;
@@ -152,6 +166,7 @@ public class EchFormats {
 	public static final int residencePermitRuling = 2;
 	public static final int residencePermitShort = 2;
 	public static final int residencePermitToBeRegistered = 2;
+	public static final int role = 100;
 	public static final int securityCategory = 8;
 	public static final int securityName = 60;
 	public static final int securityType = 21;
@@ -174,7 +189,9 @@ public class EchFormats {
 	public static final int tin = 11;
 	public static final int title = 50;
 	public static final int totalCostsOfProject = 12;
+	public static final int totalNumberOfPackages = 4;
 	public static final int town = 40;
+	public static final int transactionRole = 11;
 	public static final int typeOfClient = 4;
 	public static final int typeOfConstruction = 4;
 	public static final int typeOfConstructionProject = 4;
@@ -193,6 +210,7 @@ public class EchFormats {
 	public static final int uniqueIDBusinessCase = 50;
 	public static final int uniqueIdBusinessCase = 50;
 	public static final int uniqueIdBusinessTransaction = 50;
+	public static final int uniqueIdDelivery = 50;
 	public static final int unknown = 1;
 	public static final int usageCode = 4;
 	public static final int usageLimitation = 4;

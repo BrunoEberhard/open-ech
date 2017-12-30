@@ -87,10 +87,10 @@ public class EchSizesGenerator {
 		return openEchNamespaceLocation;
 	}
 	
-	private void read(String namespaceLocation) throws XMLStreamException, IOException {
-		if (namespaceLocations.containsValue(namespaceLocation)) return;
-		registerLocation(namespaceLocation);
-		process(namespaceLocation);
+	private void read(String schemaLocation) throws XMLStreamException, IOException {
+		if (namespaceLocations.containsValue(schemaLocation)) return;
+		registerLocation(schemaLocation);
+		process(schemaLocation);
 	}
 	
 	private void process(String namespaceLocation) throws XMLStreamException, IOException {
@@ -100,26 +100,42 @@ public class EchSizesGenerator {
 		XMLEventReader xml = null;
 		try {
 			xml = inputFactory.createXMLEventReader(new URL(namespaceLocation).openStream());
-			process(xml);
 		} catch (Exception e) {
 			// this could happen in SBB ;)
 			InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation);
 			try {
 				xml = inputFactory.createXMLEventReader(stream);
-				process(xml);
 			} catch (Exception e2) {
-				logger.severe("Not available schema: " + namespaceLocation);
+				// 
 			}
+		}
+		if (xml != null) {
+			process(xml);
+		} else {
+			logger.severe("Not available schema: " + namespaceLocation);
 		}
 	}
 	
-	private void registerLocation(String namespaceLocation) {
-		int namespaceNumber = EchNamespaceUtil.extractSchemaNumber(namespaceLocation);
-		String namespaceURI = EchNamespaceUtil.schemaURI(namespaceLocation);
-		int namespaceVersion = EchNamespaceUtil.extractSchemaMajorVersion(namespaceLocation);
-		int namespaceMinorVersion = EchNamespaceUtil.extractSchemaMinorVersion(namespaceLocation);
+	private void registerLocation(String schemaLocation) {
+		if (schemaLocation.contains("eCH-0147")) {
+			// eCH 0147 hat spezielles Namensschema, sodass hier Version nicht unterstützt wird.
+			namespaceURIs.put(147, "http://www.ech.ch/xmlns/eCH-0147/T0/1");
+			namespaceLocations.put(147, "http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T0.xsd");
+			namespaceVersions.put(147, 1);
+			namespaceMinorVersions.put(147, 0);
+			return;
+		} else {
+			String namespaceURI = EchNamespaceUtil.schemaURI(schemaLocation);
+			registerLocation(namespaceURI, schemaLocation);
+		}
+	}
+	
+	private void registerLocation(String namespaceURI, String schemaLocation) {
+		int namespaceNumber = EchNamespaceUtil.extractSchemaNumber(schemaLocation);
+		int namespaceVersion = EchNamespaceUtil.extractSchemaMajorVersion(schemaLocation);
+		int namespaceMinorVersion = EchNamespaceUtil.extractSchemaMinorVersion(schemaLocation);
 		namespaceURIs.put(namespaceNumber, namespaceURI);
-		namespaceLocations.put(namespaceNumber, namespaceLocation);
+		namespaceLocations.put(namespaceNumber, schemaLocation);
 		namespaceVersions.put(namespaceNumber, namespaceVersion);
 		namespaceMinorVersions.put(namespaceNumber, namespaceMinorVersion);
 	}
@@ -238,7 +254,7 @@ public class EchSizesGenerator {
 		new EchSizesGenerator(78, "3.0");
 		new EchSizesGenerator(129, "4.0");
 		new EchSizesGenerator(196, "1.0");
-		new EchSizesGenerator(217, "1.0");
+		new EchSizesGenerator(211, "1.0");
 		
 		for (String line : lines) {
 			System.out.println(line);
