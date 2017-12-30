@@ -1,3 +1,4 @@
 Admin = 9WbvdYWblub234h5IZHO93i2fSEFFFwc, oJ1KxDgUgkE+rIjkRt8Rl8NxdcFMJTxX, administrate, importExport, modify, view
 Superuser = tk/vKU+SVW47nBlfWPbWsbblb/8nSb7Z, U5YQSE/vjIIh0iX2V9+uUk5vATphNVBz, importExport, modify, view
 Anonymous = SZ2mFx9gU9Q2G0rk0TpLInt6JSuWUTUB, xzHE6BOKbad3V1C7nDTcKNrSzjthcxfP, modify, view
+estate = +6dl2i7HEg7w6z1Q9BWICpx33ELAVxe8, Lu45xU+vgMx+YH5fWcuy0wjEXd/L6t++, estate
