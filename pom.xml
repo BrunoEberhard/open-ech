@@ -82,6 +82,10 @@
 			<id>openech-repository</id>
 			<url>http://openech.ch/repository</url>
 		</repository>		
+		<repository>
+			<id>hispeed-repository</id>
+			<url>http://homepage.hispeed.ch/~bruno.eberhard/repository</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
