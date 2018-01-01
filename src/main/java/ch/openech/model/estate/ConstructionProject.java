@@ -24,6 +24,8 @@ import ch.openech.model.types.EchCode;
 public class ConstructionProject {
 	public static final ConstructionProject $ = Keys.of(ConstructionProject.class);
 	
+	public Object id;
+	
 	@NotEmpty
 	public List<NamedId> localId = new ArrayList<>();
 	public String EPROID;
