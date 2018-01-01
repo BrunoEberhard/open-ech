@@ -22,7 +22,7 @@ public class UndoMissingEvent extends PersonEventEditor<Object> {
 
 	@Override
 	protected void fillForm(Form<Object> formPanel) {
-		formPanel.text("<b>Hinweis:</b> Eventuelle Änderungen bei einer Ehe/Partnerschaft müssen zusätzlich erfasst werden.");
+		formPanel.text("<html><b>Hinweis:</b> Eventuelle Änderungen bei einer Ehe/Partnerschaft müssen zusätzlich erfasst werden.</html>");
 	}
 
 	@Override
