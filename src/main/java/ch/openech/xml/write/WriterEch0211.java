@@ -22,6 +22,7 @@ import static ch.openech.model.XmlConstants.ZONE;
 import static ch.openech.model.XmlConstants.ZONE_DESIGNATION;
 import static ch.openech.model.XmlConstants.ZONE_TYPE;
 
+import ch.openech.model.XmlConstants;
 import ch.openech.model.estate.Building;
 import ch.openech.model.estate.PlanningPermissionApplication;
 import ch.openech.model.estate.PlanningPermissionApplication.Publication;
@@ -84,7 +85,7 @@ public class WriterEch0211 extends DeliveryWriter {
 		}
 		ech129.namedMetaData(writer, application.namedMetaData);
 		ech7.municipality(writer, MUNICIPALITY, application.municipality);
-		ech10.address(writer, LOCATION_ADDRESS, application.locationAddress);
+		ech10.addressInformation(writer, LOCATION_ADDRESS, application.locationAddress);
 		for (RealestateInformation realestateInformation : application.realestateInformation) {
 			realestateInformation(writer, realestateInformation);
 		}
@@ -129,11 +130,13 @@ public class WriterEch0211 extends DeliveryWriter {
 	
 	private WriterElement event(String eventName) throws Exception {
 		WriterElement event = delivery().create(URI, eventName);
+		// die eventNamen stimmen hier leider nicht mit den EventType Werten
         return event;
 	}
 	
 	public String submitPlanningPermissionApplication(SubmitPlanningPermissionApplication application) throws Exception {
 		WriterElement event = event(EVENT_SUBMIT_PLANNING_PERMISSION_APPLICATION);
+		event.text(XmlConstants.EVENT_TYPE, "submit");
 		planningPermissionApplication(event, application.planningPermissionApplication);
         return result();
 	}
