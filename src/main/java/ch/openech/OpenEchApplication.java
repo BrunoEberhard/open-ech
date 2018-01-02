@@ -50,6 +50,7 @@ import ch.openech.frontend.org.ImportAllOrganisationAction;
 import ch.openech.frontend.org.ImportSwissDataAction;
 import ch.openech.frontend.org.KeyDeliveryOrganisationAction;
 import ch.openech.frontend.page.OrganisationSearchPage;
+import ch.openech.frontend.page.PersonPage;
 import ch.openech.frontend.page.PersonSearchPage;
 import ch.openech.frontend.preferences.OpenEchPreferences;
 import ch.openech.frontend.preferences.OpenEchPreferences.ApplicationSchemaData;
@@ -91,6 +92,16 @@ public class OpenEchApplication extends Application {
 		PersonSearchPage personSearchPage = new PersonSearchPage(query);
 		OrganisationSearchPage organisationSearchPage = new OrganisationSearchPage(query);
 		return SearchPage.handle(personSearchPage, organisationSearchPage);
+	}
+	
+	@Override
+	public Page createPage(String route) {
+		String[] parts = route.split("/");
+		if (parts.length == 3 && "person".equals(parts[0])) {
+			return new PersonPage(parts[1], parts[2]);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
