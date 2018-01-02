@@ -238,6 +238,13 @@ public class EchSchema {
 
 	//
 	
+	/* Ab der Version 6 wird in der Adresse die komplette CountryIdentification
+	 * angegeben, nicht nur der iso - code
+	 */
+	public boolean completeCountryInAddress() {
+		return getNamespaceVersion(10) >= 6;
+	}
+	
 	/* In den alten Versionen war es möglich, dass der Geburtsort bei
 	 * der Geburtsmeldung auf unknown gesetzt war. Das wurde ab 2.0 mit
 	 * einem eigenen Type unterbunden

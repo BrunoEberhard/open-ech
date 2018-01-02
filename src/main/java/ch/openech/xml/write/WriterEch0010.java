@@ -1,14 +1,42 @@
 package ch.openech.xml.write;
 
-import static ch.openech.model.XmlConstants.*;
+import static ch.openech.model.XmlConstants.ADDRESS_INFORMATION;
+import static ch.openech.model.XmlConstants.ADDRESS_LINE1;
+import static ch.openech.model.XmlConstants.ADDRESS_LINE2;
+import static ch.openech.model.XmlConstants.COUNTRY;
+import static ch.openech.model.XmlConstants.DWELLING_NUMBER;
+import static ch.openech.model.XmlConstants.FIRST_NAME;
+import static ch.openech.model.XmlConstants.FOREIGN_ZIP_CODE;
+import static ch.openech.model.XmlConstants.HOUSE_NUMBER;
+import static ch.openech.model.XmlConstants.LAST_NAME;
+import static ch.openech.model.XmlConstants.LOCALITY;
+import static ch.openech.model.XmlConstants.MR_MRS;
+import static ch.openech.model.XmlConstants.ORGANISATION;
+import static ch.openech.model.XmlConstants.ORGANISATION_NAME;
+import static ch.openech.model.XmlConstants.ORGANISATION_NAME_ADD_ON1;
+import static ch.openech.model.XmlConstants.ORGANISATION_NAME_ADD_ON2;
+import static ch.openech.model.XmlConstants.PERSON;
+import static ch.openech.model.XmlConstants.POST_OFFICE_BOX_NUMBER;
+import static ch.openech.model.XmlConstants.POST_OFFICE_BOX_TEXT;
+import static ch.openech.model.XmlConstants.STREET;
+import static ch.openech.model.XmlConstants.SWISS_ZIP_CODE;
+import static ch.openech.model.XmlConstants.SWISS_ZIP_CODE_ADD_ON;
+import static ch.openech.model.XmlConstants.SWISS_ZIP_CODE_ID;
+import static ch.openech.model.XmlConstants.TITLE;
+import static ch.openech.model.XmlConstants.TOWN;
+
 import ch.openech.model.common.Address;
 
 public class WriterEch0010 {
 
 	public final String URI;
+	public final WriterEch0008 ech8;
+	private final boolean completeCountry;
 	
 	public WriterEch0010(EchSchema context) {
 		URI = context.getNamespaceURI(10);
+		ech8 = new WriterEch0008(context);
+		completeCountry = context.completeCountryInAddress();
 	}
 	
 	public void address(WriterElement parent, String tagName, Address address) throws Exception {
@@ -39,7 +67,7 @@ public class WriterEch0010 {
 		addressInformation(addressInformation, address);
 	}
 	
-	private static void addressInformation(WriterElement parent, Address address) throws Exception {
+	private void addressInformation(WriterElement parent, Address address) throws Exception {
 		parent.values(address, ADDRESS_LINE1, ADDRESS_LINE2);
 		parent.values(address, STREET, HOUSE_NUMBER, DWELLING_NUMBER);
 		parent.values(address, POST_OFFICE_BOX_NUMBER, POST_OFFICE_BOX_TEXT);
@@ -51,6 +79,7 @@ public class WriterEch0010 {
 		} else {
 			parent.textIfSet(FOREIGN_ZIP_CODE, address.zip);
 		}
+		// TODO if (completeCountry) 
 		parent.values(address, COUNTRY);
 	}
 	
@@ -59,13 +88,14 @@ public class WriterEch0010 {
 		swissAddressInformation(addressInformation, address);
 	}
 	
-	private static void swissAddressInformation(WriterElement parent, Address address) throws Exception {
+	private void swissAddressInformation(WriterElement parent, Address address) throws Exception {
 		parent.values(address, ADDRESS_LINE1, ADDRESS_LINE2);
 		parent.values(address, STREET, HOUSE_NUMBER, DWELLING_NUMBER);
 		parent.values(address, LOCALITY, TOWN);
 		parent.textIfSet(SWISS_ZIP_CODE, address.getSwissZipCode());
 		parent.textIfSet(SWISS_ZIP_CODE_ADD_ON, address.getSwissZipCodeAddOn());
 		parent.textIfSet(SWISS_ZIP_CODE_ID, address.getSwissZipCodeId());
+		// TODO if (completeCountry) 
 		parent.text(COUNTRY, "CH");
 	}
 
