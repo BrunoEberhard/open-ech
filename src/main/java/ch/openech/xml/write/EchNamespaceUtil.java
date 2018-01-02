@@ -27,16 +27,13 @@ public class EchNamespaceUtil {
 	}
 	
 	public static InputStream getLocalCopyOfSchema(String namespaceLocation) {
-		System.out.println("Local copy for " + namespaceLocation);
 		String fileName;
 		if (!LOCAL_COPIES.containsKey(namespaceLocation)) {
 			int pos = namespaceLocation.lastIndexOf("/");
 			fileName = "/ch/ech/xmlns" + namespaceLocation.substring(pos);
-			System.out.println("Convention: " + fileName);
 
 		} else {
 			fileName = LOCAL_COPIES.get(namespaceLocation);
-			System.out.println("special: " + fileName);
 		}
 		return EchNamespaceUtil.class.getResourceAsStream(fileName);
 	}
