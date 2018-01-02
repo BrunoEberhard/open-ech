@@ -47,7 +47,7 @@ public class WriterEch0129 {
 	
 	public void realestateIdentification(WriterElement parent, RealestateIdentification identification) throws Exception {
 		WriterElement writer = parent.create(URI, "realestateIdentification");
-		writer.values(identification);
+		writer.values(identification, true);
 	}
 	
 	public void building(WriterElement parent, Building building) throws Exception {

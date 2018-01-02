@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -157,7 +158,13 @@ public class WriterElement {
 	}
 
 	public void values(Object object) throws Exception {
+		values(object, false);
+	}
+	
+	public void values(Object object, boolean skipId) throws Exception {
 		Set<String> keys = FlatProperties.getProperties(object.getClass()).keySet();
+		keys = new HashSet<String>(keys);
+		keys.remove("id");
 		values(object, keys.toArray(new String[keys.size()]));
 	}
 	
