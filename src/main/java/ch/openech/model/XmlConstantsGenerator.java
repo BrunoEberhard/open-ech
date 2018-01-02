@@ -95,6 +95,7 @@ public class XmlConstantsGenerator {
 		generator.read(148, "1.0");
 		generator.read(196, "1.0");
 		generator.read(211, "1.0");
+		generator.read(217, "1.0");
 		generator.print();
 	}
 	
