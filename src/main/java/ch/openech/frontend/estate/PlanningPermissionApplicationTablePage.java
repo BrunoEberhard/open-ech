@@ -10,7 +10,7 @@ import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.page.HtmlPage;
-import org.minimalj.frontend.page.TablePage.SimpleTablePageWithDetail;
+import org.minimalj.frontend.page.SimpleTableEditorPage;
 import org.minimalj.repository.query.By;
 import org.minimalj.util.StringUtils;
 
@@ -20,7 +20,7 @@ import ch.openech.model.estate.PlanningPermissionApplicationEvent.SubmitPlanning
 import ch.openech.xml.write.EchSchema;
 import ch.openech.xml.write.WriterEch0211;
 
-public class PlanningPermissionApplicationTablePage extends SimpleTablePageWithDetail<PlanningPermissionApplication> {
+public class PlanningPermissionApplicationTablePage extends SimpleTableEditorPage<PlanningPermissionApplication> {
 
 	public static final Object[] COLUMNS = new Object[] {
 		$.applicationType,
@@ -33,20 +33,8 @@ public class PlanningPermissionApplicationTablePage extends SimpleTablePageWithD
 		super(COLUMNS);
 	}
 	
-//	@Override
-//	public List<Action> getActions() {
-//		return actionGroup.getItems();
-//	}
-//	
-//	@Override
-//	public void selectionChanged(List<PlanningPermissionApplication> selectedObjects) {
-//		for (Action action : actionGroup.getItems()) {
-//			((PlanningPermissionApplicationEditor<?>) action).setPlanningPermissionApplication(selectedObjects);
-//		}
-//	}
-	
 	@Override
-	protected Form<PlanningPermissionApplication> createForm(boolean editable) {
+	protected Form<PlanningPermissionApplication> createForm(boolean editable, boolean newObject) {
 		return new PlanningPermissionApplicationForm(editable);
 	}
 		
@@ -67,7 +55,7 @@ public class PlanningPermissionApplicationTablePage extends SimpleTablePageWithD
 		public PlanningPermissionApplicationPage(PlanningPermissionApplication detail) {
 			super(detail);
 			actionGroup = new ActionGroup(null);
-			actionGroup.add(new DetailPageEditor());
+			actionGroup.add(new TableEditor());
 			actionGroup.addSeparator();
 			actionGroup.add(new SubmitPlanningPermissionApplicationEditor(detail));		
 		}

@@ -8,13 +8,13 @@ import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.StringFormElement;
 import org.minimalj.frontend.form.element.TextFormElement;
-import org.minimalj.frontend.page.TablePage.SimpleTablePageWithDetail;
+import org.minimalj.frontend.page.SimpleTableEditorPage;
 import org.minimalj.repository.query.By;
 
 import ch.openech.frontend.ewk.event.EchForm;
 import ch.openech.model.estate.Dwelling;
 
-public class DwellingTablePage extends SimpleTablePageWithDetail<Dwelling> {
+public class DwellingTablePage extends SimpleTableEditorPage<Dwelling> {
 
 	public static final Object[] COLUMNS = new Object[] { $.EWID, $.floor };
 
@@ -23,7 +23,7 @@ public class DwellingTablePage extends SimpleTablePageWithDetail<Dwelling> {
 	}
 
 	@Override
-	protected Form<Dwelling> createForm(boolean editable) {
+	protected Form<Dwelling> createForm(boolean editable, boolean newObject) {
 		return new DwellingForm(editable);
 	}
 
