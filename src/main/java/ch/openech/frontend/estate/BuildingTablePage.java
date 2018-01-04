@@ -6,13 +6,13 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.page.TablePage.SimpleTablePageWithDetail;
+import org.minimalj.frontend.page.SimpleTableEditorPage;
 import org.minimalj.repository.query.By;
 
 import ch.openech.frontend.ewk.event.DatePartiallyKnownFormElement;
 import ch.openech.model.estate.Building;
 
-public class BuildingTablePage extends SimpleTablePageWithDetail<Building> {
+public class BuildingTablePage extends SimpleTableEditorPage<Building> {
 
 	public static final Object[] COLUMNS = new Object[] { $.EGID, $.getStreetAndHouseNumber(),
 			$.municipality.municipalityName };
@@ -22,7 +22,7 @@ public class BuildingTablePage extends SimpleTablePageWithDetail<Building> {
 	}
 
 	@Override
-	protected Form<Building> createForm(boolean editable) {
+	protected Form<Building> createForm(boolean editable, boolean newObject) {
 		return new BuildingForm(editable);
 	}
 

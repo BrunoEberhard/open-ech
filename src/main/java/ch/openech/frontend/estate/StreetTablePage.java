@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.page.TablePage.SimpleTablePageWithDetail;
+import org.minimalj.frontend.page.SimpleTableEditorPage;
 import org.minimalj.repository.query.By;
 
 import ch.openech.model.estate.Street;
 
-public class StreetTablePage extends SimpleTablePageWithDetail<Street> {
+public class StreetTablePage extends SimpleTableEditorPage<Street> {
 
 	public static final Object[] COLUMNS = new Object[] {$.ESID, $.getDescriptions(), $.ESTRID};
 	
@@ -20,7 +20,7 @@ public class StreetTablePage extends SimpleTablePageWithDetail<Street> {
 	}
 	
 	@Override
-	protected Form<Street> createForm(boolean editable) {
+	protected Form<Street> createForm(boolean editable, boolean newObject) {
 		Form<Street> form = new Form<>(editable, 2);
 		form.line($.ESID, $.isOfficialDescriptionType);
 		form.line($.officialStreetNumber);

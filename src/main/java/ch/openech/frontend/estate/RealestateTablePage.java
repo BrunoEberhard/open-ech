@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.page.TablePage.SimpleTablePageWithDetail;
+import org.minimalj.frontend.page.SimpleTableEditorPage;
 import org.minimalj.repository.query.By;
 
 import ch.openech.model.estate.Realestate;
 
-public class RealestateTablePage extends SimpleTablePageWithDetail<Realestate> {
+public class RealestateTablePage extends SimpleTableEditorPage<Realestate> {
 
 	public static final Object[] COLUMNS = new Object[] { $.EGRID, $.number };
 
@@ -20,7 +20,7 @@ public class RealestateTablePage extends SimpleTablePageWithDetail<Realestate> {
 	}
 
 	@Override
-	protected Form<Realestate> createForm(boolean editable) {
+	protected Form<Realestate> createForm(boolean editable, boolean newObject) {
 		return new RealestateForm(editable);
 	}
 
