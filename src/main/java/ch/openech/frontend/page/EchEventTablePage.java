@@ -2,14 +2,13 @@ package ch.openech.frontend.page;
 
 import java.time.LocalDateTime;
 
-import org.minimalj.frontend.page.Page;
 import org.minimalj.frontend.page.TableDetailPage;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 
 import ch.openech.frontend.page.EchEventTablePage.EchEvent;
 
-public abstract class EchEventTablePage<T, DETAIL_PAGE extends Page> extends TableDetailPage<EchEvent<T>, DETAIL_PAGE> {
+public abstract class EchEventTablePage<T> extends TableDetailPage<EchEvent<T>> {
 
 	private static final Object[] KEYS = new Object[]{EchEvent.$.version, EchEvent.$.time, EchEvent.$.description};
 	

@@ -12,7 +12,7 @@ import org.minimalj.util.resources.Resources;
 import ch.openech.model.person.Person;
 import ch.openech.xml.write.EchSchema;
 
-public class PersonHistoryPage extends EchEventTablePage<Person, PersonPage> {
+public class PersonHistoryPage extends EchEventTablePage<Person> {
 
 	private final EchSchema echSchema;
 	private final PersonPage personPage;
@@ -62,15 +62,8 @@ public class PersonHistoryPage extends EchEventTablePage<Person, PersonPage> {
 	}
 
 	@Override
-	protected PersonPage createDetailPage(ch.openech.frontend.page.EchEventTablePage.EchEvent<Person> echEvent) {
+	protected PersonPage getDetailPage(ch.openech.frontend.page.EchEventTablePage.EchEvent<Person> echEvent) {
 		return new PersonPage(echSchema, echEvent.object);
 	}
-	
-	@Override
-	protected PersonPage updateDetailPage(PersonPage page, ch.openech.frontend.page.EchEventTablePage.EchEvent<Person> echEvent) {
-		page.setObject(echEvent.object);
-		return page;
-	}
-
 	
 }

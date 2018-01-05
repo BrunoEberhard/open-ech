@@ -44,7 +44,7 @@ public class PlanningPermissionApplicationTablePage extends SimpleTableEditorPag
 	}
 
 	@Override
-	protected DetailPage createDetailPage(PlanningPermissionApplication detail) {
+	protected DetailPage getDetailPage(PlanningPermissionApplication detail) {
 		return new PlanningPermissionApplicationPage(detail);
 	}
 

@@ -2,11 +2,9 @@ package ch.openech.frontend.estate;
 
 import static ch.openech.model.estate.Locality.$;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
-import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.TextFormElement;
 import org.minimalj.frontend.page.SimpleTableEditorPage;
@@ -24,17 +22,12 @@ public class LocalityTablePage extends SimpleTableEditorPage<Locality> {
 		super(COLUMNS);
 	}
 	
-	public List<Action> getTableActions() {
-		return Arrays.asList(new NewLocalityEditor(), new TableEditor(), new DeleteDetailAction());
-	}
-	
-	public class NewLocalityEditor extends TableNewObjectEditor {
-				
-		@Override
-		protected Locality save(Locality locality) {
+	@Override
+	protected Locality save(Locality locality) {
+		if (locality.id == null) {
 			locality.id = locality.getNewId();
-			return super.save(locality);
 		}
+		return super.save(locality);
 	}
 	
 	@Override

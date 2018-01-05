@@ -20,7 +20,7 @@ public class ZoneTablePage extends SimpleTableEditorPage<Zone> {
 	}
 	
 	@Override
-	protected SimpleTableEditorPage<Zone>.DetailPage createDetailPage(Zone detail) {
+	protected SimpleTableEditorPage<Zone>.DetailPage getDetailPage(Zone detail) {
 		return NO_DETAIL_PAGE;
 	}
 	

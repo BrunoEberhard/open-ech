@@ -12,7 +12,7 @@ import org.minimalj.util.resources.Resources;
 import ch.openech.model.organisation.Organisation;
 import ch.openech.xml.write.EchSchema;
 
-public class OrganisationHistoryPage extends EchEventTablePage<Organisation, OrganisationPage> {
+public class OrganisationHistoryPage extends EchEventTablePage<Organisation> {
 
 	private final EchSchema echSchema;
 	private final OrganisationPage organisationPage;
@@ -62,15 +62,8 @@ public class OrganisationHistoryPage extends EchEventTablePage<Organisation, Org
 	}
 
 	@Override
-	protected OrganisationPage createDetailPage(ch.openech.frontend.page.EchEventTablePage.EchEvent<Organisation> echEvent) {
+	protected OrganisationPage getDetailPage(ch.openech.frontend.page.EchEventTablePage.EchEvent<Organisation> echEvent) {
 		return new OrganisationPage(echSchema, echEvent.object);
 	}
-	
-	@Override
-	protected OrganisationPage updateDetailPage(OrganisationPage page, ch.openech.frontend.page.EchEventTablePage.EchEvent<Organisation> echEvent) {
-		page.setObject(echEvent.object);
-		return page;
-	}
-
 	
 }
