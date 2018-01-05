@@ -117,8 +117,8 @@ public class PartnershipEvent extends PersonEventEditor<PartnershipEvent.Partner
 	
 	@Override
 	protected void fillForm(Form<Partnership> formPanel) {
-		PersonFormElement partner1 = new PersonFormElement($.partner1); 
-		PersonFormElement partner2 = new PersonFormElement($.partner2);
+		PersonFormElement partner1 = new PersonFormElement($.partner1, false); 
+		PersonFormElement partner2 = new PersonFormElement($.partner2, true);
 		
 		//
 		

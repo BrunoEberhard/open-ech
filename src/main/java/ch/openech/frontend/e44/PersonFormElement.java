@@ -21,8 +21,8 @@ public class PersonFormElement extends ObjectFormElement<Person> {
 		super(property);
 	}
 	
-	public PersonFormElement(Person key) {
-		this(Keys.getProperty(key));
+	public PersonFormElement(Person key, boolean editable) {
+		super(Keys.getProperty(key), editable);
 	}
 	
 	@Override
@@ -32,17 +32,17 @@ public class PersonFormElement extends ObjectFormElement<Person> {
 	}
 
 	@Override
-	protected void show(Person placeOfOrigin) {
+	protected void show(Person person) {
 		if (isEditable()) {
-			add(placeOfOrigin, new RemoveObjectAction());
+			add(person, new RemoveObjectAction());
 		} else {
-			add(placeOfOrigin);
+			add(person);
 		}
 	}
 
 	@Override
 	protected Action[] getActions() {
-		return new Action[] { new PersonSearchAction(), new ObjectFormElementEditor() };
+		return new Action[] { new PersonSearchAction() };
 	}
 
 	public class PersonSearchAction extends SearchDialogAction<PersonSearch> {

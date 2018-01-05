@@ -145,8 +145,8 @@ public class MarriageEvent extends PersonEventEditor<MarriageEvent.Marriage> {
 	
 	@Override
 	protected void fillForm(Form<Marriage> formPanel) {
-		PersonFormElement partner1 = new PersonFormElement(Marriage.$.partner1); 
-		PersonFormElement partner2 = new PersonFormElement(Marriage.$.partner2);
+		PersonFormElement partner1 = new PersonFormElement(Marriage.$.partner1, false); 
+		PersonFormElement partner2 = new PersonFormElement(Marriage.$.partner2, true);
 	
 		RemoveEntriesListFormElement<PlaceOfOrigin> origin1 = new RemoveEntriesListFormElement<PlaceOfOrigin>(Marriage.$.origin1);
 		RemoveEntriesListFormElement<PlaceOfOrigin> origin2 = new RemoveEntriesListFormElement<PlaceOfOrigin>(Marriage.$.origin2);
