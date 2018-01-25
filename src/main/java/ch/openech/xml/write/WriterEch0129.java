@@ -99,7 +99,10 @@ public class WriterEch0129 {
 		writer.values(project, 
 				"permitExpirationDate", "permitIssueDate", "announcementDate", "declinationDate", "startDate",
 				"completionDate", "suspensionDate", "withdrawlDate");
-		// TODO rest
+		writer.values(project, 
+				"constructionSurveyDeptNo", "totalCostsOfProject", "status", "typeOfClient", "typeOfConstruction",
+				"description", "durationOfConstructionPhase");
+		// if (project.)
 		
 	}
 	
