@@ -12,6 +12,14 @@ public class PlanningPermissionApplicationEvent {
 		submit, file_subsequently, applicant_request, withdraw_planning_permission_application, claim, task, notice_ruling, status_notification, close_dossier, archive_dossier, notice_involved_party, notice_kind_of_proceedings, change_contact, accompanying_report, change_Responsibility;
 	}
 	
+	public static class BaseDelivery {
+		public static final BaseDelivery $ = Keys.of(BaseDelivery.class);
+
+		@NotEmpty
+		public List<PlanningPermissionApplicationInformation> applications = new ArrayList<>();
+	}
+	
+	
 	public static class SubmitPlanningPermissionApplication {
 		public static final SubmitPlanningPermissionApplication $ = Keys.of(SubmitPlanningPermissionApplication.class);
 
