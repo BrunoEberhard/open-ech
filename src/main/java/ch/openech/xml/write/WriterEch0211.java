@@ -92,7 +92,9 @@ public class WriterEch0211 extends DeliveryWriter {
 		for (Zone zone : application.zone) {
 			zone(writer, zone);
 		}
-		// TODO constructionProject !
+		if (application.constructionProject != null) {
+			ech129.constructionProject(writer, application.constructionProject);
+		}
 		// TODO directive
 		// TODO decisionRuling
 		// TODO document
