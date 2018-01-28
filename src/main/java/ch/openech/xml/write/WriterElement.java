@@ -148,6 +148,8 @@ public class WriterElement {
 				text(key, (LocalDateTime) value);
 			} else if (value instanceof BigDecimal) {
 				text(key, ((BigDecimal) value).toPlainString());
+			} else if (value instanceof Boolean) {
+				text(key, ((Boolean) value).toString());
 			} else if (value != null) {
 				String string = value.toString();
 				if (!StringUtils.isBlank(string)) {
