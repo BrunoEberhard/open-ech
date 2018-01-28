@@ -30,6 +30,8 @@ public class Coordinates implements Validation {
 	public static final BigDecimal MAX_Y = new BigDecimal("300000.999");
 	
 	// entweder east, north oder X, Y
+	@NotEmpty
+	public CoordinatesType coordinatesType;
 	
 	@Size(10) @Decimal(3)
 	public BigDecimal east, north;
