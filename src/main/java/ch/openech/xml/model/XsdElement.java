@@ -12,7 +12,7 @@ public class XsdElement {
 	public Integer maxOccours = 1;
 
 	@NotEmpty
-	public String typeName;
+	public String typeName, typeNamespace;
 	
 	@NotEmpty
 	public XsdType type;
