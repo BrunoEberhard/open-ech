@@ -4,6 +4,8 @@ import static ch.openech.xml.read.StaxEch.skip;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.xml.namespace.QName;
@@ -21,16 +23,25 @@ import ch.openech.xml.model.XsdType.XsdTypeComplex;
 public class XsdReader {
 	private static Logger log = Logger.getLogger(XsdReader.class.getName());
 
+	private final Map<String, XsdSchema> schemaLocations = new HashMap<>();
+	private final Map<String, XsdSchema> schemaNamespaces = new HashMap<>();
+	
 	public XsdSchema read(String schemaLocation) throws Exception {
-		System.out.println("Read: " + schemaLocation);
+		if (schemaLocations.containsKey(schemaLocation)) {
+			return schemaLocations.get(schemaLocation);
+		}
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		try (InputStream inputStream = new URL(schemaLocation).openStream()) {
 			XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 			XsdSchema result = read(xml);
+			schemaLocations.put(schemaLocation, result);
+			schemaNamespaces.put(result.namespace, result);
+			result.setTypes(schemaNamespaces);
 			xml.close();
 			return result;
 		}
 	}
+
 
 	public XsdSchema read(XMLEventReader xml) throws Exception {
 		XsdSchema result = null;
@@ -212,7 +223,14 @@ public class XsdReader {
 		}
 		Attribute attributeType = element.getAttributeByName(new QName("type"));
 		if (attributeType != null) {
-			result.typeName = attributeType.getValue();
+			String value = attributeType.getValue();
+			String parts[] = value.split(":");
+			if (parts.length == 2) {
+				result.typeNamespace = element.getNamespaceURI(parts[0]);
+				result.typeName = parts[1];
+			} else {
+				result.typeName = value;
+			}
 		}
 		Attribute attributeMinOccurs = element.getAttributeByName(new QName("minOccurs"));
 		if (attributeMinOccurs != null) {

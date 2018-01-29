@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.model.annotation.Size;
+import org.minimalj.util.StringUtils;
 
 public class XsdType {
 
@@ -40,6 +41,14 @@ public class XsdType {
 //
 //	}
 
+	public String getJavaType() {
+		if ("token".equals(name)) {
+			return "String";
+		} else {
+			return StringUtils.upperFirstChar(name);
+		}
+	}
+	
 	public static class XsdTypeComplex extends XsdType {
 
 		public final List<XsdElement> elements = new ArrayList<>();
