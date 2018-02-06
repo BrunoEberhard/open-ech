@@ -79,6 +79,9 @@ public class EchNamespaceUtil {
 
 	// Da nur die Location die Minor Version enthält für URI nicht anwendbar
 	public static int extractSchemaMinorVersion(String namespaceLocation) {
+		if (namespaceLocation.contains("0147")) {
+			return -1;
+		}
 		if (namespaceLocation.startsWith(ECH_NS_BASE) && namespaceLocation.length() >= ECH_NS_BASE.length() + 6) {
 			int versionStart = ECH_NS_BASE.length() + 5;
 			int versionEnd = namespaceLocation.indexOf('/', versionStart);
