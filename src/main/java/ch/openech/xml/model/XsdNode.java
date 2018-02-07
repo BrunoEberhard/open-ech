@@ -2,13 +2,10 @@ package ch.openech.xml.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import ch.openech.xml.model.XsdType.GENERATION_TYPE;
 
 public abstract class XsdNode {
-	
-	public abstract void getUsedTypes(Set<XsdType> usedTypes);
 	
 	public static class XsdCompound extends XsdNode {
 
@@ -17,13 +14,6 @@ public abstract class XsdNode {
 		public void generateJava(StringBuilder s) {
 			nodes.forEach(node -> node.generateJava(s));
 		}
-
-		public void getUsedTypes(Set<XsdType> usedTypes) {
-			for (XsdNode node : nodes) {
-				node.getUsedTypes(usedTypes);
-			}
-		}
-
 	}
 
 	public static class XsdSequence extends XsdCompound {
@@ -41,15 +31,6 @@ public abstract class XsdNode {
 
 		public void generateJava(StringBuilder s) {
 			base.generateJava(s, GENERATION_TYPE.FIELDS);
-		}
-		
-		public void getUsedTypes(Set<XsdType> usedTypes) {
-			if (base != null) {
-				base.getUsedTypes(usedTypes);
-			}
-			if (node != null) {
-				node.getUsedTypes(usedTypes);
-			}
 		}
 	}
 

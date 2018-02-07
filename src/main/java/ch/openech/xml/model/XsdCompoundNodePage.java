@@ -35,8 +35,8 @@ public class XsdCompoundNodePage extends TableDetailPage<XsdNodeRow> {
 	protected TablePage<?> getDetailPage(XsdNodeRow row) {
 		if (row.node instanceof XsdElement) {
 			XsdElement element = (XsdElement) row.node;
-			if (element.type instanceof XsdTypeComplex) {
-				XsdTypeComplex typeComplex = (XsdTypeComplex) element.type;
+			if (element.getType() instanceof XsdTypeComplex) {
+				XsdTypeComplex typeComplex = (XsdTypeComplex) element.getType();
 				XsdNode node = typeComplex.node;
 				if (node instanceof XsdCompound) {
 					XsdCompound compoundNode = (XsdCompound) node;
