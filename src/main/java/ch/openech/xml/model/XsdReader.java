@@ -25,6 +25,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.xml.model.XsdNode.XsdChoice;
 import ch.openech.xml.model.XsdNode.XsdSequence;
 import ch.openech.xml.model.XsdType.XsdTypeComplex;
+import ch.openech.xml.model.XsdType.XsdTypeReference;
 import ch.openech.xml.model.XsdType.XsdTypeSimple;
 import ch.openech.xml.write.EchNamespaceUtil;
 
@@ -111,7 +112,6 @@ public class XsdReader {
 					XsdType type = simpleType(result, xml);
 					Attribute attributeName = element.getAttributeByName(new QName("name"));
 					type.name = attributeName.getValue();
-					System.out.println(" for " + type.name);
 					result.types.add(type);
 				} else if ("element".equals(elementName)) {
 					XsdElement rootElement = element(result, element, xml);
@@ -144,7 +144,7 @@ public class XsdReader {
 					Attribute attributeBase = element.getAttributeByName(new QName("base"));
 					if (attributeBase != null) {
 						String qualifiedName = attributeBase.getValue();
-						result.base = schema.getType(qualifiedName);
+						result.base = new XsdTypeReference(schema, qualifiedName);
 						simpleTypeRestriction(schema, xml, result);
 					} else {
 						skip(xml);
@@ -327,7 +327,7 @@ public class XsdReader {
 
 		Attribute attributeType = element.getAttributeByName(new QName("type"));
 		if (attributeType != null) {
-			result.type = schema.getType(attributeType.getValue());
+			result.setTypeReference(new XsdTypeReference(schema, attributeType.getValue()));
 		}
 		
 		Attribute attributeMinOccurs = element.getAttributeByName(new QName("minOccurs"));
@@ -350,9 +350,11 @@ public class XsdReader {
 				StartElement e = event.asStartElement();
 				String elementName = e.getName().getLocalPart();
 				if ("simpleType".equals(elementName)) {
-					result.type = simpleType(schema, xml);
+					XsdTypeSimple type = simpleType(schema, xml);
+					result.typeReference = type.base;
 				} else if ("complexType".equals(elementName)) {
-					result.type = complexType(schema, xml);
+					XsdTypeComplex type = complexType(schema, xml);
+					// TODO
 				} else 
 				skip(xml);
 			} else if (event.isEndElement()) {
@@ -388,14 +390,14 @@ public class XsdReader {
 		
 		XsdReader reader = new XsdReader();
 
-		XsdSchema schema = reader.read("http://www.ech.ch/xmlns/eCH-0211/1/eCH-0211-1-0.xsd");
+//		XsdSchema schema = reader.read("http://www.ech.ch/xmlns/eCH-0211/1/eCH-0211-1-0.xsd");
+//		schema.print();
+		
+		XsdSchema schema = reader.read("http://www.ech.ch/xmlns/eCH-0020/3/eCH-0020-3-0.xsd");
 		schema.print();
 		
-		schema = reader.read("http://www.ech.ch/xmlns/eCH-0020/3/eCH-0020-3-0.xsd");
-		schema.print();
-		
-		schema = reader.read("http://www.ech.ch/xmlns/eCH-0020/3/eCH-0020-2-3.xsd");
-		schema.print();
+//		schema = reader.read("http://www.ech.ch/xmlns/eCH-0020/3/eCH-0020-2-3.xsd");
+//		schema.print();
 	}
 
 }

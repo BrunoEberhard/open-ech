@@ -15,7 +15,6 @@ import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.xml.model.XsdType.XsdTypeJava;
-import ch.openech.xml.model.XsdType.XsdTypeReference;
 import ch.openech.xml.write.EchNamespaceUtil;
 
 public class XsdSchema implements Comparable<XsdSchema> {
@@ -127,7 +126,6 @@ public class XsdSchema implements Comparable<XsdSchema> {
 	}
 
 	public XsdType getType(String qualifiedName) {
-		System.out.println("Looking for " + qualifiedName);
 		String parts[] = qualifiedName.split(":");
 		String namespace = this.namespace;
 		String name = qualifiedName;
@@ -136,20 +134,12 @@ public class XsdSchema implements Comparable<XsdSchema> {
 			name = parts[1];
 		}
 		if (StringUtils.equals(this.namespace, namespace)) {
-			XsdTypeReference reference = null;
 			for (XsdType type : types) {
-				if (type instanceof XsdTypeReference) {
-					reference = (XsdTypeReference) type;
-					continue;
-				}
 				if (StringUtils.equals(type.name, name)) {
 					return type;
 				}
 			}
-			if (reference != null) {
-				return reference;
-			}
-			return new XsdTypeReference(this, name);
+			throw new IllegalArgumentException("Cannot get type " + qualifiedName);
 		}
 		if ("http://www.w3.org/2001/XMLSchema".equals(namespace)) {
 			return XsdTypeJava.get(name);

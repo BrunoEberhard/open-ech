@@ -19,7 +19,21 @@ public class XsdType implements Comparable<XsdType> {
 		this.schema = schema;
 	}
 	
-	public XsdType base;
+	private XsdType base;
+	private XsdTypeReference baseReference;
+	
+	public void setBase(XsdType base) {
+		this.base = base;
+	}
+	
+	public void setBaseReference(XsdTypeReference baseReference) {
+		this.baseReference = baseReference;
+	}
+	
+	private void getBase() {
+		// TODO Auto-generated method stub
+
+	}
 	
 	@Size(255)
 	public String name;
@@ -61,13 +75,6 @@ public class XsdType implements Comparable<XsdType> {
 		return className().compareTo(o.className());
 	}
 
-	public void getUsedTypes(Set<XsdType> usedTypes) {
-		usedTypes.add(this);
-		if (base != null) {
-			base.getUsedTypes(usedTypes);
-		}
-	}
-	
 	public static class XsdTypeJava extends XsdType {
 		
 		private static Map<String, XsdTypeJava> types = new HashMap<>();
@@ -163,9 +170,6 @@ public class XsdType implements Comparable<XsdType> {
 
 		@Override
 		public String className() {
-			if (schema.namespace.equals("http://www.ech.ch/xmlns/eCH-0010/3") && base != null && "countryType".equals(base.name)) {
-				System.out.println("Jubidu");
-			}
 			String className = _className();
 			if (className.endsWith("Type")) className = className.substring(0, className.length() - 4);
 			return className;
@@ -173,7 +177,7 @@ public class XsdType implements Comparable<XsdType> {
 		
 		private String _className() {
 			if (base != null) {
-				return base.className();
+				return base.dereference().className();
 			} else if (enumeration.size() > 1 && name != null) {
 				return StringUtils.upperFirstChar(name);
 			} else {
@@ -185,8 +189,8 @@ public class XsdType implements Comparable<XsdType> {
 			if (enumeration.size() > 1) {
 				return true;
 			}
-			if (base instanceof XsdTypeSimple) {
-				return ((XsdTypeSimple) base).isEnumeration();
+			if (base.dereference() instanceof XsdTypeSimple) {
+				return ((XsdTypeSimple) base.dereference()).isEnumeration();
 			}
 			return false;
 		}
@@ -194,7 +198,7 @@ public class XsdType implements Comparable<XsdType> {
 		@Override
 		public boolean isJavaType() {
 			if (base != null) {
-				return base.isJavaType();
+				return base.dereference().isJavaType();
 			} else {
 				return !isEnumeration();
 			}
@@ -236,9 +240,8 @@ public class XsdType implements Comparable<XsdType> {
 		
 		public String getDescription() {
 			StringBuilder s = new StringBuilder();
-			if (base != null) {
+			if (base != null)
 				s.append(base.name).append(", ");
-			}
 			if (minLength != null) {
 				s.append("minLength = ").append(minLength).append(", ");
 			}
@@ -272,8 +275,6 @@ public class XsdType implements Comparable<XsdType> {
 			super(schema);
 		}
 
-		// public final List<XsdElement> elements = new ArrayList<>();
-
 		public XsdNode node;
 			
 		public void generateJava(StringBuilder s, GENERATION_TYPE type) {
@@ -301,45 +302,38 @@ public class XsdType implements Comparable<XsdType> {
 			}
 		}
 		
-		public void getUsedTypes(Set<XsdType> usedTypes) {
-			super.getUsedTypes(usedTypes);
-			if (node != null) {
-				node.getUsedTypes(usedTypes);
-			}
-		}
-
 		@Override
 		public String toString() {
 			return name;
 		}
 	}
 
-	public static class XsdTypeReference extends XsdType {
+	public static class XsdTypeReference {
+		private final XsdSchema schema;
+		private final String name;
 		
 		public XsdTypeReference(XsdSchema schema, String name) {
-			super(schema);
-			
+			this.schema = schema;
 			this.name = name;
 		}
+		
+		public XsdType dereference() {
+			return schema.getType(name);
+		}
 
-		@Override
-		public void generateJava(StringBuilder s, GENERATION_TYPE type) {
-			// not implemented
-		}
-		
-		public void getUsedTypes(Set<XsdType> usedTypes) {
-			schema.getType(this.name).getUsedTypes(usedTypes);
-//			throw new IllegalArgumentException();
-		}
-		
-		@Override
-		public String className() {
-			XsdType realType = schema.getType(name);
-			if (realType == this) {
-				System.out.println("Not resolvable: " + name);
-				return "Shit";
-			}
-			return schema.getType(name).className();
-		}
+//		@Override
+//		public void generateJava(StringBuilder s, GENERATION_TYPE type) {
+//			// not implemented
+//		}
+//		
+//		@Override
+//		public String className() {
+//			XsdType realType = schema.getType(name);
+//			if (realType == this) {
+//				System.out.println("Not resolvable: " + name);
+//				return "Shit";
+//			}
+//			return schema.getType(name).className();
+//		}
 	}
 }

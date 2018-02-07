@@ -1,8 +1,5 @@
 package ch.openech.xml.model;
 
-import java.util.Set;
-
-import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
@@ -19,16 +16,22 @@ public class XsdElement extends XsdNode {
 	public Integer minOccours = 1;
 	public Integer maxOccours = 1;
 
-	@NotEmpty
-	public XsdType type;
+	private XsdType type;
+	private XsdTypeReference typeReference;
 
+	public void setType(XsdType type) {
+		this.type = type;
+	}
+	
+	public void setTypeReference(XsdTypeReference typeReference) {
+		this.typeReference = typeReference;
+	}
+	
 	public XsdType getType() {
-		if (type instanceof XsdTypeReference) {
-			XsdTypeReference reference = (XsdTypeReference) type;
-			return reference.schema.getType(reference.name);
-		} else {
-			return type;
+		if (type == null) {
+			type = typeReference.dereference();
 		}
+		return type;
 	}
 	
 	public void generateJava(StringBuilder s) {
@@ -87,14 +90,5 @@ public class XsdElement extends XsdNode {
 			return minOccours > 0;
 		}
 		return false;
-	}
-
-	@Override
-	public void getUsedTypes(Set<XsdType> usedTypes) {
-		XsdType type = getType();
-
-		if (!usedTypes.contains(type)) {
-			type.getUsedTypes(usedTypes);
-		}
 	}
 }
