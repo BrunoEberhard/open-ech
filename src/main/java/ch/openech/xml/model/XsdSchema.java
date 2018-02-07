@@ -52,7 +52,7 @@ public class XsdSchema implements Comparable<XsdSchema> {
 			}
 		}
 		
-		File dir = new File("C:\\Users\\eberhard\\git\\open-ech\\src\\main\\generated");
+		File dir = new File("C:\\projects\\open-ech\\src\\main\\generated");
 		dir.mkdirs();
 		for (XsdType type : types) {
 			String java = type.generateJava();

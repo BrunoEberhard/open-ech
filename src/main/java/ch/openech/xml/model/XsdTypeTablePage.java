@@ -78,12 +78,12 @@ public class XsdTypeTablePage extends TableDetailPage<XsdTypeRow> {
 			if (type instanceof XsdTypeSimple) {
 				this.description = ((XsdTypeSimple) type).getDescription();
 			} else {
-				this.description = type.base != null ? type.base.name : "";
+				this.description = type.getBase() != null ? type.getBase().name : "";
 			}
 			if (type.isJavaType()) {
 				this.isJava = "Java";
-				if (type.base != null) {
-					this.isJava = this.isJava + " " + type.base.name;
+				if (type.getBase() != null) {
+					this.isJava = this.isJava + " " + type.getBase().name;
 				}
 			}
 			this.className = type.className();

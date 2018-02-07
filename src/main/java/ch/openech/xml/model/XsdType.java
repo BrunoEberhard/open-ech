@@ -30,9 +30,11 @@ public class XsdType implements Comparable<XsdType> {
 		this.baseReference = baseReference;
 	}
 	
-	private void getBase() {
-		// TODO Auto-generated method stub
-
+	public XsdType getBase() {
+		if (base == null) {
+			base = baseReference.dereference();
+		}
+		return base;
 	}
 	
 	@Size(255)
@@ -176,10 +178,10 @@ public class XsdType implements Comparable<XsdType> {
 		}
 		
 		private String _className() {
-			if (base != null) {
-				return base.dereference().className();
-			} else if (enumeration.size() > 1 && name != null) {
+			if (enumeration.size() > 1 && name != null) {
 				return StringUtils.upperFirstChar(name);
+			} else if (getBase() != null) {
+				return getBase().className();
 			} else {
 				return "!!!";
 			}
@@ -189,21 +191,24 @@ public class XsdType implements Comparable<XsdType> {
 			if (enumeration.size() > 1) {
 				return true;
 			}
-			if (base.dereference() instanceof XsdTypeSimple) {
-				return ((XsdTypeSimple) base.dereference()).isEnumeration();
+			if (getBase() instanceof XsdTypeSimple) {
+				return ((XsdTypeSimple) getBase()).isEnumeration();
 			}
 			return false;
 		}
 		
 		@Override
 		public boolean isJavaType() {
-			if (base != null) {
-				return base.dereference().isJavaType();
-			} else {
-				return !isEnumeration();
+			if (isEnumeration()) {
+				return false;
 			}
+			if (getBase() != null) {
+				return getBase().isJavaType();
+			}
+			return false;
 		}
 		
+		@Override
 		public String generateJava() {
 			if (isEnumeration()) {
 				StringBuilder s = new StringBuilder();
@@ -240,8 +245,8 @@ public class XsdType implements Comparable<XsdType> {
 		
 		public String getDescription() {
 			StringBuilder s = new StringBuilder();
-			if (base != null)
-				s.append(base.name).append(", ");
+			if (getBase() != null)
+				s.append(getBase().name).append(", ");
 			if (minLength != null) {
 				s.append("minLength = ").append(minLength).append(", ");
 			}

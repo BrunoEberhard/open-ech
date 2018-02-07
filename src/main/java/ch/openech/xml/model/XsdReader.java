@@ -144,7 +144,7 @@ public class XsdReader {
 					Attribute attributeBase = element.getAttributeByName(new QName("base"));
 					if (attributeBase != null) {
 						String qualifiedName = attributeBase.getValue();
-						result.base = new XsdTypeReference(schema, qualifiedName);
+						result.setBaseReference(new XsdTypeReference(schema, qualifiedName));
 						simpleTypeRestriction(schema, xml, result);
 					} else {
 						skip(xml);
@@ -222,7 +222,7 @@ public class XsdReader {
 				if ("restriction".equals(elementName)) {
 					result = new XsdNode.XsdRestriction();
 					Attribute attributeType = element.getAttributeByName(new QName("base"));
-					((XsdNode.XsdRestriction) result).base = schema.getType(attributeType.getValue());
+					((XsdNode.XsdRestriction) result).setBaseReference(new XsdTypeReference(schema, attributeType.getValue()));
 					((XsdNode.XsdRestriction) result).node = restrictionOrExtension(schema, xml);
 					if (((XsdNode.XsdRestriction) result).node == null) {
 						System.out.println("No node");
@@ -230,7 +230,7 @@ public class XsdReader {
 				} else if ("extension".equals(elementName)) {
 					result = new XsdNode.XsdExtension();
 					Attribute attributeType = element.getAttributeByName(new QName("base"));
-					((XsdNode.XsdExtension) result).base = schema.getType(attributeType.getValue());
+					((XsdNode.XsdExtension) result).setBaseReference(new XsdTypeReference(schema, attributeType.getValue()));
 					((XsdNode.XsdExtension) result).node = restrictionOrExtension(schema, xml);
 					if (((XsdNode.XsdExtension) result).node == null) {
 						System.out.println("No node");
@@ -351,10 +351,10 @@ public class XsdReader {
 				String elementName = e.getName().getLocalPart();
 				if ("simpleType".equals(elementName)) {
 					XsdTypeSimple type = simpleType(schema, xml);
-					result.typeReference = type.base;
+					result.setType(type);
 				} else if ("complexType".equals(elementName)) {
 					XsdTypeComplex type = complexType(schema, xml);
-					// TODO
+					result.setType(type);
 				} else 
 				skip(xml);
 			} else if (event.isEndElement()) {
