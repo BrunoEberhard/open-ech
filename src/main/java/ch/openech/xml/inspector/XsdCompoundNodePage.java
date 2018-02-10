@@ -1,4 +1,4 @@
-package ch.openech.xml.model;
+package ch.openech.xml.inspector;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +8,10 @@ import org.minimalj.frontend.page.TablePage;
 import org.minimalj.model.Keys;
 import org.minimalj.repository.list.SortableList;
 
-import ch.openech.xml.model.XsdCompoundNodePage.XsdNodeRow;
+import ch.openech.xml.inspector.XsdCompoundNodePage.XsdNodeRow;
+import ch.openech.xml.model.XsdElement;
+import ch.openech.xml.model.XsdNode;
+import ch.openech.xml.model.XsdType;
 import ch.openech.xml.model.XsdNode.XsdCompound;
 import ch.openech.xml.model.XsdType.XsdTypeComplex;
 

@@ -1,4 +1,4 @@
-package ch.openech.xml.model;
+package ch.openech.xml.inspector;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -10,10 +10,13 @@ import org.minimalj.model.Keys;
 import org.minimalj.repository.list.SortableList;
 import org.minimalj.util.resources.Resources;
 
+import ch.openech.xml.inspector.XsdTypeTablePage.XsdTypeRow;
+import ch.openech.xml.model.XsdNode;
+import ch.openech.xml.model.XsdSchema;
+import ch.openech.xml.model.XsdType;
 import ch.openech.xml.model.XsdNode.XsdCompound;
 import ch.openech.xml.model.XsdType.XsdTypeComplex;
 import ch.openech.xml.model.XsdType.XsdTypeSimple;
-import ch.openech.xml.model.XsdTypeTablePage.XsdTypeRow;
 
 public class XsdTypeTablePage extends TableDetailPage<XsdTypeRow> {
 

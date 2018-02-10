@@ -1,10 +1,8 @@
-package ch.openech.xml;
+package ch.openech.xml.inspector;
 
 import org.minimalj.application.Application;
 import org.minimalj.frontend.impl.swing.Swing;
 import org.minimalj.frontend.page.Page;
-
-import ch.openech.xml.model.XsdSchemaPage;
 
 public class EchXsdInspector extends Application {
 

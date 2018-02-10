@@ -1,4 +1,4 @@
-package ch.openech.xml.model;
+package ch.openech.xml.inspector;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,6 +9,9 @@ import java.util.TreeSet;
 import org.minimalj.frontend.page.TableDetailPage;
 import org.minimalj.frontend.page.TablePage;
 import org.minimalj.repository.list.SortableList;
+
+import ch.openech.xml.model.XsdReader;
+import ch.openech.xml.model.XsdSchema;
 
 public class XsdSchemaPage extends TableDetailPage<XsdSchema> {
 
