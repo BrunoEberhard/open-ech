@@ -60,6 +60,10 @@ public class XsdType implements Comparable<XsdType> {
 		}
 	}
 	
+	public Class<?> getClazz() {
+		return null;
+	}
+	
 	public boolean isAnonymous() {
 		return name == null;
 	}
@@ -125,12 +129,17 @@ public class XsdType implements Comparable<XsdType> {
 			return clazz.getSimpleName();
 		}
 		
+		@Override
+		public Class<?> getClazz() {
+			return super.getClazz();
+		}
+		
 		public boolean isJavaType() {
 			return true;
 		}
 		
 		@Override
-		public void generateJava(StringBuilder s, GENERATION_TYPE type) {
+		public void generateJava(StringBuilder s, GENERATION_TYPE type, XsdSchema context) {
 			// not implemented
 		}
 		
@@ -140,9 +149,9 @@ public class XsdType implements Comparable<XsdType> {
 		}
 	}
 	
-	public String generateJava() {
+	public String generateJava(XsdSchema context) {
 		StringBuilder s = new StringBuilder();
-		generateJava(s, GENERATION_TYPE.MAIN);
+		generateJava(s, GENERATION_TYPE.MAIN, context);
 		return s.toString();
 	}
 	
@@ -150,7 +159,7 @@ public class XsdType implements Comparable<XsdType> {
 		MAIN, INNER, FIELDS;
 	}
 	
-	public void generateJava(StringBuilder s, GENERATION_TYPE type) {}
+	public void generateJava(StringBuilder s, GENERATION_TYPE type, XsdSchema context) {}
 	
 	public static class XsdTypeSimple extends XsdType {
 
@@ -209,7 +218,7 @@ public class XsdType implements Comparable<XsdType> {
 		}
 		
 		@Override
-		public String generateJava() {
+		public String generateJava(XsdSchema context) {
 			if (isEnumeration()) {
 				StringBuilder s = new StringBuilder();
 				s.append("public enum " + className() + " {\n  ");
@@ -239,7 +248,7 @@ public class XsdType implements Comparable<XsdType> {
 		}
 		
 		@Override
-		public void generateJava(StringBuilder s, GENERATION_TYPE type) {
+		public void generateJava(StringBuilder s, GENERATION_TYPE type, XsdSchema context) {
 			// not implemented
 		}
 		
@@ -282,8 +291,8 @@ public class XsdType implements Comparable<XsdType> {
 
 		public XsdNode node;
 			
-		public void generateJava(StringBuilder s, GENERATION_TYPE type) {
-			System.out.println(className());
+		@Override
+		public void generateJava(StringBuilder s, GENERATION_TYPE type, XsdSchema context) {
 			switch (type) {
 			case MAIN:
 				s.append("public class " + className() + " {\n\n");
@@ -294,7 +303,7 @@ public class XsdType implements Comparable<XsdType> {
 			default:
 				break;
 			}
-			node.generateJava(s);
+			node.generateJava(s, context);
 			switch (type) {
 			case MAIN:
 				s.append("}");
@@ -308,6 +317,16 @@ public class XsdType implements Comparable<XsdType> {
 		}
 		
 		@Override
+		public Class<?> getClazz() {
+			try {
+				String packageName = XsdSchema.packageName(schema.namespace);
+				return Class.forName(packageName + "." + className());
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+		@Override
 		public String toString() {
 			return name;
 		}
@@ -315,30 +334,15 @@ public class XsdType implements Comparable<XsdType> {
 
 	public static class XsdTypeReference {
 		private final XsdSchema schema;
-		private final String name;
+		private final String qualifiedName;
 		
-		public XsdTypeReference(XsdSchema schema, String name) {
+		public XsdTypeReference(XsdSchema schema, String qualifiedName) {
 			this.schema = schema;
-			this.name = name;
+			this.qualifiedName = qualifiedName;
 		}
 		
 		public XsdType dereference() {
-			return schema.getType(name);
+			return schema.getQualifiedType(qualifiedName);
 		}
-
-//		@Override
-//		public void generateJava(StringBuilder s, GENERATION_TYPE type) {
-//			// not implemented
-//		}
-//		
-//		@Override
-//		public String className() {
-//			XsdType realType = schema.getType(name);
-//			if (realType == this) {
-//				System.out.println("Not resolvable: " + name);
-//				return "Shit";
-//			}
-//			return schema.getType(name).className();
-//		}
 	}
 }

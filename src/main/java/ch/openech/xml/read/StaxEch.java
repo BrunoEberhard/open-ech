@@ -96,6 +96,19 @@ public class StaxEch {
 		}
 	}
 	
+	public static long loong(XMLEventReader xml) throws XMLStreamException {
+		long i = 0;
+		while (true) {
+			XMLEvent event = xml.nextEvent();
+			if (event.isCharacters()) {
+				String token = event.asCharacters().getData().trim();
+				i = Long.parseLong(token);
+			} else if (event.isEndElement()) {
+				return i;
+			} // else skip
+		}
+	}
+	
 	public static int bulean(XMLEventReader xml) throws XMLStreamException {
 		int i = -1;
 		while (true) {

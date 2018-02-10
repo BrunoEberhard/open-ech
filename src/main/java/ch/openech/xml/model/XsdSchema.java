@@ -37,8 +37,7 @@ public class XsdSchema implements Comparable<XsdSchema> {
 	
 	public final List<XsdElement> elements = new ArrayList<>();
 	
-	public void print() {
-		System.out.println("print: " + namespace + " from " + schemaLocation);
+	public void generateJavaClasses() {
 		int minorVersion = EchNamespaceUtil.extractSchemaMinorVersion(schemaLocation);
 		if (minorVersion >= 0) {
 			if (!maxMinorVersions.containsKey(namespace)) {
@@ -52,49 +51,54 @@ public class XsdSchema implements Comparable<XsdSchema> {
 			}
 		}
 		
-		File dir = new File("C:\\projects\\open-ech\\src\\main\\generated");
+		File dir = new File(".\\src\\main\\generated");
 		dir.mkdirs();
+
+		File packageDir = new File(dir, packageName(namespace).replace('.', File.separatorChar));
+		packageDir.mkdirs();
+		
 		for (XsdType type : types) {
-			String java = type.generateJava();
-			if (java == null) {
-				continue;
-			}
-			File packageDir = new File(dir, packageName(namespace).replace('.', File.separatorChar));
-			packageDir.mkdirs();
-			File javaFile = new File(packageDir, type.className() + ".java");
-			try (FileWriter filerWriter = new FileWriter(javaFile); BufferedWriter writer = new BufferedWriter(filerWriter)) {
-				writer.write("package " + packageName(namespace) + ";\n\n");
-				if (java.contains("@NotEmpty")) writer.write("import org.minimalj.model.annotation.NotEmpty;\n");
-				if (java.contains("@Size")) writer.write("import org.minimalj.model.annotation.Size;\n");
-				if (java.contains("BigDecimal")) writer.write("import java.math.BigDecimal;\n");
-				if (java.contains("LocalDate")) writer.write("import java.time.LocalDate;\n");
-				if (java.contains("LocalTime")) writer.write("import java.time.LocalTime;\n");
-				if (java.contains("LocalDateTime")) writer.write("import java.time.LocalDateTime;\n\n");
-				if (java.contains("List<")) writer.write("import java.util.List;\n\n");
-				
-//				Set<String> importLines = new TreeSet<>();
-//				Set<XsdType> usedTypes = new TreeSet<>();
-//				type.getUsedTypes(usedTypes);
-//				for (XsdType usedType : usedTypes) {
-//					if (usedType.schema != this) {
-//						XsdSchema schema = usedType.schema;
-//						if (!usedType.isJavaType() && !usedType.isAnonymous())
-//						importLines.add(schema.getPackage() + "." + usedType.className());
-//					}
-//				}
-//				for (String i : importLines) {
-//					writer.write("import " + i + ";\n");
-//				}
-				writer.write("\n");
-				
-				writer.write(java);
-			} catch (IOException x) {
-				throw new RuntimeException(x);
+			String java = type.generateJava(this);
+			if (java != null) {
+				writeJavaFile(packageDir, type.className(), java);
 			}
 		}
+		
 		for (XsdSchema schema : imports.values()) {
-			schema.print();
+			schema.generateJavaClasses();
 		}
+	}
+
+	protected File writeJavaFile(File packageDir, String className, String java) {
+		File javaFile = new File(packageDir, className + ".java");
+		try (FileWriter filerWriter = new FileWriter(javaFile); BufferedWriter writer = new BufferedWriter(filerWriter)) {
+			writerClassHeader(writer, java);
+			writer.write(java);
+		} catch (IOException x) {
+			throw new RuntimeException(x);
+		}
+		return javaFile;
+	}
+
+	protected void writerClassHeader(BufferedWriter writer, String java) throws IOException {
+		writer.write("package " + packageName(namespace) + ";\n\n");
+		if (java.contains("@NotEmpty")) writer.write("import org.minimalj.model.annotation.NotEmpty;\n");
+		if (java.contains("@Size")) writer.write("import org.minimalj.model.annotation.Size;\n");
+		if (java.contains("BigDecimal")) writer.write("import java.math.BigDecimal;\n");
+		if (java.contains("LocalDate")) writer.write("import java.time.LocalDate;\n");
+		if (java.contains("LocalTime")) writer.write("import java.time.LocalTime;\n");
+		if (java.contains("LocalDateTime")) writer.write("import java.time.LocalDateTime;\n\n");
+		if (java.contains("List<")) writer.write("import java.util.List;\n\n");
+	}
+	
+	public String generateJava(String className) {
+		StringBuilder s = new StringBuilder();
+		s.append("public class " + className + " {\n\n");
+		for (XsdElement element : elements) {
+			element.generateJava(s, this);
+		}
+		s.append("}");
+		return s.toString();
 	}
 	
 	// http://www.ech.ch/xmlns/eCH-0135/1 -> ch.ech.ech0135.v1
@@ -125,7 +129,7 @@ public class XsdSchema implements Comparable<XsdSchema> {
 		return packageName(namespace);
 	}
 
-	public XsdType getType(String qualifiedName) {
+	public XsdType getQualifiedType(String qualifiedName) {
 		String parts[] = qualifiedName.split(":");
 		String namespace = this.namespace;
 		String name = qualifiedName;
@@ -134,12 +138,7 @@ public class XsdSchema implements Comparable<XsdSchema> {
 			name = parts[1];
 		}
 		if (StringUtils.equals(this.namespace, namespace)) {
-			for (XsdType type : types) {
-				if (StringUtils.equals(type.name, name)) {
-					return type;
-				}
-			}
-			throw new IllegalArgumentException("Cannot get type " + qualifiedName);
+			return getType(name);
 		}
 		if ("http://www.w3.org/2001/XMLSchema".equals(namespace)) {
 			return XsdTypeJava.get(name);
@@ -151,7 +150,21 @@ public class XsdSchema implements Comparable<XsdSchema> {
 			return schema.getType(name);
 		}
 	}
+	
+	public XsdType getType(String name) {
+		for (XsdType type : types) {
+			if (StringUtils.equals(type.name, name)) {
+				return type;
+			}
+		}
+		throw new IllegalArgumentException("Cannot get type " + name);
+	}
+	
 
+	public String getPrefix(String namespace) {
+		return prefixes.entrySet().stream().filter(entry -> namespace.equals(entry.getValue())).findFirst().map(Map.Entry::getKey).orElse(null);
+	}
+	
 	@Override
 	public int compareTo(XsdSchema o) {
 		return schemaLocation.compareTo(o.schemaLocation);

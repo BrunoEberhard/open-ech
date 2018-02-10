@@ -12,8 +12,9 @@ public abstract class XsdNode {
 
 		public final List<XsdNode> nodes = new ArrayList<>();
 
-		public void generateJava(StringBuilder s) {
-			nodes.forEach(node -> node.generateJava(s));
+		@Override
+		public void generateJava(StringBuilder s, XsdSchema context) {
+			nodes.forEach(node -> node.generateJava(s, context));
 		}
 	}
 
@@ -47,8 +48,9 @@ public abstract class XsdNode {
 		
 		public XsdNode node;
 
-		public void generateJava(StringBuilder s) {
-			getBase().generateJava(s, GENERATION_TYPE.FIELDS);
+		@Override
+		public void generateJava(StringBuilder s, XsdSchema context) {
+			getBase().generateJava(s, GENERATION_TYPE.FIELDS, context);
 		}
 	}
 
@@ -58,10 +60,10 @@ public abstract class XsdNode {
 	
 	public static class XsdExtension extends XsdModfication {
 		
-		public void generateJava(StringBuilder s) {
-			getBase().generateJava(s, GENERATION_TYPE.FIELDS);
+		public void generateJava(StringBuilder s, XsdSchema context) {
+			getBase().generateJava(s, GENERATION_TYPE.FIELDS, context);
 			if (node != null) {
-				node.generateJava(s);
+				node.generateJava(s, context);
 			} else {
 				// happens for complexType with simpleContent
 			}
@@ -69,6 +71,6 @@ public abstract class XsdNode {
 		
 	}
 
-	public abstract void generateJava(StringBuilder s);
+	public abstract void generateJava(StringBuilder s, XsdSchema context);
 
 }

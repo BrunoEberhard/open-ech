@@ -23,6 +23,7 @@ import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.xml.model.XsdNode.XsdChoice;
+import ch.openech.xml.model.XsdNode.XsdModfication;
 import ch.openech.xml.model.XsdNode.XsdSequence;
 import ch.openech.xml.model.XsdType.XsdTypeComplex;
 import ch.openech.xml.model.XsdType.XsdTypeReference;
@@ -35,7 +36,7 @@ public class XsdReader {
 	private final Map<String, XsdSchema> schemaLocations = new HashMap<>();
 	private final Map<String, XsdSchema> schemaNamespaces = new HashMap<>();
 	
-	public XsdSchema read(String schemaLocation) throws Exception {
+	public XsdSchema read(String schemaLocation) throws XMLStreamException {
 		if (schemaLocations.containsKey(schemaLocation)) {
 			return schemaLocations.get(schemaLocation);
 		}
@@ -48,6 +49,8 @@ public class XsdReader {
 			schemaNamespaces.put(result.namespace, result);
 			xml.close();
 			return result;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -59,14 +62,15 @@ public class XsdReader {
 		}
 	}
 
-	public XsdSchema read(XMLEventReader xml) throws Exception {
-		XsdSchema result = new XsdSchema();
+	public XsdSchema read(XMLEventReader xml) throws XMLStreamException {
+		XsdSchema result = null;
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement element = event.asStartElement();
 				String elementName = element.getName().getLocalPart();
 				if ("schema".equals(elementName)) {
+					result = new XsdSchema();
 					result.namespace = element.getAttributeByName(new QName("targetNamespace")).getValue();
 					Iterator<?> attributesIterator = element.getNamespaces();
 					while (attributesIterator.hasNext()) {
@@ -78,7 +82,7 @@ public class XsdReader {
 							result.prefixes.put(prefix, namespace);
 						}
 					}
-					result = schema(result, xml);
+					schema(result, xml);
 				} else {
 					skip(xml);
 				}
@@ -89,7 +93,7 @@ public class XsdReader {
 		return result;
 	}
 
-	public XsdSchema schema(XsdSchema result, XMLEventReader xml) throws Exception {
+	public void schema(XsdSchema result, XMLEventReader xml) throws XMLStreamException {
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -115,15 +119,18 @@ public class XsdReader {
 					result.types.add(type);
 				} else if ("element".equals(elementName)) {
 					XsdElement rootElement = element(result, element, xml);
+					if (rootElement.getType().isAnonymous()) {
+						rootElement.getType().name = rootElement.name;
+						result.types.add(rootElement.getType());
+					}
 					result.elements.add(rootElement);
 				} else 
 				skip(xml);
 			} else if (event.isEndElement()) {
 				assertEnd(event, "schema");
-				return result;
+				return;
 			}
 		}
-		return result;
 	}
 
 	private void assertEnd(XMLEvent event, String... ends) {
@@ -133,7 +140,7 @@ public class XsdReader {
 		}
 	}
 
-	public XsdTypeSimple simpleType(XsdSchema schema, XMLEventReader xml) throws Exception {
+	public XsdTypeSimple simpleType(XsdSchema schema, XMLEventReader xml) throws XMLStreamException {
 		XsdTypeSimple result = new XsdTypeSimple(schema);
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
@@ -159,7 +166,7 @@ public class XsdReader {
 		return result;
 	}
 	
-	public void simpleTypeRestriction(XsdSchema schema, XMLEventReader xml, XsdTypeSimple typeSimple) throws Exception {
+	public void simpleTypeRestriction(XsdSchema schema, XMLEventReader xml, XsdTypeSimple typeSimple) throws XMLStreamException {
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -195,7 +202,7 @@ public class XsdReader {
 		}
 	}
 	
-	public XsdTypeComplex complexType(XsdSchema schema, XMLEventReader xml) throws Exception {
+	public XsdTypeComplex complexType(XsdSchema schema, XMLEventReader xml) throws XMLStreamException {
 		XsdTypeComplex result = new XsdTypeComplex(schema);
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
@@ -212,8 +219,8 @@ public class XsdReader {
 		return result;
 	}
 
-	public XsdNode content(XsdSchema schema, XMLEventReader xml) throws Exception {
-		XsdNode result = null;
+	public XsdNode content(XsdSchema schema, XMLEventReader xml) throws XMLStreamException {
+		XsdModfication result = null;
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -221,22 +228,14 @@ public class XsdReader {
 				String elementName = element.getName().getLocalPart();
 				if ("restriction".equals(elementName)) {
 					result = new XsdNode.XsdRestriction();
-					Attribute attributeType = element.getAttributeByName(new QName("base"));
-					((XsdNode.XsdRestriction) result).setBaseReference(new XsdTypeReference(schema, attributeType.getValue()));
-					((XsdNode.XsdRestriction) result).node = restrictionOrExtension(schema, xml);
-					if (((XsdNode.XsdRestriction) result).node == null) {
-						System.out.println("No node");
-					}
 				} else if ("extension".equals(elementName)) {
 					result = new XsdNode.XsdExtension();
-					Attribute attributeType = element.getAttributeByName(new QName("base"));
-					((XsdNode.XsdExtension) result).setBaseReference(new XsdTypeReference(schema, attributeType.getValue()));
-					((XsdNode.XsdExtension) result).node = restrictionOrExtension(schema, xml);
-					if (((XsdNode.XsdExtension) result).node == null) {
-						System.out.println("No node");
-					}
-				} else
-				skip(xml);
+				} else {
+					skip(xml);
+				}
+				Attribute attributeType = element.getAttributeByName(new QName("base"));
+				result.setBaseReference(new XsdTypeReference(schema, attributeType.getValue()));
+				result.node = restrictionOrExtension(schema, xml);
 			} else if (event.isEndElement()) {
 				return result;
 			}
@@ -244,7 +243,7 @@ public class XsdReader {
 		return result;
 	}
 	
-	public XsdNode restrictionOrExtension(XsdSchema schema, XMLEventReader xml) throws Exception {
+	public XsdNode restrictionOrExtension(XsdSchema schema, XMLEventReader xml) throws XMLStreamException {
 		XsdNode result = null;
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
@@ -260,7 +259,7 @@ public class XsdReader {
 		return result;
 	}
 
-	public XsdNode node(XsdSchema schema, StartElement element, XMLEventReader xml) throws Exception {
+	public XsdNode node(XsdSchema schema, StartElement element, XMLEventReader xml) throws XMLStreamException {
 		XsdNode result = null;
 		String elementName = element.getName().getLocalPart();
 		if ("sequence".equals(elementName)) {
@@ -283,7 +282,7 @@ public class XsdReader {
 		return result;
 	}
 	
-	private XsdSequence sequence(XsdSchema schema, XMLEventReader xml) throws Exception {
+	private XsdSequence sequence(XsdSchema schema, XMLEventReader xml) throws XMLStreamException {
 		XsdSequence result = new XsdSequence();
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
@@ -300,7 +299,7 @@ public class XsdReader {
 		return result;
 	}
 	
-	private XsdChoice choice(XsdSchema schema, XMLEventReader xml) throws Exception {
+	private XsdChoice choice(XsdSchema schema, XMLEventReader xml) throws XMLStreamException {
 		XsdChoice result = new XsdChoice();
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
@@ -317,7 +316,7 @@ public class XsdReader {
 		return result;
 	}
 
-	public XsdElement element(XsdSchema schema, StartElement element, XMLEventReader xml) throws Exception {
+	public XsdElement element(XsdSchema schema, StartElement element, XMLEventReader xml) throws XMLStreamException {
 		XsdElement result = new XsdElement();
 		
 		Attribute attributeName = element.getAttributeByName(new QName("name"));
@@ -385,19 +384,24 @@ public class XsdReader {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		File dir = new File("C:\\Users\\eberhard\\git\\open-ech\\src\\main\\generated");
+		File dir = new File(".\\src\\main\\generated");
 		deleteDirectory(dir);
 		
 		XsdReader reader = new XsdReader();
 
+		XsdSchema schema;
 //		XsdSchema schema = reader.read("http://www.ech.ch/xmlns/eCH-0211/1/eCH-0211-1-0.xsd");
-//		schema.print();
-		
-		XsdSchema schema = reader.read("http://www.ech.ch/xmlns/eCH-0020/3/eCH-0020-3-0.xsd");
-		schema.print();
+//		schema.generateJavaClasses();
+//		
+//		schema = reader.read("http://www.ech.ch/xmlns/eCH-0020/3/eCH-0020-3-0.xsd");
+//		schema.generateJavaClasses();
+
+		schema = reader.read("http://www.ech.ch/xmlns/eCH-0071/1/eCH-0071-1-0.xsd");
+		schema.generateJavaClasses();
+
 		
 //		schema = reader.read("http://www.ech.ch/xmlns/eCH-0020/3/eCH-0020-2-3.xsd");
-//		schema.print();
+//		schema.generateJavaClasses();
 	}
 
 }

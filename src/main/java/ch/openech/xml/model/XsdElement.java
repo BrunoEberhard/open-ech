@@ -34,17 +34,18 @@ public class XsdElement extends XsdNode {
 		return type;
 	}
 	
-	public void generateJava(StringBuilder s) {
+	@Override
+	public void generateJava(StringBuilder s, XsdSchema context) {
 		XsdType type = getType();
 		
 		boolean generateInnerClass = type.isAnonymous() && type instanceof XsdTypeComplex;
 		if (generateInnerClass) {
 			XsdTypeComplex typeComplex = (XsdTypeComplex) type;
 			typeComplex.name = StringUtils.upperFirstChar(name);
-			typeComplex.generateJava(s, GENERATION_TYPE.INNER);
+			typeComplex.generateJava(s, GENERATION_TYPE.INNER, context);
 		}
 		
-		String className = generateInnerClass ? type.className() : type.qualifiedClassName();
+		String className = generateInnerClass || type.schema == context ? type.className() : type.qualifiedClassName();
 		
 		if (maxOccours > 1) {
 			if (minOccours > 0) {
