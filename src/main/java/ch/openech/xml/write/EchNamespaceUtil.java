@@ -39,9 +39,21 @@ public class EchNamespaceUtil {
 	}
 
 	// Aufgrund von Konventionen für URI und Location verwendbar
-	public static int extractSchemaNumber(String namespaceLocationOrURI) {
-		if (namespaceLocationOrURI.startsWith(ECH_NS_BASE) && namespaceLocationOrURI.length() >= ECH_NS_BASE.length() + 4) {
-			return  Integer.parseInt(namespaceLocationOrURI.substring(ECH_NS_BASE.length(), ECH_NS_BASE.length() + 4));
+	public static int extractSchemaNumber(String s) {
+		if (s.contains("0147")) {
+			return 147;
+		}
+		if (s.contains("eCH-")) {
+			int pos = s.lastIndexOf("eCH-") + 4;
+			int end = pos;
+			while (end < s.length() && Character.isDigit(s.charAt(end))) end++;
+			
+			try {
+				return Integer.parseInt(s.substring(pos, end));
+			} catch (Exception x) {
+				System.err.println("Error parsing minor version of " + s);
+				return -1;
+			}
 		} else {
 			return -1;
 		}
@@ -65,34 +77,56 @@ public class EchNamespaceUtil {
 		}
 	}
 
-	// Aufgrund von Konventionen für URI und Location verwendbar
-	public static int extractSchemaMajorVersion(String namespaceLocationOrURI) {
-		if (namespaceLocationOrURI.startsWith(ECH_NS_BASE) && namespaceLocationOrURI.length() >= ECH_NS_BASE.length() + 6) {
-			int versionStart = ECH_NS_BASE.length() + 5;
-			int versionEnd = namespaceLocationOrURI.indexOf('/', versionStart);
-			if (versionEnd < 0) versionEnd = namespaceLocationOrURI.length();
-			return  Integer.parseInt(namespaceLocationOrURI.substring(versionStart, versionEnd));
+	public static int extractSchemaMajorVersion(String s) {
+		if (s.contains("0147")) {
+			return -1;
+		}
+		if (s.contains("eCH-")) {
+			int pos = s.lastIndexOf("eCH-") + 4;
+			// skip schemanumber
+			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
+			// skip -
+			pos++;
+
+			int end = pos;
+			while (end < s.length() && Character.isDigit(s.charAt(end))) end++;
+			
+			try {
+				return Integer.parseInt(s.substring(pos, end));
+			} catch (Exception x) {
+				System.err.println("Error parsing minor version of " + s);
+				return -1;
+			}
 		} else {
 			return -1;
 		}
 	}
 
 	// Da nur die Location die Minor Version enthält für URI nicht anwendbar
-	public static int extractSchemaMinorVersion(String namespaceLocation) {
-		if (namespaceLocation.contains("0147")) {
+	public static int extractSchemaMinorVersion(String s) {
+		if (s.contains("0147")) {
 			return -1;
 		}
-		if (namespaceLocation.startsWith(ECH_NS_BASE) && namespaceLocation.length() >= ECH_NS_BASE.length() + 6) {
-			int versionStart = ECH_NS_BASE.length() + 5;
-			int versionEnd = namespaceLocation.indexOf('/', versionStart);
+		if (s.contains("eCH-")) {
+			int pos = s.lastIndexOf("eCH-") + 4;
+			// skip schemanumber
+			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
+			// skip -
+			pos++;
+			// skip version
+			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
+			// skip -
+			pos++;
+
+			int end = pos;
+			while (end < s.length() && Character.isDigit(s.charAt(end))) end++;
 			
-			// now skip 3 '-'
-			int minorVersionStart = namespaceLocation.indexOf('-', versionEnd);
-			minorVersionStart = namespaceLocation.indexOf('-', minorVersionStart + 1);
-			minorVersionStart = namespaceLocation.indexOf('-', minorVersionStart + 1) + 1;
-			
-			int minorVersionEnd = namespaceLocation.indexOf(".xsd", minorVersionStart);
-			return  Integer.parseInt(namespaceLocation.substring(minorVersionStart, minorVersionEnd));
+			try {
+				return Integer.parseInt(s.substring(pos, end));
+			} catch (Exception x) {
+				System.err.println("Error parsing minor version of " + s);
+				return -1;
+			}
 		} else {
 			return -1;
 		}
