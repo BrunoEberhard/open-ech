@@ -30,7 +30,7 @@ public class EchWriterTest {
 			nomenclature.cantons.canton.add(canton);
 		}
 
-		XsdReader reader = new XsdReader();
+		XsdModel reader = new XsdModel();
 		XsdSchema schema = reader.read("http://www.ech.ch/xmlns/eCH-0071/1/eCH-0071-1-0.xsd");
 
 		StringWriter stringWriter = new StringWriter();

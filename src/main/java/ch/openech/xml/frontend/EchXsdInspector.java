@@ -1,4 +1,4 @@
-package ch.openech.xml.inspector;
+package ch.openech.xml.frontend;
 
 import org.minimalj.application.Application;
 import org.minimalj.frontend.impl.swing.Swing;
@@ -8,7 +8,7 @@ public class EchXsdInspector extends Application {
 
 	@Override
 	public Page createDefaultPage() {
-		return new XsdSchemaPage();
+		return new XsdModelTablePage();
 	}
 	
 	public static void main(String[] args) {

@@ -2,41 +2,33 @@ package ch.openech.xml;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.minimalj.metamodel.model.MjEntity;
+import org.minimalj.metamodel.model.MjModel;
 import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.CloneHelper;
+import org.minimalj.util.FieldUtils;
+import org.minimalj.util.GenericUtils;
 import org.minimalj.util.StringUtils;
 
-import ch.openech.xml.model.XsdReader;
-import ch.openech.xml.model.XsdSchema;
-import ch.openech.xml.model.XsdType;
-import ch.openech.xml.model.XsdType.XsdTypeComplex;
-import ch.openech.xml.model.XsdType.XsdTypeJava;
-import ch.openech.xml.model.XsdType.XsdTypeSimple;
 import ch.openech.xml.read.StaxEch;
 
 public class EchReader implements AutoCloseable {
 
 	private final XMLEventReader xml;
-	private XsdSchema schema;
+	private MjModel model;
 	
 	// namespace -> location
-	public final Map<String, String> locations = new HashMap<>();
-
-	// namespace -> schema
-	public final Map<String, XsdSchema> schemas = new HashMap<>();
+	// public final Map<String, String> locations = new HashMap<>();
 
 	public EchReader(InputStream inputStream) {
 		try {
@@ -76,83 +68,94 @@ public class EchReader implements AutoCloseable {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
 				StartElement startElement = event.asStartElement();
-				if (schema == null) {
-					Iterator<?> i = startElement.getAttributes();
-					while (i.hasNext()) {
-						Attribute attribute = (Attribute) i.next();
-						if ("schemaLocation".equals(attribute.getName().getLocalPart())) {
-							String namespaceAndLocation = attribute.getValue();
-							String[] parts = namespaceAndLocation.split(" ");
-							locations.put(parts[0], parts[1]);
-							schemas.put(parts[0], new XsdReader().read(parts[1]));
-						}
-					}
-				}
+
 				String namespace = startElement.getName().getNamespaceURI();
-				XsdSchema schema = schemas.get(namespace);
-				if (schema == null) {
-					System.out.println("No namespace: " + namespace + " for " + startElement.getName().getLocalPart());
+				String rootElementName = startElement.getName().getLocalPart();
+
+				MjModel model = EchSchemas.getModel(namespace);
+				if (model == null) {
+					System.out.println("No namespace: " + namespace + " for " + rootElementName);
 				}
-				XsdType type = schema.getType(startElement.getName().getLocalPart());
-				return read(type);
+				MjEntity entity = model.getEntity(StringUtils.upperFirstChar(rootElementName));
+				if (entity == null) {
+					entity = model.getEntity("RootElement_" + rootElementName);
+				}
+				return read(getClass(entity));
 			} 
 		}
 		return null;
 	}
 	
-	private Object read(XsdType type) throws XMLStreamException {
-		if (type instanceof XsdTypeSimple || type instanceof XsdTypeJava) {
-			return readValue(type);
-		} else if (type instanceof XsdTypeComplex) {
-			XsdTypeComplex typeComplex = (XsdTypeComplex) type;
-			return read(typeComplex);
-		} else {
-			throw new IllegalArgumentException("" + type);
+	private Class getClass(MjEntity entity) {
+		try {
+			return Class.forName(entity.packageName + "." + entity.getClassName());
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
 		}
 	}
 	
-	private Object read(XsdTypeComplex type) throws XMLStreamException {
-		Object result = CloneHelper.newInstance(type.getClazz());
+	private Object read(Class<?> clazz) throws XMLStreamException {
+		Object result = null;
+		
+		System.out.println("Read entity: " + clazz.getSimpleName());
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
+				if (result == null) {
+					result = CloneHelper.newInstance(clazz);
+				}
+				
 				StartElement startElement = event.asStartElement();
 				String elementName = startElement.getName().getLocalPart();
-				PropertyInterface property = FlatProperties.getProperty(type.getClazz(), elementName);
+					
+				System.out.println("Element: " + elementName);
+				PropertyInterface property = FlatProperties.getProperty(clazz, elementName);
 				if (property != null) {
-					XsdType elementType;
-					String elementNamespace = startElement.getName().getNamespaceURI();
-					if (StringUtils.isEmpty(elementNamespace)) {
-						elementType = type.schema.getType(elementName);
+					if (FieldUtils.isList(property.getClazz())) {
+						List<?> list = readList(GenericUtils.getGenericClass(property.getType()));
+						property.setValue(result, list);
 					} else {
-						elementType = type.schema.getQualifiedType(elementNamespace + ":" + elementName);
+						Object value = read(property.getClazz());
+						property.setValue(result, value);
 					}
-					Object value = read(elementType);
-					property.setValue(result, value);
 				} else {
 					System.out.println("No property for " + elementName);
+					StaxEch.skip(xml);
 				}
-			} 
+			} else if (event.isCharacters()) {
+				String s = event.asCharacters().getData().trim();
+				if (!StringUtils.isEmpty(s)) {
+					System.out.println("Characters: " + s);
+					result = FieldUtils.parse(s, clazz);
+				}
+			} else if (event.isEndElement()) {
+				return result;
+			}
 		}
 		return result;
 	}
 
-	private Object readValue(XsdType type) throws XMLStreamException {
-		Class<?> clazz = type.getClazz();
-		if (clazz == String.class) {
-			return StaxEch.token(xml);
-		} else if (clazz == Boolean.class) {
-			return StaxEch.bulean(xml);
-		} else if (clazz == Integer.class) {
-			return StaxEch.integer(xml);
-		} else if (clazz == Long.class) {
-			return StaxEch.loong(xml);
-		} else if (clazz == LocalDate.class) {
-			return StaxEch.date(xml);
-//		} else if (Enum.class.isAssignableFrom(clazz)) {
-//			return StaxEch.enuum(xml, object, property);
-		} else {
-			throw new IllegalArgumentException("Unknown field type: " + clazz.getName());
+	@SuppressWarnings("rawtypes")
+	private List readList(Class<?> clazz) throws XMLStreamException {
+		List result = new ArrayList<>();
+		
+		System.out.println("Read list: " + clazz.getSimpleName());
+		while (xml.hasNext()) {
+			XMLEvent event = xml.nextEvent();
+			if (event.isStartElement()) {
+				Object element = read(clazz);
+				result.add(element);
+			} else if (event.isEndElement()) {
+				return result;
+			}
 		}
+		return result;
 	}
+	
+	public static void main(String[] args) throws Exception {
+		InputStream is = EchReader.class.getResourceAsStream("/ch/ech/data/eCH0071_canton.xml");
+		EchReader reader = new EchReader(is);
+		reader.read();
+	}
+	
 }
