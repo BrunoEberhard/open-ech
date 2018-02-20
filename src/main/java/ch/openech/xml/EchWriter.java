@@ -2,12 +2,16 @@ package ch.openech.xml;
 
 import java.io.Writer;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.minimalj.metamodel.model.MjEntity;
+import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.util.StringUtils;
+import org.w3c.dom.Element;
 
 import ch.openech.xml.write.IndentingXMLStreamWriter;
 
@@ -30,11 +34,8 @@ public class EchWriter implements AutoCloseable {
 			throw new RuntimeException(e);
 		}
 	}
-	public void write(Object object) throws XMLStreamException {
-		write(object, true);
-	}
 	
-	private void write(Object object, boolean root) throws XMLStreamException {
+	public void write(Object object) throws XMLStreamException {
 		Class<?> clazz = object.getClass();
 		String packageName = clazz.getPackage().getName();
 		String namespace = EchSchemas.getNamespaceByPackage(packageName);
@@ -43,23 +44,98 @@ public class EchWriter implements AutoCloseable {
 		if (xsdModel == null) {
 			throw new IllegalArgumentException(namespace + " for " + packageName + " not found");
 		}
-
+		document(object, xsdModel);
+	}
+	
+	private void document(Object object, XsdModel xsdModel) throws XMLStreamException {
+		Class<?> clazz = object.getClass();
 		Optional<MjEntity> entityOptional = xsdModel.getEntities().stream().filter(e -> CLASS_NAME_GENERATOR.apply(e).equals(clazz.getSimpleName())).findFirst();
 		if (!entityOptional.isPresent()) {
 			throw new IllegalArgumentException("Entity " + clazz.getSimpleName() + " not found");
 		}
 		MjEntity entity = entityOptional.get();
+		Element element = entity.getElement();
+		String name = element.getAttribute("name");
 		
-		if (root) {
-			xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), entity.name, xsdModel.getNamespace());
-			
-			setPrefixs(xsdModel);
-			writeNamespaces(xsdModel);
+		xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), name, xsdModel.getNamespace());
+		setPrefixs(xsdModel);
+		writeNamespaces(xsdModel);
+		write(object, entity.getElement());
+		xmlStreamWriter.writeEndElement();
+	}
+	
+	private void element(Object object, MjEntity entity) throws XMLStreamException {
+//		Class<?> clazz = object.getClass();
+//		Optional<MjEntity> entityOptional = xsdModel.getEntities().stream().filter(e -> CLASS_NAME_GENERATOR.apply(e).equals(clazz.getSimpleName())).findFirst();
+//		if (!entityOptional.isPresent()) {
+//			throw new IllegalArgumentException("Entity " + clazz.getSimpleName() + " not found");
+//		}
+//		MjEntity entity = entityOptional.get();
+		
+		xmlStreamWriter.writeStartElement(entity.name);
+		if (entity.type.getJavaClass() != null) {
+			xmlStreamWriter.writeCData(object.toString());
 		} else {
-			xmlStreamWriter.writeStartElement(entity.name);
+			write(object, entity.getElement());
+		}
+		xmlStreamWriter.writeEndElement();
+	}
+	
+	private void write(Object object, Element element) {
+		Element complexType = XsdModel.get(element, "complexType");
+		if (complexType != null) {
+			complexType(object, complexType);
+		}
+	}
+	
+	private void complexType(Object object, Element element) {
+		Element sequence = XsdModel.get(element, "sequence");
+		if (sequence != null) {
+			sequence(object, sequence);
+		}
+		Element choice = XsdModel.get(element, "choice");
+		if (choice != null) {
+			choice(object, sequence);
+		}
+//		Element complexContent = get(element, "complexContent");
+//		if (complexContent != null) {
+//			entity.properties.addAll(complexContent(complexContent));
+//		}
+	}
+	
+	private void sequence(Object object, Element element) {
+		XsdModel.forEachChild(element, new SequenceVisitor(object, false));
+	}
+
+	private void choice(Object object, Element element) {
+		XsdModel.forEachChild(element, new SequenceVisitor(object, true));
+	}
+
+	private class SequenceVisitor implements Consumer<Element> {
+		private final Object object;
+		private final boolean choice;
+		
+		public SequenceVisitor(Object object, boolean choice) {
+			this.object = object;
+			this.choice = choice;
 		}
 		
-		xmlStreamWriter.writeEndElement();
+		@Override
+		public void accept(Element element) {
+			String name = element.getAttribute("name");
+			if (StringUtils.isEmpty(name)) return;
+			
+			Object value = FlatProperties.getValue(object, name);
+			if ("element".equals(element.getLocalName())) {
+				write(value, element);
+			} else if ("sequence".equals(element.getLocalName())) {
+				sequence(value, element);
+			} else if ("choice".equals(element.getLocalName())) {
+				choice(value, element);
+			} else {
+				// what to do with xs:any ?
+			}
+		}
 	}
 	
 	private void setPrefixs(XsdModel xsdModel) throws XMLStreamException {

@@ -174,7 +174,7 @@ public class XsdModel {
 		});		
 	}
 	
-	private void forEachChild(Node parent, Consumer<Element> function) {
+	public static void forEachChild(Node parent, Consumer<Element> function) {
 		NodeList nodeList = parent.getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
@@ -185,7 +185,7 @@ public class XsdModel {
 		}
 	}
 
-	private Element get(Element node, String localName) {
+	public static Element get(Element node, String localName) {
 		NodeList childNodes = node.getChildNodes();
 		for (int i = 0; i<childNodes.getLength(); i++) {
 			Node c = childNodes.item(i);
@@ -254,6 +254,7 @@ public class XsdModel {
 			entity.properties.addAll(complexContent(complexContent));
 		}
 		
+		entity.setElement(node);
 		return entity;
 	}
 
@@ -291,6 +292,8 @@ public class XsdModel {
 			} else if ("choice".equals(element.getLocalName())) {
 				// bei choice das "NotEmpty" rausschmeissen
 				forEachChild(element, new SequenceVisitor(properties, true));
+			} else {
+				// what to do with xs:any ?
 			}
 		}
 	}
