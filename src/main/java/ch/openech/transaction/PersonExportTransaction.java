@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.repository.query.By;
 import org.minimalj.repository.sql.SqlRepository;
 import org.minimalj.transaction.OutputStreamTransaction;
 import org.minimalj.transaction.Role;
@@ -32,7 +33,7 @@ public class PersonExportTransaction extends OutputStreamTransaction<Integer> {
 		int count = 0;
 		try {
 			SqlRepository db = (SqlRepository) Backend.getInstance().getRepository();
-			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Person.class));
+			int maxId = db.execute(Integer.class, "SELECT COUNT(ID) FROM " + db.name(Person.class)); // + " WHERE historized = 0");
 			
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getStream(), "UTF-8");
 			
@@ -41,9 +42,7 @@ public class PersonExportTransaction extends OutputStreamTransaction<Integer> {
 			WriterElement delivery = writer.delivery(outputStreamWriter);
 			WriterElement baseDelivery = complete ? writer.baseDelivery(delivery, maxId) : writer.keyDelivery(delivery, maxId);
 
-			for (long id = 1; id<=maxId; id++) {
-				Person person = Backend.read(Person.class, id);
-
+			for (Person person : Backend.find(Person.class, By.ALL)) {
 				if (person != null) {
 					if (complete) {
 						writer.eventBaseDelivery(baseDelivery, person);
