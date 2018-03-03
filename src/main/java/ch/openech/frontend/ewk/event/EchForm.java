@@ -6,7 +6,6 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.FormElement;
 import org.minimalj.frontend.form.element.TextFormElement;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.util.GenericUtils;
 
 import ch.openech.frontend.e07.CantonFormElement;
 import ch.openech.frontend.e07.MunicipalityFormElement;
@@ -118,7 +117,7 @@ public class EchForm<T> extends Form<T> {
 		} else if (type == UidStructure.class) {
 			return new UidStructureFormElement(property, editable);				
 		} else if (type == List.class) {
-			Class<?> listClass = GenericUtils.getGenericClass(property.getType());
+			Class<?> listClass = property.getGenericClass();
 			if (listClass == Occupation.class) {
 				return new OccupationFormElement(property, echSchema, editable);
 			} else if (listClass == PlaceOfOrigin.class) {
