@@ -3,7 +3,6 @@ package ch.openech.frontend.e07;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
@@ -33,7 +32,14 @@ public class MunicipalityFormElement extends AbstractFormElement<MunicipalityIde
 		Collections.sort(municipalities);
 		List<MunicipalityIdentification> items;
 		if (!allowFederalRegister) {
-			items = municipalities.stream().filter((municipalityIdentification) -> (municipalityIdentification.id > 0)).collect(Collectors.toList());
+			items = new ArrayList<>();
+			for (MunicipalityIdentification municipality : municipalities) {
+				if (municipality.id > 0) {
+					items.add(municipality);
+				}
+			}
+			// Cheerpj doesn't work with Collectors.toList()
+			// items = municipalities.stream().filter((municipalityIdentification) -> (municipalityIdentification.id > 0)).collect(Collectors.toList());
 		} else {
 			items = new ArrayList<>(municipalities);
 		}
