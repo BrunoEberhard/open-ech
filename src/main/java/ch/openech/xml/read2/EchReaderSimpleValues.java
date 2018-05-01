@@ -17,13 +17,12 @@ import org.minimalj.model.validation.InvalidValues;
 
 import ch.openech.model.types.EchCode;
 
-public class EchReaderSimpleValues extends EchAttributeReader {
+public class EchReaderSimpleValues {
 	private static Logger logger = Logger.getLogger(EchReaderSimpleValues.class.getName());
 	private static final int MAX_DATE_LENGHT = "01-02-1934".length();
 	private static final int MAX_DATE_TIME_LENGHT = "01-02-1934 12:12:12".length();
 
-	@Override
-	public boolean read(XMLEventReader xml, String attributename, Object object) throws XMLStreamException {
+	public static boolean read(XMLEventReader xml, String attributename, Object object) throws XMLStreamException {
 		PropertyInterface property = FlatProperties.getProperty(object.getClass(), attributename);
 		if (property == null) {
 			return false;
