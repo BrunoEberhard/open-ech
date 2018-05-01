@@ -145,6 +145,7 @@ public class XsdModel {
 			if (StringUtils.equals(element.getLocalName(), "simpleType", "complexType")) {
 				String name = element.getAttribute("name");
 				MjEntity entity = new MjEntity(name);
+				entity.setElement(element);
 				entities.put(name, entity);
 			}
 		});
@@ -241,6 +242,10 @@ public class XsdModel {
 	private MjEntity complexType(Element node) {
 		String name = node.getAttribute("name");
 		MjEntity entity = StringUtils.isEmpty(name) ? new MjEntity(MjEntityType.ENTITY) : entities.get(name);
+		if (!entity.properties.isEmpty()) {
+			return entity;
+		}
+		
 		Element sequence = get(node, "sequence");
 		if (sequence != null) {
 			entity.properties.addAll(sequence(sequence));
@@ -253,8 +258,6 @@ public class XsdModel {
 		if (complexContent != null) {
 			entity.properties.addAll(complexContent(complexContent));
 		}
-		
-		entity.setElement(node);
 		return entity;
 	}
 
@@ -307,9 +310,17 @@ public class XsdModel {
 			if (baseEntity == null) {
 				throw new IllegalStateException("Base Entity not found: " + base);
 			}
+			if (baseEntity.properties.isEmpty() && baseEntity.getElement() != null) {
+				complexType(baseEntity.getElement());
+			}
 			properties.addAll(baseEntity.properties);
 			MjEntity extensionContent = complexType(extension);
 			properties.addAll(extensionContent.properties);
+		}
+		Element restriction = get(node, "restriction");
+		if (restriction != null) {
+			MjEntity restrictionContent = complexType(restriction);
+			properties.addAll(restrictionContent.properties);
 		}
 		return properties;
 	}
