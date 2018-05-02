@@ -17,7 +17,6 @@ import org.minimalj.model.properties.FlatProperties;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.FieldUtils;
-import org.minimalj.util.GenericUtils;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.xml.read.StaxEch;
@@ -115,7 +114,7 @@ public class EchReader implements AutoCloseable {
 						if (property.getValue(result) == null) {
 							property.setValue(result, new ArrayList<>());
 						}
-						Object value = read(GenericUtils.getGenericClass(property.getType()));
+						Object value = read(property.getGenericClass());
 						((List) property.getValue(result)).add(value);
 					} else {
 						Object value = read(property.getClazz());
