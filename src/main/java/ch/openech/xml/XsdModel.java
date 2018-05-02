@@ -167,6 +167,7 @@ public class XsdModel {
 			if ("element".equals(element.getLocalName())) {
 				MjProperty property = element(element);
 				MjEntity entity = property.type;
+				entity.setElement(element);
 				if (StringUtils.isEmpty(entity.name)) {
 					entity.name = property.name;
 					entities.put(entity.name, entity);
