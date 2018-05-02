@@ -49,7 +49,7 @@ public class EchSchemas {
 		xsdFiles = removeMinorVersion(xsdFiles);
 
 		for (File file : xsdFiles) {
-			if (file.isDirectory() || !file.getName().endsWith(".xsd")) {
+			if (file.isDirectory() || !file.getName().endsWith(".xsd") || file.getName().endsWith("f.xsd")) {
 				continue;
 			}
 			try (FileInputStream fis = new FileInputStream(file)) {
