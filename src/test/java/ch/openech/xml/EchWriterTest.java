@@ -9,8 +9,6 @@ import org.junit.Test;
 import ch.ech.ech0071.v1.Canton;
 import ch.ech.ech0071.v1.CantonAbbreviation;
 import ch.ech.ech0071.v1.Nomenclature;
-import ch.openech.xml.model.XsdReader;
-import ch.openech.xml.model.XsdSchema;
 
 public class EchWriterTest {
 
@@ -18,24 +16,20 @@ public class EchWriterTest {
 	public void testEch71WriteCantons() throws Exception {
 		Nomenclature nomenclature = new Nomenclature();
 		nomenclature.validFrom = LocalDate.now().minusMonths(1);
-		nomenclature.cantons = new Nomenclature.Cantons();
+		nomenclature.cantons = new ArrayList<>();
 
-		nomenclature.cantons.canton = new ArrayList<>();
 		for (int i = 1; i <= 26; i++) {
 			Canton canton = new Canton();
 			canton.cantonId = i;
 			canton.cantonAbbreviation = CantonAbbreviation.values()[i - 1];
 			canton.cantonLongName = "Kanton" + i;
 			canton.cantonDateOfChange = LocalDate.now();
-			nomenclature.cantons.canton.add(canton);
+			nomenclature.cantons.add(canton);
 		}
 
-		XsdModel reader = new XsdModel();
-		XsdSchema schema = reader.read("http://www.ech.ch/xmlns/eCH-0071/1/eCH-0071-1-0.xsd");
-
 		StringWriter stringWriter = new StringWriter();
-		EchWriter writer = new EchWriter(stringWriter, schema);
-		writer.write(schema.elements.get(0), nomenclature);
+		EchWriter writer = new EchWriter(stringWriter);
+		writer.writeDocument(nomenclature);
 		writer.close();
 
 		System.out.println(stringWriter.toString());
