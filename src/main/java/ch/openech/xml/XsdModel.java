@@ -367,7 +367,7 @@ public class XsdModel {
 		return property;
 	}
 	
-	private MjEntity findEntity(String type) {
+	public MjEntity findEntity(String type) {
 		if (!StringUtils.isEmpty(type)) {
 			if (type.contains(":")) {
 				String[] parts = type.split(":");

@@ -4,7 +4,6 @@ import static ch.openech.xml.read.StaxEch.skip;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -130,19 +129,8 @@ public class EchSchema {
 	
 	private void process(String namespaceLocation) throws XMLStreamException, IOException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		XMLEventReader xml = null;
-		try {
-			xml = inputFactory.createXMLEventReader(new URL(namespaceLocation).openStream());
-		} catch (Exception e) {
-
-			InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation);
-			try {
-				xml = inputFactory.createXMLEventReader(stream);
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-		if (xml != null) {
+		try (InputStream stream = EchNamespaceUtil.getLocalCopyOfSchema(namespaceLocation)) {
+			XMLEventReader xml = inputFactory.createXMLEventReader(stream);
 			process(xml);
 		}
 	}

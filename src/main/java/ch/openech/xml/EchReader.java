@@ -109,11 +109,14 @@ public class EchReader implements AutoCloseable {
 				String elementName = startElement.getName().getLocalPart();
 					
 				System.out.println("Element: " + elementName);
-				PropertyInterface property = FlatProperties.getProperty(clazz, elementName);
+				PropertyInterface property = FlatProperties.getProperty(clazz, elementName, true);
 				if (property != null) {
 					if (FieldUtils.isList(property.getClazz())) {
-						List<?> list = readList(GenericUtils.getGenericClass(property.getType()));
-						property.setValue(result, list);
+						if (property.getValue(result) == null) {
+							property.setValue(result, new ArrayList<>());
+						}
+						Object value = read(GenericUtils.getGenericClass(property.getType()));
+						((List) property.getValue(result)).add(value);
 					} else {
 						Object value = read(property.getClazz());
 						property.setValue(result, value);
