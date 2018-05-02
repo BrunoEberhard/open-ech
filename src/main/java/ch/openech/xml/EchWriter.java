@@ -1,6 +1,7 @@
 package ch.openech.xml;
 
 import java.io.Writer;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -35,8 +36,22 @@ public class EchWriter implements AutoCloseable {
 		}
 	}
 	
-	public void write(Object object) throws XMLStreamException {
-		Class<?> clazz = object.getClass();
+	public void writeDocument(Object object) throws XMLStreamException {
+		XsdModel xsdModel = getXsdModel(object.getClass());
+		// Hier eigentlich die Entities total vergessen, es geht nur um das Xsd!
+		MjEntity entity = findEntity(object);
+
+		Element element = entity.getElement();
+		String name = element.getAttribute("name");
+		
+		xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), name, xsdModel.getNamespace());
+		setPrefixs(xsdModel);
+		writeNamespaces(xsdModel);
+		writeElement(object, element);
+		xmlStreamWriter.writeEndElement();
+	}
+
+	private XsdModel getXsdModel(Class<?> clazz) {
 		String packageName = clazz.getPackage().getName();
 		String namespace = EchSchemas.getNamespaceByPackage(packageName);
 		
@@ -44,44 +59,30 @@ public class EchWriter implements AutoCloseable {
 		if (xsdModel == null) {
 			throw new IllegalArgumentException(namespace + " for " + packageName + " not found");
 		}
-		document(object, xsdModel);
+		return xsdModel;
 	}
-	
-	private void document(Object object, XsdModel xsdModel) throws XMLStreamException {
+
+	private MjEntity findEntity(Object object) {
 		Class<?> clazz = object.getClass();
-		Optional<MjEntity> entityOptional = xsdModel.getEntities().stream().filter(e -> CLASS_NAME_GENERATOR.apply(e).equals(clazz.getSimpleName())).findFirst();
-		if (!entityOptional.isPresent()) {
-			throw new IllegalArgumentException("Entity " + clazz.getSimpleName() + " not found");
-		}
-		MjEntity entity = entityOptional.get();
-		Element element = entity.getElement();
-		String name = element.getAttribute("name");
+
+		XsdModel xsdModel = getXsdModel(clazz);
 		
-		xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), name, xsdModel.getNamespace());
-		setPrefixs(xsdModel);
-		writeNamespaces(xsdModel);
-		write(object, entity.getElement());
-		xmlStreamWriter.writeEndElement();
+		Optional<MjEntity> entityOptional = xsdModel.getEntities().stream().filter(e -> CLASS_NAME_GENERATOR.apply(e).equals(clazz.getSimpleName())).findFirst();
+		MjEntity entity = entityOptional.orElseThrow(() -> new IllegalArgumentException("Entity " + clazz.getSimpleName() + " not found"));
+		return entity;
 	}
 	
-	private void element(Object object, MjEntity entity) throws XMLStreamException {
-//		Class<?> clazz = object.getClass();
-//		Optional<MjEntity> entityOptional = xsdModel.getEntities().stream().filter(e -> CLASS_NAME_GENERATOR.apply(e).equals(clazz.getSimpleName())).findFirst();
-//		if (!entityOptional.isPresent()) {
-//			throw new IllegalArgumentException("Entity " + clazz.getSimpleName() + " not found");
-//		}
-//		MjEntity entity = entityOptional.get();
-		
-		xmlStreamWriter.writeStartElement(entity.name);
+	private void writeElement(Object object, Element element) throws XMLStreamException {
+		xmlStreamWriter.writeStartElement(element.getNamespaceURI(), element.getLocalName());
 		if (entity.type.getJavaClass() != null) {
 			xmlStreamWriter.writeCData(object.toString());
 		} else {
-			write(object, entity.getElement());
+			writeContent(object, element);
 		}
 		xmlStreamWriter.writeEndElement();
 	}
 	
-	private void write(Object object, Element element) {
+	private void writeContent(Object object, Element element) {
 		Element complexType = XsdModel.get(element, "complexType");
 		if (complexType != null) {
 			complexType(object, complexType);
@@ -97,10 +98,6 @@ public class EchWriter implements AutoCloseable {
 		if (choice != null) {
 			choice(object, sequence);
 		}
-//		Element complexContent = get(element, "complexContent");
-//		if (complexContent != null) {
-//			entity.properties.addAll(complexContent(complexContent));
-//		}
 	}
 	
 	private void sequence(Object object, Element element) {
@@ -124,16 +121,35 @@ public class EchWriter implements AutoCloseable {
 		public void accept(Element element) {
 			String name = element.getAttribute("name");
 			if (StringUtils.isEmpty(name)) return;
-			
-			Object value = FlatProperties.getValue(object, name);
-			if ("element".equals(element.getLocalName())) {
-				write(value, element);
-			} else if ("sequence".equals(element.getLocalName())) {
-				sequence(value, element);
-			} else if ("choice".equals(element.getLocalName())) {
-				choice(value, element);
+		
+			if (object instanceof Collection) {
+				Collection<?> collection = (Collection<?>) object;
+				collection.forEach(value -> {
+					write2(element, value);
+				});
 			} else {
-				// what to do with xs:any ?
+				Object value = FlatProperties.getValue(object, name);
+				write2(element, value);
+			}
+		}
+
+		private void write2(Element element, Object value) {
+			if (value != null) {
+				if ("element".equals(element.getLocalName())) {
+					XsdModel model = getXsdModel(value);
+					MjEntity entity = findEntity(value, model);
+					try {
+						writeElement(value, entity);
+					} catch (XMLStreamException e) {
+						throw new RuntimeException(e);
+					}
+				} else if ("sequence".equals(element.getLocalName())) {
+					sequence(value, element);
+				} else if ("choice".equals(element.getLocalName())) {
+					choice(value, element);
+				} else {
+					// what to do with xs:any ?
+				}
 			}
 		}
 	}
@@ -164,63 +180,6 @@ public class EchWriter implements AutoCloseable {
 		}
 	}
 
-	/*
-	protected void write(XsdElement element, Object object) {
-		writeElement(element, object, true);
-	}
-
-	protected void writeElement(XsdElement element, Object object, boolean root) {
-		if (object == null) {
-			return;
-		}
-		try {
-			XsdType type = element.getType();
-
-			if (root) {
-				xmlStreamWriter.writeStartElement(schema.getPrefix(type.schema.namespace), element.name, type.schema.namespace);
-			
-				setPrefixs();
-				writeXmlSchemaLocations();
-				writeNamespaces();
-			} else {
-				xmlStreamWriter.writeStartElement(element.name);
-			}
-			
-			if (type instanceof XsdTypeJava || type instanceof XsdTypeSimple) {
-				xmlStreamWriter.writeCharacters("" + object);
-			} else if (type instanceof XsdTypeComplex) {
-				XsdTypeComplex typeComplex = (XsdTypeComplex) type;
-				writeNode(typeComplex.node, object);
-			}
-			xmlStreamWriter.writeEndElement();
-		} catch (XMLStreamException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void writeNode(XsdNode node, Object object) {
-		if (node instanceof XsdElement) {
-			XsdElement element = (XsdElement) node;
-			Object value = Properties.getProperty(object.getClass(), element.name).getValue(object);
-			if (value instanceof List) {
-				List<?> list = (List<?>) value;
-				for (Object listItem : list) {
-					writeElement((XsdElement) node, listItem, false);
-				}
-			} else {
-				writeElement((XsdElement) node, value, false);
-			}
-		} else if (node instanceof XsdSequence) {
-			XsdSequence sequence = (XsdSequence) node;
-			for (XsdNode subNode : sequence.nodes) {
-				writeNode(subNode, object);
-			}
-		} else {
-			System.out.println("TODO: " + node.getClass());
-		}
-	}
-	*/
-	
 	@Override
 	public void close() throws Exception {
 		xmlStreamWriter.writeEndDocument();
