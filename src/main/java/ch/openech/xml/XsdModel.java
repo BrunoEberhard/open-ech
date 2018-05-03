@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -70,21 +71,30 @@ public class XsdModel {
 	
 	static {
 		MjEntity INT = new MjEntity(MjEntityType.Integer);
-		XML_TYPES.put("gYear", INT);
 		XML_TYPES.put("unsignedInt", INT);
 		XML_TYPES.put("int", INT);
 		XML_TYPES.put("integer", INT);
-	
+
+		MjEntity YEAR = new MjEntity(MjEntityType.Integer);
+		YEAR.maxLength = 4;
+		XML_TYPES.put("gYear", YEAR);
+		
 		MjEntity LONG = new MjEntity(MjEntityType.Long);
 		XML_TYPES.put("unsignedLong", LONG);
 		XML_TYPES.put("nonNegativeInteger", LONG);
 		
 		MjEntity STRING = new MjEntity(MjEntityType.String);
 		XML_TYPES.put("string", STRING);
-		XML_TYPES.put("gYearMonth", STRING);
 		XML_TYPES.put("normalizedString", STRING);
 		XML_TYPES.put("token", STRING);
-		XML_TYPES.put("anyURI", STRING);
+
+		MjEntity YEAR_MONTH = new MjEntity(MjEntityType.String);
+		YEAR_MONTH.maxLength = 7;
+		XML_TYPES.put("gYearMonth", YEAR_MONTH);
+
+		MjEntity URI = new MjEntity(MjEntityType.String);
+		URI.maxLength = 2047; // https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
+		XML_TYPES.put("anyURI", URI);
 		
 		XML_TYPES.put("boolean", new MjEntity(MjEntityType.Boolean));
 		XML_TYPES.put("decimal", new MjEntity(MjEntityType.BigDecimal));
@@ -209,8 +219,8 @@ public class XsdModel {
 			if (baseEntity == null) {
 				throw new IllegalStateException("Base Entity not found: " + base + " for " + name);
 			}
-			if (anonymous) {
-				return baseEntity;
+			if (baseEntity.isEnumeration()) {
+			 	return baseEntity;
 			}
 			
 			entity.type = baseEntity.type;
@@ -223,20 +233,49 @@ public class XsdModel {
 			entity.minLength = minLength != null ? Integer.parseInt(((Element) minLength).getAttribute("value")) : 0;
 			Node maxLength = get(restriction, "maxLength");
 			entity.maxLength = maxLength != null ? Integer.parseInt(((Element) maxLength).getAttribute("value")) : null;
-	
-			if (baseEntity.isEnumeration() || get(restriction, "enumeration") != null) {
+
+			if (entity.maxLength == null) {
+				int m = 0;
+				if (entity.maxInclusive != null) m = entity.maxInclusive.length();
+				if (entity.minInclusive != null) m = Math.max(m, entity.minInclusive.length());
+				if (m > 0) entity.maxLength = m;
+			}
+			
+			Node patternNode = get(restriction, "pattern");
+			if (patternNode instanceof Element) {
+				String pattern = ((Element) patternNode).getAttribute("value");
+				int index = pattern.indexOf("{");
+				if (index >= 0 && pattern.endsWith("}")) {
+					String[] patternValues = pattern.substring(index + 1, pattern.length()-1).split(",");
+					if (patternValues.length > 1) {
+						entity.minLength = Integer.parseInt(patternValues[0]);
+					}
+					entity.maxLength = Integer.parseInt(patternValues[patternValues.length-1]);
+				}
+			}
+			
+			if (get(restriction, "enumeration") != null) {
 				entity.values = baseEntity.values != null ? new ArrayList<>(baseEntity.values) : new ArrayList<>();
+				AtomicInteger maxValueLength = new AtomicInteger(0);
 				forEachChild(restriction, element -> {
 					if ("enumeration".equals(element.getLocalName())) {
 						entity.type = MjEntityType.String;
 						String value = element.getAttribute("value");
+						maxValueLength.set(Math.max(maxValueLength.get(), value.length()));
 						if (!entity.values.contains(value)) {
 							entity.values.add(value);
 						}
 					}
 				});
+				
+				if (baseEntity.type == MjEntityType.String || baseEntity.type == MjEntityType.Integer || baseEntity.type == MjEntityType.Long) {
+					if (maxValueLength.get() > 0 && entity.maxLength == null) {
+						entity.maxLength = maxValueLength.get();
+					}
+				}
 			}
 		}
+		
 		return entity;
 	}
 
@@ -249,11 +288,11 @@ public class XsdModel {
 		
 		Element sequence = get(node, "sequence");
 		if (sequence != null) {
-			entity.properties.addAll(sequence(sequence));
+			entity.properties.addAll(sequence(sequence, false));
 		}
 		Element choice = get(node, "choice");
 		if (choice != null) {
-			entity.properties.addAll(sequence(choice));
+			entity.properties.addAll(sequence(choice, true));
 		}
 		Element complexContent = get(node, "complexContent");
 		if (complexContent != null) {
@@ -262,9 +301,9 @@ public class XsdModel {
 		return entity;
 	}
 
-	private List<MjProperty> sequence(Node node) {
+	private List<MjProperty> sequence(Node node, boolean overrideNotEmpty) {
 		List<MjProperty> properties = new ArrayList<>();
-		forEachChild(node, new SequenceVisitor(properties, false));
+		forEachChild(node, new SequenceVisitor(properties, overrideNotEmpty));
 		return properties;
 	}
 
