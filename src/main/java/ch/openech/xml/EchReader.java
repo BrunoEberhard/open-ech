@@ -24,11 +24,7 @@ import ch.openech.xml.read.StaxEch;
 public class EchReader implements AutoCloseable {
 
 	private final XMLEventReader xml;
-	private MjModel model;
 	
-	// namespace -> location
-	// public final Map<String, String> locations = new HashMap<>();
-
 	public EchReader(InputStream inputStream) {
 		try {
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
