@@ -110,16 +110,13 @@ public class EchReader implements AutoCloseable {
 				System.out.println("Element: " + elementName);
 				PropertyInterface property = FlatProperties.getProperty(clazz, elementName, true);
 				if (property != null) {
+					Object value;
 					if (FieldUtils.isList(property.getClazz())) {
-						if (property.getValue(result) == null) {
-							property.setValue(result, new ArrayList<>());
-						}
-						Object value = read(property.getGenericClass());
-						((List) property.getValue(result)).add(value);
+						value = readList(property.getGenericClass());
 					} else {
-						Object value = read(property.getClazz());
-						property.setValue(result, value);
+						value = read(property.getClazz());
 					}
+					property.setValue(result, value);
 				} else {
 					System.out.println("No property for " + elementName);
 					StaxEch.skip(xml);
