@@ -147,10 +147,4 @@ public class EchReader implements AutoCloseable {
 		return result;
 	}
 	
-	public static void main(String[] args) throws Exception {
-		InputStream is = EchReader.class.getResourceAsStream("/ch/ech/data/eCH0071_canton.xml");
-		EchReader reader = new EchReader(is);
-		reader.read();
-	}
-	
 }
