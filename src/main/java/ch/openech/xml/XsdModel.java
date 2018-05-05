@@ -219,9 +219,6 @@ public class XsdModel {
 			if (baseEntity == null) {
 				throw new IllegalStateException("Base Entity not found: " + base + " for " + name);
 			}
-			if (baseEntity.isEnumeration()) {
-			 	return baseEntity;
-			}
 			
 			entity.type = baseEntity.type;
 			
@@ -273,6 +270,10 @@ public class XsdModel {
 						entity.maxLength = maxValueLength.get();
 					}
 				}
+			} else if (baseEntity.isEnumeration()) {
+				// wenn von einer enum abgeleitet wird und keine Werte angegeben werden sollen
+				// die Werte der "super - enum" verwendet werden
+				entity.values = baseEntity.values;
 			}
 		}
 		

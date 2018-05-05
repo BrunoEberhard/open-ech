@@ -1,7 +1,9 @@
 package ch.openech.xml;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -61,24 +63,47 @@ public class EchWriter implements AutoCloseable {
 		}
 		return xsdModel;
 	}
-	
-	private void writeElement(Object object, Element element) throws XMLStreamException {
-		if (object != null) {
-			xmlStreamWriter.writeStartElement(element.getAttribute("name"));
-			writeContent(object, element);
-			xmlStreamWriter.writeEndElement();
+
+	private void setPrefixs(XsdModel xsdModel) throws XMLStreamException {
+		xmlStreamWriter.setPrefix("xsi", XMLSchema_URI);
+		for (Map.Entry<String, String> entry : xsdModel.getNamespaceByPrefix().entrySet()) {
+			xmlStreamWriter.setPrefix(entry.getKey(), entry.getValue());
+		}
+	}
+
+	private void writeNamespaces(XsdModel xsdModel) throws XMLStreamException {
+		xmlStreamWriter.writeNamespace("xsi", XMLSchema_URI);
+		for (Map.Entry<String, String> entry : xsdModel.getNamespaceByPrefix().entrySet()) {
+			xmlStreamWriter.writeNamespace(entry.getKey(), entry.getValue());
+		}
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void writeElement(Object object, Element element) {
+		if (object instanceof Collection) {
+			((Collection) object).forEach(listItem -> writeElement(listItem, element));
+		} else if (object != null) {
+			try {
+				xmlStreamWriter.writeStartElement(element.getAttribute("name"));
+				writeContent(object, element);
+				xmlStreamWriter.writeEndElement();
+			} catch (XMLStreamException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 	
 	private void writeContent(Object object, Element element) throws XMLStreamException {
-		Element complexType = XsdModel.get(element, "complexType");
-		if (complexType != null) {
-			complexType(object, complexType);
-		}
-
 		Element simpleType = XsdModel.get(element, "simpleType");
 		if (simpleType != null) {
 			xmlStreamWriter.writeCharacters(object.toString());
+			return;
+		}
+
+		Element complexType = XsdModel.get(element, "complexType");
+		if (complexType != null) {
+			complexType(object, complexType);
+			return;
 		}
 		
 		String type = element.getAttribute("type");
@@ -94,7 +119,7 @@ public class EchWriter implements AutoCloseable {
 		
 	}
 	
-	private void complexType(Object object, Element element) throws XMLStreamException {
+	private void complexType(Object object, Element element) {
 		Element sequence = XsdModel.get(element, "sequence");
 		if (sequence != null) {
 			sequence(object, sequence);
@@ -105,11 +130,11 @@ public class EchWriter implements AutoCloseable {
 		}
 	}
 	
-	private void sequence(Object object, Element element) throws XMLStreamException {
+	private void sequence(Object object, Element element) {
 		XsdModel.forEachChild(element, new SequenceVisitor(object));
 	}
 
-	private void choice(Object object, Element element) throws XMLStreamException {
+	private void choice(Object object, Element element) {
 		XsdModel.forEachChild(element, new SequenceVisitor(object));
 	}
 
@@ -123,57 +148,16 @@ public class EchWriter implements AutoCloseable {
 		@Override
 		public void accept(Element element) {
 			String name = element.getAttribute("name");
-			if (StringUtils.isEmpty(name))
-				return;
-
-			if (object instanceof Collection) {
-				Collection<?> collection = (Collection<?>) object;
-				collection.forEach(value -> {
-					try {
-						writeElement(value, element);
-					} catch (XMLStreamException e) {
-						throw new RuntimeException(e);
-					}
-				});
-			} else {
+			if (!StringUtils.isEmpty(name)) {
 				Object value = FlatProperties.getValue(object, name);
-				try {
-					writeElement(value, element);
-				} catch (XMLStreamException e) {
-					throw new RuntimeException(e);
-				}
+				writeElement(value, element);
 			}
+
 		}		
 	}
 	
-	private void setPrefixs(XsdModel xsdModel) throws XMLStreamException {
-		xmlStreamWriter.setPrefix("xsi", XMLSchema_URI);
-		xsdModel.getNamespaceByPrefix().forEach((prefix, namespace) -> setPrefix(prefix, namespace));
-	}
-
-	private void setPrefix(String prefix, String namespace) {
-		try {
-			xmlStreamWriter.setPrefix(prefix, namespace);
-		} catch (XMLStreamException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void writeNamespaces(XsdModel xsdModel) throws XMLStreamException {
-		xmlStreamWriter.writeNamespace("xsi", XMLSchema_URI);
-		xsdModel.getNamespaceByPrefix().forEach((prefix, namespace) -> writeNamespace(prefix, namespace));
-	}
-
-	protected void writeNamespace(String prefix, String namespace) {
-		try {
-			xmlStreamWriter.writeNamespace(prefix, namespace);
-		} catch (XMLStreamException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	@Override
-	public void close() throws Exception {
+	public void close() throws XMLStreamException, IOException {
 		xmlStreamWriter.writeEndDocument();
 
 		xmlStreamWriter.flush();

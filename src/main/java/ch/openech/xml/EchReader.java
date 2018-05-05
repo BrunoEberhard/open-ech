@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -22,6 +24,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.xml.read.StaxEch;
 
 public class EchReader implements AutoCloseable {
+	public static final Logger LOG = Logger.getLogger(EchReader.class.getName());
 
 	private final XMLEventReader xml;
 	
@@ -68,9 +71,8 @@ public class EchReader implements AutoCloseable {
 				String rootElementName = startElement.getName().getLocalPart();
 
 				MjModel model = EchSchemas.getModel(namespace);
-				if (model == null) {
-					System.out.println("No namespace: " + namespace + " for " + rootElementName);
-				}
+				Objects.requireNonNull(model, "No namespace: " + namespace + " for " + rootElementName);
+
 				MjEntity entity = model.getEntity(StringUtils.upperFirstChar(rootElementName));
 				if (entity == null) {
 					entity = model.getEntity("RootElement_" + rootElementName);
@@ -81,7 +83,7 @@ public class EchReader implements AutoCloseable {
 		return null;
 	}
 	
-	private Class getClass(MjEntity entity) {
+	private Class<?> getClass(MjEntity entity) {
 		try {
 			return Class.forName(entity.packageName + "." + entity.getClassName());
 		} catch (ClassNotFoundException e) {
@@ -89,10 +91,19 @@ public class EchReader implements AutoCloseable {
 		}
 	}
 	
-	private Object read(Class<?> clazz) throws XMLStreamException {
-		Object result = null;
+	/*
+	 * Einlesen des Inhalts eines XML-Elements (das Start Tag wurde bereits gelesen).
+	 * Massgebend ist, welche Tags vom Parser angetroffen werden. Zu diesen wird ein
+	 * Match auf der angebebenen Klasse gesucht. Das Resultat wird nicht vom Tag
+	 * bestimmt, sondern eben als Parameter mitgegeben.
+	 * 
+	 * Eine Klasse kann also weitere Felder besitzen, die von einem XML Dokument nicht
+	 * mitgeliefert werden.
+	 */
+	private <T> T read(Class<T> clazz) throws XMLStreamException {
+		LOG.fine("Read entity: " + clazz.getSimpleName());
 		
-		System.out.println("Read entity: " + clazz.getSimpleName());
+		T result = null;
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -103,24 +114,28 @@ public class EchReader implements AutoCloseable {
 				StartElement startElement = event.asStartElement();
 				String elementName = startElement.getName().getLocalPart();
 					
-				System.out.println("Element: " + elementName);
 				PropertyInterface property = FlatProperties.getProperty(clazz, elementName, true);
 				if (property != null) {
-					Object value;
-					if (FieldUtils.isList(property.getClazz())) {
-						value = readList(property.getGenericClass());
+					LOG.fine("Element: " + elementName +" -> Property: " + property.getPath());
+					
+					boolean isList = FieldUtils.isList(property.getClazz());
+					if (isList) {
+						Object value = read(property.getGenericClass());
+						if (property.getValue(result) == null) {
+							property.setValue(result, new ArrayList<>());
+						}
+						((List) property.getValue(result)).add(value);
 					} else {
-						value = read(property.getClazz());
+						Object value = read(property.getClazz());
+						property.setValue(result, value);
 					}
-					property.setValue(result, value);
 				} else {
-					System.out.println("No property for " + elementName);
+					LOG.warning("Element: " + elementName + " -> No Property in " + clazz.getName());
 					StaxEch.skip(xml);
 				}
 			} else if (event.isCharacters()) {
 				String s = event.asCharacters().getData().trim();
 				if (!StringUtils.isEmpty(s)) {
-					System.out.println("Characters: " + s);
 					result = FieldUtils.parse(s, clazz);
 				}
 			} else if (event.isEndElement()) {
@@ -130,21 +145,4 @@ public class EchReader implements AutoCloseable {
 		return result;
 	}
 
-	@SuppressWarnings("rawtypes")
-	private List readList(Class<?> clazz) throws XMLStreamException {
-		List result = new ArrayList<>();
-		
-		System.out.println("Read list: " + clazz.getSimpleName());
-		while (xml.hasNext()) {
-			XMLEvent event = xml.nextEvent();
-			if (event.isStartElement()) {
-				Object element = read(clazz);
-				result.add(element);
-			} else if (event.isEndElement()) {
-				return result;
-			}
-		}
-		return result;
-	}
-	
 }

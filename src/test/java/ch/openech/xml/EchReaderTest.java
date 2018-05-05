@@ -20,14 +20,15 @@ public class EchReaderTest {
 		Nomenclature nomenclature = new Nomenclature();
 		nomenclature.validFrom = LocalDate.now().minusMonths(1);
 
-		nomenclature.cantons = new ArrayList<>();
+		nomenclature.cantons = new Nomenclature.Cantons();
+		nomenclature.cantons.canton = new ArrayList<>();
 		for (int i = 1; i <= 26; i++) {
 			Canton canton = new Canton();
 			canton.cantonId = i;
 			canton.cantonAbbreviation = CantonAbbreviation.values()[i - 1];
 			canton.cantonLongName = "Kanton" + i;
 			canton.cantonDateOfChange = LocalDate.now();
-			nomenclature.cantons.add(canton);
+			nomenclature.cantons.canton.add(canton);
 		}
 
 		XsdModel reader = new XsdModel();
@@ -42,7 +43,7 @@ public class EchReaderTest {
 		StringReader sr = new StringReader(xml);
 		try (EchReader er = new EchReader(sr)) {
 			nomenclature = (Nomenclature) er.read();
-			Assert.assertEquals(26, nomenclature.cantons.size());
+			Assert.assertEquals(26, nomenclature.cantons.canton.size());
 		}
 	}
 
