@@ -20,7 +20,6 @@ public class EchReaderTest {
 		Nomenclature nomenclature = new Nomenclature();
 		nomenclature.validFrom = LocalDate.now().minusMonths(1);
 
-		nomenclature.cantons = new Nomenclature.Cantons();
 		nomenclature.cantons.canton = new ArrayList<>();
 		for (int i = 1; i <= 26; i++) {
 			Canton canton = new Canton();
