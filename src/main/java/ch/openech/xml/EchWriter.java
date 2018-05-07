@@ -12,7 +12,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.minimalj.metamodel.model.MjEntity;
-import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.model.properties.Properties;
 import org.minimalj.util.StringUtils;
 import org.w3c.dom.Element;
 
@@ -149,7 +149,7 @@ public class EchWriter implements AutoCloseable {
 		public void accept(Element element) {
 			String name = element.getAttribute("name");
 			if (!StringUtils.isEmpty(name)) {
-				Object value = FlatProperties.getValue(object, name);
+				Object value = Properties.getProperty(object.getClass(), name).getValue(object);
 				writeElement(value, element);
 			}
 

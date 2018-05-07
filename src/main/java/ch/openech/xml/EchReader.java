@@ -15,7 +15,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.metamodel.model.MjModel;
-import org.minimalj.model.properties.FlatProperties;
+import org.minimalj.model.properties.Properties;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.FieldUtils;
@@ -114,7 +114,7 @@ public class EchReader implements AutoCloseable {
 				StartElement startElement = event.asStartElement();
 				String elementName = startElement.getName().getLocalPart();
 					
-				PropertyInterface property = FlatProperties.getProperty(clazz, elementName, true);
+				PropertyInterface property = Properties.getProperty(clazz, elementName);
 				if (property != null) {
 					LOG.fine("Element: " + elementName +" -> Property: " + property.getPath());
 					
@@ -127,7 +127,9 @@ public class EchReader implements AutoCloseable {
 						((List) property.getValue(result)).add(value);
 					} else {
 						Object value = read(property.getClazz());
-						property.setValue(result, value);
+						if (value != null) {
+							property.setValue(result, value);
+						}
 					}
 				} else {
 					LOG.warning("Element: " + elementName + " -> No Property in " + clazz.getName());
