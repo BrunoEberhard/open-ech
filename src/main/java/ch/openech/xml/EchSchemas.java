@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import org.minimalj.metamodel.generator.ClassGenerator;
 import org.minimalj.metamodel.model.MjEntity;
+import org.minimalj.metamodel.model.MjEntity.MjEntityType;
 import org.minimalj.metamodel.model.MjModel;
 import org.minimalj.metamodel.model.MjProperty;
 import org.minimalj.util.StringUtils;
@@ -145,9 +146,11 @@ public class EchSchemas {
 			if (!StringUtils.equals(property.name, previousProperty.name)) {
 				return false;
 			}
-			if (!StringUtils.equals(property.type.name, previousProperty.type.name)) {
-				return false;
-			}
+			if (property.type.type == MjEntityType.ENTITY) {
+				if (!sameSignatore(property.type, previousProperty.type)) {
+					return false;
+				}
+			}			
 			if (!Objects.equals(property.size, previousProperty.size)) {
 				return false;
 			}
