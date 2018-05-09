@@ -227,7 +227,7 @@ public class XsdModel {
 			Node maxInclusive = get(restriction, "maxInclusive");
 			entity.maxInclusive = maxInclusive != null ? ((Element) maxInclusive).getAttribute("value") : null;
 			Node minLength = get(restriction, "minLength");
-			entity.minLength = minLength != null ? Integer.parseInt(((Element) minLength).getAttribute("value")) : 0;
+			entity.minLength = minLength != null ? Integer.parseInt(((Element) minLength).getAttribute("value")) : null;
 			Node maxLength = get(restriction, "maxLength");
 			entity.maxLength = maxLength != null ? Integer.parseInt(((Element) maxLength).getAttribute("value")) : null;
 
@@ -388,9 +388,13 @@ public class XsdModel {
 			property.size = property.type.maxLength;
 		}
 
-		String minOccurs = element.getAttribute("minOccurs");
-		property.notEmpty = !"0".equals(minOccurs);
-
+		if (property.type != null && property.type.isPrimitiv()) {
+			property.notEmpty = property.type.minLength != null && property.type.minLength > 0;
+		} else {
+			String minOccurs = element.getAttribute("minOccurs");
+			property.notEmpty = minOccurs == null || !minOccurs.equals("0");
+		}
+		
 		String maxOccurs = element.getAttribute("maxOccurs");
 		if (!StringUtils.isEmpty(maxOccurs)) {
 			if ("unbounded".equals(maxOccurs)) {
