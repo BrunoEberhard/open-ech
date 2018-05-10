@@ -30,9 +30,6 @@ import ch.openech.xml.write.EchNamespaceUtil;
 public class EchSchemas {
 	private static Logger LOG = Logger.getLogger(EchSchemas.class.getName());
 
-	// namespace -> location
-	// private static final Map<String, String> locationByNamespace = new HashMap<>();
-
 	// namespace -> package
 	private static Map<String, String> packageByNamespace = new HashMap<>();
 	private static Map<String, String> namespaceByPackage = new HashMap<>();
