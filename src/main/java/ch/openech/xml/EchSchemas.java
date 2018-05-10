@@ -46,13 +46,21 @@ public class EchSchemas {
 	}
 	
 	private static void readDirectory(File dir) {
-		List<File> xsdFiles = Arrays.stream(dir.listFiles()).filter(f -> f.getName().endsWith(".xsd") && !f.isDirectory()).collect(Collectors.toList());
+		List<File> xsdFiles = new ArrayList<>();
+		scanDirectory(dir, xsdFiles);
 		xsdFiles = removeMinorVersion(xsdFiles);
+		generate(xsdFiles);
+	}
 
+	private static void scanDirectory(File dir, List<File> files) {
+		Arrays.stream(dir.listFiles()).filter(File::isDirectory).forEach(subDir -> scanDirectory(subDir, files));
+		Arrays.stream(dir.listFiles())
+				.filter(f -> f.getName().endsWith(".xsd") && !f.getName().endsWith("f.xsd") && !f.isDirectory())
+				.forEach(files::add);
+	}
+
+	private static void generate(List<File> xsdFiles) {
 		for (File file : xsdFiles) {
-			if (file.isDirectory() || !file.getName().endsWith(".xsd") || file.getName().endsWith("f.xsd")) {
-				continue;
-			}
 			try (FileInputStream fis = new FileInputStream(file)) {
 				XsdModel model = new XsdModel(fis);
 				xsdModels.put(model.getNamespace(), model);
@@ -63,7 +71,7 @@ public class EchSchemas {
 				LOG.log(Level.SEVERE, "Konnte xsd nicht lesen: " + file.getName(), e);
 			}
 		}
-		
+
 		for (XsdModel model : xsdModels.values()) {
 			model.read(xsdModels);
 			LOG.info("Read entities of " + model.getNamespace());
@@ -255,7 +263,7 @@ public class EchSchemas {
 	}
 	
 	static {
-		File dir = new File("./src/main/xml/ch/ech/xmlns");
+		File dir = new File("./src/main/xml");
 		readDirectory(dir);
 	}
 	
