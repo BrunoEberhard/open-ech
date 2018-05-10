@@ -1,4 +1,4 @@
-package  ch.openech.model;
+package ch.openech.model;
 
 import static ch.openech.xml.read.StaxEch.skip;
 
@@ -12,8 +12,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -22,75 +20,30 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.minimalj.util.StringUtils;
+
 import ch.openech.xml.write.EchNamespaceUtil;
 
-
 public class EchXmlDownload {
-	
-	private final Set<String> locations = new HashSet<>();
-	
-	private EchXmlDownload() {
-	}
-	
-	//
-	
-	public void download(int rootNumber) {
-		int major = 1;
-		MAJOR: while (true) {
-			int minor = 0;
-			MINOR: while (true) {
-				if (!download(rootNumber, major, minor)) {
-					break MINOR;
-				}
-				minor++;
-			}
-			if (minor == 0 && major > 3) {
-				break MAJOR;
-			}
-			major++;
-		}
-	}
-	
-	
-	public boolean download(int rootNumber, int major, int minor) {
-		if (rootNumber == 147) {
-			return download147(major, minor);
-		}
-		
-		String rootNamespaceURI = EchNamespaceUtil.schemaURI(rootNumber, "" + major);
-		String rootNamespaceLocation = EchNamespaceUtil.schemaLocation(rootNamespaceURI, "" + minor);
 
-		if (locations.contains(rootNamespaceLocation)) {
-			return true;
-		}
-		locations.add(rootNamespaceLocation);
-		
-		boolean versionExists = download(rootNamespaceLocation);
-		return versionExists;
+	private final String schemaLocation;
+
+	private EchXmlDownload() {
+		this.schemaLocation = null;
 	}
-	
-	public boolean download147(int major, int minor) {
-		boolean versionExists = true;
-		for (int part = 0; part < 3; part++) {
-			String rootNamespaceLocation = "http://www.ech.ch/xmlns/eCH-0147/" + major + "." + minor + "/eCH-0147T" + part + ".xsd";
-			
-			if (locations.contains(rootNamespaceLocation)) {
-				continue;
-			}
-			locations.add(rootNamespaceLocation);
-			
-			versionExists = download(rootNamespaceLocation);
-		}
-		return versionExists;
+
+	private EchXmlDownload(String schemaLocation) {
+		this.schemaLocation = schemaLocation;
 	}
-	
-	private boolean download(String namespaceLocation) {
-		System.out.println("Download: " + namespaceLocation);
-		String fileName = namespaceLocation.substring(namespaceLocation.lastIndexOf("/"));
-		File file = new File("src/main/xml/ch/ech/xmlns" + fileName);
-		if (!file.exists()) {
-			try {
-				URL url = new URL(namespaceLocation);
+
+	private void download() {
+		System.out.println("Download: " + schemaLocation);
+		try {
+			URL url = new URL(schemaLocation);
+			String fileName = convert(url);
+			File file = new File(fileName);
+			file.getParentFile().mkdirs();
+			if (!file.exists()) {
 				try (InputStream stream = url.openStream()) {
 					try (ReadableByteChannel rbc = Channels.newChannel(stream)) {
 						try (FileOutputStream fos = new FileOutputStream(file)) {
@@ -98,13 +51,11 @@ public class EchXmlDownload {
 						}
 					}
 				} catch (FileNotFoundException f) {
-					// Diese Version exsistiert nicht.
-					return false;
+					System.out.println("Not available: " + schemaLocation);
+					return;
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
-			} catch (MalformedURLException e) {
-				throw new RuntimeException(e);
 			}
 
 			try {
@@ -112,18 +63,41 @@ public class EchXmlDownload {
 			} catch (XMLStreamException | IOException e) {
 				throw new RuntimeException(e);
 			}
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
 		}
-		
-		return true;
 	}
-	
+
+	private String convert(URL url) {
+		StringBuilder s = new StringBuilder("src/main/xml");
+
+		String host = url.getHost();
+		String[] hostParts = host.split("\\.");
+		for (int i = hostParts.length - 1; i >= 0; i--) {
+			if (i == 0 && hostParts[i].equals("www")) {
+				continue;
+			}
+			s.append("/").append(hostParts[i]);
+		}
+
+		s.append(url.getPath());
+
+		return s.toString();
+	}
+
 	private void process(File file) throws XMLStreamException, IOException {
+		try (InputStream inputStream = new FileInputStream(file)) {
+			process_(inputStream);
+		}
+	}
+
+	private void process_(InputStream inputStream) throws XMLStreamException {
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		XMLEventReader xml = inputFactory.createXMLEventReader(new FileInputStream(file));
+		XMLEventReader xml = inputFactory.createXMLEventReader(inputStream);
 		process(xml);
 	}
-	
-	private void process(XMLEventReader xml) throws XMLStreamException, IOException {
+
+	private void process(XMLEventReader xml) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -131,14 +105,15 @@ public class EchXmlDownload {
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals("schema")) {
 					schema(xml);
-				} else skip(xml);
+				} else
+					skip(xml);
 			} else if (event.isEndElement() || event.isEndDocument()) {
 				return;
 			} // else skip
 		}
 	}
-	
-	private void schema(XMLEventReader xml) throws XMLStreamException, IOException {
+
+	private void schema(XMLEventReader xml) throws XMLStreamException {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -155,29 +130,51 @@ public class EchXmlDownload {
 			} // else skip
 		}
 	}
-	
-	private void imprt(StartElement startElement) throws XMLStreamException, IOException {
-		// 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0011/8" schemaLocation="http://www.ech.ch/xmlns/eCH-0011/8/eCH-0011-8-1.xsd"/>
+
+	private void imprt(StartElement startElement) throws XMLStreamException {
+		// <xs:import namespace="http://www.ech.ch/xmlns/eCH-0011/8"
+		// schemaLocation="http://www.ech.ch/xmlns/eCH-0011/8/eCH-0011-8-1.xsd"/>
 		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
-		int schema = EchNamespaceUtil.extractSchemaNumber(schemaLocation);
-		download(schema);
+
+		if (!StringUtils.isEmpty(schemaLocation)) {
+			if (!schemaLocation.contains("/")) {
+				schemaLocation = this.schemaLocation.substring(0, this.schemaLocation.lastIndexOf("/") + 1)
+						+ schemaLocation;
+			}
+			new EchXmlDownload(schemaLocation).download();
+		}
+
 	}
 
-	public static void main(String... args) {
+	private static void download(int rootNumber, int major, int minor) {
+		String rootNamespaceURI = EchNamespaceUtil.schemaURI(rootNumber, "" + major);
+		EchXmlDownload download = new EchXmlDownload(EchNamespaceUtil.schemaLocation(rootNamespaceURI, "" + minor));
+		download.download();
+	}
+
+	private static void process(InputStream inputStream) throws XMLStreamException {
 		EchXmlDownload download = new EchXmlDownload();
-		download.download(71);
-		download.download(72);
-//		download.download(147);
-//		download.download(211);
-//		download.download(21);
-//		download.download(78);
-//		download.download(93);
-//		download.download(101);
-//		download.download(108);
-//		download.download(129);
-//		download.download(148);
-//		download.download(173);
-//		download.download(196);
-//		download.download(201);
+		download.process_(inputStream);
+	}
+
+	public static void main(String... args) throws Exception {
+		// download.download(20, 2, 3);
+		download(20, 3, 0);
+		download(116, 3, 0);
+		download(71, 1, 1);
+		download(72, 1, 0);
+		// download.download(147);
+		// download.download(211, 1, 0);
+		// download.download(21);
+		// download.download(78);
+		// download.download(93);
+		// download.download(101);
+		// download(108);
+		// download.download(129);
+		// download.download(148);
+		// download.download(173);
+		// download.download(196);
+		// download.download(201);
+		process(EchXmlDownload.class.getResourceAsStream("/ch/ech/xmlns/eCH-0211-1-0.xsd"));
 	}
 }
