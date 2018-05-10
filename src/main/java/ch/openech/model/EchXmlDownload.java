@@ -159,10 +159,12 @@ public class EchXmlDownload {
 
 	public static void main(String... args) throws Exception {
 		// download.download(20, 2, 3);
-		download(20, 3, 0);
-		download(116, 3, 0);
-		download(71, 1, 1);
-		download(72, 1, 0);
+//		download(20, 3, 0);
+//		download(116, 3, 0);
+//		download(71, 1, 1);
+//		download(72, 1, 0);
+//		download(129, 4, 0); // Objektwesen
+		download(132, 2, 0); // Objektwesen Steuern
 		// download.download(147);
 		// download.download(211, 1, 0);
 		// download.download(21);
