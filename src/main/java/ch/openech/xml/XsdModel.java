@@ -170,6 +170,7 @@ public class XsdModel {
 			if (StringUtils.equals(element.getLocalName(), "simpleType", "complexType")) {
 				String name = element.getAttribute("name");
 				MjEntity entity = new MjEntity(name);
+				entity.type = MjEntityType.DEPENDING_ENTITY;
 				entity.setElement(element);
 				entities.put(name, entity);
 			}
@@ -192,6 +193,7 @@ public class XsdModel {
 			if ("element".equals(element.getLocalName())) {
 				MjProperty property = element(element);
 				MjEntity entity = property.type;
+				entity.type = MjEntityType.ENTITY;
 				entity.setElement(element);
 				if (StringUtils.isEmpty(entity.name)) {
 					entity.name = property.name;
@@ -226,7 +228,7 @@ public class XsdModel {
 	private MjEntity simpleType(Element node) {
 		String name = node.getAttribute("name");
 		boolean anonymous = StringUtils.isEmpty(name);
-		MjEntity entity = anonymous ? new MjEntity(MjEntityType.ENTITY) : entities.get(name);
+		MjEntity entity = anonymous ? new MjEntity(MjEntityType.DEPENDING_ENTITY) : entities.get(name);
 		Element restriction = get(node, "restriction");
 		if (restriction != null) {
 			String base = restriction.getAttribute("base");
@@ -297,7 +299,7 @@ public class XsdModel {
 
 	private MjEntity complexType(Element node) {
 		String name = node.getAttribute("name");
-		MjEntity entity = StringUtils.isEmpty(name) ? new MjEntity(MjEntityType.ENTITY) : entities.get(name);
+		MjEntity entity = StringUtils.isEmpty(name) ? new MjEntity(MjEntityType.DEPENDING_ENTITY) : entities.get(name);
 		if (!entity.properties.isEmpty()) {
 			return entity;
 		}
