@@ -17,6 +17,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.metamodel.model.MjEntity.MjEntityType;
+import org.minimalj.metamodel.model.MjModel;
 import org.minimalj.metamodel.model.MjProperty;
 import org.minimalj.metamodel.model.MjProperty.MjPropertyType;
 import org.minimalj.model.Keys;
@@ -48,6 +49,7 @@ public class XsdModel {
 	private final Map<String, String> prefixByNamespace = new HashMap<>();
 	
 	private static Map<String, MjEntity> XML_TYPES = new HashMap<>();
+	public  static Map<String, MjEntity> PREDEFINED_TYPES = new HashMap<>();
 	
 	public Collection<MjEntity> getEntities() {
 		return entities.values();
@@ -103,6 +105,19 @@ public class XsdModel {
 		XML_TYPES.put("time", new MjEntity(MjEntityType.LocalTime));
 
 		XML_TYPES.put("anyType", new MjEntity(MjEntityType.ByteArray));
+	}
+	
+	static {
+		MjModel defaultModel = new MjModel();
+		
+		MjEntity datePartiallyKnown = new MjEntity(defaultModel, DatePartiallyKnown.class);
+		
+		PREDEFINED_TYPES.put("datePartiallyKnownType", datePartiallyKnown);
+		
+//		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0098/4:datePartiallyKnownType", datePartiallyKnown);
+//		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0129/4:datePartiallyKnownType", datePartiallyKnown);
+//		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0044/1:datePartiallyKnownType", datePartiallyKnown);
+//		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0044/4:datePartiallyKnownType", datePartiallyKnown);
 	}
 
 	public XsdModel() {
@@ -418,6 +433,9 @@ public class XsdModel {
 				String namespace = namespaceByPrefix.get(parts[0]);
 				if ("xs".equals(parts[0])) {
 					return XML_TYPES.get(parts[1]);
+				} else if (PREDEFINED_TYPES.containsKey(parts[1])) {
+					// der namespace wird hier nicht gecheckt
+					return PREDEFINED_TYPES.get(parts[1]);
 				} else if (!StringUtils.equals(namespace, this.namespace)) {
 					XsdModel xsdModel = models.get(namespace);
 					if (xsdModel != null) {

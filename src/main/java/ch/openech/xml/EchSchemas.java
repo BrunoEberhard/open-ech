@@ -264,10 +264,16 @@ public class EchSchemas {
 		readDirectory(dir);
 	}
 	
+	public static boolean filter(MjEntity entity) {
+		return !entity.getClassName().endsWith("DatePartiallyKnown");
+	}
+	
 	public static void main(String[] args) throws Exception {
 		ClassGenerator generator = new ClassGenerator("./src/main/generated");
 		for (XsdModel model : xsdModels.values()) {
-			generator.generate(model.getEntities());
+			Collection<MjEntity> entities = model.getEntities();
+			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
+			generator.generate(entities);
 		}
 	}
 	
