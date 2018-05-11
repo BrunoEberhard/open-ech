@@ -23,6 +23,7 @@ import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.metamodel.model.MjEntity.MjEntityType;
 import org.minimalj.metamodel.model.MjModel;
 import org.minimalj.metamodel.model.MjProperty;
+import org.minimalj.metamodel.model.MjProperty.MjPropertyType;
 import org.minimalj.util.StringUtils;
 
 import ch.openech.xml.write.EchNamespaceUtil;
@@ -268,11 +269,33 @@ public class EchSchemas {
 		return !entity.getClassName().endsWith("DatePartiallyKnown");
 	}
 	
+	private static void updateType(MjEntity entity) {
+		boolean hasListProperty = entity.properties.stream().anyMatch(p -> p.propertyType == MjPropertyType.LIST);
+		if (hasListProperty) {
+			entity.type = MjEntityType.ENTITY;
+		}
+	}
+	
+	private static void checkForMissingSizes(MjEntity entity) {
+		for (MjProperty property : entity.properties) {
+			if (property.type.type == MjEntityType.String) {
+				if (property.size == null) {
+					if (property.name.equals("uuid")) {
+						System.out.println("entity " + entity.name);
+						property.size = 36;
+					}
+				}
+			}
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 		ClassGenerator generator = new ClassGenerator("./src/main/generated");
 		for (XsdModel model : xsdModels.values()) {
 			Collection<MjEntity> entities = model.getEntities();
 			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
+			entities.forEach(EchSchemas::updateType);
+			entities.forEach(EchSchemas::checkForMissingSizes);
 			generator.generate(entities);
 		}
 	}
