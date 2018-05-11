@@ -8,14 +8,12 @@ import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.minimalj.repository.DataSourceFactory;
-import org.minimalj.repository.sql.SqlRepository;
+import org.minimalj.model.test.ModelTest;
 
-import ch.ech.ech0011.v4.Person;
-import ch.ech.ech0020.v2.Delivery;
 import ch.ech.ech0071.v1.Canton;
 import ch.ech.ech0071.v1.CantonAbbreviation;
 import ch.ech.ech0071.v1.Nomenclature;
+import ch.ech.ech0108.v4.Organisation;
 
 public class EchReaderTest {
 
@@ -59,16 +57,22 @@ public class EchReaderTest {
 		}
 	}
 
-	@Test
-	public void testReadXmlPerson() throws Exception {
-		String fileName = "/ch/openech/test/server/testPerson/mariage/person_7560584727838.xml";
-		InputStream inputStream = getClass().getResourceAsStream(fileName);
-		try (EchReader er = new EchReader(inputStream)) {
-			Delivery delivery = (Delivery) er.read();
-			Person o = delivery.baseDelivery.messages.get(0).baseDeliveryPerson.person;
-			SqlRepository repository = new SqlRepository(DataSourceFactory.embeddedDataSource(), o.getClass());
-			repository.insert(o);
-		}
-	}
+//	@Test
+//	public void testReadXmlPerson() throws Exception {
+//		String fileName = "/ch/openech/test/server/testPerson/mariage/person_7560584727838.xml";
+//		InputStream inputStream = getClass().getResourceAsStream(fileName);
+//		try (EchReader er = new EchReader(inputStream)) {
+//			Delivery delivery = (Delivery) er.read();
+//			Person o = delivery.baseDelivery.messages.get(0).baseDeliveryPerson.person;
+//			SqlRepository repository = new SqlRepository(DataSourceFactory.embeddedDataSource(), o.getClass());
+//			repository.insert(o);
+//		}
+//	}
 
+	@Test
+	public void testOrganisationRoot() throws Exception {
+		ModelTest test = new ModelTest(Organisation.class);
+		test.assertValid();
+	}
+	
 }
