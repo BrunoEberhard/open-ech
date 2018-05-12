@@ -305,10 +305,12 @@ public class EchSchemas {
 	public static void main(String[] args) throws Exception {
 		ClassGenerator generator = new ClassGenerator("./src/main/generated");
 		for (XsdModel model : xsdModels.values()) {
+			model.getEntities().forEach(EchSchemas::updateType);
+			model.getEntities().forEach(EchSchemas::checkForMissingSizes);
+		}
+		for (XsdModel model : xsdModels.values()) {
 			Collection<MjEntity> entities = model.getEntities();
 			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
-			entities.forEach(EchSchemas::updateType);
-			entities.forEach(EchSchemas::checkForMissingSizes);
 			generator.generate(entities);
 		}
 	}
