@@ -9,57 +9,57 @@ public class NamedId {
 
 	@NotEmpty
 	@Size(20)
-	public String idCategory;
+	public String namedIdCategory;
 	@NotEmpty
 	@Size(36)
-	public String id;
+	public String namedId;
 
 	public String getIdCategory() {
-		return idCategory;
+		return namedIdCategory;
 	}
 
 	public void setIdCategory(String idCategory) {
-		this.idCategory = idCategory;
+		this.namedIdCategory = idCategory;
 	}
 
 	public String getId() {
-		return id;
+		return namedId;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this.namedId = id;
 	}
 
 	public String getPersonIdCategory() {
-		return idCategory;
+		return namedIdCategory;
 	}
 
 	public void setPersonIdCategory(String personIdCategory) {
-		this.idCategory = personIdCategory;
+		this.namedIdCategory = personIdCategory;
 	}
 
 	public String getPersonId() {
-		return id;
+		return namedId;
 	}
 
 	public void setPersonId(String personId) {
-		this.id = personId;
+		this.namedId = personId;
 	}
 
 	public String getOrganisationIdCategory() {
-		return idCategory;
+		return namedIdCategory;
 	}
 
 	public void setOrganisationIdCategory(String organisationIdCategory) {
-		this.idCategory = organisationIdCategory;
+		this.namedIdCategory = organisationIdCategory;
 	}
 
 	public String getOrganisationId() {
-		return id;
+		return namedId;
 	}
 
 	public void setOrganisationId(String organisationId) {
-		this.id = organisationId;
+		this.namedId = organisationId;
 	}
 
 }
