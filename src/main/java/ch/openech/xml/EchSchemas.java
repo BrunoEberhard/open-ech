@@ -283,6 +283,13 @@ public class EchSchemas {
 	}
 	
 	private static void updateType(MjEntity entity) {
+		if (entity.type == MjEntityType.ENTITY && entity.packageName.equals("ch.ech.ech0129.v4")) {
+			// bei 129 sind einige complexType auch als Element aufgeführt, wie z.B.
+			// Locality. Das ist unnötig und bewirkt, dass die types nicht inlined werden.
+			if (!StringUtils.equals(entity.name, "Building", "Dwelling", "RealEstate", "Street")) {
+				entity.type = MjEntityType.DEPENDING_ENTITY;
+			}
+		}
 		boolean hasListProperty = entity.properties.stream().anyMatch(p -> p.propertyType == MjPropertyType.LIST);
 		if (hasListProperty) {
 			entity.type = MjEntityType.ENTITY;
