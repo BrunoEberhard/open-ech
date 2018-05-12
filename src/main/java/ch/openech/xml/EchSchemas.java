@@ -141,6 +141,19 @@ public class EchSchemas {
 		if (previousEntity.isEnumeration() && entity.isEnumeration()) {
 			return Arrays.equals(previousEntity.values.toArray(), entity.values.toArray());
 		}
+
+		if (StringUtils.equals(previousEntity.minInclusive, entity.minInclusive)) {
+			return false;
+		}
+		if (StringUtils.equals(previousEntity.maxInclusive, entity.maxInclusive)) {
+			return false;
+		}
+		if (Objects.equals(previousEntity.minLength, entity.minLength)) {
+			return false;
+		}
+		if (Objects.equals(previousEntity.maxLength, entity.maxLength)) {
+			return false;
+		}
 		
 		if (previousEntity.properties.size() != entity.properties.size()) {
 			return false;
@@ -152,11 +165,9 @@ public class EchSchemas {
 			if (!StringUtils.equals(property.name, previousProperty.name)) {
 				return false;
 			}
-			if (property.type.type == MjEntityType.ENTITY) {
-				if (!sameSignatore(property.type, previousProperty.type)) {
-					return false;
-				}
-			}			
+			if (!sameSignatore(property.type, previousProperty.type)) {
+				return false;
+			}
 			if (!Objects.equals(property.size, previousProperty.size)) {
 				return false;
 			}
@@ -266,7 +277,9 @@ public class EchSchemas {
 	}
 	
 	public static boolean filter(MjEntity entity) {
-		return !entity.getClassName().endsWith("DatePartiallyKnown");
+		String name = entity.getClassName();
+		return !name.endsWith("DatePartiallyKnown") &&
+				!(name.contains("Named") &&  name.contains("Id"));
 	}
 	
 	private static void updateType(MjEntity entity) {

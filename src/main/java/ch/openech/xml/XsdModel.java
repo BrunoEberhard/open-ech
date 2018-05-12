@@ -111,8 +111,13 @@ public class XsdModel {
 		MjModel defaultModel = new MjModel();
 		
 		MjEntity datePartiallyKnown = new MjEntity(defaultModel, DatePartiallyKnown.class);
-		
 		PREDEFINED_TYPES.put("datePartiallyKnownType", datePartiallyKnown);
+
+		MjEntity namedId = new MjEntity(defaultModel, NamedId.class);
+		PREDEFINED_TYPES.put("namedPersonIdType", namedId);
+		PREDEFINED_TYPES.put("namedOrganisationIdType", namedId);
+		PREDEFINED_TYPES.put("namedIdType", namedId);
+
 		
 //		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0098/4:datePartiallyKnownType", datePartiallyKnown);
 //		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0129/4:datePartiallyKnownType", datePartiallyKnown);
