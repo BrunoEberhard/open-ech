@@ -111,9 +111,11 @@ public class XsdModel {
 		MjModel defaultModel = new MjModel();
 		
 		MjEntity datePartiallyKnown = new MjEntity(defaultModel, DatePartiallyKnown.class);
+		datePartiallyKnown.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("datePartiallyKnownType", datePartiallyKnown);
 
 		MjEntity namedId = new MjEntity(defaultModel, NamedId.class);
+		namedId.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("namedPersonIdType", namedId);
 		PREDEFINED_TYPES.put("namedOrganisationIdType", namedId);
 		PREDEFINED_TYPES.put("namedIdType", namedId);
