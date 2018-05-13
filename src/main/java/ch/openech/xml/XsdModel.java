@@ -49,7 +49,7 @@ public class XsdModel {
 	private final Map<String, String> prefixByNamespace = new HashMap<>();
 	
 	private static Map<String, MjEntity> XML_TYPES = new HashMap<>();
-	public  static Map<String, MjEntity> PREDEFINED_TYPES = new HashMap<>();
+	private static Map<String, MjEntity> PREDEFINED_TYPES = new HashMap<>();
 	
 	public Collection<MjEntity> getEntities() {
 		return entities.values();
