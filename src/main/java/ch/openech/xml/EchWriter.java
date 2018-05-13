@@ -21,8 +21,6 @@ import ch.openech.xml.write.IndentingXMLStreamWriter;
 public class EchWriter implements AutoCloseable {
 	public static final String XMLSchema_URI = "http://www.w3.org/2001/XMLSchema-instance";
 
-	private static final EchClassNameGenerator CLASS_NAME_GENERATOR = new EchClassNameGenerator();
-	
 	private final Writer writer;
 	private XMLStreamWriter xmlStreamWriter;
 
@@ -43,7 +41,7 @@ public class EchWriter implements AutoCloseable {
 	public void writeDocument(Object object) throws XMLStreamException {
 		Class<?> clazz = object.getClass();
 		xsdModel = getXsdModel(clazz);
-		Optional<MjEntity> entityOptional = xsdModel.getEntities().stream().filter(e -> CLASS_NAME_GENERATOR.apply(e).equals(clazz.getSimpleName())).findFirst();
+		Optional<MjEntity> entityOptional = xsdModel.getEntities().stream().filter(e -> EchClassNameGenerator.apply(e).equals(clazz.getSimpleName())).findFirst();
 		MjEntity entity = entityOptional.orElseThrow(() -> new IllegalArgumentException("Entity " + clazz.getSimpleName() + " not found"));
 		
 		xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), entity.getElement().getAttribute("name"), xsdModel.getNamespace());

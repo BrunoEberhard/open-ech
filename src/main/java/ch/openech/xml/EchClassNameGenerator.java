@@ -1,14 +1,11 @@
 package ch.openech.xml;
 
-import java.util.function.Function;
-
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.util.StringUtils;
 
-public class EchClassNameGenerator implements Function<MjEntity, String> {
+public class EchClassNameGenerator {
 
-	@Override
-	public String apply(MjEntity t) {
+	public static String apply(MjEntity t) {
 		String name = t.getClassName();
 		if (StringUtils.isEmpty(name)) {
 			return name;

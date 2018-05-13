@@ -77,7 +77,7 @@ public class EchSchemas {
 			String packageName = packageName(model.getNamespace());
 			model.getEntities().forEach(e -> e.packageName = packageName);
 
-			model.getEntities().forEach(e -> e.name = convertName(e.name));
+			model.getEntities().forEach(e -> e.name = EchClassNameGenerator.apply(e));
 			
 			namespaceByPackage.put(packageName, model.getNamespace());
 			packageByNamespace.put(model.getNamespace(), packageName);
@@ -222,16 +222,6 @@ public class EchSchemas {
 		return false;
 	}
 
-	public static String convertName(String name) {
-		if (StringUtils.isEmpty(name)) {
-			return name;
-		}
-		if (name.endsWith("Type")) {
-			name = name.substring(0, name.length() - 4);
-		}
-		return StringUtils.upperFirstChar(name);
-	}
-	
 	public static Collection<MjModel> getModels() {
 		return models.values();
 	}
