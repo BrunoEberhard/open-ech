@@ -120,26 +120,18 @@ public class EchWriter implements AutoCloseable {
 	private void complexType(Object object, Element element) {
 		Element sequence = XsdModel.get(element, "sequence");
 		if (sequence != null) {
-			sequence(object, sequence);
+			XsdModel.forEachChild(sequence, new ElementWriter(object));
 		}
 		Element choice = XsdModel.get(element, "choice");
 		if (choice != null) {
-			choice(object, sequence);
+			XsdModel.forEachChild(choice, new ElementWriter(object));
 		}
 	}
 	
-	private void sequence(Object object, Element element) {
-		XsdModel.forEachChild(element, new SequenceVisitor(object));
-	}
-
-	private void choice(Object object, Element element) {
-		XsdModel.forEachChild(element, new SequenceVisitor(object));
-	}
-
-	private class SequenceVisitor implements Consumer<Element> {
+	private class ElementWriter implements Consumer<Element> {
 		private final Object object;
 		
-		public SequenceVisitor(Object object) {
+		public ElementWriter(Object object) {
 			this.object = object;
 		}
 		
@@ -150,7 +142,6 @@ public class EchWriter implements AutoCloseable {
 				Object value = Properties.getProperty(object.getClass(), name).getValue(object);
 				writeElement(value, element);
 			}
-
 		}		
 	}
 	
