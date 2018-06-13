@@ -51,7 +51,7 @@ public class EchNamespaceUtil {
 			try {
 				return Integer.parseInt(s.substring(pos, end));
 			} catch (Exception x) {
-				System.err.println("Error parsing minor version of " + s);
+				System.err.println("Error parsing schema number of " + s);
 				return -1;
 			}
 		} else {
@@ -59,24 +59,6 @@ public class EchNamespaceUtil {
 		}
 	}
 	
-	// http://www.ech.ch/xmlns/eCH-0044/2/eCH-0044-2-0.xsd -> 2.0
-	public static String extractSchemaVersion(String namespaceLocation) {
-		if (namespaceLocation.startsWith(ECH_NS_BASE) && namespaceLocation.length() >= ECH_NS_BASE.length() + 6) {
-			int versionStart = ECH_NS_BASE.length() + 5;
-			int versionEnd = namespaceLocation.indexOf('/', versionStart);
-			
-			// now skip 3 '-'
-			int minorVersionStart = namespaceLocation.indexOf('-', versionEnd);
-			minorVersionStart = namespaceLocation.indexOf('-', minorVersionStart + 1);
-			minorVersionStart = namespaceLocation.indexOf('-', minorVersionStart + 1) + 1;
-
-			int minorVersionEnd = namespaceLocation.indexOf(".xsd", minorVersionStart);
-			return  namespaceLocation.substring(versionStart, versionEnd) + "." + namespaceLocation.substring(minorVersionStart, minorVersionEnd);
-		} else {
-			return null;
-		}
-	}
-
 	public static int extractSchemaMajorVersion(String s) {
 		if (s.contains("0147")) {
 			return -1;
@@ -87,14 +69,21 @@ public class EchNamespaceUtil {
 			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
 			// skip -
 			pos++;
-
+			// skip 'commons-' in 'eCH-0084-commons-1-4'
+			if (!Character.isDigit(s.charAt(pos))) {
+				// skip commons
+				while (pos < s.length() && s.charAt(pos) != '-' && s.charAt(pos) != '/') pos++;
+				// skip - or /
+				pos++;
+			}
+						
 			int end = pos;
 			while (end < s.length() && Character.isDigit(s.charAt(end))) end++;
 			
 			try {
 				return Integer.parseInt(s.substring(pos, end));
 			} catch (Exception x) {
-				System.err.println("Error parsing minor version of " + s);
+				System.err.println("Error parsing major version of " + s);
 				return -1;
 			}
 		} else {
@@ -113,11 +102,18 @@ public class EchNamespaceUtil {
 			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
 			// skip -
 			pos++;
+			// skip 'commons-' in 'eCH-0084-commons-1-4'
+			if (!Character.isDigit(s.charAt(pos))) {
+				// skip commons
+				while (pos < s.length() && s.charAt(pos) != '-') pos++;
+				// skip -
+				pos++;
+			}
 			// skip version
 			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
 			// skip -
 			pos++;
-
+			
 			int end = pos;
 			while (end < s.length() && Character.isDigit(s.charAt(end))) end++;
 			
@@ -156,7 +152,11 @@ public class EchNamespaceUtil {
 	public static String schemaURI(int number, String major) {
 		String numberAsString = "0000" + Integer.toString(number);
 		String fourDigitSttring = numberAsString.substring(numberAsString.length() - 4);
-		return ECH_NS_BASE + fourDigitSttring + "/" + major;
+		String uri = ECH_NS_BASE + fourDigitSttring + "/" + major;
+		if (number == 215 || number == 213) {
+			uri += ".0";
+		}
+		return uri;
 	}
 	
 	// http://www.ech.ch/xmlns/eCH-0044/2/eCH-0044-2-0.xsd - > http://www.ech.ch/xmlns/eCH-0044/2
