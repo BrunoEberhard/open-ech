@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044/1" xmlns:eCH-0058="http://www.ech.ch/xmlns/eCH-0058/5"
+	xmlns:eCH-0084="http://www.ech.ch/xmlns/eCH-0084/1" xmlns:eCH-0212="http://www.ech.ch/xmlns/eCH-0212/1" targetNamespace="http://www.ech.ch/xmlns/eCH-0212/1"
+	elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Broadcast updates UPI/AHVN13, last modification timestamp 2018-04-20</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0044/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0044/1/eCH-0044-1-0.xsd" />
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0058/5" schemaLocation="http://www.ech.ch/xmlns/eCH-0058/5/eCH-0058-5-0.xsd" />
+	<!--  <xs:import namespace="http://www.ech.ch/xmlns/eCH-0084/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-4.xsd" /> das ist noch nicht publiziert -->
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0084/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-3.xsd" />
+	<xs:element name="broadcast">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="header" type="eCH-0058:headerType" />
+				<xs:element name="content">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="dateInterval">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="from" type="xs:date" />
+										<xs:element name="till" type="xs:date" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="inactivationOfAhvvn" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="inactivationTimestamp" type="xs:dateTime" />
+										<xs:element name="inactiveAhvvn" type="eCH-0044:vnType" />
+										<xs:element name="activeAhvvn" type="eCH-0044:vnType" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="cancellationOfAhvvn" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="cancellationTimestamp" type="xs:dateTime" />
+										<xs:element name="cancelledAhvvn" type="eCH-0044:vnType" />
+										<xs:sequence minOccurs="0">
+											<xs:element name="activeAhvvnCandidate" type="eCH-0044:vnType" minOccurs="2" maxOccurs="2" />
+										</xs:sequence>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="changeInDemographics" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="activeAhvvn" type="eCH-0044:vnType" />
+										<xs:sequence minOccurs="0">
+											<xs:element name="personFromUPIBefore" type="eCH-0084:valuesStoredUnderAhvvn_Type" minOccurs="0" />
+											<xs:element name="personFromUPIAfter" type="eCH-0084:valuesStoredUnderAhvvn_Type" />
+										</xs:sequence>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="minorVersion" type="xs:integer" use="required" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

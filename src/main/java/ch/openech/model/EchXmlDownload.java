@@ -1,6 +1,6 @@
 package ch.openech.model;
 
-import static ch.openech.xml.read.StaxEch.skip;
+import static ch.openech.xml.EchReader.skip;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,10 +24,15 @@ import org.minimalj.util.StringUtils;
 
 import ch.openech.xml.write.EchNamespaceUtil;
 
+// Ausgabe kann in eclipse user catalog kopiert werden in
+// workspace/.metadata/.plugins/org.eclipse.wst.xml.core/usser_catalog.xml
+// C:\projects\workspaces\minimalj\.metadata\.plugins\org.eclipse.wst.xml.core
+
 public class EchXmlDownload {
 
 	private final String schemaLocation;
-
+	private String targetNamespace;
+	
 	private EchXmlDownload() {
 		this.schemaLocation = null;
 	}
@@ -37,7 +42,7 @@ public class EchXmlDownload {
 	}
 
 	private void download() {
-		System.out.println("Download: " + schemaLocation);
+		// System.out.println("Download: " + schemaLocation);
 		try {
 			URL url = new URL(schemaLocation);
 			String fileName = convert(url);
@@ -51,7 +56,7 @@ public class EchXmlDownload {
 						}
 					}
 				} catch (FileNotFoundException f) {
-					System.out.println("Not available: " + schemaLocation);
+					// System.out.println("Not available: " + schemaLocation);
 					return;
 				} catch (IOException e) {
 					throw new RuntimeException(e);
@@ -63,6 +68,10 @@ public class EchXmlDownload {
 			} catch (XMLStreamException | IOException e) {
 				throw new RuntimeException(e);
 			}
+			
+			System.out.println("  <uri name=\"" + targetNamespace + "\" uri=\"platform:/resource/openech/" + fileName + "\"/>");
+			System.out.println("  <system systemId=\"" + url.toExternalForm() + "\" uri=\"platform:/resource/openech/" + fileName + "\"/>");
+			
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
@@ -71,16 +80,8 @@ public class EchXmlDownload {
 	private String convert(URL url) {
 		StringBuilder s = new StringBuilder("src/main/xml");
 
-		String host = url.getHost();
-		String[] hostParts = host.split("\\.");
-		for (int i = hostParts.length - 1; i >= 0; i--) {
-			if (i == 0 && hostParts[i].equals("www")) {
-				continue;
-			}
-			s.append("/").append(hostParts[i]);
-		}
-
-		s.append(url.getPath());
+		String path = url.getPath();
+		s.append(path.substring(path.lastIndexOf('/')));
 
 		return s.toString();
 	}
@@ -104,6 +105,7 @@ public class EchXmlDownload {
 				StartElement startElement = event.asStartElement();
 				String startName = startElement.getName().getLocalPart();
 				if (startName.equals("schema")) {
+					targetNamespace = startElement.getAttributeByName(new QName("targetNamespace")).getValue();
 					schema(xml);
 				} else
 					skip(xml);
@@ -141,6 +143,9 @@ public class EchXmlDownload {
 				schemaLocation = this.schemaLocation.substring(0, this.schemaLocation.lastIndexOf("/") + 1)
 						+ schemaLocation;
 			}
+			if ("http://www.ech.ch/xmlns/eCH-0213-commons/1/eCH-0213-commons-1-0.xsd".equals(schemaLocation)) {
+				schemaLocation = "http://www.ech.ch/xmlns/eCH-0213/1.0/eCH-0213-commons-1-0.xsd";
+			}
 			new EchXmlDownload(schemaLocation).download();
 		}
 
@@ -148,7 +153,12 @@ public class EchXmlDownload {
 
 	private static void download(int rootNumber, int major, int minor) {
 		String rootNamespaceURI = EchNamespaceUtil.schemaURI(rootNumber, "" + major);
-		EchXmlDownload download = new EchXmlDownload(EchNamespaceUtil.schemaLocation(rootNamespaceURI, "" + minor));
+		String location = EchNamespaceUtil.schemaLocation(rootNamespaceURI, "" + minor);
+		download(location);
+	}
+
+	private static void download(String location) {
+		EchXmlDownload download = new EchXmlDownload(location);
 		download.download();
 	}
 
@@ -158,25 +168,33 @@ public class EchXmlDownload {
 	}
 
 	public static void main(String... args) throws Exception {
-		// download.download(20, 2, 3);
-//		download(20, 3, 0);
+		download(20, 3, 0); // Person mutation
+		download(11, 8, 1); // Person
+		download(71, 1, 1); // Orte
+		download(72, 1, 0); // Länder
+
+		download(215, 1, 0); // sektoriellen Personenidentifikator
+		
+		download(20, 2, 3);
 //		download(116, 3, 0);
-//		download(71, 1, 1);
-//		download(72, 1, 0);
+
 //		download(129, 4, 0); // Objektwesen
-		download(132, 2, 0); // Objektwesen Steuern
-		// download.download(147);
-		// download.download(211, 1, 0);
-		// download.download(21);
-		// download.download(78);
-		// download.download(93);
-		// download.download(101);
-		// download(108);
-		// download.download(129);
-		// download.download(148);
-		// download.download(173);
-		// download.download(196);
-		// download.download(201);
-		process(EchXmlDownload.class.getResourceAsStream("/ch/ech/xmlns/eCH-0211-1-0.xsd"));
+//		download(132, 2, 0); // Objektwesen Steuern
+		// download("http://www.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T0.xsd");
+		// download("http://www.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T1.xsd");
+		// download("http://www.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T2.xsd");
+		download(211, 1, 0);
+		download(21, 7, 0);
+		download(78, 4, 0);
+		download(93, 2, 0);
+		download(101, 1, 0);
+		download(108, 3, 0);
+		download(129, 4, 0);
+		download(148, 1, 0);
+		download(173, 1, 0);
+		download(196, 1, 0);
+		download(201, 1, 0);
+		process(EchXmlDownload.class.getResourceAsStream("/eCH-0211-1-0.xsd"));
+		process(EchXmlDownload.class.getResourceAsStream("/eCH-0212-1-0.xsd"));
 	}
 }

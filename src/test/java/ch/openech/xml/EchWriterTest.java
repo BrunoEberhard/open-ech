@@ -21,7 +21,7 @@ public class EchWriterTest {
 		for (int i = 1; i <= 26; i++) {
 			Canton canton = new Canton();
 			canton.cantonId = i;
-			canton.cantonAbbreviation = CantonAbbreviation.values()[i - 1];
+			canton.setCantonAbbreviation(CantonAbbreviation.values()[i - 1]);
 			canton.cantonLongName = "Kanton" + i;
 			canton.cantonDateOfChange = LocalDate.now();
 			nomenclature.cantons.canton.add(canton);

@@ -36,16 +36,6 @@ public class EchNamespaceUtilTest {
 	}
 
 	@Test
-	public void schemaLocation() {
-		Assert.assertEquals("http://www.ech.ch/xmlns/eCH-0010/4/eCH-0010-4-1.xsd", EchNamespaceUtil.schemaLocation("http://www.ech.ch/xmlns/eCH-0010/4", "1"));
-	}
-
-	@Test
-	public void schemaLocation3() {
-		Assert.assertEquals("http://www.ech.ch/xmlns/eCH-0123/4/eCH-0123-4-5.xsd", EchNamespaceUtil.schemaLocation(123, "4", "5"));
-	}
-	
-	@Test
 	public void schemaURI() {
 		Assert.assertEquals("http://www.ech.ch/xmlns/eCH-0010/4", EchNamespaceUtil.schemaURI("http://www.ech.ch/xmlns/eCH-0010/4/eCH-0010-4-1.xsd"));
 		Assert.assertEquals("http://www.ech.ch/xmlns/eCH-0123/45", EchNamespaceUtil.schemaURI("http://www.ech.ch/xmlns/eCH-0123/45/eCH-0123-45-6.xsd"));

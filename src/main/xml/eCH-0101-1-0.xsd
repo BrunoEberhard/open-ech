@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Martin Stingelin (Stingelin Informatik GmbH) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by BITUSER (Bundesamt für Informatik und Telekommunikation) -->
+<xs:schema xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044/1" xmlns:eCH-0101="http://www.ech.ch/xmlns/eCH-0101/1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/3" targetNamespace="http://www.ech.ch/xmlns/eCH-0101/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:annotation>
+		<xs:documentation xml:lang="de">Ausgabedatum: 09.05.2009</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0044/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0044/1/eCH-0044-1-1.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0010/3" schemaLocation="http://www.ech.ch/xmlns/eCH-0010/3/eCH-0010-3-1.xsd"/>
+	<xs:complexType name="personExtendedInformationType">
+		<xs:sequence>
+			<xs:element name="personidentification" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="armedForces" type="eCH-0101:armedForcesType" minOccurs="0"/>
+			<xs:element name="civilDefense" type="eCH-0101:yesNoType" minOccurs="0"/>
+			<xs:element name="fireService" type="eCH-0101:fireServiceType" minOccurs="0"/>
+			<xs:element name="healthInsurance" type="eCH-0101:healthInsuranceType" minOccurs="0"/>
+			<xs:element name="matrimonialInheritanceArrangement" type="eCH-0101:yesNoType" minOccurs="0"/>
+			<xs:element name="extension" type="xs:anyType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="schemaVersion" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="yesNoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="baseNameType">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="armedForcesType">
+		<xs:sequence>
+			<xs:element name="armedForcesService" type="eCH-0101:yesNoType" minOccurs="0"/>
+			<xs:element name="armedForcesLiability" type="eCH-0101:yesNoType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fireServiceType">
+		<xs:sequence>
+			<xs:element name="fireService" type="eCH-0101:yesNoType" minOccurs="0"/>
+			<xs:element name="fireServiceLiability" type="eCH-0101:yesNoType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="healthInsuranceType">
+		<xs:sequence>
+			<xs:element name="healthInsured" type="eCH-0101:yesNoType"/>
+			<xs:element name="insurance" minOccurs="0">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="insuranceName" type="eCH-0101:baseNameType"/>
+						<xs:element name="insuranceAddress" type="eCH-0010:organisationMailAddressType"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="personExtendedInformationRoot">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="personAddon" type="eCH-0101:personExtendedInformationType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

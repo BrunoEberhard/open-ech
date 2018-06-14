@@ -134,19 +134,6 @@ public class EchNamespaceUtil {
 		String fileNamePart = namespaceURI.substring(ECH_NS_BASE.length() - 4, ECH_NS_BASE.length() + 4);
 		return namespaceURI + "/" + fileNamePart + "-" + major + "-" + minor + ".xsd";
 	}
-	
-	// 112, 1, 0 -> http://www.ech.ch/xmlns/eCH-0112/1/eCH-0112-1-0.xsd
-	public static String schemaLocation(int number, String major, String minor) {
-		return schemaLocation(schemaURI(number, major), minor);
-	}
-
-	// 112, 1.0 -> http://www.ech.ch/xmlns/eCH-0112/1/eCH-0112-1-0.xsd
-	public static String schemaLocation(int number, String version) {
-		int pos = version.indexOf(".");
-		String major = version.substring(0, pos);
-		String minor = version.substring(pos+1);
-		return schemaLocation(number, major, minor);
-	}
 
 	// 20, 2 -> http://www.ech.ch/xmlns/eCH-0020/2
 	public static String schemaURI(int number, String major) {

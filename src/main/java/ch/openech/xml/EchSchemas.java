@@ -142,16 +142,18 @@ public class EchSchemas {
 			return Arrays.equals(previousEntity.values.toArray(), entity.values.toArray());
 		}
 
-		if (StringUtils.equals(previousEntity.minInclusive, entity.minInclusive)) {
+		if (!StringUtils.equals(previousEntity.minInclusive, entity.minInclusive)) {
 			return false;
 		}
-		if (StringUtils.equals(previousEntity.maxInclusive, entity.maxInclusive)) {
+		if (!StringUtils.equals(previousEntity.maxInclusive, entity.maxInclusive)) {
 			return false;
 		}
-		if (Objects.equals(previousEntity.minLength, entity.minLength)) {
-			return false;
-		}
-		if (Objects.equals(previousEntity.maxLength, entity.maxLength)) {
+		
+//		if (!Objects.equals(previousEntity.minLength, entity.minLength)) {
+//			return false;
+//		}
+		
+		if (!Objects.equals(previousEntity.maxLength, entity.maxLength)) {
 			return false;
 		}
 		
@@ -268,11 +270,15 @@ public class EchSchemas {
 	
 	public static boolean filter(MjEntity entity) {
 		String name = entity.getClassName();
-		return !name.endsWith("DatePartiallyKnown") &&
-				!(name.contains("Named") &&  name.contains("Id"));
+		boolean skip = //
+				name.equals(DatePartiallyKnown.class.getSimpleName()) || // 
+				name.contains("Named") && name.contains("Id") || //
+				name.equals(YesNo.class.getSimpleName()) || //
+				false;
+		return !skip;
 	}
 	
-	private static void updateType(MjEntity entity) {
+	private static void updateEntityType(MjEntity entity) {
 		if (entity.type == MjEntityType.ENTITY && entity.packageName.equals("ch.ech.ech0129.v4")) {
 			// bei 129 sind einige complexType auch als Element aufgeführt, wie z.B.
 			// Locality. Das ist unnötig und bewirkt, dass die types nicht inlined werden.
@@ -280,18 +286,24 @@ public class EchSchemas {
 				entity.type = MjEntityType.DEPENDING_ENTITY;
 			}
 		}
+		// Depending Entities enthalten keine 'id' und können daher nicht als
+		// parents für Listen herhalten
+		
 		boolean hasListProperty = entity.properties.stream().anyMatch(p -> p.propertyType == MjPropertyType.LIST);
 		if (hasListProperty) {
-			entity.type = MjEntityType.ENTITY;
+			// Eine Ausnahme sind entities, die nur als inline verwendet werden.
+			// diese müssen zur Zeit von Hand herausgefiltert werden
+			if (!(StringUtils.equals(entity.name, "NationalityData") && entity.packageName.contains("ech0011"))) {
+				entity.type = MjEntityType.ENTITY;
+			}
 		}
 	}
-	
+
 	private static void checkForMissingSizes(MjEntity entity) {
 		for (MjProperty property : entity.properties) {
 			if (property.type.type == MjEntityType.String) {
 				if (property.size == null) {
 					if (property.name.equals("uuid")) {
-						System.out.println("entity " + entity.name);
 						property.size = 36;
 					}
 				}
@@ -302,7 +314,7 @@ public class EchSchemas {
 	public static void main(String[] args) throws Exception {
 		ClassGenerator generator = new ClassGenerator("./src/main/generated");
 		for (XsdModel model : xsdModels.values()) {
-			model.getEntities().forEach(EchSchemas::updateType);
+			model.getEntities().forEach(EchSchemas::updateEntityType);
 			model.getEntities().forEach(EchSchemas::checkForMissingSizes);
 		}
 		for (XsdModel model : xsdModels.values()) {

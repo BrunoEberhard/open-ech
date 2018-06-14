@@ -21,8 +21,6 @@ import org.minimalj.util.CloneHelper;
 import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;
 
-import ch.openech.xml.read.StaxEch;
-
 public class EchReader implements AutoCloseable {
 	public static final Logger LOG = Logger.getLogger(EchReader.class.getName());
 
@@ -47,9 +45,13 @@ public class EchReader implements AutoCloseable {
 	}
 
 	@Override
-	public void close() throws Exception {
+	public void close() {
 		if (xml != null) {
-			xml.close();
+			try {
+				xml.close();
+			} catch (XMLStreamException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 	
@@ -133,7 +135,7 @@ public class EchReader implements AutoCloseable {
 					}
 				} else {
 					LOG.warning("Element: " + elementName + " -> No Property in " + clazz.getName());
-					StaxEch.skip(xml);
+					skip(xml);
 				}
 			} else if (event.isCharacters()) {
 				String s = event.asCharacters().getData().trim();
@@ -148,6 +150,17 @@ public class EchReader implements AutoCloseable {
 			}
 		}
 		return result;
+	}
+	
+	public static void skip(XMLEventReader xml) throws XMLStreamException {
+		while (true) {
+			XMLEvent event = xml.nextEvent();
+			if (event.isStartElement()) {
+				LOG.fine("Skipping XML Element: " + event.asStartElement().getName().getLocalPart());
+				skip(xml);
+			} else if (event.isEndElement()) break;
+			// else ignore
+		}
 	}
 
 }

@@ -1,20 +1,16 @@
 package ch.openech.transaction;
 
-import java.util.List;
-
 import org.minimalj.backend.Backend;
-import org.minimalj.model.EnumUtils;
 import org.minimalj.repository.query.By;
 import org.minimalj.transaction.Transaction;
-import org.minimalj.util.CsvReader;
 
-import ch.openech.model.code.FederalRegister;
-import ch.openech.model.common.Canton;
-import ch.openech.model.common.CountryIdentification;
-import ch.openech.model.common.MunicipalityIdentification;
-import ch.openech.model.estate.Locality;
-import ch.openech.xml.read.StaxEch0071;
-import ch.openech.xml.read.StaxEch0072;
+import ch.ech.ech0071.v1.Canton;
+import ch.ech.ech0071.v1.Municipality;
+import ch.ech.ech0071.v1.Nomenclature;
+import ch.ech.ech0072.v1.Countries;
+import ch.ech.ech0072.v1.Country;
+import ch.openech.xml.EchReader;
+
 
 public class ImportSwissDataTransaction implements Transaction<Void> {
 	private static final long serialVersionUID = 1L;
@@ -24,43 +20,54 @@ public class ImportSwissDataTransaction implements Transaction<Void> {
 
 	@Override
 	public Void execute() {
-		if (!Backend.find(CountryIdentification.class, By.limit(1)).isEmpty()) {
+		if (!Backend.find(Country.class, By.limit(1)).isEmpty()) {
 			return null;
 		}
 		
-		StaxEch0072 staxEch0072 = new StaxEch0072();
-		for (CountryIdentification country : staxEch0072.getCountryIdentifications()) {
-			Backend.insert(country);
-		}
-		
-		StaxEch0071 staxEch0071 = new StaxEch0071();
-		for (Canton canton : staxEch0071.getCantons()) {
-			Backend.insert(canton);
-		}
-
-		for (MunicipalityIdentification municipality : staxEch0071.getMunicipalityIdentifications()) {
-			Backend.insert(municipality);
-		}
-		
-		int pos = 0;
-		for (FederalRegister federalRegister : FederalRegister.values()) {
-			MunicipalityIdentification municipalityIdentification = new MunicipalityIdentification();
-			municipalityIdentification.id = --pos;
-			municipalityIdentification.municipalityName = EnumUtils.getText(federalRegister);
-			Backend.insert(municipalityIdentification);
-		}
-		
-		CsvReader csvReader = new CsvReader(getClass().getResourceAsStream("/ch/openech/gemeindenPlz.csv"));
-		List<GemeindenPlz> gemeinden = csvReader.readValues(GemeindenPlz.class);
-		for (GemeindenPlz gemeinde : gemeinden) {
-			Locality locality = new Locality();
-			locality.name.language = "de";
-			locality.name.nameLong = gemeinde.PLZNAMK;
-			locality.id = gemeinde.PLZ4 * 100 + gemeinde.PLZZ;
-			if (Backend.read(Locality.class, locality.id) == null) {
-				Backend.insert(locality);
+		try (EchReader reader = new EchReader(getClass().getResourceAsStream("/eCH0072.xml"))) {
+			Countries countries = (Countries) reader.read();
+			for (Country country : countries.country) {
+				Backend.insert(country);
 			}
 		}
+
+		try (EchReader reader = new EchReader(getClass().getResourceAsStream("/eCH0071.xml"))) {
+			Nomenclature nomenclature = (Nomenclature) reader.read();
+			for (Canton canton : nomenclature.cantons.canton) {
+				Backend.insert(canton);
+			}
+			for (Municipality municipality : nomenclature.municipalities.municipality) {
+				Backend.insert(municipality);
+			}
+		}
+
+		/*
+		int pos = 0;
+		for (FederalRegister federalRegister : FederalRegister.values()) {
+			Municipality municipality = new Municipality();
+			municipality.id = --pos;
+			municipality.municipalityName = EnumUtils.getText(federalRegister);
+			Backend.insert(municipality);
+		}
+		*/
+		
+//		CsvReader csvReader = new CsvReader(getClass().getResourceAsStream("/ch/openech/gemeindenPlz.csv"));
+//		List<GemeindenPlz> gemeinden = csvReader.readValues(GemeindenPlz.class);
+//		for (GemeindenPlz gemeinde : gemeinden) {
+//			Locality locality = new Locality();
+//			// locality.name.language = "de";
+////			locality.name.nameLong = gemeinde.PLZNAMK;
+////			locality.id = gemeinde.PLZ4 * 100 + gemeinde.PLZZ;
+////			if (Backend.read(Locality.class, locality.id) == null) {
+////				Backend.insert(locality);
+////			}
+//			locality.swissZipCode = gemeinde.PLZ4;
+//			locality.swissZipCodeAddOn = gemeinde.PLZZ != null && gemeinde.PLZZ != 0 ? "" + gemeinde.PLZZ : null;;
+//			locality.name.nameLong = gemeinde.PLZNAMK;
+//			if (Backend.read(Locality.class, locality.swissZipCode) == null) {
+//				Backend.insert(locality);
+//			}
+//		}
 		return null;
 	}
 	

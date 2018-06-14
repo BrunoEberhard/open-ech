@@ -73,6 +73,7 @@ public class XsdModel {
 	
 	static {
 		MjEntity INT = new MjEntity(MjEntityType.Integer);
+		XML_TYPES.put("unsignedShort", INT);
 		XML_TYPES.put("unsignedInt", INT);
 		XML_TYPES.put("int", INT);
 		XML_TYPES.put("integer", INT);
@@ -114,17 +115,15 @@ public class XsdModel {
 		datePartiallyKnown.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("datePartiallyKnownType", datePartiallyKnown);
 
+		MjEntity yesNo = new MjEntity(defaultModel, YesNo.class);
+		yesNo.type = MjEntityType.Integer;
+		PREDEFINED_TYPES.put("yesNoType", yesNo);
+		
 		MjEntity namedId = new MjEntity(defaultModel, NamedId.class);
 		namedId.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("namedPersonIdType", namedId);
 		PREDEFINED_TYPES.put("namedOrganisationIdType", namedId);
 		PREDEFINED_TYPES.put("namedIdType", namedId);
-
-		
-//		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0098/4:datePartiallyKnownType", datePartiallyKnown);
-//		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0129/4:datePartiallyKnownType", datePartiallyKnown);
-//		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0044/1:datePartiallyKnownType", datePartiallyKnown);
-//		PREDEFINED_TYPES.put("http://www.ech.ch/xmlns/eCH-0044/4:datePartiallyKnownType", datePartiallyKnown);
 	}
 
 	public XsdModel() {
@@ -243,6 +242,11 @@ public class XsdModel {
 			if (baseEntity == null) {
 				throw new IllegalStateException("Base Entity not found: " + base + " for " + name);
 			}
+			// restriction auf enumeration werden ignoriert,
+			// z.B. bei eCH-0021:typeOfRelationshipType
+			if (baseEntity.isEnumeration()) {
+				return baseEntity;
+			}
 			
 			entity.type = baseEntity.type;
 			
@@ -321,7 +325,20 @@ public class XsdModel {
 		}
 		Element complexContent = get(node, "complexContent");
 		if (complexContent != null) {
-			entity.properties.addAll(complexContent(complexContent));
+			Element restriction = get(complexContent, "restriction");
+			if (restriction != null) {
+				// Im xsd werden hier aus dem Basis Typ einzelne Properties
+				// herausgepickt. Das wird ignoriert und gleich das Basis entity verwendet
+				String base = restriction.getAttribute("base");
+				MjEntity baseEntity = findEntity(base);
+				if (baseEntity == null) {
+					throw new IllegalStateException("Base Entity not found: " + base);
+				}
+				entities.put(name, baseEntity);
+				return baseEntity;
+			} else {
+				entity.properties.addAll(complexContent(complexContent));
+			}
 		}
 		return entity;
 	}
@@ -412,13 +429,12 @@ public class XsdModel {
 			property.size = property.type.maxLength;
 		}
 
-		if (property.type != null && property.type.isPrimitiv()) {
-			property.notEmpty = property.type.minLength != null && property.type.minLength > 0;
-		} else {
-			String minOccurs = element.getAttribute("minOccurs");
-			property.notEmpty = minOccurs == null || !minOccurs.equals("0");
-		}
-		
+		String minOccurs = element.getAttribute("minOccurs");
+		property.notEmpty = minOccurs == null || !minOccurs.equals("0");
+//		if (property.type != null && property.type.isPrimitiv()) {
+//			property.notEmpty = property.type.minLength != null && property.type.minLength > 0;
+//		}
+//		
 		String maxOccurs = element.getAttribute("maxOccurs");
 		if (!StringUtils.isEmpty(maxOccurs)) {
 			if ("unbounded".equals(maxOccurs)) {
@@ -446,7 +462,12 @@ public class XsdModel {
 					// der namespace wird hier nicht gecheckt
 					return PREDEFINED_TYPES.get(parts[1]);
 				} else if (!StringUtils.equals(namespace, this.namespace)) {
-					XsdModel xsdModel = models.get(namespace);
+					// ech 173 verwendet die forgiving schemas. Die werden zur Zeit nicht
+					// explizit erzeugt. Daher werden die namespaces konviertiert von
+					// http://www.ech.ch/xmlns/eCH-0021-f/7 zu
+					// http://www.ech.ch/xmlns/eCH-0021/7
+					String namespaceWithoutForgiving = namespace.replaceAll("-f/", "/");
+					XsdModel xsdModel = models.get(namespaceWithoutForgiving);
 					if (xsdModel != null) {
 						return xsdModel.findEntity(parts[1]);
 					} else {

@@ -13,7 +13,6 @@ import org.minimalj.model.validation.ValidationMessage;
 
 import ch.openech.datagenerator.GeneratePersonEditor.GeneratePersonData;
 import ch.openech.transaction.GenerateDemoDataTransaction;
-import ch.openech.xml.write.EchSchema;
 
 
 public class GeneratePersonEditor extends Editor<GeneratePersonData, Void> {
@@ -21,7 +20,7 @@ public class GeneratePersonEditor extends Editor<GeneratePersonData, Void> {
 //	private final String ewkVersion;
 //	private final String orgVersion;
 	
-	public GeneratePersonEditor(EchSchema ewkNamespaceContext, EchSchema orgNamespaceContext) {
+	public GeneratePersonEditor() {
 //		this.ewkVersion = ewkNamespaceContext.getVersion();
 //		this.orgVersion = orgNamespaceContext.getVersion();
 	}
