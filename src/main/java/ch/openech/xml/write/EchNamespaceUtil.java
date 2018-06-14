@@ -39,57 +39,90 @@ public class EchNamespaceUtil {
 	}
 
 	// Aufgrund von Konventionen für URI und Location verwendbar
-	public static int extractSchemaNumber(String namespaceLocationOrURI) {
-		if (namespaceLocationOrURI.startsWith(ECH_NS_BASE) && namespaceLocationOrURI.length() >= ECH_NS_BASE.length() + 4) {
-			return  Integer.parseInt(namespaceLocationOrURI.substring(ECH_NS_BASE.length(), ECH_NS_BASE.length() + 4));
+	public static int extractSchemaNumber(String s) {
+		if (s.contains("0147")) {
+			return 147;
+		}
+		if (s.contains("eCH-")) {
+			int pos = s.lastIndexOf("eCH-") + 4;
+			int end = pos;
+			while (end < s.length() && Character.isDigit(s.charAt(end))) end++;
+			
+			try {
+				return Integer.parseInt(s.substring(pos, end));
+			} catch (Exception x) {
+				System.err.println("Error parsing schema number of " + s);
+				return -1;
+			}
 		} else {
 			return -1;
 		}
 	}
 	
-	// http://www.ech.ch/xmlns/eCH-0044/2/eCH-0044-2-0.xsd -> 2.0
-	public static String extractSchemaVersion(String namespaceLocation) {
-		if (namespaceLocation.startsWith(ECH_NS_BASE) && namespaceLocation.length() >= ECH_NS_BASE.length() + 6) {
-			int versionStart = ECH_NS_BASE.length() + 5;
-			int versionEnd = namespaceLocation.indexOf('/', versionStart);
-			
-			// now skip 3 '-'
-			int minorVersionStart = namespaceLocation.indexOf('-', versionEnd);
-			minorVersionStart = namespaceLocation.indexOf('-', minorVersionStart + 1);
-			minorVersionStart = namespaceLocation.indexOf('-', minorVersionStart + 1) + 1;
-
-			int minorVersionEnd = namespaceLocation.indexOf(".xsd", minorVersionStart);
-			return  namespaceLocation.substring(versionStart, versionEnd) + "." + namespaceLocation.substring(minorVersionStart, minorVersionEnd);
-		} else {
-			return null;
+	public static int extractSchemaMajorVersion(String s) {
+		if (s.contains("0147")) {
+			return -1;
 		}
-	}
-
-	// Aufgrund von Konventionen für URI und Location verwendbar
-	public static int extractSchemaMajorVersion(String namespaceLocationOrURI) {
-		if (namespaceLocationOrURI.startsWith(ECH_NS_BASE) && namespaceLocationOrURI.length() >= ECH_NS_BASE.length() + 6) {
-			int versionStart = ECH_NS_BASE.length() + 5;
-			int versionEnd = namespaceLocationOrURI.indexOf('/', versionStart);
-			if (versionEnd < 0) versionEnd = namespaceLocationOrURI.length();
-			return  Integer.parseInt(namespaceLocationOrURI.substring(versionStart, versionEnd));
+		if (s.contains("eCH-")) {
+			int pos = s.lastIndexOf("eCH-") + 4;
+			// skip schemanumber
+			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
+			// skip -
+			pos++;
+			// skip 'commons-' in 'eCH-0084-commons-1-4'
+			if (!Character.isDigit(s.charAt(pos))) {
+				// skip commons
+				while (pos < s.length() && s.charAt(pos) != '-' && s.charAt(pos) != '/') pos++;
+				// skip - or /
+				pos++;
+			}
+						
+			int end = pos;
+			while (end < s.length() && Character.isDigit(s.charAt(end))) end++;
+			
+			try {
+				return Integer.parseInt(s.substring(pos, end));
+			} catch (Exception x) {
+				System.err.println("Error parsing major version of " + s);
+				return -1;
+			}
 		} else {
 			return -1;
 		}
 	}
 
 	// Da nur die Location die Minor Version enthält für URI nicht anwendbar
-	public static int extractSchemaMinorVersion(String namespaceLocation) {
-		if (namespaceLocation.startsWith(ECH_NS_BASE) && namespaceLocation.length() >= ECH_NS_BASE.length() + 6) {
-			int versionStart = ECH_NS_BASE.length() + 5;
-			int versionEnd = namespaceLocation.indexOf('/', versionStart);
+	public static int extractSchemaMinorVersion(String s) {
+		if (s.contains("0147")) {
+			return -1;
+		}
+		if (s.contains("eCH-")) {
+			int pos = s.lastIndexOf("eCH-") + 4;
+			// skip schemanumber
+			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
+			// skip -
+			pos++;
+			// skip 'commons-' in 'eCH-0084-commons-1-4'
+			if (!Character.isDigit(s.charAt(pos))) {
+				// skip commons
+				while (pos < s.length() && s.charAt(pos) != '-') pos++;
+				// skip -
+				pos++;
+			}
+			// skip version
+			while (pos < s.length() && Character.isDigit(s.charAt(pos))) pos++;
+			// skip -
+			pos++;
 			
-			// now skip 3 '-'
-			int minorVersionStart = namespaceLocation.indexOf('-', versionEnd);
-			minorVersionStart = namespaceLocation.indexOf('-', minorVersionStart + 1);
-			minorVersionStart = namespaceLocation.indexOf('-', minorVersionStart + 1) + 1;
+			int end = pos;
+			while (end < s.length() && Character.isDigit(s.charAt(end))) end++;
 			
-			int minorVersionEnd = namespaceLocation.indexOf(".xsd", minorVersionStart);
-			return  Integer.parseInt(namespaceLocation.substring(minorVersionStart, minorVersionEnd));
+			try {
+				return Integer.parseInt(s.substring(pos, end));
+			} catch (Exception x) {
+				System.err.println("Error parsing minor version of " + s);
+				return -1;
+			}
 		} else {
 			return -1;
 		}
@@ -101,25 +134,16 @@ public class EchNamespaceUtil {
 		String fileNamePart = namespaceURI.substring(ECH_NS_BASE.length() - 4, ECH_NS_BASE.length() + 4);
 		return namespaceURI + "/" + fileNamePart + "-" + major + "-" + minor + ".xsd";
 	}
-	
-	// 112, 1, 0 -> http://www.ech.ch/xmlns/eCH-0112/1/eCH-0112-1-0.xsd
-	public static String schemaLocation(int number, String major, String minor) {
-		return schemaLocation(schemaURI(number, major), minor);
-	}
-
-	// 112, 1.0 -> http://www.ech.ch/xmlns/eCH-0112/1/eCH-0112-1-0.xsd
-	public static String schemaLocation(int number, String version) {
-		int pos = version.indexOf(".");
-		String major = version.substring(0, pos);
-		String minor = version.substring(pos+1);
-		return schemaLocation(number, major, minor);
-	}
 
 	// 20, 2 -> http://www.ech.ch/xmlns/eCH-0020/2
 	public static String schemaURI(int number, String major) {
 		String numberAsString = "0000" + Integer.toString(number);
 		String fourDigitSttring = numberAsString.substring(numberAsString.length() - 4);
-		return ECH_NS_BASE + fourDigitSttring + "/" + major;
+		String uri = ECH_NS_BASE + fourDigitSttring + "/" + major;
+		if (number == 215 || number == 213) {
+			uri += ".0";
+		}
+		return uri;
 	}
 	
 	// http://www.ech.ch/xmlns/eCH-0044/2/eCH-0044-2-0.xsd - > http://www.ech.ch/xmlns/eCH-0044/2

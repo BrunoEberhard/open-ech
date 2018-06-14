@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) von Martin Stingelin (Stingelin Informatik GmbH) bearbeitet -->
+<!-- edited with XMLSpy v2012 rel. 2 sp1 (http://www.altova.com) by Martin Stingelin (Stingelin Informatik GmbH) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by BITUSER (Bundesamt für Informatik und Telekommunikation) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0020="http://www.ech.ch/xmlns/eCH-0020/3" xmlns:eCH-0058="http://www.ech.ch/xmlns/eCH-0058/5" xmlns:eCH-0011="http://www.ech.ch/xmlns/eCH-0011/8" xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/5" xmlns:eCH-0008="http://www.ech.ch/xmlns/eCH-0008/3" xmlns:eCH-0021="http://www.ech.ch/xmlns/eCH-0021/7" xmlns:eCH-0006="http://www.ech.ch/xmlns/eCH-0006/2" xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044/4" xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/5" targetNamespace="http://www.ech.ch/xmlns/eCH-0020/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xs:annotation>
+		<xs:documentation>Ausgabedatum:07.11.2014</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0011/8" schemaLocation="http://www.ech.ch/xmlns/eCH-0011/8/eCH-0011-8-1.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0010/5" schemaLocation="http://www.ech.ch/xmlns/eCH-0010/5/eCH-0010-5-1.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0008/3" schemaLocation="http://www.ech.ch/xmlns/eCH-0008/3/eCH-0008-3-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0021/7" schemaLocation="http://www.ech.ch/xmlns/eCH-0021/7/eCH-0021-7-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0006/2" schemaLocation="http://www.ech.ch/xmlns/eCH-0006/2/eCH-0006-2-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0044/4" schemaLocation="http://www.ech.ch/xmlns/eCH-0044/4/eCH-0044-4-1.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0007/5" schemaLocation="http://www.ech.ch/xmlns/eCH-0007/5/eCH-0007-5-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0058/5" schemaLocation="http://www.ech.ch/xmlns/eCH-0058/5/eCH-0058-5-0.xsd"/>
+	<xs:element name="extension">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="federalRegisterType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="nameInfoType">
+		<xs:sequence>
+			<xs:element name="nameData" type="eCH-0011:nameDataType"/>
+			<xs:element name="nameValidFrom" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="birthPlaceAddonType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="birthInfoType">
+		<xs:sequence>
+			<xs:element name="birthData" type="eCH-0011:birthDataType"/>
+			<xs:element name="birthAddonData" type="eCH-0021:birthAddonDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="maritalInfoType">
+		<xs:sequence>
+			<xs:element name="maritalData" type="eCH-0011:maritalDataType"/>
+			<xs:element name="maritalDataAddon" type="eCH-0021:maritalDataAddonType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="maritalInfoRestrictedMarriageType">
+		<xs:sequence>
+			<xs:element name="maritalData">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="maritalStatus" type="eCH-0011:maritalStatusType"/>
+						<xs:element name="dateOfMaritalStatus" type="xs:date" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="maritalDataAddon" type="eCH-0021:maritalDataAddonType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="placeOfOriginInfoType">
+		<xs:sequence>
+			<xs:element name="placeOfOrigin" type="eCH-0011:placeOfOriginType"/>
+			<xs:element name="placeOfOriginAddonData" type="eCH-0021:placeOfOriginAddonDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="permanentLackingCompetenceOfJudgementType">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:complexType name="birthPersonType">
+		<xs:sequence>
+			<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="nameInfo" type="eCH-0020:nameInfoType"/>
+			<xs:element name="birthInfo" type="eCH-0020:birthInfoType"/>
+			<xs:element name="religionData" type="eCH-0011:religionDataType"/>
+			<xs:element name="maritalData" type="eCH-0011:maritalDataType"/>
+			<xs:element name="nationalityData" type="eCH-0011:nationalityDataType"/>
+			<xs:element name="contactData" type="eCH-0011:contactDataType" minOccurs="0"/>
+			<xs:element name="personAdditionalData" type="eCH-0021:personAdditionalData" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="placeOfOriginInfo" type="eCH-0020:placeOfOriginInfoType" maxOccurs="unbounded"/>
+				<xs:element name="residencePermitData" type="eCH-0011:residencePermitDataType"/>
+			</xs:choice>
+			<xs:element name="lockData" type="eCH-0021:lockDataType"/>
+			<xs:element name="parentalRelationship" type="eCH-0021:parentalRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="healthInsuranceData" type="eCH-0021:healthInsuranceDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="infostarPersonType">
+		<xs:sequence>
+			<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="nameInfo" type="eCH-0020:nameInfoType"/>
+			<xs:element name="birthInfo">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="eCH-0020:birthInfoType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="maritalInfo" type="eCH-0020:maritalInfoType"/>
+			<xs:element name="nationalityData" type="eCH-0011:nationalityDataType"/>
+			<xs:element name="placeOfOriginInfo" type="eCH-0020:placeOfOriginInfoType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="deathData" type="eCH-0011:deathDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="baseDeliveryPersonType">
+		<xs:sequence>
+			<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="nameInfo" type="eCH-0020:nameInfoType"/>
+			<xs:element name="birthInfo" type="eCH-0020:birthInfoType"/>
+			<xs:element name="religionData" type="eCH-0011:religionDataType"/>
+			<xs:element name="maritalInfo" type="eCH-0020:maritalInfoType"/>
+			<xs:element name="nationalityData" type="eCH-0011:nationalityDataType"/>
+			<xs:element name="deathData" type="eCH-0011:deathDataType" minOccurs="0"/>
+			<xs:element name="contactData" type="eCH-0011:contactDataType" minOccurs="0"/>
+			<xs:element name="personAdditionalData" type="eCH-0021:personAdditionalData" minOccurs="0"/>
+			<xs:element name="politicalRightData" type="eCH-0021:politicalRightDataType" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="placeOfOriginInfo" type="eCH-0020:placeOfOriginInfoType" maxOccurs="unbounded"/>
+				<xs:element name="residencePermitData" type="eCH-0011:residencePermitDataType"/>
+			</xs:choice>
+			<xs:element name="lockData" type="eCH-0021:lockDataType"/>
+			<xs:element name="jobData" type="eCH-0021:jobDataType" minOccurs="0"/>
+			<xs:element name="maritalRelationship" type="eCH-0021:maritalRelationshipType" minOccurs="0"/>
+			<xs:element name="parentalRelationship" type="eCH-0021:parentalRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="guardianRelationship" type="eCH-0021:guardianRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="armedForcesData" type="eCH-0021:armedForcesDataType" minOccurs="0"/>
+			<xs:element name="civilDefenseData" type="eCH-0021:civilDefenseDataType" minOccurs="0"/>
+			<xs:element name="fireServiceData" type="eCH-0021:fireServiceDataType" minOccurs="0"/>
+			<xs:element name="healthInsuranceData" type="eCH-0021:healthInsuranceDataType" minOccurs="0"/>
+			<xs:element name="matrimonialInheritanceArrangementData" type="eCH-0021:matrimonialInheritanceArrangementDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="baseDeliveryRestrictedMoveInPersonType">
+		<xs:complexContent>
+			<xs:restriction base="eCH-0020:baseDeliveryPersonType">
+				<xs:sequence>
+					<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+					<xs:element name="nameInfo" type="eCH-0020:nameInfoType"/>
+					<xs:element name="birthInfo" type="eCH-0020:birthInfoType"/>
+					<xs:element name="religionData" type="eCH-0011:religionDataType"/>
+					<xs:element name="maritalInfo" type="eCH-0020:maritalInfoType"/>
+					<xs:element name="nationalityData" type="eCH-0011:nationalityDataType"/>
+					<xs:element name="contactData" type="eCH-0011:contactDataType" minOccurs="0"/>
+					<xs:element name="personAdditionalData" type="eCH-0021:personAdditionalData" minOccurs="0"/>
+					<xs:element name="politicalRightData" type="eCH-0021:politicalRightDataType" minOccurs="0"/>
+					<xs:choice>
+						<xs:element name="placeOfOriginInfo" type="eCH-0020:placeOfOriginInfoType" maxOccurs="unbounded"/>
+						<xs:element name="residencePermitData" type="eCH-0011:residencePermitDataType"/>
+					</xs:choice>
+					<xs:element name="lockData" type="eCH-0021:lockDataType"/>
+					<xs:element name="jobData" type="eCH-0021:jobDataType" minOccurs="0"/>
+					<xs:element name="maritalRelationship" type="eCH-0021:maritalRelationshipType" minOccurs="0"/>
+					<xs:element name="parentalRelationship" type="eCH-0021:parentalRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="guardianRelationship" type="eCH-0021:guardianRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="armedForcesData" type="eCH-0021:armedForcesDataType" minOccurs="0"/>
+					<xs:element name="civilDefenseData" type="eCH-0021:civilDefenseDataType" minOccurs="0"/>
+					<xs:element name="fireServiceData" type="eCH-0021:fireServiceDataType" minOccurs="0"/>
+					<xs:element name="healthInsuranceData" type="eCH-0021:healthInsuranceDataType" minOccurs="0"/>
+					<xs:element name="matrimonialInheritanceArrangementData" type="eCH-0021:matrimonialInheritanceArrangementDataType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="eventBaseDelivery">
+		<xs:sequence>
+			<xs:element name="baseDeliveryPerson" type="eCH-0020:baseDeliveryPersonType"/>
+			<xs:choice>
+				<xs:element name="hasMainResidence">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="eCH-0020:reportingMunicipalityRestrictedBaseMainType">
+								<xs:sequence>
+									<xs:element name="secondaryResidence" type="eCH-0007:swissMunicipalityType" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="hasSecondaryResidence">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="eCH-0020:reportingMunicipalityRestrictedBaseSecondaryType">
+								<xs:sequence>
+									<xs:element name="mainResidence" type="eCH-0007:swissMunicipalityType"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="hasOtherResidence" type="eCH-0020:reportingMunicipalityRestrictedBaseSecondaryType"/>
+			</xs:choice>
+			<xs:element name="baseDeliveryValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventKeyExchange">
+		<xs:sequence>
+			<xs:element name="keyExchangePerson" type="eCH-0044:personIdentificationType" maxOccurs="unbounded"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventDataRequest">
+		<xs:sequence>
+			<xs:element name="dataRequestPerson" type="eCH-0044:personIdentificationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="municipality" type="eCH-0007:swissMunicipalityType" minOccurs="0"/>
+			<xs:element name="dataValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventAdoption">
+		<xs:sequence>
+			<xs:element name="adoptionPerson" type="eCH-0020:infostarPersonType"/>
+			<xs:element name="addParent" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="eCH-0021:parentalRelationshipType">
+							<xs:sequence>
+								<xs:element name="nameOfParentAtEvent" type="eCH-0021:nameOfParentType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="removeParent" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="eCH-0021:parentalRelationshipType">
+							<xs:sequence>
+								<xs:element name="nameOfParentAtEvent" type="eCH-0021:nameOfParentType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="adoptionValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChildRelationship">
+		<xs:sequence>
+			<xs:element name="childRelationshipPerson" type="eCH-0020:infostarPersonType"/>
+			<xs:element name="addParent" minOccurs="0" maxOccurs="2">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="eCH-0021:parentalRelationshipType">
+							<xs:sequence>
+								<xs:element name="nameOfParentAtEvent" type="eCH-0021:nameOfParentType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="removeParent" minOccurs="0" maxOccurs="2">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="eCH-0021:parentalRelationshipType">
+							<xs:sequence>
+								<xs:element name="nameOfParentAtEvent" type="eCH-0021:nameOfParentType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="childRelationshipValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="swissNationalityType">
+		<xs:sequence>
+			<xs:element name="nationalityStatus">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="country">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="countryId">
+							<xs:simpleType>
+								<xs:restriction base="xs:integer">
+									<xs:enumeration value="8100"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="countryIdISO2">
+							<xs:simpleType>
+								<xs:restriction base="xs:token">
+									<xs:enumeration value="CH"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventNaturalizeForeigner">
+		<xs:sequence>
+			<xs:element name="naturalizeForeignerPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="placeOfOriginInfo" type="eCH-0020:placeOfOriginInfoType" maxOccurs="unbounded"/>
+			<xs:element name="nationality" type="eCH-0020:swissNationalityType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventNaturalizeSwiss">
+		<xs:sequence>
+			<xs:element name="naturalizeSwissPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="placeOfOriginInfo" type="eCH-0020:placeOfOriginInfoType" maxOccurs="unbounded"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventUndoCitizen">
+		<xs:sequence>
+			<xs:element name="undoCitizenPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="placeOfOrigin" type="eCH-0011:placeOfOriginType"/>
+			<xs:element name="placeOfOriginAddon" type="eCH-0021:placeOfOriginAddonRestrictedUnDoDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventUndoSwiss">
+		<xs:sequence>
+			<xs:element name="undoSwissPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="nationalityData" type="eCH-0011:nationalityDataType"/>
+			<xs:element name="residencePermitData" type="eCH-0011:residencePermitDataType" minOccurs="0"/>
+			<xs:element name="undoSwissValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeOrigin">
+		<xs:sequence>
+			<xs:element name="changeOriginPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="originInfo" type="eCH-0020:placeOfOriginInfoType" maxOccurs="unbounded"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventBirth">
+		<xs:sequence>
+			<xs:element name="birthPerson" type="eCH-0020:birthPersonType"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="hasMainResidence" type="eCH-0011:mainResidenceType"/>
+				<xs:element name="hasSecondaryResidence" type="eCH-0011:secondaryResidenceType"/>
+				<xs:element name="hasOtherResidence" type="eCH-0011:otherResidenceType"/>
+			</xs:choice>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventMarriage">
+		<xs:sequence>
+			<xs:element name="marriagePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="maritalInfo" type="eCH-0020:maritalInfoRestrictedMarriageType"/>
+			<xs:element name="maritalRelationship" type="eCH-0021:maritalRelationshipType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventPartnership">
+		<xs:sequence>
+			<xs:element name="partnershipPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="maritalInfo" type="eCH-0020:maritalInfoRestrictedMarriageType"/>
+			<xs:element name="partnershipRelationship" type="eCH-0021:maritalRelationshipType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventSeparation">
+		<xs:sequence>
+			<xs:element name="separationPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="separationData" type="eCH-0011:separationDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventUndoSeparation">
+		<xs:sequence>
+			<xs:element name="undoSeparationPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="separationValidTill" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventDivorce">
+		<xs:sequence>
+			<xs:element name="divorcePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="maritalData" type="eCH-0011:maritalDataRestrictedDivorceType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventUndoMarriage">
+		<xs:sequence>
+			<xs:element name="undoMarriagePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="maritalData" type="eCH-0011:maritalDataRestrictedUndoMarriedType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventUndoPartnership">
+		<xs:sequence>
+			<xs:element name="undoPartnershipPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="maritalData" type="eCH-0011:maritalDataRestrictedUndoPartnershipType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventDeath">
+		<xs:sequence>
+			<xs:element name="deathPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="deathData" type="eCH-0011:deathDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventMissing">
+		<xs:sequence>
+			<xs:element name="missingPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="deathData" type="eCH-0011:deathDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventUndoMissing">
+		<xs:sequence>
+			<xs:element name="undoMissingPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="undoMissingValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventMaritalStatusPartner">
+		<xs:sequence>
+			<xs:element name="maritalStatusPartnerPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="maritalData" type="eCH-0011:maritalDataRestrictedMaritalStatusPartnerType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeName">
+		<xs:sequence>
+			<xs:element name="changeNamePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="nameInfo" type="eCH-0020:nameInfoType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="changeSexPersonType">
+		<xs:sequence>
+			<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="sex" type="eCH-0044:sexType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeSex">
+		<xs:sequence>
+			<xs:element name="changeSexPerson" type="eCH-0020:changeSexPersonType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="reportingMunicipalityType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+				<xs:element name="federalRegister" type="eCH-0020:federalRegisterType"/>
+			</xs:choice>
+			<xs:element name="arrivalDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="comesFrom" type="eCH-0011:destinationType" minOccurs="0"/>
+			<xs:element name="dwellingAddress" type="eCH-0011:dwellingAddressType" minOccurs="0"/>
+			<xs:element name="departureDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="goesTo" type="eCH-0011:destinationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="reportingMunicipalityRestrictedBaseMainType">
+		<xs:complexContent>
+			<xs:restriction base="eCH-0020:reportingMunicipalityType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+						<xs:element name="federalRegister" type="eCH-0020:federalRegisterType"/>
+					</xs:choice>
+					<xs:element name="arrivalDate" type="xs:date"/>
+					<xs:element name="comesFrom" type="eCH-0011:destinationType" minOccurs="0"/>
+					<xs:element name="dwellingAddress" type="eCH-0011:dwellingAddressType"/>
+					<xs:element name="departureDate" type="xs:date" minOccurs="0"/>
+					<xs:element name="goesTo" type="eCH-0011:destinationType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="reportingMunicipalityRestrictedBaseSecondaryType">
+		<xs:complexContent>
+			<xs:restriction base="eCH-0020:reportingMunicipalityType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+						<xs:element name="federalRegister" type="eCH-0020:federalRegisterType"/>
+					</xs:choice>
+					<xs:element name="arrivalDate" type="xs:date"/>
+					<xs:element name="comesFrom" type="eCH-0011:destinationType"/>
+					<xs:element name="dwellingAddress" type="eCH-0011:dwellingAddressType"/>
+					<xs:element name="departureDate" type="xs:date" minOccurs="0"/>
+					<xs:element name="goesTo" type="eCH-0011:destinationType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="reportingMunicipalityRestrictedMoveInType">
+		<xs:complexContent>
+			<xs:restriction base="eCH-0020:reportingMunicipalityType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+						<xs:element name="federalRegister" type="eCH-0020:federalRegisterType"/>
+					</xs:choice>
+					<xs:element name="arrivalDate" type="xs:date"/>
+					<xs:element name="comesFrom" type="eCH-0011:destinationType"/>
+					<xs:element name="dwellingAddress" type="eCH-0011:dwellingAddressType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="reportingMunicipalityRestrictedMoveOutType">
+		<xs:complexContent>
+			<xs:restriction base="eCH-0020:reportingMunicipalityType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+						<xs:element name="federalRegister" type="eCH-0020:federalRegisterType"/>
+					</xs:choice>
+					<xs:element name="departureDate" type="xs:date"/>
+					<xs:element name="goesTo" type="eCH-0011:destinationType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="reportingMunicipalityRestrictedMoveType">
+		<xs:complexContent>
+			<xs:restriction base="eCH-0020:reportingMunicipalityType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="reportingMunicipality" type="eCH-0007:swissMunicipalityType"/>
+						<xs:element name="federalRegister" type="eCH-0020:federalRegisterType"/>
+					</xs:choice>
+					<xs:element name="dwellingAddress" type="eCH-0011:dwellingAddressType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="eventMoveIn">
+		<xs:sequence>
+			<xs:element name="moveInPerson" type="eCH-0020:baseDeliveryRestrictedMoveInPersonType"/>
+			<xs:choice>
+				<xs:element name="hasMainResidence">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="eCH-0020:reportingMunicipalityRestrictedMoveInType">
+								<xs:sequence>
+									<xs:element name="secondaryResidence" type="eCH-0007:swissMunicipalityType" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="hasSecondaryResidence">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="eCH-0020:reportingMunicipalityRestrictedMoveInType">
+								<xs:sequence>
+									<xs:element name="mainResidence" type="eCH-0007:swissMunicipalityType"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="hasOtherResidence" type="eCH-0020:reportingMunicipalityRestrictedMoveInType"/>
+			</xs:choice>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventMove">
+		<xs:sequence>
+			<xs:element name="movePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="moveReportingMunicipality" type="eCH-0020:reportingMunicipalityRestrictedMoveType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventContact">
+		<xs:sequence>
+			<xs:element name="contactPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="contactData" type="eCH-0011:contactDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventMoveOut">
+		<xs:sequence>
+			<xs:element name="moveOutPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="moveOutReportingDestination" type="eCH-0020:reportingMunicipalityRestrictedMoveOutType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeResidenceTypeType">
+		<xs:sequence>
+			<xs:element name="changeResidenceTypePerson" type="eCH-0020:baseDeliveryRestrictedMoveInPersonType"/>
+			<xs:element name="changeResidenceTypeReportingRelationship" type="eCH-0020:reportingMunicipalityRestrictedMoveInType"/>
+			<xs:element name="residenceTypeValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeReligion">
+		<xs:sequence>
+			<xs:element name="changeReligionPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="religionData" type="eCH-0011:religionDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeOccupation">
+		<xs:sequence>
+			<xs:element name="changeOccupationPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="jobData" type="eCH-0021:jobDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventGuardianMeasure">
+		<xs:sequence>
+			<xs:element name="guardianMeasurePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="relationship" type="eCH-0021:guardianRelationshipType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventUndoGuardian">
+		<xs:sequence>
+			<xs:element name="undoGuardianPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="guardianRelationshipId" type="eCH-0021:guardianRelationshipIdType"/>
+			<xs:element name="undoGuardianValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeGuardian">
+		<xs:sequence>
+			<xs:element name="changeGuardianPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="relationship" type="eCH-0021:guardianRelationshipType"/>
+			<xs:element name="changeGuardianValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeNationality">
+		<xs:sequence>
+			<xs:element name="changeNationalityPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="nationalityData" type="eCH-0011:nationalityDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventEntryResidencePermit">
+		<xs:sequence>
+			<xs:element name="entryResidencePermitPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="jobData" type="eCH-0021:jobDataType" minOccurs="0"/>
+			<xs:element name="residencePermitData" type="eCH-0011:residencePermitDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventDataLock">
+		<xs:sequence>
+			<xs:element name="dataLockPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="dataLock" type="eCH-0021:dataLockType"/>
+			<xs:element name="dataLockValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element name="dataLockValidTill" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventPaperLock">
+		<xs:sequence>
+			<xs:element name="paperLockPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="paperLock" type="eCH-0021:paperLockType"/>
+			<xs:element name="paperLockValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element name="paperLockValidTill" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCare">
+		<xs:sequence>
+			<xs:element name="carePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="parentalRelationship" type="eCH-0021:parentalRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectGuardianRelationship">
+		<xs:sequence>
+			<xs:element name="correctGuardianRelationshipPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="guardianRelationship" type="eCH-0021:guardianRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectParentalRelationship">
+		<xs:sequence>
+			<xs:element name="correctParentalRelationshipPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="parentalRelationship" type="eCH-0021:parentalRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectReporting">
+		<xs:sequence>
+			<xs:element name="correctReportingPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:choice>
+				<xs:element name="hasMainResidence" type="eCH-0011:mainResidenceType"/>
+				<xs:element name="hasSecondaryResidence" type="eCH-0011:secondaryResidenceType"/>
+				<xs:element name="hasOtherResidence" type="eCH-0011:otherResidenceType"/>
+			</xs:choice>
+			<xs:element name="reportingValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectOccupation">
+		<xs:sequence>
+			<xs:element name="correctOccupationPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="jobData" type="eCH-0021:jobDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="personIdOnlyType">
+		<xs:sequence>
+			<xs:element name="vn" type="eCH-0044:vnType" minOccurs="0"/>
+			<xs:element name="localPersonId" type="eCH-0044:namedPersonIdType"/>
+			<xs:element name="otherPersonId" type="eCH-0044:namedPersonIdType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="euPersonId" type="eCH-0044:namedPersonIdType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="correctIdentificationPersonType">
+		<xs:sequence>
+			<xs:element name="personIdentificationBefore" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="personIdentificationAfter" type="eCH-0020:personIdOnlyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectIdentification">
+		<xs:sequence>
+			<xs:element name="correctIdentificationPerson" type="eCH-0020:correctIdentificationPersonType"/>
+			<xs:element name="identificationValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventIdentificationConversion">
+		<xs:sequence>
+			<xs:element name="identificationConversionPerson" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="vn" type="eCH-0044:vnType" minOccurs="0"/>
+						<xs:element name="localPersonIdBefore" type="eCH-0044:namedPersonIdType"/>
+						<xs:element name="localPersonIdAfter" type="eCH-0044:namedPersonIdType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="identificationValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectName">
+		<xs:sequence>
+			<xs:element name="correctNamePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="nameInfo" type="eCH-0020:nameInfoType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectNationality">
+		<xs:sequence>
+			<xs:element name="correctNationalityPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="nationalityData" type="eCH-0011:nationalityDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectContact">
+		<xs:sequence>
+			<xs:element name="correctContactPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="contactData" type="eCH-0011:contactDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectReligion">
+		<xs:sequence>
+			<xs:element name="correctReligionPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="religionData" type="eCH-0011:religionDataType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectPlaceOfOrigin">
+		<xs:sequence>
+			<xs:element name="correctPlaceOfOriginPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="placeOfOriginInfo" type="eCH-0020:placeOfOriginInfoType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectResidencePermit">
+		<xs:sequence>
+			<xs:element name="correctResidencePermitPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="residencePermitData" type="eCH-0011:residencePermitDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectMaritalInfo">
+		<xs:sequence>
+			<xs:element name="correctMaritalDataPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="maritalInfo" type="eCH-0020:maritalInfoType"/>
+			<xs:element name="maritalRelationship" type="eCH-0021:maritalRelationshipType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectBirthInfo">
+		<xs:sequence>
+			<xs:element name="correctBirthInfoPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="birthInfo" type="eCH-0020:birthInfoType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectDeathData">
+		<xs:sequence>
+			<xs:element name="correctDeathDataPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="deathData" type="eCH-0011:deathDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectPersonAdditionalData">
+		<xs:sequence>
+			<xs:element name="correctPersonAdditionalDataPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="personAdditionalData" type="eCH-0021:personAdditionalData" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectPoliticalRightData">
+		<xs:sequence>
+			<xs:element name="correctPoliticalRightDataPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="politicalRightData" type="eCH-0021:politicalRightDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectDataLock">
+		<xs:sequence>
+			<xs:element name="correctDataLockPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="dataLock" type="eCH-0021:dataLockType"/>
+			<xs:element name="dataLockValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element name="dataLockValidTill" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventCorrectPaperLock">
+		<xs:sequence>
+			<xs:element name="correctPaperLockPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="paperLock" type="eCH-0021:paperLockType"/>
+			<xs:element name="paperLockValidFrom" type="xs:date" minOccurs="0"/>
+			<xs:element name="paperLockValidTill" type="xs:date" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventAnnounceDuplicate">
+		<xs:sequence>
+			<xs:element name="correctEntry" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="duplicateEntry" type="eCH-0044:personIdentificationType" maxOccurs="unbounded"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventDeletedInRegister">
+		<xs:sequence>
+			<xs:element name="deledetInRegisterPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeArmedForces">
+		<xs:sequence>
+			<xs:element name="changeArmedForcesPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="armedForcesData" type="eCH-0021:armedForcesDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeCivilDefense">
+		<xs:sequence>
+			<xs:element name="changeCivilDefensePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="civilDefenseData" type="eCH-0021:civilDefenseDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeFireService">
+		<xs:sequence>
+			<xs:element name="changeFireServicePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="fireServiceData" type="eCH-0021:fireServiceDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeHealthInsurance">
+		<xs:sequence>
+			<xs:element name="changeHealthInsurancePerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="healthInsuranceData" type="eCH-0021:healthInsuranceDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eventChangeMatrimonialInheritanceArrangement">
+		<xs:sequence>
+			<xs:element name="changeMatrimonialInheritanceArrangementPerson" type="eCH-0044:personIdentificationType"/>
+			<xs:element name="matrimonialInheritanceArrangementData" type="eCH-0021:matrimonialInheritanceArrangementDataType" minOccurs="0"/>
+			<xs:element ref="eCH-0020:extension" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="headerType">
+		<xs:complexContent>
+			<xs:extension base="eCH-0058:headerType">
+				<xs:sequence>
+					<xs:element name="dataLock" type="eCH-0021:dataLockType" minOccurs="0"/>
+					<xs:element name="dataLockValidFrom" type="xs:date" minOccurs="0"/>
+					<xs:element name="dataLockValidTill" type="xs:date" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="deliveryType">
+		<xs:sequence>
+			<xs:element name="deliveryHeader" type="eCH-0020:headerType"/>
+			<xs:choice>
+				<xs:element name="baseDelivery">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="messages" type="eCH-0020:eventBaseDelivery" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="keyExchange">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="messages" type="eCH-0020:eventKeyExchange" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dataRequest" type="eCH-0020:eventDataRequest"/>
+				<xs:element name="identificationConversion" type="eCH-0020:eventIdentificationConversion"/>
+				<xs:element name="announceDuplicate" type="eCH-0020:eventAnnounceDuplicate"/>
+				<xs:element name="deletedInRegister" type="eCH-0020:eventDeletedInRegister"/>
+				<xs:element name="adoption" type="eCH-0020:eventAdoption"/>
+				<xs:element name="childRelationship" type="eCH-0020:eventChildRelationship"/>
+				<xs:element name="naturalizeForeigner" type="eCH-0020:eventNaturalizeForeigner"/>
+				<xs:element name="naturalizeSwiss" type="eCH-0020:eventNaturalizeSwiss"/>
+				<xs:element name="undoCitizen" type="eCH-0020:eventUndoCitizen"/>
+				<xs:element name="undoSwiss" type="eCH-0020:eventUndoSwiss"/>
+				<xs:element name="changeOrigin" type="eCH-0020:eventChangeOrigin"/>
+				<xs:element name="birth" type="eCH-0020:eventBirth"/>
+				<xs:element name="marriage" type="eCH-0020:eventMarriage"/>
+				<xs:element name="partnership" type="eCH-0020:eventPartnership"/>
+				<xs:element name="separation" type="eCH-0020:eventSeparation"/>
+				<xs:element name="undoSeparation" type="eCH-0020:eventUndoSeparation"/>
+				<xs:element name="divorce" type="eCH-0020:eventDivorce"/>
+				<xs:element name="undoMarriage" type="eCH-0020:eventUndoMarriage"/>
+				<xs:element name="undoPartnership" type="eCH-0020:eventUndoPartnership"/>
+				<xs:element name="death" type="eCH-0020:eventDeath"/>
+				<xs:element name="missing" type="eCH-0020:eventMissing"/>
+				<xs:element name="undoMissing" type="eCH-0020:eventUndoMissing"/>
+				<xs:element name="maritalStatusPartner" type="eCH-0020:eventMaritalStatusPartner"/>
+				<xs:element name="changeName" type="eCH-0020:eventChangeName"/>
+				<xs:element name="changeSex" type="eCH-0020:eventChangeSex"/>
+				<xs:element name="moveIn" type="eCH-0020:eventMoveIn"/>
+				<xs:element name="move" type="eCH-0020:eventMove"/>
+				<xs:element name="contact" type="eCH-0020:eventContact"/>
+				<xs:element name="moveOut" type="eCH-0020:eventMoveOut"/>
+				<xs:element name="changeResidenceType" type="eCH-0020:eventChangeResidenceTypeType"/>
+				<xs:element name="changeReligion" type="eCH-0020:eventChangeReligion"/>
+				<xs:element name="changeOccupation" type="eCH-0020:eventChangeOccupation"/>
+				<xs:element name="guardianMeasure" type="eCH-0020:eventGuardianMeasure"/>
+				<xs:element name="undoGuardian" type="eCH-0020:eventUndoGuardian"/>
+				<xs:element name="changeGuardian" type="eCH-0020:eventChangeGuardian"/>
+				<xs:element name="changeNationality" type="eCH-0020:eventChangeNationality"/>
+				<xs:element name="changeResidencePermit" type="eCH-0020:eventEntryResidencePermit"/>
+				<xs:element name="dataLock" type="eCH-0020:eventDataLock"/>
+				<xs:element name="paperLock" type="eCH-0020:eventPaperLock"/>
+				<xs:element name="care" type="eCH-0020:eventCare"/>
+				<xs:element name="changeArmedForces" type="eCH-0020:eventChangeArmedForces"/>
+				<xs:element name="changeCivilDefense" type="eCH-0020:eventChangeCivilDefense"/>
+				<xs:element name="changeFireService" type="eCH-0020:eventChangeFireService"/>
+				<xs:element name="changeHealthInsurance" type="eCH-0020:eventChangeHealthInsurance"/>
+				<xs:element name="changeMatrimonialInheritanceArrangement" type="eCH-0020:eventChangeMatrimonialInheritanceArrangement"/>
+				<xs:element name="correctGuardianRelationship" type="eCH-0020:eventCorrectGuardianRelationship"/>
+				<xs:element name="correctParentalRelationship" type="eCH-0020:eventCorrectParentalRelationship"/>
+				<xs:element name="correctReporting" type="eCH-0020:eventCorrectReporting"/>
+				<xs:element name="correctOccupation" type="eCH-0020:eventCorrectOccupation"/>
+				<xs:element name="correctIdentification" type="eCH-0020:eventCorrectIdentification"/>
+				<xs:element name="correctName" type="eCH-0020:eventCorrectName"/>
+				<xs:element name="correctNationality" type="eCH-0020:eventCorrectNationality"/>
+				<xs:element name="correctContact" type="eCH-0020:eventCorrectContact"/>
+				<xs:element name="correctReligion" type="eCH-0020:eventCorrectReligion"/>
+				<xs:element name="correctPlaceOfOrigin" type="eCH-0020:eventCorrectPlaceOfOrigin"/>
+				<xs:element name="correctResidencePermit" type="eCH-0020:eventCorrectResidencePermit"/>
+				<xs:element name="correctMaritalInfo" type="eCH-0020:eventCorrectMaritalInfo"/>
+				<xs:element name="correctBirthInfo" type="eCH-0020:eventCorrectBirthInfo"/>
+				<xs:element name="correctDeathData" type="eCH-0020:eventCorrectDeathData"/>
+				<xs:element name="correctPersonAdditionalData" type="eCH-0020:eventCorrectPersonAdditionalData"/>
+				<xs:element name="correctPoliticalRightData" type="eCH-0020:eventCorrectPoliticalRightData"/>
+				<xs:element name="correctDataLock" type="eCH-0020:eventCorrectDataLock"/>
+				<xs:element name="correctPaperLock" type="eCH-0020:eventCorrectPaperLock"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="3.0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="infoType">
+		<xs:sequence>
+			<xs:element name="code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="250"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="textEnglish" type="eCH-0020:infoTextType" minOccurs="0"/>
+			<xs:element name="textGerman" type="eCH-0020:infoTextType" minOccurs="0"/>
+			<xs:element name="textFrench" type="eCH-0020:infoTextType" minOccurs="0"/>
+			<xs:element name="textItalian" type="eCH-0020:infoTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="infoTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="negativeReportType">
+		<xs:sequence>
+			<xs:element name="generalError" type="eCH-0020:infoType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="personError" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+						<xs:element name="errorInfo" type="eCH-0020:infoType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="positiveReportType">
+		<xs:sequence>
+			<xs:element name="generalResponse" type="eCH-0020:infoType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="personResponse" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="personIdentification" type="eCH-0044:personIdentificationType"/>
+						<xs:element name="response" type="eCH-0020:infoType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="delivery" type="eCH-0020:deliveryType"/>
+</xs:schema>

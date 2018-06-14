@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2015, Bruno Eberhard, bruno.eberhard@pop.ch
+	Copyright (C) 2018, Bruno Eberhard, bruno.eberhard@pop.ch
 	
 	The files in this package are part of Open-eCH.
 	
