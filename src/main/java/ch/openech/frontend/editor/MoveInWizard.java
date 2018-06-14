@@ -106,6 +106,10 @@ public class MoveInWizard extends Wizard<Person> {
 			return "Person eingeben";
 		}
 
+		public boolean hasNext() {
+			return true;
+		}
+		
 		@Override
 		public WizardStep<?> getNextStep() {
 			return moveInNextPersonWizardStep;
@@ -171,6 +175,10 @@ public class MoveInWizard extends Wizard<Person> {
 			return wizardData.nextPersons.get(personIndex);
 		}
 
+		public boolean hasNext() {
+			return true;
+		}
+		
 		@Override
 		public WizardStep<?> getNextStep() {
 			return moveInPersonWizardStep;
