@@ -47,7 +47,7 @@ public class EchSchemas {
 		List<File> xsdFiles = new ArrayList<>();
 		scanDirectory(dir, xsdFiles);
 		xsdFiles = removeMinorVersion(xsdFiles);
-		generate(xsdFiles);
+		read(xsdFiles);
 	}
 
 	private static void scanDirectory(File dir, List<File> files) {
@@ -57,7 +57,7 @@ public class EchSchemas {
 				.forEach(files::add);
 	}
 
-	private static void generate(List<File> xsdFiles) {
+	private static void read(List<File> xsdFiles) {
 		for (File file : xsdFiles) {
 			try (FileInputStream fis = new FileInputStream(file)) {
 				XsdModel model = new XsdModel(fis);
@@ -84,7 +84,9 @@ public class EchSchemas {
 		}
 
 		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
-		// sortedModels.sort(new ModelOrder());
+		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
+		
+		applyHandMadeChanges();
 		
 		Set<String> collapsed = new TreeSet<>();
 		sortedModels.forEach(m -> collapseToOlderVersion(m, xsdModels, collapsed));
@@ -111,17 +113,16 @@ public class EchSchemas {
 		
 		int schemaNumber = EchNamespaceUtil.extractSchemaNumber(namespace);
 		int majorVersion = EchNamespaceUtil.extractSchemaMajorVersion(namespace);
-		for (int version = 2; version <= majorVersion; version++) {
-			String versionNamespace = EchNamespaceUtil.schemaURI(schemaNumber, "" + version);
-			String previousVersionNamespace = EchNamespaceUtil.schemaURI(schemaNumber, "" + (version-1));
 
-			XsdModel m = xsdModels.get(versionNamespace);
+		for (int version = majorVersion - 1; version >= 0; version--) {
+			String previousVersionNamespace = EchNamespaceUtil.schemaURI(schemaNumber, "" + version);
+
 			XsdModel previousModel = xsdModels.get(previousVersionNamespace);
-			if (previousModel == null || m == null) {
+			if (previousModel == null) {
 				continue;
 			}
 			
-			for (MjEntity entity : m.getEntities()) {
+			for (MjEntity entity : model.getEntities()) {
 				MjEntity previousEntity = findEntity(previousModel, entity.name);
 				if (sameSignatore(entity, previousEntity)) {
 					entity.packageName = previousEntity.packageName;
@@ -142,21 +143,6 @@ public class EchSchemas {
 			return Arrays.equals(previousEntity.values.toArray(), entity.values.toArray());
 		}
 
-		if (!StringUtils.equals(previousEntity.minInclusive, entity.minInclusive)) {
-			return false;
-		}
-		if (!StringUtils.equals(previousEntity.maxInclusive, entity.maxInclusive)) {
-			return false;
-		}
-		
-//		if (!Objects.equals(previousEntity.minLength, entity.minLength)) {
-//			return false;
-//		}
-		
-		if (!Objects.equals(previousEntity.maxLength, entity.maxLength)) {
-			return false;
-		}
-		
 		if (previousEntity.properties.size() != entity.properties.size()) {
 			return false;
 		}
@@ -263,21 +249,29 @@ public class EchSchemas {
 		return s.toString();
 	}
 	
-	static {
-		File dir = new File("./src/main/xml");
-		readDirectory(dir);
-	}
-	
 	public static boolean filter(MjEntity entity) {
 		String name = entity.getClassName();
 		boolean skip = //
 				name.equals(DatePartiallyKnown.class.getSimpleName()) || // 
 				name.contains("Named") && name.contains("Id") || //
 				name.equals(YesNo.class.getSimpleName()) || //
+				name.startsWith(UidStructure.class.getSimpleName()) || //
 				false;
 		return !skip;
 	}
 	
+	static {
+		File dir = new File("./src/main/xml");
+		readDirectory(dir);
+	}
+
+	private static void applyHandMadeChanges() {
+		for (XsdModel model : xsdModels.values()) {
+			model.getEntities().forEach(EchSchemas::updateEntityType);
+			model.getEntities().forEach(EchSchemas::checkForMissingSizes);
+		}
+	}
+
 	private static void updateEntityType(MjEntity entity) {
 		if (entity.type == MjEntityType.ENTITY && entity.packageName.equals("ch.ech.ech0129.v4")) {
 			// bei 129 sind einige complexType auch als Element aufgeführt, wie z.B.
@@ -297,26 +291,31 @@ public class EchSchemas {
 				entity.type = MjEntityType.ENTITY;
 			}
 		}
+		
+		// avoid duplicate name between ech 44 and ech 129
+		if (entity.name.equals("PersonIdentification") && entity.packageName.contains("ech0129")) {
+			entity.name = "PersonOrOrganisation";
+		}
 	}
 
 	private static void checkForMissingSizes(MjEntity entity) {
 		for (MjProperty property : entity.properties) {
-			if (property.type.type == MjEntityType.String) {
-				if (property.size == null) {
+			if (property.size == null) {
+				if (property.type.type == MjEntityType.String) {
 					if (property.name.equals("uuid")) {
 						property.size = 36;
 					}
+				} else if (property.type.type == MjEntityType.Integer) {
+					if (property.name.equals("historyMunicipalityId")) {
+						property.size = 5;
+					}
 				}
-			}
+			} 
 		}
 	}
 	
 	public static void main(String[] args) throws Exception {
 		ClassGenerator generator = new ClassGenerator("./src/main/generated");
-		for (XsdModel model : xsdModels.values()) {
-			model.getEntities().forEach(EchSchemas::updateEntityType);
-			model.getEntities().forEach(EchSchemas::checkForMissingSizes);
-		}
 		for (XsdModel model : xsdModels.values()) {
 			Collection<MjEntity> entities = model.getEntities();
 			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
