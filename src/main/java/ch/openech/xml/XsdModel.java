@@ -124,6 +124,10 @@ public class XsdModel {
 		PREDEFINED_TYPES.put("namedPersonIdType", namedId);
 		PREDEFINED_TYPES.put("namedOrganisationIdType", namedId);
 		PREDEFINED_TYPES.put("namedIdType", namedId);
+		
+		MjEntity uidStructure = new MjEntity(defaultModel, UidStructure.class);
+		uidStructure.type = MjEntityType.DEPENDING_ENTITY;
+		PREDEFINED_TYPES.put("uidStructureType", uidStructure);
 	}
 
 	public XsdModel() {
@@ -431,10 +435,7 @@ public class XsdModel {
 
 		String minOccurs = element.getAttribute("minOccurs");
 		property.notEmpty = minOccurs == null || !minOccurs.equals("0");
-//		if (property.type != null && property.type.isPrimitiv()) {
-//			property.notEmpty = property.type.minLength != null && property.type.minLength > 0;
-//		}
-//		
+
 		String maxOccurs = element.getAttribute("maxOccurs");
 		if (!StringUtils.isEmpty(maxOccurs)) {
 			if ("unbounded".equals(maxOccurs)) {
