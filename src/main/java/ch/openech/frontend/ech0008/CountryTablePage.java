@@ -1,6 +1,6 @@
 package ch.openech.frontend.ech0008;
 
-import static ch.ech.ech0072.v1.Country.$;
+import static ch.ech.ech0072.Country.$;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.minimalj.frontend.form.element.TextFormElement;
 import org.minimalj.frontend.page.SimpleTableEditorPage;
 import org.minimalj.repository.query.By;
 
-import ch.ech.ech0072.v1.Country;
+import ch.ech.ech0008.Country;
 
 public class CountryTablePage extends SimpleTableEditorPage<Country> {
 

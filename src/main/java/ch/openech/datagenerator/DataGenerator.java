@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.minimalj.util.Codes;
 
-import ch.ech.ech0071.v1.Canton;
-import ch.ech.ech0071.v1.Municipality;
+import ch.ech.ech0071.Canton;
+import ch.ech.ech0071.Municipality;
 
 public class DataGenerator {
 

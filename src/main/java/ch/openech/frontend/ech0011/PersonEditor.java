@@ -5,8 +5,8 @@ import org.minimalj.frontend.editor.Editor.SimpleEditor;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.util.CloneHelper;
 
-import ch.ech.ech0011.v8.Person;
-import ch.ech.ech0044.v4.PersonIdentification;
+import ch.ech.ech0011.Person;
+import ch.ech.ech0044.PersonIdentification;
 
 public class PersonEditor extends SimpleEditor<Person> {
 

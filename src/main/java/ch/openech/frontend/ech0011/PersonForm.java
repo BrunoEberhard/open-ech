@@ -1,8 +1,8 @@
 package ch.openech.frontend.ech0011;
 
-import static ch.ech.ech0011.v8.Person.$;
+import static ch.ech.ech0011.Person.$;
 
-import ch.ech.ech0011.v8.Person;
+import ch.ech.ech0011.Person;
 import ch.openech.frontend.form.EchForm;
 
 public class PersonForm extends EchForm<Person> {

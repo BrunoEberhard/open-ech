@@ -4,11 +4,11 @@ import org.minimalj.backend.Backend;
 import org.minimalj.repository.query.By;
 import org.minimalj.transaction.Transaction;
 
-import ch.ech.ech0071.v1.Canton;
-import ch.ech.ech0071.v1.Municipality;
-import ch.ech.ech0071.v1.Nomenclature;
-import ch.ech.ech0072.v1.Countries;
-import ch.ech.ech0072.v1.Country;
+import ch.ech.ech0071.Canton;
+import ch.ech.ech0071.Municipality;
+import ch.ech.ech0071.Nomenclature;
+import ch.ech.ech0072.Countries;
+import ch.ech.ech0072.Country;
 import ch.openech.xml.EchReader;
 
 

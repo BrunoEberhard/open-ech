@@ -16,7 +16,7 @@ import org.minimalj.util.CloneHelper;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
 
-import ch.ech.ech0071.v1.Municipality;
+import ch.ech.ech0071.Municipality;
 import ch.openech.datagenerator.DataGenerator;
 
 public class MunicipalityFormElement extends AbstractFormElement<Municipality> implements Mocking {

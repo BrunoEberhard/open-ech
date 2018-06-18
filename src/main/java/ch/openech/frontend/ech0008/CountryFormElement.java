@@ -12,7 +12,8 @@ import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
 
-import ch.ech.ech0072.v1.Country;
+import ch.ech.ech0072.Country;
+
 
 public class CountryFormElement extends AbstractFormElement<Country> implements Mocking {
 	private static final Logger logger = Logger.getLogger(CountryFormElement.class.getName());

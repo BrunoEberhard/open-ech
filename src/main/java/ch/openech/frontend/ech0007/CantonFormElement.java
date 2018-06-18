@@ -10,7 +10,7 @@ import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
-import ch.ech.ech0071.v1.Canton;
+import ch.ech.ech0071.Canton;
 import ch.openech.datagenerator.DataGenerator;
 
 public class CantonFormElement extends AbstractFormElement<Canton> implements Mocking {

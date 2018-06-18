@@ -15,12 +15,12 @@ import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
-import ch.ech.ech0007.v3.CantonAbbreviation;
-import ch.ech.ech0007.v4.SwissMunicipality;
-import ch.ech.ech0011.v8.GeneralPlace;
-import ch.ech.ech0011.v8.Unknown;
-import ch.ech.ech0071.v1.Municipality;
-import ch.ech.ech0072.v1.Country;
+import ch.ech.ech0007.CantonAbbreviation;
+import ch.ech.ech0007.SwissMunicipality;
+import ch.ech.ech0011.GeneralPlace;
+import ch.ech.ech0011.Unknown;
+import ch.ech.ech0071.Municipality;
+import ch.ech.ech0072.Country;
 import ch.openech.datagenerator.MockName;
 
 public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> implements Mocking {

@@ -5,7 +5,7 @@ import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.StringUtils;
 
-import ch.ech.ech0011.v8.ForeignerName;
+import ch.ech.ech0011.ForeignerName;
 
 public class ForeignerNameFormElement extends ObjectFormElement<ForeignerName> {
 
