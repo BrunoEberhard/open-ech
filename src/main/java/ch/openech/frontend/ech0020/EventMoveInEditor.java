@@ -7,12 +7,12 @@ import org.minimalj.frontend.editor.Editor.NewObjectEditor;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.util.CloneHelper;
 
-import ch.ech.ech0011.v8.MaritalStatus;
-import ch.ech.ech0011.v8.NationalityStatus;
-import ch.ech.ech0011.v8.Person;
+import ch.ech.ech0011.MaritalStatus;
+import ch.ech.ech0011.NationalityStatus;
+import ch.ech.ech0011.Person;
 import ch.ech.ech0020.v3.BaseDeliveryPerson;
 import ch.ech.ech0020.v3.EventMoveIn;
-import ch.ech.ech0044.v4.PersonIdentification;
+import ch.ech.ech0044.PersonIdentification;
 import ch.openech.frontend.ech0011.PersonForm;
 
 public class EventMoveInEditor extends NewObjectEditor<Person> {

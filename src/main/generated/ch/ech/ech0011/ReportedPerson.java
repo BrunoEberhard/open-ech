@@ -1,4 +1,4 @@
-package ch.ech.ech0011.v8;
+package ch.ech.ech0011;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.util.CloneHelper;
 
-import ch.ech.ech0007.v4.SwissMunicipality;
+import ch.ech.ech0007.SwissMunicipality;
 
 //handmade
 public class ReportedPerson {

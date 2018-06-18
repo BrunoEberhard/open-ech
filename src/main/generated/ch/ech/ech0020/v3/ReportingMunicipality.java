@@ -9,17 +9,17 @@ import org.minimalj.model.Keys;
 public class ReportingMunicipality {
 	public static final ReportingMunicipality $ = Keys.of(ReportingMunicipality.class);
 
-	public ch.ech.ech0007.v4.SwissMunicipality reportingMunicipality;
-	public ch.ech.ech0020.v2.FederalRegister federalRegister;
+	public ch.ech.ech0007.SwissMunicipality reportingMunicipality;
+	public FederalRegister federalRegister;
 	public LocalDate arrivalDate;
-	public ch.ech.ech0011.v8.Destination comesFrom;
-	public ch.ech.ech0011.v8.DwellingAddress dwellingAddress;
+	public ch.ech.ech0011.Destination comesFrom;
+	public ch.ech.ech0011.DwellingAddress dwellingAddress;
 	public LocalDate departureDate;
-	public ch.ech.ech0011.v8.Destination goesTo;
+	public ch.ech.ech0011.Destination goesTo;
 	
 	//
 
-	public final ch.ech.ech0007.v4.SwissMunicipality mainResidence = new ch.ech.ech0007.v4.SwissMunicipality();
-	public List<ch.ech.ech0007.v4.SwissMunicipality> secondaryResidence;
+	public final ch.ech.ech0007.SwissMunicipality mainResidence = new ch.ech.ech0007.SwissMunicipality();
+	public List<ch.ech.ech0007.SwissMunicipality> secondaryResidence;
 
 }

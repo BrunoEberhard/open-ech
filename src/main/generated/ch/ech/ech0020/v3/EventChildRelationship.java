@@ -6,7 +6,7 @@ import java.util.List;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 
-import ch.ech.ech0021.v3.TypeOfRelationship;
+import ch.ech.ech0021.TypeOfRelationship;
 
 //handmade
 public class EventChildRelationship {
@@ -19,9 +19,9 @@ public class EventChildRelationship {
 
 		public static class Partner {
 
-			public ch.ech.ech0044.v4.PersonIdentification personIdentification;
-			public ch.ech.ech0044.v4.PersonIdentificationLight personIdentificationPartner;
-			public ch.ech.ech0010.v5.PersonMailAddress address;
+			public ch.ech.ech0044.PersonIdentification personIdentification;
+			public ch.ech.ech0044.PersonIdentificationLight personIdentificationPartner;
+			public ch.ech.ech0010.PersonMailAddress address;
 		}
 		public final Partner partner = new Partner();
 		public LocalDate relationshipValidFrom;
@@ -29,8 +29,8 @@ public class EventChildRelationship {
 		@NotEmpty
 		public TypeOfRelationship typeOfRelationship;
 		@NotEmpty
-		public ch.ech.ech0021.v7.Care care;
-		public ch.ech.ech0021.v7.NameOfParent nameOfParentAtEvent;
+		public ch.ech.ech0021.Care care;
+		public ch.ech.ech0021.NameOfParent nameOfParentAtEvent;
 	}
 	public List<Parent> addParent;
 	public List<Parent> removeParent;

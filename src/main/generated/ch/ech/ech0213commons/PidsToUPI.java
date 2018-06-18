@@ -1,4 +1,4 @@
-package ch.ech.ech0213commons.v1;
+package ch.ech.ech0213commons;
 
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;

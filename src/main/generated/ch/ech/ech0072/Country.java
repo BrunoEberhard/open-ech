@@ -1,4 +1,4 @@
-package ch.ech.ech0072.v1;
+package ch.ech.ech0072;
 
 import java.time.LocalDate;
 import java.util.Locale;
