@@ -9,10 +9,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.minimalj.model.test.ModelTest;
 
-import ch.ech.ech0071.v1.Canton;
-import ch.ech.ech0071.v1.CantonAbbreviation;
-import ch.ech.ech0071.v1.Nomenclature;
-import ch.ech.ech0098.v3.OrganisationRoot;
+import ch.ech.ech0071.Canton;
+import ch.ech.ech0071.CantonAbbreviation;
+import ch.ech.ech0071.Nomenclature;
+import ch.ech.ech0098.OrganisationRoot;
 
 public class EchReaderTest {
 

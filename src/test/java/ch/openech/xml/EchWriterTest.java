@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import ch.ech.ech0071.v1.Canton;
-import ch.ech.ech0071.v1.CantonAbbreviation;
-import ch.ech.ech0071.v1.Nomenclature;
+import ch.ech.ech0071.Canton;
+import ch.ech.ech0071.CantonAbbreviation;
+import ch.ech.ech0071.Nomenclature;
 
 public class EchWriterTest {
 
