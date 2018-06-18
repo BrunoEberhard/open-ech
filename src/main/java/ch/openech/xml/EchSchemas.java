@@ -46,7 +46,6 @@ public class EchSchemas {
 	private static void readDirectory(File dir) {
 		List<File> xsdFiles = new ArrayList<>();
 		scanDirectory(dir, xsdFiles);
-		xsdFiles = removeMinorVersion(xsdFiles);
 		read(xsdFiles);
 	}
 
@@ -84,10 +83,10 @@ public class EchSchemas {
 		}
 
 		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
-		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
 		
 		applyHandMadeChanges();
-		
+
+		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
 		Set<String> collapsed = new TreeSet<>();
 		sortedModels.forEach(m -> collapseToOlderVersion(m, xsdModels, collapsed));
 		
@@ -125,7 +124,7 @@ public class EchSchemas {
 			for (MjEntity entity : model.getEntities()) {
 				MjEntity previousEntity = findEntity(previousModel, entity.name);
 				if (sameSignatore(entity, previousEntity)) {
-					entity.packageName = previousEntity.packageName;
+					previousEntity.packageName = entity.packageName;
 				}
 			}
 		}
@@ -173,43 +172,6 @@ public class EchSchemas {
 		return null;
 	}
 
-	// eine neue minor version wird nur publiziert, wenn sie vollständig rückwärtskompatibel ist.
-	// Daher könnere frühere minor Version (der gleichen major Version) einfach ausgefiltert werden
-	private static List<File> removeMinorVersion(List<File> xsdFiles) {
-		Set<String> names = new TreeSet<>(xsdFiles.stream().map(file -> file.getName()).collect(Collectors.toSet()));
-		List<File> result = new ArrayList<>();
-		for (File file : xsdFiles) {
-			if (!hasNewerVersion(file.getName(), names)) {
-				result.add(file);
-			}
-		}
-		return result;
-	}
-
-	private static boolean hasNewerVersion(String test, Collection<String> names) {
-		int minorVersion = EchNamespaceUtil.extractSchemaMinorVersion(test);
-		if (minorVersion >= 0) {
-			int majorVersion = EchNamespaceUtil.extractSchemaMajorVersion(test);
-			int schemaNumber = EchNamespaceUtil.extractSchemaNumber(test);
-			if (majorVersion > 0 && schemaNumber > 0) {
-				for (String name : names) {
-					int thisSchemaNumber = EchNamespaceUtil.extractSchemaNumber(name);
-					if (thisSchemaNumber == schemaNumber) {
-						int thisMajorVersion = EchNamespaceUtil.extractSchemaMajorVersion(name);
-						if (thisMajorVersion == majorVersion) {
-							int thisMinorVersion = EchNamespaceUtil.extractSchemaMinorVersion(name);
-							if (thisMinorVersion > minorVersion) {
-								LOG.fine("skip " + schemaNumber + "-" + majorVersion + "." +  minorVersion);
-								return true;
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
 	public static Collection<MjModel> getModels() {
 		return models.values();
 	}
@@ -237,12 +199,20 @@ public class EchSchemas {
 			s.insert(0, hostElement);
 		}
 		
+		int schemaNumber = EchNamespaceUtil.extractSchemaNumber(namespace);
 		String path[] = uri.getPath().split("/");
 		for (String pathElement : path) {
 			if (StringUtils.equals(pathElement, "xmlns", "")) continue;
-			s.append(".");
 			pathElement = pathElement.toLowerCase().replace("-", "");
-			if (Character.isDigit(pathElement.charAt(0))) s.append("v");
+			if (Character.isDigit(pathElement.charAt(0))) {
+				if (schemaNumber == 20 || schemaNumber == 211) {
+					s.append(".v");
+				} else {
+					continue;
+				}
+			} else {
+				s.append(".");
+			}
 			s.append(pathElement);
 		}
 		
@@ -316,7 +286,11 @@ public class EchSchemas {
 	
 	public static void main(String[] args) throws Exception {
 		ClassGenerator generator = new ClassGenerator("./src/main/generated");
-		for (XsdModel model : xsdModels.values()) {
+
+		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
+		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
+
+		for (XsdModel model : sortedModels) {
 			Collection<MjEntity> entities = model.getEntities();
 			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
 			generator.generate(entities);

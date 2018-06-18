@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -28,6 +29,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import ch.openech.xml.write.EchNamespaceUtil;
 
 public class XsdModel {
 	public static final XsdModel $ = Keys.of(XsdModel.class);
@@ -170,6 +173,15 @@ public class XsdModel {
 		for (String dependency : namespaceByPrefix.values()) {
 			if (models.containsKey(dependency)) {
 				models.get(dependency).read(models);
+			} else {
+				int schemaNumber = EchNamespaceUtil.extractSchemaNumber(dependency);
+				if (schemaNumber > 0) {
+					for (Entry<String, XsdModel> m : models.entrySet()) {
+						if (EchNamespaceUtil.extractSchemaNumber(m.getKey()) == schemaNumber) {
+							m.getValue().read(models);
+						}
+					}
+				}
 			}
 		}
 		
@@ -463,12 +475,7 @@ public class XsdModel {
 					// der namespace wird hier nicht gecheckt
 					return PREDEFINED_TYPES.get(parts[1]);
 				} else if (!StringUtils.equals(namespace, this.namespace)) {
-					// ech 173 verwendet die forgiving schemas. Die werden zur Zeit nicht
-					// explizit erzeugt. Daher werden die namespaces konviertiert von
-					// http://www.ech.ch/xmlns/eCH-0021-f/7 zu
-					// http://www.ech.ch/xmlns/eCH-0021/7
-					String namespaceWithoutForgiving = namespace.replaceAll("-f/", "/");
-					XsdModel xsdModel = models.get(namespaceWithoutForgiving);
+					XsdModel xsdModel = findModel(namespace);
 					if (xsdModel != null) {
 						return xsdModel.findEntity(parts[1]);
 					} else {
@@ -485,6 +492,17 @@ public class XsdModel {
 		} else {
 			return null;
 		}
+	}
+	
+	private XsdModel findModel(String namespace) {
+		// ech 173 verwendet die forgiving schemas. Die werden zur Zeit nicht
+		// explizit erzeugt. Daher werden die namespaces konviertiert von
+		// http://www.ech.ch/xmlns/eCH-0021-f/7 zu
+		// http://www.ech.ch/xmlns/eCH-0021/7
+		String namespaceWithoutForgiving = namespace.replaceAll("-f/", "/");
+
+		XsdModel xsdModel = models.get(namespaceWithoutForgiving);
+		return xsdModel;
 	}
 
 }
