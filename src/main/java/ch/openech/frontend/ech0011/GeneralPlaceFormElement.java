@@ -20,14 +20,14 @@ import ch.ech.ech0007.SwissMunicipality;
 import ch.ech.ech0011.GeneralPlace;
 import ch.ech.ech0011.Unknown;
 import ch.ech.ech0071.Municipality;
-import ch.ech.ech0072.Country;
+import ch.ech.ech0072.CountryInformation;
 import ch.openech.datagenerator.MockName;
 
 public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> implements Mocking {
 	private static final Logger logger = Logger.getLogger(GeneralPlaceFormElement.class.getName());
 
-	private final List<Country> countries;
-	private final Input<Country> comboBoxCountry;
+	private final List<CountryInformation> countries;
+	private final Input<CountryInformation> comboBoxCountry;
 
 	private final List<Municipality> municipalities;
 	private final Input<String> textFieldMunicipality;
@@ -36,7 +36,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 
 	public GeneralPlaceFormElement(PropertyInterface property) {
 		super(property);
-		countries = Codes.get(Country.class);
+		countries = Codes.get(CountryInformation.class);
 		municipalities = Codes.get(Municipality.class);
 		Collections.sort(municipalities);
 		
@@ -49,7 +49,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 		componentGroup = Frontend.getInstance().createComponentGroup(comboBoxCountry, textFieldMunicipality);
 	}
 
-	private Country findCountry(String countryIdISO2) {
+	private CountryInformation findCountry(String countryIdISO2) {
 		return countries.stream().filter(country -> StringUtils.equals(countryIdISO2, country.iso2Id)).findFirst().orElse(null);
 	}
 	
@@ -86,7 +86,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 	public GeneralPlace getValue() {
 		GeneralPlace place = new GeneralPlace();
 		
-		Country country = comboBoxCountry.getValue();
+		CountryInformation country = comboBoxCountry.getValue();
 		if (country != null) {
 			if (!"CH".equals(country.iso2Id)) {
 				place.foreignCountry = new GeneralPlace.ForeignCountry();
@@ -131,7 +131,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 			}
 		} else {
 			int index = (int)(Math.random() * countries.size());
-			Country country = countries.get(index);
+			CountryInformation country = countries.get(index);
 			place.foreignCountry = new GeneralPlace.ForeignCountry();
 			place.foreignCountry.country.countryId = country.id;
 			place.foreignCountry.country.countryIdISO2 = country.iso2Id;
@@ -146,7 +146,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 
 		@Override
 		public List<String> search(String query) {
-			Country country = comboBoxCountry.getValue();
+			CountryInformation country = comboBoxCountry.getValue();
 			if (country != null && !"CH".equals(country.iso2Id) || query == null || query.length() < 1) {
 				return Collections.emptyList();
 			} else {

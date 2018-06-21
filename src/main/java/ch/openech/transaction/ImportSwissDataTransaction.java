@@ -8,7 +8,7 @@ import ch.ech.ech0071.Canton;
 import ch.ech.ech0071.Municipality;
 import ch.ech.ech0071.Nomenclature;
 import ch.ech.ech0072.Countries;
-import ch.ech.ech0072.Country;
+import ch.ech.ech0072.CountryInformation;
 import ch.openech.xml.EchReader;
 
 
@@ -20,13 +20,13 @@ public class ImportSwissDataTransaction implements Transaction<Void> {
 
 	@Override
 	public Void execute() {
-		if (!Backend.find(Country.class, By.limit(1)).isEmpty()) {
+		if (!Backend.find(CountryInformation.class, By.limit(1)).isEmpty()) {
 			return null;
 		}
 		
 		try (EchReader reader = new EchReader(getClass().getResourceAsStream("/eCH0072.xml"))) {
 			Countries countries = (Countries) reader.read();
-			for (Country country : countries.country) {
+			for (CountryInformation country : countries.country) {
 				Backend.insert(country);
 			}
 		}

@@ -1,6 +1,6 @@
 package ch.openech.frontend.ech0008;
 
-import static ch.ech.ech0072.Country.$;
+import static ch.ech.ech0072.CountryInformation.$;
 
 import java.util.List;
 

@@ -10,8 +10,11 @@ import org.minimalj.frontend.page.PageAction;
 import ch.ech.ech0011.Person;
 import ch.ech.ech0071.Canton;
 import ch.ech.ech0071.Municipality;
-import ch.ech.ech0072.Country;
+import ch.ech.ech0072.CountryInformation;
 import ch.ech.ech0098.OrganisationRoot;
+import ch.ech.ech0129.Building;
+import ch.ech.ech0129.Dwelling;
+import ch.ech.ech0211.v1.PlanningPermissionApplication;
 import ch.openech.frontend.ech0007.CantonTablePage;
 import ch.openech.frontend.ech0007.MunicipalityTablePage;
 import ch.openech.frontend.ech0020.EventMoveInEditor;
@@ -31,7 +34,7 @@ public class OpenEch extends Application {
 	
 	@Override
 	public Class<?>[] getEntityClasses() {
-		return new Class<?>[] { Person.class, Country.class, Canton.class, Municipality.class, OrganisationRoot.class };
+		return new Class<?>[] { Person.class, CountryInformation.class, Canton.class, Municipality.class, OrganisationRoot.class, Building.class, Dwelling.class, PlanningPermissionApplication.class };
 	}
 	
 //	public static void main(String[] args) {
