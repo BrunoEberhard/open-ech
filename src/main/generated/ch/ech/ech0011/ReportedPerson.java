@@ -1,5 +1,6 @@
 package ch.ech.ech0011;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.minimalj.model.Keys;
@@ -91,7 +92,71 @@ public class ReportedPerson {
 		public ResidenceData getSecondaryResidence() {
 			return residenceData;
 		}
+
+		// hies in ech 11 früher so
+		public ResidenceData getSecondaryResidenceInformation() {
+			return residenceData;
+		}
 	}
 
+	//
+	
+	private final AnyPerson anyPerson = new AnyPerson();
 
+	public AnyPerson getAnyPerson() {
+		return anyPerson;
+	}
+
+	public class AnyPerson {
+
+		private Swiss swiss;
+		private Foreigner foreigner;
+
+		public class Swiss {
+
+			public List<PlaceOfOrigin> placeOfOrigin;
+		}
+
+		public class Foreigner {
+			public ch.ech.ech0006.ResidencePermit getResidencePermit() {
+				return person.residencePermit.residencePermit;
+			}
+
+			public void setResidencePermit(ch.ech.ech0006.ResidencePermit residencePermit) {
+				person.residencePermit.residencePermit = residencePermit;
+			}
+
+			public LocalDate getResidencePermitTill() {
+				return person.residencePermit.residencePermitValidTill;
+			}
+
+			public void setResidencePermitTill(LocalDate residencePermitTill) {
+				person.residencePermit.residencePermitValidTill = residencePermitTill;
+			}
+
+			public String getNameOnPassport() {
+				return person.nameData.nameOnForeignPassport.firstName;
+			}
+
+			public void setNameOnPassport(String nameOnPassport) {
+				// ignored
+			}
+		}
+
+		public Swiss getSwiss() {
+			return swiss;
+		}
+
+		public void setSwiss(Swiss swiss) {
+			this.swiss = swiss;
+		}
+
+		public Foreigner getForeigner() {
+			return foreigner;
+		}
+
+		public void setForeigner(Foreigner foreigner) {
+			this.foreigner = foreigner;
+		}
+	}
 }

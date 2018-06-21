@@ -11,9 +11,11 @@ import org.minimalj.util.Codes;
 import org.minimalj.util.LocaleContext;
 import org.minimalj.util.StringUtils;
 
+import ch.ech.ech0008.Country;
+
 //handmade
-public class Country implements Code, Rendering {
-	public static final Country $ = Keys.of(Country.class);
+public class CountryInformation implements Code, Rendering {
+	public static final CountryInformation $ = Keys.of(CountryInformation.class);
 
 	@Size(4)
 	public Integer id;
@@ -63,7 +65,15 @@ public class Country implements Code, Rendering {
 		}
 	}
 	
-	public static Country getSwitzerland() {
-		return Codes.findCode(Country.class, 8100);
+	public static CountryInformation getSwitzerland() {
+		return Codes.findCode(CountryInformation.class, 8100);
+	}
+
+	public Country getCountry() {
+		Country country = new Country();
+		country.countryId = this.id;
+		country.countryIdISO2 = this.iso2Id;
+		country.countryNameShort = getShortName();
+		return country;
 	}
 }

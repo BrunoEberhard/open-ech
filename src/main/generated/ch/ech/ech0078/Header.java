@@ -1,4 +1,4 @@
-package ch.ech.ech0058;
+package ch.ech.ech0078;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,36 +39,32 @@ public class Header {
 	public String messageType;
 	@Size(36)
 	public String subMessageType;
-	public final SendingApplication sendingApplication = new SendingApplication();
-	public PartialDelivery partialDelivery;
+	public final ch.ech.ech0058.SendingApplication sendingApplication = new ch.ech.ech0058.SendingApplication();
+	public ch.ech.ech0058.PartialDelivery partialDelivery;
 	@Size(100)
 	public String subject;
+	public List<PersonObject> object;
 	@Size(250)
 	public String comment;
 	@NotEmpty
 	public LocalDateTime messageDate;
 	public LocalDateTime initialMessageDate;
+	@NotEmpty
 	public LocalDate eventDate;
 	public LocalDate modificationDate;
+
+	public enum Action { _1, _3, _4, _5, _6, _7, _10, _12;	}
 	@NotEmpty
 	public Action action;
-	public List<byte[]> attachment;
+	public List<Attachment> attachment;
 	@NotEmpty
 	public Boolean testDeliveryFlag;
-	public Boolean responseExpected;
-	public Boolean businessCaseClosed;
-	public List<NamedMetaData> namedMetaData;
-	public byte[] extension;
+	@Size(250)
+	public String testData;
 	
-	// andere (falsche) Schreibweise in früheren Versionen
+	public final Extension extension = new Extension();
 	
-	public String getOriginalSenderID() {
-		return originalSenderId;
-	}
-	
-	public void setOriginalSenderID(String originalSenderId) {
-		this.originalSenderId = originalSenderId;
-	}
+	//
 	
 	public String getOurBusinessReferenceID() {
 		return ourBusinessReferenceId;
@@ -78,9 +74,11 @@ public class Header {
 		this.ourBusinessReferenceId = ourBusinessReferenceId;
 	}
 	
-	// folgende elemente existieren in neueren Versionen nicht mehr
+	public String getOriginalSenderID() {
+		return originalSenderId;
+	}
 	
-	public List<byte[]> object;
-	
-	public byte[] testData;
+	public void setOriginalSenderID(String originalSenderId) {
+		this.originalSenderId = originalSenderId;
+	}
 }

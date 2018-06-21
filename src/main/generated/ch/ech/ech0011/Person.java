@@ -50,7 +50,7 @@ public class Person {
 	
 	// PersonAddOn
 	
-	public PersonAdditionalData personAdditionalData;
+	public final PersonAdditionalData personAdditionalData = new PersonAdditionalData();
 	public PoliticalRightData politicalRightData;
 	public BirthAddonData birthAddonData;
 	public LockData lockData;
@@ -145,6 +145,22 @@ public class Person {
 		
 		public ContactData getContact() {
 			return contactData;
+		}
+		
+		public String getLanguageOfCorrespondance() {
+			return personAdditionalData.languageOfCorrespondance;
+		}
+
+		public void setLanguageOfCorrespondance(String languageOfCorrespondance) {
+			personAdditionalData.languageOfCorrespondance = languageOfCorrespondance;
+		}
+		
+		public String getReligion() {
+			return religionData.religion;
+		}
+		
+		public void setReligion(String religion) {
+			religionData.religion = religion;
 		}
 	}
 	
