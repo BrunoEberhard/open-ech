@@ -459,6 +459,9 @@ public class XsdModel {
 					property.size = size;
 				}
 			}
+			if (property.propertyType == MjPropertyType.LIST && property.type.isEnumeration()) {
+				property.propertyType = MjPropertyType.ENUM_SET;
+			}
 		}
 		
 		return property;
