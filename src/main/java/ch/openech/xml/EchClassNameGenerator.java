@@ -25,6 +25,9 @@ public class EchClassNameGenerator {
 			name = "Address147";
 		} else if (StringUtils.equals(name, "Country") && t.packageName.contains("0072")) {
 			name = "CountryInformation";
+		} else if (StringUtils.equals(name, "PersonIdentification") && t.packageName.contains("0129")) {
+			// avoid duplicate name between ech 44 and ech 129
+			name = "PersonOrOrganisation";
 		}
 		return name;
 	}

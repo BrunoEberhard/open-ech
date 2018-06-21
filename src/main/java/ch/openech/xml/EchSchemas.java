@@ -267,11 +267,6 @@ public class EchSchemas {
 				entity.type = MjEntityType.ENTITY;
 			}
 		}
-		
-		// avoid duplicate name between ech 44 and ech 129
-		if (entity.name.equals("PersonIdentification") && entity.packageName.contains("ech0129")) {
-			entity.name = "PersonOrOrganisation";
-		}
 	}
 
 	private static void checkForMissingSizes(MjEntity entity) {
