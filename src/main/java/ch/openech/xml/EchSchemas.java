@@ -16,7 +16,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+import org.minimalj.metamodel.generator.ClassGenerator;
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.metamodel.model.MjEntity.MjEntityType;
 import org.minimalj.metamodel.model.MjModel;
@@ -29,8 +31,7 @@ import ch.openech.xml.write.EchNamespaceUtil;
 public class EchSchemas {
 	private static Logger LOG = Logger.getLogger(EchSchemas.class.getName());
 
-	// namespace -> package
-	private static Map<String, String> packageByNamespace = new HashMap<>();
+	// package -> namespace
 	private static Map<String, String> namespaceByPackage = new HashMap<>();
 
 	// namespace -> MjModel
@@ -80,7 +81,6 @@ public class EchSchemas {
 			model.getEntities().forEach(e -> e.name = EchClassNameGenerator.apply(e));
 			
 			namespaceByPackage.put(packageName, model.getNamespace());
-			packageByNamespace.put(model.getNamespace(), packageName);
 		}
 		
 		applyHandMadeChanges();
@@ -284,20 +284,16 @@ public class EchSchemas {
 	}
 	
 	public static void main(String[] args) throws Exception {
-//		ClassGenerator generator = new ClassGenerator("./src/main/generated");
+		ClassGenerator generator = new ClassGenerator("./src/main/generated");
 
-		for (Map.Entry entry : namespaceByPackage.entrySet()) {
-			System.out.println(entry.getKey() + " -> " + entry.getValue());
+		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
+		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
+
+		for (XsdModel model : sortedModels) {
+			Collection<MjEntity> entities = model.getEntities();
+			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
+			generator.generate(entities);
 		}
-		
-//		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
-//		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
-//
-//		for (XsdModel model : sortedModels) {
-//			Collection<MjEntity> entities = model.getEntities();
-//			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
-//			generator.generate(entities);
-//		}
 	}
 	
 }
