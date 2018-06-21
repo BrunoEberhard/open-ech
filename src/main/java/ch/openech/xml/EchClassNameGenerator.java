@@ -12,8 +12,21 @@ public class EchClassNameGenerator {
 		}
 		if (name.endsWith("Type")) {
 			name = name.substring(0, name.length() - 4);
+			if (name.endsWith("_")) {
+				name = name.substring(0, name.length() - 1);
+			}
 		}
-		return StringUtils.upperFirstChar(name);
+		name = StringUtils.upperFirstChar(name);
+		if (StringUtils.equals(name, "Object", "Class", "Package", "Import", "Public")) {
+			name += "_";
+		} else if (StringUtils.equals(name, "PartnerShipAbolition")) {
+			name = "PartnershipAbolition";
+		} else if (StringUtils.equals(name, "Address") && t.packageName.contains("0147")) {
+			name = "Address147";
+		} else if (StringUtils.equals(name, "Country") && t.packageName.contains("0072")) {
+			name = "CountryInformation";
+		}
+		return name;
 	}
 
 }
