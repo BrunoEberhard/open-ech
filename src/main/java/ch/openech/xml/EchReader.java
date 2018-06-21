@@ -115,7 +115,8 @@ public class EchReader implements AutoCloseable {
 				
 				StartElement startElement = event.asStartElement();
 				String elementName = startElement.getName().getLocalPart();
-					
+				elementName = StringUtils.lowerFirstChar(elementName);
+				
 				PropertyInterface property = Properties.getProperty(clazz, elementName);
 				if (property != null) {
 					LOG.fine("Element: " + elementName +" -> Property: " + property.getPath());
