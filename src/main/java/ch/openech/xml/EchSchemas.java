@@ -226,6 +226,12 @@ public class EchSchemas {
 				name.contains("Named") && name.contains("Id") || //
 				name.equals(YesNo.class.getSimpleName()) || //
 				name.startsWith(UidStructure.class.getSimpleName()) || //
+				// die Extension von ech 0078 ist komplett etwas anderes als bei ech 0020
+				name.equals("Extension") && !entity.packageName.equals("ch.ech.ech0078" )|| //
+				// bei den PersonAddon sind die Versionen 3 und 4 recht unterschiedlich
+				// das anzugleichen macht viel vergebliche Mühe, diese Elemente werden
+				// kaum je eigenständig gebrauchtw werden.
+				name.startsWith("PersonAddon") && entity.packageName.startsWith("ch.ech.ech0021") || //
 				false;
 		return !skip;
 	}
