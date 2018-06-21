@@ -16,9 +16,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-import org.minimalj.metamodel.generator.ClassGenerator;
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.metamodel.model.MjEntity.MjEntityType;
 import org.minimalj.metamodel.model.MjModel;
@@ -69,7 +67,10 @@ public class EchSchemas {
 			}
 		}
 
-		for (XsdModel model : xsdModels.values()) {
+		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
+		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
+
+		for (XsdModel model : sortedModels) {
 			model.read(xsdModels);
 			LOG.info("Read entities of " + model.getNamespace());
 
@@ -81,12 +82,9 @@ public class EchSchemas {
 			namespaceByPackage.put(packageName, model.getNamespace());
 			packageByNamespace.put(model.getNamespace(), packageName);
 		}
-
-		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
 		
 		applyHandMadeChanges();
 
-		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
 		Set<String> collapsed = new TreeSet<>();
 		sortedModels.forEach(m -> collapseToOlderVersion(m, xsdModels, collapsed));
 		
@@ -286,16 +284,20 @@ public class EchSchemas {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		ClassGenerator generator = new ClassGenerator("./src/main/generated");
+//		ClassGenerator generator = new ClassGenerator("./src/main/generated");
 
-		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
-		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
-
-		for (XsdModel model : sortedModels) {
-			Collection<MjEntity> entities = model.getEntities();
-			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
-			generator.generate(entities);
+		for (Map.Entry entry : namespaceByPackage.entrySet()) {
+			System.out.println(entry.getKey() + " -> " + entry.getValue());
 		}
+		
+//		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
+//		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
+//
+//		for (XsdModel model : sortedModels) {
+//			Collection<MjEntity> entities = model.getEntities();
+//			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
+//			generator.generate(entities);
+//		}
 	}
 	
 }
