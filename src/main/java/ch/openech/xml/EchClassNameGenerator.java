@@ -28,7 +28,11 @@ public class EchClassNameGenerator {
 		} else if (StringUtils.equals(name, "PersonIdentification") && t.packageName.contains("0129")) {
 			// avoid duplicate name between ech 44 and ech 129
 			name = "PersonOrOrganisation";
+		} else if (StringUtils.equals(name, "NameOfParentAtBirth")) {
+			// NameOfParent existiert schon handmade, damit wird nix erzeugt
+			name = "NameOfParent";
 		}
+		
 		return name;
 	}
 

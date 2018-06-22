@@ -230,6 +230,7 @@ public class EchSchemas {
 				// das anzugleichen macht viel vergebliche Mühe, diese Elemente werden
 				// kaum je eigenständig gebrauchtw werden.
 				name.startsWith("PersonAddon") && entity.packageName.startsWith("ch.ech.ech0021") || //
+				name.equals("NameOfParentAtBirth") || //
 				false;
 		return !skip;
 	}

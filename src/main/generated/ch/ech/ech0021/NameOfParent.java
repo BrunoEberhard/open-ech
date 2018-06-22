@@ -4,7 +4,7 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
-// handmade
+// handmade , wird auch als NameOfParentAtBirth benutzt, dort existiert kein officialProofOfNameOfParentsYesNo
 public class NameOfParent {
 	public static final NameOfParent $ = Keys.of(NameOfParent.class);
 
