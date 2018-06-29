@@ -3,6 +3,7 @@ package ch.ech.ech0011;
 import java.time.LocalDate;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.annotation.Enabled;
 import org.minimalj.model.annotation.NotEmpty;
 
 // handmade
@@ -11,9 +12,31 @@ public class MaritalData {
 
 	@NotEmpty
 	public MaritalStatus maritalStatus;
+//	ledig, // Code 1
+//	verheiratet,
+//	verwitwet,
+//	geschieden,
+//	ungueltig,
+//	partnerschaft,
+//	aufgeloeste_partnerschaft;	
+	
+	@Enabled("!isLedig")
 	public LocalDate dateOfMaritalStatus;
+	@Enabled("isMaritalStatusCanceled")
 	public PartnershipAbolition cancelationReason;
 	public Boolean officialProofOfMaritalStatusYesNo;
+
+	//
+
+	public boolean isLedig() {	
+		// ledig
+		return maritalStatus == MaritalStatus._1;
+	}
+
+	public boolean isMaritalStatusCanceled() {	
+		// aufgelöst oder geschieden
+		return maritalStatus == MaritalStatus._7 || maritalStatus == MaritalStatus._4;
+	}
 
 	// separationData wird nicht final generiert
 	
