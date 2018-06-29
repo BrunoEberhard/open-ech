@@ -2,6 +2,13 @@ package ch.openech.frontend.ech0011;
 
 import static ch.ech.ech0011.Person.$;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.minimalj.frontend.form.element.EmptyFormElement;
+
+import ch.ech.ech0011.NationalityData.CountryInfo;
+import ch.ech.ech0011.NationalityStatus;
 import ch.ech.ech0011.Person;
 import ch.openech.frontend.form.EchForm;
 
@@ -23,5 +30,26 @@ public class PersonForm extends EchForm<Person> {
 		addTitle("Religion");
 		line($.religionData.religion, $.religionData.religionValidFrom);
 
+		addTitle("Zivilstand");
+		line($.maritalData.maritalStatus, $.maritalData.dateOfMaritalStatus, $.maritalData.cancelationReason, $.maritalData.officialProofOfMaritalStatusYesNo);
+		line($.maritalData.separationData.separation, $.maritalData.separationData.separationValidFrom, $.maritalData.separationData.separationValidTill, new EmptyFormElement());
+
+		addTitle("Nationlität");
+		line($.nationalityData.nationalityStatus, new CountryInfoListFormElement($.nationalityData.countryInfo, editable));
+		addDependecy($.nationalityData.nationalityStatus, new NationalityUpdater(), $.nationalityData.countryInfo);
 	}
+	
+	private class NationalityUpdater implements PropertyUpdater<NationalityStatus, List<CountryInfo>, Person> {
+
+		@Override
+		public List<CountryInfo> update(NationalityStatus input, Person copyOfEditObject) {
+			if (input == NationalityStatus._0 || input == NationalityStatus._1) {
+				return new ArrayList<>();
+			} else {
+				return copyOfEditObject.nationalityData.countryInfo;
+			}
+		}
+		
+	}
+	
 }
