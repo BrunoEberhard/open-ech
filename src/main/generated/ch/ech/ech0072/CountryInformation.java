@@ -76,4 +76,8 @@ public class CountryInformation implements Code, Rendering {
 		country.countryNameShort = getShortName();
 		return country;
 	}
+	
+	public boolean switzerland() {
+		return id == 8100;
+	}
 }
