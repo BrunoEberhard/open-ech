@@ -31,7 +31,7 @@ public class PersonSearch implements View<Person>, Rendering {
 	}
 
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return firstName + " " + officialName;
 	}
 	

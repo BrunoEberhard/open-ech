@@ -48,7 +48,7 @@ public class CountryIdentification implements Code, Rendering, Comparable<Countr
 	}
 
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return countryNameShort;
 	}
 

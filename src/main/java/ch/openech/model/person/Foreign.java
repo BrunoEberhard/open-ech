@@ -1,6 +1,7 @@
 package  ch.openech.model.person;
 
 import java.time.LocalDate;
+
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
@@ -21,17 +22,7 @@ public class Foreign implements Rendering {
 	public String nameOnPassport;
 	
 	@Override
-	public String render(RenderType renderType) {
-		return toHtml();
-	}
-
-	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.HMTL;
-	}
-	
-	@Deprecated
-	public String toHtml() {
+	public CharSequence render() {
 		// Der residencePermitDetailed - Code hat mehr Möglichkeiten als
 		// der neuere "normale" Code, daher wird zum auflösen der ältere verwendet
 		String codeText = EnumUtils.getText(residencePermit);

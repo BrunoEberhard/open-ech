@@ -2,6 +2,7 @@ package ch.openech.model.person;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.NotEmpty;
@@ -41,15 +42,10 @@ public class PersonIdentificationLight implements Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);
-		return s.toString().replace("<br>", "\n");
-	}
-
-	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.PLAIN_TEXT;
+		return s;
 	}
 	
 }

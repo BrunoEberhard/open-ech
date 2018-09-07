@@ -37,27 +37,17 @@ public class PartnerIdentification implements Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
-		return toHtml();
-	}
-	
-	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.HMTL;
-	}
-	
-	@Deprecated
-	public String toHtml() {
+	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);
-		return s.toString();
+		return s;
 	}
 	
 	public void toHtml(StringBuilder s) {
 		if (personIdentification != null) {
 			personIdentification.toHtml(s);
 		} else if (personIdentificationLight != null) {
-			s.append(personIdentificationLight.render(RenderType.HMTL));
+			s.append(personIdentificationLight.render());
 		} else if (organisation != null) {
 			// TODO organisation.toString();
 		}

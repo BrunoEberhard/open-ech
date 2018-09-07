@@ -71,13 +71,13 @@ public class Nationality implements Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		if (nationalityStatus == NationalityStatus.without) {
 			return "Staatenlos";
 		} else if (nationalityStatus == NationalityStatus.unknown) {
 			return "Staatsangehörigkeit unbekannt";
 		} else if (nationalityStatus == NationalityStatus.with) {
-			return nationalityCountry.render(renderType);
+			return nationalityCountry.render();
 		} else {
 			return nationalityStatus + " / " + nationalityCountry.toString();
 		}
@@ -90,6 +90,6 @@ public class Nationality implements Rendering {
 
 	@Override
 	public String toString() {
-		return render(RenderType.PLAIN_TEXT);
+		return render().toString();
 	}
 }

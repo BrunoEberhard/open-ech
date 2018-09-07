@@ -37,7 +37,7 @@ public class Canton implements Code, Rendering, Comparable<Canton>, Validation {
 	}
 
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return id;
 	}
 

@@ -3,6 +3,7 @@ package  ch.openech.model.person;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
@@ -45,17 +46,7 @@ public class Occupation implements Validation, Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
-		return toHtml();
-	}
-
-	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.HMTL;
-	}
-
-	@Deprecated
-	public String toHtml() {
+	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
 		
 		if (!StringUtils.isBlank(jobTitle)) {
@@ -72,46 +63,19 @@ public class Occupation implements Validation, Rendering {
 		
 		if (placeOfWork != null && !placeOfWork.isEmpty()) {
 			StringUtils.appendLine(s, "Arbeitsort:");
-			placeOfWork.toHtml(s);
+			placeOfWork.render(s);
 		}
 
 		if (placeOfEmployer != null && !placeOfEmployer.isEmpty()) {
 			StringUtils.appendLine(s, "Arbeitgeberort:");
-			placeOfEmployer.toHtml(s);
+			placeOfEmployer.render(s);
 		}
 		
 		if (occupationValidTill != null) {
 			s.append("Gültig bis ").append(DateUtils.format(occupationValidTill));
 		}
 		
-		return s.toString();
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		if (!StringUtils.isBlank(jobTitle)) {
-			StringUtils.appendLine(s, "Bezeichnung:", jobTitle);
-		}
-
-		if (kindOfEmployment != null) {
-			StringUtils.appendLine(s, EnumUtils.getText(kindOfEmployment));
-		}
-
-		if (!StringUtils.isBlank(employer)) {
-			StringUtils.appendLine(s, "Arbeitgeber:", employer);
-		}
-		
-		if (placeOfWork != null && !placeOfWork.isEmpty()) {
-			StringUtils.appendLine(s, "Arbeitsort:");
-			placeOfWork.toHtml(s);
-		}
-
-		if (placeOfEmployer != null && !placeOfEmployer.isEmpty()) {
-			StringUtils.appendLine(s, "Arbeitgeberort:");
-			placeOfEmployer.toHtml(s);
-		}
-		return s.toString().replace("<br>", "\n");
+		return s;
 	}
 
 	@Override

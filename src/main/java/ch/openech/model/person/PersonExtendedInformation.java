@@ -41,7 +41,7 @@ public class PersonExtendedInformation implements Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return toHtml();
 	}
 	
@@ -72,7 +72,7 @@ public class PersonExtendedInformation implements Rendering {
 		}
 		if (insuranceAddress != null && !insuranceAddress.isEmpty()) {
 			s.append("Krankenkasse:<BR>");
-			insuranceAddress.toHtml(s);
+			insuranceAddress.render(s);
 			s.append("<BR>");
 		}
 

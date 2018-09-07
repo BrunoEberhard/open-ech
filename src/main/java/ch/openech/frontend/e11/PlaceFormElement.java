@@ -10,7 +10,6 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.element.AbstractFormElement;
-import org.minimalj.model.Rendering.RenderType;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
@@ -47,7 +46,7 @@ public class PlaceFormElement extends AbstractFormElement<Place> implements Mock
 	private List<String> munipalityNames(List<MunicipalityIdentification> municipalityIdentifications) {
 		List<String> names = new ArrayList<>(municipalityIdentifications.size());
 		for (MunicipalityIdentification municipalityIdentification : municipalityIdentifications) {
-			names.add(municipalityIdentification.render(RenderType.PLAIN_TEXT));
+			names.add(municipalityIdentification.render());
 		}
 		return names;
 	}

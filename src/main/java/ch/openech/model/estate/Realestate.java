@@ -56,7 +56,7 @@ public class Realestate implements Rendering {
 	public List<Building> building = new ArrayList<>();
 	
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return EGRID;
 	}
 	
@@ -171,7 +171,7 @@ public class Realestate implements Rendering {
 		public List<NamedMetaData> namedMetaData = new ArrayList<NamedMetaData>();
 
 		@Override
-		public String render(RenderType renderType) {
+		public CharSequence render() {
 			return EGRID;
 		}
 	}

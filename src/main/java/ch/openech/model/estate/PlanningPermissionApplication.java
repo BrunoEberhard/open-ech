@@ -70,7 +70,7 @@ public class PlanningPermissionApplication {
 		public LocalDate publicationTill;
 		
 		@Override
-		public String render(RenderType renderType) {
+		public CharSequence render() {
 			return DateUtils.format(publicationDate) + " " + officialGazette;
  		}
 	}
@@ -106,7 +106,7 @@ public class PlanningPermissionApplication {
 		public String token;
 
 		@Override
-		public String render(RenderType renderType) {
+		public CharSequence render() {
 			return token;
 		}
 	}

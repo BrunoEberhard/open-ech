@@ -17,7 +17,7 @@ public class NamedMetaData implements Rendering {
 	public String metaDataValue;
 	
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		if (metaDataValue != null && metaDataValue.length() > 30) {
 			return metaDataName + " = " + metaDataValue.substring(0, 30) + "...";
 		} else {

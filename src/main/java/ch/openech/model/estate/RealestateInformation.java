@@ -26,8 +26,8 @@ public class RealestateInformation implements Rendering {
 	public List<Owner> owner;
 	
 	@Override
-	public String render(RenderType renderType) {
-		return realestate.render(RenderType.PLAIN_TEXT) + " in " + municipality.municipalityName;
+	public CharSequence render() {
+		return realestate.render() + " in " + municipality.municipalityName;
 	}
 	
 	public static class Owner {

@@ -44,14 +44,13 @@ public class PersonIdentification implements View<Person>, Rendering {
 	}
 	
 	public String display() {
-		return toHtml();
+		return render().toString();
 	}
 	
-	@Deprecated
-	public String toHtml() {
+	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
 		toHtml(s);
-		return s.toString();
+		return s;
 	}
 	
 	public void toHtml(StringBuilder s) {
@@ -59,16 +58,6 @@ public class PersonIdentification implements View<Person>, Rendering {
 		StringUtils.appendLine(s, dateOfBirth.toString());
 	}
 	
-	@Override
-	public String render(RenderType renderType) {
-		return toHtml();
-	}
-
-	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.HMTL;
-	}
-
 	public boolean isMale() {
 		return Sex.maennlich.equals(sex);
 	}

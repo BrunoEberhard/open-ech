@@ -1,6 +1,5 @@
 package  ch.openech.model.common;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.model.EnumUtils;
@@ -109,23 +108,13 @@ public class Address implements Validation, Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
-		return toHtml();
-	}
-
-	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.HMTL;
-	}
-	
-	@Deprecated
-	public String toHtml() {
+	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
-		toHtml(s);
-		return s.toString();
+		render(s);
+		return s;
 	}
 	
-	public void toHtml(StringBuilder s) {
+	public void render(StringBuilder s) {
 		StringUtils.appendLine(s, organisationName);
 		StringUtils.appendLine(s, organisationNameAddOn1);
 		StringUtils.appendLine(s, organisationNameAddOn2);

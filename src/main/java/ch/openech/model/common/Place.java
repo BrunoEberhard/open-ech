@@ -29,7 +29,7 @@ public class Place implements Rendering {
 	}
 
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		if (isSwiss()) {
 			return municipalityIdentification != null ? municipalityIdentification.municipalityName : "-";
 		} else if (isForeign()) {

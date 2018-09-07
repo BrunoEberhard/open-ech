@@ -24,7 +24,7 @@ public class LegalForm implements Code, Rendering {
 	}
 
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return text;
 	}
 

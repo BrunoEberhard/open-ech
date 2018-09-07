@@ -23,7 +23,7 @@ public class OrganisationIdentification implements Rendering {
 	public LegalForm legalForm;
 	
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return organisationName;
 	}
 }

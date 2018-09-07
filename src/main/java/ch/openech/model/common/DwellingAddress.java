@@ -33,28 +33,18 @@ public class DwellingAddress implements Validation, Rendering {
 	public LocalDate movingDate;
 
 	@Override
-	public String render(RenderType renderType) {
-		return toHtml();
-	}
-
-	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.HMTL;
-	}
-	
-	@Deprecated
-	public String toHtml() {
+	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
-		toHtml(s);
-		return s.toString();
+		render(s);
+		return s;
 	}
 		
-	public void toHtml(StringBuilder s) {
+	public void render(StringBuilder s) {
 		if (mailAddress != null) {
-			mailAddress.toHtml(s);
+			mailAddress.render(s);
 		}
 		if (!StringUtils.isBlank(EGID)) {
-			s.append("EGID: " ).append(EGID).append("<BR>");
+			s.append("EGID: ").append(EGID).append('\n');
 		}
 		if (!StringUtils.isBlank(EWID)) {
 			s.append("EWID: ").append(EWID);
@@ -65,12 +55,13 @@ public class DwellingAddress implements Validation, Rendering {
 			s.append(householdID).append(EWID);
 		}
 		if (typeOfHousehold != null) {
-			s.append("<BR>").append(EnumUtils.getText(typeOfHousehold)).append("<BR>");
+			s.append('\n').append(EnumUtils.getText(typeOfHousehold)).append('\n');
 		}
 		if (movingDate != null) {
-			s.append("<BR>").append("Umzugsdatum: " ); s.append(DateUtils.format(movingDate)).append("<BR>");
+			s.append('\n').append("Umzugsdatum: ");
+			s.append(DateUtils.format(movingDate)).append('\n');
 		}
-		if (s.toString().toLowerCase().endsWith("<br>")) {
+		if (s.toString().toLowerCase().endsWith("\n")) {
 			s.delete(s.length() - 4, s.length());
 		}
 	}
@@ -84,7 +75,7 @@ public class DwellingAddress implements Validation, Rendering {
 		if (!StringUtils.isBlank(householdID)) s.append(householdID); else s.append("- ");
 		s.append("\n");
 		if (mailAddress != null) {
-			mailAddress.toHtml(s);
+			mailAddress.render(s);
 		}
 		s.append("Haushaltsart: ");
 		if (typeOfHousehold != null) s.append(EnumUtils.getText(typeOfHousehold)); else s.append("- ");

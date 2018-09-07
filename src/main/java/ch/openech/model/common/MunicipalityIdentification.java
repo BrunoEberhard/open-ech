@@ -45,7 +45,7 @@ public class MunicipalityIdentification implements Code, Rendering, Comparable<M
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
+	public String render() {
 		return formatMunicipality(municipalityName, canton);
 	}
 

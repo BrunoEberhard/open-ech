@@ -11,7 +11,7 @@ public interface EchSchemaVersion extends Rendering {
 	public int getMinorVersion();
 	
 	@Override
-	default String render(RenderType renderType) {
+	default CharSequence render() {
 		return getVersion() + "." + getMinorVersion();
 	}
 	

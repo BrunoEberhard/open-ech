@@ -58,7 +58,7 @@ public class Locality implements Code, Validation, Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return getSwissZipCode() + " " + name.nameLong;
 	}
 	

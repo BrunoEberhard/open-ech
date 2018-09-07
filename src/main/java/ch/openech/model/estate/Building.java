@@ -209,7 +209,7 @@ public class Building {
 		public ThermotechnicalDeviceEnergySource energySource;
 
 		@Override
-		public String render(RenderType renderType) {
+		public CharSequence render() {
 			String text = EnumUtils.getText(heatGenerator);
 			if (energySource != null) {
 				text += " (" + EnumUtils.getText(energySource) + ")";
@@ -269,8 +269,8 @@ public class Building {
 		public Street street;
 		
 		@Override
-		public String render(RenderType renderType) {
-			return "Todostrasse 2, " + locality.render(RenderType.PLAIN_TEXT);
+		public CharSequence render() {
+			return "Todostrasse 2, " + locality.render();
 		}
 	}
 	

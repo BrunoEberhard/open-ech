@@ -26,7 +26,7 @@ public class NameOfParent implements Rendering {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		if (StringUtils.isEmpty(firstName)) {
 			if (!StringUtils.isEmpty(officialName)) {
 				return officialName;

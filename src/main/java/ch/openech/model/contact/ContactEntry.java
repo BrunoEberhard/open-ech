@@ -69,17 +69,7 @@ public class ContactEntry implements Validation, Rendering {
 	}
 	
 	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.HMTL;
-	}
-
-	@Override
-	public String render(RenderType renderType) {
-		return toHtml();
-	}
-	
-	@Deprecated
-	public String toHtml() {
+	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
 		if (typeOfContact != null) {
 			if (categoryCode != null) {
@@ -95,7 +85,7 @@ public class ContactEntry implements Validation, Rendering {
 				if (isEmail()) s.append("Email");
 				if (isInternet()) s.append("Internet");
 			}
-			s.append("<BR>");
+			s.append('\n');
 		}
 		s.append("<SMALL>");
 		if (dateFrom != null && dateTo != null) {
@@ -103,29 +93,26 @@ public class ContactEntry implements Validation, Rendering {
 			s.append(DateUtils.format(dateFrom)); 
 			s.append(" - ");
 			s.append(DateUtils.format(dateTo)); 
-			s.append("<BR>");
+			s.append('\n');
 		} else if (dateFrom != null) {
-			s.append("Gültig ab ");
-			s.append(DateUtils.format(dateFrom)); 
-			s.append("<BR>");
+			s.append("Gültig ab ").append(DateUtils.format(dateFrom)).append('\n');
 		} else if (dateTo != null) {
-			s.append("Gültig bis ").append(DateUtils.format(dateTo));
-			s.append("<BR>");
+			s.append("Gültig bis ").append(DateUtils.format(dateTo)).append('\n');
 		}
 		s.append("</SMALL>");
 
 		if (isAddressEntry()) {
 			if (address != null) {
-				address.toHtml(s);
+				address.render(s);
 			}
 		} else {
 			if (!StringUtils.isEmpty(value)) {
-				s.append(value);
-				s.append("<BR>");
+				s.append(value).append('\n');
 			}
 		}
 		
-		return s.toString();
+		StringUtils.trim(s);
+		return s;
 	}
 
 	@Override

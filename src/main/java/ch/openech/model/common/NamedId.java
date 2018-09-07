@@ -28,7 +28,7 @@ public class NamedId implements Rendering {
 	public String Id;
 
 	@Override
-	public String render(RenderType renderType) {
+	public CharSequence render() {
 		return IdCategory + "=" + Id;
 	}
 

@@ -57,28 +57,18 @@ public class Relation implements Validation, Rendering {
 		return partner != null && address != null;
 	}
 	
-	@Override
-	public String render(RenderType renderType) {
-		return toHtml();
-	}
-
-	@Override
-	public RenderType getPreferredRenderType(RenderType firstType, RenderType... otherTypes) {
-		return RenderType.HMTL;
-	}
-
 	public void identificationToHtml(StringBuilder s) {
 		if (partner != null) {
 			partner.toHtml(s);
 		}
 		
 		if (address != null && !address.isEmpty()) {
-			address.toHtml(s);
+			address.render(s);
 		}
 	}
 
-	@Deprecated
-	public String toHtml() {
+	@Override
+	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
 
 		if (typeOfRelationship != null) {
@@ -108,7 +98,7 @@ public class Relation implements Validation, Rendering {
 
 		identificationToHtml(s);
 		
-		return s.toString();
+		return s;
 	}
 	
 	private void appendCare(StringBuilder s) {
