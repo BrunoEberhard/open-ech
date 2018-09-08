@@ -46,7 +46,7 @@ public class CountryInformation implements Code, Rendering {
 	public LocalDate dateOfChange;
 
 	@Override
-	public String render(RenderType renderType) {
+	public String render() {
 		return getShortName();
 	}
 	

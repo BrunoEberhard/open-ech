@@ -46,13 +46,13 @@ public class Municipality implements Code, Rendering, Comparable<Municipality> {
 	}
 	
 	@Override
-	public String render(RenderType renderType) {
+	public String render() {
 		return municipalityShortName;
 	}
 
 	@Override
 	public int compareTo(Municipality o) {
-		return StringUtils.compare(render(RenderType.PLAIN_TEXT), o.render(RenderType.PLAIN_TEXT));
+		return StringUtils.compare(render(), o.render());
 	}
 
 }
