@@ -85,11 +85,6 @@ public class TechnicalIdsFormElement extends ObjectFormElement<TechnicalIds> {
 		}
 		
 		@Override
-		protected Action[] getActions() {
-			return new Action[] { new AddListEntryEditor() };
-		}
-
-		@Override
 		protected Form<NamedId> createForm(boolean edit) {
 			return new NamedIdPanel();
 		}

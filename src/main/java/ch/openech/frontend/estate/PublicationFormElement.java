@@ -2,7 +2,6 @@ package ch.openech.frontend.estate;
 
 import java.util.List;
 
-import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.model.Keys;
@@ -24,11 +23,6 @@ public class PublicationFormElement extends ListFormElement<Publication> {
 		}
 	}
 	
-	@Override
-	protected Action[] getActions() {
-		return new Action[] { new AddListEntryEditor() };
-	}
-
 	@Override
 	protected Form<Publication> createForm(boolean edit) {
 		Form<Publication> form = new Form<>(2);

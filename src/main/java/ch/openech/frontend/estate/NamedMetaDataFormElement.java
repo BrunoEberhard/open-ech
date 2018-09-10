@@ -2,7 +2,6 @@ package ch.openech.frontend.estate;
 
 import java.util.List;
 
-import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.model.Keys;
@@ -22,11 +21,6 @@ public class NamedMetaDataFormElement extends ListFormElement<NamedMetaData> {
 		} else {
 			add(entry);
 		}
-	}
-
-	@Override
-	protected Action[] getActions() {
-		return new Action[] { new AddListEntryEditor() };
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package ch.openech.frontend.e11;
 
 import java.util.List;
 
-import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ListFormElement;
 import org.minimalj.model.Keys;
@@ -31,60 +30,6 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 		super(Keys.getProperty(key), editable);
 		this.withAddOn = withAddOn;
 	}
-	
-	public class AddOriginEditor extends AddListEntryEditor {
-		@Override
-		public Form<PlaceOfOrigin> createForm() {
-			return new OriginPanel(withAddOn, withAddOn);
-		}
-
-		@Override
-		protected PlaceOfOrigin createObject() {
-			PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
-			// TODO Preference in PlaceOfOriginField
-//			PageContext context = PageContextHelper.findContext(visual);
-//			OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
-//			placeOfOrigin.canton.cantonAbbreviation = preferences.preferencesDefaultsData.canton.cantonAbbreviation;
-			placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
-			return placeOfOrigin;
-		}
-
-		@Override
-		protected void addEntry(PlaceOfOrigin p) {
-			PlaceOfOriginFormElement.this.getValue().add(p);
-		}
-	}
-
-	public class OriginEditor extends ListEntryEditor {
-		private OriginEditor(PlaceOfOrigin placeOfOrigin) {
-			super(placeOfOrigin);
-		}
-
-		@Override
-		public Form<PlaceOfOrigin> createForm() {
-			return new OriginPanel(withAddOn, withAddOn);
-		}
-		
-		@Override
-		protected void editEntry(PlaceOfOrigin placeOfOrigin, PlaceOfOrigin p) {
-			List<PlaceOfOrigin> placeOfOrigins = PlaceOfOriginFormElement.this.getValue();
-			placeOfOrigins.set(placeOfOrigins.indexOf(placeOfOrigin), p);
-		}
-	}
-
-	private class RemoveOriginAction extends Action {
-		private final PlaceOfOrigin placeOfOrigin;
-		
-		private RemoveOriginAction(PlaceOfOrigin placeOfOrigin) {
-			this.placeOfOrigin = placeOfOrigin;
-		}
-		
-		@Override
-		public void action() {
-			getValue().remove(placeOfOrigin);
-			handleChange();
-		}
-	}
 
 	@Override
 	public void setEnabled(boolean enabled) {
@@ -105,26 +50,19 @@ public class PlaceOfOriginFormElement extends ListFormElement<PlaceOfOrigin> imp
 	}
 
 	@Override
+	protected PlaceOfOrigin createEntry() {
+		PlaceOfOrigin placeOfOrigin = new PlaceOfOrigin();
+		// TODO Preference in PlaceOfOriginField
+//		PageContext context = PageContextHelper.findContext(visual);
+//		OpenEchPreferences preferences = (OpenEchPreferences) context.getApplicationContext().getPreferences();
+//		placeOfOrigin.canton.cantonAbbreviation = preferences.preferencesDefaultsData.canton.cantonAbbreviation;
+		placeOfOrigin.reasonOfAcquisition = ReasonOfAcquisition.Abstammung;
+		return placeOfOrigin;
+	}
+
+	@Override
 	public Form<PlaceOfOrigin> createForm(boolean edit) {
-		// unused
-		return null;
-	}
-
-	@Override
-	protected void showEntry(PlaceOfOrigin placeOfOrigin) {
-		if (isEditable()) {
-			add(placeOfOrigin,
-					new OriginEditor(placeOfOrigin),
-					new RemoveOriginAction(placeOfOrigin)
-					);
-		} else {
-			add(placeOfOrigin);
-		}
-	}
-
-	@Override
-	protected Action[] getActions() {
-		return new Action[] { new AddOriginEditor() };
+		return new OriginPanel(withAddOn, withAddOn);
 	}
 
 }

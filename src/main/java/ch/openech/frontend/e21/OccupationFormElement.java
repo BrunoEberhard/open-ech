@@ -17,12 +17,9 @@ public class OccupationFormElement extends ListFormElement<Occupation> {
 		this.echSchema = echSchema;
 	}
 	
-	public class AddOccupationEditor extends AddListEntryEditor {
-
-		@Override
-		protected Occupation createObject() {
-			return new Occupation(echSchema);
-		}
+	@Override
+	protected Occupation createEntry() {
+		return new Occupation(echSchema);
 	}
 
 	private class RemoveOccupationAction extends Action {
@@ -53,9 +50,4 @@ public class OccupationFormElement extends ListFormElement<Occupation> {
 		}
 	}
 
-	@Override
-	protected Action[] getActions() {
-		return new Action[] { new AddOccupationEditor() };
-	}
-	
 }

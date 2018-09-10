@@ -24,20 +24,6 @@ public class RealestateInformationFormElement extends ListFormElement<Realestate
 	}
 
 	@Override
-	protected void showEntry(RealestateInformation entry) {
-		if (isEditable()) {
-			add(entry, new ListEntryEditor(entry), new RemoveEntryAction(entry));
-		} else {
-			add(entry);
-		}
-	}
-
-	@Override
-	protected Action[] getActions() {
-		return new Action[] { new AddListEntryEditor() };
-	}
-
-	@Override
 	protected Form<RealestateInformation> createForm(boolean edit) {
 		return new RealestateInformationForm();
 	}
