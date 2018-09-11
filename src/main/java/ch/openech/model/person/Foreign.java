@@ -25,14 +25,14 @@ public class Foreign implements Rendering {
 	public CharSequence render() {
 		// Der residencePermitDetailed - Code hat mehr Möglichkeiten als
 		// der neuere "normale" Code, daher wird zum auflösen der ältere verwendet
-		String codeText = EnumUtils.getText(residencePermit);
-		
-		String s = "";
-		if (codeText != null) {
-			s = s + codeText + "<BR>";
+		StringBuilder s = new StringBuilder();
+		StringUtils.appendLine(s, EnumUtils.getText(residencePermit));
+		if (residencePermitTill != null) {
+			StringUtils.appendLine(s, "Gültig bis: " + DateUtils.format(residencePermitTill));
 		}
-		if (residencePermitTill != null) s += "Gültig bis: " + DateUtils.format(residencePermitTill) + "<BR>";
-		if (!StringUtils.isBlank(nameOnPassport)) s += "Name in ausl. Pass: " + nameOnPassport;
+		if (!StringUtils.isBlank(nameOnPassport)) {
+			StringUtils.appendLine(s, "Name in ausl. Pass: " + nameOnPassport);
+		}
 		return s;
 	}
 	
