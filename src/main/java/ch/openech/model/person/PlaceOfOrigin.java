@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.DateUtils;
@@ -13,7 +14,7 @@ import ch.openech.model.EchFormats;
 import ch.openech.model.common.Canton;
 import ch.openech.model.person.types.ReasonOfAcquisition;
 
-public class PlaceOfOrigin {
+public class PlaceOfOrigin implements Rendering {
 
 	public static final PlaceOfOrigin $ = Keys.of(PlaceOfOrigin.class);
 	
@@ -28,7 +29,7 @@ public class PlaceOfOrigin {
 	public LocalDate naturalizationDate, expatriationDate;
 	
 	@Override
-	public String toString() {
+	public String render() {
 		String s = originName;
 		if (canton != null && !originEndsWithCanton()) {
 			s = s + " " + canton.id;
