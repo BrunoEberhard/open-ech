@@ -1,6 +1,5 @@
 package ch.openech.frontend.e11;
 
-import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.ObjectFormElement;
 import org.minimalj.model.properties.PropertyInterface;
@@ -14,16 +13,6 @@ public class ForeignFormElement extends ObjectFormElement<Foreign> {
 	public ForeignFormElement(PropertyInterface property, EchSchema echSchema, boolean editable) {
 		super(property, editable);
 		this.echSchema = echSchema;
-	}
-	
-	@Override
-	protected Action[] getActions() {
-		return new Action[] { getEditorAction() };
-	}
-
-	@Override
-	protected void show(Foreign foreign) {
-		add(foreign);
 	}
 	
 	@Override
