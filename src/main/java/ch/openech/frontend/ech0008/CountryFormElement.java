@@ -23,7 +23,7 @@ public class CountryFormElement extends AbstractFormElement<Country> implements 
 	private final Input<CountryInformation> comboBox;
 	private final List<CountryInformation> countries;
 	
-	public CountryFormElement(Object key) {
+	public CountryFormElement(Country key) {
 		this(Keys.getProperty(key));
 	}
 	

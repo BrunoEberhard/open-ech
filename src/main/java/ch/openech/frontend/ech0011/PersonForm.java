@@ -10,6 +10,7 @@ import org.minimalj.frontend.form.element.EmptyFormElement;
 import ch.ech.ech0011.NationalityData.CountryInfo;
 import ch.ech.ech0011.NationalityStatus;
 import ch.ech.ech0011.Person;
+import ch.openech.frontend.ech0008.CountryInfoFormElement;
 import ch.openech.frontend.form.EchForm;
 
 public class PersonForm extends EchForm<Person> {
@@ -35,7 +36,7 @@ public class PersonForm extends EchForm<Person> {
 		line($.maritalData.separationData.separation, $.maritalData.separationData.separationValidFrom, $.maritalData.separationData.separationValidTill, new EmptyFormElement());
 
 		addTitle("Nationlität");
-		line($.nationalityData.nationalityStatus, new CountryInfoListFormElement($.nationalityData.countryInfo, editable));
+		line($.nationalityData.nationalityStatus, new CountryInfoFormElement($.nationalityData.countryInfo));
 		addDependecy($.nationalityData.nationalityStatus, new NationalityUpdater(), $.nationalityData.countryInfo);
 	}
 	
