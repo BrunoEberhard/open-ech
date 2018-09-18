@@ -188,7 +188,7 @@ public class EchXmlDownload {
 		download(78, 4, 0);
 		download(93, 2, 0);
 		download(101, 1, 0);
-		download(108, 3, 0);
+		download(108, 4, 0);
 		download(129, 4, 0);
 		download(148, 1, 0);
 		download(173, 1, 0);
