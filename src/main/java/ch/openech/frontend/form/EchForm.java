@@ -9,6 +9,7 @@ import org.minimalj.model.properties.PropertyInterface;
 
 import ch.ech.ech0011.ForeignerName;
 import ch.ech.ech0011.GeneralPlace;
+import ch.ech.ech0021.NameOfParent;
 import ch.openech.frontend.ech0011.GeneralPlaceFormElement;
 import ch.openech.xml.DatePartiallyKnown;
 
@@ -46,7 +47,9 @@ public class EchForm<T> extends Form<T> {
 		if (type == DatePartiallyKnown.class) {
 			return new DatePartiallyKnownFormElement(property, editable);
 		} else if (type == ForeignerName.class) {
-			return new ForeignerNameFormElement(property, editable);
+			return new ch.openech.frontend.ech0011.ForeignerNameFormElement(property, editable);
+		} else if (type == NameOfParent.class) {
+			return new ch.openech.frontend.ech0011.NameOfParentFormElement(property, editable);
 		} else if (type == GeneralPlace.class) {
 			return new GeneralPlaceFormElement(property);
 		} 

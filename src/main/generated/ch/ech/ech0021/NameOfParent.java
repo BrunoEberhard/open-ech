@@ -1,11 +1,12 @@
 package ch.ech.ech0021;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.StringUtils;
 
 // handmade , wird auch als NameOfParentAtBirth benutzt, dort existiert kein officialProofOfNameOfParentsYesNo
-public class NameOfParent {
+public class NameOfParent implements Rendering {
 	public static final NameOfParent $ = Keys.of(NameOfParent.class);
 
 	@Size(100)
@@ -14,6 +15,25 @@ public class NameOfParent {
 	public String officialNameValue;
 	public Boolean officialProofOfNameOfParentsYesNo;
 	
+	@Override
+	public String render() {
+		StringBuilder s = new StringBuilder(200);
+		if (!StringUtils.isEmpty(firstNameValue)) {
+			s.append(firstNameValue);
+		}
+		if (!StringUtils.isEmpty(officialNameValue)) {
+			if (s.length() > 0)
+				s.append(' ');
+			s.append(officialNameValue);
+		}
+		if (Boolean.TRUE.equals(officialProofOfNameOfParentsYesNo)) {
+			if (s.length() > 0)
+				s.append(' ');
+			s.append(" *");
+		}
+		return s.toString();
+	}
+
 	// Das ech Schema ist hier etwas über engineert.
 	// die only element sollen jeweils nur vorhanden sein, wenn
 	// das andere es nicht ist. Die 'normalen' element sollen nur
