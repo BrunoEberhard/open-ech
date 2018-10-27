@@ -114,21 +114,21 @@ public class XsdModel {
 	static {
 		MjModel defaultModel = new MjModel();
 		
-		MjEntity datePartiallyKnown = new MjEntity(defaultModel, DatePartiallyKnown.class);
+		MjEntity datePartiallyKnown = defaultModel.getOrCreateEntity(DatePartiallyKnown.class);
 		datePartiallyKnown.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("datePartiallyKnownType", datePartiallyKnown);
 
-		MjEntity yesNo = new MjEntity(defaultModel, YesNo.class);
+		MjEntity yesNo = defaultModel.getOrCreateEntity(YesNo.class);
 		yesNo.type = MjEntityType.Integer;
 		PREDEFINED_TYPES.put("yesNoType", yesNo);
 		
-		MjEntity namedId = new MjEntity(defaultModel, NamedId.class);
+		MjEntity namedId = defaultModel.getOrCreateEntity(NamedId.class);
 		namedId.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("namedPersonIdType", namedId);
 		PREDEFINED_TYPES.put("namedOrganisationIdType", namedId);
 		PREDEFINED_TYPES.put("namedIdType", namedId);
 		
-		MjEntity uidStructure = new MjEntity(defaultModel, UidStructure.class);
+		MjEntity uidStructure = defaultModel.getOrCreateEntity(UidStructure.class);
 		uidStructure.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("uidStructureType", uidStructure);
 	}
