@@ -42,9 +42,6 @@ public class Person {
 	public final NationalityData nationalityData = new NationalityData();
 	public DeathData deathData;
 	public ContactData contactData;
-	@Size(2)
-	public String languageOfCorrespondance;
-	public Boolean restrictedVotingAndElectionRightFederation;
 	public List<PlaceOfOrigin> placeOfOrigin;
 	public ResidencePermitData residencePermit;
 	
@@ -65,6 +62,24 @@ public class Person {
 	public HealthInsuranceData healthInsuranceData;
 	public MatrimonialInheritanceArrangementData matrimonialInheritanceArrangementData;
 	
+	//
+
+	public String getLanguageOfCorrespondance() {
+		return personAdditionalData.languageOfCorrespondance;
+	}
+
+	public void setLanguageOfCorrespondance(String languageOfCorrespondance) {
+		personAdditionalData.languageOfCorrespondance = languageOfCorrespondance;
+	}
+
+	public Boolean getRestrictedVotingAndElectionRightFederation() {
+		return politicalRightData.restrictedVotingAndElectionRightFederation;
+	}
+
+	public void setRestrictedVotingAndElectionRightFederation(Boolean restrictedVotingAndElectionRightFederation) {
+		politicalRightData.restrictedVotingAndElectionRightFederation = restrictedVotingAndElectionRightFederation;
+	}
+
 	// for old ech 11 versions
 	
 	private final Coredata coredata = new Coredata();
