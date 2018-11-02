@@ -11,6 +11,7 @@ import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
@@ -104,6 +105,8 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 					place.swissTown.municipalityName = municipality.municipalityShortName;
 					// TODO Nur 1 CantonAbbreviation
 					place.swissTown.cantonAbbreviation = CantonAbbreviation.valueOf(municipality.cantonAbbreviation.name());
+				} else {
+					place.swissTown.municipalityName = InvalidValues.createInvalidString(textFieldMunicipality.getValue());
 				}
 			}
 		} else {
