@@ -19,6 +19,7 @@ public class PersonForm extends EchForm<Person> {
 		super(editable, 4);
 		
 		addTitle("Name");
+		line($.personAdditionalData.mrMrs, $.personAdditionalData.title);
 		line($.nameData.officialName, $.nameData.firstName);
 		line($.nameData.originalName, $.nameData.allianceName, $.nameData.allianceName, $.nameData.aliasName);
 		line($.nameData.otherName, $.nameData.callName);
@@ -35,9 +36,21 @@ public class PersonForm extends EchForm<Person> {
 		line($.maritalData.maritalStatus, $.maritalData.dateOfMaritalStatus, $.maritalData.cancelationReason, $.maritalData.officialProofOfMaritalStatusYesNo);
 		line($.maritalData.separationData.separation, $.maritalData.separationData.separationValidFrom, $.maritalData.separationData.separationValidTill, new EmptyFormElement());
 
-		addTitle("Nationlität");
+		addTitle("Nationalität");
 		line($.nationalityData.nationalityStatus, new CountryInfoFormElement($.nationalityData.countryInfo));
 		addDependecy($.nationalityData.nationalityStatus, new NationalityUpdater(), $.nationalityData.countryInfo);
+
+		addTitle("Kontakt");
+		// line(new PersonIdentificationFormElement($.contactData.personIdentification,
+		// $.contactData.personIdentificationPartner,
+		// $.contactData.partnerIdOrganisation));
+		// line($.contactData.contactAddress);
+		// line($.contactData.contactValidFrom, $.contactData.contactValidTill);
+
+		addTitle("Aufenthaltsbewilligung");
+		line($.residencePermit.residencePermit, $.residencePermit.residencePermitValidFrom, $.residencePermit.residencePermitValidTill,
+				$.residencePermit.entryDate);
+
 	}
 	
 	private class NationalityUpdater implements PropertyUpdater<NationalityStatus, List<CountryInfo>, Person> {
