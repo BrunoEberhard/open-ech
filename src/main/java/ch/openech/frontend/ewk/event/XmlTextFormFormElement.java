@@ -38,7 +38,7 @@ public class XmlTextFormFormElement extends ListFormElement<String> {
 
 	@Override
 	protected void showEntry(String entry) {
-		addTextArea(entry, new XmlValidateAction(entry));
+		add(entry, new XmlValidateAction(entry));
 	}
 
 }

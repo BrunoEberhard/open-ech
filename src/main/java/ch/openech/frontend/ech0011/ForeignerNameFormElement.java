@@ -1,33 +1,34 @@
 package ch.openech.frontend.ech0011;
 
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.FormatLookupFormElement;
+import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser;
+import org.minimalj.frontend.form.element.FormLookupFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.AnnotationUtil;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.ech.ech0011.ForeignerName;
 
-public class ForeignerNameFormElement extends FormatLookupFormElement<ForeignerName> {
+public class ForeignerNameFormElement extends FormLookupFormElement<ForeignerName> implements LookupParser {
 	private static final int SIZE_FIRST_NAME = AnnotationUtil.getSize(Keys.getProperty(ForeignerName.$.firstName));
 	private static final int SIZE_NAME = AnnotationUtil.getSize(Keys.getProperty(ForeignerName.$.name));
 
 	public ForeignerNameFormElement(PropertyInterface property, boolean editable) {
-		super(property, true, editable);
+		super(property, editable);
 	}
 
 	public ForeignerNameFormElement(ForeignerName key, boolean editable) {
-		super(key, true, editable);
+		super(key, editable);
 	}
 
 	@Override
-	protected int getAllowedSize() {
+	public int getAllowedSize() {
 		return SIZE_FIRST_NAME + 1 + SIZE_NAME;
 	}
 
 	@Override
-	protected void parse(ForeignerName object, String text) {
-		object.name = object.firstName = null;
+	public ForeignerName parse(String text) {
+		ForeignerName object = new ForeignerName();
 		if (text != null) {
 			text = text.trim();
 			int index = text.lastIndexOf(' ');
@@ -38,6 +39,7 @@ public class ForeignerNameFormElement extends FormatLookupFormElement<ForeignerN
 				object.name = text;
 			}
 		}
+		return object;
 	}
 
 	@Override
@@ -46,4 +48,5 @@ public class ForeignerNameFormElement extends FormatLookupFormElement<ForeignerN
 		form.line(ForeignerName.$.firstName, ForeignerName.$.name);
 		return form;
 	}
+
 }

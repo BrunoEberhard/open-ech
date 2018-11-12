@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser;
 import org.minimalj.frontend.form.element.SmallListFormElement;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.Codes;
@@ -16,11 +17,11 @@ import ch.ech.ech0008.Country;
 import ch.ech.ech0011.NationalityData.CountryInfo;
 import ch.ech.ech0072.CountryInformation;
 
-public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> implements Mocking {
+public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> implements LookupParser, Mocking {
 	private static final Logger logger = Logger.getLogger(CountryInfoFormElement.class.getName());
 
 	public CountryInfoFormElement(List<CountryInfo> key) {
-		super(key, true, true);
+		super(key, true);
 	}
 
 	@Override
@@ -74,8 +75,8 @@ public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> im
 	}
 
 	@Override
-	protected List<CountryInfo> parse(String text) {
-		List<CountryInfo> result = new ArrayList<>();
+	public List<CountryInfo> parse(String text) {
+		List<CountryInfo> value = new ArrayList<>();
 		if (!text.isEmpty()) {
 			String[] parts = text.split(", ");
 			for (String part : parts) {
@@ -86,10 +87,10 @@ public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> im
 					part = part.substring(0, pos);
 				}
 				findCountry(part, info.country);
-				result.add(info);
+				value.add(info);
 			}
 		}
-		return result;
+		return value;
 	}
 
 }

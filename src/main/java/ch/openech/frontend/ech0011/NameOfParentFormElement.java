@@ -1,33 +1,34 @@
 package ch.openech.frontend.ech0011;
 
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.form.element.FormatLookupFormElement;
+import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser;
+import org.minimalj.frontend.form.element.FormLookupFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.AnnotationUtil;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.ech.ech0021.NameOfParent;
 
-public class NameOfParentFormElement extends FormatLookupFormElement<NameOfParent> {
+public class NameOfParentFormElement extends FormLookupFormElement<NameOfParent> implements LookupParser {
 	private static final int SIZE_FIRST_NAME = AnnotationUtil.getSize(Keys.getProperty(NameOfParent.$.firstNameValue));
 	private static final int SIZE_NAME = AnnotationUtil.getSize(Keys.getProperty(NameOfParent.$.officialNameValue));
 
 	public NameOfParentFormElement(PropertyInterface property, boolean editable) {
-		super(property, true, editable);
+		super(property, editable);
 	}
 
 	public NameOfParentFormElement(NameOfParent key, boolean editable) {
-		super(key, true, editable);
+		super(key, editable);
 	}
 
 	@Override
-	protected int getAllowedSize() {
+	public int getAllowedSize() {
 		return SIZE_FIRST_NAME + 1 + SIZE_NAME;
 	}
 
 	@Override
-	protected void parse(NameOfParent object, String text) {
-		object.officialNameValue = object.firstNameValue = null;
+	public NameOfParent parse(String text) {
+		NameOfParent object = new NameOfParent();
 		object.officialProofOfNameOfParentsYesNo = false;
 		if (text != null) {
 			text = text.trim();
@@ -44,11 +45,7 @@ public class NameOfParentFormElement extends FormatLookupFormElement<NameOfParen
 				object.officialNameValue = text;
 			}
 		}
-//		if (object.officialNameValue != null && object.officialNameValue.length() > SIZE_FIRST_NAME) {
-//			InvalidValues.markInvalid(object, text, "Nachname zu lang");
-//		} else if (object.firstNameValue != null && object.firstNameValue.length() > SIZE_NAME) {
-//			InvalidValues.markInvalid(object, text, "Vorname(n) zu lang");
-//		}
+		return object;
 	}
 
 	@Override
