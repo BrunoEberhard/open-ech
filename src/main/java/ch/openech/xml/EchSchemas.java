@@ -286,6 +286,7 @@ public class EchSchemas {
 	
 	public static void main(String[] args) throws Exception {
 		ClassGenerator generator = new ClassGenerator("./src/main/generated");
+		EnumPropertyGenerator enumPropertyGenerator = new EnumPropertyGenerator("./src/main/generated/enum.properties");
 
 		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
 		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
@@ -294,6 +295,7 @@ public class EchSchemas {
 			Collection<MjEntity> entities = model.getEntities();
 			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
 			generator.generate(entities);
+			enumPropertyGenerator.generate(entities);
 		}
 	}
 	
