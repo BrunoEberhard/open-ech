@@ -7,9 +7,11 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.FormElement;
 import org.minimalj.model.properties.PropertyInterface;
 
+import ch.ech.ech0011.ContactData;
 import ch.ech.ech0011.ForeignerName;
 import ch.ech.ech0011.GeneralPlace;
 import ch.ech.ech0021.NameOfParent;
+import ch.openech.frontend.ech0011.ContactDataFormElement;
 import ch.openech.frontend.ech0011.GeneralPlaceFormElement;
 import ch.openech.xml.DatePartiallyKnown;
 
@@ -52,7 +54,9 @@ public class EchForm<T> extends Form<T> {
 			return new ch.openech.frontend.ech0011.NameOfParentFormElement(property, editable);
 		} else if (type == GeneralPlace.class) {
 			return new GeneralPlaceFormElement(property);
-		} 
+		} else if (type == ContactData.class) {
+			return new ContactDataFormElement(property, editable);
+		}
 		
 		return super.createElement(property);
 	}
