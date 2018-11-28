@@ -23,7 +23,7 @@ import ch.ech.ech0021.MaritalRelationship;
 import ch.ech.ech0021.MatrimonialInheritanceArrangementData;
 import ch.ech.ech0021.ParentalRelationship;
 import ch.ech.ech0021.PersonAdditionalData;
-import ch.ech.ech0021.PlaceOfOriginAddonData;
+import ch.ech.ech0021.PlaceOfOriginAddon;
 import ch.ech.ech0021.PoliticalRightData;
 import ch.ech.ech0044.PersonIdentification;
 
@@ -42,7 +42,7 @@ public class Person {
 	public final NationalityData nationalityData = new NationalityData();
 	public DeathData deathData;
 	public ContactData contactData;
-	public List<PlaceOfOrigin> placeOfOrigin;
+	public List<PlaceOfOriginAddon> placeOfOrigin; // PlaceOfOriginAddon, nicht nur PlaceOfOrigin
 	public ResidencePermitData residencePermit;
 	
 	// PersonAddOn
@@ -51,7 +51,6 @@ public class Person {
 	public PoliticalRightData politicalRightData;
 	public BirthAddonData birthAddonData;
 	public LockData lockData;
-	public List<PlaceOfOriginAddonData> placeOfOriginAddonData;
 	public JobData jobData;
 	public MaritalRelationship maritalRelationship;
 	public List<ParentalRelationship> parentalRelationship;
