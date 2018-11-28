@@ -3,10 +3,11 @@ package ch.ech.ech0011;
 import java.time.LocalDate;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.NotEmpty;
 
 // handmade
-public class ContactData {
+public class ContactData implements Rendering {
 	public static final ContactData $ = Keys.of(ContactData.class);
 
 	public ch.ech.ech0044.PersonIdentification personIdentification;
@@ -25,5 +26,10 @@ public class ContactData {
 	
 	public void setPartnerIdOrgnisation(PartnerIdOrganisation partnerIdOrganisation) {
 		this.partnerIdOrganisation = partnerIdOrganisation;
+	}
+
+	@Override
+	public CharSequence render() {
+		return "TODO: rendering";
 	}
 }
