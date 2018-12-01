@@ -121,6 +121,7 @@ public class XsdModel {
 		MjEntity yesNo = defaultModel.getOrCreateEntity(YesNo.class);
 		yesNo.type = MjEntityType.Integer;
 		PREDEFINED_TYPES.put("yesNoType", yesNo);
+		PREDEFINED_TYPES.put("paperLockType", yesNo);
 		
 		MjEntity namedId = defaultModel.getOrCreateEntity(NamedId.class);
 		namedId.type = MjEntityType.DEPENDING_ENTITY;

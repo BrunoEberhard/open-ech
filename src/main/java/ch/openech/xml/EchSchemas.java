@@ -220,21 +220,21 @@ public class EchSchemas {
 	public static boolean filter(MjEntity entity) {
 		String name = entity.getClassName();
 		boolean skip = //
-				name.equals(DatePartiallyKnown.class.getSimpleName()) || // 
-				name.contains("Named") && name.contains("Id") || //
-				name.equals(YesNo.class.getSimpleName()) || //
-				name.startsWith(UidStructure.class.getSimpleName()) || //
-				// die Extension von ech 0078 ist komplett etwas anderes als bei ech 0020
-				name.equals("Extension") && !entity.packageName.equals("ch.ech.ech0078" )|| //
-				// bei den PersonAddon sind die Versionen 3 und 4 recht unterschiedlich
-				// das anzugleichen macht viel vergebliche Mühe, diese Elemente werden
-				// kaum je eigenständig gebrauchtw werden.
-				name.startsWith("PersonAddon") && entity.packageName.startsWith("ch.ech.ech0021") || //
-				name.equals("NameOfParentAtBirth") || //
-				false;
+				name.equals(DatePartiallyKnown.class.getSimpleName()) || //
+						name.contains("Named") && name.contains("Id") || //
+						name.equals(YesNo.class.getSimpleName()) || name.equals("PaperLock") || //
+						name.startsWith(UidStructure.class.getSimpleName()) || //
+						// die Extension von ech 0078 ist komplett etwas anderes als bei ech 0020
+						name.equals("Extension") && !entity.packageName.equals("ch.ech.ech0078") || //
+						// bei den PersonAddon sind die Versionen 3 und 4 recht unterschiedlich
+						// das anzugleichen macht viel vergebliche Mühe, diese Elemente werden
+						// kaum je eigenständig gebrauchtw werden.
+						name.startsWith("PersonAddon") && entity.packageName.startsWith("ch.ech.ech0021") || //
+						name.equals("NameOfParentAtBirth") || //
+						false;
 		return !skip;
 	}
-	
+
 	static {
 		File dir = new File("./src/main/xml");
 		readDirectory(dir);
