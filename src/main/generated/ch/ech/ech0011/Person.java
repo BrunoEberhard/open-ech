@@ -28,7 +28,6 @@ import ch.ech.ech0021.PoliticalRightData;
 import ch.ech.ech0044.PersonIdentification;
 
 //handmade
-// Die PersonAddon - Felder können auch gleich hier untergebracht werden
 public class Person {
 	public static final Person $ = Keys.of(Person.class);
 
@@ -46,9 +45,12 @@ public class Person {
 	public ResidencePermitData residencePermit;
 	
 	// PersonAddOn
+	// Wird als eigenständige Entität nicht generiert. Ab ech0020 v3 sind diese
+	// Felder in der Person integriert. Bei v2 mussten sie noch über ech0021
+	// speziell übermittelt werden.
 	
 	public final PersonAdditionalData personAdditionalData = new PersonAdditionalData();
-	public PoliticalRightData politicalRightData;
+	public final PoliticalRightData politicalRightData = new PoliticalRightData();
 	public BirthAddonData birthAddonData;
 	public LockData lockData;
 	public JobData jobData;
