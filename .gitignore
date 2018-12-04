@@ -79,7 +79,6 @@ derby.log
 /src/main/generated/ch/ech/ech0011/Separation.java
 /src/main/generated/ch/ech/ech0011/MainResidence.java
 /src/main/generated/ch/ech/ech0011/SecondaryResidence.java
-/src/main/generated/ch/ech/ech0011/OtherResidence.java
 /src/main/generated/ch/ech/ech0011/Destination.java
 /src/main/generated/ch/ech/ech0011/TypeOfHousehold.java
 /src/main/generated/ch/ech/ech0011/Birthplace.java
@@ -95,7 +94,6 @@ derby.log
 /src/main/generated/ch/ech/ech0011/Separation.java
 /src/main/generated/ch/ech/ech0011/MainResidence.java
 /src/main/generated/ch/ech/ech0011/SecondaryResidence.java
-/src/main/generated/ch/ech/ech0011/OtherResidence.java
 /src/main/generated/ch/ech/ech0011/Destination.java
 /src/main/generated/ch/ech/ech0011/TypeOfHousehold.java
 /src/main/generated/ch/ech/ech0011/Birthplace.java
@@ -111,7 +109,6 @@ derby.log
 /src/main/generated/ch/ech/ech0011/Separation.java
 /src/main/generated/ch/ech/ech0011/MainResidence.java
 /src/main/generated/ch/ech/ech0011/SecondaryResidence.java
-/src/main/generated/ch/ech/ech0011/OtherResidence.java
 /src/main/generated/ch/ech/ech0011/Destination.java
 /src/main/generated/ch/ech/ech0011/TypeOfHousehold.java
 /src/main/generated/ch/ech/ech0011/Birthplace.java
@@ -139,7 +136,6 @@ derby.log
 /src/main/generated/ch/ech/ech0011/ResidenceData.java
 /src/main/generated/ch/ech/ech0011/MainResidence.java
 /src/main/generated/ch/ech/ech0011/SecondaryResidence.java
-/src/main/generated/ch/ech/ech0011/OtherResidence.java
 /src/main/generated/ch/ech/ech0011/PartnerIdOrganisation.java
 /src/main/generated/ch/ech/ech0011/Unknown.java
 /src/main/generated/ch/ech/ech0011/ResidenceData.java

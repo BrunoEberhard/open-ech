@@ -231,6 +231,8 @@ public class EchSchemas {
 						// kaum je eigenständig gebrauchtw werden.
 						name.startsWith("PersonAddon") && entity.packageName.startsWith("ch.ech.ech0021") || //
 						name.equals("NameOfParentAtBirth") || //
+						// Es wird immer die Destination von ech0011 verwendet
+						name.equals("Destination") && entity.packageName.equals("ch.ech.ech0098") || //
 						false;
 		return !skip;
 	}
