@@ -30,6 +30,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import ch.ech.ech0011.Destination;
+import ch.ech.ech0044.PersonIdentification;
 import ch.openech.xml.write.EchNamespaceUtil;
 
 public class XsdModel {
@@ -132,6 +134,19 @@ public class XsdModel {
 		MjEntity uidStructure = defaultModel.getOrCreateEntity(UidStructure.class);
 		uidStructure.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("uidStructureType", uidStructure);
+
+		MjEntity personIdentification = defaultModel.getOrCreateEntity(PersonIdentification.class);
+		personIdentification.type = MjEntityType.ENTITY;
+		PREDEFINED_TYPES.put("personIdentificationLightType", personIdentification);
+
+		MjEntity destination = defaultModel.getOrCreateEntity(Destination.class);
+		destination.type = MjEntityType.DEPENDING_ENTITY;
+		PREDEFINED_TYPES.put("destinationType", destination);
+
+//		MjEntity person = defaultModel.getOrCreateEntity(Person.class);
+//		person.type = MjEntityType.ENTITY;
+//		PREDEFINED_TYPES.put("baseDeliveryPersonType", person);
+
 	}
 
 	public XsdModel() {
