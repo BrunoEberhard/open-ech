@@ -203,7 +203,7 @@ public class EchSchemas {
 			if (StringUtils.equals(pathElement, "xmlns", "")) continue;
 			pathElement = pathElement.toLowerCase().replace("-", "");
 			if (Character.isDigit(pathElement.charAt(0))) {
-				if (schemaNumber == 20 || schemaNumber == 211) {
+				if (schemaNumber == 20 || schemaNumber == 116 || schemaNumber == 211) {
 					s.append(".v");
 				} else {
 					continue;
@@ -233,6 +233,10 @@ public class EchSchemas {
 						name.equals("NameOfParentAtBirth") || //
 						// Es wird immer die Destination von ech0011 verwendet
 						name.equals("Destination") && entity.packageName.equals("ch.ech.ech0098") || //
+						// PersonIdentificationLight und PersonIdentification sind zusammengefasst
+						name.equals("PersonIdentificationLight") || //
+//						// Die Person enthält alle Element der BaseDeliveryPerson
+//						name.equals("BaseDeliveryPerson") || //
 						false;
 		return !skip;
 	}

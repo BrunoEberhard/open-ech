@@ -1,4 +1,4 @@
-package ch.ech.ech0116;
+package ch.ech.ech0116.v3;
 
 import java.util.List;
 
