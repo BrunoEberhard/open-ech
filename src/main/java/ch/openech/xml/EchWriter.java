@@ -146,17 +146,7 @@ public class EchWriter implements AutoCloseable {
 			}
 		}
 
-		Element choice = XsdModel.get(element, "choice");
-		if (choice != null) {
-			XsdModel.forEachChild(choice, new ElementWriter(object));
-			return;
-		}
-
-		Element sequence = XsdModel.get(element, "sequence");
-		if (sequence != null) {
-			XsdModel.forEachChild(sequence, new ElementWriter(object));
-			return;
-		}
+		XsdModel.forEachChild(element, new ElementWriter(object));
 	}
 
 	private class ElementWriter implements Consumer<Element> {
@@ -168,10 +158,14 @@ public class EchWriter implements AutoCloseable {
 		
 		@Override
 		public void accept(Element element) {
-			String name = element.getAttribute("name");
-			if (!StringUtils.isEmpty(name)) {
-				Object value = Properties.getProperty(object.getClass(), name).getValue(object);
-				writeElement(value, element);
+			if (element.getLocalName().equals("element")) {
+				String name = element.getAttribute("name");
+				if (!StringUtils.isEmpty(name)) {
+					Object value = Properties.getProperty(object.getClass(), name).getValue(object);
+					writeElement(value, element);
+				} else {
+					// wahrscheinlich ref="extension"
+				}
 				return;
 			}
 
