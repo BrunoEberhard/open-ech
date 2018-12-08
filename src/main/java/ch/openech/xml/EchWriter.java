@@ -13,6 +13,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.model.properties.Properties;
+import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.StringUtils;
 import org.w3c.dom.Element;
 
@@ -81,22 +82,30 @@ public class EchWriter implements AutoCloseable {
 			((Collection) object).forEach(listItem -> writeElement(listItem, element));
 		} else if (object != null) {
 			try {
-				String namespace = element.getOwnerDocument().getDocumentElement().getAttribute("targetNamespace");
-				xmlStreamWriter.writeStartElement(namespace, element.getAttribute("name"));
-				writeElementContent(object, element);
-				xmlStreamWriter.writeEndElement();
+				if (!EmptyObjects.isEmpty(object)) {
+					String namespace = element.getOwnerDocument().getDocumentElement().getAttribute("targetNamespace");
+					xmlStreamWriter.writeStartElement(namespace, element.getAttribute("name"));
+					writeElementContent(object, element);
+					xmlStreamWriter.writeEndElement();
+				}
 			} catch (XMLStreamException e) {
 				throw new RuntimeException(e);
 			}
 		}
 	}
 	
+	// Elemente haben entweder einen Type (spezifiziert mit dem Attribute "type).
+	// Oder sie enthalten selber einen simple oder complex - Type.
 	private void writeElementContent(Object object, Element element) throws XMLStreamException {
 		String type = element.getAttribute("type");
 		if (!StringUtils.isEmpty(type)) {
 			MjEntity entity = xsdModel.findEntity(type);
 			if (entity.isPrimitiv() || entity.isEnumeration()) {
-				xmlStreamWriter.writeCharacters(object.toString());
+				if (object.getClass().isEnum() && object.toString().startsWith("_")) {
+					xmlStreamWriter.writeCharacters(object.toString().substring(1));
+				} else {
+					xmlStreamWriter.writeCharacters(object.toString());
+				}
 			} else {
 				Element typeElement = entity.getElement();
 
@@ -109,7 +118,7 @@ public class EchWriter implements AutoCloseable {
 					}
 				}
 
-				writeComplexType(object, typeElement);
+				writeElements(object, typeElement);
 			}
 		}
 
@@ -121,31 +130,12 @@ public class EchWriter implements AutoCloseable {
 
 		Element complexType = XsdModel.get(element, "complexType");
 		if (complexType != null) {
-			writeComplexType(object, complexType);
+			writeElements(object, complexType);
 			return;
 		}
 	}
 
-	private void writeComplexType(Object object, Element element) throws XMLStreamException {
-		Element complexContent = XsdModel.get(element, "complexContent");
-		if (complexContent != null) {
-			Element extension = XsdModel.get(complexContent, "extension");
-			if (extension != null) {
-				String base = extension.getAttribute("base");
-				MjEntity entity = xsdModel.findEntity(base);
-				Element typeElement = entity.getElement();
-
-				writeComplexType(object, typeElement);
-				writeComplexType(object, extension);
-			}
-
-			Element restriction = XsdModel.get(complexContent, "restriction");
-			if (restriction != null) {
-				// base is ignored
-				writeElement(object, restriction);
-			}
-		}
-
+	private void writeElements(Object object, Element element) {
 		XsdModel.forEachChild(element, new ElementWriter(object));
 	}
 
@@ -158,11 +148,32 @@ public class EchWriter implements AutoCloseable {
 		
 		@Override
 		public void accept(Element element) {
+			if (element.getLocalName().equals("complexContent")) {
+				Element extension = XsdModel.get(element, "extension");
+				if (extension != null) {
+					String base = extension.getAttribute("base");
+					MjEntity entity = xsdModel.findEntity(base);
+					Element baseType = entity.getElement();
+
+					writeElements(object, baseType);
+					writeElements(object, extension);
+				}
+
+				Element restriction = XsdModel.get(element, "restriction");
+				if (restriction != null) {
+					// base is ignored
+					writeElement(object, restriction);
+				}
+				return;
+			}
+
 			if (element.getLocalName().equals("element")) {
 				String name = element.getAttribute("name");
 				if (!StringUtils.isEmpty(name)) {
 					Object value = Properties.getProperty(object.getClass(), name).getValue(object);
-					writeElement(value, element);
+					if (!EmptyObjects.isEmpty(value)) {
+						writeElement(value, element);
+					}
 				} else {
 					// wahrscheinlich ref="extension"
 				}
