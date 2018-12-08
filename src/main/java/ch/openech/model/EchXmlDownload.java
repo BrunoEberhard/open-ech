@@ -175,8 +175,9 @@ public class EchXmlDownload {
 
 		download(215, 1, 0); // sektoriellen Personenidentifikator
 		
-		download(20, 2, 3);
-//		download(116, 3, 0);
+//		download(20, 2, 3); // Person mutation, alte Version zu Zeit nicht mehr vorgesehen
+
+		download(116, 3, 0);
 
 //		download(129, 4, 0); // Objektwesen
 //		download(132, 2, 0); // Objektwesen Steuern
@@ -194,6 +195,7 @@ public class EchXmlDownload {
 		download(173, 1, 0);
 		download(196, 1, 0);
 		download(201, 1, 0);
+		download(116, 4, 0); // UID Meldegründe
 		process(EchXmlDownload.class.getResourceAsStream("/eCH-0211-1-0.xsd"));
 		process(EchXmlDownload.class.getResourceAsStream("/eCH-0212-1-0.xsd"));
 	}

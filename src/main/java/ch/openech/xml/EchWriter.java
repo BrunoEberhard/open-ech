@@ -46,7 +46,7 @@ public class EchWriter implements AutoCloseable {
 		xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), rootElement.getAttribute("name"), xsdModel.getNamespace());
 		setPrefixs(xsdModel);
 		writeNamespaces(xsdModel);
-		writeContent(object, rootElement);
+		writeElementContent(object, rootElement);
 		xmlStreamWriter.writeEndElement();
 	}
 
@@ -83,7 +83,7 @@ public class EchWriter implements AutoCloseable {
 			try {
 				String namespace = element.getOwnerDocument().getDocumentElement().getAttribute("targetNamespace");
 				xmlStreamWriter.writeStartElement(namespace, element.getAttribute("name"));
-				writeContent(object, element);
+				writeElementContent(object, element);
 				xmlStreamWriter.writeEndElement();
 			} catch (XMLStreamException e) {
 				throw new RuntimeException(e);
@@ -91,13 +91,25 @@ public class EchWriter implements AutoCloseable {
 		}
 	}
 	
-	private void writeContent(Object object, Element element) throws XMLStreamException {
-		List<Element> attributes = XsdModel.getList(element, "attribute");
-		if (attributes != null) {
-			for (Element attribute : attributes) {
-				String attributeName = attribute.getAttribute("name");
-				Object value = Properties.getProperty(object.getClass(), attributeName).getValue(object);
-				xmlStreamWriter.writeAttribute(attributeName, value.toString());
+	private void writeElementContent(Object object, Element element) throws XMLStreamException {
+		String type = element.getAttribute("type");
+		if (!StringUtils.isEmpty(type)) {
+			MjEntity entity = xsdModel.findEntity(type);
+			if (entity.isPrimitiv() || entity.isEnumeration()) {
+				xmlStreamWriter.writeCharacters(object.toString());
+			} else {
+				Element typeElement = entity.getElement();
+
+				List<Element> attributes = XsdModel.getList(typeElement, "attribute");
+				if (attributes != null) {
+					for (Element attribute : attributes) {
+						String attributeName = attribute.getAttribute("name");
+						Object value = Properties.getProperty(object.getClass(), attributeName).getValue(object);
+						xmlStreamWriter.writeAttribute(attributeName, value.toString());
+					}
+				}
+
+				writeComplexType(object, typeElement);
 			}
 		}
 
@@ -109,10 +121,12 @@ public class EchWriter implements AutoCloseable {
 
 		Element complexType = XsdModel.get(element, "complexType");
 		if (complexType != null) {
-			writeContent(object, complexType);
+			writeComplexType(object, complexType);
 			return;
 		}
+	}
 
+	private void writeComplexType(Object object, Element element) throws XMLStreamException {
 		Element complexContent = XsdModel.get(element, "complexContent");
 		if (complexContent != null) {
 			Element extension = XsdModel.get(complexContent, "extension");
@@ -120,40 +134,31 @@ public class EchWriter implements AutoCloseable {
 				String base = extension.getAttribute("base");
 				MjEntity entity = xsdModel.findEntity(base);
 				Element typeElement = entity.getElement();
-				writeContent(object, typeElement);
-				writeContent(object, extension);
+
+				writeComplexType(object, typeElement);
+				writeComplexType(object, extension);
 			}
 
 			Element restriction = XsdModel.get(complexContent, "restriction");
 			if (restriction != null) {
 				// base is ignored
-				writeContent(object, restriction);
+				writeElement(object, restriction);
 			}
-		}
-		
-		Element sequence = XsdModel.get(element, "sequence");
-		if (sequence != null) {
-			XsdModel.forEachChild(sequence, new ElementWriter(object));
 		}
 
 		Element choice = XsdModel.get(element, "choice");
 		if (choice != null) {
 			XsdModel.forEachChild(choice, new ElementWriter(object));
+			return;
 		}
 
-		String type = element.getAttribute("type");
-		if (!StringUtils.isEmpty(type)) {
-			MjEntity entity = xsdModel.findEntity(type);
-			if (entity.isPrimitiv() || entity.isEnumeration()) {
-				xmlStreamWriter.writeCharacters(object.toString());
-			} else {
-				Element typeElement = entity.getElement();
-				writeContent(object, typeElement);
-			}
+		Element sequence = XsdModel.get(element, "sequence");
+		if (sequence != null) {
+			XsdModel.forEachChild(sequence, new ElementWriter(object));
+			return;
 		}
-		
 	}
-	
+
 	private class ElementWriter implements Consumer<Element> {
 		private final Object object;
 		
@@ -167,8 +172,19 @@ public class EchWriter implements AutoCloseable {
 			if (!StringUtils.isEmpty(name)) {
 				Object value = Properties.getProperty(object.getClass(), name).getValue(object);
 				writeElement(value, element);
+				return;
 			}
-		}		
+
+			if (element.getLocalName().equals("choice")) {
+				XsdModel.forEachChild(element, new ElementWriter(object));
+				return;
+			}
+
+			if (element.getLocalName().equals("sequence")) {
+				XsdModel.forEachChild(element, new ElementWriter(object));
+				return;
+			}
+		}
 	}
 	
 	@Override
