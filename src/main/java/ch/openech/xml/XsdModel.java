@@ -47,6 +47,7 @@ public class XsdModel {
 	
 	private Map<String, XsdModel> models;
 	
+	private LinkedHashMap<String, Element> rootElements = new LinkedHashMap<>();
 	private LinkedHashMap<String, MjEntity> entities = new LinkedHashMap<>();
 	private String namespace;
 	
@@ -229,14 +230,8 @@ public class XsdModel {
 		
 		forEachChild(documentElement, element -> {
 			if ("element".equals(element.getLocalName())) {
-				MjProperty property = element(element);
-				MjEntity entity = property.type;
-				entity.type = MjEntityType.ENTITY;
-				entity.setElement(element);
-				if (StringUtils.isEmpty(entity.name)) {
-					entity.name = property.name;
-					entities.put(entity.name, entity);
-				}
+				String name = element.getAttribute("name");
+				rootElements.put(name, element);
 			} 
 		});		
 	}
@@ -261,6 +256,21 @@ public class XsdModel {
 			}
 		}
 		return null;
+	}
+
+	public static List<Element> getList(Element node, String localName) {
+		List<Element> elements = null;
+		NodeList childNodes = node.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i++) {
+			Node c = childNodes.item(i);
+			if (XS.equals(c.getNamespaceURI()) && StringUtils.equals(localName, c.getLocalName())) {
+				if (elements == null) {
+					elements = new ArrayList<>();
+				}
+				elements.add((Element) c);
+			}
+		}
+		return elements;
 	}
 
 	private MjEntity simpleType(Element node) {
@@ -370,6 +380,18 @@ public class XsdModel {
 				return baseEntity;
 			} else {
 				entity.properties.addAll(complexContent(complexContent));
+			}
+		}
+		List<Element> attributes = getList(node, "attribute");
+		if (attributes != null) {
+			for (Element attribute : attributes) {
+				MjProperty property = element(attribute);
+				if (!StringUtils.isEmpty(property.name) && property.type != null) {
+//					if (property.name.equals("version"))
+//						property.name = "version_";
+//					System.out.println("Attribute: " + property.name);
+					entity.properties.add(property);
+				}
 			}
 		}
 		return entity;
@@ -483,6 +505,10 @@ public class XsdModel {
 		return property;
 	}
 	
+	public Element getRootElement(String name) {
+		return rootElements.get(name);
+	}
+
 	public MjEntity findEntity(String type) {
 		if (!StringUtils.isEmpty(type)) {
 			if (type.contains(":")) {

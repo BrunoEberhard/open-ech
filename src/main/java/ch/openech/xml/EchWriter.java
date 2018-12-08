@@ -3,8 +3,8 @@ package ch.openech.xml;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import javax.xml.stream.XMLOutputFactory;
@@ -41,13 +41,12 @@ public class EchWriter implements AutoCloseable {
 	public void writeDocument(Object object) throws XMLStreamException {
 		Class<?> clazz = object.getClass();
 		xsdModel = getXsdModel(clazz);
-		Optional<MjEntity> entityOptional = xsdModel.getEntities().stream().filter(e -> EchClassNameGenerator.apply(e).equals(clazz.getSimpleName())).findFirst();
-		MjEntity entity = entityOptional.orElseThrow(() -> new IllegalArgumentException("Entity " + clazz.getSimpleName() + " not found"));
-		
-		xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), entity.getElement().getAttribute("name"), xsdModel.getNamespace());
+		Element rootElement = xsdModel.getRootElement(StringUtils.lowerFirstChar(clazz.getSimpleName()));
+
+		xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), rootElement.getAttribute("name"), xsdModel.getNamespace());
 		setPrefixs(xsdModel);
 		writeNamespaces(xsdModel);
-		writeContent(object, entity.getElement());
+		writeContent(object, rootElement);
 		xmlStreamWriter.writeEndElement();
 	}
 
@@ -117,11 +116,21 @@ public class EchWriter implements AutoCloseable {
 		
 	}
 	
-	private void complexType(Object object, Element element) {
+	private void complexType(Object object, Element element) throws XMLStreamException {
+		List<Element> attributes = XsdModel.getList(element, "attribute");
+		if (attributes != null) {
+			for (Element attribute : attributes) {
+				String attributeName = attribute.getAttribute("name");
+				Object value = Properties.getProperty(object.getClass(), attributeName).getValue(object);
+				xmlStreamWriter.writeAttribute(attributeName, value.toString());
+			}
+		}
+
 		Element sequence = XsdModel.get(element, "sequence");
 		if (sequence != null) {
 			XsdModel.forEachChild(sequence, new ElementWriter(object));
 		}
+
 		Element choice = XsdModel.get(element, "choice");
 		if (choice != null) {
 			XsdModel.forEachChild(choice, new ElementWriter(object));
