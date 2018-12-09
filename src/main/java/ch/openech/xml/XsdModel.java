@@ -51,7 +51,8 @@ public class XsdModel {
 	private LinkedHashMap<String, Element> rootElements = new LinkedHashMap<>();
 	private LinkedHashMap<String, MjEntity> entities = new LinkedHashMap<>();
 	private String namespace;
-	
+	private boolean qualifiedElements = true;
+
 	private final Map<String, String> namespaceByPrefix = new HashMap<>();
 	private final Map<String, String> prefixByNamespace = new HashMap<>();
 	
@@ -145,11 +146,6 @@ public class XsdModel {
 		MjEntity destination = defaultModel.getOrCreateEntity(Destination.class);
 		destination.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("destinationType", destination);
-
-//		MjEntity person = defaultModel.getOrCreateEntity(Person.class);
-//		person.type = MjEntityType.ENTITY;
-//		PREDEFINED_TYPES.put("baseDeliveryPersonType", person);
-
 	}
 
 	public XsdModel() {
@@ -175,6 +171,8 @@ public class XsdModel {
 					String namespaceURI = attribute.getValue();
 					namespaceByPrefix.put(prefix, namespaceURI);
 					prefixByNamespace.put(namespaceURI, prefix);
+				} else if (attribute.getName().equals("elementFormDefault")) {
+					qualifiedElements = !"unqualified".equals(attribute.getValue());
 				}
 			}
 		} catch (Exception e) {
@@ -232,8 +230,18 @@ public class XsdModel {
 		
 		forEachChild(documentElement, element -> {
 			if ("element".equals(element.getLocalName())) {
-				String name = element.getAttribute("name");
-				rootElements.put(name, element);
+				MjProperty property = element(element);
+				MjEntity entity = property.type;
+				// Root Element können mit einem type - Attribute auf eine Type - Definition
+				// verweisen oder sie können eine eigene Definition mitbringen. Diese eigenen
+				// Definitionen müssen dann als neue Entität mit dem Namen des Root Elements
+				// erfasst werden.
+				if (StringUtils.isEmpty(entity.name)) {
+					entity.name = property.name;
+					entities.put(property.name, entity);
+				}
+				System.out.println("Put " + property.name + " on " + namespace);
+				rootElements.put(property.name, element);
 			} 
 		});		
 	}
@@ -351,6 +359,7 @@ public class XsdModel {
 			}
 		}
 		
+		entity.setElement(node);
 		return entity;
 	}
 
@@ -396,6 +405,8 @@ public class XsdModel {
 				}
 			}
 		}
+
+		entity.setElement(node);
 		return entity;
 	}
 
@@ -507,10 +518,6 @@ public class XsdModel {
 		return property;
 	}
 	
-	public Element getRootElement(String name) {
-		return rootElements.get(name);
-	}
-
 	public MjEntity findEntity(String type) {
 		if (type.equals("string40Type")) {
 			type = "string60Type";
@@ -569,6 +576,14 @@ public class XsdModel {
 
 		XsdModel xsdModel = models.get(namespaceWithoutForgiving);
 		return xsdModel;
+	}
+
+	public Element getRootElement(String rootElementName) {
+		return rootElements.get(rootElementName);
+	}
+
+	public boolean isQualifiedElements() {
+		return qualifiedElements;
 	}
 
 }
