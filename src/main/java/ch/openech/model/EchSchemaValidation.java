@@ -50,6 +50,12 @@ public class EchSchemaValidation {
 			LSResourceResolver resourceResolver = new LSResourceResolver() {
 				@Override
 				public LSInput resolveResource(String type, String namespaceURI, String publicId, String systemId, String baseURI) {
+					if (namespaceURI == null) {
+						// wenn xml element ohne qualifier (schema Kürzel) angegeben werden wird
+						// tatsächlich der Resolver mit null aufgerufen.
+						return null;
+					}
+
 					String fileName = fileByNamespace.get(namespaceURI);
 					InputStream stream = this.getClass().getClassLoader().getResourceAsStream(fileName);
 
