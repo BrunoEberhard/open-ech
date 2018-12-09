@@ -2,7 +2,6 @@ package ch.openech.xml;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.time.temporal.Temporal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +103,7 @@ public class EchWriter implements AutoCloseable {
 		}
 	}
 	
-	// Elemente haben entweder einen Type (spezifiziert mit dem Attribute "type).
+	// Elemente haben entweder einen Type (spezifiziert mit dem Attribute "type").
 	// Oder sie enthalten selber einen simple oder complex - Type.
 	private void writeElementContent(Object object, Element element) throws XMLStreamException {
 		String type = element.getAttribute("type");
