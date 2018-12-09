@@ -12,6 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -30,8 +32,9 @@ import ch.openech.xml.write.EchNamespaceUtil;
 
 public class EchXmlDownload {
 
-	private final String schemaLocation;
+	private String schemaLocation;
 	private String targetNamespace;
+	private static Map<String, String> fileByNamespace = new HashMap<>();
 	
 	private EchXmlDownload() {
 		this.schemaLocation = null;
@@ -42,7 +45,9 @@ public class EchXmlDownload {
 	}
 
 	private void download() {
-		// System.out.println("Download: " + schemaLocation);
+		if ("http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-4.xsd".equals(schemaLocation)) {
+			schemaLocation = "http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-3.xsd";
+		}
 		try {
 			URL url = new URL(schemaLocation);
 			String fileName = convert(url);
@@ -69,9 +74,10 @@ public class EchXmlDownload {
 				throw new RuntimeException(e);
 			}
 			
-			System.out.println("  <uri name=\"" + targetNamespace + "\" uri=\"platform:/resource/openech/" + fileName + "\"/>");
-			System.out.println("  <system systemId=\"" + url.toExternalForm() + "\" uri=\"platform:/resource/openech/" + fileName + "\"/>");
-			
+			System.out.println(" <uri name=\"" + targetNamespace + "\" + uri=\"platform:/resource/openech/" + fileName + "\"/>");
+			System.out.println(" <system systemId=\"" + url.toExternalForm() + "\" + uri=\"platform:/resource/openech/" + fileName + "\"/>");
+
+			fileByNamespace.put(targetNamespace, fileName.substring(fileName.lastIndexOf("/") + 1));
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
@@ -174,7 +180,7 @@ public class EchXmlDownload {
 		download(72, 1, 0); // Länder
 
 		download(215, 1, 0); // sektoriellen Personenidentifikator
-		
+
 //		download(20, 2, 3); // Person mutation, alte Version zu Zeit nicht mehr vorgesehen
 
 		download(116, 3, 0);
@@ -198,5 +204,11 @@ public class EchXmlDownload {
 		download(116, 4, 0); // UID Meldegründe
 		process(EchXmlDownload.class.getResourceAsStream("/eCH-0211-1-0.xsd"));
 		process(EchXmlDownload.class.getResourceAsStream("/eCH-0212-1-0.xsd"));
+
+		download(215, 1, 0);
+
+		for (String namespace : fileByNamespace.keySet()) {
+			System.out.println(namespace + " = " + fileByNamespace.get(namespace));
+		}
 	}
 }
