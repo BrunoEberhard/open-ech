@@ -2,6 +2,7 @@ package ch.openech.xml;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.time.temporal.Temporal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,9 @@ public class EchWriter implements AutoCloseable {
 	public void writeDocument(Object object) throws XMLStreamException {
 		Class<?> clazz = object.getClass();
 		xsdModel = getXsdModel(clazz);
-		Element rootElement = xsdModel.getRootElement(StringUtils.lowerFirstChar(clazz.getSimpleName()));
+
+		String rootElementName = StringUtils.lowerFirstChar(clazz.getSimpleName());
+		Element rootElement = xsdModel.getRootElement(rootElementName);
 
 		xmlStreamWriter.writeStartElement(xsdModel.getPrefix(), rootElement.getAttribute("name"), xsdModel.getNamespace());
 		setPrefixs(xsdModel);
@@ -85,9 +88,13 @@ public class EchWriter implements AutoCloseable {
 		} else if (object != null) {
 			try {
 				if (!EmptyObjects.isEmpty(object)) {
-					String namespace = element.getOwnerDocument().getDocumentElement().getAttribute("targetNamespace");
 					String name = element.getAttribute("name");
-					xmlStreamWriter.writeStartElement(namespace, name);
+					if (xsdModel.isQualifiedElements()) {
+						String namespace = element.getOwnerDocument().getDocumentElement().getAttribute("targetNamespace");
+						xmlStreamWriter.writeStartElement(namespace, name);
+					} else {
+						xmlStreamWriter.writeStartElement(name);
+					}
 					writeElementContent(object, element);
 					xmlStreamWriter.writeEndElement();
 				}
