@@ -13,10 +13,12 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.model.properties.Properties;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.StringUtils;
 import org.w3c.dom.Element;
 
+import ch.ech.ech0010.Country;
 import ch.openech.xml.write.IndentingXMLStreamWriter;
 
 public class EchWriter implements AutoCloseable {
@@ -84,7 +86,8 @@ public class EchWriter implements AutoCloseable {
 			try {
 				if (!EmptyObjects.isEmpty(object)) {
 					String namespace = element.getOwnerDocument().getDocumentElement().getAttribute("targetNamespace");
-					xmlStreamWriter.writeStartElement(namespace, element.getAttribute("name"));
+					String name = element.getAttribute("name");
+					xmlStreamWriter.writeStartElement(namespace, name);
 					writeElementContent(object, element);
 					xmlStreamWriter.writeEndElement();
 				}
@@ -107,7 +110,7 @@ public class EchWriter implements AutoCloseable {
 					xmlStreamWriter.writeCharacters(object.toString());
 				}
 			} else {
-				Element typeElement = entity.getElement();
+				Element typeElement = xsdModel.findElement(type);
 
 				List<Element> attributes = XsdModel.getList(typeElement, "attribute");
 				if (attributes != null) {
@@ -124,7 +127,14 @@ public class EchWriter implements AutoCloseable {
 
 		Element simpleType = XsdModel.get(element, "simpleType");
 		if (simpleType != null) {
-			xmlStreamWriter.writeCharacters(object.toString());
+			if (object instanceof Country) {
+				// in der Destination wird AddressInformation statt eine spezielle Klasse
+				// verwendet. Damit hat country aber die falsche Klasse, das wird hier
+				// geradegebogen.
+				xmlStreamWriter.writeCharacters(((Country) object).countryIdISO2);
+			} else {
+				xmlStreamWriter.writeCharacters(object.toString());
+			}
 			return;
 		}
 
@@ -152,8 +162,7 @@ public class EchWriter implements AutoCloseable {
 				Element extension = XsdModel.get(element, "extension");
 				if (extension != null) {
 					String base = extension.getAttribute("base");
-					MjEntity entity = xsdModel.findEntity(base);
-					Element baseType = entity.getElement();
+					Element baseType = xsdModel.findElement(base);
 
 					writeElements(object, baseType);
 					writeElements(object, extension);
@@ -170,9 +179,14 @@ public class EchWriter implements AutoCloseable {
 			if (element.getLocalName().equals("element")) {
 				String name = element.getAttribute("name");
 				if (!StringUtils.isEmpty(name)) {
-					Object value = Properties.getProperty(object.getClass(), name).getValue(object);
-					if (!EmptyObjects.isEmpty(value)) {
-						writeElement(value, element);
+					PropertyInterface property = Properties.getProperty(object.getClass(), name);
+					if (property != null) {
+						Object value = property.getValue(object);
+						if (!EmptyObjects.isEmpty(value)) {
+							writeElement(value, element);
+						}
+					} else {
+						System.out.println("Not found: " + name + " on " + object.getClass().getSimpleName());
 					}
 				} else {
 					// wahrscheinlich ref="extension"

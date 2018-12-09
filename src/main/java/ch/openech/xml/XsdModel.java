@@ -2,6 +2,7 @@ package ch.openech.xml;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -122,7 +123,8 @@ public class XsdModel {
 		PREDEFINED_TYPES.put("datePartiallyKnownType", datePartiallyKnown);
 
 		MjEntity yesNo = defaultModel.getOrCreateEntity(YesNo.class);
-		yesNo.type = MjEntityType.Integer;
+		yesNo.type = MjEntityType.String;
+		yesNo.values = Arrays.asList("0", "1");
 		PREDEFINED_TYPES.put("yesNoType", yesNo);
 		PREDEFINED_TYPES.put("paperLockType", yesNo);
 		
@@ -219,7 +221,7 @@ public class XsdModel {
 			if ("simpleType".equals(element.getLocalName())) {
 				// maybe only complex types are added to the model
 				simpleType(element);
-			} 
+			}
 		});
 
 		forEachChild(documentElement, element -> {
@@ -284,13 +286,15 @@ public class XsdModel {
 			if (baseEntity == null) {
 				throw new IllegalStateException("Base Entity not found: " + base + " for " + name);
 			}
+
+			entity.type = baseEntity.type;
+
 			// restriction auf enumeration werden ignoriert,
 			// z.B. bei eCH-0021:typeOfRelationshipType
 			if (baseEntity.isEnumeration()) {
+				entity.values = baseEntity.values;
 				return baseEntity;
 			}
-			
-			entity.type = baseEntity.type;
 			
 			Node minInclusive = get(restriction, "minInclusive");
 			entity.minInclusive = minInclusive != null ? ((Element) minInclusive).getAttribute("value") : null;
@@ -387,9 +391,7 @@ public class XsdModel {
 			for (Element attribute : attributes) {
 				MjProperty property = element(attribute);
 				if (!StringUtils.isEmpty(property.name) && property.type != null) {
-//					if (property.name.equals("version"))
-//						property.name = "version_";
-//					System.out.println("Attribute: " + property.name);
+//					if (property.name.equals("version")) property.name = "version_";
 					entity.properties.add(property);
 				}
 			}
@@ -510,35 +512,55 @@ public class XsdModel {
 	}
 
 	public MjEntity findEntity(String type) {
+		if (type.equals("string40Type")) {
+			type = "string60Type";
+		}
 		if (!StringUtils.isEmpty(type)) {
 			if (type.contains(":")) {
 				String[] parts = type.split(":");
 				String namespace = namespaceByPrefix.get(parts[0]);
 				if ("xs".equals(parts[0])) {
 					return XML_TYPES.get(parts[1]);
-				} else if (PREDEFINED_TYPES.containsKey(parts[1])) {
-					// der namespace wird hier nicht gecheckt
-					return PREDEFINED_TYPES.get(parts[1]);
 				} else if (!StringUtils.equals(namespace, this.namespace)) {
 					XsdModel xsdModel = findModel(namespace);
 					if (xsdModel != null) {
 						return xsdModel.findEntity(parts[1]);
 					} else {
 						log.warning("Cannot resolve: " + namespace + ":" + parts[1]);
-						MjEntity entity = new MjEntity(parts[1]);
-						return entity;
+						return new MjEntity(parts[1]);
 					}
 				} else {
-					return entities.get(parts[1]);
+					type = parts[1];
 				}
-			} else {
+			}
+			if (PREDEFINED_TYPES.containsKey(type)) {
+				return PREDEFINED_TYPES.get(type);
+			} else if (entities.containsKey(type)) {
 				return entities.get(type);
+			} else {
+				log.warning("Cannot resolve: " + type);
+				return new MjEntity(type);
 			}
 		} else {
 			return null;
 		}
 	}
 	
+	// TODO!
+	public Element findElement(String type) {
+		if (type.contains(":")) {
+			String[] parts = type.split(":");
+			String namespace = namespaceByPrefix.get(parts[0]);
+			if (!StringUtils.equals(namespace, this.namespace)) {
+				XsdModel xsdModel = findModel(namespace);
+				return xsdModel.findElement(parts[1]);
+			} else {
+				type = parts[1];
+			}
+		}
+		return entities.get(type).getElement();
+	}
+
 	private XsdModel findModel(String namespace) {
 		// ech 173 verwendet die forgiving schemas. Die werden zur Zeit nicht
 		// explizit erzeugt. Daher werden die namespaces konviertiert von
