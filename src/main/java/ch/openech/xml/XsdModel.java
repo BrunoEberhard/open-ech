@@ -546,7 +546,6 @@ public class XsdModel {
 		}
 	}
 	
-	// TODO!
 	public Element findElement(String type) {
 		if (type.contains(":")) {
 			String[] parts = type.split(":");
