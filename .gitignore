@@ -141,7 +141,6 @@ derby.log
 /src/main/generated/ch/ech/ech0011/ResidenceData.java
 /src/main/generated/ch/ech/ech0020/v2/EventTypes.java
 /src/main/generated/ch/ech/ech0020/v2/BaseDeliveryPerson.java
-/src/main/generated/ch/ech/ech0020/v2/EventBaseDelivery.java
 /src/main/generated/ch/ech/ech0020/v2/BirthPerson.java
 /src/main/generated/ch/ech/ech0020/v2/BirthPartner.java
 /src/main/generated/ch/ech/ech0020/v2/BirthMother.java
@@ -296,7 +295,6 @@ derby.log
 /src/main/generated/ch/ech/ech0020/v3/InfostarPerson.java
 /src/main/generated/ch/ech/ech0020/v3/BaseDeliveryPerson.java
 /src/main/generated/ch/ech/ech0020/v3/BaseDeliveryPerson.java
-/src/main/generated/ch/ech/ech0020/v3/EventBaseDelivery.java
 /src/main/generated/ch/ech/ech0020/v3/EventKeyExchange.java
 /src/main/generated/ch/ech/ech0020/v3/EventDataRequest.java
 /src/main/generated/ch/ech/ech0020/v3/SwissNationality.java
