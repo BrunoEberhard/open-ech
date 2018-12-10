@@ -13,7 +13,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.model.properties.Properties;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.CloneHelper;
@@ -74,22 +73,20 @@ public class EchReader implements AutoCloseable {
 				XsdModel model = EchSchemas.getXsdModel(namespace);
 				Objects.requireNonNull(model, "No namespace: " + namespace + " for " + rootElementName);
 
-				MjEntity entity = model.findEntity(StringUtils.upperFirstChar(rootElementName));
-				if (entity == null) {
-					entity = model.findEntity("RootElement_" + rootElementName);
-				}
-				return read(getClass(entity, namespace));
+				rootElementName = StringUtils.upperFirstChar(rootElementName);
+				Class<?> clazz = getClass(rootElementName, namespace);
+				return read(clazz);
 			} 
 		}
 		return null;
 	}
 	
-	private Class<?> getClass(MjEntity entity, String namespace) {
+	private Class<?> getClass(String name, String namespace) {
 		try {
 			String packageName = EchSchemas.packageName(namespace);
-			return Class.forName(packageName + "." + entity.getClassName());
+			return Class.forName(packageName + "." + name);
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
+			return null;
 		}
 	}
 	
