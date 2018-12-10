@@ -240,7 +240,6 @@ public class XsdModel {
 					entity.name = property.name;
 					entities.put(property.name, entity);
 				}
-				System.out.println("Put " + property.name + " on " + namespace);
 				rootElements.put(property.name, element);
 			} 
 		});		
