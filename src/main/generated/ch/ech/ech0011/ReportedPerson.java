@@ -9,7 +9,7 @@ import org.minimalj.util.CloneHelper;
 
 import ch.ech.ech0007.SwissMunicipality;
 
-//handmade
+//handmade, unused
 public class ReportedPerson {
 	public static final ReportedPerson $ = Keys.of(ReportedPerson.class);
 
