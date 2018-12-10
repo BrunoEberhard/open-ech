@@ -6,6 +6,11 @@ import java.util.List;
 import org.minimalj.model.Keys;
 
 // Handmade
+// ReportingMunicipalityRestrictedBaseMain: arrivalDate zwingend
+// ReportingMunicipalityRestrictedBaseSecondary: arrivalDate, comesFrom zwingend
+// ReportingMunicipalityRestrictedMoveIn: arrivalDate zwingend, kein departureDate, goesTo
+// ReportingMunicipalityRestrictedMove: nur, aber zwingend: departureDate, goesTo 
+// ReportingMunicipalityRestrictedMove: nur dwellingAddress
 public class ReportingMunicipality {
 	public static final ReportingMunicipality $ = Keys.of(ReportingMunicipality.class);
 
