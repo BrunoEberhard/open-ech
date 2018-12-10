@@ -1,12 +1,7 @@
 package ch.openech.model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.xml.XMLConstants;
@@ -20,25 +15,16 @@ import org.w3c.dom.ls.LSResourceResolver;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import ch.openech.xml.EchSchemas;
 import ch.openech.xml.read.LSInputImpl;
 
 public class EchSchemaValidation {
 	public static final Logger logger = Logger.getLogger(EchSchemaValidation.class.getName());
 	public static final String OK = "ok";
-	private static Map<String, String> fileByNamespace = new HashMap<>();
 
 	//
 
 	static {
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(EchSchemaValidation.class.getClassLoader().getResourceAsStream("catalog.txt")))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				String[] parts = line.split("=");
-				fileByNamespace.put(parts[0].trim(), parts[1].trim());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private static Validator validator;
@@ -56,7 +42,7 @@ public class EchSchemaValidation {
 						return null;
 					}
 
-					String fileName = fileByNamespace.get(namespaceURI);
+					String fileName = EchSchemas.getFile(namespaceURI);
 					InputStream stream = this.getClass().getClassLoader().getResourceAsStream(fileName);
 
 					return new LSInputImpl(publicId, systemId, baseURI, stream, null);

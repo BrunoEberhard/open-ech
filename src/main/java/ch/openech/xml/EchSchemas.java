@@ -1,9 +1,9 @@
 package ch.openech.xml;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.minimalj.metamodel.generator.ClassGenerator;
 import org.minimalj.metamodel.model.MjEntity;
@@ -26,54 +27,46 @@ import org.minimalj.metamodel.model.MjProperty;
 import org.minimalj.metamodel.model.MjProperty.MjPropertyType;
 import org.minimalj.util.StringUtils;
 
+import ch.openech.model.EchSchemaValidation;
 import ch.openech.xml.write.EchNamespaceUtil;
 
 public class EchSchemas {
 	private static Logger LOG = Logger.getLogger(EchSchemas.class.getName());
 
+	// namespace -> xsd file name in class path
+	private static Map<String, String> fileByNamespace = new HashMap<>();
+
 	// package -> namespace
 	private static Map<String, String> namespaceByPackage = new HashMap<>();
 
-	// namespace -> MjModel
-	private static Map<String, MjModel> models = new HashMap<>();
+	// namespace -> XsdModel
 	private static Map<String, XsdModel> xsdModels = new HashMap<>();
 
 	public static String getNamespaceByPackage(String packageName) {
 		return namespaceByPackage.get(packageName);
 	}
 	
-	private static void readDirectory(File dir) {
-		List<File> xsdFiles = new ArrayList<>();
-		scanDirectory(dir, xsdFiles);
-		read(xsdFiles);
-	}
-
-	private static void scanDirectory(File dir, List<File> files) {
-		Arrays.stream(dir.listFiles()).filter(File::isDirectory).forEach(subDir -> scanDirectory(subDir, files));
-		Arrays.stream(dir.listFiles())
-				.filter(f -> f.getName().endsWith(".xsd") && !f.getName().endsWith("f.xsd") && !f.isDirectory())
-				.forEach(files::add);
-	}
-
-	private static void read(List<File> xsdFiles) {
-		for (File file : xsdFiles) {
-			try (FileInputStream fis = new FileInputStream(file)) {
-				XsdModel model = new XsdModel(fis);
-				xsdModels.put(model.getNamespace(), model);
-				LOG.fine("Read names of " + model.getNamespace());
-			} catch (FileNotFoundException e) {
-				LOG.log(Level.SEVERE, "Konnte xsd nicht finden: " + file.getName(), e);
+	private static void read(Stream<String> xsdFiles) {
+		xsdFiles.forEach(f -> {
+			try (InputStream is = EchSchemas.class.getClassLoader().getResourceAsStream(f)) {
+				if (is == null) {
+					LOG.warning("Xsd not available in classpath: " + f);
+				} else {
+					XsdModel model = new XsdModel(is);
+					xsdModels.put(model.getNamespace(), model);
+					LOG.fine("Read names of " + model.getNamespace());
+				}
 			} catch (IOException e) {
-				LOG.log(Level.SEVERE, "Konnte xsd nicht lesen: " + file.getName(), e);
+				LOG.log(Level.SEVERE, "Could not read: " + f);
 			}
-		}
+		});
 
 		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
 		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
 
 		for (XsdModel model : sortedModels) {
 			model.read(xsdModels);
-			LOG.info("Read entities of " + model.getNamespace());
+			LOG.fine("Read entities of " + model.getNamespace());
 
 			String packageName = packageName(model.getNamespace());
 			model.getEntities().forEach(e -> e.packageName = packageName);
@@ -91,7 +84,6 @@ public class EchSchemas {
 		for (XsdModel model : xsdModels.values()) {
 			MjModel mjModel = new MjModel();
 			model.getEntities().forEach(entity -> mjModel.addEntity(entity));
-			models.put(model.getNamespace(), mjModel);
 		}
 	}
 
@@ -170,14 +162,6 @@ public class EchSchemas {
 		return null;
 	}
 
-	public static Collection<MjModel> getModels() {
-		return models.values();
-	}
-	
-	public static MjModel getModel(String namespace) {
-		return models.get(namespace);
-	}
-	
 	public static Collection<XsdModel> getXsdModels() {
 		return xsdModels.values();
 	}
@@ -242,8 +226,22 @@ public class EchSchemas {
 	}
 
 	static {
-		File dir = new File("./src/main/xml");
-		readDirectory(dir);
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(EchSchemaValidation.class.getClassLoader().getResourceAsStream("catalog.txt")))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				String[] parts = line.split("=");
+				fileByNamespace.put(parts[0].trim(), parts[1].trim());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Stream<String> filesToRead = fileByNamespace.values().stream().filter(f -> !f.endsWith("f.xsd"));
+		read(filesToRead);
+	}
+
+	public static String getFile(String namespace) {
+		return fileByNamespace.get(namespace);
 	}
 
 	private static void applyHandMadeChanges() {
