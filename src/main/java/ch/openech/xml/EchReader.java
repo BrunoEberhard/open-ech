@@ -14,7 +14,6 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.metamodel.model.MjEntity;
-import org.minimalj.metamodel.model.MjModel;
 import org.minimalj.model.properties.Properties;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.CloneHelper;
@@ -72,22 +71,23 @@ public class EchReader implements AutoCloseable {
 				String namespace = startElement.getName().getNamespaceURI();
 				String rootElementName = startElement.getName().getLocalPart();
 
-				MjModel model = EchSchemas.getModel(namespace);
+				XsdModel model = EchSchemas.getXsdModel(namespace);
 				Objects.requireNonNull(model, "No namespace: " + namespace + " for " + rootElementName);
 
-				MjEntity entity = model.getEntity(StringUtils.upperFirstChar(rootElementName));
+				MjEntity entity = model.findEntity(StringUtils.upperFirstChar(rootElementName));
 				if (entity == null) {
-					entity = model.getEntity("RootElement_" + rootElementName);
+					entity = model.findEntity("RootElement_" + rootElementName);
 				}
-				return read(getClass(entity));
+				return read(getClass(entity, namespace));
 			} 
 		}
 		return null;
 	}
 	
-	private Class<?> getClass(MjEntity entity) {
+	private Class<?> getClass(MjEntity entity, String namespace) {
 		try {
-			return Class.forName(entity.packageName + "." + entity.getClassName());
+			String packageName = EchSchemas.packageName(namespace);
+			return Class.forName(packageName + "." + entity.getClassName());
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		}
