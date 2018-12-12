@@ -1,6 +1,8 @@
 package ch.openech.transaction;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.minimalj.repository.query.By;
 import org.minimalj.transaction.Transaction;
@@ -55,6 +57,7 @@ public class ImportSwissDataTransaction implements Transaction<Void> {
 		}
 		*/
 		
+		Set<String> zips = new HashSet<>(10000);
 		CsvReader csvReader = new CsvReader(getClass().getResourceAsStream("/ch/openech/gemeindenPlz.csv"));
 		List<GemeindenPlz> gemeinden = csvReader.readValues(GemeindenPlz.class);
 		for (GemeindenPlz gemeinde : gemeinden) {
@@ -68,13 +71,14 @@ public class ImportSwissDataTransaction implements Transaction<Void> {
 			locality.swissZipCode = gemeinde.PLZ4;
 			locality.swissZipCodeAddOn = gemeinde.PLZZ != null && gemeinde.PLZZ != 0 ? "" + gemeinde.PLZZ : null;
 			locality.name.nameLong = gemeinde.PLZNAMK;
-			if (count(Locality.class, By.field(Locality.$.swissZipCode, locality.swissZipCode).
-					and(By.field(Locality.$.swissZipCodeAddOn, locality.swissZipCodeAddOn)))  == 0) {
-				insert(locality);
-			} else {
-				System.out.println("Duplicate: " + locality.name.nameLong);
+			String key = locality.swissZipCode + (locality.swissZipCodeAddOn != null ? locality.swissZipCodeAddOn : "");
+			if (zips.contains(key)) {
+				continue;
 			}
+			zips.add(key);
+			insert(locality);
 		}
+
 		return null;
 	}
 	
