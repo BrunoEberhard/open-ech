@@ -3,6 +3,7 @@ package ch.ech.ech0108;
 import java.util.List;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.annotation.Size;
 
 // handmade
 public class UidregInformation {
@@ -16,6 +17,8 @@ public class UidregInformation {
 	public List<UidRegSource> uidregSource;
 	public ch.openech.xml.UidStructure uidReplacement;
 	public Boolean uidregUidService;
+	@Size(255)
+	public String uidregTranslation;
 	
 	// in version 4 nicht mehr vorhanden
 	
