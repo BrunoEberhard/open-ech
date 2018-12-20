@@ -1,7 +1,6 @@
 package ch.openech.frontend.ech0008;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.minimalj.frontend.Frontend;
@@ -9,6 +8,7 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
+import org.minimalj.model.ViewUtil;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
@@ -50,12 +50,8 @@ public class CountryFormElement extends AbstractFormElement<Country> implements 
 
 	@Override
 	public void setValue(Country country) {
-		if (country != null) {
-			Optional<CountryInformation> countryInformation = countries.stream().filter(ci -> ci.id.equals(country.countryId)).findFirst();
-			comboBox.setValue(countryInformation.orElse(null));
-		} else {
-			comboBox.setValue(null);
-		}
+		CountryInformation countryInformation = ViewUtil.viewed(country);
+		comboBox.setValue(countryInformation);
 	}
 
 	@Override

@@ -40,12 +40,10 @@ public class PersonForm extends EchForm<Person> {
 		line($.nationalityData.nationalityStatus, new CountryInfoFormElement($.nationalityData.countryInfo));
 		addDependecy($.nationalityData.nationalityStatus, new NationalityUpdater(), $.nationalityData.countryInfo);
 
+		line(new PlaceOfOriginAddonFormElement($.placeOfOrigin, true));
+
 		addTitle("Kontakt");
-		// line(new PersonIdentificationFormElement($.contactData.personIdentification,
-		// $.contactData.personIdentificationPartner,
-		// $.contactData.partnerIdOrganisation));
-		// line($.contactData.contactAddress);
-		// line($.contactData.contactValidFrom, $.contactData.contactValidTill);
+		line(new ContactDataFormElement($.contactData, true));
 
 		addTitle("Aufenthaltsbewilligung");
 		line($.residencePermit.residencePermit, $.residencePermit.residencePermitValidFrom, $.residencePermit.residencePermitValidTill,

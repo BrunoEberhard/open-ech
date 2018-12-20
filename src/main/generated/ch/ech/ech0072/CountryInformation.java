@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
+import org.minimalj.model.ViewUtil;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.Codes;
 import org.minimalj.util.LocaleContext;
@@ -70,11 +71,7 @@ public class CountryInformation implements Code, Rendering {
 	}
 
 	public Country getCountry() {
-		Country country = new Country();
-		country.countryId = this.id;
-		country.countryIdISO2 = this.iso2Id;
-		country.countryNameShort = getShortName();
-		return country;
+		return ViewUtil.view(this, new Country());
 	}
 	
 	public boolean switzerland() {

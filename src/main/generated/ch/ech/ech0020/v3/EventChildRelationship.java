@@ -20,7 +20,7 @@ public class EventChildRelationship {
 		public static class Partner {
 
 			public ch.ech.ech0044.PersonIdentification personIdentification;
-			public ch.ech.ech0044.PersonIdentificationLight personIdentificationPartner;
+			public ch.ech.ech0044.PersonIdentification personIdentificationPartner; // Light
 			public ch.ech.ech0010.PersonMailAddress address;
 		}
 		public final Partner partner = new Partner();

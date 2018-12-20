@@ -1,29 +1,36 @@
 package ch.ech.ech0007;
 
+import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
-import org.minimalj.model.annotation.NotEmpty;
-import org.minimalj.model.annotation.Size;
+import org.minimalj.model.View;
 
-// handmade
-public class SwissMunicipality {
+import ch.ech.ech0071.Municipality;
+
+public class SwissMunicipality implements View<Municipality>, Code {
 	public static final SwissMunicipality $ = Keys.of(SwissMunicipality.class);
 
-	@Size(4)
+	public Integer id;
 	public Integer municipalityId;
-	@NotEmpty
-	@Size(40)
-	public String municipalityName;
-	public CantonAbbreviation cantonAbbreviation;
-	@Size(5)
+	public String municipalityShortName;
+	public ch.ech.ech0071.CantonAbbreviation cantonAbbreviation;
 	public Integer historyMunicipalityId;
-	
-	//
-	
+
+	public String getMunicipalityName() {
+		return municipalityShortName;
+	}
+
+	public void setMunicipalityName(String municipalityShortName) {
+		this.municipalityShortName = municipalityShortName;
+	}
+
+	// typo!! (piality)
+
 	public Integer getHistoryMunicipialityId() {
 		return historyMunicipalityId;
 	}
-	
+
 	public void setHistoryMunicipialityId(Integer historyMunicipalityId) {
 		this.historyMunicipalityId = historyMunicipalityId;
 	}
+
 }

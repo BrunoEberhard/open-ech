@@ -10,8 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import ch.ech.ech0006.ResidencePermit;
-import ch.ech.ech0007.CantonAbbreviation;
 import ch.ech.ech0007.SwissMunicipality;
+import ch.ech.ech0008.Country;
 import ch.ech.ech0011.Destination;
 import ch.ech.ech0011.DwellingAddress;
 import ch.ech.ech0011.MaritalStatus;
@@ -28,6 +28,7 @@ import ch.ech.ech0021.DataLock;
 import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0044.Sex;
 import ch.ech.ech0058.Action;
+import ch.ech.ech0071.CantonAbbreviation;
 import ch.openech.model.EchSchemaValidation;
 import ch.openech.xml.EchWriter;
 import ch.openech.xml.YesNo;
@@ -50,7 +51,7 @@ public class EventBaseDeliveryTest {
 		event.baseDeliveryPerson.nameInfo.nameData.firstName = "Bruno";
 		event.baseDeliveryPerson.birthInfo.birthData.dateOfBirth.value = "1974-08-02";
 		event.baseDeliveryPerson.birthInfo.birthData.placeOfBirth.swissTown = new SwissMunicipality();
-		event.baseDeliveryPerson.birthInfo.birthData.placeOfBirth.swissTown.municipalityName = "Jona";
+		event.baseDeliveryPerson.birthInfo.birthData.placeOfBirth.swissTown.municipalityShortName = "Jona";
 		event.baseDeliveryPerson.birthInfo.birthData.placeOfBirth.swissTown.cantonAbbreviation = CantonAbbreviation.SG;
 		event.baseDeliveryPerson.birthInfo.birthData.sex = Sex._1;
 
@@ -68,18 +69,19 @@ public class EventBaseDeliveryTest {
 
 		event.hasMainResidence = new ReportingMunicipality();
 		event.hasMainResidence.reportingMunicipality = new SwissMunicipality();
-		event.hasMainResidence.reportingMunicipality.municipalityName = "Jona";
+		event.hasMainResidence.reportingMunicipality.municipalityShortName = "Jona";
 		event.hasMainResidence.reportingMunicipality.cantonAbbreviation = CantonAbbreviation.SG;
 		event.hasMainResidence.comesFrom = new Destination();
 		event.hasMainResidence.comesFrom.swissTown = new SwissMunicipality();
-		event.hasMainResidence.comesFrom.swissTown.municipalityName = "Rapperswil";
+		event.hasMainResidence.comesFrom.swissTown.municipalityShortName = "Rapperswil";
 		event.hasMainResidence.reportingMunicipality.cantonAbbreviation = CantonAbbreviation.SG;
 		event.hasMainResidence.arrivalDate = LocalDate.now();
 		event.hasMainResidence.dwellingAddress = new DwellingAddress();
 		event.hasMainResidence.dwellingAddress.address.street = "Grütstrasse";
 		event.hasMainResidence.dwellingAddress.address.swissZipCode = 8645;
 		event.hasMainResidence.dwellingAddress.address.town = "Jona";
-		event.hasMainResidence.dwellingAddress.address.country.countryIdISO2 = "CH";
+		event.hasMainResidence.dwellingAddress.address.country = new Country();
+		event.hasMainResidence.dwellingAddress.address.country.iso2Id = "CH";
 		event.hasMainResidence.dwellingAddress.typeOfHousehold = TypeOfHousehold._1;
 
 		Delivery delivery = new Delivery();

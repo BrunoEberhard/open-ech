@@ -18,7 +18,7 @@ import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.StringUtils;
 import org.w3c.dom.Element;
 
-import ch.ech.ech0010.Country;
+import ch.ech.ech0008.Country;
 import ch.openech.xml.write.IndentingXMLStreamWriter;
 
 public class EchWriter implements AutoCloseable {
@@ -137,7 +137,7 @@ public class EchWriter implements AutoCloseable {
 				// in der Destination wird AddressInformation statt eine spezielle Klasse
 				// verwendet. Damit hat country aber die falsche Klasse, das wird hier
 				// geradegebogen.
-				xmlStreamWriter.writeCharacters(((Country) object).countryIdISO2);
+				xmlStreamWriter.writeCharacters(((Country) object).iso2Id);
 			} else {
 				xmlStreamWriter.writeCharacters(object.toString());
 			}

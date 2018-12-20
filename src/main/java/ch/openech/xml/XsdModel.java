@@ -31,6 +31,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import ch.ech.ech0008.Country;
 import ch.ech.ech0011.Destination;
 import ch.ech.ech0044.PersonIdentification;
 import ch.openech.xml.write.EchNamespaceUtil;
@@ -146,6 +147,10 @@ public class XsdModel {
 		MjEntity destination = defaultModel.getOrCreateEntity(Destination.class);
 		destination.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("destinationType", destination);
+
+		MjEntity country = defaultModel.getOrCreateEntity(Country.class);
+		country.type = MjEntityType.ENTITY;
+		PREDEFINED_TYPES.put("countryType", country);
 	}
 
 	public XsdModel() {
@@ -371,11 +376,11 @@ public class XsdModel {
 		
 		Element sequence = get(node, "sequence");
 		if (sequence != null) {
-			entity.properties.addAll(sequence(sequence, false));
+			entity.properties.addAll(sequence(sequence, mayBeLeftOut(sequence)));
 		}
 		Element choice = get(node, "choice");
 		if (choice != null) {
-			entity.properties.addAll(sequence(choice, true));
+			entity.properties.addAll(sequence(choice, mayBeLeftOut(choice) || hasMoreThanOneOption(choice)));
 		}
 		Element complexContent = get(node, "complexContent");
 		if (complexContent != null) {
@@ -409,6 +414,29 @@ public class XsdModel {
 		return entity;
 	}
 
+	// pathologischer Fall: Ein Choice Element hat nur ein echtes Child. Dh man muss
+	// genau diese Option anwählen. Damit bleiben die dort vorhandenen NotEmpty -
+	// Felder auch zwingend, da man nie auf eine andere Option ausweichen kann. Gibt
+	// es nur bei ech 0011 version 3 (destinationType)
+	private boolean hasMoreThanOneOption(Node node) {
+		boolean foundOne = false;
+		for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+			if (node.getChildNodes().item(i).getNodeType() == Node.TEXT_NODE)
+				continue;
+			if (foundOne)
+				return true;
+			foundOne = true;
+		}
+		return false;
+	}
+
+	// wenn auf einer sequence oder choice minOccurs="0" als attribute angegeben
+	// ist können die enthaltenen Element nicht "notEmpty" sein.
+	private boolean mayBeLeftOut(Element element) {
+		String minOccurs = element.getAttribute("minOccurs");
+		return "0".equals(minOccurs);
+	}
+
 	private List<MjProperty> sequence(Node node, boolean overrideNotEmpty) {
 		List<MjProperty> properties = new ArrayList<>();
 		forEachChild(node, new SequenceVisitor(properties, overrideNotEmpty));
@@ -439,7 +467,7 @@ public class XsdModel {
 					properties.add(property);
 				}
 			} else if ("sequence".equals(element.getLocalName())) {
-				forEachChild(element, new SequenceVisitor(properties, overrideNotEmpty));
+				forEachChild(element, new SequenceVisitor(properties, overrideNotEmpty || mayBeLeftOut(element)));
 			} else if ("choice".equals(element.getLocalName())) {
 				// bei choice das "NotEmpty" rausschmeissen
 				forEachChild(element, new SequenceVisitor(properties, true));

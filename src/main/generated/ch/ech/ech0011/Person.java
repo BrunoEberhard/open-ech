@@ -3,12 +3,20 @@ package ch.ech.ech0011;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import org.fluttercode.datafactory.impl.DataFactory;
+import org.minimalj.backend.Backend;
 import org.minimalj.model.Keys;
+import org.minimalj.model.ViewUtil;
+import org.minimalj.model.annotation.Materialized;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
+import org.minimalj.repository.query.By;
 import org.minimalj.util.CloneHelper;
+import org.minimalj.util.mock.Mocking;
 
+import ch.ech.ech0007.SwissMunicipality;
 import ch.ech.ech0008.Country;
 import ch.ech.ech0011.NationalityData.CountryInfo;
 import ch.ech.ech0021.ArmedForcesData;
@@ -26,9 +34,11 @@ import ch.ech.ech0021.PersonAdditionalData;
 import ch.ech.ech0021.PlaceOfOriginAddon;
 import ch.ech.ech0021.PoliticalRightData;
 import ch.ech.ech0044.PersonIdentification;
+import ch.ech.ech0044.Sex;
+import ch.ech.ech0071.Municipality;
 
 //handmade
-public class Person {
+public class Person implements Mocking {
 	public static final Person $ = Keys.of(Person.class);
 
 	public Object id;
@@ -45,6 +55,7 @@ public class Person {
 	public ResidencePermitData residencePermit;
 	
 	// PersonAddOn
+	// ===========
 	// Wird als eigenständige Entität nicht generiert. Ab ech0020 v3 sind diese
 	// Felder in der Person integriert. Bei v2 mussten sie noch über ech0021
 	// speziell übermittelt werden.
@@ -62,7 +73,35 @@ public class Person {
 	public FireServiceData fireServiceData;
 	public HealthInsuranceData healthInsuranceData;
 	public MatrimonialInheritanceArrangementData matrimonialInheritanceArrangementData;
+
+	// ReportedPerson
+	// ==============
+
+	public ResidenceData residenceData;
+
+	public SwissMunicipality mainResidence;
+	public List<SwissMunicipality> secondaryResidence;
 	
+	@Materialized
+	@Size(60)
+	public String getStreet() {
+		if (residenceData != null) {
+			return residenceData.dwellingAddress.address.street;
+		} else {
+			return null;
+		}
+	}
+
+	@Materialized
+	@Size(40)
+	public String getTown() {
+		if (residenceData != null) {
+			return residenceData.dwellingAddress.address.town;
+		} else {
+			return null;
+		}
+	}
+
 	//
 
 	public String getLanguageOfCorrespondance() {
@@ -261,5 +300,26 @@ public class Person {
 				nationalityData.countryInfo.add(countryInfo);
 			}
 		}
+	}
+
+	@Override
+	public void mock() {
+		DataFactory df = new DataFactory();
+		Random r = new Random();
+		nameData.firstName = df.getFirstName();
+		nameData.officialName = df.getLastName();
+		birthData.dateOfBirth.value = LocalDate.now().minusDays(r.nextInt(10000)).toString();
+		List<Municipality> municipalities = Backend.find(Municipality.class, By.all());
+		Municipality municipality = municipalities.get(r.nextInt(municipalities.size()));
+		birthData.placeOfBirth.swissTown = ViewUtil.view(municipality, new SwissMunicipality());
+		birthData.sex = Sex._1;
+
+		personIdentification = new PersonIdentification();
+		personIdentification.officialName = nameData.officialName;
+		personIdentification.firstName = nameData.firstName;
+		personIdentification.sex = birthData.sex;
+		personIdentification.localPersonId.namedIdCategory = "OpenEch";
+		personIdentification.localPersonId.namedId = "test";
+		personIdentification.dateOfBirth.value = birthData.dateOfBirth.value;
 	}
 }

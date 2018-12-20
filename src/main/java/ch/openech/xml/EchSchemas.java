@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -46,6 +47,8 @@ public class EchSchemas {
 		return namespaceByPackage.get(packageName);
 	}
 	
+	private static final HashSet<MjEntity> updated = new HashSet<>();
+
 	private static void read(Stream<String> xsdFiles) {
 		xsdFiles.forEach(f -> {
 			try (InputStream is = EchSchemas.class.getClassLoader().getResourceAsStream(f)) {
@@ -170,6 +173,16 @@ public class EchSchemas {
 		return xsdModels.get(namespace);
 	}
 
+	private static XsdModel getXsdModel(int number) {
+		for (Map.Entry<String, XsdModel> entry : xsdModels.entrySet()) {
+			int n = EchNamespaceUtil.extractSchemaNumber(entry.getKey());
+			if (number == n) {
+				return entry.getValue();
+			}
+		}
+		throw new IllegalArgumentException("Not available: " + number);
+	}
+
 	public static String packageName(String namespace) {
 		StringBuilder s = new StringBuilder();
 		URI uri = URI.create(namespace);
@@ -210,6 +223,10 @@ public class EchSchemas {
 						name.startsWith(UidStructure.class.getSimpleName()) || //
 						// die Extension von ech 0078 ist komplett etwas anderes als bei ech 0020
 						name.equals("Extension") && !entity.packageName.equals("ch.ech.ech0078") || //
+						// Kantone/Gemeinden werden von ech 0071 verwendet
+						entity.packageName.equals("ch.ech.ech0007") ||
+						// Länder werden von ech 0072 verwendet (CountryInformation)
+						entity.packageName.equals("ch.ech.ech0008") || entity.name.equals("Country") ||
 						// bei den PersonAddon sind die Versionen 3 und 4 recht unterschiedlich
 						// das anzugleichen macht viel vergebliche Mühe, diese Elemente werden
 						// kaum je eigenständig gebrauchtw werden.
@@ -252,6 +269,11 @@ public class EchSchemas {
 	}
 
 	private static void updateEntityType(MjEntity entity) {
+		if (updated.contains(entity)) {
+			return;
+		}
+		updated.add(entity);
+
 		if (entity.type == MjEntityType.ENTITY && entity.packageName.equals("ch.ech.ech0129.v4")) {
 			// bei 129 sind einige complexType auch als Element aufgeführt, wie z.B.
 			// Locality. Das ist unnötig und bewirkt, dass die types nicht inlined werden.
@@ -259,9 +281,9 @@ public class EchSchemas {
 				entity.type = MjEntityType.DEPENDING_ENTITY;
 			}
 		}
+
 		// Depending Entities enthalten keine 'id' und können daher nicht als
 		// parents für Listen herhalten
-		
 		boolean hasListProperty = entity.properties.stream().anyMatch(p -> p.propertyType == MjPropertyType.LIST);
 		if (hasListProperty) {
 			// Eine Ausnahme sind entities, die nur als inline verwendet werden.
@@ -269,6 +291,13 @@ public class EchSchemas {
 			if (!(StringUtils.equals(entity.name, "NationalityData") && entity.packageName.contains("ech0011"))) {
 				entity.type = MjEntityType.ENTITY;
 			}
+		}
+
+		for (MjProperty property : entity.properties) {
+			if ("CantonAbbreviation".equals(property.type.name)) {
+				property.type = getXsdModel(71).findEntity("cantonAbbreviationType");
+			}
+			updateEntityType(property.type);
 		}
 	}
 

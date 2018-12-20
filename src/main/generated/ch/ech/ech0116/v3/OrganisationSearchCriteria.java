@@ -1,11 +1,11 @@
-package ch.ech.ech0116.v4;
+package ch.ech.ech0116.v3;
 
 import java.util.List;
-
-import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.Size;
+import javax.annotation.Generated;
+import org.minimalj.model.Keys;
 
-// handmade
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2018-12-20T07:58:10.140")
 public class OrganisationSearchCriteria {
 	public static final OrganisationSearchCriteria $ = Keys.of(OrganisationSearchCriteria.class);
 
@@ -29,15 +29,4 @@ public class OrganisationSearchCriteria {
 	public Integer organisationMunicipalityID;
 	public ch.ech.ech0071.CantonAbbreviation cantonAbbreviationMainAddress;
 	public ch.ech.ech0071.CantonAbbreviation cantonAbbreviationAdditionalAddress;
-	
-	//
-	
-	public String getNogaCode() {
-		return NOGACode;
-	}
-	
-	public void setNogaCode(String nogaCode) {
-		this.NOGACode = nogaCode;
-	}
-	
 }

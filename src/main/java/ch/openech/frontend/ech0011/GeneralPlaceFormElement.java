@@ -10,16 +10,17 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.element.AbstractFormElement;
+import org.minimalj.model.ViewUtil;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
-import ch.ech.ech0007.CantonAbbreviation;
 import ch.ech.ech0007.SwissMunicipality;
 import ch.ech.ech0011.GeneralPlace;
 import ch.ech.ech0011.Unknown;
+import ch.ech.ech0071.CantonAbbreviation;
 import ch.ech.ech0071.Municipality;
 import ch.ech.ech0072.CountryInformation;
 import ch.openech.datagenerator.MockName;
@@ -73,9 +74,9 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 		boolean isSwitzerland = place.swissTown != null;
 		if (isSwitzerland) {
 			comboBoxCountry.setValue(findCountry("CH"));
-			textFieldMunicipality.setValue(place.swissTown.municipalityName);
+			textFieldMunicipality.setValue(place.swissTown.getMunicipalityName());
 		} else if (place.foreignCountry != null) {
-			comboBoxCountry.setValue(findCountry(place.foreignCountry.country.countryIdISO2));
+			comboBoxCountry.setValue(findCountry(place.foreignCountry.country.iso2Id));
 			textFieldMunicipality.setValue(place.foreignCountry.town);
 		} else {
 			comboBoxCountry.setValue(null);
@@ -91,9 +92,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 		if (country != null) {
 			if (!"CH".equals(country.iso2Id)) {
 				place.foreignCountry = new GeneralPlace.ForeignCountry();
-				place.foreignCountry.country.countryId = country.id;
-				place.foreignCountry.country.countryIdISO2 = country.iso2Id;
-				place.foreignCountry.country.countryNameShort = country.shortNameDe;
+				ViewUtil.view(country, place.foreignCountry.country);
 				place.foreignCountry.town = textFieldMunicipality.getValue();
 			} else {
 				place.swissTown = new SwissMunicipality();
@@ -102,11 +101,11 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 				if (municipality != null) {
 					place.swissTown.historyMunicipalityId = municipality.getHistoryMunicipalityId();
 					place.swissTown.municipalityId = municipality.municipalityId;
-					place.swissTown.municipalityName = municipality.municipalityShortName;
+					place.swissTown.municipalityShortName = municipality.municipalityShortName;
 					// TODO Nur 1 CantonAbbreviation
 					place.swissTown.cantonAbbreviation = CantonAbbreviation.valueOf(municipality.cantonAbbreviation.name());
 				} else {
-					place.swissTown.municipalityName = InvalidValues.createInvalidString(textFieldMunicipality.getValue());
+					place.swissTown.municipalityShortName = InvalidValues.createInvalidString(textFieldMunicipality.getValue());
 				}
 			}
 		} else {
@@ -127,18 +126,13 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 			int index = (int)(Math.random() * municipalities.size());
 			Municipality municipality = municipalities.get(index);
 			if (municipality != null) {
-				place.swissTown.historyMunicipalityId = municipality.getHistoryMunicipalityId();
-				place.swissTown.municipalityId = municipality.municipalityId;
-				place.swissTown.municipalityName = municipality.municipalityShortName;
-				place.swissTown.cantonAbbreviation = CantonAbbreviation.valueOf(municipality.cantonAbbreviation.name());
+				ViewUtil.view(municipality, place.swissTown);
 			}
 		} else {
 			int index = (int)(Math.random() * countries.size());
 			CountryInformation country = countries.get(index);
 			place.foreignCountry = new GeneralPlace.ForeignCountry();
-			place.foreignCountry.country.countryId = country.id;
-			place.foreignCountry.country.countryIdISO2 = country.iso2Id;
-			place.foreignCountry.country.countryNameShort = country.shortNameDe;
+			ViewUtil.view(country, place.foreignCountry.country);
 			place.foreignCountry.town = textFieldMunicipality.getValue();
 			place.foreignCountry.town = MockName.officialName() + "Town";
 		}
