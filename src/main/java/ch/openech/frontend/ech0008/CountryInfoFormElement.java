@@ -44,10 +44,12 @@ public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> im
 	@Override
 	public void mock() {
 		List<CountryInformation> countries = Codes.get(CountryInformation.class);
+		List<CountryInfo> countryInfos = new ArrayList<>();
 		CountryInfo info = new CountryInfo();
 		info.country = new Country();
 		ViewUtil.view(countries.get(new Random().nextInt(countries.size())), info.country);
-		setValue(info);
+		countryInfos.add(info);
+		setValue(countryInfos);
 	}
 
 	@Override
