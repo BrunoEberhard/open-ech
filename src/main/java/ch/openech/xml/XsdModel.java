@@ -32,6 +32,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import ch.ech.ech0008.Country;
+import ch.ech.ech0010.AddressInformation;
+import ch.ech.ech0010.MailAddress;
 import ch.ech.ech0011.Destination;
 import ch.ech.ech0044.PersonIdentification;
 import ch.openech.xml.write.EchNamespaceUtil;
@@ -151,6 +153,17 @@ public class XsdModel {
 		MjEntity country = defaultModel.getOrCreateEntity(Country.class);
 		country.type = MjEntityType.ENTITY;
 		PREDEFINED_TYPES.put("countryType", country);
+
+		MjEntity mailAddress = defaultModel.getOrCreateEntity(MailAddress.class);
+		mailAddress.type = MjEntityType.DEPENDING_ENTITY;
+		PREDEFINED_TYPES.put("personMailAddressType", mailAddress);
+		PREDEFINED_TYPES.put("organisationMailAddressType", mailAddress);
+
+		MjEntity addressInformation = defaultModel.getOrCreateEntity(AddressInformation.class);
+		addressInformation.type = MjEntityType.DEPENDING_ENTITY;
+		PREDEFINED_TYPES.put("addressInformationType", addressInformation);
+		PREDEFINED_TYPES.put("swissAddressInformationType", addressInformation);
+
 	}
 
 	public XsdModel() {

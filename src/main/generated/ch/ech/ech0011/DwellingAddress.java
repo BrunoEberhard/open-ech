@@ -16,7 +16,7 @@ public class DwellingAddress {
 	public Integer EWID;
 	@Size(255) // unknown
 	public String householdID;
-	public final ch.ech.ech0010.SwissAddressInformation address = new ch.ech.ech0010.SwissAddressInformation();
+	public final ch.ech.ech0010.AddressInformation address = new ch.ech.ech0010.AddressInformation();
 	@NotEmpty
 	public TypeOfHousehold typeOfHousehold;
 	public LocalDate movingDate;

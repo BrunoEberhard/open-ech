@@ -227,6 +227,8 @@ public class EchSchemas {
 						entity.packageName.equals("ch.ech.ech0007") ||
 						// Länder werden von ech 0072 verwendet (CountryInformation)
 						entity.packageName.equals("ch.ech.ech0008") || entity.name.equals("Country") ||
+						// Adressen sind ausser der enum von Hand neu geschrieben
+						entity.packageName.equals("ch.ech.ech0010") && !(entity.name.equals("MrMrs")) ||
 						// bei den PersonAddon sind die Versionen 3 und 4 recht unterschiedlich
 						// das anzugleichen macht viel vergebliche Mühe, diese Elemente werden
 						// kaum je eigenständig gebrauchtw werden.

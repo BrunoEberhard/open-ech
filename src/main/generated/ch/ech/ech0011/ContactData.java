@@ -7,7 +7,6 @@ import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 
 import ch.ech.ech0010.MailAddress;
-import ch.ech.ech0010.PersonMailAddressInfo;
 import ch.ech.ech0098.Organisation;
 import ch.openech.frontend.ech0011.ContactReference;
 
@@ -53,12 +52,10 @@ public class ContactData {
 				partnerIdOrganisation = null;
 				personIdentification = person.personIdentification;
 				contactAddress = new MailAddress();
-				contactAddress.organisation = null;
-				contactAddress.person = new PersonMailAddressInfo();
-				contactAddress.person.firstName = person.nameData.firstName;
-				contactAddress.person.lastName = person.nameData.officialName;
-				contactAddress.person.mrMrs = person.personAdditionalData.mrMrs;
-				contactAddress.person.title = person.personAdditionalData.title;
+				contactAddress.names.firstName = person.nameData.firstName;
+				contactAddress.names.lastName = person.nameData.officialName;
+				contactAddress.names.mrMrs = person.personAdditionalData.mrMrs;
+				contactAddress.names.title = person.personAdditionalData.title;
 				if (person.residenceData != null) {
 					contactAddress.addressInformation.street = person.residenceData.dwellingAddress.address.street;
 					// TODO rest of address

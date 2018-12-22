@@ -21,7 +21,7 @@ public class EventChildRelationship {
 
 			public ch.ech.ech0044.PersonIdentification personIdentification;
 			public ch.ech.ech0044.PersonIdentification personIdentificationPartner; // Light
-			public ch.ech.ech0010.PersonMailAddress address;
+			public ch.ech.ech0010.MailAddress address;
 		}
 		public final Partner partner = new Partner();
 		public LocalDate relationshipValidFrom;

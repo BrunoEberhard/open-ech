@@ -27,14 +27,14 @@ public class ContactReferenceFormElement extends ReferenceFormElement<ContactRef
 		return result;
 	}
 
-//	@Override
-//	protected String render(Object value) {
+	@Override
+	protected String render(ContactReference value) {
 //		if (value instanceof Person) {
 //			Person person = (Person) value;
 //			return person.nameData.firstName + " " + person.nameData.officialName;
 //		} else {
-//			return "" + value;
+			return "" + value;
 //		}
-//	}
+	}
 
 }
