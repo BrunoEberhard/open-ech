@@ -2,12 +2,13 @@ package ch.ech.ech0011;
 
 import java.time.LocalDate;
 
+import org.minimalj.backend.Backend;
 import org.minimalj.model.Keys;
-import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.NotEmpty;
 
 import ch.ech.ech0010.MailAddress;
 import ch.ech.ech0098.Organisation;
+import ch.openech.frontend.ech0011.ContactReference;
 
 // handmade
 public class ContactData {
@@ -23,54 +24,52 @@ public class ContactData {
 
 	private transient ContactReference reference;
 
-	public class ContactReference implements Rendering {
-
-		@Override
-		public CharSequence render() {
-			if (personIdentification != null) {
-				return personIdentification.officialName;
-			} else if (personIdentificationPartner != null) {
-				return personIdentificationPartner.officialName;
-			} else if (partnerIdOrganisation != null) {
-				return partnerIdOrganisation.id.toString();
-			} else {
-				return "-";
-			}
-		}
-
-		public void setPerson(Person person) {
-			personIdentification = person.personIdentification;
-			personIdentificationPartner = null;
-			partnerIdOrganisation = null;
-			contactAddress = new MailAddress();
-			contactAddress.names.firstName = person.nameData.firstName;
-			contactAddress.names.lastName = person.nameData.officialName;
-			contactAddress.names.mrMrs = person.personAdditionalData.mrMrs;
-			contactAddress.names.title = person.personAdditionalData.title;
-			if (person.residenceData != null) {
-				contactAddress.addressInformation.street = person.residenceData.dwellingAddress.address.street;
-				// TODO rest of address
-			}
-		}
-
-		public void setOrganisation(Organisation organisation) {
-			personIdentification = null;
-			personIdentificationPartner = null;
-			partnerIdOrganisation = new PartnerIdOrganisation();
-			partnerIdOrganisation.localPersonId.namedIdCategory = organisation.organisationIdentification.localOrganisationId.namedIdCategory;
-			partnerIdOrganisation.localPersonId.namedId = organisation.organisationIdentification.localOrganisationId.namedId;
-			// TODO rest of localPersonId
-		}
-	}
-
 	public ContactReference getReference() {
 		if (Keys.isKeyObject(this))
 			return Keys.methodOf(this, "reference");
 
 		if (reference == null) {
 			reference = new ContactReference();
+			if (personIdentification != null) {
+				String id = personIdentification.localPersonId.namedId;
+				reference.person = Backend.read(Person.class, id);
+			} else if (personIdentificationPartner != null) {
+				String id = personIdentificationPartner.localPersonId.namedId;
+				reference.person = Backend.read(Person.class, id);
+			} else if (partnerIdOrganisation != null) {
+				String id = partnerIdOrganisation.localPersonId.namedId;
+				reference.organisation = Backend.read(Organisation.class, id);
+			}
 		}
 		return reference;
+	}
+
+	public void setReference(ContactReference reference) {
+		if (this.reference != reference) {
+			if (reference.person != null) {
+				Person person = reference.person;
+				personIdentificationPartner = null;
+				partnerIdOrganisation = null;
+				personIdentification = person.personIdentification;
+				contactAddress = new MailAddress();
+				contactAddress.names.firstName = person.nameData.firstName;
+				contactAddress.names.lastName = person.nameData.officialName;
+				contactAddress.names.mrMrs = person.personAdditionalData.mrMrs;
+				contactAddress.names.title = person.personAdditionalData.title;
+				if (person.residenceData != null) {
+					contactAddress.addressInformation.street = person.residenceData.dwellingAddress.address.street;
+					// TODO rest of address
+				}
+			} else if (reference.organisation != null) {
+				personIdentification = null;
+				personIdentificationPartner = null;
+				Organisation organisation = reference.organisation;
+				partnerIdOrganisation = new PartnerIdOrganisation();
+				partnerIdOrganisation.localPersonId.namedIdCategory = organisation.organisationIdentification.localOrganisationId.namedIdCategory;
+				partnerIdOrganisation.localPersonId.namedId = organisation.organisationIdentification.localOrganisationId.namedId;
+				// TODO rest of localPersonId
+			}
+		}
 	}
 
 	// support typo in ech 11 v5
