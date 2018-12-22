@@ -2,6 +2,7 @@ package ch.openech.frontend.ech0011;
 
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.FormLookupFormElement;
+import org.minimalj.model.properties.Properties;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.ech.ech0011.ContactData;
@@ -19,7 +20,7 @@ public class ContactDataFormElement extends FormLookupFormElement<ContactData> {
 	@Override
 	public Form<ContactData> createForm() {
 		Form<ContactData> form = new Form<>(2);
-		form.line(new ContactReferenceFormElement(ContactData.$.getReference(), true));
+		form.line(new ContactReferenceFormElement(Properties.getProperty(ContactData.class, "reference"), true));
 		form.line(new ContactAddressFormElement(ContactData.$.contactAddress, true));
 		form.line(ContactData.$.contactValidFrom, ContactData.$.contactValidTill);
 		return form;
