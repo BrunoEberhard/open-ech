@@ -8,33 +8,33 @@ import org.minimalj.frontend.form.element.ReferenceFormElement;
 import org.minimalj.repository.query.By;
 
 import ch.ech.ech0011.Person;
+import ch.ech.ech0098.Organisation;
 
 public class ContactReferenceFormElement extends ReferenceFormElement<ContactReference> {
 
-	public ContactReferenceFormElement(ContactReference key, boolean editable) {
+	public ContactReferenceFormElement(ContactReference key) {
 		super(key, ContactReference.$.getText());
 	}
 
 	@Override
-	public List<ContactReference> search(String searchText) {
-		List<Person> persons = Backend.find(Person.class, By.search(searchText));
-		List<ContactReference> result = new ArrayList<>();
-		for (Person person : persons) {
-			ContactReference r = new ContactReference();
-			r.person = person;
-			result.add(r);
-		}
-		return result;
-	}
+	public List<ContactReference> search(String query) {
+		List<ContactReference> result = new ArrayList<ContactReference>(60);
 
-	@Override
-	protected String render(ContactReference value) {
-//		if (value instanceof Person) {
-//			Person person = (Person) value;
-//			return person.nameData.firstName + " " + person.nameData.officialName;
-//		} else {
-			return "" + value;
-//		}
+		List<Person> persons = Backend.find(Person.class, By.search(query));
+		persons.stream().forEach(p -> {
+			ContactReference reference = new ContactReference();
+			reference.person = p;
+			result.add(reference);
+		});
+
+		List<Organisation> organisations = Backend.find(Organisation.class, By.search(query));
+		organisations.stream().forEach(o -> {
+			ContactReference reference = new ContactReference();
+			reference.organisation = o;
+			result.add(reference);
+		});
+
+		return result;
 	}
 
 }
