@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.form.element.FormElementConstraint;
 import org.minimalj.frontend.form.element.ReferenceFormElement;
 import org.minimalj.repository.query.By;
 
@@ -14,6 +15,7 @@ public class ContactReferenceFormElement extends ReferenceFormElement<ContactRef
 
 	public ContactReferenceFormElement(ContactReference key) {
 		super(key, ContactReference.$.getText());
+		height(3, FormElementConstraint.MAX, true);
 	}
 
 	@Override

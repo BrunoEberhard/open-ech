@@ -1,6 +1,7 @@
 package ch.openech.frontend.ech0011;
 
 import org.minimalj.frontend.form.Form;
+import org.minimalj.frontend.form.element.FormElementConstraint;
 import org.minimalj.frontend.form.element.FormLookupFormElement;
 import org.minimalj.util.Codes;
 
@@ -12,6 +13,7 @@ public class ContactAddressFormElement extends FormLookupFormElement<MailAddress
 
 	public ContactAddressFormElement(MailAddress key, boolean editable) {
 		super(key, editable);
+		height(3, FormElementConstraint.MAX, true);
 	}
 
 	@Override
