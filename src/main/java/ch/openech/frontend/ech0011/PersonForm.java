@@ -29,23 +29,17 @@ public class PersonForm extends EchForm<Person> {
 		line($.birthData.dateOfBirth, $.birthData.sex, $.birthData.placeOfBirth);
 		line($.birthAddonData.nameOfFather, $.birthAddonData.nameOfMother); // TODO only for some events
 
-		addTitle("Religion");
+		addTitle("Weitere Angaben");
 		line($.religionData.religion, $.religionData.religionValidFrom);
 
-		addTitle("Zivilstand");
 		line($.maritalData.maritalStatus, $.maritalData.dateOfMaritalStatus, $.maritalData.cancelationReason, $.maritalData.officialProofOfMaritalStatusYesNo);
 		line($.maritalData.separationData.separation, $.maritalData.separationData.separationValidFrom, $.maritalData.separationData.separationValidTill, new EmptyFormElement());
 
-		addTitle("Nationalität");
 		line($.nationalityData.nationalityStatus, new CountryInfoFormElement($.nationalityData.countryInfo));
 		addDependecy($.nationalityData.nationalityStatus, new NationalityUpdater(), $.nationalityData.countryInfo);
 
-		line(new PlaceOfOriginAddonFormElement($.placeOfOrigin, true));
+		line(new PlaceOfOriginAddonFormElement($.placeOfOrigin, true), new ContactDataFormElement($.contactData, true));
 
-		addTitle("Kontakt");
-		line(new ContactDataFormElement($.contactData, true));
-
-		addTitle("Aufenthaltsbewilligung");
 		line($.residencePermit.residencePermit, $.residencePermit.residencePermitValidFrom, $.residencePermit.residencePermitValidTill,
 				$.residencePermit.entryDate);
 
