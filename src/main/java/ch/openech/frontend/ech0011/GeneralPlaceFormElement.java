@@ -18,6 +18,7 @@ import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
 import ch.ech.ech0007.SwissMunicipality;
+import ch.ech.ech0008.Country;
 import ch.ech.ech0011.GeneralPlace;
 import ch.ech.ech0011.Unknown;
 import ch.ech.ech0071.CantonAbbreviation;
@@ -92,7 +93,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 		if (country != null) {
 			if (!"CH".equals(country.iso2Id)) {
 				place.foreignCountry = new GeneralPlace.ForeignCountry();
-				ViewUtil.view(country, place.foreignCountry.country);
+				place.foreignCountry.country = ViewUtil.view(country, new Country());
 				place.foreignCountry.town = textFieldMunicipality.getValue();
 			} else {
 				place.swissTown = new SwissMunicipality();
