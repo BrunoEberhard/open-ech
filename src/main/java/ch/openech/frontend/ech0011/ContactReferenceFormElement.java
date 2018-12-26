@@ -15,7 +15,7 @@ public class ContactReferenceFormElement extends ReferenceFormElement<ContactRef
 
 	public ContactReferenceFormElement(ContactReference key) {
 		super(key, ContactReference.$.getText());
-		height(3, FormElementConstraint.MAX, true);
+		height(3, FormElementConstraint.MAX);
 	}
 
 	@Override

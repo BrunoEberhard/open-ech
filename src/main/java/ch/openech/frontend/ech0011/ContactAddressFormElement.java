@@ -13,7 +13,7 @@ public class ContactAddressFormElement extends FormLookupFormElement<MailAddress
 
 	public ContactAddressFormElement(MailAddress key, boolean editable) {
 		super(key, editable);
-		height(3, FormElementConstraint.MAX, true);
+		height(3, FormElementConstraint.MAX);
 	}
 
 	@Override
