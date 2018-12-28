@@ -1,12 +1,15 @@
 package ch.openech;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.minimalj.application.Application;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.impl.swing.Swing;
 import org.minimalj.frontend.page.PageAction;
+import org.minimalj.util.resources.MultiResourceBundle;
 
 import ch.ech.ech0011.Person;
 import ch.ech.ech0071.Canton;
@@ -38,6 +41,11 @@ public class OpenEch extends Application {
 	public Class<?>[] getEntityClasses() {
 		return new Class<?>[] { Person.class, CountryInformation.class, Canton.class, Municipality.class, Locality.class, Organisation.class, Building.class,
 				Dwelling.class, PlanningPermissionApplication.class };
+	}
+
+	@Override
+	public ResourceBundle getResourceBundle(Locale locale) {
+		return new MultiResourceBundle(super.getResourceBundle(locale), ResourceBundle.getBundle("ch.openech.Person", locale));
 	}
 
 }
