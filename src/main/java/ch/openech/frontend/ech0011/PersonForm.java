@@ -5,8 +5,6 @@ import static ch.ech.ech0011.Person.$;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.minimalj.frontend.form.element.EmptyFormElement;
-
 import ch.ech.ech0011.NationalityData.CountryInfo;
 import ch.ech.ech0011.NationalityStatus;
 import ch.ech.ech0011.Person;
@@ -30,10 +28,9 @@ public class PersonForm extends EchForm<Person> {
 		line($.birthAddonData.nameOfFather, $.birthAddonData.nameOfMother); // TODO only for some events
 
 		addTitle("Weitere Angaben");
-		line($.religionData.religion, $.religionData.religionValidFrom);
+		line(new ReligionFormElement($.religionData, editable));
 
-		line(new MaritalDataFormElement($.maritalData, editable));
-		line($.maritalData.separationData.separation, $.maritalData.separationData.separationValidFrom, $.maritalData.separationData.separationValidTill, new EmptyFormElement());
+		line(new MaritalDataFormElement($.maritalData, editable), new SeparationFormElement($.maritalData.separationData, editable));
 
 		line($.nationalityData.nationalityStatus, new CountryInfoFormElement($.nationalityData.countryInfo));
 		addDependecy($.nationalityData.nationalityStatus, new NationalityUpdater(), $.nationalityData.countryInfo);
