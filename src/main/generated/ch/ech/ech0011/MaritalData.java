@@ -12,19 +12,15 @@ public class MaritalData {
 
 	@NotEmpty
 	public MaritalStatus maritalStatus;
-//	ledig, // Code 1
-//	verheiratet,
-//	verwitwet,
-//	geschieden,
-//	ungueltig,
-//	partnerschaft,
-//	aufgeloeste_partnerschaft;	
 	
 	@Enabled("!isLedig")
 	public LocalDate dateOfMaritalStatus;
 	@Enabled("isMaritalStatusCanceled")
 	public PartnershipAbolition cancelationReason;
 	public Boolean officialProofOfMaritalStatusYesNo;
+
+	// MaritalDataAddon (wird von MaritalInfo verwendet)
+	public GeneralPlace placeOfMarriage;
 
 	//
 

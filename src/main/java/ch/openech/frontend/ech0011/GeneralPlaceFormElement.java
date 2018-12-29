@@ -10,6 +10,7 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.element.AbstractFormElement;
+import org.minimalj.model.Keys;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.model.validation.InvalidValues;
@@ -50,6 +51,10 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 		textFieldMunicipality = Frontend.getInstance().createTextField(100, null, new MunicipalitySearch(), listener());
 		
 		componentGroup = Frontend.getInstance().createComponentGroup(comboBoxCountry, textFieldMunicipality);
+	}
+
+	public GeneralPlaceFormElement(GeneralPlace generalPlace) {
+		this(Keys.getProperty(generalPlace));
 	}
 
 	private CountryInformation findCountry(String countryIdISO2) {
