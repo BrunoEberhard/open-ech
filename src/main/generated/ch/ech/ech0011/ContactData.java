@@ -6,6 +6,7 @@ import org.minimalj.backend.Backend;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.NotEmpty;
+import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.DateUtils;
 
@@ -73,10 +74,14 @@ public class ContactData implements Rendering {
 	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
 		ContactReference reference = getReference();
-		if (reference != null) {
+		boolean hasReference = !EmptyObjects.isEmpty(reference);
+		if (hasReference) {
 			reference.render(s);
 		}
 		if (contactAddress != null) {
+			if (!hasReference) {
+				contactAddress.names.render(s);
+			}
 			contactAddress.addressInformation.render(s);
 			appendRange(s, contactValidFrom, contactValidTill);
 		}
