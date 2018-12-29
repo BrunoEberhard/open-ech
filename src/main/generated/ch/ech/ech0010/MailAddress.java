@@ -31,9 +31,13 @@ public class MailAddress implements Rendering {
 	@Override
 	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
+		append(s);
+		return s;
+	}
+
+	public void append(StringBuilder s) {
 		names.render(s);
 		addressInformation.render(s);
-		return s;
 	}
 
 	// Das ist die Zusammenfassung von PersonMailAddressInfo und

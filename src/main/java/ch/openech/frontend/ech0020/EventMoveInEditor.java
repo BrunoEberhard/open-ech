@@ -49,7 +49,6 @@ public class EventMoveInEditor extends NewObjectEditor<Person> {
 	
 	@Override
 	protected Person save(Person person) {
-		Person moveInPerson = new Person();
 
 		person.personIdentification.officialName = person.nameData.officialName;
 		person.personIdentification.firstName = person.nameData.firstName;
@@ -64,7 +63,13 @@ public class EventMoveInEditor extends NewObjectEditor<Person> {
 //		EventMoveIn event = new EventMoveIn();
 //		event.moveInPerson = moveInPerson;
 
-		return Backend.save(person);
+		// TODO do this in one specialized Transaction
+		person = Backend.save(person);
+		person.personIdentification.localPersonId.namedId = person.id.toString();
+		person.personIdentification.localPersonId.namedIdCategory = "OpenEchPerson";
+		Backend.update(person.personIdentification);
+
+		return person;
 	}
 	
 }

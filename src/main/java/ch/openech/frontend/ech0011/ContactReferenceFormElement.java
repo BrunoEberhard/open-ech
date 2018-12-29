@@ -29,7 +29,8 @@ public class ContactReferenceFormElement extends ReferenceFormElement<ContactRef
 			result.add(reference);
 		});
 
-		List<Organisation> organisations = Backend.find(Organisation.class, By.search(query));
+		List<Organisation> organisations = Backend.find(Organisation.class,
+				By.search(query, Organisation.$.organisationIdentification.organisationName, Organisation.$.organisationIdentification.organisationLegalName));
 		organisations.stream().forEach(o -> {
 			ContactReference reference = new ContactReference();
 			reference.organisation = o;

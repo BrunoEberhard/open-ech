@@ -14,6 +14,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.repository.query.By;
 import org.minimalj.util.CloneHelper;
+import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
 import ch.ech.ech0007.SwissMunicipality;
@@ -321,5 +322,29 @@ public class Person implements Mocking {
 		personIdentification.localPersonId.namedIdCategory = "OpenEch";
 		personIdentification.localPersonId.namedId = "test";
 		personIdentification.dateOfBirth.value = birthData.dateOfBirth.value;
+	}
+
+	public void render(StringBuilder s) {
+		boolean empty = true;
+		if (!StringUtils.isEmpty(nameData.firstName)) {
+			s.append(nameData.firstName);
+			empty = false;
+		}
+		if (!StringUtils.isEmpty(nameData.officialName)) {
+			if (!empty) {
+				s.append(' ');
+			}
+			s.append(nameData.officialName);
+			empty = false;
+		}
+		if (!empty && residenceData != null) {
+			String town = residenceData.dwellingAddress.address.town;
+			if (!StringUtils.isEmpty(town)) {
+				s.append(", ").append(town);
+			}
+		}
+		if (!empty) {
+			s.append('\n');
+		}
 	}
 }

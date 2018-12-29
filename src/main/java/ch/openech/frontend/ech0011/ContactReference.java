@@ -17,12 +17,18 @@ public class ContactReference implements Rendering {
 		if (Keys.isKeyObject(this))
 			return Keys.methodOf(this, "text");
 
+		StringBuilder s = new StringBuilder();
+		render(s);
+		return s.toString();
+	}
+
+	public void render(StringBuilder s) {
 		if (person != null) {
-			return person.nameData.officialName;
+			person.render(s);
 		} else if (organisation != null) {
-			return organisation.organisationIdentification.organisationName;
+			organisation.render(s);
 		} else {
-			return "-";
+			s.append("-\n");
 		}
 	}
 

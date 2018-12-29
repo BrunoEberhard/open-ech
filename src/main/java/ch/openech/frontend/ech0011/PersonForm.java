@@ -32,7 +32,7 @@ public class PersonForm extends EchForm<Person> {
 		addTitle("Weitere Angaben");
 		line($.religionData.religion, $.religionData.religionValidFrom);
 
-		line($.maritalData.maritalStatus, $.maritalData.dateOfMaritalStatus, $.maritalData.cancelationReason, $.maritalData.officialProofOfMaritalStatusYesNo);
+		line(new MaritalDataFormElement($.maritalData, editable));
 		line($.maritalData.separationData.separation, $.maritalData.separationData.separationValidFrom, $.maritalData.separationData.separationValidTill, new EmptyFormElement());
 
 		line($.nationalityData.nationalityStatus, new CountryInfoFormElement($.nationalityData.countryInfo));

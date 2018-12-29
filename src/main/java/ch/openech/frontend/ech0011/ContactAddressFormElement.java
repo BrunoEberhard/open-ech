@@ -18,8 +18,10 @@ public class ContactAddressFormElement extends FormLookupFormElement<MailAddress
 
 	@Override
 	protected MailAddress createObject() {
-		MailAddress mailAddress = new MailAddress();
-		mailAddress.addressInformation.country = Codes.findCode(Country.class, 8100);
+		MailAddress mailAddress = super.createObject();
+		if (mailAddress.addressInformation.country == null) {
+			mailAddress.addressInformation.country = Codes.findCode(Country.class, 8100);
+		}
 		return mailAddress;
 	}
 

@@ -29,7 +29,14 @@ public class PersonEditor extends SimpleEditor<Person> {
 		person.personIdentification.originalName = person.nameData.originalName;
 		person.personIdentification.sex = person.birthData.sex;
 		CloneHelper.deepCopy(person.birthData.dateOfBirth, person.personIdentification.dateOfBirth);
-		return Backend.save(person);
+
+		// TODO do this in one specialized Transaction
+		person = Backend.save(person);
+		person.personIdentification.localPersonId.namedId = person.id.toString();
+		person.personIdentification.localPersonId.namedIdCategory = "OpenEchPerson";
+		Backend.update(person.personIdentification);
+
+		return person;
 	}
 
 }

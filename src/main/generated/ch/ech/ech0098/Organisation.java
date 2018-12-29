@@ -5,6 +5,7 @@ import java.util.List;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
+import org.minimalj.util.StringUtils;
 
 // handmade
 public class Organisation {
@@ -32,5 +33,18 @@ public class Organisation {
 	
 	public void setNogaCode(String nogaCode) {
 		this.NOGACode = nogaCode;
+	}
+
+	public void render(StringBuilder s) {
+		if (organisationIdentification != null && !StringUtils.isEmpty(organisationIdentification.organisationName)) {
+			s.append(organisationIdentification.organisationName);
+			if (address != null && address.size() > 0) {
+				String town = address.get(0).town;
+				if (!StringUtils.isEmpty(town)) {
+					s.append(", ").append(town);
+				}
+			}
+			s.append('\n');
+		}
 	}
 }

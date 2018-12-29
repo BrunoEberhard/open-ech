@@ -43,10 +43,12 @@ public class AddressInformation implements Validation {
 		StringUtils.appendLine(s, addressLine2);
 		StringUtils.appendLine(s, street, houseNumber.concatNumbers());
 		StringUtils.appendLine(s, postOfficeBoxText, postOfficeBoxNumber != null ? postOfficeBoxNumber.toString() : null);
-		if (StringUtils.equals(country.iso2Id, "CH")) {
-			StringUtils.appendLine(s, "" + swissZipCode, town);
-		} else {
-			StringUtils.appendLine(s, country.iso2Id, "" + swissZipCode, town);
+		if (country != null) {
+			if (StringUtils.equals(country.iso2Id, "CH")) {
+				StringUtils.appendLine(s, "" + swissZipCode, town);
+			} else {
+				StringUtils.appendLine(s, country.iso2Id, "" + swissZipCode, town);
+			}
 		}
 		StringUtils.appendLine(s, locality);
 	}
