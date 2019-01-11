@@ -96,6 +96,7 @@ public class XsdModel {
 		
 		MjEntity LONG = new MjEntity(MjEntityType.Long);
 		XML_TYPES.put("unsignedLong", LONG);
+		XML_TYPES.put("long", LONG);
 		
 		MjEntity STRING = new MjEntity(MjEntityType.String);
 		XML_TYPES.put("string", STRING);
