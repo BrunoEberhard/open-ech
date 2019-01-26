@@ -117,22 +117,14 @@ public class EchWriter implements AutoCloseable {
 				}
 			} else {
 				Element typeElement = xsdModel.findElement(type);
-
-				List<Element> attributes = XsdModel.getList(typeElement, "attribute");
-				if (attributes != null) {
-					for (Element attribute : attributes) {
-						String attributeName = attribute.getAttribute("name");
-						Object value = Properties.getProperty(object.getClass(), attributeName).getValue(object);
-						xmlStreamWriter.writeAttribute(attributeName, value.toString());
-					}
-				}
-
+				writeElementAttributes(object, typeElement);
 				writeElements(object, typeElement);
 			}
 		}
 
 		Element simpleType = XsdModel.get(element, "simpleType");
 		if (simpleType != null) {
+			writeElementAttributes(object, simpleType);
 			if (object instanceof Country) {
 				// in der Destination wird AddressInformation statt eine spezielle Klasse
 				// verwendet. Damit hat country aber die falsche Klasse, das wird hier
@@ -146,8 +138,20 @@ public class EchWriter implements AutoCloseable {
 
 		Element complexType = XsdModel.get(element, "complexType");
 		if (complexType != null) {
+			writeElementAttributes(object, complexType);
 			writeElements(object, complexType);
 			return;
+		}
+	}
+
+	private void writeElementAttributes(Object object, Element typeElement) throws XMLStreamException {
+		List<Element> attributes = XsdModel.getList(typeElement, "attribute");
+		if (attributes != null) {
+			for (Element attribute : attributes) {
+				String attributeName = attribute.getAttribute("name");
+				Object value = Properties.getProperty(object.getClass(), attributeName).getValue(object);
+				xmlStreamWriter.writeAttribute(attributeName, value.toString());
+			}
 		}
 	}
 
