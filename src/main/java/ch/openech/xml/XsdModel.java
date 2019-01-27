@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
@@ -206,7 +208,8 @@ public class XsdModel {
 		this.models = models;
 		
 		// dependencies must be read first to have the base types and its values
-		for (String dependency : namespaceByPrefix.values()) {
+		Set<String> namespaces = new HashSet<String>(namespaceByPrefix.values());
+		for (String dependency : namespaces) {
 			if (models.containsKey(dependency)) {
 				models.get(dependency).read(models);
 			} else {
@@ -216,6 +219,15 @@ public class XsdModel {
 						if (EchNamespaceUtil.extractSchemaNumber(m.getKey()) == schemaNumber) {
 							m.getValue().read(models);
 						}
+					}
+				}
+			}
+			XsdModel depModel = models.get(dependency);
+			if (depModel != null) {
+				for (Map.Entry<String, String> e : depModel.namespaceByPrefix.entrySet()) {
+					if (!namespaceByPrefix.containsKey(e.getKey())) {
+						namespaceByPrefix.put(e.getKey(), e.getValue());
+						prefixByNamespace.put(e.getValue(), e.getKey());
 					}
 				}
 			}
