@@ -150,7 +150,9 @@ public class EchWriter implements AutoCloseable {
 			for (Element attribute : attributes) {
 				String attributeName = attribute.getAttribute("name");
 				Object value = Properties.getProperty(object.getClass(), attributeName).getValue(object);
-				xmlStreamWriter.writeAttribute(attributeName, value.toString());
+				if (!EmptyObjects.isEmpty(value)) {
+					xmlStreamWriter.writeAttribute(attributeName, value.toString());
+				}
 			}
 		}
 	}
