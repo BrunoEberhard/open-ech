@@ -168,6 +168,11 @@ public class XsdModel {
 		PREDEFINED_TYPES.put("addressInformationType", addressInformation);
 		PREDEFINED_TYPES.put("swissAddressInformationType", addressInformation);
 
+		MjEntity originIdentification = new MjEntity(MjEntityType.String);
+		// originIdentification.values = // da könnte man noch Kantone + FL + XX
+		// einfügen (für ech 229)
+		PREDEFINED_TYPES.put("originIdentificationType", originIdentification);
+		PREDEFINED_TYPES.put("cantonFlAbbreviationType", originIdentification); // ok, hier wäre ohne Ausland
 	}
 
 	public XsdModel() {
