@@ -3,6 +3,7 @@ package ch.openech.xml;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -10,6 +11,7 @@ import java.util.logging.Logger;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
@@ -62,6 +64,7 @@ public class EchReader implements AutoCloseable {
 	}
 	
 	private Object _read() throws XMLStreamException {
+		Object result = null;
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
@@ -75,12 +78,28 @@ public class EchReader implements AutoCloseable {
 
 				rootElementName = StringUtils.upperFirstChar(rootElementName);
 				Class<?> clazz = getClass(rootElementName, namespace);
-				return read(clazz);
-			} 
+				result = read(clazz);
+
+				readAttributes(startElement, result);
+			}
 		}
-		return null;
+		return result;
 	}
 	
+	private void readAttributes(StartElement startElement, Object result) {
+		Iterator<Attribute> attributes = startElement.getAttributes();
+		while (attributes.hasNext()) {
+			Attribute attribute = attributes.next();
+			String attributeName = attribute.getName().getLocalPart();
+			String valueString = attribute.getValue();
+			PropertyInterface property = Properties.getProperty(result.getClass(), attributeName);
+			if (property != null) {
+				Object value = FieldUtils.parse(valueString, property.getClazz());
+				property.setValue(result, value);
+			}
+		}
+	}
+
 	private Class<?> getClass(String name, String namespace) {
 		try {
 			String packageName = EchSchemas.packageName(namespace);
@@ -111,6 +130,8 @@ public class EchReader implements AutoCloseable {
 				}
 				
 				StartElement startElement = event.asStartElement();
+				readAttributes(startElement, result);
+				
 				String elementName = startElement.getName().getLocalPart();
 				elementName = StringUtils.lowerFirstChar(elementName);
 				
