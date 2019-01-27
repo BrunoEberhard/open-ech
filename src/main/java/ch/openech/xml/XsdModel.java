@@ -91,7 +91,8 @@ public class XsdModel {
 		XML_TYPES.put("int", INT);
 		XML_TYPES.put("integer", INT);
 		XML_TYPES.put("nonNegativeInteger", INT);
-
+		XML_TYPES.put("positiveInteger", INT);
+		
 		MjEntity YEAR = new MjEntity(MjEntityType.Integer);
 		YEAR.maxLength = 4;
 		XML_TYPES.put("gYear", YEAR);
