@@ -626,7 +626,7 @@ public class XsdModel {
 		return entities.get(type).getElement();
 	}
 
-	private XsdModel findModel(String namespace) {
+	public XsdModel findModel(String namespace) {
 		// ech 173 verwendet die forgiving schemas. Die werden zur Zeit nicht
 		// explizit erzeugt. Daher werden die namespaces konviertiert von
 		// http://www.ech.ch/xmlns/eCH-0021-f/7 zu

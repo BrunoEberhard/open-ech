@@ -152,6 +152,20 @@ public class EchReader implements AutoCloseable {
 							property.setValue(result, value);
 						}
 					}
+				} else if (Properties.getProperty(clazz, "any") != null) {
+					property = Properties.getProperty(clazz, "any");
+					Any any = (Any) property.getValue(result);
+
+					String namespace = startElement.getName().getNamespaceURI();
+					String rootElementName = startElement.getName().getLocalPart();
+
+					XsdModel model = EchSchemas.getXsdModel(namespace);
+					Objects.requireNonNull(model, "No namespace: " + namespace + " for " + rootElementName);
+
+					Class<?> elementClass = getClass(StringUtils.upperFirstChar(rootElementName), namespace);
+					any.object = read(elementClass);
+					any.elementName = rootElementName;
+					any.namespace = namespace;
 				} else {
 					LOG.warning("Element: " + elementName + " -> No Property in " + clazz.getName());
 					skip(xml);

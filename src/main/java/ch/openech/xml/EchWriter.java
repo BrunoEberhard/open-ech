@@ -215,6 +215,28 @@ public class EchWriter implements AutoCloseable {
 				XsdModel.forEachChild(element, new ElementWriter(object));
 				return;
 			}
+
+			if (element.getLocalName().equals("any")) {
+				PropertyInterface property = Properties.getProperty(object.getClass(), "any");
+				if (property != null) {
+					Any any = (Any) property.getValue(object);
+					if (any != null && !EmptyObjects.isEmpty(any.object)) {
+						XsdModel model = xsdModel.findModel(any.namespace);
+						try {
+							String prefix = model.getPrefix();
+							String namespace = any.namespace;
+							xmlStreamWriter.setPrefix(prefix, namespace);
+							Element e = model.getRootElement(any.elementName);
+							writeElement(any.object, e);
+						} catch (XMLStreamException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				} else {
+					System.out.println("Not found: 'any' on " + object.getClass().getSimpleName());
+				}
+			}
+
 		}
 	}
 	
