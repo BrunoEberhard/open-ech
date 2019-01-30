@@ -8,12 +8,12 @@ import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.CloneHelper;
-import org.minimalj.util.DateUtils;
 
 import ch.ech.ech0010.MailAddress;
 import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0098.Organisation;
 import ch.openech.frontend.ech0011.ContactReference;
+import ch.openech.frontend.ech0011.RangeUtil;
 
 // handmade
 public class ContactData implements Rendering {
@@ -83,21 +83,9 @@ public class ContactData implements Rendering {
 				contactAddress.names.render(s);
 			}
 			contactAddress.addressInformation.render(s);
-			appendRange(s, contactValidFrom, contactValidTill);
+			RangeUtil.appendRangeLine(s, contactValidFrom, contactValidTill);
 		}
 		return s.toString();
-	}
-
-	public static void appendRange(StringBuilder stringBuilder, LocalDate from, LocalDate to) {
-		if (from != null || to != null) {
-			if (from != null && to != null) {
-				stringBuilder.append(DateUtils.format(from)).append(" - ").append(DateUtils.format(to));
-			} else if (from != null) {
-				stringBuilder.append("Ab ").append(DateUtils.format(from));
-			} else {
-				stringBuilder.append("Bis").append(DateUtils.format(to));
-			}
-		}
 	}
 
 	// support typo in ech 11 v5
