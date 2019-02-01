@@ -12,6 +12,7 @@ import org.minimalj.model.test.ModelTest;
 import ch.ech.ech0071.Canton;
 import ch.ech.ech0071.CantonAbbreviation;
 import ch.ech.ech0071.Nomenclature;
+import ch.ech.ech0071.Nomenclature.Cantons;
 import ch.ech.ech0098.OrganisationRoot;
 
 public class EchReaderTest {
@@ -21,6 +22,7 @@ public class EchReaderTest {
 		Nomenclature nomenclature = new Nomenclature();
 		nomenclature.validFrom = LocalDate.now().minusMonths(1);
 
+		nomenclature.cantons = new Cantons();
 		nomenclature.cantons.canton = new ArrayList<>();
 		for (int i = 1; i <= 26; i++) {
 			Canton canton = new Canton();
