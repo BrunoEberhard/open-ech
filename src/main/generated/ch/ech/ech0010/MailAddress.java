@@ -4,6 +4,8 @@ import org.minimalj.model.EnumUtils;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.Size;
+import org.minimalj.repository.sql.EmptyObjects;
+import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
 
 public class MailAddress implements Rendering {
@@ -20,12 +22,26 @@ public class MailAddress implements Rendering {
 		}
 	}
 
+	public void setPerson(AddressNames names) {
+		if (names == null) {
+			names = EmptyObjects.getEmptyObject(AddressNames.class);
+		}
+		CloneHelper.deepCopy(names, this.names);
+	}
+
 	public AddressNames getOrganisation() {
 		if (names.organisationName != null) {
 			return names;
 		} else {
 			return null;
 		}
+	}
+
+	public void setOrganisation(AddressNames names) {
+		if (names == null) {
+			names = EmptyObjects.getEmptyObject(AddressNames.class);
+		}
+		CloneHelper.deepCopy(names, this.names);
 	}
 
 	@Override

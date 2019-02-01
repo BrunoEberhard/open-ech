@@ -179,6 +179,9 @@ public class EchReader implements AutoCloseable {
 					}
 				}
 			} else if (event.isEndElement()) {
+				if (result == null && clazz == String.class) {
+					result = (T) "";
+				}
 				return result;
 			}
 		}

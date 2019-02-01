@@ -86,7 +86,7 @@ public class EchWriter implements AutoCloseable {
 			((Collection) object).forEach(listItem -> writeElement(listItem, element));
 		} else if (object != null) {
 			try {
-				if (!EmptyObjects.isEmpty(object)) {
+				if (!EmptyObjects.isEmpty(object) || object.equals("")) {
 					String name = element.getAttribute("name");
 					if (xsdModel.isQualifiedElements()) {
 						String namespace = element.getOwnerDocument().getDocumentElement().getAttribute("targetNamespace");
@@ -194,9 +194,7 @@ public class EchWriter implements AutoCloseable {
 					PropertyInterface property = Properties.getProperty(object.getClass(), name);
 					if (property != null) {
 						Object value = property.getValue(object);
-						if (!EmptyObjects.isEmpty(value)) {
-							writeElement(value, element);
-						}
+						writeElement(value, element);
 					} else {
 						System.out.println("Not found: " + name + " on " + object.getClass().getSimpleName());
 					}
