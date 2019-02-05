@@ -12,6 +12,7 @@ import org.minimalj.model.ViewUtil;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.Codes;
 import org.minimalj.util.DateUtils;
+import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
 import ch.ech.ech0008.Country;
@@ -74,7 +75,7 @@ public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> im
 	@Override
 	public List<CountryInfo> parse(String text) {
 		List<CountryInfo> value = new ArrayList<>();
-		if (!text.isEmpty()) {
+		if (!StringUtils.isEmpty(text)) {
 			String[] parts = text.split(", ");
 			for (String part : parts) {
 				CountryInfo info = new CountryInfo();
