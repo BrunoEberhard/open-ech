@@ -222,7 +222,7 @@ public class EchSchemas {
 						name.equals(YesNo.class.getSimpleName()) || name.equals("PaperLock") || //
 						name.startsWith(UidStructure.class.getSimpleName()) || //
 						// die Extension von ech 0078 ist komplett etwas anderes als bei ech 0020
-						name.equals("Extension") && !entity.packageName.equals("ch.ech.ech0078") || //
+						name.equals("Extension") && !entity.packageName.equals("ch.ech.ech0078") && !entity.packageName.equals("ch.ech.ech0155") || //
 						// Kantone/Gemeinden werden von ech 0071 verwendet
 						entity.packageName.equals("ch.ech.ech0007") ||
 						// Länder werden von ech 0072 verwendet (CountryInformation)
@@ -240,6 +240,8 @@ public class EchSchemas {
 						name.equals("PersonIdentificationLight") || //
 //						// Die Person enthält alle Element der BaseDeliveryPerson
 //						name.equals("BaseDeliveryPerson") || //
+						// Wird fehlerhaft generiert, aber nirgends verwendet, kann übersprungen werden
+						name.equals("ElectoralAddress") || //
 						false;
 		return !skip;
 	}

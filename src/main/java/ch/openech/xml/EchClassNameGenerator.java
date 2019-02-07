@@ -31,6 +31,8 @@ public class EchClassNameGenerator {
 		} else if (StringUtils.equals(name, "NameOfParentAtBirth")) {
 			// NameOfParent existiert schon handmade, damit wird nix erzeugt
 			name = "NameOfParent";
+		} else if (StringUtils.equals(name, "List")) {
+			name = "Liste";
 		}
 		
 		return name;
