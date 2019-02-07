@@ -34,7 +34,7 @@ public class AddressForm extends Form<MailAddress> {
 		}
 		line($.addressInformation.addressLine1);
 		line($.addressInformation.addressLine2);
-		line($.addressInformation.street, new HouseNumberFormElement($.addressInformation.houseNumber, editable));
+		line(Form.GROW_FIRST_ELEMENT, $.addressInformation.street, $.addressInformation.houseNumber, $.addressInformation.dwellingNumber);
 		if (!swiss) {
 			line($.addressInformation.postOfficeBoxText, $.addressInformation.postOfficeBoxNumber);
 			line($.addressInformation.country, $.addressInformation.swissZipCode, $.addressInformation.town);

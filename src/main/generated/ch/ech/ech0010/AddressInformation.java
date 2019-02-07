@@ -18,7 +18,8 @@ public class AddressInformation implements Validation {
 
 	@Size(150)
 	public String addressLine1, addressLine2, street;
-	public final HouseNumber houseNumber = new HouseNumber();
+	@Size(30)
+	public String houseNumber, dwellingNumber;
 	@Size(8)
 	public Integer postOfficeBoxNumber;
 	@Size(15)
@@ -41,7 +42,7 @@ public class AddressInformation implements Validation {
 	public void render(StringBuilder s) {
 		StringUtils.appendLine(s, addressLine1);
 		StringUtils.appendLine(s, addressLine2);
-		StringUtils.appendLine(s, street, houseNumber.concatNumbers());
+		StringUtils.appendLine(s, street, houseNumber, dwellingNumber);
 		StringUtils.appendLine(s, postOfficeBoxText, postOfficeBoxNumber != null ? postOfficeBoxNumber.toString() : null);
 		if (country != null) {
 			if (StringUtils.equals(country.iso2Id, "CH")) {
