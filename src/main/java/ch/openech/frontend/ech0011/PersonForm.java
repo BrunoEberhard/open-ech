@@ -37,8 +37,7 @@ public class PersonForm extends EchForm<Person> {
 
 		line(new PlaceOfOriginAddonFormElement($.placeOfOrigin, true), new ContactDataFormElement($.contactData, true));
 
-		line($.residencePermit.residencePermit, $.residencePermit.residencePermitValidFrom, $.residencePermit.residencePermitValidTill,
-				$.residencePermit.entryDate);
+		line(new ResidencePermitFormElement($.residencePermit, editable));
 
 	}
 	
