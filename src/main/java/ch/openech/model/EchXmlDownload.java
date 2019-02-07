@@ -183,8 +183,6 @@ public class EchXmlDownload {
 
 //		download(20, 2, 3); // Person mutation, alte Version zu Zeit nicht mehr vorgesehen
 
-		download(116, 3, 0);
-
 //		download(129, 4, 0); // Objektwesen
 //		download(132, 2, 0); // Objektwesen Steuern
 		// download("http://www.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T0.xsd");
