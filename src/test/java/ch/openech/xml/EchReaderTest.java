@@ -13,7 +13,7 @@ import ch.ech.ech0071.Canton;
 import ch.ech.ech0071.CantonAbbreviation;
 import ch.ech.ech0071.Nomenclature;
 import ch.ech.ech0071.Nomenclature.Cantons;
-import ch.ech.ech0098.OrganisationRoot;
+import ch.ech.ech0098.Organisation;
 
 public class EchReaderTest {
 
@@ -71,8 +71,8 @@ public class EchReaderTest {
 //	}
 
 	@Test
-	public void testOrganisationRoot() throws Exception {
-		ModelTest test = new ModelTest(OrganisationRoot.class);
+	public void testOrganisation() throws Exception {
+		ModelTest test = new ModelTest(Organisation.class);
 		test.assertValid();
 	}
 	
