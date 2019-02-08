@@ -31,7 +31,7 @@ public class EchSchemaValidation {
 
 	static Validator getValidator() throws SAXException {
 		if (validator == null) {
-			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			SchemaFactory schemaFactory = getSchemaFactory();
 
 			LSResourceResolver resourceResolver = new LSResourceResolver() {
 				@Override
@@ -55,6 +55,18 @@ public class EchSchemaValidation {
 			validator.setResourceResolver(resourceResolver);
 		}
 		return validator;
+	}
+
+	private static SchemaFactory getSchemaFactory() {
+		try {
+			@SuppressWarnings("unchecked")
+			// Remote Fetch URL https://github.com/apache/xerces2-j
+			// Tag Xerces-J_2_12_0-xml-schema-1.1
+			Class<SchemaFactory> xmlSchema11FactoryClass = (Class<SchemaFactory>) Class.forName("org.apache.xerces.jaxp.validation.XMLSchema11Factory");
+			return xmlSchema11FactoryClass.newInstance();
+		} catch (Exception x) {
+			return SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		}
 	}
 
 	public static String validate(String string) {
