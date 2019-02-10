@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import org.minimalj.application.Application;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
-import org.minimalj.frontend.impl.swing.Swing;
+import org.minimalj.frontend.impl.web.WebServer;
 import org.minimalj.frontend.page.PageAction;
 import org.minimalj.util.resources.MultiResourceBundle;
 
@@ -20,9 +20,10 @@ import ch.ech.ech0129.Building;
 import ch.ech.ech0129.Dwelling;
 import ch.ech.ech0129.Locality;
 import ch.ech.ech0211.v1.PlanningPermissionApplication;
+import ch.openech.frontend.AddPersonEditor;
 import ch.openech.frontend.ech0007.CantonTablePage;
 import ch.openech.frontend.ech0007.MunicipalityTablePage;
-import ch.openech.frontend.ech0020.EventMoveInEditor;
+import ch.openech.frontend.ech0229.NetProfitEditor;
 import ch.openech.frontend.org.ImportSwissDataAction;
 
 public class OpenEch extends Application {
@@ -30,10 +31,11 @@ public class OpenEch extends Application {
 	@Override
 	public List<Action> getNavigation() {
 		ActionGroup actions = new ActionGroup("");
-		actions.add(new EventMoveInEditor());
+		actions.add(new AddPersonEditor());
 		actions.add(new PageAction(new MunicipalityTablePage()));
 		actions.add(new PageAction(new CantonTablePage()));
 		actions.add(new ImportSwissDataAction());
+		actions.add(new NetProfitEditor());
 		return actions.getItems();
 	}
 	
@@ -46,6 +48,12 @@ public class OpenEch extends Application {
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return new MultiResourceBundle(super.getResourceBundle(locale), ResourceBundle.getBundle("ch.openech.Person", locale));
+	}
+
+	public static void main(String[] args) {
+		// MjVaadinSpringbootApplication.start(new OpenEch());
+		// Swing.start(new OpenEch());
+		WebServer.start(new OpenEch());
 	}
 
 }
