@@ -4,22 +4,14 @@ import java.time.LocalDate;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.minimalj.application.Application;
-import org.minimalj.frontend.Frontend;
-import org.minimalj.frontend.impl.json.JsonFrontend;
 import org.minimalj.util.EqualsHelper;
 
 import ch.ech.ech0006.ResidencePermit;
 import ch.ech.ech0011.Person;
 import ch.ech.ech0011.ResidencePermitData;
-import ch.openech.OpenEch;
+import ch.openech.OpenEchTest;
 
-public class ResidencePermitFormElementTest {
-
-	static {
-		Application.setInstance(new OpenEch());
-		Frontend.setInstance(new JsonFrontend());
-	}
+public class ResidencePermitFormElementTest extends OpenEchTest {
 
 	private ResidencePermitFormElement element = new ResidencePermitFormElement(Person.$.residencePermit, false);
 
@@ -45,7 +37,7 @@ public class ResidencePermitFormElementTest {
 	}
 
 	@Test
-	public void testEntryCompolete() {
+	public void testEntryComplete() {
 		ResidencePermitData data = new ResidencePermitData();
 		data.residencePermit = ResidencePermit._01;
 		data.entryDate = LocalDate.of(2001, 02, 03);

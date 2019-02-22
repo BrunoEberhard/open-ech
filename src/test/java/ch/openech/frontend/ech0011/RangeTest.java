@@ -6,8 +6,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import ch.ech.ech0046.DateRange;
+import ch.openech.OpenEchTest;
 
-public class RangeTest {
+public class RangeTest extends OpenEchTest {
 
 	@Test
 	public void testRange() {
