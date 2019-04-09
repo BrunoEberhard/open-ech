@@ -41,7 +41,7 @@ public class EchForm<T> extends Form<T> {
 	//
 
 	@Override
-	public FormElement<?> createElement(PropertyInterface property) {
+	public FormElement<?> createElement(PropertyInterface property, boolean editable) {
 		Class<?> type = property.getClazz();
 //		if (formElements.containsKey(type)) {
 //			return CloneHelper.newInstance(formElements.get(type));
@@ -58,7 +58,7 @@ public class EchForm<T> extends Form<T> {
 			return new ContactDataFormElement(property, editable);
 		}
 		
-		return super.createElement(property);
+		return super.createElement(property, editable);
 	}
 
 }
