@@ -34,7 +34,7 @@ public class SeparationFormElement extends FormLookupFormElement<SeparationData>
 			int index = text.indexOf('(');
 			String separationString = text;
 			if (index > 0) {
-				separationString = text.substring(0, index);
+				separationString = text.substring(0, index).trim();
 				DateRange range = RangeUtil.parseDateRange(text.substring(index));
 				object.separationValidFrom = range.dateFrom;
 				object.separationValidTill = range.dateTo;
