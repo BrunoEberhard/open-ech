@@ -28,7 +28,7 @@ public class PersonForm extends EchForm<Person> {
 		line($.birthAddonData.nameOfFather, $.birthAddonData.nameOfMother); // TODO only for some events
 
 		addTitle("Weitere Angaben");
-		line(new ReligionFormElement($.religionData, editable));
+		line(new ReligionDataFormElement($.religionData, editable));
 
 		line(new MaritalDataFormElement($.maritalData, editable), new SeparationFormElement($.maritalData.separationData, editable));
 
