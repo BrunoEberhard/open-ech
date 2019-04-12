@@ -62,7 +62,7 @@ public class EventBaseDeliveryTest {
 		event.baseDeliveryPerson.nationalityData.nationalityStatus = NationalityStatus._1;
 
 		event.baseDeliveryPerson.residencePermitData = new ResidencePermitData();
-		event.baseDeliveryPerson.residencePermitData.residencePermit = ResidencePermit._01;
+		event.baseDeliveryPerson.residencePermitData.setResidencePermit(ResidencePermit._01);
 
 		event.baseDeliveryPerson.lockData.dataLock = DataLock._0;
 		event.baseDeliveryPerson.lockData.paperLock = YesNo._1;

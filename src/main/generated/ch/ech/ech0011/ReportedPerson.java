@@ -119,11 +119,11 @@ public class ReportedPerson {
 
 		public class Foreigner {
 			public ch.ech.ech0006.ResidencePermit getResidencePermit() {
-				return person.residencePermit.residencePermit;
+				return person.residencePermit.getResidencePermit();
 			}
 
 			public void setResidencePermit(ch.ech.ech0006.ResidencePermit residencePermit) {
-				person.residencePermit.residencePermit = residencePermit;
+				person.residencePermit.setResidencePermit(residencePermit);
 			}
 
 			public LocalDate getResidencePermitTill() {

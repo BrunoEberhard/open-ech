@@ -53,7 +53,8 @@ public class Person implements Mocking {
 	public DeathData deathData;
 	public ContactData contactData;
 	public List<PlaceOfOriginAddon> placeOfOrigin; // PlaceOfOriginAddon, nicht nur PlaceOfOrigin
-	public ResidencePermitData residencePermit;
+	// TODO das sollte abhängig von der Nationalität gesetzt sein
+	public ResidencePermitData residencePermit = new ResidencePermitData();
 	
 	// PersonAddOn
 	// ===========

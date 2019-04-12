@@ -24,14 +24,14 @@ public class ResidencePermitFormElementTest extends OpenEchTest {
 	@Test
 	public void testPermit() {
 		ResidencePermitData data = new ResidencePermitData();
-		data.residencePermit = ResidencePermit._01;
+		data.setResidencePermit(ResidencePermit._01);
 		test(data);
 	}
 
 	@Test
 	public void testEntryDate() {
 		ResidencePermitData data = new ResidencePermitData();
-		data.residencePermit = ResidencePermit._01;
+		data.setResidencePermit(ResidencePermit._01);
 		data.entryDate = LocalDate.of(2001, 02, 03);
 		test(data);
 	}
@@ -39,7 +39,7 @@ public class ResidencePermitFormElementTest extends OpenEchTest {
 	@Test
 	public void testEntryComplete() {
 		ResidencePermitData data = new ResidencePermitData();
-		data.residencePermit = ResidencePermit._01;
+		data.setResidencePermit(ResidencePermit._01);
 		data.entryDate = LocalDate.of(2001, 02, 03);
 		data.residencePermitValidFrom = LocalDate.of(2010, 11, 12);
 		data.residencePermitValidTill = LocalDate.of(2011, 01, 31);
