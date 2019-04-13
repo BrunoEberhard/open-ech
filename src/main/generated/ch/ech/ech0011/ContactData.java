@@ -20,7 +20,10 @@ public class ContactData implements Rendering {
 	public static final ContactData $ = Keys.of(ContactData.class);
 
 	public PersonIdentification personIdentification;
-	public PersonIdentification personIdentificationPartner; // Light
+	// dieses Feld war für ein personIdentificationPartnerType, diese partner
+	// Version der personIdentification wurde zugunsten der "Light" Version
+	// fallengelassen
+	public PersonIdentification personIdentificationPartner;
 	public PartnerIdOrganisation partnerIdOrganisation;
 	@NotEmpty
 	public MailAddress contactAddress;
