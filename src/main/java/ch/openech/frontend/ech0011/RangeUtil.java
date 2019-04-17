@@ -2,7 +2,9 @@ package ch.openech.frontend.ech0011;
 
 import java.time.LocalDate;
 
+import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.DateUtils;
+import org.minimalj.util.StringUtils;
 
 import ch.ech.ech0046.DateRange;
 
@@ -38,6 +40,11 @@ public class RangeUtil {
 	}
 
 	public static DateRange parseDateRange(String s) {
+		DateRange range = new DateRange();
+		if (StringUtils.isBlank(s)) {
+			return range;
+		}
+
 		if (s.startsWith("(")) {
 			s = s.substring(1).trim();
 		}
@@ -45,7 +52,6 @@ public class RangeUtil {
 			s = s.substring(0, s.length() - 1).trim();
 		}
 
-		DateRange range = new DateRange();
 		int index = s.indexOf('-');
 		if (index > -1) {
 			range.dateFrom = DateUtils.parse(s.substring(0, index).trim());
@@ -64,6 +70,10 @@ public class RangeUtil {
 		if (index > -1) {
 			range.dateTo = DateUtils.parse(s.substring(index + 3).trim());
 			return range;
+		}
+
+		if (range.dateFrom == null && range.dateTo == null) {
+			range.dateFrom = InvalidValues.createInvalidLocalDate("Bereich ungültig");
 		}
 
 		return range;

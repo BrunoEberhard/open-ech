@@ -41,9 +41,6 @@ public class EventMoveInEditor extends NewObjectEditor<Person> {
 
 //		person.residencePermit.residencePermit = ResidencePermit._01;
 
-//		person.lockData.dataLock = DataLock._0;
-//		person.lockData.paperLock = YesNo._1;
-
 		return person;
 	}
 	

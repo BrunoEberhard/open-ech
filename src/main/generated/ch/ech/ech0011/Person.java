@@ -13,6 +13,7 @@ import org.minimalj.model.annotation.Materialized;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.repository.query.By;
+import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
@@ -37,6 +38,7 @@ import ch.ech.ech0021.PoliticalRightData;
 import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0044.Sex;
 import ch.ech.ech0071.Municipality;
+import ch.openech.xml.YesNo;
 
 //handmade
 public class Person implements Mocking {
@@ -65,7 +67,8 @@ public class Person implements Mocking {
 	public final PersonAdditionalData personAdditionalData = new PersonAdditionalData();
 	public final PoliticalRightData politicalRightData = new PoliticalRightData();
 	public BirthAddonData birthAddonData;
-	public LockData lockData;
+	public final DataLock dataLock = new DataLock();
+	public final PaperLock paperLock = new PaperLock();
 	public JobData jobData;
 	public MaritalRelationship maritalRelationship;
 	public List<ParentalRelationship> parentalRelationship;
@@ -302,6 +305,43 @@ public class Person implements Mocking {
 				nationalityData.countryInfo.add(countryInfo);
 			}
 		}
+	}
+
+	public LockData getLockData() {
+		boolean emptyDataLock = dataLock.dataLock == ch.ech.ech0021.DataLock._0;
+		boolean emptyPaperLock = paperLock.paperLock == null || paperLock.paperLock == false;
+		if (emptyDataLock && emptyPaperLock) {
+			return null;
+		} else {
+			LockData d = new LockData();
+			if (dataLock != null) {
+				d.dataLock = dataLock.dataLock;
+				d.dataLockValidFrom = dataLock.dataLockValidFrom;
+				d.dataLockValidTill = dataLock.dataLockValidTill;
+			} else {
+				d.dataLock = ch.ech.ech0021.DataLock._0;
+			}
+			if (paperLock != null) {
+				d.paperLock = Boolean.TRUE.equals(paperLock.paperLock) ? YesNo._1 : YesNo._0;
+				d.paperLockValidFrom = paperLock.paperLockValidFrom;
+				d.paperLockValidTill = paperLock.paperLockValidTill;
+			} else {
+				d.paperLock = YesNo._0;
+			}
+			return d;
+		}
+	}
+
+	public void setDataLock(LockData d) {
+		if (d == null) {
+			d = EmptyObjects.getEmptyObject(LockData.class);
+		}
+		paperLock.paperLock = YesNo._1.equals(d.paperLock);
+		paperLock.paperLockValidFrom = d.paperLockValidFrom;
+		paperLock.paperLockValidTill = d.paperLockValidTill;
+		dataLock.dataLock = d.dataLock;
+		dataLock.dataLockValidFrom = d.dataLockValidFrom;
+		dataLock.dataLockValidTill = d.dataLockValidTill;
 	}
 
 	@Override
