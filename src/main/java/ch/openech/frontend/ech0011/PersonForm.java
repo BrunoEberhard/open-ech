@@ -41,6 +41,11 @@ public class PersonForm extends EchForm<Person> {
 		addDependecy($.residencePermit, $.residencePermit.getResidencePermit());
 
 		line(new DataLockFormElement($.dataLock, editable), new PaperLockFormElement($.paperLock, editable));
+		line(new MatrimonialInheritanceArrangementFormElement($.matrimonialInheritanceArrangementData, editable));
+		addTitle("Dienstpflichten");
+		line(new ArmedForcesFormElement($.armedForcesData, editable),
+				new CivilDefenseFormElement($.civilDefenseData, editable));
+		line(new FireServiceFormElement($.fireServiceData, editable));
 	}
 	
 	private class NationalityUpdater implements PropertyUpdater<NationalityStatus, List<CountryInfo>, Person> {

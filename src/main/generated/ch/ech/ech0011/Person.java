@@ -66,18 +66,18 @@ public class Person implements Mocking {
 	
 	public final PersonAdditionalData personAdditionalData = new PersonAdditionalData();
 	public final PoliticalRightData politicalRightData = new PoliticalRightData();
-	public BirthAddonData birthAddonData;
+	public final BirthAddonData birthAddonData = new BirthAddonData();
 	public final DataLock dataLock = new DataLock();
 	public final PaperLock paperLock = new PaperLock();
 	public JobData jobData;
 	public MaritalRelationship maritalRelationship;
 	public List<ParentalRelationship> parentalRelationship;
 	public List<GuardianRelationship> guardianRelationship;
-	public ArmedForcesData armedForcesData;
-	public CivilDefenseData civilDefenseData;
-	public FireServiceData fireServiceData;
-	public HealthInsuranceData healthInsuranceData;
-	public MatrimonialInheritanceArrangementData matrimonialInheritanceArrangementData;
+	public final ArmedForcesData armedForcesData = new ArmedForcesData();
+	public final CivilDefenseData civilDefenseData = new CivilDefenseData();
+	public final FireServiceData fireServiceData = new FireServiceData();
+	public final HealthInsuranceData healthInsuranceData = new HealthInsuranceData();
+	public final MatrimonialInheritanceArrangementData matrimonialInheritanceArrangementData = new MatrimonialInheritanceArrangementData();
 
 	// ReportedPerson
 	// ==============

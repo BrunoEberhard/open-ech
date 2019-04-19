@@ -78,4 +78,46 @@ public class RangeUtil {
 
 		return range;
 	}
+
+	public static void appendValidFrom(StringBuilder stringBuilder, LocalDate from) {
+		appendValidFrom(stringBuilder, from, true);
+	}
+
+	public static void appendValidFrom(StringBuilder stringBuilder, LocalDate from, boolean inline) {
+		if (from != null) {
+			if (inline) {
+				if (stringBuilder.length() > 0
+						&& !Character.isWhitespace(stringBuilder.charAt(stringBuilder.length() - 1))) {
+					stringBuilder.append(' ');
+				}
+				stringBuilder.append('(');
+			}
+			stringBuilder.append("Ab ").append(DateUtils.format(from));
+			if (inline) {
+				stringBuilder.append(')');
+			}
+		}
+	}
+
+	public static LocalDate parseValidFrom(String s) {
+		if (StringUtils.isBlank(s)) {
+			return null;
+		}
+
+		if (s.startsWith("(")) {
+			s = s.substring(1).trim();
+		}
+		if (s.endsWith(")")) {
+			s = s.substring(0, s.length() - 1).trim();
+		}
+
+		s = s.toLowerCase();
+		int index = s.indexOf("ab");
+		if (index > -1) {
+			return DateUtils.parse(s.substring(index + 2).trim());
+		}
+
+		return InvalidValues.createInvalidLocalDate("Bereich ungültig");
+	}
+
 }
