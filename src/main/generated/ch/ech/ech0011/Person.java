@@ -38,6 +38,7 @@ import ch.ech.ech0021.PoliticalRightData;
 import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0044.Sex;
 import ch.ech.ech0071.Municipality;
+import ch.openech.frontend.ech0011.ReligionFormElement;
 import ch.openech.xml.YesNo;
 
 //handmade
@@ -355,6 +356,8 @@ public class Person implements Mocking {
 		Municipality municipality = municipalities.get(r.nextInt(municipalities.size()));
 		birthData.placeOfBirth.swissTown = ViewUtil.view(municipality, new SwissMunicipality());
 		birthData.sex = Sex._1;
+		religionData.religion = String
+				.valueOf(ReligionFormElement.RELIGION_VALUES[r.nextInt(ReligionFormElement.RELIGION_VALUES.length)]);
 
 		personIdentification = new PersonIdentification();
 		personIdentification.officialName = nameData.officialName;
