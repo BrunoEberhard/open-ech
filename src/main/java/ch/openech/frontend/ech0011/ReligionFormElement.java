@@ -15,7 +15,7 @@ import org.minimalj.util.resources.Resources;
 
 public class ReligionFormElement extends FormatFormElement<String> implements LookupParser {
 
-	private static final int[] RELIGION_VALUES = { 111, 121, 122, 211, 711, 811 };
+	public static final int[] RELIGION_VALUES = { 111, 121, 122, 211, 711, 811 };
 
 	public ReligionFormElement(PropertyInterface property, boolean editable) {
 		super(property, editable);
