@@ -13,6 +13,7 @@ import ch.ech.ech0011.Person;
 import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0044.Sex;
 import ch.openech.frontend.ech0011.PersonForm;
+import ch.openech.xml.YesNo;
 
 public class AddPersonEditor extends NewObjectEditor<Person> {
 
@@ -38,6 +39,9 @@ public class AddPersonEditor extends NewObjectEditor<Person> {
 		person.maritalData.maritalStatus = MaritalStatus._1;
 
 		person.nationalityData.nationalityStatus = NationalityStatus._1;
+
+		person.healthInsuranceData.healthInsured = YesNo._0;
+		person.matrimonialInheritanceArrangementData.matrimonialInheritanceArrangement = YesNo._0;
 
 //		person.residencePermit.residencePermit = ResidencePermit._01;
 
