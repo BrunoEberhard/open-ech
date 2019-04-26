@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.FormElement;
+import org.minimalj.frontend.form.element.TextFormElement;
 import org.minimalj.model.properties.PropertyInterface;
 
 import ch.ech.ech0011.ContactData;
@@ -53,7 +54,7 @@ public class EchForm<T> extends Form<T> {
 		} else if (type == NameOfParent.class) {
 			return new ch.openech.frontend.ech0011.NameOfParentFormElement(property, editable);
 		} else if (type == GeneralPlace.class) {
-			return new GeneralPlaceFormElement(property);
+			return editable ? new GeneralPlaceFormElement(property) : new TextFormElement(property);
 		} else if (type == ContactData.class) {
 			return new ContactDataFormElement(property, editable);
 		}
