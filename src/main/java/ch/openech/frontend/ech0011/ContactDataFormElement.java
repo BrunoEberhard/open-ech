@@ -9,13 +9,13 @@ import ch.ech.ech0011.ContactData;
 
 public class ContactDataFormElement extends FormLookupFormElement<ContactData> {
 
-	public ContactDataFormElement(PropertyInterface property, boolean editable) {
-		super(property, editable);
+	public ContactDataFormElement(PropertyInterface property) {
+		super(property, Form.EDITABLE);
 		height(2, FormElementConstraint.MAX);
 	}
 
-	public ContactDataFormElement(ContactData key, boolean editable) {
-		super(key, editable);
+	public ContactDataFormElement(ContactData key) {
+		super(key, Form.EDITABLE);
 		height(2, FormElementConstraint.MAX);
 	}
 

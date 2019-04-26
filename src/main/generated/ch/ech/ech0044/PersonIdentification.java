@@ -58,7 +58,7 @@ public class PersonIdentification implements Rendering {
 		}
 		if (!EmptyObjects.isEmpty(dateOfBirth)) {
 			if (!empty) {
-				s.append(", ");
+				s.append(' ');
 			}
 			s.append('(').append(dateOfBirth.toString()).append(')');
 		}

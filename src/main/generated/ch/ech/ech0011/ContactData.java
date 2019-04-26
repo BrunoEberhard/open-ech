@@ -25,7 +25,10 @@ public class ContactData implements Rendering {
 	@Override
 	public CharSequence render() {
 		StringBuilder s = new StringBuilder();
-		s.append(identification.render());
+		CharSequence identificationStr = identification.render();
+		if (identificationStr != null) {
+			s.append(identificationStr).append('\n');
+		}
 		if (contactAddress != null) {
 			contactAddress.names.render(s);
 			contactAddress.addressInformation.render(s);

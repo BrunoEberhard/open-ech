@@ -56,7 +56,7 @@ public class EchForm<T> extends Form<T> {
 		} else if (type == GeneralPlace.class) {
 			return editable ? new GeneralPlaceFormElement(property) : new TextFormElement(property);
 		} else if (type == ContactData.class) {
-			return new ContactDataFormElement(property, editable);
+			return editable ? new ContactDataFormElement(property) : new TextFormElement(property);
 		}
 		
 		return super.createElement(property, editable);
