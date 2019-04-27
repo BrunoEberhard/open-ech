@@ -50,7 +50,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 		
 		textFieldMunicipality = Frontend.getInstance().createTextField(100, null, new MunicipalitySearch(), listener());
 		
-		componentGroup = Frontend.getInstance().createComponentGroup(comboBoxCountry, textFieldMunicipality);
+		componentGroup = Frontend.getInstance().createHorizontalGroup(comboBoxCountry, textFieldMunicipality);
 	}
 
 	public GeneralPlaceFormElement(GeneralPlace generalPlace) {

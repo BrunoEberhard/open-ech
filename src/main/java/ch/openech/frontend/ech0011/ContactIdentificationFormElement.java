@@ -1,18 +1,19 @@
 package ch.openech.frontend.ech0011;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
+import org.minimalj.frontend.Frontend.SwitchComponent;
 import org.minimalj.frontend.Frontend.TableActionListener;
 import org.minimalj.frontend.action.Action;
+import org.minimalj.frontend.action.ActionGroup;
 import org.minimalj.frontend.editor.SearchDialog;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.form.element.FormElementConstraint;
+import org.minimalj.model.Rendering;
 import org.minimalj.repository.query.By;
 
 import ch.ech.ech0011.Person;
@@ -20,8 +21,7 @@ import ch.ech.ech0098.Organisation;
 
 public class ContactIdentificationFormElement extends AbstractFormElement<Identification> {
 
-	private final Input<List<Object>> input;
-
+	private final SwitchComponent component;
 	private Identification value;
 
 	private SearchDialog<Person> personSearchDialog;
@@ -29,10 +29,8 @@ public class ContactIdentificationFormElement extends AbstractFormElement<Identi
 
 	public ContactIdentificationFormElement(Identification key) {
 		super(key);
+		component = Frontend.getInstance().createSwitchComponent();
 		height(3, FormElementConstraint.MAX);
-
-		input = Frontend.getInstance().createList(null, item -> Arrays.asList(new IdentificationClearAction()),
-				new PersonLookupAction(), new OrganisationLookupAction());
 	}
 
 	@Override
@@ -44,17 +42,24 @@ public class ContactIdentificationFormElement extends AbstractFormElement<Identi
 	protected void setValueInternal(Object object) {
 		value.set(object);
 		refresh();
-		listener().changed(input);
+		listener().changed(component);
 	}
 
 	private void refresh() {
+		Input<String> input = Frontend.getInstance().createReadOnlyTextField();
+		ActionGroup actions = new ActionGroup(null);
+		actions.add(new PersonLookupAction());
+		actions.add(new OrganisationLookupAction());
 		if (value.person != null) {
-			input.setValue(Arrays.asList(value.person));
+			input.setValue(Rendering.toString(value));
+			actions.add(new IdentificationClearAction());
 		} else if (value.organisation != null) {
-			input.setValue(Arrays.asList(value.organisation));
+			input.setValue(Rendering.toString(value.organisation));
+			actions.add(new IdentificationClearAction());
 		} else {
-			input.setValue(Collections.emptyList());
+			input.setValue(null);
 		}
+		component.show(Frontend.getInstance().createLookup(input, actions));
 	}
 
 	@Override
@@ -64,7 +69,7 @@ public class ContactIdentificationFormElement extends AbstractFormElement<Identi
 
 	@Override
 	public IComponent getComponent() {
-		return input;
+		return component;
 	}
 
 	public class PersonLookupAction extends Action {
