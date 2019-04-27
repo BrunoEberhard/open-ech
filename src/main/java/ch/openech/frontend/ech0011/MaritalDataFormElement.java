@@ -16,7 +16,8 @@ public class MaritalDataFormElement extends FormLookupFormElement<MaritalData> {
 	protected Form<MaritalData> createForm() {
 		Form<MaritalData> form = new Form<>(2);
 		form.line(MaritalData.$.maritalStatus, MaritalData.$.dateOfMaritalStatus);
-		form.line(new GeneralPlaceFormElement(MaritalData.$.placeOfMarriage), MaritalData.$.officialProofOfMaritalStatusYesNo);
+		form.line(new GeneralPlaceFormElement(MaritalData.$.placeOfMarriage));
+		form.line(MaritalData.$.officialProofOfMaritalStatusYesNo);
 		form.line(MaritalData.$.cancelationReason);
 
 		return form;
