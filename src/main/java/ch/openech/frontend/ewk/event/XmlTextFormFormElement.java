@@ -1,5 +1,6 @@
 package ch.openech.frontend.ewk.event;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.Frontend;
@@ -37,8 +38,7 @@ public class XmlTextFormFormElement extends ListFormElement<String> {
 	}
 
 	@Override
-	protected void showEntry(String entry) {
-		add(entry, new XmlValidateAction(entry));
+	protected List<Action> getActions(String entry) {
+		return Collections.singletonList(new XmlValidateAction(entry));
 	}
-
 }

@@ -15,9 +15,11 @@ public class PlaceOfOriginAddonFormElement extends ListFormElement<PlaceOfOrigin
 	}
 
 	@Override
-	protected Object render(PlaceOfOriginAddon value) {
-		// TODO Datumsrange anzeigen
-		return value.origin.originName;
+	protected CharSequence render(PlaceOfOriginAddon value) {
+		StringBuilder s = new StringBuilder();
+		s.append(value.origin.originName);
+		RangeUtil.appendRange(s, value.naturalizationDate, value.expatriationDate);
+		return s;
 	}
 
 	@Override

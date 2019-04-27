@@ -3,7 +3,6 @@ package ch.openech.frontend.ech0011;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.FormLookupFormElement;
 import org.minimalj.model.EnumUtils;
-import org.minimalj.util.DateUtils;
 
 import ch.ech.ech0011.MaritalData;
 
@@ -31,7 +30,7 @@ public class MaritalDataFormElement extends FormLookupFormElement<MaritalData> {
 				s.append(EnumUtils.getText(data.maritalStatus));
 			}
 			if (data.dateOfMaritalStatus != null) {
-				s.append(' ').append(DateUtils.format(data.dateOfMaritalStatus));
+				RangeUtil.appendValidFrom(s, data.dateOfMaritalStatus);
 			}
 		}
 		return s.toString();

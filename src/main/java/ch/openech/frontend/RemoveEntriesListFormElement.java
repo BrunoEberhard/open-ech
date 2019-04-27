@@ -1,5 +1,6 @@
 package ch.openech.frontend;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.minimalj.frontend.action.Action;
@@ -41,11 +42,7 @@ public class RemoveEntriesListFormElement<T> extends ListFormElement<T> {
 	}
 	
 	@Override
-	protected void showEntry(T entry) {
-		if (isEditable()) {
-			add(entry, new RemoveThisObjectAction(entry));
-		} else {
-			add(entry);
-		}
+	protected List<Action> getActions(T entry) {
+		return Collections.singletonList(new RemoveThisObjectAction(entry));
 	}
 }

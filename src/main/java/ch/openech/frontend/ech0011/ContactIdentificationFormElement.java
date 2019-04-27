@@ -1,25 +1,26 @@
 package ch.openech.frontend.ech0011;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
-import org.minimalj.frontend.Frontend.IList;
+import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.Frontend.TableActionListener;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.editor.SearchDialog;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.form.element.FormElementConstraint;
 import org.minimalj.repository.query.By;
-import org.minimalj.repository.sql.EmptyObjects;
 
 import ch.ech.ech0011.Person;
 import ch.ech.ech0098.Organisation;
 
 public class ContactIdentificationFormElement extends AbstractFormElement<Identification> {
 
-	private final IList input;
+	private final Input<List<Object>> input;
 
 	private Identification value;
 
@@ -30,7 +31,8 @@ public class ContactIdentificationFormElement extends AbstractFormElement<Identi
 		super(key);
 		height(3, FormElementConstraint.MAX);
 
-		input = Frontend.getInstance().createList(new PersonLookupAction(), new OrganisationLookupAction());
+		input = Frontend.getInstance().createList(null, item -> Arrays.asList(new IdentificationClearAction()),
+				new PersonLookupAction(), new OrganisationLookupAction());
 	}
 
 	@Override
@@ -46,9 +48,12 @@ public class ContactIdentificationFormElement extends AbstractFormElement<Identi
 	}
 
 	private void refresh() {
-		input.clear();
-		if (!EmptyObjects.isEmpty(value)) {
-			input.add(value, new IdentificationClearAction());
+		if (value.person != null) {
+			input.setValue(Arrays.asList(value.person));
+		} else if (value.organisation != null) {
+			input.setValue(Arrays.asList(value.organisation));
+		} else {
+			input.setValue(Collections.emptyList());
 		}
 	}
 
