@@ -3,6 +3,7 @@ package ch.openech.frontend;
 import java.util.UUID;
 
 import org.minimalj.backend.Backend;
+import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.editor.Editor.NewObjectEditor;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.util.CloneHelper;
@@ -13,6 +14,7 @@ import ch.ech.ech0011.Person;
 import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0044.Sex;
 import ch.openech.frontend.ech0011.PersonForm;
+import ch.openech.frontend.ech0011.PersonPage;
 import ch.openech.xml.YesNo;
 
 public class AddPersonEditor extends NewObjectEditor<Person> {
@@ -76,4 +78,9 @@ public class AddPersonEditor extends NewObjectEditor<Person> {
 		return person;
 	}
 	
+	@Override
+	protected void finished(Person result) {
+		Frontend.show(new PersonPage(result));
+	}
+
 }
