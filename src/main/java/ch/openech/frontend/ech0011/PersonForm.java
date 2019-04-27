@@ -35,7 +35,7 @@ public class PersonForm extends EchForm<Person> {
 		line($.nationalityData.nationalityStatus, new CountryInfoFormElement($.nationalityData.countryInfo));
 		addDependecy($.nationalityData.nationalityStatus, new NationalityUpdater(), $.nationalityData.countryInfo);
 
-		line(new PlaceOfOriginAddonFormElement($.placeOfOrigin, true), $.contactData);
+		line(new PlaceOfOriginAddonFormElement($.placeOfOrigin, editable), $.contactData);
 
 		line($.residencePermit.getResidencePermit(), new ResidencePermitFormElement($.residencePermit, editable));
 		addDependecy($.residencePermit, $.residencePermit.getResidencePermit());
