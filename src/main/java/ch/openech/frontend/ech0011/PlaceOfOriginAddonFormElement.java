@@ -23,7 +23,7 @@ public class PlaceOfOriginAddonFormElement extends ListFormElement<PlaceOfOrigin
 	}
 
 	@Override
-	protected Form<PlaceOfOriginAddon> createForm(boolean edit) {
+	protected Form<PlaceOfOriginAddon> createForm() {
 		Form<PlaceOfOriginAddon> form = new Form<>(2);
 		form.line(new PlaceOfOriginFormElement(PlaceOfOriginAddon.$.origin));
 		form.line(PlaceOfOriginAddon.$.reasonOfAcquisition);

@@ -32,7 +32,7 @@ public class XmlTextFormFormElement extends ListFormElement<String> {
 	}
 
 	@Override
-	protected Form<String> createForm(boolean edit) {
+	protected Form<String> createForm() {
 		// not used
 		return null;
 	}
