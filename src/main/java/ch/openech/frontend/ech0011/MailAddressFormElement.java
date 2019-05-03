@@ -9,9 +9,9 @@ import ch.ech.ech0008.Country;
 import ch.ech.ech0010.MailAddress;
 import ch.openech.frontend.ech0010.AddressForm;
 
-public class ContactAddressFormElement extends FormLookupFormElement<MailAddress> {
+public class MailAddressFormElement extends FormLookupFormElement<MailAddress> {
 
-	public ContactAddressFormElement(MailAddress key, boolean editable) {
+	public MailAddressFormElement(MailAddress key, boolean editable) {
 		super(key, editable);
 		height(3, FormElementConstraint.MAX);
 	}

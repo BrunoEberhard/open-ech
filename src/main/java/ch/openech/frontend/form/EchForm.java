@@ -21,7 +21,7 @@ public class EchForm<T> extends Form<T> {
 
 	private final Map<Class<?>, Class<?>> formElements = new HashMap<>();
 	
-	protected EchForm(boolean editable, int columns) {
+	public EchForm(boolean editable, int columns) {
 		super(editable, columns);
 
 //		addFormElements();

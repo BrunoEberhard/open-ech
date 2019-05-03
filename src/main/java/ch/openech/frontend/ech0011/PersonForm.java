@@ -46,6 +46,8 @@ public class PersonForm extends EchForm<Person> {
 		line(new ArmedForcesFormElement($.armedForcesData, editable),
 				new CivilDefenseFormElement($.civilDefenseData, editable));
 		line(new FireServiceFormElement($.fireServiceData, editable));
+		
+		line(new MaritalRelationshipFormElement($.maritalRelationship, editable), new ParentalRelationshipFormElement($.parentalRelationship, editable));
 	}
 	
 	private class NationalityUpdater implements PropertyUpdater<NationalityStatus, List<CountryInfo>, Person> {

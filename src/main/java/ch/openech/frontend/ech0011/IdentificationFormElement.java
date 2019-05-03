@@ -10,25 +10,31 @@ import org.minimalj.frontend.Frontend.SwitchComponent;
 import org.minimalj.frontend.Frontend.TableActionListener;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.action.ActionGroup;
+import org.minimalj.frontend.editor.Editor.NewObjectEditor;
 import org.minimalj.frontend.editor.SearchDialog;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.frontend.form.element.FormElementConstraint;
 import org.minimalj.model.Rendering;
 import org.minimalj.repository.query.By;
 
 import ch.ech.ech0011.Person;
+import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0098.Organisation;
+import ch.openech.frontend.form.EchForm;
 
-public class ContactIdentificationFormElement extends AbstractFormElement<Identification> {
+public class IdentificationFormElement extends AbstractFormElement<Identification> {
 
+	private final boolean organisation;
 	private final SwitchComponent component;
 	private Identification value;
 
 	private SearchDialog<Person> personSearchDialog;
 	private SearchDialog<Organisation> organisationSearchDialog;
 
-	public ContactIdentificationFormElement(Identification key) {
+	public IdentificationFormElement(Identification key, boolean organisation) {
 		super(key);
+		this.organisation = organisation;
 		component = Frontend.getInstance().createSwitchComponent();
 		height(3, FormElementConstraint.MAX);
 	}
@@ -49,7 +55,10 @@ public class ContactIdentificationFormElement extends AbstractFormElement<Identi
 		Input<String> input = Frontend.getInstance().createReadOnlyTextField();
 		ActionGroup actions = new ActionGroup(null);
 		actions.add(new PersonLookupAction());
-		actions.add(new OrganisationLookupAction());
+		actions.add(new PersonNameEditor());
+		if (organisation) {
+			actions.add(new OrganisationLookupAction());
+		}
 		if (value.person != null) {
 			input.setValue(Rendering.toString(value));
 			actions.add(new IdentificationClearAction());
@@ -85,15 +94,33 @@ public class ContactIdentificationFormElement extends AbstractFormElement<Identi
 	private class PersonSearchDialogActionListener implements TableActionListener<Person> {
 		@Override
 		public void action(Person selectedObject) {
-			ContactIdentificationFormElement.this.setValueInternal(selectedObject.personIdentification);
+			IdentificationFormElement.this.setValueInternal(selectedObject.personIdentification);
 			personSearchDialog.closeDialog();
 		}
+	}
+
+	public class PersonNameEditor extends NewObjectEditor<PersonIdentification> {
+		@Override
+		protected Form<PersonIdentification> createForm() {
+			Form<PersonIdentification> form = new EchForm<>(Form.EDITABLE, 2);
+			form.line(PersonIdentification.$.firstName, PersonIdentification.$.officialName);
+			form.line(PersonIdentification.$.originalName);
+			form.line(PersonIdentification.$.sex, PersonIdentification.$.dateOfBirth);
+			return form;
+		}
+
+		@Override
+		protected PersonIdentification save(PersonIdentification object) {
+			IdentificationFormElement.this.setValueInternal(object);
+			return object;
+		}
+
 	}
 
 	public class IdentificationClearAction extends Action {
 		@Override
 		public void action() {
-			ContactIdentificationFormElement.this.setValue(null);
+			IdentificationFormElement.this.setValue(null);
 		}
 	}
 
@@ -111,7 +138,7 @@ public class ContactIdentificationFormElement extends AbstractFormElement<Identi
 	private class OrganisationSearchDialogActionListener implements TableActionListener<Organisation> {
 		@Override
 		public void action(Organisation selectedObject) {
-			ContactIdentificationFormElement.this.setValueInternal(selectedObject.organisationIdentification);
+			IdentificationFormElement.this.setValueInternal(selectedObject.organisationIdentification);
 			organisationSearchDialog.closeDialog();
 		}
 	}
