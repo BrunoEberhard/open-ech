@@ -11,11 +11,10 @@ import org.minimalj.repository.query.By;
 import ch.ech.ech0071.Canton;
 
 public class CantonTablePage extends TablePage<Canton> {
-
-	public static final Object[] KEYS = new Object[] { $.id, $.cantonLongName};
 	
-	public CantonTablePage() {
-		super(KEYS);
+	@Override
+	protected Object[] getColumns() {
+		return new Object[] { $.id, $.cantonLongName };
 	}
 
 	@Override

@@ -14,10 +14,9 @@ import ch.ech.ech0008.Country;
 
 public class CountryTablePage extends SimpleTableEditorPage<Country> {
 
-	public static final Object[] KEYS = new Object[] { $.id, $.iso2Id, $.getShortName() };
-	
-	public CountryTablePage() {
-		super(KEYS);
+	@Override
+	protected Object[] getColumns() {
+		return new Object[] { $.id, $.iso2Id, $.getShortName() };
 	}
 
 	@Override
