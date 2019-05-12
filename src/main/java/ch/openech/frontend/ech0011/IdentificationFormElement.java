@@ -1,6 +1,7 @@
 package ch.openech.frontend.ech0011;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.frontend.Frontend;
@@ -107,6 +108,14 @@ public class IdentificationFormElement extends AbstractFormElement<Identificatio
 			form.line(PersonIdentification.$.originalName);
 			form.line(PersonIdentification.$.sex, PersonIdentification.$.dateOfBirth);
 			return form;
+		}
+
+		@Override
+		protected PersonIdentification createObject() {
+			PersonIdentification identification = new PersonIdentification();
+			identification.localPersonId.namedIdCategory = "openech";
+			identification.localPersonId.namedId = UUID.randomUUID().toString();
+			return identification;
 		}
 
 		@Override
