@@ -7,6 +7,7 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.EnumFormElement;
 import org.minimalj.frontend.form.element.ListFormElement;
 
+import ch.ech.ech0021.Care;
 import ch.ech.ech0021.ParentalRelationship;
 import ch.ech.ech0021.TypeOfRelationship;
 
@@ -26,6 +27,14 @@ public class ParentalRelationshipFormElement extends ListFormElement<ParentalRel
 		form.line(ParentalRelationship.$.relationshipValidFrom);
 		form.line(ParentalRelationship.$.care);
 		return form;
+	}
+
+	@Override
+	protected ParentalRelationship createEntry() {
+		ParentalRelationship relationship = new ParentalRelationship();
+		relationship.care = Care._1;
+		relationship.typeOfRelationship = TypeOfRelationship._3;
+		return relationship;
 	}
 
 }
