@@ -21,8 +21,8 @@ import ch.ech.ech0072.CountryInformation;
 
 public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> implements LookupParser, Mocking {
 
-	public CountryInfoFormElement(List<CountryInfo> key) {
-		super(key, true);
+	public CountryInfoFormElement(List<CountryInfo> key, boolean editable) {
+		super(key, editable);
 	}
 
 	@Override
