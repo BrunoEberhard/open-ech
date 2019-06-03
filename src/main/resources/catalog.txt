@@ -52,7 +52,6 @@ http://www.ech.ch/xmlns/eCH-0097/5 = eCH-0097-5-0.xsd
 http://www.ech.ch/xmlns/eCH-0097/4 = eCH-0097-4-0.xsd
 http://www.ech.ch/xmlns/eCH-0011/5 = eCH-0011-5-0.xsd
 http://www.ech.ch/xmlns/eCH-0097/2 = eCH-0097-2-0.xsd
-http://www.ech.ch/xmlns/eCH-0101/1 = eCH-0101-1-0.xsd
 http://www.ech.ch/xmlns/eCH-0108/4 = eCH-0108-4-0.xsd
 http://www.ech.ch/xmlns/eCH-0211/1 = eCH-0211-1-0.xsd
 http://www.ech.ch/xmlns/eCH-0129/4 = eCH-0129-4-0.xsd

@@ -192,7 +192,7 @@ public class EchXmlDownload {
 		download(21, 7, 0);
 		download(78, 4, 0);
 		download(93, 2, 0);
-		download(101, 1, 0);
+//		download(101, 1, 0); Alle Daten von PersonExtendedInformation sind bereits in Person integriert
 		download(108, 4, 0);
 		download(129, 4, 0);
 		download(148, 1, 0);
