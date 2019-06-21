@@ -344,11 +344,8 @@ derby.log
 /src/main/generated/ch/ech/ech0021/PlaceOfOriginAddon.java
 /src/main/generated/ch/ech/ech0021/BirthAddonData.java
 /src/main/generated/ch/ech/ech0021/MaritalDataAddon.java
-/src/main/generated/ch/ech/ech0021/MaritalRelationship.java
 /src/main/generated/ch/ech/ech0021/Care.java
-/src/main/generated/ch/ech/ech0021/ParentalRelationship.java
 /src/main/generated/ch/ech/ech0021/GuardianMeasureInfo.java
-/src/main/generated/ch/ech/ech0021/GuardianRelationship.java
 /src/main/generated/ch/ech/ech0021/TypeOfRelationship.java
 /src/main/generated/ch/ech/ech0021/JobData.java
 /src/main/generated/ch/ech/ech0021/UidOrganisationIdCategorie.java
@@ -360,7 +357,6 @@ derby.log
 /src/main/generated/ch/ech/ech0021/PlaceOfOriginAddonData.java
 /src/main/generated/ch/ech/ech0021/ArmedForcesData.java
 /src/main/generated/ch/ech/ech0021/FireServiceData.java
-/src/main/generated/ch/ech/ech0021/HealthInsuranceData.java
 /src/main/generated/ch/ech/ech0021/LockData.java
 /src/main/generated/ch/ech/ech0021/CivilDefenseData.java
 /src/main/generated/ch/ech/ech0021/MatrimonialInheritanceArrangementData.java
