@@ -48,6 +48,10 @@ public class PersonForm extends EchForm<Person> {
 		line(new FireServiceFormElement($.fireServiceData, editable));
 		
 		line(new MaritalRelationshipFormElement($.maritalRelationship, editable), new ParentalRelationshipFormElement($.parentalRelationship, editable));
+		line(new GuardianRelationshipFormElement($.guardianRelationship, editable));
+
+		line(new HealthInsuranceFormElement($.healthInsuranceData, editable));
+
 	}
 	
 	private class NationalityUpdater implements PropertyUpdater<NationalityStatus, List<CountryInfo>, Person> {
