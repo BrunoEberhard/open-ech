@@ -131,7 +131,7 @@ public class XsdModel {
 		PREDEFINED_TYPES.put("datePartiallyKnownType", datePartiallyKnown);
 
 		MjEntity yesNo = defaultModel.getOrCreateEntity(YesNo.class);
-		yesNo.type = MjEntityType.String;
+		yesNo.type = MjEntityType.Enum;
 		yesNo.values = Arrays.asList("0", "1");
 		PREDEFINED_TYPES.put("yesNoType", yesNo);
 		PREDEFINED_TYPES.put("paperLockType", yesNo);
@@ -208,7 +208,7 @@ public class XsdModel {
 	}
 
 	void read(Map<String, XsdModel> models) {
-		Objects.nonNull(models);
+		Objects.requireNonNull(models);
 		boolean readBefore = this.models != null;
 		if (readBefore) return;
 		this.models = models;
@@ -374,7 +374,7 @@ public class XsdModel {
 				AtomicInteger maxValueLength = new AtomicInteger(0);
 				forEachChild(restriction, element -> {
 					if ("enumeration".equals(element.getLocalName())) {
-						entity.type = MjEntityType.String;
+						entity.type = MjEntityType.Enum;
 						String value = element.getAttribute("value");
 						maxValueLength.set(Math.max(maxValueLength.get(), value.length()));
 						if (!entity.values.contains(value)) {
