@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.EnumFormElement;
-import org.minimalj.frontend.form.element.FormLookupFormElement;
+import org.minimalj.frontend.form.element.ListFormElement;
 
 import ch.ech.ech0021.GuardianRelationship;
 import ch.ech.ech0021.TypeOfRelationship;
 
-public class GuardianRelationshipFormElement extends FormLookupFormElement<GuardianRelationship> {
+public class GuardianRelationshipFormElement extends ListFormElement<GuardianRelationship> {
 	private static final List<TypeOfRelationship> TYPES = Arrays.asList(TypeOfRelationship._7, TypeOfRelationship._8, TypeOfRelationship._9, TypeOfRelationship._10);
 
-	public GuardianRelationshipFormElement(GuardianRelationship key, boolean editable) {
+	public GuardianRelationshipFormElement(List<GuardianRelationship> key, boolean editable) {
 		super(key, editable);
 	}
 
@@ -23,9 +23,10 @@ public class GuardianRelationshipFormElement extends FormLookupFormElement<Guard
 		form.line(new EnumFormElement<TypeOfRelationship>(GuardianRelationship.$.typeOfRelationship, TYPES));
 		form.line(new IdentificationFormElement(GuardianRelationship.$.partner.identification, false));
 		form.line(new MailAddressFormElement(GuardianRelationship.$.partner.address, true));
-//		form.line(new EnumSetFormElement<Set<Enum<?>>>(GuardianRelationship.$.partner.address, true));
 		form.line(GuardianRelationship.$.guardianMeasureInfo.basedOnLawAddOn);
 		form.line(GuardianRelationship.$.guardianMeasureInfo.guardianMeasureValidFrom);
+		form.line(GuardianRelationship.$.care);
+
 		return form;
 	}
 
