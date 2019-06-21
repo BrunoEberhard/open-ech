@@ -242,6 +242,9 @@ public class EchSchemas {
 //						name.equals("BaseDeliveryPerson") || //
 						// Wird fehlerhaft generiert, aber nirgends verwendet, kann übersprungen werden
 						name.equals("ElectoralAddress") || //
+						// In neueren 0021 schemas existieren nur noch die Spezialisierungen
+						name.equals("Relationship") && entity.packageName.startsWith("ch.ech.ech0021") || //
+						
 						false;
 		return !skip;
 	}
