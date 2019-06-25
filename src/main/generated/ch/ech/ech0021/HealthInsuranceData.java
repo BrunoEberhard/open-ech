@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;
+import org.minimalj.model.annotation.Size;
 
 import ch.ech.ech0010.MailAddress;
 
@@ -17,36 +18,40 @@ public class HealthInsuranceData {
 	public LocalDate healthInsuranceValidFrom;
 
 	public static class Insurance {
-		public Object id;
+		public static final Insurance $ = Keys.of(Insurance.class);
 
-		private String insuranceName;
-		private MailAddress address;
+		@Size(100)
+		public String insuranceName;
+		public MailAddress address;
 
-		public String getInsuranceName() {
-			if (address == null) {
-				return insuranceName;
-			} else {
-				return null;
-			}
-		}
-
-		public void setInsuranceName(String insuranceName) {
-			this.insuranceName = insuranceName;
-			if (insuranceName != null) {
-				address = null;
-			}
-		}
-
-		public MailAddress getInsuranceAddress() {
-			return address;
-		}
-
-		public void setInsuranceAddress(MailAddress address) {
-			this.address = address;
-			if (address != null) {
-				this.insuranceName = null;
-			}
-		}
+//		private String insuranceName;
+//		private MailAddress address;
+//
+//		public String getInsuranceName() {
+//			if (address == null) {
+//				return insuranceName;
+//			} else {
+//				return null;
+//			}
+//		}
+//
+//		public void setInsuranceName(String insuranceName) {
+//			this.insuranceName = insuranceName;
+//			if (insuranceName != null) {
+//				address = null;
+//			}
+//		}
+//
+//		public MailAddress getInsuranceAddress() {
+//			return address;
+//		}
+//
+//		public void setInsuranceAddress(MailAddress address) {
+//			this.address = address;
+//			if (address != null) {
+//				this.insuranceName = null;
+//			}
+//		}
 	}
 
 }
