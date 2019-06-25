@@ -9,6 +9,10 @@ derby.log
 /OpenEch.db/
 /.externalToolBuilders/
 /.settings/
+/src/main/generated/ch/ech/ech0234/
+/src/main/generated/ch/ech/ech0235/
+/src/main/generated/ch/ech/ech0236/
+/src/main/generated/ch/ech/ech0237/
 /src/main/generated/ch/ech/ech0006/ResidencePermitCategory.java
 /src/main/generated/ch/ech/ech0006/ResidencePermitRuling.java
 /src/main/generated/ch/ech/ech0006/ResidencePermitBorder.java
