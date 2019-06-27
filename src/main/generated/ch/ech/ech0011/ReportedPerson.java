@@ -9,7 +9,7 @@ import org.minimalj.util.CloneHelper;
 
 import ch.ech.ech0007.SwissMunicipality;
 
-//handmade, unused
+//handmade, wird nie zu xml serialisiert, ist nur der DB Basis Typ
 public class ReportedPerson {
 	public static final ReportedPerson $ = Keys.of(ReportedPerson.class);
 
@@ -21,10 +21,6 @@ public class ReportedPerson {
 	public final SwissMunicipality mainResidence = new SwissMunicipality();
 	public List<SwissMunicipality> secondaryResidence;
 	
-	// public MainResidence hasMainResidence;
-	// public SecondaryResidence hasSecondaryResidence;
-	// public OtherResidence hasOtherResidence;
-
 	//
 	
 	private final MainResidenceDelegate mainResidenceDelegate = new MainResidenceDelegate();
