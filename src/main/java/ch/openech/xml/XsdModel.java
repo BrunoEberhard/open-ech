@@ -96,7 +96,11 @@ public class XsdModel {
 		MjEntity YEAR = new MjEntity(MjEntityType.Integer);
 		YEAR.maxLength = 4;
 		XML_TYPES.put("gYear", YEAR);
-		
+
+		MjEntity DURATION = new MjEntity(MjEntityType.Integer);
+		DURATION.maxLength = 6;
+		XML_TYPES.put("duration", DURATION);
+
 		MjEntity LONG = new MjEntity(MjEntityType.Long);
 		XML_TYPES.put("unsignedLong", LONG);
 		XML_TYPES.put("long", LONG);
@@ -359,13 +363,15 @@ public class XsdModel {
 			Node patternNode = get(restriction, "pattern");
 			if (patternNode instanceof Element) {
 				String pattern = ((Element) patternNode).getAttribute("value");
-				int index = pattern.indexOf("{");
-				if (index >= 0 && pattern.endsWith("}")) {
-					String[] patternValues = pattern.substring(index + 1, pattern.length()-1).split(",");
+				// das deckt es nicht 100% ab, aber meist haben die nutzbaren reges die Form
+				// "\d{14}"
+				int index = pattern.lastIndexOf('{');
+				if (pattern.startsWith("\\d{") && index == 2 && pattern.endsWith("}")) {
+					String[] patternValues = pattern.substring(3, pattern.length() - 1).split(",");
 					if (patternValues.length > 1) {
 						entity.minLength = Integer.parseInt(patternValues[0]);
 					}
-					entity.maxLength = Integer.parseInt(patternValues[patternValues.length-1]);
+					entity.maxLength = Integer.parseInt(patternValues[patternValues.length - 1]);
 				}
 			}
 			
@@ -409,6 +415,10 @@ public class XsdModel {
 		Element sequence = get(node, "sequence");
 		if (sequence != null) {
 			entity.properties.addAll(sequence(sequence, mayBeLeftOut(sequence)));
+		}
+		Element all = get(node, "all");
+		if (all != null) {
+			entity.properties.addAll(sequence(all, mayBeLeftOut(all)));
 		}
 		Element choice = get(node, "choice");
 		if (choice != null) {
@@ -498,7 +508,7 @@ public class XsdModel {
 				if (property.type != null) {
 					properties.add(property);
 				}
-			} else if ("sequence".equals(element.getLocalName())) {
+			} else if (StringUtils.equals(element.getLocalName(), "sequence", "all")) {
 				forEachChild(element, new SequenceVisitor(properties, overrideNotEmpty || mayBeLeftOut(element)));
 			} else if ("choice".equals(element.getLocalName())) {
 				// bei choice das "NotEmpty" rausschmeissen
