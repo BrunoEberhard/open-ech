@@ -1,7 +1,6 @@
 package ch.openech.xml;
 
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -33,14 +32,7 @@ public class EchReaderTest {
 			nomenclature.cantons.canton.add(canton);
 		}
 
-		XsdModel reader = new XsdModel();
-
-		StringWriter stringWriter = new StringWriter();
-		EchWriter writer = new EchWriter(stringWriter);
-		writer.writeDocument(nomenclature);
-		writer.close();
-
-		String xml = stringWriter.toString();
+		String xml = EchWriter.serialize(nomenclature);
 		
 		StringReader sr = new StringReader(xml);
 		try (EchReader er = new EchReader(sr)) {

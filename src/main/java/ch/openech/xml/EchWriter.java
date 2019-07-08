@@ -1,6 +1,7 @@
 package ch.openech.xml;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
@@ -244,6 +245,16 @@ public class EchWriter implements AutoCloseable {
 
 		xmlStreamWriter.flush();
 		writer.flush();
+	}
+
+	public static String serialize(Object object) {
+		StringWriter stringWriter = new StringWriter();
+		try (EchWriter writer = new EchWriter(stringWriter)) {
+			writer.writeDocument(object);
+			return stringWriter.toString();
+		} catch (XMLStreamException | IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

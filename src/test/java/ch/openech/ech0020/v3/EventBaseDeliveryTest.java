@@ -1,6 +1,5 @@
 package ch.openech.ech0020.v3;
 
-import java.io.StringWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -100,12 +99,7 @@ public class EventBaseDeliveryTest {
 		delivery.deliveryHeader.action = Action._1;
 		delivery.deliveryHeader.testDeliveryFlag = true;
 
-		StringWriter stringWriter = new StringWriter();
-		EchWriter writer = new EchWriter(stringWriter);
-		writer.writeDocument(delivery);
-		writer.close();
-
-		String string = stringWriter.toString();
+		String string = EchWriter.serialize(delivery);
 		System.out.println(string);
 
 		String validationResult = EchSchemaValidation.validate(string);

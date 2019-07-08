@@ -1,7 +1,5 @@
 package ch.openech.ech0229;
 
-import java.io.StringWriter;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -25,12 +23,7 @@ public class Ech0229WriterTest {
 		try (EchReader reader = new EchReader(this.getClass().getResourceAsStream("example229.xml"))) {
 			Object o = reader.read();
 			
-			StringWriter stringWriter = new StringWriter();
-			EchWriter writer = new EchWriter(stringWriter);
-			writer.writeDocument(o);
-			writer.close();
-			
-			String string = stringWriter.toString();
+			String string = EchWriter.serialize(o);
 			
 			Assert.assertEquals("ok", EchSchemaValidation.validate(string));
 		}
@@ -56,12 +49,7 @@ public class Ech0229WriterTest {
 		tax.content.netProfit.taxableIncome.cantonalTax = 100000L;
 		tax.content.netProfit.taxableIncome.federalTax = 120000L;
 
-		StringWriter stringWriter = new StringWriter();
-		EchWriter writer = new EchWriter(stringWriter);
-		writer.writeDocument(tax);
-		writer.close();
-
-		String string = stringWriter.toString();
+		String string = EchWriter.serialize(tax);
 
 		Assert.assertEquals("ok", EchSchemaValidation.validate(string));
 	}

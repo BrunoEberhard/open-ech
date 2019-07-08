@@ -39,12 +39,7 @@ public class EchWriterTest {
 		district.districtLongName = "See Gaster";
 		nomenclature.districts.district.add(district);
 
-		StringWriter stringWriter = new StringWriter();
-		EchWriter writer = new EchWriter(stringWriter);
-		writer.writeDocument(nomenclature);
-		writer.close();
-
-		String string = stringWriter.toString();
+		String string = EchWriter.serialize(nomenclature);
 		System.out.println(string);
 
 		System.out.println(EchSchemaValidation.validate(string));
