@@ -82,6 +82,8 @@ public class Person implements Mocking {
 
 	// ReportedPerson
 	// ==============
+	// Wird nicht für ech 20 verwendet, sondern ist das (DB) root Element für
+	// Personen
 
 	public ResidenceData residenceData;
 
