@@ -53,23 +53,22 @@ public class RangeUtil {
 		}
 
 		int index = s.indexOf('-');
-		if (index > -1) {
+		if (index > 0) {
 			range.dateFrom = DateUtils.parse(s.substring(0, index).trim());
-			range.dateTo = index < s.length() - 1 ? DateUtils.parse(s.substring(index + 1).trim()) : null;
-			return range;
+		}
+		if (index > -1 && index < s.length() - 1) {
+			range.dateTo = DateUtils.parse(s.substring(index + 1).trim());
 		}
 
 		s = s.toLowerCase();
 		index = s.indexOf("ab");
-		if (index > -1) {
+		if (index > -1 && index < s.length() - 3) {
 			range.dateFrom = DateUtils.parse(s.substring(index + 2).trim());
-			return range;
 		}
 
 		index = s.indexOf("bis");
-		if (index > -1) {
+		if (index > -1 && index < s.length() - 3) {
 			range.dateTo = DateUtils.parse(s.substring(index + 3).trim());
-			return range;
 		}
 
 		if (range.dateFrom == null && range.dateTo == null) {
@@ -86,8 +85,7 @@ public class RangeUtil {
 	public static void appendValidFrom(StringBuilder stringBuilder, LocalDate from, boolean inline) {
 		if (from != null) {
 			if (inline) {
-				if (stringBuilder.length() > 0
-						&& !Character.isWhitespace(stringBuilder.charAt(stringBuilder.length() - 1))) {
+				if (stringBuilder.length() > 0 && !Character.isWhitespace(stringBuilder.charAt(stringBuilder.length() - 1))) {
 					stringBuilder.append(' ');
 				}
 				stringBuilder.append('(');

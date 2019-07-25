@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.minimalj.model.validation.InvalidValues;
+import org.minimalj.repository.sql.EmptyObjects;
 
 import ch.ech.ech0046.DateRange;
 import ch.openech.OpenEchTest;
@@ -73,28 +75,25 @@ public class RangeTest extends OpenEchTest {
 
 	@Test
 	public void testRangeEmpty() {
-		DateRange range = RangeUtil.parseDateRange("");
-		Assert.assertNull(range.dateFrom);
-		Assert.assertNull(range.dateTo);
+		DateRange range = RangeUtil.parseDateRange(null);
+		Assert.assertTrue(EmptyObjects.isEmpty(range));
+
+		range = RangeUtil.parseDateRange("");
+		Assert.assertTrue(EmptyObjects.isEmpty(range));
 
 		range = RangeUtil.parseDateRange("-");
-		Assert.assertNull(range.dateFrom);
-		Assert.assertNull(range.dateTo);
+		Assert.assertTrue(InvalidValues.isInvalid(range.dateFrom));
 
 		range = RangeUtil.parseDateRange("()");
-		Assert.assertNull(range.dateFrom);
-		Assert.assertNull(range.dateTo);
+		Assert.assertTrue(InvalidValues.isInvalid(range.dateFrom));
 
 		range = RangeUtil.parseDateRange("(-)");
-		Assert.assertNull(range.dateFrom);
-		Assert.assertNull(range.dateTo);
+		Assert.assertTrue(InvalidValues.isInvalid(range.dateFrom));
 
 		range = RangeUtil.parseDateRange("ab");
-		Assert.assertNull(range.dateFrom);
-		Assert.assertNull(range.dateTo);
+		Assert.assertTrue(InvalidValues.isInvalid(range.dateFrom));
 
 		range = RangeUtil.parseDateRange("bis");
-		Assert.assertNull(range.dateFrom);
-		Assert.assertNull(range.dateTo);
+		Assert.assertTrue(InvalidValues.isInvalid(range.dateFrom));
 	}
 }
