@@ -51,8 +51,8 @@ public class HealthInsuranceFormElement extends FormLookupFormElement<HealthInsu
 
 		private void refresh() {
 			ActionGroup actions = new ActionGroup(null);
-			if (!EmptyObjects.isEmpty(value.address)) {
-				textField.setValue(Rendering.toString(value.address));
+			if (!EmptyObjects.isEmpty(value.insuranceAddress)) {
+				textField.setValue(Rendering.toString(value.insuranceAddress));
 				actions.add(new InsuranceAddressEditor());
 				actions.add(new InsuranceClearAction());
 			} else if (!StringUtils.isEmpty(value.insuranceName)) {
@@ -125,8 +125,8 @@ public class HealthInsuranceFormElement extends FormLookupFormElement<HealthInsu
 
 			@Override
 			protected MailAddress createObject() {
-				if (InsuranceFormElement.this.getValue().address != null) {
-					return CloneHelper.clone(InsuranceFormElement.this.getValue().address);
+				if (InsuranceFormElement.this.getValue().insuranceAddress != null) {
+					return CloneHelper.clone(InsuranceFormElement.this.getValue().insuranceAddress);
 				} else {
 					MailAddress address = new MailAddress();
 					CountryInformation swiss = Backend.read(CountryInformation.class, 8100);
@@ -142,7 +142,7 @@ public class HealthInsuranceFormElement extends FormLookupFormElement<HealthInsu
 			@Override
 			protected MailAddress save(MailAddress object) {
 				Insurance insurance = new Insurance();
-				insurance.address = object;
+				insurance.insuranceAddress = object;
 				InsuranceFormElement.this.setValueInternal(insurance);
 				return object;
 			}

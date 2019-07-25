@@ -22,7 +22,7 @@ public class HealthInsuranceData {
 
 		@Size(100)
 		public String insuranceName;
-		public MailAddress address;
+		public MailAddress insuranceAddress;
 
 //		private String insuranceName;
 //		private MailAddress address;
