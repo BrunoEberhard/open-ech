@@ -1,6 +1,7 @@
 package ch.openech.xml;
 
 import java.io.InputStream;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,13 +36,19 @@ public class EchReader implements AutoCloseable {
 		}
 	}
 	
-	public EchReader(StringReader sr) {
+	public EchReader(Reader reader) {
 		try {
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-			xml = inputFactory.createXMLEventReader(sr);
+			xml = inputFactory.createXMLEventReader(reader);
 		} catch (XMLStreamException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@SuppressWarnings({ "resource", "unchecked" })
+	public static <T> T deserialize(String s) {
+		EchReader reader = new EchReader(new StringReader(s));
+		return (T) reader.read();
 	}
 
 	@Override
