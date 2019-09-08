@@ -45,12 +45,36 @@ public class EchXmlDownload {
 	}
 
 	private void download() {
-		if ("http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-4.xsd".equals(schemaLocation)) {
-			schemaLocation = "http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-3.xsd";
-		}
 		try {
 			URL url = new URL(schemaLocation);
 			String fileName = convert(url);
+
+			if ("http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-4.xsd".equals(schemaLocation)) {
+				schemaLocation = "http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-3.xsd";
+			}
+			if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T0.xsd".equals(schemaLocation)) {
+				schemaLocation = "http://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T0.xsd";
+			}
+			if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T1.xsd".equals(schemaLocation)) {
+				schemaLocation = "http://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T1.xsd";
+			}
+			if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T2.xsd".equals(schemaLocation)) {
+				schemaLocation = "http://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T2.xsd";
+			}
+			if ("http://www.ech.ch/xmlns/eCH-0148/1/eCH-0148-1-2.xsd".equals(schemaLocation)) {
+				schemaLocation = "https://www.ech.ch/dokument/bcc30760-77bf-4ed9-ad64-89cb5c6603bb";
+			}
+			if ("http://www.ech.ch/xmlns/eCH-0213/1.0/eCH-0213-commons-1-0.xsd".equals(schemaLocation)) {
+				schemaLocation = "https://www.ech.ch/dokument/2fc0d695-874c-45ab-b829-62df35b188a0";
+			}
+			if ("http://www.ech.ch/xmlns/eCH-0215/1.0/eCH-0215-1-0.xsd".equals(schemaLocation)) {
+				schemaLocation = "http://www.ech.ch/xmlns/eCH-0215/1/eCH-0215-1-0.xsd";
+			}
+			if ("http://www.ech.ch/xmlns/eCH-0215/2.0/eCH-0215-2-0.xsd".equals(schemaLocation)) {
+				schemaLocation = "http://www.ech.ch/xmlns/eCH-0215/2/eCH-0215-2-0.xsd";
+			}
+
+			url = new URL(schemaLocation);
 			File file = new File(fileName);
 			file.getParentFile().mkdirs();
 			if (!file.exists()) {
@@ -175,11 +199,11 @@ public class EchXmlDownload {
 
 	public static void main(String... args) throws Exception {
 		download(20, 3, 0); // Person mutation
-		download(11, 8, 1); // Person
+		// download(11, 8, 1); // Person wird von 20 geholt
 		download(71, 1, 1); // Orte
 		download(72, 1, 0); // Länder
 
-		download(215, 1, 0); // sektoriellen Personenidentifikator
+		download(215, 2, 0); // sektoriellen Personenidentifikator
 
 //		download(20, 2, 3); // Person mutation, alte Version zu Zeit nicht mehr vorgesehen
 
@@ -189,21 +213,31 @@ public class EchXmlDownload {
 		// download("http://www.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T1.xsd");
 		// download("http://www.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T2.xsd");
 		download(211, 1, 0);
-		download(21, 7, 0);
+		// download(21, 7, 0); // Personergänzung wird von 20 und anderen geholt
+
+		// in ech 20, Version 3: "Der Meldungsrahmen wird neu durch den eCH-0058 statt
+		// den eCH-0078 implementiert. Der eCH-0078 wird nicht mehr weiter gepflegt."
 		download(78, 4, 0);
-		download(93, 2, 0);
+
+		// download(58, 5, 0);
+		download(93, 3, 0);
 //		download(101, 1, 0); Alle Daten von PersonExtendedInformation sind bereits in Person integriert
-		download(108, 4, 0);
-		download(129, 4, 0);
-		download(148, 1, 0);
+		download(108, 5, 0);
+		// download(129, 4, 0); wird von 211 geholt
+		download(148, 1, 2);
 		download(173, 1, 0);
 		download(196, 1, 0);
 		download(201, 1, 0);
 		download(116, 4, 0); // UID Meldegründe
-		process(EchXmlDownload.class.getResourceAsStream("/eCH-0211-1-0.xsd"));
-		process(EchXmlDownload.class.getResourceAsStream("/eCH-0212-1-0.xsd"));
+		download(211, 1, 0);
+		download(212, 1, 0);
+		// für xsd die noch nicht fertig sind
+		// process(EchXmlDownload.class.getResourceAsStream("/eCH-0211-1-0.xsd"));
+		// process(EchXmlDownload.class.getResourceAsStream("/eCH-0212-1-0.xsd"));
 
 		download(215, 1, 0);
+
+		download(229, 1, 0);
 
 		for (String namespace : fileByNamespace.keySet()) {
 			System.out.println(namespace + " = " + fileByNamespace.get(namespace));
