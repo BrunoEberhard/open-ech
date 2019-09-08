@@ -114,8 +114,8 @@ public class EchSchemas {
 				continue;
 			}
 			
-			for (MjEntity entity : model.getEntities()) {
-				MjEntity previousEntity = findEntity(previousModel, entity.name);
+			for (XsdMjEntity entity : model.getEntities()) {
+				XsdMjEntity previousEntity = findEntity(previousModel, entity.name);
 				if (sameSignatore(entity, previousEntity)) {
 					previousEntity.packageName = entity.packageName;
 				}
@@ -156,9 +156,9 @@ public class EchSchemas {
 		return true;
 	}
 
-	private static MjEntity findEntity(XsdModel model, String name) {
-		for (MjEntity entity : model.getEntities()) {
-			if (name.equals(entity.name)) {
+	private static XsdMjEntity findEntity(XsdModel model, String name) {
+		for (XsdMjEntity entity : model.getEntities()) {
+			if (name.equals(entity.getClassName())) {
 				return entity;
 			}
 		}
@@ -216,26 +216,29 @@ public class EchSchemas {
 	
 	public static boolean filter(MjEntity entity) {
 		String name = entity.getClassName();
+		if (name == null || entity.getPackageName() == null) {
+			return false;
+		}
 		boolean skip = //
 				name.equals(DatePartiallyKnown.class.getSimpleName()) || //
 						name.contains("Named") && name.contains("Id") || //
 						name.equals(YesNo.class.getSimpleName()) || name.equals("PaperLock") || //
 						name.startsWith(UidStructure.class.getSimpleName()) || //
 						// die Extension von ech 0078 ist komplett etwas anderes als bei ech 0020
-						name.equals("Extension") && !entity.packageName.equals("ch.ech.ech0078") && !entity.packageName.equals("ch.ech.ech0155") || //
+						name.equals("Extension") && !entity.getPackageName().equals("ch.ech.ech0078") && !entity.getPackageName().equals("ch.ech.ech0155") || //
 						// Kantone/Gemeinden werden von ech 0071 verwendet
-						entity.packageName.equals("ch.ech.ech0007") ||
+						entity.getPackageName().equals("ch.ech.ech0007") ||
 						// Länder werden von ech 0072 verwendet (CountryInformation)
-						entity.packageName.equals("ch.ech.ech0008") || entity.name.equals("Country") ||
+						entity.getPackageName().equals("ch.ech.ech0008") || entity.getClassName().equals("Country") ||
 						// Adressen sind ausser der enum von Hand neu geschrieben
-						entity.packageName.equals("ch.ech.ech0010") && !(entity.name.equals("MrMrs")) ||
+						entity.getPackageName().equals("ch.ech.ech0010") && !(entity.getClassName().equals("MrMrs")) ||
 						// bei den PersonAddon sind die Versionen 3 und 4 recht unterschiedlich
 						// das anzugleichen macht viel vergebliche Mühe, diese Elemente werden
 						// kaum je eigenständig gebrauchtw werden.
-						name.startsWith("PersonAddon") && entity.packageName.startsWith("ch.ech.ech0021") || //
+						name.startsWith("PersonAddon") && entity.getPackageName().startsWith("ch.ech.ech0021") || //
 						name.equals("NameOfParentAtBirth") || //
 						// Es wird immer die Destination von ech0011 verwendet
-						name.equals("Destination") && entity.packageName.equals("ch.ech.ech0098") || //
+						name.equals("Destination") && entity.getPackageName().equals("ch.ech.ech0098") || //
 						// PersonIdentificationLight und PersonIdentification sind zusammengefasst
 						name.equals("PersonIdentificationLight") || //
 //						// Die Person enthält alle Element der BaseDeliveryPerson
@@ -243,7 +246,7 @@ public class EchSchemas {
 						// Wird fehlerhaft generiert, aber nirgends verwendet, kann übersprungen werden
 						name.equals("ElectoralAddress") || //
 						// In neueren 0021 schemas existieren nur noch die Spezialisierungen
-						name.equals("Relationship") && entity.packageName.startsWith("ch.ech.ech0021") || //
+						name.equals("Relationship") && entity.getPackageName().startsWith("ch.ech.ech0021") || //
 						
 						false;
 		return !skip;
@@ -281,10 +284,10 @@ public class EchSchemas {
 		}
 		updated.add(entity);
 
-		if (entity.type == MjEntityType.ENTITY && entity.packageName.equals("ch.ech.ech0129.v4")) {
+		if (entity.type == MjEntityType.ENTITY && entity.getPackageName().equals("ch.ech.ech0129.v4")) {
 			// bei 129 sind einige complexType auch als Element aufgeführt, wie z.B.
 			// Locality. Das ist unnötig und bewirkt, dass die types nicht inlined werden.
-			if (!StringUtils.equals(entity.name, "Building", "Dwelling", "RealEstate", "Street")) {
+			if (!StringUtils.equals(entity.getClassName(), "Building", "Dwelling", "RealEstate", "Street")) {
 				entity.type = MjEntityType.DEPENDING_ENTITY;
 			}
 		}
@@ -295,13 +298,13 @@ public class EchSchemas {
 		if (hasListProperty) {
 			// Eine Ausnahme sind entities, die nur als inline verwendet werden.
 			// diese müssen zur Zeit von Hand herausgefiltert werden
-			if (!(StringUtils.equals(entity.name, "NationalityData") && entity.packageName.contains("ech0011"))) {
+			if (!(StringUtils.equals(entity.getClassName(), "NationalityData") && entity.getPackageName().contains("ech0011"))) {
 				entity.type = MjEntityType.ENTITY;
 			}
 		}
 
 		for (MjProperty property : entity.properties) {
-			if ("CantonAbbreviation".equals(property.type.name)) {
+			if ("CantonAbbreviation".equals(property.type.getClassName())) {
 				property.type = getXsdModel(71).findEntity("cantonAbbreviationType");
 			}
 			updateEntityType(property.type);
@@ -332,7 +335,7 @@ public class EchSchemas {
 		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
 
 		for (XsdModel model : sortedModels) {
-			Collection<MjEntity> entities = model.getEntities();
+			Collection<XsdMjEntity> entities = model.getEntities();
 			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
 			generator.generate(entities);
 			enumPropertyGenerator.generate(entities);

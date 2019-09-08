@@ -1,11 +1,11 @@
 package ch.openech.xml;
 
-import org.minimalj.metamodel.model.MjEntity;
+import org.minimalj.metamodel.generator.GeneratorEntity;
 import org.minimalj.util.StringUtils;
 
 public class EchClassNameGenerator {
 
-	public static String apply(MjEntity t) {
+	public static String apply(GeneratorEntity t) {
 		String name = t.getClassName();
 		if (StringUtils.isEmpty(name)) {
 			return name;

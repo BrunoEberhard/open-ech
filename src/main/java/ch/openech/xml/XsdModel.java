@@ -54,20 +54,25 @@ public class XsdModel {
 	private Map<String, XsdModel> models;
 	
 	private LinkedHashMap<String, Element> rootElements = new LinkedHashMap<>();
-	private LinkedHashMap<String, MjEntity> entities = new LinkedHashMap<>();
+	private LinkedHashMap<String, XsdMjEntity> rootEntities = new LinkedHashMap<>();
+	private LinkedHashMap<String, XsdMjEntity> entities = new LinkedHashMap<>();
 	private String namespace;
 	private boolean qualifiedElements = true;
 
 	private final Map<String, String> namespaceByPrefix = new HashMap<>();
 	private final Map<String, String> prefixByNamespace = new HashMap<>();
 	
-	private static Map<String, MjEntity> XML_TYPES = new HashMap<>();
+	private static Map<String, XsdMjEntity> XML_TYPES = new HashMap<>();
 	private static Map<String, MjEntity> PREDEFINED_TYPES = new HashMap<>();
 	
-	public Collection<MjEntity> getEntities() {
+	public Collection<XsdMjEntity> getEntities() {
 		return entities.values();
 	}
 	
+	public Collection<XsdMjEntity> getRootEntities() {
+		return rootEntities.values();
+	}
+
 	public String getNamespace() {
 		if (Keys.isKeyObject(this)) return Keys.methodOf(this, "namespace");
 		
@@ -85,7 +90,7 @@ public class XsdModel {
 	}
 	
 	static {
-		MjEntity INT = new MjEntity(MjEntityType.Integer);
+		XsdMjEntity INT = new XsdMjEntity(MjEntityType.Integer);
 		XML_TYPES.put("unsignedShort", INT);
 		XML_TYPES.put("unsignedInt", INT);
 		XML_TYPES.put("int", INT);
@@ -93,81 +98,81 @@ public class XsdModel {
 		XML_TYPES.put("nonNegativeInteger", INT);
 		XML_TYPES.put("positiveInteger", INT);
 		
-		MjEntity YEAR = new MjEntity(MjEntityType.Integer);
+		XsdMjEntity YEAR = new XsdMjEntity(MjEntityType.Integer);
 		YEAR.maxLength = 4;
 		XML_TYPES.put("gYear", YEAR);
 
-		MjEntity DURATION = new MjEntity(MjEntityType.Integer);
+		XsdMjEntity DURATION = new XsdMjEntity(MjEntityType.Integer);
 		DURATION.maxLength = 6;
 		XML_TYPES.put("duration", DURATION);
 
-		MjEntity LONG = new MjEntity(MjEntityType.Long);
+		XsdMjEntity LONG = new XsdMjEntity(MjEntityType.Long);
 		XML_TYPES.put("unsignedLong", LONG);
 		XML_TYPES.put("long", LONG);
 		
-		MjEntity STRING = new MjEntity(MjEntityType.String);
+		XsdMjEntity STRING = new XsdMjEntity(MjEntityType.String);
 		XML_TYPES.put("string", STRING);
 		XML_TYPES.put("normalizedString", STRING);
 		XML_TYPES.put("token", STRING);
 
-		MjEntity YEAR_MONTH = new MjEntity(MjEntityType.String);
+		XsdMjEntity YEAR_MONTH = new XsdMjEntity(MjEntityType.String);
 		YEAR_MONTH.maxLength = 7;
 		XML_TYPES.put("gYearMonth", YEAR_MONTH);
 
-		MjEntity URI = new MjEntity(MjEntityType.String);
+		XsdMjEntity URI = new XsdMjEntity(MjEntityType.String);
 		URI.maxLength = 2047; // https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
 		XML_TYPES.put("anyURI", URI);
 		
-		XML_TYPES.put("boolean", new MjEntity(MjEntityType.Boolean));
-		XML_TYPES.put("decimal", new MjEntity(MjEntityType.BigDecimal));
-		XML_TYPES.put("date", new MjEntity(MjEntityType.LocalDate));
-		XML_TYPES.put("dateTime", new MjEntity(MjEntityType.LocalDateTime));
-		XML_TYPES.put("time", new MjEntity(MjEntityType.LocalTime));
+		XML_TYPES.put("boolean", new XsdMjEntity(MjEntityType.Boolean));
+		XML_TYPES.put("decimal", new XsdMjEntity(MjEntityType.BigDecimal));
+		XML_TYPES.put("date", new XsdMjEntity(MjEntityType.LocalDate));
+		XML_TYPES.put("dateTime", new XsdMjEntity(MjEntityType.LocalDateTime));
+		XML_TYPES.put("time", new XsdMjEntity(MjEntityType.LocalTime));
 
-		XML_TYPES.put("anyType", new MjEntity(MjEntityType.ByteArray));
+		XML_TYPES.put("anyType", new XsdMjEntity(MjEntityType.ByteArray));
 	}
 	
 	static {
 		MjModel defaultModel = new MjModel();
 		
-		MjEntity datePartiallyKnown = defaultModel.getOrCreateEntity(DatePartiallyKnown.class);
+		MjEntity datePartiallyKnown = new MjEntity(defaultModel, DatePartiallyKnown.class);
 		datePartiallyKnown.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("datePartiallyKnownType", datePartiallyKnown);
 
-		MjEntity yesNo = defaultModel.getOrCreateEntity(YesNo.class);
+		MjEntity yesNo = new MjEntity(defaultModel, YesNo.class);
 		yesNo.type = MjEntityType.Enum;
 		yesNo.values = Arrays.asList("0", "1");
 		PREDEFINED_TYPES.put("yesNoType", yesNo);
 		PREDEFINED_TYPES.put("paperLockType", yesNo);
 		
-		MjEntity namedId = defaultModel.getOrCreateEntity(NamedId.class);
+		MjEntity namedId = new MjEntity(defaultModel, NamedId.class);
 		namedId.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("namedPersonIdType", namedId);
 		PREDEFINED_TYPES.put("namedOrganisationIdType", namedId);
 		PREDEFINED_TYPES.put("namedIdType", namedId);
 		
-		MjEntity uidStructure = defaultModel.getOrCreateEntity(UidStructure.class);
+		MjEntity uidStructure = new MjEntity(defaultModel, UidStructure.class);
 		uidStructure.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("uidStructureType", uidStructure);
 
-		MjEntity personIdentification = defaultModel.getOrCreateEntity(PersonIdentification.class);
+		MjEntity personIdentification = new MjEntity(defaultModel, PersonIdentification.class);
 		personIdentification.type = MjEntityType.ENTITY;
 		PREDEFINED_TYPES.put("personIdentificationLightType", personIdentification);
 
-		MjEntity destination = defaultModel.getOrCreateEntity(Destination.class);
+		MjEntity destination = new MjEntity(defaultModel, Destination.class);
 		destination.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("destinationType", destination);
 
-		MjEntity country = defaultModel.getOrCreateEntity(Country.class);
+		MjEntity country = new MjEntity(defaultModel, Country.class);
 		country.type = MjEntityType.ENTITY;
 		PREDEFINED_TYPES.put("countryType", country);
 
-		MjEntity mailAddress = defaultModel.getOrCreateEntity(MailAddress.class);
+		MjEntity mailAddress = new MjEntity(defaultModel, MailAddress.class);
 		mailAddress.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("personMailAddressType", mailAddress);
 		PREDEFINED_TYPES.put("organisationMailAddressType", mailAddress);
 
-		MjEntity addressInformation = defaultModel.getOrCreateEntity(AddressInformation.class);
+		MjEntity addressInformation = new MjEntity(defaultModel, AddressInformation.class);
 		addressInformation.type = MjEntityType.DEPENDING_ENTITY;
 		PREDEFINED_TYPES.put("addressInformationType", addressInformation);
 		PREDEFINED_TYPES.put("swissAddressInformationType", addressInformation);
@@ -249,7 +254,7 @@ public class XsdModel {
 		forEachChild(documentElement, element -> {
 			if (StringUtils.equals(element.getLocalName(), "simpleType", "complexType")) {
 				String name = element.getAttribute("name");
-				MjEntity entity = new MjEntity(name);
+				XsdMjEntity entity = new XsdMjEntity(name);
 				entity.type = MjEntityType.DEPENDING_ENTITY;
 				entity.setElement(element);
 				entities.put(name, entity);
@@ -272,16 +277,20 @@ public class XsdModel {
 		forEachChild(documentElement, element -> {
 			if ("element".equals(element.getLocalName())) {
 				MjProperty property = element(element);
-				MjEntity entity = property.type;
-				// Root Element können mit einem type - Attribute auf eine Type - Definition
-				// verweisen oder sie können eine eigene Definition mitbringen. Diese eigenen
-				// Definitionen müssen dann als neue Entität mit dem Namen des Root Elements
-				// erfasst werden.
-				if (StringUtils.isEmpty(entity.name)) {
-					entity.name = property.name;
-					entities.put(property.name, entity);
+				// PREDEFINED_TYPES sind nur MjEntities
+				if (property.type instanceof XsdMjEntity) {
+					XsdMjEntity entity = (XsdMjEntity) property.type;
+					// Root Element können mit einem type - Attribute auf eine Type - Definition
+					// verweisen oder sie können eine eigene Definition mitbringen. Diese eigenen
+					// Definitionen müssen dann als neue Entität mit dem Namen des Root Elements
+					// erfasst werden.
+					if (StringUtils.isEmpty(entity.name)) {
+						entity.name = property.name;
+						entities.put(property.name, entity);
+					}
+					rootEntities.put(property.name, entity);
+					rootElements.put(property.name, element);
 				}
-				rootElements.put(property.name, element);
 			} 
 		});		
 	}
@@ -326,7 +335,7 @@ public class XsdModel {
 	private MjEntity simpleType(Element node) {
 		String name = node.getAttribute("name");
 		boolean anonymous = StringUtils.isEmpty(name);
-		MjEntity entity = anonymous ? new MjEntity(MjEntityType.DEPENDING_ENTITY) : entities.get(name);
+		XsdMjEntity entity = anonymous ? new XsdMjEntity(MjEntityType.DEPENDING_ENTITY) : entities.get(name);
 		Element restriction = get(node, "restriction");
 		if (restriction != null) {
 			String base = restriction.getAttribute("base");
@@ -407,7 +416,7 @@ public class XsdModel {
 
 	private MjEntity complexType(Element node) {
 		String name = node.getAttribute("name");
-		MjEntity entity = StringUtils.isEmpty(name) ? new MjEntity(MjEntityType.DEPENDING_ENTITY) : entities.get(name);
+		XsdMjEntity entity = StringUtils.isEmpty(name) ? new XsdMjEntity(MjEntityType.DEPENDING_ENTITY) : entities.get(name);
 		if (!entity.properties.isEmpty()) {
 			return entity;
 		}
@@ -435,7 +444,10 @@ public class XsdModel {
 				if (baseEntity == null) {
 					throw new IllegalStateException("Base Entity not found: " + base);
 				}
-				entities.put(name, baseEntity);
+				// TODO müssten hier Entities kopiert werden damits passt?
+				if (baseEntity instanceof XsdMjEntity) {
+					entities.put(name, (XsdMjEntity) baseEntity);
+				}
 				return baseEntity;
 			} else {
 				entity.properties.addAll(complexContent(complexContent));
@@ -528,8 +540,8 @@ public class XsdModel {
 			if (baseEntity == null) {
 				throw new IllegalStateException("Base Entity not found: " + base);
 			}
-			if (baseEntity.properties.isEmpty() && baseEntity.getElement() != null) {
-				complexType(baseEntity.getElement());
+			if (baseEntity.properties.isEmpty() && (baseEntity instanceof XsdMjEntity) && ((XsdMjEntity) baseEntity).getElement() != null) {
+				complexType(((XsdMjEntity) baseEntity).getElement());
 			}
 			properties.addAll(baseEntity.properties);
 			MjEntity extensionContent = complexType(extension);
@@ -603,7 +615,7 @@ public class XsdModel {
 						return xsdModel.findEntity(parts[1]);
 					} else {
 						log.warning("Cannot resolve: " + namespace + ":" + parts[1]);
-						return new MjEntity(parts[1]);
+						return new XsdMjEntity(parts[1]);
 					}
 				} else {
 					type = parts[1];
@@ -615,7 +627,7 @@ public class XsdModel {
 				return entities.get(type);
 			} else {
 				log.warning("Cannot resolve: " + type);
-				return new MjEntity(type);
+				return new XsdMjEntity(type);
 			}
 		} else {
 			return null;

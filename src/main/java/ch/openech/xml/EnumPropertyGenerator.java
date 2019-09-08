@@ -39,7 +39,7 @@ public class EnumPropertyGenerator {
 		generate(model.entities);
 	}
 
-	public void generate(Collection<MjEntity> entities) {
+	public void generate(Collection<? extends MjEntity> entities) {
 		entities.stream().filter(MjEntity::isEnumeration).forEach(this::generateEntity);
 
 		try (FileOutputStream fos = new FileOutputStream(file)) {
