@@ -2,18 +2,30 @@ package ch.ech.ech0007;
 
 import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.View;
 
 import ch.ech.ech0071.Municipality;
 
-public class SwissMunicipality implements View<Municipality>, Code {
+public class SwissMunicipality implements View<Municipality>, Code, Rendering {
 	public static final SwissMunicipality $ = Keys.of(SwissMunicipality.class);
 
 	public Integer id;
 	public Integer municipalityId;
 	public String municipalityShortName;
 	public ch.ech.ech0071.CantonAbbreviation cantonAbbreviation;
-	public Integer historyMunicipalityId;
+
+	// id wird auch bei Municipality as historyMunicipalityId verwendet.
+	// daher auch hier. ein super.get ist nicht möglich, da es ja nicht
+	// extends ist, sondern implements
+
+	public Integer getHistoryMunicipalityId() {
+		return id;
+	}
+
+	public void setHistoryMunicipalityId(Integer historyMunicipalityId) {
+		this.id = historyMunicipalityId;
+	}
 
 	public String getMunicipalityName() {
 		return municipalityShortName;
@@ -26,11 +38,16 @@ public class SwissMunicipality implements View<Municipality>, Code {
 	// typo!! (piality)
 
 	public Integer getHistoryMunicipialityId() {
-		return historyMunicipalityId;
+		return id;
 	}
 
 	public void setHistoryMunicipialityId(Integer historyMunicipalityId) {
-		this.historyMunicipalityId = historyMunicipalityId;
+		this.id = historyMunicipalityId;
+	}
+
+	@Override
+	public CharSequence render() {
+		return municipalityShortName;
 	}
 
 }
