@@ -9,11 +9,15 @@ import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.Frontend.Search;
+import org.minimalj.frontend.action.Action;
+import org.minimalj.frontend.action.ActionGroup;
+import org.minimalj.frontend.editor.Editor.SimpleEditor;
+import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.ViewUtil;
 import org.minimalj.model.properties.PropertyInterface;
-import org.minimalj.model.validation.InvalidValues;
+import org.minimalj.util.CloneHelper;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
@@ -21,44 +25,44 @@ import org.minimalj.util.mock.Mocking;
 import ch.ech.ech0007.SwissMunicipality;
 import ch.ech.ech0008.Country;
 import ch.ech.ech0011.GeneralPlace;
+import ch.ech.ech0011.GeneralPlace.ForeignCountry;
 import ch.ech.ech0011.Unknown;
 import ch.ech.ech0071.CantonAbbreviation;
 import ch.ech.ech0071.Municipality;
 import ch.ech.ech0072.CountryInformation;
 import ch.openech.datagenerator.MockName;
 
+// ein Textfeld, bei dem z.b. "Amden SG", "Berlin, Deutschland" oder "unbekannt" eingegeben werden kann
+// zusäztlich ein "Frontend.getInstance().createLookup(textField, actions)" damit Schweizer
+// oder ausländischer Ort in Formular eingegeben werden kann. Plus Action "Unbekannt"
 public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> implements Mocking {
 	private static final Logger logger = Logger.getLogger(GeneralPlaceFormElement.class.getName());
 
 	private final List<CountryInformation> countries;
-	private final Input<CountryInformation> comboBoxCountry;
-
 	private final List<Municipality> municipalities;
-	private final Input<String> textFieldMunicipality;
+	private final Input<String> textField;
+	private final Input<String> lookup;
 	
-	private final IComponent componentGroup;
-
 	public GeneralPlaceFormElement(PropertyInterface property) {
 		super(property);
 		countries = Codes.get(CountryInformation.class);
 		municipalities = Codes.get(Municipality.class);
 		Collections.sort(municipalities);
 		
-		comboBoxCountry = Frontend.getInstance().createComboBox(countries, listener());
-		
-		// int municipalityShortNameSize = AnnotationUtil.getSize(Keys.getProperty(Municipality.$.municipalityShortName));
-		
-		textFieldMunicipality = Frontend.getInstance().createTextField(100, null, new MunicipalitySearch(), listener());
-		
-		componentGroup = Frontend.getInstance().createHorizontalGroup(comboBoxCountry, textFieldMunicipality);
+		textField = Frontend.getInstance().createTextField(100, null, new MunicipalitySearch(), listener());
+		ActionGroup actions = new ActionGroup(null);
+		actions.add(new SwissTownAction());
+		actions.add(new ForeignCountryAction());
+		actions.add(new UnknownAction());
+		lookup = Frontend.getInstance().createLookup(textField, actions);
 	}
 
 	public GeneralPlaceFormElement(GeneralPlace generalPlace) {
 		this(Keys.getProperty(generalPlace));
 	}
 
-	private CountryInformation findCountry(String countryIdISO2) {
-		return countries.stream().filter(country -> StringUtils.equals(countryIdISO2, country.iso2Id)).findFirst().orElse(null);
+	private CountryInformation findCountry(String name) {
+		return countries.stream().filter(country -> StringUtils.equals(name, country.shortNameDe)).findFirst().orElse(null);
 	}
 	
 	private Municipality findMunicipality(String name) {
@@ -67,7 +71,75 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 	
 	@Override
 	public IComponent getComponent() {
-		return componentGroup;
+		return lookup;
+	}
+
+	private class SwissTownAction extends SimpleEditor<GeneralPlace> {
+
+		@Override
+		protected Form<GeneralPlace> createForm() {
+			Form<GeneralPlace> form = new Form<>();
+			form.line(GeneralPlace.$.swissTown);
+			return form;
+		}
+
+		@Override
+		protected GeneralPlace createObject() {
+			GeneralPlace object = GeneralPlaceFormElement.this.getValue();
+			GeneralPlace newObject = new GeneralPlace();
+			if (object != null) {
+				newObject.swissTown = object.swissTown;
+			}
+			return newObject;
+		}
+
+		@Override
+		protected GeneralPlace save(GeneralPlace savedObject) {
+			GeneralPlaceFormElement.this.setValue(savedObject);
+			GeneralPlaceFormElement.this.fireChange();
+			return savedObject;
+		}
+	}
+
+	private class ForeignCountryAction extends SimpleEditor<GeneralPlace> {
+
+		@Override
+		protected Form<GeneralPlace> createForm() {
+			Form<GeneralPlace> form = new Form<>();
+			form.line(GeneralPlace.$.foreignCountry.country);
+			form.line(GeneralPlace.$.foreignCountry.town);
+			return form;
+		}
+
+		@Override
+		protected GeneralPlace createObject() {
+			GeneralPlace object = GeneralPlaceFormElement.this.getValue();
+			GeneralPlace newObject = new GeneralPlace();
+			if (object != null && object.foreignCountry != null) {
+				newObject.foreignCountry = CloneHelper.clone(object.foreignCountry);
+			} else {
+				newObject.foreignCountry = new ForeignCountry();
+			}
+			return newObject;
+		}
+
+		@Override
+		protected GeneralPlace save(GeneralPlace savedObject) {
+			GeneralPlaceFormElement.this.setValue(savedObject);
+			GeneralPlaceFormElement.this.fireChange();
+			return savedObject;
+		}
+	}
+
+	private class UnknownAction extends Action {
+
+		@Override
+		public void action() {
+			GeneralPlace object = new GeneralPlace();
+			object.unknown = Unknown._0;
+			GeneralPlaceFormElement.this.setValue(object);
+			GeneralPlaceFormElement.this.fireChange();
+		}
 	}
 
 	@Override
@@ -79,45 +151,67 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 		
 		boolean isSwitzerland = place.swissTown != null;
 		if (isSwitzerland) {
-			comboBoxCountry.setValue(findCountry("CH"));
-			textFieldMunicipality.setValue(place.swissTown.getMunicipalityName());
+			textField.setValue(place.swissTown.getMunicipalityName());
 		} else if (place.foreignCountry != null) {
-			comboBoxCountry.setValue(findCountry(place.foreignCountry.country.iso2Id));
-			textFieldMunicipality.setValue(place.foreignCountry.town);
+			StringBuilder s = new StringBuilder();
+			if (!StringUtils.isEmpty(place.foreignCountry.town)) {
+				s.append(place.foreignCountry.town);
+			}
+			if (place.foreignCountry.country != null) {
+				if (s.length() > 0) {
+					s.append(", ");
+				}
+				s.append(place.foreignCountry.country.shortNameDe);
+			}
+			textField.setValue(s.toString());
+		} else if (place.unknown == Unknown._0) {
+			textField.setValue("Unbekannt");
 		} else {
-			comboBoxCountry.setValue(null);
-			textFieldMunicipality.setValue(null);
+			textField.setValue(null);
 		}
 	}
 	
 	@Override
 	public GeneralPlace getValue() {
-		GeneralPlace place = new GeneralPlace();
-		
-		CountryInformation country = comboBoxCountry.getValue();
-		if (country != null) {
-			if (!"CH".equals(country.iso2Id)) {
+		String text = textField.getValue();
+		if (text == null) {
+			return null;
+		}
+		if (StringUtils.equals(text, "Unbekannt")) {
+			GeneralPlace place = new GeneralPlace();
+			place.unknown = Unknown._0;
+			return place;
+		}
+		Municipality municipality = findMunicipality(text);
+		if (municipality != null) {
+			GeneralPlace place = new GeneralPlace();
+			place.swissTown = new SwissMunicipality();
+			place.swissTown.setHistoryMunicipalityId(municipality.getHistoryMunicipalityId());
+			place.swissTown.municipalityId = municipality.municipalityId;
+			place.swissTown.municipalityShortName = municipality.municipalityShortName;
+			place.swissTown.cantonAbbreviation = CantonAbbreviation.valueOf(municipality.cantonAbbreviation.name());
+			return place;
+		} else {
+			String countryString;
+			String town;
+			int index = text.indexOf(",");
+			if (index > -1) {
+				countryString = text.substring(text.indexOf(",") + 1).trim();
+				town = text.substring(0, index - 1).trim();
+			} else {
+				countryString = text;
+				town = null;
+			}
+			CountryInformation country = findCountry(countryString);
+			if (country != null) {
+				GeneralPlace place = new GeneralPlace();
 				place.foreignCountry = new GeneralPlace.ForeignCountry();
 				place.foreignCountry.country = ViewUtil.view(country, new Country());
-				place.foreignCountry.town = textFieldMunicipality.getValue();
-			} else {
-				place.swissTown = new SwissMunicipality();
-				String m = textFieldMunicipality.getValue();
-				Municipality municipality = findMunicipality(m);
-				if (municipality != null) {
-					place.swissTown.historyMunicipalityId = municipality.getHistoryMunicipalityId();
-					place.swissTown.municipalityId = municipality.municipalityId;
-					place.swissTown.municipalityShortName = municipality.municipalityShortName;
-					// TODO Nur 1 CantonAbbreviation
-					place.swissTown.cantonAbbreviation = CantonAbbreviation.valueOf(municipality.cantonAbbreviation.name());
-				} else {
-					place.swissTown.municipalityShortName = InvalidValues.createInvalidString(textFieldMunicipality.getValue());
-				}
+				place.foreignCountry.town = town;
+				return place;
 			}
-		} else {
-			place.unknown = Unknown._0;
 		}
-		return place;
+		return null;
 	}
 
 	@Override
@@ -139,7 +233,6 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 			CountryInformation country = countries.get(index);
 			place.foreignCountry = new GeneralPlace.ForeignCountry();
 			ViewUtil.view(country, place.foreignCountry.country);
-			place.foreignCountry.town = textFieldMunicipality.getValue();
 			place.foreignCountry.town = MockName.officialName() + "Town";
 		}
 		setValue(place);
@@ -149,19 +242,14 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 
 		@Override
 		public List<String> search(String query) {
-			CountryInformation country = comboBoxCountry.getValue();
-			if (country != null && !"CH".equals(country.iso2Id) || query == null || query.length() < 1) {
-				return Collections.emptyList();
-			} else {
-				query = query.toLowerCase();
-				List<String> names = new ArrayList<>();
-				for (Municipality m : municipalities) {
-					if (m.municipalityShortName.toLowerCase().startsWith(query) && m.municipalityAbolitionNumber == null) {
-						names.add(m.municipalityShortName);
-					}
+			query = query.toLowerCase();
+			List<String> names = new ArrayList<>();
+			for (Municipality m : municipalities) {
+				if (m.municipalityShortName.toLowerCase().startsWith(query) && m.municipalityAbolitionNumber == null) {
+					names.add(m.municipalityShortName);
 				}
-				return names;
 			}
+			return names;
 		}
 
 	}
