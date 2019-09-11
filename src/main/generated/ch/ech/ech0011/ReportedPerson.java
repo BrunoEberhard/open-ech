@@ -9,49 +9,46 @@ import org.minimalj.util.CloneHelper;
 
 import ch.ech.ech0007.SwissMunicipality;
 
-//handmade, wird nie zu xml serialisiert, ist nur der DB Basis Typ
+// handmade. Kann ev entfernt werden. Die Residence Felder
+// sind in die Person integriert. Und in den Events
+// wird die Klasse auch nirgends verwendet.
 public class ReportedPerson {
 	public static final ReportedPerson $ = Keys.of(ReportedPerson.class);
 
 	@NotEmpty
 	public Person person;
 
-	public final ResidenceData residenceData = new ResidenceData();
-
-	public final SwissMunicipality mainResidence = new SwissMunicipality();
-	public List<SwissMunicipality> secondaryResidence;
-	
 	//
-	
+
 	private final MainResidenceDelegate mainResidenceDelegate = new MainResidenceDelegate();
 	private final SecondaryResidenceDelegate secondaryResidenceDelegate = new SecondaryResidenceDelegate();
 	private final OtherResidenceDelegate otherResidenceDelegate = new OtherResidenceDelegate();
 
 	//
-	
+
 	public class MainResidenceDelegate {
 
 		public List<SwissMunicipality> getSecondaryResidence() {
-			return secondaryResidence;
+			return person.secondaryResidence;
 		}
 
 		public void setSecondaryResidence(List<SwissMunicipality> s) {
-			secondaryResidence = s;
+			person.secondaryResidence = s;
 		}
 
 		public ResidenceData getMainResidence() {
-			return residenceData;
+			return person.residenceData;
 		}
 	}
 
 	public MainResidenceDelegate getHasMainResidence() {
 		return mainResidenceDelegate;
 	}
-	
+
 	public void setHasMainResidence(MainResidenceDelegate mainResidenceDelegate) {
 		CloneHelper.deepCopy(mainResidenceDelegate, this.mainResidenceDelegate);
 	}
-	
+
 	//
 
 	public SecondaryResidenceDelegate getHasSecondaryResidence() {
@@ -65,16 +62,16 @@ public class ReportedPerson {
 	public class SecondaryResidenceDelegate {
 
 		public SwissMunicipality getMainResidence() {
-			return mainResidence;
+			return person.residenceData.reportingMunicipality;
 		}
 
 		public ResidenceData getSecondaryResidence() {
-			return residenceData;
+			return person.residenceData;
 		}
 	}
-	
+
 	//
-	
+
 	public OtherResidenceDelegate getHasOtherResidence() {
 		return otherResidenceDelegate;
 	}
@@ -86,17 +83,17 @@ public class ReportedPerson {
 	public class OtherResidenceDelegate {
 
 		public ResidenceData getSecondaryResidence() {
-			return residenceData;
+			return person.residenceData;
 		}
 
 		// hies in ech 11 früher so
 		public ResidenceData getSecondaryResidenceInformation() {
-			return residenceData;
+			return person.residenceData;
 		}
 	}
 
 	//
-	
+
 	private final AnyPerson anyPerson = new AnyPerson();
 
 	public AnyPerson getAnyPerson() {
@@ -109,7 +106,8 @@ public class ReportedPerson {
 		private Foreigner foreigner;
 
 		public class Swiss {
-
+			// Nicht implementiert. Auf der Person ist ein Liste von erweiterten
+			// PlaceOfOrginAddOn
 			public List<PlaceOfOrigin> placeOfOrigin;
 		}
 

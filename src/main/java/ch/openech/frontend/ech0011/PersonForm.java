@@ -52,6 +52,14 @@ public class PersonForm extends EchForm<Person> {
 
 		line(new HealthInsuranceFormElement($.healthInsuranceData, editable));
 
+		addTitle("Meldung");
+		// TODO SecondaryResidenceFormElement (als ListElement)
+		// TODO SwissMunicipalityFormElement
+		line($.residenceData.reportingMunicipality, $.residenceType, $.secondaryResidence);
+		line($.residenceData.arrivalDate, $.residenceData.comesFrom.generalPlace, $.residenceData.departureDate, $.residenceData.goesTo.generalPlace);
+		line($.residenceData.dwellingAddress.EGID, $.residenceData.dwellingAddress.EWID, $.residenceData.dwellingAddress.householdID, $.residenceData.dwellingAddress.typeOfHousehold);
+		line(new AddressInformationFormElement($.residenceData.dwellingAddress.address, editable));
+		line(new AddressInformationFormElement($.residenceData.comesFrom.mailAddress, editable), new AddressInformationFormElement($.residenceData.goesTo.mailAddress, editable));
 	}
 	
 	private class NationalityUpdater implements PropertyUpdater<NationalityStatus, List<CountryInfo>, Person> {

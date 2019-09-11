@@ -1,7 +1,6 @@
 package ch.ech.ech0011;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -13,14 +12,10 @@ import org.minimalj.model.annotation.Materialized;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.repository.query.By;
-import org.minimalj.repository.sql.EmptyObjects;
-import org.minimalj.util.CloneHelper;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
 
 import ch.ech.ech0007.SwissMunicipality;
-import ch.ech.ech0008.Country;
-import ch.ech.ech0011.NationalityData.CountryInfo;
 import ch.ech.ech0021.ArmedForcesData;
 import ch.ech.ech0021.BirthAddonData;
 import ch.ech.ech0021.CivilDefenseData;
@@ -28,7 +23,6 @@ import ch.ech.ech0021.FireServiceData;
 import ch.ech.ech0021.GuardianRelationship;
 import ch.ech.ech0021.HealthInsuranceData;
 import ch.ech.ech0021.JobData;
-import ch.ech.ech0021.LockData;
 import ch.ech.ech0021.MaritalRelationship;
 import ch.ech.ech0021.MatrimonialInheritanceArrangementData;
 import ch.ech.ech0021.ParentalRelationship;
@@ -39,9 +33,13 @@ import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0044.Sex;
 import ch.ech.ech0071.Municipality;
 import ch.openech.frontend.ech0011.ReligionFormElement;
-import ch.openech.xml.YesNo;
 
 //handmade
+
+// Ziel: ech11 als Basis für DB verwenden. Daher so aufgeräumt
+// wie möglich. ech20 kann mal neue Version bekommen, die Entitäten
+// müssen nicht perfekt, sondern so originalgetreu wie möglich sein.
+
 public class Person implements Mocking {
 	public static final Person $ = Keys.of(Person.class);
 
@@ -82,12 +80,12 @@ public class Person implements Mocking {
 
 	// ReportedPerson
 	// ==============
-	// Wird nicht für ech 20 verwendet, sondern ist das (DB) root Element für
-	// Personen
+	// Folgende Felder sind nicht für die XML Serialisierung bestimmt.
+	// Sie werden nur in der DB verwendet.
 
-	public ResidenceData residenceData;
-
-	public SwissMunicipality mainResidence;
+	@NotEmpty
+	public ResidenceType residenceType = ResidenceType.PRIMARY;
+	public ResidenceData residenceData; // enthält SwissMunicipality
 	public List<SwissMunicipality> secondaryResidence;
 	
 	@Materialized
@@ -128,224 +126,6 @@ public class Person implements Mocking {
 		politicalRightData.restrictedVotingAndElectionRightFederation = restrictedVotingAndElectionRightFederation;
 	}
 
-	// for old ech 11 versions
-	
-	private final Coredata coredata = new Coredata();
-	@Size(100)
-	public String alliancePartnershipName;
-
-	public Coredata getCoredata() {
-		return coredata;
-	}
-
-	public class Coredata {
-		public String getOriginalName() {
-			return nameData.originalName;
-		}
-		
-		public void setOriginalName(String originalName) {
-			nameData.originalName = originalName;
-		}
-
-		public String getAlliancePartnershipName() {
-			return alliancePartnershipName;
-		}
-
-		public void setAlliancePartnershipName(String name) {
-			alliancePartnershipName = name;
-		}
-
-		public String getAliasName() {
-			return nameData.aliasName;
-		}
-
-		public void setAliasName(String aliasName) {
-			nameData.aliasName = aliasName;
-		}
-
-		public String getOtherName() {
-			return nameData.otherName;
-		}
-
-		public void setOtherName(String otherName) {
-			nameData.otherName = otherName;
-		}
-
-		public String getCallName() {
-			return nameData.callName;
-		}
-
-		public void setCallName(String callName) {
-			nameData.callName = callName;
-		}
-
-		public Birthplace getPlaceOfBirth() {
-			return placeOfBirth;
-		}
-		
-		public LocalDate getDateOfDeath() {
-			return deathData != null ? deathData.deathPeriod.dateFrom : null;
-		}
-	
-		public void setDateOfDeath(LocalDate date) {
-			if (date == null) {
-				deathData = null;
-			} else {
-				if (deathData == null) {
-					deathData = new DeathData();
-				}
-				deathData.deathPeriod.dateFrom = date;
-			}
-		}
-
-		public MaritalData getMaritalData() {
-			return maritalData;
-		}
-		
-		public Nationality getNationality() {
-			return nationality;
-		}
-		
-		public ContactData getContact() {
-			return contactData;
-		}
-		
-		public String getLanguageOfCorrespondance() {
-			return personAdditionalData.languageOfCorrespondance;
-		}
-
-		public void setLanguageOfCorrespondance(String languageOfCorrespondance) {
-			personAdditionalData.languageOfCorrespondance = languageOfCorrespondance;
-		}
-		
-		public String getReligion() {
-			return religionData.religion;
-		}
-		
-		public void setReligion(String religion) {
-			religionData.religion = religion;
-		}
-	}
-	
-	private final Birthplace placeOfBirth = new Birthplace();
-	
-	public class Birthplace {
-
-		private final SwissTown swissTown = new SwissTown();
-		private final ForeignCountry foreignCountry = new ForeignCountry();
-
-		public class SwissTown {
-
-			private final Country swiss = new Country();
-
-			public ch.ech.ech0008.Country getCountry() {
-				return swiss;
-			}
-
-			public ch.ech.ech0007.SwissMunicipality getMunicipality() {
-				return birthData.placeOfBirth.swissTown;
-			}
-		}
-
-		public class ForeignCountry {
-
-			public Country getCountry() {
-				return birthData.placeOfBirth.foreignCountry.country;
-			}
-
-			public void setCountry(Country country) {
-				CloneHelper.deepCopy(country, birthData.placeOfBirth.foreignCountry.country);
-			}
-			
-			public String getForeignBirthTown() {
-				return birthData.placeOfBirth.foreignCountry.town;
-			}
-
-			public void setForeignBirthTown(String foreignBirthTown) {
-				birthData.placeOfBirth.foreignCountry.town = foreignBirthTown;
-			}
-		}
-
-		public Unknown getUnknown() {
-			return birthData.placeOfBirth.unknown;
-		}
-
-		public SwissTown getSwissTown() {
-			return swissTown;
-		}
-
-		public ForeignCountry getForeignCountry() {
-			return foreignCountry;
-		}
-	}
-	
-	private final Nationality nationality = new Nationality();
-	
-	public class Nationality {
-		
-		public NationalityStatus getNationalityStatus() {
-			return nationalityData.nationalityStatus;
-		}
-		public void setNationalityStatus(NationalityStatus nationalityStatus) {
-			nationalityData.nationalityStatus = nationalityStatus;
-		}
-		
-		public Country getCountry() {
-			if (nationalityData.countryInfo != null && !nationalityData.countryInfo.isEmpty()) {
-				return nationalityData.countryInfo.get(0).country;
-			} else {
-				return null;
-			}
-		}
-		
-		public void setCountry(Country country) {
-			if (country == null) {
-				nationalityData.countryInfo = null;
-			} else {
-				nationalityData.countryInfo = new ArrayList<>();
-				CountryInfo countryInfo = new CountryInfo();
-				CloneHelper.deepCopy(country, countryInfo.country);
-				nationalityData.countryInfo.add(countryInfo);
-			}
-		}
-	}
-
-	public LockData getLockData() {
-		boolean emptyDataLock = dataLock.dataLock == ch.ech.ech0021.DataLock._0;
-		boolean emptyPaperLock = paperLock.paperLock == null || paperLock.paperLock == false;
-		if (emptyDataLock && emptyPaperLock) {
-			return null;
-		} else {
-			LockData d = new LockData();
-			if (dataLock != null) {
-				d.dataLock = dataLock.dataLock;
-				d.dataLockValidFrom = dataLock.dataLockValidFrom;
-				d.dataLockValidTill = dataLock.dataLockValidTill;
-			} else {
-				d.dataLock = ch.ech.ech0021.DataLock._0;
-			}
-			if (paperLock != null) {
-				d.paperLock = Boolean.TRUE.equals(paperLock.paperLock) ? YesNo._1 : YesNo._0;
-				d.paperLockValidFrom = paperLock.paperLockValidFrom;
-				d.paperLockValidTill = paperLock.paperLockValidTill;
-			} else {
-				d.paperLock = YesNo._0;
-			}
-			return d;
-		}
-	}
-
-	public void setDataLock(LockData d) {
-		if (d == null) {
-			d = EmptyObjects.getEmptyObject(LockData.class);
-		}
-		paperLock.paperLock = YesNo._1.equals(d.paperLock);
-		paperLock.paperLockValidFrom = d.paperLockValidFrom;
-		paperLock.paperLockValidTill = d.paperLockValidTill;
-		dataLock.dataLock = d.dataLock;
-		dataLock.dataLockValidFrom = d.dataLockValidFrom;
-		dataLock.dataLockValidTill = d.dataLockValidTill;
-	}
 
 	@Override
 	public void mock() {
