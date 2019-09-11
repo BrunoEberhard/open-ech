@@ -39,7 +39,7 @@ public class AddressForm extends Form<MailAddress> {
 			line($.addressInformation.postOfficeBoxText, $.addressInformation.postOfficeBoxNumber);
 			line($.addressInformation.country, $.addressInformation.swissZipCode, $.addressInformation.town);
 		} else {
-			line(new ChIso2FormElement(), $.addressInformation.swissZipCode, new TownFormElement($.addressInformation.town));
+			line(new ChIso2FormElement($.addressInformation.country), $.addressInformation.swissZipCode, new TownFormElement($.addressInformation.town));
 		}
 		line($.addressInformation.locality);
 		

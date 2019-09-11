@@ -5,16 +5,19 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 
-import ch.ech.ech0010.MailAddress;
+import ch.ech.ech0008.Country;
 
-public class ChIso2FormElement extends AbstractFormElement<String> {
+public class ChIso2FormElement extends AbstractFormElement<Country> {
 	private final Input<String> textField;
+	private static final Country switzerland = new Country();
 
-	public ChIso2FormElement() {
-		this(MailAddress.$.addressInformation.country.iso2Id);
+	static {
+		switzerland.id = 8100;
+		switzerland.shortNameDe = "Schweiz";
+		switzerland.iso2Id = "CH";
 	}
-	
-	public ChIso2FormElement(Object key) {
+
+	public ChIso2FormElement(Country key) {
 		super(key);
 
 		textField = Frontend.getInstance().createReadOnlyTextField();
@@ -27,12 +30,12 @@ public class ChIso2FormElement extends AbstractFormElement<String> {
 	}
 
 	@Override
-	public String getValue() {
-		return "CH";
+	public Country getValue() {
+		return switzerland;
 	}
 
 	@Override
-	public void setValue(String object) {
+	public void setValue(Country object) {
 		// not supported
 	}
 
