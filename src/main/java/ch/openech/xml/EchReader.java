@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLEventReader;
@@ -126,7 +127,9 @@ public class EchReader implements AutoCloseable {
 	 * mitgeliefert werden.
 	 */
 	private <T> T read(Class<T> clazz) throws XMLStreamException {
-		LOG.fine("Read entity: " + clazz.getSimpleName());
+		if (LOG.isLoggable(Level.FINE)) {
+			LOG.fine("Read entity: " + clazz.getSimpleName());
+		}
 		
 		T result = null;
 		while (xml.hasNext()) {
@@ -144,7 +147,9 @@ public class EchReader implements AutoCloseable {
 				
 				PropertyInterface property = Properties.getProperty(clazz, elementName);
 				if (property != null) {
-					LOG.fine("Element: " + elementName +" -> Property: " + property.getPath());
+					if (LOG.isLoggable(Level.FINE)) {
+						LOG.fine("Element: " + elementName + " -> Property: " + property.getPath());
+					}
 					
 					boolean isList = FieldUtils.isList(property.getClazz());
 					if (isList) {
@@ -199,7 +204,9 @@ public class EchReader implements AutoCloseable {
 		while (true) {
 			XMLEvent event = xml.nextEvent();
 			if (event.isStartElement()) {
-				LOG.fine("Skipping XML Element: " + event.asStartElement().getName().getLocalPart());
+				if (LOG.isLoggable(Level.FINE)) {
+					LOG.fine("Skipping XML Element: " + event.asStartElement().getName().getLocalPart());
+				}
 				skip(xml);
 			} else if (event.isEndElement()) break;
 			// else ignore
