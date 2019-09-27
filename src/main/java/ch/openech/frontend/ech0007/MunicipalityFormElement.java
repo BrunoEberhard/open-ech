@@ -30,7 +30,7 @@ public class MunicipalityFormElement extends AbstractFormElement<Municipality> i
 	public MunicipalityFormElement(PropertyInterface property, boolean allowFederalRegister) {
 		super(property);
 		
-		municipalities = Codes.get(Municipality.class);
+		municipalities = Codes.get(Municipality.class).stream().filter(m -> m.municipalityAbolitionMode == null).collect(Collectors.toList());
 		Collections.sort(municipalities);
 		List<Municipality> items;
 		if (!allowFederalRegister) {

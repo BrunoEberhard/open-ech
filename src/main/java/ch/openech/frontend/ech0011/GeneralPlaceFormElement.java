@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.Frontend.IComponent;
@@ -46,7 +47,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 	public GeneralPlaceFormElement(PropertyInterface property) {
 		super(property);
 		countries = Codes.get(CountryInformation.class);
-		municipalities = Codes.get(Municipality.class);
+		municipalities = Codes.get(Municipality.class).stream().filter(m -> m.municipalityAbolitionMode == null).collect(Collectors.toList());
 		Collections.sort(municipalities);
 		
 		textField = Frontend.getInstance().createTextField(100, null, new MunicipalitySearch(), listener());
