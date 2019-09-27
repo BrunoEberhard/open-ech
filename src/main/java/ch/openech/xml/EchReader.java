@@ -184,7 +184,7 @@ public class EchReader implements AutoCloseable {
 				}
 			} else if (event.isCharacters()) {
 				String s = event.asCharacters().getData().trim();
-				if (!StringUtils.isEmpty(s)) {
+				if (!s.isEmpty()) {
 					result = FieldUtils.parse(s, clazz);
 					if (result == null && clazz.isEnum()) {
 						result = FieldUtils.parse("_" + s, clazz);
