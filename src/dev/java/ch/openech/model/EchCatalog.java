@@ -63,10 +63,8 @@ public class EchCatalog {
 		File dir = new File("src/main/xml");
 		for (File file : dir.listFiles()) {
 			if (file.getName().endsWith(".xsd")) {
-//				if (file.getName().contains("eCH-023")) {
-					EchCatalog instance = new EchCatalog(file);
-					instance.process(file);
-//				}
+				EchCatalog instance = new EchCatalog(file);
+				instance.process(file);
 			}
 		}
 	}

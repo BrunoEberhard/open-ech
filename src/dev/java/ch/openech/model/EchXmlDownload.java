@@ -27,7 +27,7 @@ import org.minimalj.util.StringUtils;
 import ch.openech.xml.write.EchNamespaceUtil;
 
 // Ausgabe kann in eclipse user catalog kopiert werden in
-// workspace/.metadata/.plugins/org.eclipse.wst.xml.core/usser_catalog.xml
+// workspace/.metadata/.plugins/org.eclipse.wst.xml.core/user_catalog.xml
 // C:\projects\workspaces\minimalj\.metadata\.plugins\org.eclipse.wst.xml.core
 
 public class EchXmlDownload {
@@ -192,6 +192,7 @@ public class EchXmlDownload {
 		download.download();
 	}
 
+	@SuppressWarnings("unused")
 	private static void process(InputStream inputStream) throws XMLStreamException {
 		EchXmlDownload download = new EchXmlDownload();
 		download.process_(inputStream);
