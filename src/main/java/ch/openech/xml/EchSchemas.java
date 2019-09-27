@@ -17,10 +17,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.minimalj.metamodel.generator.ClassGenerator;
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.metamodel.model.MjEntity.MjEntityType;
 import org.minimalj.metamodel.model.MjModel;
@@ -324,21 +322,6 @@ public class EchSchemas {
 					}
 				}
 			} 
-		}
-	}
-	
-	public static void main(String[] args) throws Exception {
-		ClassGenerator generator = new ClassGenerator("./src/main/generated");
-		EnumPropertyGenerator enumPropertyGenerator = new EnumPropertyGenerator("./src/main/generated/enum.properties");
-
-		List<XsdModel> sortedModels = new ArrayList<>(xsdModels.values());
-		sortedModels.sort((m1, m2) -> m1.getNamespace().compareTo(m2.getNamespace()));
-
-		for (XsdModel model : sortedModels) {
-			Collection<XsdMjEntity> entities = model.getEntities();
-			entities = entities.stream().filter(EchSchemas::filter).collect(Collectors.toList());
-			generator.generate(entities);
-			enumPropertyGenerator.generate(entities);
 		}
 	}
 	
