@@ -9,8 +9,8 @@ import org.minimalj.model.annotation.NotEmpty;
 
 import ch.ech.ech0010.MailAddress;
 import ch.ech.ech0097.OrganisationIdentification;
-import ch.openech.frontend.ech0011.Identification;
 import ch.openech.frontend.ech0011.RangeUtil;
+import ch.openech.model.Identification;
 
 // handmade
 public class ContactData implements Rendering {

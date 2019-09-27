@@ -1,4 +1,4 @@
-package ch.openech.frontend.ech0011;
+package ch.openech.model;
 
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;

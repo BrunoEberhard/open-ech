@@ -23,6 +23,7 @@ import ch.ech.ech0011.Person;
 import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0098.Organisation;
 import ch.openech.frontend.form.EchForm;
+import ch.openech.model.Identification;
 
 public class IdentificationFormElement extends AbstractFormElement<Identification> {
 

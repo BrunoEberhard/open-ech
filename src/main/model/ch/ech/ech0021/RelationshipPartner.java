@@ -6,7 +6,7 @@ import org.minimalj.model.Keys;
 
 import ch.ech.ech0011.PartnerIdOrganisation;
 import ch.ech.ech0097.OrganisationIdentification;
-import ch.openech.frontend.ech0011.Identification;
+import ch.openech.model.Identification;
 
 // gibt es in ech nicht. Zusammenfassung aus den 3 Relationship klassen
 public class RelationshipPartner {
