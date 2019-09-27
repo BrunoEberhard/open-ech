@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.minimalj.model.Keys;
+import org.minimalj.model.Rendering;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.model.validation.Validation;
@@ -13,7 +14,7 @@ import org.minimalj.util.resources.Resources;
 
 import ch.openech.util.PlzImport;
 
-public class AddressInformation implements Validation {
+public class AddressInformation implements Validation, Rendering {
 	public static final AddressInformation $ = Keys.of(AddressInformation.class);
 
 	@Size(150)
@@ -38,6 +39,13 @@ public class AddressInformation implements Validation {
 	public String foreignZipCode;
 	@NotEmpty
 	public ch.ech.ech0008.Country country;
+
+	@Override
+	public CharSequence render() {
+		StringBuilder s = new StringBuilder();
+		render(s);
+		return s;
+	}
 
 	public void render(StringBuilder s) {
 		StringUtils.appendLine(s, addressLine1);

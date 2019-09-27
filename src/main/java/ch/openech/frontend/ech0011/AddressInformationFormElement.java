@@ -3,6 +3,7 @@ package ch.openech.frontend.ech0011;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.FormElementConstraint;
 import org.minimalj.frontend.form.element.FormLookupFormElement;
+import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.Codes;
 
 import ch.ech.ech0008.Country;
@@ -11,9 +12,14 @@ import ch.openech.frontend.ech0010.AddressInformationForm;
 
 public class AddressInformationFormElement extends FormLookupFormElement<AddressInformation> {
 
+	public AddressInformationFormElement(PropertyInterface property, boolean editable) {
+		super(property, editable);
+		height(1, FormElementConstraint.MAX);
+	}
+
 	public AddressInformationFormElement(AddressInformation key, boolean editable) {
 		super(key, editable);
-		height(3, FormElementConstraint.MAX);
+		height(1, FormElementConstraint.MAX);
 	}
 
 	@Override
