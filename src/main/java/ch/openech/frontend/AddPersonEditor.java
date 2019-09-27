@@ -11,6 +11,7 @@ import org.minimalj.util.CloneHelper;
 import ch.ech.ech0011.MaritalStatus;
 import ch.ech.ech0011.NationalityStatus;
 import ch.ech.ech0011.Person;
+import ch.ech.ech0011.ResidenceData;
 import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0044.Sex;
 import ch.openech.frontend.ech0011.PersonForm;
@@ -44,6 +45,8 @@ public class AddPersonEditor extends NewObjectEditor<Person> {
 
 		person.healthInsuranceData.healthInsured = YesNo._0;
 		person.matrimonialInheritanceArrangementData.matrimonialInheritanceArrangement = YesNo._0;
+
+		person.residenceData = new ResidenceData();
 
 //		person.residencePermit.residencePermit = ResidencePermit._01;
 

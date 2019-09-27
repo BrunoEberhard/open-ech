@@ -71,8 +71,8 @@ public class EventBaseDeliveryTest {
 		event.hasMainResidence.reportingMunicipality.municipalityShortName = "Jona";
 		event.hasMainResidence.reportingMunicipality.cantonAbbreviation = CantonAbbreviation.SG;
 		event.hasMainResidence.comesFrom = new Destination();
-		event.hasMainResidence.comesFrom.swissTown = new SwissMunicipality();
-		event.hasMainResidence.comesFrom.swissTown.municipalityShortName = "Rapperswil";
+		event.hasMainResidence.comesFrom.generalPlace.swissTown = new SwissMunicipality();
+		event.hasMainResidence.comesFrom.generalPlace.swissTown.municipalityShortName = "Rapperswil";
 		event.hasMainResidence.reportingMunicipality.cantonAbbreviation = CantonAbbreviation.SG;
 		event.hasMainResidence.arrivalDate = LocalDate.now();
 		event.hasMainResidence.dwellingAddress = new DwellingAddress();
