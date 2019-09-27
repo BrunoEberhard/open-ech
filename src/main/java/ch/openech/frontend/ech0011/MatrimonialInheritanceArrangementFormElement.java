@@ -1,6 +1,5 @@
 package ch.openech.frontend.ech0011;
 
-import org.h2.util.StringUtils;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser;
 import org.minimalj.frontend.form.element.FormLookupFormElement;
@@ -34,8 +33,7 @@ public class MatrimonialInheritanceArrangementFormElement
 				text = text.substring(0, index).trim();
 			}
 			for (YesNo yesNo : YesNo.values()) {
-				if (StringUtils.equals(Resources.getString("matrimonialInheritanceArrangement." + yesNo.name()),
-						text)) {
+				if (text.equals(Resources.getString("matrimonialInheritanceArrangement." + yesNo.name()))) {
 					object.matrimonialInheritanceArrangement = yesNo;
 					break;
 				}
