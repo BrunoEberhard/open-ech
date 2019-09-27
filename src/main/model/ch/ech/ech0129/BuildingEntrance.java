@@ -16,7 +16,7 @@ public class BuildingEntrance {
 	public String buildingEntranceNo;
 	public EntranceStatus status;
 	public Coordinates coordinates;
-	public final ch.openech.xml.NamedId localID = new ch.openech.xml.NamedId();
+	public final ch.openech.model.NamedId localID = new ch.openech.model.NamedId();
 	public Boolean isMainAddress;
 	public Boolean isOfficial;
 	public final Locality locality = new Locality();

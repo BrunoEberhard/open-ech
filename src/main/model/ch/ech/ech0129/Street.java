@@ -13,7 +13,7 @@ public class Street {
 	public Boolean isOfficialDescription;
 	@Size(12)
 	public Integer officialStreetNumber;
-	public ch.openech.xml.NamedId localID;
+	public ch.openech.model.NamedId localID;
 	public LocalisationKind localisationKind;
 	public final LocalisationDescription description = new LocalisationDescription();
 	public LocalisationStatus status;

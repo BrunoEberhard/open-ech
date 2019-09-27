@@ -11,9 +11,9 @@ public class OrganisationIdentification {
 	public static final OrganisationIdentification $ = Keys.of(OrganisationIdentification.class);
 
 	public Object id;
-	public final ch.openech.xml.UidStructure uid = new ch.openech.xml.UidStructure();
-	public ch.openech.xml.NamedId localOrganisationId;
-	public List<ch.openech.xml.NamedId> OtherOrganisationId;
+	public final ch.openech.model.UidStructure uid = new ch.openech.model.UidStructure();
+	public ch.openech.model.NamedId localOrganisationId;
+	public List<ch.openech.model.NamedId> OtherOrganisationId;
 	@NotEmpty
 	@Size(255)
 	public String organisationName;

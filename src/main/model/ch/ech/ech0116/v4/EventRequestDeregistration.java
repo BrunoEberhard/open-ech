@@ -10,6 +10,6 @@ public class EventRequestDeregistration {
 
 	public Object id;
 	public final ReportingRegister requestingRegister = new ReportingRegister();
-	public List<ch.openech.xml.UidStructure> uid;
+	public List<ch.openech.model.UidStructure> uid;
 	public byte[] extension;
 }

@@ -1,4 +1,4 @@
-package ch.openech.xml;
+package ch.openech.model;
 
 public class Any {
 

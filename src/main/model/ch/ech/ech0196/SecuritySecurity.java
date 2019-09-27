@@ -16,7 +16,7 @@ public class SecuritySecurity {
 	public List<SecurityTaxValue> taxValue;
 	public List<SecurityPayment> payment;
 	public List<SecurityStock> stock;
-	public ch.openech.xml.UidStructure uid;
+	public ch.openech.model.UidStructure uid;
 	@NotEmpty
 	@Size(12)
 	public Integer valorNumber;

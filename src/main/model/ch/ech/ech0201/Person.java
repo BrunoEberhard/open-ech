@@ -12,7 +12,7 @@ public class Person {
 
 	@Size(13)
 	public Long vn;
-	public final ch.openech.xml.NamedId localPersonId = new ch.openech.xml.NamedId();
+	public final ch.openech.model.NamedId localPersonId = new ch.openech.model.NamedId();
 	@NotEmpty
 	@Size(100)
 	public String officialName;
@@ -21,7 +21,7 @@ public class Person {
 	public String firstName;
 	@Size(100)
 	public String callName;
-	public final ch.openech.xml.DatePartiallyKnown dateOfBirth = new ch.openech.xml.DatePartiallyKnown();
+	public final ch.openech.model.DatePartiallyKnown dateOfBirth = new ch.openech.model.DatePartiallyKnown();
 	public LocalDate dateOfDeath;
 	public ch.ech.ech0044.Sex sex;
 	@Size(2)

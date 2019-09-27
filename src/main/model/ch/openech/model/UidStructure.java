@@ -1,4 +1,4 @@
-package ch.openech.xml;
+package ch.openech.model;
 
 import java.util.List;
 

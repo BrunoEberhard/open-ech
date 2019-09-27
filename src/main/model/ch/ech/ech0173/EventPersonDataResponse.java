@@ -21,7 +21,7 @@ public class EventPersonDataResponse {
 		public static class BirthData {
 			public static final BirthData $ = Keys.of(BirthData.class);
 
-			public ch.openech.xml.DatePartiallyKnown dateOfBirth;
+			public ch.openech.model.DatePartiallyKnown dateOfBirth;
 			public ch.ech.ech0011.GeneralPlace placeOfBirth;
 		}
 		public BirthData birthData;
@@ -73,7 +73,7 @@ public class EventPersonDataResponse {
 
 		public enum KindOfEmployment { _0, _1, _2, _3, _4;		}
 		public KindOfEmployment kindOfEmployment;
-		public ch.openech.xml.YesNo paperLock;
+		public ch.openech.model.YesNo paperLock;
 		public ch.ech.ech0021.DataLock dataLock;
 		@Size(2)
 		public String languageOfCorrespondance;

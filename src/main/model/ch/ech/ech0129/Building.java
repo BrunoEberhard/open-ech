@@ -20,7 +20,7 @@ public class Building {
 	public String name;
 	public BuildingDate dateOfConstruction;
 	public BuildingDate dateOfRenovation;
-	public ch.openech.xml.DatePartiallyKnown dateOfDemolition;
+	public ch.openech.model.DatePartiallyKnown dateOfDemolition;
 	@Size(2)
 	public Integer numberOfFloors;
 	@Size(3)
@@ -37,7 +37,7 @@ public class Building {
 	public Integer buildingClass;
 	public BuildingStatus status;
 	public Coordinates coordinates;
-	public List<ch.openech.xml.NamedId> otherID;
+	public List<ch.openech.model.NamedId> otherID;
 	public Boolean civilDefenseShelter;
 	@Size(7)
 	public Integer quartersCode;

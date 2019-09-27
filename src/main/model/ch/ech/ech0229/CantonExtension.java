@@ -3,7 +3,7 @@ package ch.ech.ech0229;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
 
-import ch.openech.xml.Any;
+import ch.openech.model.Any;
 
 // handmade
 public class CantonExtension {

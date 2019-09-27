@@ -11,7 +11,7 @@ import org.minimalj.model.Keys;
 public class EstimationValue {
 	public static final EstimationValue $ = Keys.of(EstimationValue.class);
 
-	public final ch.openech.xml.NamedId localID = new ch.openech.xml.NamedId();
+	public final ch.openech.model.NamedId localID = new ch.openech.model.NamedId();
 	@Size(4)
 	public Integer baseYear;
 	public LocalDate validFrom;

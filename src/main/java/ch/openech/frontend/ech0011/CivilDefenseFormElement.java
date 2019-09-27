@@ -8,7 +8,7 @@ import org.minimalj.util.resources.Resources;
 
 import ch.ech.ech0021.CivilDefenseData;
 import ch.openech.frontend.YesNoFormElement;
-import ch.openech.xml.YesNo;
+import ch.openech.model.YesNo;
 
 public class CivilDefenseFormElement extends FormLookupFormElement<CivilDefenseData> implements LookupParser {
 

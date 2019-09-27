@@ -10,7 +10,7 @@ public class ConstructionProjectIdentification {
 	public static final ConstructionProjectIdentification $ = Keys.of(ConstructionProjectIdentification.class);
 
 	public Object id;
-	public List<ch.openech.xml.NamedId> localID;
+	public List<ch.openech.model.NamedId> localID;
 	@Size(9)
 	public Integer EPROID;
 	@Size(15)

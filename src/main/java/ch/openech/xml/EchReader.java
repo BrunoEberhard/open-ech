@@ -23,6 +23,8 @@ import org.minimalj.util.CloneHelper;
 import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;
 
+import ch.openech.model.Any;
+
 public class EchReader implements AutoCloseable {
 	public static final Logger LOG = Logger.getLogger(EchReader.class.getName());
 

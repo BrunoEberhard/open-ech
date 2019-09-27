@@ -8,7 +8,7 @@ import org.minimalj.model.Keys;
 public class FireServiceData {
 	public static final FireServiceData $ = Keys.of(FireServiceData.class);
 
-	public ch.openech.xml.YesNo fireService;
-	public ch.openech.xml.YesNo fireServiceLiability;
+	public ch.openech.model.YesNo fireService;
+	public ch.openech.model.YesNo fireServiceLiability;
 	public LocalDate fireServiceValidFrom;
 }

@@ -9,7 +9,7 @@ import org.minimalj.model.Keys;
 public class Institution {
 	public static final Institution $ = Keys.of(Institution.class);
 
-	public ch.openech.xml.UidStructure uid;
+	public ch.openech.model.UidStructure uid;
 	@NotEmpty
 	@Size(20)
 	public String lei;

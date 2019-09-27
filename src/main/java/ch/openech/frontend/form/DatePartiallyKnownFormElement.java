@@ -7,7 +7,7 @@ import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
 
-import ch.openech.xml.DatePartiallyKnown;
+import ch.openech.model.DatePartiallyKnown;
 
 
 public class DatePartiallyKnownFormElement extends FormatFormElement<DatePartiallyKnown> {

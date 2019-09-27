@@ -8,7 +8,7 @@ import org.minimalj.util.resources.Resources;
 
 import ch.ech.ech0021.MatrimonialInheritanceArrangementData;
 import ch.openech.frontend.YesNoFormElement;
-import ch.openech.xml.YesNo;
+import ch.openech.model.YesNo;
 
 public class MatrimonialInheritanceArrangementFormElement
 		extends FormLookupFormElement<MatrimonialInheritanceArrangementData> implements LookupParser {

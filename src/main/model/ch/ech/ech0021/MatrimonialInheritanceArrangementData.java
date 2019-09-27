@@ -10,6 +10,6 @@ public class MatrimonialInheritanceArrangementData {
 	public static final MatrimonialInheritanceArrangementData $ = Keys.of(MatrimonialInheritanceArrangementData.class);
 
 	@NotEmpty
-	public ch.openech.xml.YesNo matrimonialInheritanceArrangement;
+	public ch.openech.model.YesNo matrimonialInheritanceArrangement;
 	public LocalDate matrimonialInheritanceArrangementValidFrom;
 }

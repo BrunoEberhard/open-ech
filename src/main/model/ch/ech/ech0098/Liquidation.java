@@ -7,7 +7,7 @@ import org.minimalj.model.Keys;
 public class Liquidation {
 	public static final Liquidation $ = Keys.of(Liquidation.class);
 
-	public ch.openech.xml.DatePartiallyKnown liquidationDate;
-	public ch.openech.xml.DatePartiallyKnown liquidationStartDate;
+	public ch.openech.model.DatePartiallyKnown liquidationDate;
+	public ch.openech.model.DatePartiallyKnown liquidationStartDate;
 	public LiquidationReason liquidationReason;
 }

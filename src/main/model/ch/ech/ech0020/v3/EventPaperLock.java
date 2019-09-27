@@ -12,7 +12,7 @@ public class EventPaperLock {
 	@NotEmpty
 	public ch.ech.ech0044.PersonIdentification paperLockPerson;
 	@NotEmpty
-	public ch.openech.xml.YesNo paperLock;
+	public ch.openech.model.YesNo paperLock;
 	public LocalDate paperLockValidFrom;
 	public LocalDate paperLockValidTill;
 }

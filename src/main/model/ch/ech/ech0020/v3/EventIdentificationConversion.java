@@ -16,8 +16,8 @@ public class EventIdentificationConversion {
 
 		@Size(13)
 		public Long vn;
-		public final ch.openech.xml.NamedId localPersonIdBefore = new ch.openech.xml.NamedId();
-		public final ch.openech.xml.NamedId localPersonIdAfter = new ch.openech.xml.NamedId();
+		public final ch.openech.model.NamedId localPersonIdBefore = new ch.openech.model.NamedId();
+		public final ch.openech.model.NamedId localPersonIdAfter = new ch.openech.model.NamedId();
 	}
 	public List<IdentificationConversionPerson> identificationConversionPerson;
 	public LocalDate identificationValidFrom;

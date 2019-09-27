@@ -15,7 +15,7 @@ import ch.openech.frontend.ech0007.SwissMunicipalityFormElement;
 import ch.openech.frontend.ech0011.AddressInformationFormElement;
 import ch.openech.frontend.ech0011.ContactDataFormElement;
 import ch.openech.frontend.ech0011.GeneralPlaceFormElement;
-import ch.openech.xml.DatePartiallyKnown;
+import ch.openech.model.DatePartiallyKnown;
 
 
 public class EchForm<T> extends Form<T> {

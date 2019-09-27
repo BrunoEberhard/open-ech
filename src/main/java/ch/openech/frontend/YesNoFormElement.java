@@ -9,7 +9,7 @@ import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.util.resources.Resources;
 
-import ch.openech.xml.YesNo;
+import ch.openech.model.YesNo;
 
 public class YesNoFormElement extends AbstractFormElement<YesNo> {
 	private final Input<String> input;

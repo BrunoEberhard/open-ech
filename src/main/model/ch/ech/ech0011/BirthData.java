@@ -8,7 +8,7 @@ import org.minimalj.model.Keys;
 public class BirthData {
 	public static final BirthData $ = Keys.of(BirthData.class);
 
-	public final ch.openech.xml.DatePartiallyKnown dateOfBirth = new ch.openech.xml.DatePartiallyKnown();
+	public final ch.openech.model.DatePartiallyKnown dateOfBirth = new ch.openech.model.DatePartiallyKnown();
 	public final GeneralPlace placeOfBirth = new GeneralPlace();
 	@NotEmpty
 	public ch.ech.ech0044.Sex sex;

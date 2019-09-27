@@ -1,4 +1,4 @@
-package ch.openech.xml;
+package ch.openech.model;
 
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.NotEmpty;

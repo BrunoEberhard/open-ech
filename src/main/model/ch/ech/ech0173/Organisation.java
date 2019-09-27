@@ -18,7 +18,7 @@ public class Organisation {
 	public static class Foundation {
 		public static final Foundation $ = Keys.of(Foundation.class);
 
-		public ch.openech.xml.DatePartiallyKnown foundationDate;
+		public ch.openech.model.DatePartiallyKnown foundationDate;
 
 		public enum FoundationReason { _1, _2, _3;		}
 		public FoundationReason foundationReason;
@@ -27,8 +27,8 @@ public class Organisation {
 	public static class Liquidation {
 		public static final Liquidation $ = Keys.of(Liquidation.class);
 
-		public ch.openech.xml.DatePartiallyKnown liquidationDate;
-		public ch.openech.xml.DatePartiallyKnown liquidationStartDate;
+		public ch.openech.model.DatePartiallyKnown liquidationDate;
+		public ch.openech.model.DatePartiallyKnown liquidationStartDate;
 
 		public enum LiquidationReason { _1, _2, _3;		}
 		public LiquidationReason liquidationReason;

@@ -19,6 +19,6 @@ public class InvolvedPerson {
 	public String officialName;
 	@Size(100)
 	public String firstName;
-	public ch.openech.xml.DatePartiallyKnown dateOfBirth;
+	public ch.openech.model.DatePartiallyKnown dateOfBirth;
 	public ch.ech.ech0044.Sex sex;
 }

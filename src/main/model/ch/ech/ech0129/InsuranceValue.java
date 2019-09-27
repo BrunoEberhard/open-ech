@@ -9,7 +9,7 @@ import org.minimalj.model.Keys;
 public class InsuranceValue {
 	public static final InsuranceValue $ = Keys.of(InsuranceValue.class);
 
-	public final ch.openech.xml.NamedId localID = new ch.openech.xml.NamedId();
+	public final ch.openech.model.NamedId localID = new ch.openech.model.NamedId();
 	@NotEmpty
 	public LocalDate validFrom;
 	@NotEmpty

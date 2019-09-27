@@ -9,7 +9,7 @@ import org.minimalj.model.Keys;
 public class OccupationData {
 	public static final OccupationData $ = Keys.of(OccupationData.class);
 
-	public ch.openech.xml.UidStructure UID;
+	public ch.openech.model.UidStructure UID;
 	@Size(100)
 	public String employer;
 	public ch.ech.ech0010.AddressInformation placeOfWork;

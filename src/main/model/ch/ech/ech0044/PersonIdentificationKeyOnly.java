@@ -12,7 +12,7 @@ public class PersonIdentificationKeyOnly {
 	public Object id;
 	@Size(13)
 	public Long vn;
-	public final ch.openech.xml.NamedId localPersonId = new ch.openech.xml.NamedId();
-	public List<ch.openech.xml.NamedId> otherPersonId;
-	public List<ch.openech.xml.NamedId> euPersonId;
+	public final ch.openech.model.NamedId localPersonId = new ch.openech.model.NamedId();
+	public List<ch.openech.model.NamedId> otherPersonId;
+	public List<ch.openech.model.NamedId> euPersonId;
 }

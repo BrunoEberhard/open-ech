@@ -10,8 +10,8 @@ public class PlanningPermissionApplicationIdentification {
 	public static final PlanningPermissionApplicationIdentification $ = Keys.of(PlanningPermissionApplicationIdentification.class);
 
 	public Object id;
-	public List<ch.openech.xml.NamedId> localID;
-	public List<ch.openech.xml.NamedId> otherID;
+	public List<ch.openech.model.NamedId> localID;
+	public List<ch.openech.model.NamedId> otherID;
 	@Size(255)
 	public String dossierIdentification;
 }

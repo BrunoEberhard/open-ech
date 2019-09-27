@@ -18,5 +18,5 @@ public class DwellingIdentification {
 	@NotEmpty
 	@Size(3)
 	public Integer EWID;
-	public final ch.openech.xml.NamedId localID = new ch.openech.xml.NamedId();
+	public final ch.openech.model.NamedId localID = new ch.openech.model.NamedId();
 }

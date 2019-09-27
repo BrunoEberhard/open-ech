@@ -15,13 +15,13 @@ public class UidregInformation {
 	public UidregOrganisationType uidregOrganisationType;
 	public UidregLiquidationReason uidregLiquidationReason;
 	public List<UidRegSource> uidregSource;
-	public ch.openech.xml.UidStructure uidReplacement;
+	public ch.openech.model.UidStructure uidReplacement;
 	public Boolean uidregUidService;
 	@Size(255)
 	public String uidregTranslation;
 	
 	// in version 4 nicht mehr vorhanden
 	
-	public ch.openech.xml.UidStructure uidHeadQuarter;
+	public ch.openech.model.UidStructure uidHeadQuarter;
 	
 }

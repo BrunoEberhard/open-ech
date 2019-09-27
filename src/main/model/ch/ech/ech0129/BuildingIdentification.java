@@ -30,7 +30,7 @@ public class BuildingIdentification {
 	public RealestateType realestateType;
 	@Size(12)
 	public String officialBuildingNo;
-	public List<ch.openech.xml.NamedId> localID;
+	public List<ch.openech.model.NamedId> localID;
 	@NotEmpty
 	@Size(4)
 	public Integer municipality;

@@ -26,9 +26,9 @@ public class EventAddressVerification {
 
 			@Size(13)
 			public Long vn;
-			public final ch.openech.xml.NamedId localPersonId = new ch.openech.xml.NamedId();
-			public List<ch.openech.xml.NamedId> otherPersonId;
-			public List<ch.openech.xml.NamedId> euPersonId;
+			public final ch.openech.model.NamedId localPersonId = new ch.openech.model.NamedId();
+			public List<ch.openech.model.NamedId> otherPersonId;
+			public List<ch.openech.model.NamedId> euPersonId;
 			@NotEmpty
 			@Size(100)
 			public String officialName;
@@ -39,7 +39,7 @@ public class EventAddressVerification {
 			public String originalName;
 			@NotEmpty
 			public ch.ech.ech0044.Sex sex;
-			public final ch.openech.xml.DatePartiallyKnown dateOfBirth = new ch.openech.xml.DatePartiallyKnown();
+			public final ch.openech.model.DatePartiallyKnown dateOfBirth = new ch.openech.model.DatePartiallyKnown();
 			@Size(100)
 			public String callName;
 			public ch.ech.ech0011.ForeignerName nameOnForeignPassport;

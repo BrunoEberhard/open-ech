@@ -7,6 +7,6 @@ import org.minimalj.model.Keys;
 public class Foundation {
 	public static final Foundation $ = Keys.of(Foundation.class);
 
-	public ch.openech.xml.DatePartiallyKnown foundationDate;
+	public ch.openech.model.DatePartiallyKnown foundationDate;
 	public FoundationReason foundationReason;
 }

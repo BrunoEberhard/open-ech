@@ -16,7 +16,7 @@ import ch.ech.ech0044.PersonIdentification;
 import ch.ech.ech0044.Sex;
 import ch.openech.frontend.ech0011.PersonForm;
 import ch.openech.frontend.ech0011.PersonPage;
-import ch.openech.xml.YesNo;
+import ch.openech.model.YesNo;
 
 public class AddPersonEditor extends NewObjectEditor<Person> {
 

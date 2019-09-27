@@ -29,8 +29,8 @@ import ch.ech.ech0044.Sex;
 import ch.ech.ech0058.Action;
 import ch.ech.ech0071.CantonAbbreviation;
 import ch.openech.model.EchSchemaValidation;
+import ch.openech.model.YesNo;
 import ch.openech.xml.EchWriter;
-import ch.openech.xml.YesNo;
 
 public class EventBaseDeliveryTest {
 

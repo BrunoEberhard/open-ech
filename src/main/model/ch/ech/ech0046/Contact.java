@@ -9,7 +9,7 @@ public class Contact {
 	public static final Contact $ = Keys.of(Contact.class);
 
 	public Object id;
-	public ch.openech.xml.NamedId localID;
+	public ch.openech.model.NamedId localID;
 	public List<Address> address;
 	public List<Email> email;
 	public List<Phone> phone;

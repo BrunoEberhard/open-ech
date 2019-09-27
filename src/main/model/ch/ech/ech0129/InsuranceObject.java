@@ -10,7 +10,7 @@ import org.minimalj.model.Keys;
 public class InsuranceObject {
 	public static final InsuranceObject $ = Keys.of(InsuranceObject.class);
 
-	public final ch.openech.xml.NamedId localID = new ch.openech.xml.NamedId();
+	public final ch.openech.model.NamedId localID = new ch.openech.model.NamedId();
 	public LocalDate startDate;
 	public LocalDate endDate;
 	@NotEmpty

@@ -9,7 +9,7 @@ import org.minimalj.model.Keys;
 public class UidRegSource {
 	public static final UidRegSource $ = Keys.of(UidRegSource.class);
 
-	public final ch.openech.xml.UidStructure uid = new ch.openech.xml.UidStructure();
+	public final ch.openech.model.UidStructure uid = new ch.openech.model.UidStructure();
 
 	public enum RelationType { Responsible, Registered, Subscribed;	}
 	@NotEmpty

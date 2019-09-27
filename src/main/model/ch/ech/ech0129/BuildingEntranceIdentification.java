@@ -16,5 +16,5 @@ public class BuildingEntranceIdentification {
 	public Integer EGAID;
 	@Size(2)
 	public Integer EDID;
-	public final ch.openech.xml.NamedId localID = new ch.openech.xml.NamedId();
+	public final ch.openech.model.NamedId localID = new ch.openech.model.NamedId();
 }

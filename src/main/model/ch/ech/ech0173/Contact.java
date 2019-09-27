@@ -12,7 +12,7 @@ public class Contact {
 	public static final Contact $ = Keys.of(Contact.class);
 
 	public Object id;
-	public ch.openech.xml.NamedId localID;
+	public ch.openech.model.NamedId localID;
 	public static class Address {
 		public static final Address $ = Keys.of(Address.class);
 

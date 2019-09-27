@@ -10,8 +10,8 @@ public class OrganisationSearchCriteria {
 	public static final OrganisationSearchCriteria $ = Keys.of(OrganisationSearchCriteria.class);
 
 	public Object id;
-	public ch.openech.xml.UidStructure uid;
-	public List<ch.openech.xml.NamedId> OtherOrganisationId;
+	public ch.openech.model.UidStructure uid;
+	public List<ch.openech.model.NamedId> OtherOrganisationId;
 	@Size(255)
 	public String organisationName;
 	@Size(255)

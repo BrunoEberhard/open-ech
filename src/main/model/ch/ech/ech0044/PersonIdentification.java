@@ -24,10 +24,10 @@ public class PersonIdentification implements Rendering {
 	@Size(13)
 	public Long vn;
 	// bei "Light" nicht zwingend, sonst schon
-	public final ch.openech.xml.NamedId localPersonId = new ch.openech.xml.NamedId();
-	public List<ch.openech.xml.NamedId> otherPersonId;
+	public final ch.openech.model.NamedId localPersonId = new ch.openech.model.NamedId();
+	public List<ch.openech.model.NamedId> otherPersonId;
 	// bei "Light" nicht vorhanden
-	public List<ch.openech.xml.NamedId> euPersonId;
+	public List<ch.openech.model.NamedId> euPersonId;
 	@Size(100)
 	@NotEmpty
 	public String officialName, firstName;
@@ -35,7 +35,7 @@ public class PersonIdentification implements Rendering {
 	public String originalName;
 	// bei "Light" nicht zwingend, sonst schon
 	public Sex sex;
-	public final ch.openech.xml.DatePartiallyKnown dateOfBirth = new ch.openech.xml.DatePartiallyKnown();
+	public final ch.openech.model.DatePartiallyKnown dateOfBirth = new ch.openech.model.DatePartiallyKnown();
 
 	public boolean isLight() {
 		return EmptyObjects.isEmpty(localPersonId) || sex == null || EmptyObjects.isEmpty(dateOfBirth);

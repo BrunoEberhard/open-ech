@@ -19,7 +19,7 @@ public class GroupRelationship {
 	public static class GroupParticipant {
 		public static final GroupParticipant $ = Keys.of(GroupParticipant.class);
 
-		public final ch.openech.xml.UidStructure participant = new ch.openech.xml.UidStructure();
+		public final ch.openech.model.UidStructure participant = new ch.openech.model.UidStructure();
 		public OrganisationMembershipRole participantRole;
 	}
 	public List<GroupParticipant> groupParticipant;

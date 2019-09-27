@@ -14,7 +14,7 @@ public class LockData {
 	public LocalDate dataLockValidFrom;
 	public LocalDate dataLockValidTill;
 	@NotEmpty
-	public ch.openech.xml.YesNo paperLock;
+	public ch.openech.model.YesNo paperLock;
 	public LocalDate paperLockValidFrom;
 	public LocalDate paperLockValidTill;
 }

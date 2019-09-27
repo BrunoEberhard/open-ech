@@ -26,7 +26,10 @@ import org.minimalj.metamodel.model.MjProperty;
 import org.minimalj.metamodel.model.MjProperty.MjPropertyType;
 import org.minimalj.util.StringUtils;
 
+import ch.openech.model.DatePartiallyKnown;
 import ch.openech.model.EchSchemaValidation;
+import ch.openech.model.UidStructure;
+import ch.openech.model.YesNo;
 import ch.openech.xml.write.EchNamespaceUtil;
 
 public class EchSchemas {

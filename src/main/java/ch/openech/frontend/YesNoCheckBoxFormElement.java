@@ -5,7 +5,7 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 
-import ch.openech.xml.YesNo;
+import ch.openech.model.YesNo;
 
 public class YesNoCheckBoxFormElement extends AbstractFormElement<YesNo> {
 	private final Input<Boolean> checkBox;

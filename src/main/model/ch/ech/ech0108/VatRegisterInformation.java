@@ -14,5 +14,5 @@ public class VatRegisterInformation {
 	public VatEntryStatus vatEntryStatus;
 	public LocalDate vatEntryDate;
 	public LocalDate vatLiquidationDate;
-	public ch.openech.xml.UidStructure uidVat;
+	public ch.openech.model.UidStructure uidVat;
 }

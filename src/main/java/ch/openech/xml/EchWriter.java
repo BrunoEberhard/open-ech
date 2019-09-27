@@ -20,6 +20,7 @@ import org.minimalj.util.StringUtils;
 import org.w3c.dom.Element;
 
 import ch.ech.ech0008.Country;
+import ch.openech.model.Any;
 import ch.openech.xml.write.IndentingXMLStreamWriter;
 
 public class EchWriter implements AutoCloseable {

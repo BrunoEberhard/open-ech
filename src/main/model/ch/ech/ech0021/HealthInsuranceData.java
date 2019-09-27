@@ -13,7 +13,7 @@ public class HealthInsuranceData {
 	public static final HealthInsuranceData $ = Keys.of(HealthInsuranceData.class);
 
 	@NotEmpty
-	public ch.openech.xml.YesNo healthInsured;
+	public ch.openech.model.YesNo healthInsured;
 	public Insurance insurance = new Insurance();
 	public LocalDate healthInsuranceValidFrom;
 

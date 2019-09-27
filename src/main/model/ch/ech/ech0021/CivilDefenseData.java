@@ -8,6 +8,6 @@ import org.minimalj.model.Keys;
 public class CivilDefenseData {
 	public static final CivilDefenseData $ = Keys.of(CivilDefenseData.class);
 
-	public ch.openech.xml.YesNo civilDefense;
+	public ch.openech.model.YesNo civilDefense;
 	public LocalDate civilDefenseValidFrom;
 }

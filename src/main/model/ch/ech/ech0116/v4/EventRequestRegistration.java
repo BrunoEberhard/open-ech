@@ -11,7 +11,7 @@ public class EventRequestRegistration {
 
 	public Object id;
 	public final ReportingRegister requestingRegister = new ReportingRegister();
-	public List<ch.openech.xml.UidStructure> uid;
+	public List<ch.openech.model.UidStructure> uid;
 	@NotEmpty
 	public InfoAboRegistrationType infoAboRegistrationType;
 	public byte[] extension;

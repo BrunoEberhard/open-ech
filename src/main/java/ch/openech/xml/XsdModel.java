@@ -38,6 +38,10 @@ import ch.ech.ech0010.AddressInformation;
 import ch.ech.ech0010.MailAddress;
 import ch.ech.ech0011.Destination;
 import ch.ech.ech0044.PersonIdentification;
+import ch.openech.model.DatePartiallyKnown;
+import ch.openech.model.NamedId;
+import ch.openech.model.UidStructure;
+import ch.openech.model.YesNo;
 import ch.openech.xml.write.EchNamespaceUtil;
 
 public class XsdModel {

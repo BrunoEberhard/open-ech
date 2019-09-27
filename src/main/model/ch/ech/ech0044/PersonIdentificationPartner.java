@@ -13,8 +13,8 @@ public class PersonIdentificationPartner {
 	public Object id;
 	@Size(13)
 	public Long vn;
-	public ch.openech.xml.NamedId localPersonId;
-	public List<ch.openech.xml.NamedId> otherPersonId;
+	public ch.openech.model.NamedId localPersonId;
+	public List<ch.openech.model.NamedId> otherPersonId;
 	@NotEmpty
 	@Size(100)
 	public String officialName;
@@ -22,5 +22,5 @@ public class PersonIdentificationPartner {
 	@Size(100)
 	public String firstName;
 	public Sex sex;
-	public ch.openech.xml.DatePartiallyKnown dateOfBirth;
+	public ch.openech.model.DatePartiallyKnown dateOfBirth;
 }

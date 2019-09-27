@@ -11,7 +11,7 @@ public class EstimationObject {
 	public static final EstimationObject $ = Keys.of(EstimationObject.class);
 
 	public Object id;
-	public final ch.openech.xml.NamedId localID = new ch.openech.xml.NamedId();
+	public final ch.openech.model.NamedId localID = new ch.openech.model.NamedId();
 	@Size(7)
 	public Integer volume;
 	@Size(4)

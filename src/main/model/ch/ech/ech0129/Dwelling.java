@@ -10,15 +10,15 @@ public class Dwelling {
 	public static final Dwelling $ = Keys.of(Dwelling.class);
 
 	public Object id;
-	public List<ch.openech.xml.NamedId> localID;
+	public List<ch.openech.model.NamedId> localID;
 	@Size(12)
 	public String administrativeDwellingNo;
 	@Size(3)
 	public Integer EWID;
 	@Size(12)
 	public String physicalDwellingNo;
-	public ch.openech.xml.DatePartiallyKnown dateOfConstruction;
-	public ch.openech.xml.DatePartiallyKnown dateOfDemolition;
+	public ch.openech.model.DatePartiallyKnown dateOfConstruction;
+	public ch.openech.model.DatePartiallyKnown dateOfDemolition;
 	@Size(2)
 	public Integer noOfHabitableRooms;
 	@Size(4)
