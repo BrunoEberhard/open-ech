@@ -33,7 +33,7 @@ public class MailAddressFormElement extends FormLookupFormElement<MailAddress> {
 
 	@Override
 	protected Form<MailAddress> createForm() {
-		return new AddressForm(true, true, true, false);
+        return new AddressForm(Form.EDITABLE, true, true, false);
 	}
 
 }

@@ -16,7 +16,7 @@ public class XmlPreview {
 	private IDialog dialog;
 	
 	public XmlPreview(List<String> xmls) {
-		Form<XmlPreviewValue> form = new Form<XmlPreviewValue>(false) {
+        Form<XmlPreviewValue> form = new Form<XmlPreviewValue>(Form.READ_ONLY) {
 			@Override
 			protected int getColumnWidthPercentage() {
 				return 400;

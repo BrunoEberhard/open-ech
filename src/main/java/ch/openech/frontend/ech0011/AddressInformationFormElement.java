@@ -33,7 +33,7 @@ public class AddressInformationFormElement extends FormLookupFormElement<Address
 
 	@Override
 	protected Form<AddressInformation> createForm() {
-		return new AddressInformationForm(true, true);
+        return new AddressInformationForm(Form.EDITABLE, true);
 	}
 
 }

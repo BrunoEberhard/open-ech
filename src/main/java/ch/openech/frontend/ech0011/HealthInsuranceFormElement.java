@@ -120,7 +120,7 @@ public class HealthInsuranceFormElement extends FormLookupFormElement<HealthInsu
 		public class InsuranceAddressEditor extends SimpleEditor<MailAddress> {
 			@Override
 			protected Form<MailAddress> createForm() {
-				return new AddressForm(true, true, false, true);
+                return new AddressForm(Form.EDITABLE, true, false, true);
 			}
 
 			@Override
