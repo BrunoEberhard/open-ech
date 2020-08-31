@@ -22,8 +22,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.minimalj.util.StringUtils;
-
 import ch.openech.xml.write.EchNamespaceUtil;
 
 // Ausgabe kann in eclipse user catalog kopiert werden in
@@ -49,30 +47,33 @@ public class EchXmlDownload {
 			URL url = new URL(schemaLocation);
 			String fileName = convert(url);
 
-			if ("http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-4.xsd".equals(schemaLocation)) {
-				schemaLocation = "http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-3.xsd";
-			}
-			if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T0.xsd".equals(schemaLocation)) {
-				schemaLocation = "http://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T0.xsd";
-			}
-			if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T1.xsd".equals(schemaLocation)) {
-				schemaLocation = "http://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T1.xsd";
-			}
-			if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T2.xsd".equals(schemaLocation)) {
-				schemaLocation = "http://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T2.xsd";
-			}
-			if ("http://www.ech.ch/xmlns/eCH-0148/1/eCH-0148-1-2.xsd".equals(schemaLocation)) {
-				schemaLocation = "https://www.ech.ch/dokument/bcc30760-77bf-4ed9-ad64-89cb5c6603bb";
-			}
-			if ("http://www.ech.ch/xmlns/eCH-0213/1.0/eCH-0213-commons-1-0.xsd".equals(schemaLocation)) {
-				schemaLocation = "https://www.ech.ch/dokument/2fc0d695-874c-45ab-b829-62df35b188a0";
-			}
-			if ("http://www.ech.ch/xmlns/eCH-0215/1.0/eCH-0215-1-0.xsd".equals(schemaLocation)) {
-				schemaLocation = "http://www.ech.ch/xmlns/eCH-0215/1/eCH-0215-1-0.xsd";
-			}
-			if ("http://www.ech.ch/xmlns/eCH-0215/2.0/eCH-0215-2-0.xsd".equals(schemaLocation)) {
-				schemaLocation = "http://www.ech.ch/xmlns/eCH-0215/2/eCH-0215-2-0.xsd";
-			}
+            if ("http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-4.xsd".equals(schemaLocation)) {
+                schemaLocation = "http://www.ech.ch/xmlns/eCH-0084/1/eCH-0084-commons-1-3.xsd";
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T0.xsd".equals(schemaLocation)) {
+                schemaLocation = "https://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T0.xsd";
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T1.xsd".equals(schemaLocation)) {
+                schemaLocation = "https://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T1.xsd";
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0147/1/eCH-0147T2.xsd".equals(schemaLocation)) {
+                schemaLocation = "https://share.ech.ch/xmlns/eCH-0147/1.0/eCH-0147T2.xsd";
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0148/1/eCH-0148-1-2.xsd".equals(schemaLocation)) {
+                schemaLocation = "https://www.ech.ch/dokument/bcc30760-77bf-4ed9-ad64-89cb5c6603bb";
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0213/1.0/eCH-0213-commons-1-0.xsd".equals(schemaLocation)) {
+                schemaLocation = "https://www.ech.ch/dokument/2fc0d695-874c-45ab-b829-62df35b188a0";
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0215/1.0/eCH-0215-1-0.xsd".equals(schemaLocation)) {
+                schemaLocation = "http://www.ech.ch/xmlns/eCH-0215/1/eCH-0215-1-0.xsd";
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0215/2.0/eCH-0215-2-0.xsd".equals(schemaLocation)) {
+                schemaLocation = "http://www.ech.ch/xmlns/eCH-0215/2/eCH-0215-2-0.xsd";
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0229/1/eCH-0229-1-0.xsd".equals(schemaLocation)) {
+                schemaLocation = "http://www.ech.ch/de/dokument/987ab63b-d8ec-4139-a19b-fb53faacea86";
+            }
 
 			url = new URL(schemaLocation);
 			File file = new File(fileName);
@@ -166,18 +167,17 @@ public class EchXmlDownload {
 	private void imprt(StartElement startElement) throws XMLStreamException {
 		// <xs:import namespace="http://www.ech.ch/xmlns/eCH-0011/8"
 		// schemaLocation="http://www.ech.ch/xmlns/eCH-0011/8/eCH-0011-8-1.xsd"/>
-		String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
+        if (startElement.getAttributeByName(new QName("schemaLocation")) != null) {
+            String schemaLocation = startElement.getAttributeByName(new QName("schemaLocation")).getValue();
 
-		if (!StringUtils.isEmpty(schemaLocation)) {
-			if (!schemaLocation.contains("/")) {
-				schemaLocation = this.schemaLocation.substring(0, this.schemaLocation.lastIndexOf("/") + 1)
-						+ schemaLocation;
-			}
-			if ("http://www.ech.ch/xmlns/eCH-0213-commons/1/eCH-0213-commons-1-0.xsd".equals(schemaLocation)) {
-				schemaLocation = "http://www.ech.ch/xmlns/eCH-0213/1.0/eCH-0213-commons-1-0.xsd";
-			}
-			new EchXmlDownload(schemaLocation).download();
-		}
+            if (!schemaLocation.contains("/")) {
+                schemaLocation = this.schemaLocation.substring(0, this.schemaLocation.lastIndexOf("/") + 1) + schemaLocation;
+            }
+            if ("http://www.ech.ch/xmlns/eCH-0213-commons/1/eCH-0213-commons-1-0.xsd".equals(schemaLocation)) {
+                schemaLocation = "http://www.ech.ch/xmlns/eCH-0213/1.0/eCH-0213-commons-1-0.xsd";
+            }
+            new EchXmlDownload(schemaLocation).download();
+        }
 
 	}
 
