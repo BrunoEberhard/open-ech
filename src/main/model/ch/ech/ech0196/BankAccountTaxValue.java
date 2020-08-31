@@ -7,7 +7,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:31:03.597")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.430261500")
 public class BankAccountTaxValue {
 	public static final BankAccountTaxValue $ = Keys.of(BankAccountTaxValue.class);
 

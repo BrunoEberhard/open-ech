@@ -4,7 +4,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:31:03.963")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.467260400")
 public class DecisionAuthority {
 	public static final DecisionAuthority $ = Keys.of(DecisionAuthority.class);
 

@@ -2,7 +2,7 @@ package ch.ech.ech0229;
 
 import javax.annotation.Generated;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:31:04.291")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.482260400")
 public enum FederalAbbreviation {
 	CH;
 }

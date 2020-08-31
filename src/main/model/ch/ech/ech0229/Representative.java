@@ -3,7 +3,7 @@ package ch.ech.ech0229;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:31:04.369")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.486260200")
 public class Representative {
 	public static final Representative $ = Keys.of(Representative.class);
 

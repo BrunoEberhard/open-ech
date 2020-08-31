@@ -2,7 +2,7 @@ package ch.ech.ech0129;
 
 import javax.annotation.Generated;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:31:02.488")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.343085900")
 public enum TypeOfConstruction {
 	_6211, _6212, _6213, _6214, _6219, _6221, _6222, _6223, _6231, _6232, _6233, _6234, _6235, _6241, _6242, _6243, _6244, _6245, _6249, _6251, _6252, _6253, _6254, _6255, _6256, _6257, _6258, _6259, _6261, _6262, _6269, _6271, _6272, _6273, _6274, _6276, _6278, _6279, _6281, _6282, _6283, _6291, _6292, _6293, _6294, _6295, _6296, _6299;
 }

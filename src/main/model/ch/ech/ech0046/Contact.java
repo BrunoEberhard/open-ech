@@ -4,7 +4,7 @@ import java.util.List;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:31:01.203")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.038114")
 public class Contact {
 	public static final Contact $ = Keys.of(Contact.class);
 

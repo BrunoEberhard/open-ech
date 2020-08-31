@@ -2,7 +2,7 @@ package ch.ech.ech0229;
 
 import javax.annotation.Generated;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:31:04.338")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.484260300")
 public enum TaxableResultIncreaseReason {
 	unjustifiedBusinessDepreciationAndCostsForAcquisitionProductionOrIncreaseInValueOfAssets, provisionsNotSubstantiatedByBusiness, unallowableDepreciationOfRevaluedAssets, contributionsToReserves, concealedProfitDistributionsAndUnjustifiedPaymentsToThirdParties, depreciationAndValueAdjustmentOfInvestmentsNoLongerJustifiedInBusinessTerms, excessiveGrants, interestOnHiddenEquity, paymentsOfBribesToPublicOfficials, eliminationOfBusinessJustificationOfProvisions, bookprofitsFromHigherValuationOfRealEstate, bookprofitsFromHigherValuationOfInvestments, anticipatedProfits, liquidationGains, nonDeductibleProvisionsOrDepositsInSpecialFundsOrReserves, nonDeductibleDepreciation, taxableIncomeNotCreditedToIncomeStatement, otherReason;
 }

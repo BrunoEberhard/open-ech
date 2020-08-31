@@ -5,7 +5,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:30:59.983")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.834333700")
 public class EventCorrectParentalRelationship {
 	public static final EventCorrectParentalRelationship $ = Keys.of(EventCorrectParentalRelationship.class);
 

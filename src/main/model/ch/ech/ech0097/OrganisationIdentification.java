@@ -6,7 +6,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:31:01.667")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.159119200")
 public class OrganisationIdentification {
 	public static final OrganisationIdentification $ = Keys.of(OrganisationIdentification.class);
 

@@ -5,7 +5,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2019-09-24T07:30:59.452")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.773317800")
 public class SwissMunicipalityWithoutBFS {
 	public static final SwissMunicipalityWithoutBFS $ = Keys.of(SwissMunicipalityWithoutBFS.class);
 
