@@ -4,7 +4,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.828333100")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class EventMoveOut {
 	public static final EventMoveOut $ = Keys.of(EventMoveOut.class);
 

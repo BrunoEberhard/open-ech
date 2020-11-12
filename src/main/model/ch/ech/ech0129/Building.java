@@ -6,7 +6,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.358114700")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class Building {
 	public static final Building $ = Keys.of(Building.class);
 

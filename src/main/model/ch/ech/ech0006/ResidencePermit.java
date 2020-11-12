@@ -2,7 +2,7 @@ package ch.ech.ech0006;
 
 import javax.annotation.Generated;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.582287900")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public enum ResidencePermit {
 	_01, _0102, _02, _0201, _0202, _03, _0301, _0302, _04, _0401, _0402, _05, _0503, _06, _0601, _0602, _060101, _060201, _060102, _060202, _07, _0701, _0702, _070101, _070201, _070102, _070202, _070103, _070104, _070204, _070105, _070205, _070206, _070907, _08, _0804, _09, _0905, _10, _1006, _100601, _100602, _100603, _11, _1107, _12, _1208, _1300;
 }

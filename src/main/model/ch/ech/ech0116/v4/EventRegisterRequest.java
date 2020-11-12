@@ -3,7 +3,7 @@ package ch.ech.ech0116.v4;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:24.329083400")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class EventRegisterRequest {
 	public static final EventRegisterRequest $ = Keys.of(EventRegisterRequest.class);
 

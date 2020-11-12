@@ -3,7 +3,7 @@ package ch.ech.ech0006;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.586287")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class PermitRoot {
 	public static final PermitRoot $ = Keys.of(PermitRoot.class);
 

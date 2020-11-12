@@ -6,7 +6,7 @@ import org.minimalj.model.annotation.Size;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.837334600")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class EventIdentificationConversion {
 	public static final EventIdentificationConversion $ = Keys.of(EventIdentificationConversion.class);
 

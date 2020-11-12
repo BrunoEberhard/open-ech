@@ -4,7 +4,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.817335700")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class EventUndoCitizen {
 	public static final EventUndoCitizen $ = Keys.of(EventUndoCitizen.class);
 

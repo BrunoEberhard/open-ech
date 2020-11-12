@@ -5,7 +5,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.905523600")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class File {
 	public static final File $ = Keys.of(File.class);
 

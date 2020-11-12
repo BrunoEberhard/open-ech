@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.803323")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class NameInfo {
 	public static final NameInfo $ = Keys.of(NameInfo.class);
 

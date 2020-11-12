@@ -5,7 +5,7 @@ import org.minimalj.model.annotation.NotEmpty;
 import javax.annotation.Generated;
 import org.minimalj.model.Keys;
 
-@Generated(value="org.minimalj.metamodel.generator.ClassGenerator", date = "2020-06-11T15:12:23.849333600")
+@Generated(value="org.minimalj.metamodel.generator.ClassGenerator")
 public class NegativeReport {
 	public static final NegativeReport $ = Keys.of(NegativeReport.class);
 
