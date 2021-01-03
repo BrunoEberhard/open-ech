@@ -21,7 +21,7 @@ public class AddressForm extends Form<MailAddress> {
 	private MailAddress address;
 	
 	public AddressForm(boolean editable, boolean swiss, boolean person, boolean organisation) {
-		super(editable, 4);
+		super(editable, 4, 70);
 		if (organisation) {
 			line($.names.organisationName);
 			line($.names.organisationNameAddOn1);
@@ -51,11 +51,6 @@ public class AddressForm extends Form<MailAddress> {
 	public void setObject(MailAddress address) {
 		this.address = address;
 		super.setObject(address);
-	}
-
-	@Override
-	protected int getColumnWidthPercentage() {
-		return 70;
 	}
 
 	public static class TownUpdater implements Form.PropertyUpdater<Integer, String, MailAddress> {

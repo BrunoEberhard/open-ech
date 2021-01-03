@@ -21,7 +21,7 @@ public class AddressInformationForm extends Form<AddressInformation> {
 	private AddressInformation address;
 	
 	public AddressInformationForm(boolean editable, boolean swiss) {
-		super(editable, 4);
+		super(editable, 4, 70);
 		line($.addressLine1);
 		line($.addressLine2);
 		line(Form.GROW_FIRST_ELEMENT, $.street, $.houseNumber, $.dwellingNumber);
@@ -41,11 +41,6 @@ public class AddressInformationForm extends Form<AddressInformation> {
 	public void setObject(AddressInformation address) {
 		this.address = address;
 		super.setObject(address);
-	}
-
-	@Override
-	protected int getColumnWidthPercentage() {
-		return 70;
 	}
 
 	public static class TownUpdater implements Form.PropertyUpdater<Integer, String, AddressInformation> {
