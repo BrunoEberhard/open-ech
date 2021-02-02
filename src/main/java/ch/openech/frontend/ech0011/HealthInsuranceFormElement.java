@@ -90,7 +90,7 @@ public class HealthInsuranceFormElement extends FormLookupFormElement<HealthInsu
 
 		public class InsuranceClearAction extends Action {
 			@Override
-			public void action() {
+			public void run() {
 				InsuranceFormElement.this.setValueInternal(null);
 			}
 		}
@@ -150,7 +150,7 @@ public class HealthInsuranceFormElement extends FormLookupFormElement<HealthInsu
 
 		public class ClearInsuranceAction extends Action {
 			@Override
-			public void action() {
+			public void run() {
 				InsuranceFormElement.this.setValueInternal(new Insurance());
 			}
 		}

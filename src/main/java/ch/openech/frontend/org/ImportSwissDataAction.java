@@ -11,7 +11,7 @@ public class ImportSwissDataAction extends Action {
 	}
 
 	@Override
-	public void action() {
+	public void run() {
 		Backend.execute(new ImportSwissDataTransaction());
 	}
 	

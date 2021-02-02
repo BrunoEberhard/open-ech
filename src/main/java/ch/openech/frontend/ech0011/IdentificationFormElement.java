@@ -85,7 +85,7 @@ public class IdentificationFormElement extends AbstractFormElement<Identificatio
 
 	public class PersonLookupAction extends Action {
 		@Override
-		public void action() {
+		public void run() {
 			personSearchDialog = new SearchDialog<Person>(query -> Backend.find(Person.class, By.search(query)),
 					new Object[] { Person.$.nameData.officialName }, false, new PersonSearchDialogActionListener(),
 					Collections.emptyList());
@@ -129,14 +129,14 @@ public class IdentificationFormElement extends AbstractFormElement<Identificatio
 
 	public class IdentificationClearAction extends Action {
 		@Override
-		public void action() {
+		public void run() {
 			IdentificationFormElement.this.setValue(null);
 		}
 	}
 
 	public class OrganisationLookupAction extends Action {
 		@Override
-		public void action() {
+		public void run() {
 			organisationSearchDialog = new SearchDialog<Organisation>(
 					query -> Backend.find(Organisation.class, By.search(query)),
 					new Object[] { Organisation.$.organisationIdentification.organisationName }, false,

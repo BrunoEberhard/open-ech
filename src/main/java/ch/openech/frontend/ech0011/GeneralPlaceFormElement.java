@@ -135,7 +135,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 	private class UnknownAction extends Action {
 
 		@Override
-		public void action() {
+		public void run() {
 			GeneralPlace object = new GeneralPlace();
 			object.unknown = Unknown._0;
 			GeneralPlaceFormElement.this.setValue(object);

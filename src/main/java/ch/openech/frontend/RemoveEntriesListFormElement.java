@@ -22,7 +22,7 @@ public class RemoveEntriesListFormElement<T> extends ListFormElement<T> {
 		}
 
 		@Override
-		public void action() {
+		public void run() {
 			getValue().remove(object);
 			setValue(getValue());
 		}

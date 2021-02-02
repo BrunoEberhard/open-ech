@@ -25,7 +25,7 @@ public class XmlTextFormFormElement extends ListFormElement<String> {
 		}
 		
 		@Override
-		public void action() {
+		public void run() {
 			String message = EchSchemaValidation.validate(xml);
 			Frontend.showMessage(message);
 		}

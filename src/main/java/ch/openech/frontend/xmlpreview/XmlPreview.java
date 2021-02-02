@@ -23,7 +23,7 @@ public class XmlPreview {
 		
 		Action closeAction = new Action(Resources.getString("CancelAction")) {
 			@Override
-			public void action() {
+			public void run() {
 				dialog.closeDialog();
 			}
 		};
