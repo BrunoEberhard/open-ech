@@ -17,9 +17,11 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.minimalj.model.Code;
 import org.minimalj.model.properties.Properties;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.util.CloneHelper;
+import org.minimalj.util.Codes;
 import org.minimalj.util.FieldUtils;
 import org.minimalj.util.StringUtils;
 
@@ -104,12 +106,12 @@ public class EchReader implements AutoCloseable {
 			String valueString = attribute.getValue();
 			PropertyInterface property = Properties.getProperty(result.getClass(), attributeName);
 			if (property != null) {
-				Object value = FieldUtils.parse(valueString, property.getClazz());
+				Object value = parse(valueString, property.getClazz());
 				property.setValue(result, value);
 			}
 		}
 	}
-
+	
 	private Class<?> getClass(String name, String namespace) {
 		try {
 			String packageName = EchSchemas.packageName(namespace);
@@ -136,14 +138,11 @@ public class EchReader implements AutoCloseable {
 		T result = null;
 		while (xml.hasNext()) {
 			XMLEvent event = xml.nextEvent();
+			if (result == null && (event.isStartElement() || event.isEndElement())) {
+				result = CloneHelper.newInstance(clazz);
+			}
 			if (event.isStartElement()) {
-				if (result == null) {
-					result = CloneHelper.newInstance(clazz);
-				}
-				
 				StartElement startElement = event.asStartElement();
-				readAttributes(startElement, result);
-				
 				String elementName = startElement.getName().getLocalPart();
 				elementName = StringUtils.lowerFirstChar(elementName);
 				
@@ -156,6 +155,7 @@ public class EchReader implements AutoCloseable {
 					boolean isList = FieldUtils.isList(property.getClazz());
 					if (isList) {
 						Object value = read(property.getGenericClass());
+						readAttributes(startElement, value);
 						if (property.getValue(result) == null) {
 							property.setValue(result, new ArrayList<>());
 						}
@@ -163,6 +163,7 @@ public class EchReader implements AutoCloseable {
 					} else {
 						Object value = read(property.getClazz());
 						if (value != null) {
+							readAttributes(startElement, value);
 							property.setValue(result, value);
 						}
 					}
@@ -187,19 +188,27 @@ public class EchReader implements AutoCloseable {
 			} else if (event.isCharacters()) {
 				String s = event.asCharacters().getData().trim();
 				if (!s.isEmpty()) {
-					result = FieldUtils.parse(s, clazz);
-					if (result == null && clazz.isEnum()) {
-						result = FieldUtils.parse("_" + s, clazz);
-					}
+					result = parse(s, clazz);
 				}
 			} else if (event.isEndElement()) {
-				if (result == null && clazz == String.class) {
-					result = (T) "";
-				}
-				return result;
+				break;
 			}
 		}
 		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private <T> T parse(String valueString, Class<T> clazz) {
+		T value;
+		if (Code.class.isAssignableFrom(clazz) && !StringUtils.isEmpty(valueString)) {
+			value = (T) Codes.findCode((Class<Code>) clazz, valueString);
+		} else {
+			if (clazz.isEnum()) {
+				valueString = valueString.replace('.', '_');
+			}
+			value = FieldUtils.parse(valueString, clazz);
+		}
+		return value;
 	}
 	
 	public static void skip(XMLEventReader xml) throws XMLStreamException {

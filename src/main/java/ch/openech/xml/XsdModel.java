@@ -321,16 +321,27 @@ public class XsdModel {
 		return null;
 	}
 
-	public static List<Element> getList(Element node, String localName) {
-		List<Element> elements = null;
+	public List<Element> getAttributes(Element node) {
+		List<Element> elements = new ArrayList<>();
 		NodeList childNodes = node.getChildNodes();
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node c = childNodes.item(i);
-			if (XS.equals(c.getNamespaceURI()) && StringUtils.equals(localName, c.getLocalName())) {
-				if (elements == null) {
-					elements = new ArrayList<>();
-				}
+			if (XS.equals(c.getNamespaceURI()) && StringUtils.equals("attribute", c.getLocalName())) {
 				elements.add((Element) c);
+			} else if (c instanceof Element) {
+				Element child = (Element) c;
+				List<Element> childElements = getAttributes(child);
+				elements.addAll(childElements);
+				
+				Element extension = get(child, "extension");
+				if (extension != null) {
+					String base = extension.getAttribute("base");
+					Element baseElement = findElement(base);
+					if (baseElement != null) {
+						List<Element> baseAttribures = getAttributes(baseElement);
+						elements.addAll(baseAttribures);
+					}
+				}
 			}
 		}
 		return elements;
@@ -457,7 +468,7 @@ public class XsdModel {
 				entity.properties.addAll(complexContent(complexContent));
 			}
 		}
-		List<Element> attributes = getList(node, "attribute");
+		List<Element> attributes = getAttributes(node);
 		if (attributes != null) {
 			for (Element attribute : attributes) {
 				MjProperty property = element(attribute);
@@ -644,7 +655,7 @@ public class XsdModel {
 			String namespace = namespaceByPrefix.get(parts[0]);
 			if (!StringUtils.equals(namespace, this.namespace)) {
 				XsdModel xsdModel = findModel(namespace);
-				return xsdModel.findElement(parts[1]);
+				return xsdModel != null ? xsdModel.findElement(parts[1]) : null;
 			} else {
 				type = parts[1];
 			}

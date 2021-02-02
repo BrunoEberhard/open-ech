@@ -13,9 +13,11 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.minimalj.metamodel.model.MjEntity;
+import org.minimalj.model.Code;
 import org.minimalj.model.properties.Properties;
 import org.minimalj.model.properties.PropertyInterface;
 import org.minimalj.repository.sql.EmptyObjects;
+import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
 import org.w3c.dom.Element;
 
@@ -109,14 +111,17 @@ public class EchWriter implements AutoCloseable {
 	// Oder sie enthalten selber einen simple oder complex - Type.
 	private void writeElementContent(Object object, Element element) throws XMLStreamException {
 		String type = element.getAttribute("type");
+		String string = object.toString();
 		if (!StringUtils.isEmpty(type)) {
 			MjEntity entity = xsdModel.findEntity(type);
-			if (entity.isPrimitiv() || entity.isEnumeration()) {
-				if (object.getClass().isEnum() && object.toString().startsWith("_")) {
-					xmlStreamWriter.writeCharacters(object.toString().substring(1));
-				} else {
-					xmlStreamWriter.writeCharacters(object.toString());
+			if (entity.isPrimitiv()) {
+				if (entity.isEnumeration()) {
+					if (string.startsWith("_")) {
+						string = string.substring(1);
+					}
+					string = string.replace('_', '.');
 				}
+				xmlStreamWriter.writeCharacters(string);
 			} else {
 				Element typeElement = xsdModel.findElement(type);
 				writeElementAttributes(object, typeElement);
@@ -133,7 +138,7 @@ public class EchWriter implements AutoCloseable {
 				// geradegebogen.
 				xmlStreamWriter.writeCharacters(((Country) object).iso2Id);
 			} else {
-				xmlStreamWriter.writeCharacters(object.toString());
+				xmlStreamWriter.writeCharacters(string);
 			}
 			return;
 		}
@@ -147,12 +152,20 @@ public class EchWriter implements AutoCloseable {
 	}
 
 	private void writeElementAttributes(Object object, Element typeElement) throws XMLStreamException {
-		List<Element> attributes = XsdModel.getList(typeElement, "attribute");
+		List<Element> attributes = xsdModel.getAttributes(typeElement);
 		if (attributes != null) {
 			for (Element attribute : attributes) {
 				String attributeName = attribute.getAttribute("name");
 				Object value = Properties.getProperty(object.getClass(), attributeName).getValue(object);
 				if (!EmptyObjects.isEmpty(value)) {
+					if (value instanceof Code) {
+						value = IdUtils.getId(value);
+					} else if (value.getClass().isEnum()) {
+						if (value.toString().startsWith("_")) {
+							value = value.toString().substring(1);
+						}
+						value = value.toString().replace('_', '.');
+					}
 					xmlStreamWriter.writeAttribute(attributeName, value.toString());
 				}
 			}
