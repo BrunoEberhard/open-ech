@@ -198,7 +198,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 			int index = text.indexOf(",");
 			if (index > -1) {
 				countryString = text.substring(text.indexOf(",") + 1).trim();
-				town = text.substring(0, index - 1).trim();
+				town = text.substring(0, index).trim();
 			} else {
 				countryString = text;
 				town = null;
