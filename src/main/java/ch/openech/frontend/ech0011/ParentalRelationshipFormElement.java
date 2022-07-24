@@ -19,7 +19,7 @@ public class ParentalRelationshipFormElement extends ListFormElement<ParentalRel
 	}
 
 	@Override
-	public Form<ParentalRelationship> createForm() {
+	public Form<ParentalRelationship> createForm(boolean newObject) {
 		Form<ParentalRelationship> form = new Form<>(2);
 		form.line(new EnumFormElement<TypeOfRelationship>(ParentalRelationship.$.typeOfRelationship, TYPES));
 		form.line(new IdentificationFormElement(ParentalRelationship.$.partner.identification, false));

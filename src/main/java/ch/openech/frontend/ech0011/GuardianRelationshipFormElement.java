@@ -18,7 +18,7 @@ public class GuardianRelationshipFormElement extends ListFormElement<GuardianRel
 	}
 
 	@Override
-	public Form<GuardianRelationship> createForm() {
+	public Form<GuardianRelationship> createForm(boolean newObject) {
 		Form<GuardianRelationship> form = new Form<>(2);
 		form.line(new EnumFormElement<TypeOfRelationship>(GuardianRelationship.$.typeOfRelationship, TYPES));
 		form.line(new IdentificationFormElement(GuardianRelationship.$.partner.identification, false));
