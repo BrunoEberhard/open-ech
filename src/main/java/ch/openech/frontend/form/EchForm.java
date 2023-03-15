@@ -3,7 +3,7 @@ package ch.openech.frontend.form;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.FormElement;
 import org.minimalj.frontend.form.element.TextFormElement;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 
 import ch.ech.ech0007.SwissMunicipality;
 import ch.ech.ech0010.AddressInformation;
@@ -27,7 +27,7 @@ public class EchForm<T> extends Form<T> {
 	//
 
 	@Override
-	public FormElement<?> createElement(PropertyInterface property, boolean editable) {
+	public FormElement<?> createElement(Property property, boolean editable) {
 		Class<?> type = property.getClazz();
 		if (type == DatePartiallyKnown.class) {
 			return new DatePartiallyKnownFormElement(property, editable);

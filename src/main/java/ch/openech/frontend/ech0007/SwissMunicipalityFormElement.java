@@ -10,8 +10,8 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.ViewUtil;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.ViewUtils;
+import org.minimalj.model.properties.Property;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
 
@@ -27,7 +27,7 @@ public class SwissMunicipalityFormElement extends AbstractFormElement<SwissMunic
 		this(Keys.getProperty(key));
 	}
 	
-	public SwissMunicipalityFormElement(PropertyInterface property) {
+	public SwissMunicipalityFormElement(Property property) {
 		super(property);
 		
 		municipalities = Codes.get(Municipality.class).stream().filter(m -> m.municipalityAbolitionMode == null).collect(Collectors.toList());
@@ -44,7 +44,7 @@ public class SwissMunicipalityFormElement extends AbstractFormElement<SwissMunic
 
 	@Override
 	public void setValue(SwissMunicipality object) {
-		Municipality municipality = ViewUtil.viewed(object);
+		Municipality municipality = ViewUtils.viewed(object);
 		comboBox.setValue(municipality);
 	}
 	
@@ -52,7 +52,7 @@ public class SwissMunicipalityFormElement extends AbstractFormElement<SwissMunic
 	public SwissMunicipality getValue() {
 		Municipality municipality = comboBox.getValue();
 		if (municipality != null) {
-			return ViewUtil.view(municipality, new SwissMunicipality());
+			return ViewUtils.view(municipality, new SwissMunicipality());
 		} else {
 			return null;
 		}

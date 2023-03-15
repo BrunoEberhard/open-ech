@@ -8,7 +8,7 @@ import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser;
 import org.minimalj.frontend.form.element.FormatFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.resources.Resources;
@@ -17,7 +17,7 @@ public class ReligionFormElement extends FormatFormElement<String> implements Lo
 
 	public static final int[] RELIGION_VALUES = { 111, 121, 122, 211, 711, 811 };
 
-	public ReligionFormElement(PropertyInterface property, boolean editable) {
+	public ReligionFormElement(Property property, boolean editable) {
 		super(property, editable);
 	}
 
@@ -26,7 +26,7 @@ public class ReligionFormElement extends FormatFormElement<String> implements Lo
 	}
 
 	@Override
-	protected Search<String> getSearch(PropertyInterface property) {
+	protected Search<String> getSearch(Property property) {
 		return new ReligionSearch();
 	}
 
@@ -46,12 +46,12 @@ public class ReligionFormElement extends FormatFormElement<String> implements Lo
 	}
 
 	@Override
-	protected String getAllowedCharacters(PropertyInterface property) {
+	protected String getAllowedCharacters(Property property) {
 		return null;
 	}
 
 	@Override
-	protected int getAllowedSize(PropertyInterface property) {
+	protected int getAllowedSize(Property property) {
 		int max = 10;
 		for (int i : RELIGION_VALUES) {
 			String text = Resources.getString("Religion._" + i);

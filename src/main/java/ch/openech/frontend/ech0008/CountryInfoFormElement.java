@@ -8,7 +8,7 @@ import java.util.Random;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser;
 import org.minimalj.frontend.form.element.SmallListFormElement;
-import org.minimalj.model.ViewUtil;
+import org.minimalj.model.ViewUtils;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.Codes;
 import org.minimalj.util.DateUtils;
@@ -48,7 +48,7 @@ public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> im
 		List<CountryInfo> countryInfos = new ArrayList<>();
 		CountryInfo info = new CountryInfo();
 		info.country = new Country();
-		ViewUtil.view(countries.get(new Random().nextInt(countries.size())), info.country);
+		ViewUtils.view(countries.get(new Random().nextInt(countries.size())), info.country);
 		countryInfos.add(info);
 		setValue(countryInfos);
 	}
@@ -65,7 +65,7 @@ public class CountryInfoFormElement extends SmallListFormElement<CountryInfo> im
 		List<CountryInformation> countries = Codes.get(CountryInformation.class);
 		Optional<CountryInformation> c = countries.stream().filter(c2 -> text.equals(c2.shortNameDe)).findFirst();
 		if (c.isPresent()) {
-			ViewUtil.view(c.get(), country);
+			ViewUtils.view(c.get(), country);
 		} else {
 			country.shortNameDe = InvalidValues.createInvalidString(text);
 		}

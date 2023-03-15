@@ -8,8 +8,8 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.ViewUtil;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.ViewUtils;
+import org.minimalj.model.properties.Property;
 import org.minimalj.util.Codes;
 import org.minimalj.util.mock.Mocking;
 
@@ -27,7 +27,7 @@ public class CountryFormElement extends AbstractFormElement<Country> implements 
 		this(Keys.getProperty(key));
 	}
 	
-	public CountryFormElement(PropertyInterface property) {
+	public CountryFormElement(Property property) {
 		super(property);
 		countries = Codes.get(CountryInformation.class);
 		comboBox = Frontend.getInstance().createComboBox(countries, listener());
@@ -50,7 +50,7 @@ public class CountryFormElement extends AbstractFormElement<Country> implements 
 
 	@Override
 	public void setValue(Country country) {
-		CountryInformation countryInformation = ViewUtil.viewed(country);
+		CountryInformation countryInformation = ViewUtils.viewed(country);
 		comboBox.setValue(countryInformation);
 	}
 

@@ -2,7 +2,7 @@ package ch.openech.frontend.form;
 
 import org.minimalj.frontend.form.element.FormatFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.DateUtils;
 import org.minimalj.util.StringUtils;
@@ -16,7 +16,7 @@ public class DatePartiallyKnownFormElement extends FormatFormElement<DatePartial
 		super(Keys.getProperty(key), editable);
 	}
 	
-	public DatePartiallyKnownFormElement(PropertyInterface property, boolean editable) {
+	public DatePartiallyKnownFormElement(Property property, boolean editable) {
 		super(property, editable);
 	}
 
@@ -28,12 +28,12 @@ public class DatePartiallyKnownFormElement extends FormatFormElement<DatePartial
 	}
 
 	@Override
-	protected String getAllowedCharacters(PropertyInterface property) {
+	protected String getAllowedCharacters(Property property) {
 		return "0123456789.";
 	}
 
 	@Override
-	protected int getAllowedSize(PropertyInterface property) {
+	protected int getAllowedSize(Property property) {
 		return 10;
 	}
 

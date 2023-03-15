@@ -5,7 +5,7 @@ import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser
 import org.minimalj.frontend.form.element.FormLookupFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.AnnotationUtil;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 
 import ch.ech.ech0011.ForeignerName;
 
@@ -13,7 +13,7 @@ public class ForeignerNameFormElement extends FormLookupFormElement<ForeignerNam
 	private static final int SIZE_FIRST_NAME = AnnotationUtil.getSize(Keys.getProperty(ForeignerName.$.firstName));
 	private static final int SIZE_NAME = AnnotationUtil.getSize(Keys.getProperty(ForeignerName.$.name));
 
-	public ForeignerNameFormElement(PropertyInterface property, boolean editable) {
+	public ForeignerNameFormElement(Property property, boolean editable) {
 		super(property, editable);
 	}
 

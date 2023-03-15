@@ -7,7 +7,7 @@ import java.util.Random;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.minimalj.backend.Backend;
 import org.minimalj.model.Keys;
-import org.minimalj.model.ViewUtil;
+import org.minimalj.model.ViewUtils;
 import org.minimalj.model.annotation.Materialized;
 import org.minimalj.model.annotation.NotEmpty;
 import org.minimalj.model.annotation.Size;
@@ -136,7 +136,7 @@ public class Person implements Mocking {
 		birthData.dateOfBirth.value = LocalDate.now().minusDays(r.nextInt(10000)).toString();
 		List<Municipality> municipalities = Backend.find(Municipality.class, By.all());
 		Municipality municipality = municipalities.get(r.nextInt(municipalities.size()));
-		birthData.placeOfBirth.swissTown = ViewUtil.view(municipality, new SwissMunicipality());
+		birthData.placeOfBirth.swissTown = ViewUtils.view(municipality, new SwissMunicipality());
 		birthData.sex = Sex._1;
 		religionData.religion = String
 				.valueOf(ReligionFormElement.RELIGION_VALUES[r.nextInt(ReligionFormElement.RELIGION_VALUES.length)]);

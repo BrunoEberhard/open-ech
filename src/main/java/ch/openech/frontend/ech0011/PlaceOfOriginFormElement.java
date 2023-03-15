@@ -10,7 +10,7 @@ import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.model.validation.InvalidValues;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
@@ -28,7 +28,7 @@ public class PlaceOfOriginFormElement extends AbstractFormElement<PlaceOfOrigin>
 		this(Keys.getProperty(key));
 	}
 	
-	public PlaceOfOriginFormElement(PropertyInterface property) {
+	public PlaceOfOriginFormElement(Property property) {
 		super(property);
 		municipalities = Codes.get(Municipality.class);
 		Collections.sort(municipalities);

@@ -5,7 +5,7 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
 import org.minimalj.util.mock.Mocking;
@@ -21,7 +21,7 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 		this(Keys.getProperty(key));
 	}
 	
-	public CantonFormElement(PropertyInterface property) {
+	public CantonFormElement(Property property) {
 		super(property);
 		textField = Frontend.getInstance().createTextField(2, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, listener());
 	}
@@ -35,7 +35,7 @@ public class CantonFormElement extends AbstractFormElement<Canton> implements Mo
 	public Canton getValue() {
 		String text = textField.getValue();
 		if (!StringUtils.isEmpty(text)) {
-			Canton canton = Codes.findCode(Canton.class, textField.getValue());
+			Canton canton = Codes.get(Canton.class, textField.getValue());
 			if (canton == null) {
 				canton = new Canton();
 				canton.id = textField.getValue();

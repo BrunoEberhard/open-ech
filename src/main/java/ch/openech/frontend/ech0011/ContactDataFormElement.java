@@ -3,13 +3,13 @@ package ch.openech.frontend.ech0011;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.FormElementConstraint;
 import org.minimalj.frontend.form.element.FormLookupFormElement;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 
 import ch.ech.ech0011.ContactData;
 
 public class ContactDataFormElement extends FormLookupFormElement<ContactData> {
 
-	public ContactDataFormElement(PropertyInterface property) {
+	public ContactDataFormElement(Property property) {
 		super(property, Form.EDITABLE);
 		height(2, FormElementConstraint.MAX);
 	}

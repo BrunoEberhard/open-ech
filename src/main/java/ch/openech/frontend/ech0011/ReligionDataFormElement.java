@@ -4,14 +4,14 @@ import org.minimalj.frontend.Frontend.Search;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser;
 import org.minimalj.frontend.form.element.FormLookupFormElement;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 
 import ch.ech.ech0011.ReligionData;
 import ch.ech.ech0046.DateRange;
 
 public class ReligionDataFormElement extends FormLookupFormElement<ReligionData> implements LookupParser {
 
-	public ReligionDataFormElement(PropertyInterface property, boolean editable) {
+	public ReligionDataFormElement(Property property, boolean editable) {
 		super(property, editable);
 	}
 
