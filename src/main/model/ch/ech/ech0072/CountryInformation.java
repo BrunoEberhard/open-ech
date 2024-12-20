@@ -6,7 +6,7 @@ import java.util.Locale;
 import org.minimalj.model.Code;
 import org.minimalj.model.Keys;
 import org.minimalj.model.Rendering;
-import org.minimalj.model.ViewUtil;
+import org.minimalj.model.ViewUtils;
 import org.minimalj.model.annotation.Size;
 import org.minimalj.util.Codes;
 import org.minimalj.util.LocaleContext;
@@ -67,11 +67,11 @@ public class CountryInformation implements Code, Rendering {
 	}
 	
 	public static CountryInformation getSwitzerland() {
-		return Codes.findCode(CountryInformation.class, 8100);
+		return Codes.get(CountryInformation.class, 8100);
 	}
 
 	public Country getCountry() {
-		return ViewUtil.view(this, new Country());
+		return ViewUtils.view(this, new Country());
 	}
 	
 	public boolean switzerland() {

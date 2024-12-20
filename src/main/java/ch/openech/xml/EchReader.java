@@ -19,7 +19,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.minimalj.model.Code;
 import org.minimalj.model.properties.Properties;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.Codes;
 import org.minimalj.util.FieldUtils;
@@ -104,7 +104,7 @@ public class EchReader implements AutoCloseable {
 			Attribute attribute = attributes.next();
 			String attributeName = attribute.getName().getLocalPart();
 			String valueString = attribute.getValue();
-			PropertyInterface property = Properties.getProperty(result.getClass(), attributeName);
+			Property property = Properties.getProperty(result.getClass(), attributeName);
 			if (property != null) {
 				Object value = parse(valueString, property.getClazz());
 				property.setValue(result, value);
@@ -146,7 +146,7 @@ public class EchReader implements AutoCloseable {
 				String elementName = startElement.getName().getLocalPart();
 				elementName = StringUtils.lowerFirstChar(elementName);
 				
-				PropertyInterface property = Properties.getProperty(clazz, elementName);
+				Property property = Properties.getProperty(clazz, elementName);
 				if (property != null) {
 					if (LOG.isLoggable(Level.FINE)) {
 						LOG.fine("Element: " + elementName + " -> Property: " + property.getPath());
@@ -201,7 +201,7 @@ public class EchReader implements AutoCloseable {
 	private <T> T parse(String valueString, Class<T> clazz) {
 		T value;
 		if (Code.class.isAssignableFrom(clazz) && !StringUtils.isEmpty(valueString)) {
-			value = (T) Codes.findCode((Class<Code>) clazz, valueString);
+			value = (T) Codes.get((Class<Code>) clazz, valueString);
 		} else {
 			if (clazz.isEnum()) {
 				valueString = valueString.replace('.', '_');

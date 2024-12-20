@@ -34,7 +34,7 @@ public class AddressForm extends Form<MailAddress> {
 		}
 		line($.addressInformation.addressLine1);
 		line($.addressInformation.addressLine2);
-		line(Form.GROW_FIRST_ELEMENT, $.addressInformation.street, $.addressInformation.houseNumber, $.addressInformation.dwellingNumber);
+		line($.addressInformation.street, $.addressInformation.street, $.addressInformation.houseNumber, $.addressInformation.dwellingNumber);
 		if (!swiss) {
 			line($.addressInformation.postOfficeBoxText, $.addressInformation.postOfficeBoxNumber);
 			line($.addressInformation.country, $.addressInformation.swissZipCode, $.addressInformation.town);
@@ -43,8 +43,8 @@ public class AddressForm extends Form<MailAddress> {
 		}
 		line($.addressInformation.locality);
 		
-		addDependecy($.addressInformation.swissZipCode, new TownUpdater(), $.addressInformation.town);
-		addDependecy($.addressInformation.town, new ZipUpdater(), $.addressInformation.swissZipCode);
+		addDependency($.addressInformation.swissZipCode, new TownUpdater(), $.addressInformation.town);
+		addDependency($.addressInformation.town, new ZipUpdater(), $.addressInformation.swissZipCode);
 	}
 
 	@Override

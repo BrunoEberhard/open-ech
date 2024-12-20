@@ -16,8 +16,8 @@ import org.minimalj.frontend.editor.Editor.SimpleEditor;
 import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.ViewUtil;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.ViewUtils;
+import org.minimalj.model.properties.Property;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.Codes;
 import org.minimalj.util.StringUtils;
@@ -44,7 +44,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 	private final Input<String> textField;
 	private final Input<String> lookup;
 	
-	public GeneralPlaceFormElement(PropertyInterface property) {
+	public GeneralPlaceFormElement(Property property) {
 		super(property);
 		countries = Codes.get(CountryInformation.class);
 		municipalities = Codes.get(Municipality.class).stream().filter(m -> m.municipalityAbolitionMode == null).collect(Collectors.toList());
@@ -207,7 +207,7 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 			if (country != null) {
 				GeneralPlace place = new GeneralPlace();
 				place.foreignCountry = new GeneralPlace.ForeignCountry();
-				place.foreignCountry.country = ViewUtil.view(country, new Country());
+				place.foreignCountry.country = ViewUtils.view(country, new Country());
 				place.foreignCountry.town = town;
 				return place;
 			}
@@ -227,13 +227,13 @@ public class GeneralPlaceFormElement extends AbstractFormElement<GeneralPlace> i
 			int index = (int)(Math.random() * municipalities.size());
 			Municipality municipality = municipalities.get(index);
 			if (municipality != null) {
-				ViewUtil.view(municipality, place.swissTown);
+				ViewUtils.view(municipality, place.swissTown);
 			}
 		} else {
 			int index = (int)(Math.random() * countries.size());
 			CountryInformation country = countries.get(index);
 			place.foreignCountry = new GeneralPlace.ForeignCountry();
-			ViewUtil.view(country, place.foreignCountry.country);
+			ViewUtils.view(country, place.foreignCountry.country);
 			place.foreignCountry.town = MockName.officialName() + "Town";
 		}
 		setValue(place);

@@ -1,7 +1,7 @@
 package ch.openech.transaction;
 
 import org.minimalj.model.properties.Properties;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.transaction.Transaction;
 
 import ch.ech.ech0011.Person;
@@ -29,7 +29,7 @@ public class EchTransaction implements Transaction<Person> {
 	}
 
 	private Person execute(Delivery delivery) {
-		for (PropertyInterface property : Properties.getProperties(Delivery.class).values()) {
+		for (Property property : Properties.getProperties(Delivery.class).values()) {
 			Object event = property.getValue(delivery);
 			if (event != null) {
 				return executeEvent(event);

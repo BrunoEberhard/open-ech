@@ -15,7 +15,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.minimalj.metamodel.model.MjEntity;
 import org.minimalj.model.Code;
 import org.minimalj.model.properties.Properties;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.IdUtils;
 import org.minimalj.util.StringUtils;
@@ -206,7 +206,7 @@ public class EchWriter implements AutoCloseable {
 			if (element.getLocalName().equals("element")) {
 				String name = element.getAttribute("name");
 				if (!StringUtils.isEmpty(name)) {
-					PropertyInterface property = Properties.getProperty(object.getClass(), name);
+					Property property = Properties.getProperty(object.getClass(), name);
 					if (property != null) {
 						Object value = property.getValue(object);
 						writeElement(value, element);
@@ -230,7 +230,7 @@ public class EchWriter implements AutoCloseable {
 			}
 
 			if (element.getLocalName().equals("any")) {
-				PropertyInterface property = Properties.getProperty(object.getClass(), "any");
+				Property property = Properties.getProperty(object.getClass(), "any");
 				if (property != null) {
 					Any any = (Any) property.getValue(object);
 					if (any != null && !EmptyObjects.isEmpty(any.object)) {

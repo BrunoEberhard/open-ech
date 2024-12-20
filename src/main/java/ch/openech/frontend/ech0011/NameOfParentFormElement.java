@@ -5,7 +5,7 @@ import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser
 import org.minimalj.frontend.form.element.FormLookupFormElement;
 import org.minimalj.model.Keys;
 import org.minimalj.model.annotation.AnnotationUtil;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 
 import ch.ech.ech0021.NameOfParent;
 
@@ -13,7 +13,7 @@ public class NameOfParentFormElement extends FormLookupFormElement<NameOfParent>
 	private static final int SIZE_FIRST_NAME = AnnotationUtil.getSize(Keys.getProperty(NameOfParent.$.firstNameValue));
 	private static final int SIZE_NAME = AnnotationUtil.getSize(Keys.getProperty(NameOfParent.$.officialNameValue));
 
-	public NameOfParentFormElement(PropertyInterface property, boolean editable) {
+	public NameOfParentFormElement(Property property, boolean editable) {
 		super(property, editable);
 	}
 

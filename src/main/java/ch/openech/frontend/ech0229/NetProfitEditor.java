@@ -14,7 +14,8 @@ public class NetProfitEditor extends NewObjectEditor<NetProfit> {
 				return 50;
 			}
 		};
-		form.line(Form.GROW_FIRST_ELEMENT, "Laber die Fasel die Quatsch langer Text", NetProfit.$.taxableIncome.federalTax,
+		String text = "Laber die Fasel die Quatsch langer Text";
+		form.line(text, text, text, text, NetProfit.$.taxableIncome.federalTax,
 				NetProfit.$.taxableIncome.cantonalTax);
 		return form;
 	}

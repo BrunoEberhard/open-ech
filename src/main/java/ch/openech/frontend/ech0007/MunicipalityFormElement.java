@@ -10,7 +10,7 @@ import org.minimalj.frontend.Frontend.IComponent;
 import org.minimalj.frontend.Frontend.Input;
 import org.minimalj.frontend.form.element.AbstractFormElement;
 import org.minimalj.model.Keys;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.repository.sql.EmptyObjects;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.Codes;
@@ -27,7 +27,7 @@ public class MunicipalityFormElement extends AbstractFormElement<Municipality> i
 		this(Keys.getProperty(key), allowFederalRegister);
 	}
 	
-	public MunicipalityFormElement(PropertyInterface property, boolean allowFederalRegister) {
+	public MunicipalityFormElement(Property property, boolean allowFederalRegister) {
 		super(property);
 		
 		municipalities = Codes.get(Municipality.class).stream().filter(m -> m.municipalityAbolitionMode == null).collect(Collectors.toList());

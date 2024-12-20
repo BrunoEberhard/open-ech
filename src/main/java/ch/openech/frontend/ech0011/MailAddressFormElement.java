@@ -20,7 +20,7 @@ public class MailAddressFormElement extends FormLookupFormElement<MailAddress> {
 	protected MailAddress createObject() {
 		MailAddress mailAddress = super.createObject();
 		if (mailAddress.addressInformation.country == null) {
-			mailAddress.addressInformation.country = Codes.findCode(Country.class, 8100);
+			mailAddress.addressInformation.country = Codes.get(Country.class, 8100);
 		}
 		return mailAddress;
 	}

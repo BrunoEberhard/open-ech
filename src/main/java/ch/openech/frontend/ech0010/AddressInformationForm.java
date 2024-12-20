@@ -24,7 +24,7 @@ public class AddressInformationForm extends Form<AddressInformation> {
 		super(editable, 4, 70);
 		line($.addressLine1);
 		line($.addressLine2);
-		line(Form.GROW_FIRST_ELEMENT, $.street, $.houseNumber, $.dwellingNumber);
+		line($.street, $.street, $.houseNumber, $.dwellingNumber);
 		if (!swiss) {
 			line($.postOfficeBoxText, $.postOfficeBoxNumber);
 			line($.country, $.swissZipCode, $.town);
@@ -33,8 +33,8 @@ public class AddressInformationForm extends Form<AddressInformation> {
 		}
 		line($.locality);
 		
-		addDependecy($.swissZipCode, new TownUpdater(), $.town);
-		addDependecy($.town, new ZipUpdater(), $.swissZipCode);
+		addDependency($.swissZipCode, new TownUpdater(), $.town);
+		addDependency($.town, new ZipUpdater(), $.swissZipCode);
 	}
 
 	@Override

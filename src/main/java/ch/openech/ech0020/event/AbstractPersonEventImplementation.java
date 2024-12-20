@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.minimalj.backend.Backend;
 import org.minimalj.model.properties.Properties;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.util.CloneHelper;
 import org.minimalj.util.GenericUtils;
 
@@ -22,21 +22,21 @@ public abstract class AbstractPersonEventImplementation<EVENT, CHANGE> implement
 	public EVENT createEvent(Person person) {
 		EVENT event = CloneHelper.newInstance(eventClass);
 
-		Optional<PropertyInterface> identificationProperty = findProperty(eventClass, PersonIdentification.class);
+		Optional<Property> identificationProperty = findProperty(eventClass, PersonIdentification.class);
 		identificationProperty.orElseThrow(IllegalArgumentException::new).setValue(event, person.personIdentification);
 
-		Optional<PropertyInterface> changeProperty = findProperty(eventClass, changeClass);
+		Optional<Property> changeProperty = findProperty(eventClass, changeClass);
 		changeProperty.orElseThrow(IllegalArgumentException::new).setValue(event, findOldValue(person));
 
 		return event;
 	}
 
-	protected Optional<PropertyInterface> findProperty(Class<?> clazz, Class<?> propertyClass) {
+	protected Optional<Property> findProperty(Class<?> clazz, Class<?> propertyClass) {
 		return Properties.getProperties(clazz).values().stream().filter(p -> p.getClazz() == propertyClass).findFirst();
 	}
 
 	private CHANGE findOldValue(Object oldObject) {
-		Optional<PropertyInterface> changeProperty = findProperty(oldObject.getClass(), changeClass);
+		Optional<Property> changeProperty = findProperty(oldObject.getClass(), changeClass);
 		return (CHANGE) changeProperty.orElseThrow(IllegalArgumentException::new).getValue(oldObject);
 	}
 
@@ -48,7 +48,7 @@ public abstract class AbstractPersonEventImplementation<EVENT, CHANGE> implement
 	}
 
 	protected void setValue(Object delivery, EVENT event) {
-		Optional<PropertyInterface> eventProperty = findProperty(delivery.getClass(), eventClass);
+		Optional<Property> eventProperty = findProperty(delivery.getClass(), eventClass);
 		eventProperty.orElseThrow(IllegalArgumentException::new).setValue(delivery, event);
 	}
 
@@ -60,15 +60,15 @@ public abstract class AbstractPersonEventImplementation<EVENT, CHANGE> implement
 	}
 
 	protected void apply(EVENT event, Person person) {
-		Optional<PropertyInterface> eventChangeProperty = findProperty(eventClass, changeClass);
+		Optional<Property> eventChangeProperty = findProperty(eventClass, changeClass);
 		CHANGE change = (CHANGE) eventChangeProperty.orElseThrow(IllegalArgumentException::new).getValue(event);
 
-		Optional<PropertyInterface> changeProperty = findProperty(Person.class, changeClass);
+		Optional<Property> changeProperty = findProperty(Person.class, changeClass);
 		changeProperty.orElseThrow(IllegalArgumentException::new).setValue(person, change);
 	}
 
 	private Person readPerson(EVENT event) {
-		Optional<PropertyInterface> identificationProperty = findProperty(eventClass, PersonIdentification.class);
+		Optional<Property> identificationProperty = findProperty(eventClass, PersonIdentification.class);
 		PersonIdentification personIdentification = (PersonIdentification) identificationProperty.orElseThrow(IllegalArgumentException::new).getValue(event);
 
 		return Backend.read(Person.class, personIdentification.localPersonId.namedId);

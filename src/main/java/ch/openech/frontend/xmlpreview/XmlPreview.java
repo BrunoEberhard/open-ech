@@ -5,7 +5,7 @@ import java.util.List;
 import org.minimalj.frontend.Frontend;
 import org.minimalj.frontend.action.Action;
 import org.minimalj.frontend.form.Form;
-import org.minimalj.frontend.page.IDialog;
+import org.minimalj.frontend.page.Page.Dialog;
 import org.minimalj.model.Keys;
 import org.minimalj.util.resources.Resources;
 
@@ -13,7 +13,7 @@ import ch.openech.frontend.ewk.event.XmlTextFormFormElement;
 
 public class XmlPreview {
 
-	private IDialog dialog;
+	private Dialog dialog;
 	
 	public XmlPreview(List<String> xmls) {
         Form<XmlPreviewValue> form = new Form<XmlPreviewValue>(Form.READ_ONLY, 1, 400);

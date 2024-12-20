@@ -91,7 +91,7 @@ public class DataGenerator {
 //	private static Municipality createJona() {
 //		Municipality reportingMunicipality = new Municipality();
 //		reportingMunicipality.historyMunicipalityId = 14925;
-//		reportingMunicipality.canton = Codes.findCode(Canton.class, "SG");
+//		reportingMunicipality.canton = Codes.get(Canton.class, "SG");
 //		reportingMunicipality.id = 3340;
 //		reportingMunicipality.municipalityName = "Rapperswil-Jona";
 //		return reportingMunicipality;

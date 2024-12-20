@@ -4,7 +4,7 @@ import org.minimalj.frontend.form.Form;
 import org.minimalj.frontend.form.element.AbstractLookupFormElement.LookupParser;
 import org.minimalj.frontend.form.element.FormLookupFormElement;
 import org.minimalj.model.EnumUtils;
-import org.minimalj.model.properties.PropertyInterface;
+import org.minimalj.model.properties.Property;
 import org.minimalj.model.validation.InvalidValues;
 
 import ch.ech.ech0011.Separation;
@@ -13,7 +13,7 @@ import ch.ech.ech0046.DateRange;
 
 public class SeparationFormElement extends FormLookupFormElement<SeparationData> implements LookupParser {
 
-	public SeparationFormElement(PropertyInterface property, boolean editable) {
+	public SeparationFormElement(Property property, boolean editable) {
 		super(property, editable);
 	}
 
